@@ -7,29 +7,23 @@
     "types": ["node"],
     "jsx": "preserve",
     "strict": true,
-    "noImplicitOverride": true,
-    "useDefineForClassFields": true,
     "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "vitepress-theme-neptu-blog": ["../packages/blog/src/index.ts"],
-      "vitepress-theme-neptu-blog/*": ["../packages/blog/src/*"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src/.vitepress/**/*.ts",
+    "src/.vitepress/**/*.js",
     "src/.vitepress/**/*.vue",
     "src/**/*.ts",
+    "src/**/*.js",
     "src/**/*.vue",
-    "src/**/*.d.ts",
-    "../packages/blog/src/**/*.ts",
-    "../packages/blog/src/**/*.vue",
-    "../packages/blog/src/**/*.d.ts"
-  ]
+    "src/**/*.d.ts"
+  ],
+  "exclude": ["src/.vitepress/cache", "src/.vitepress/dist"]
 }

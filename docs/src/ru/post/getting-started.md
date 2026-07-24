@@ -26,7 +26,7 @@ descrAsPreview: true
 
 ```bash
 git clone https://github.com/bozonx/vitepress-theme-neptu-blog
-cp -r vitepress-theme-neptu-blog/template my-blog
+cp -r vitepress-theme-neptu-blog/packages/blog/template my-blog
 cd my-blog
 ```
 

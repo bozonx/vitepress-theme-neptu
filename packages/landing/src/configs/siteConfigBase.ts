@@ -58,13 +58,14 @@ export function mergeSiteConfig(config: any): any {
       ...config.vite,
       ssr: { noExternal: ['vitepress-theme-neptu-blog'], ...config.vite?.ssr },
     },
-    sitemap: {
-      hostname: config.siteUrl,
-      transformItems: (items: any[]) => {
-        return filterSitemap(items as any)
-      },
-      ...config.sitemap,
-    },
+    sitemap:
+      config.sitemap === false
+        ? false
+        : {
+            hostname: config.siteUrl,
+            transformItems: (items: any[]) => filterSitemap(items as any),
+            ...config.sitemap,
+          },
     markdown: {
       ...config.markdown,
       image: { lazyLoading: true, ...config.markdown?.image },

@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
-import {
+import './shims-modules.d.ts'
+import type {
   DefaultTheme,
   PageData,
+  Theme,
   UserConfig,
   HeadConfig,
 } from 'vitepress'
@@ -100,6 +102,8 @@ export namespace NeptuBlogTheme {
     sidebarLogoHeight?: number
     /** Blog/site name. Used as the site title fallback and sidebar title fallback. */
     blogTitle?: string
+    /** Optional URL of a companion blog, used by the landing starter. */
+    blogUrl?: string
     sidebarMenuLabel?: string
     colorThemeMenuLabel?: string
 
@@ -465,3 +469,6 @@ export type AuthorItem = NeptuBlogTheme.AuthorItem
 export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem
 export type LinkItem = NeptuBlogTheme.LinkItem
 export type SocialLink = NeptuBlogTheme.SocialLink
+
+declare const theme: Theme
+export default theme

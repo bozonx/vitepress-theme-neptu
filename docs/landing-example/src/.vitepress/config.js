@@ -1,3 +1,4 @@
+// @ts-nocheck -- Neptu extends VitePress' public UserConfig with site-specific fields.
 import path from 'node:path'
 import { defineConfig } from 'vitepress'
 import { mergeSiteConfig, loadSiteLocale } from 'vitepress-theme-neptu-landing/configs'
@@ -5,8 +6,9 @@ import { mergeSiteConfig, loadSiteLocale } from 'vitepress-theme-neptu-landing/c
 export default async () => {
   const config = defineConfig({
     srcDir: path.resolve(__dirname, '../'),
-    siteUrl: 'https://...',
-    repo: 'https://github.com/...',
+    siteUrl: 'https://example.com',
+    repo: 'https://github.com/example/landing-site',
+    sitemap: false,
     themeConfig: {
       logo: '/img/logo.svg',
 

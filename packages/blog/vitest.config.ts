@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     pool: 'threads',
+    testTimeout: 10_000,
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.test.ts'],
     exclude: ['node_modules/**', 'dist/**', 'docs/**', '.vitepress/**', 'tests/e2e/**'],

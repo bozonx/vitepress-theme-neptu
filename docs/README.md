@@ -18,5 +18,5 @@ pnpm docs:preview   # preview the production build
 
 Content lives under `src/<locale>/` — see the
 [Getting started](https://bozonx.github.io/vitepress-theme-neptu-blog/ru/post/getting-started)
-guide for the structure. To scaffold a new blog, copy the [`template/`](../template)
-directory instead of this site.
+guide for the structure. To scaffold a new blog, copy the
+[`packages/blog/template/`](../packages/blog/template) directory instead of this site.

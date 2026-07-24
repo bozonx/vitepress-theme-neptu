@@ -33,7 +33,7 @@ The fastest way to a working blog is to copy the starter template in
 
 ```sh
 git clone https://github.com/bozonx/vitepress-theme-neptu-blog
-cp -r vitepress-theme-neptu-blog/template my-blog
+cp -r vitepress-theme-neptu-blog/packages/blog/template my-blog
 cd my-blog
 pnpm install
 pnpm dev
@@ -76,7 +76,8 @@ Configuration, frontmatter, components, and SEO are documented in full on the
 
 ## Development
 
-This repo is a pnpm workspace (the theme in `.`, the docs site in `docs/`):
+This repo is a pnpm workspace (the blog theme is in `packages/blog`, the docs
+site is in `docs/`):
 
 ```sh
 pnpm install

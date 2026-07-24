@@ -49,8 +49,8 @@ jobs:
       - name: Run unit tests
         run: pnpm test
 
-      - name: Build documentation site
-        run: pnpm docs:build
+      - name: Build documentation and landing example
+        run: pnpm build
 
       - name: Install Playwright browsers
         run: pnpm --filter vitepress-theme-neptu-blog exec playwright install --with-deps chromium

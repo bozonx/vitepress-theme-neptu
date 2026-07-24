@@ -2,6 +2,7 @@
   "name": "vitepress-theme-neptu-landing",
   "version": "0.1.0",
   "description": "VitePress landing theme for Neptu main site",
+  "types": "./src/index.ts",
   "type": "module",
   "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
   "license": "MIT",
@@ -11,17 +12,31 @@
     "LICENSE"
   ],
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
     "./package.json": "./package.json",
     "./layouts": "./src/layouts/index.ts",
     "./configs": "./src/configs/index.ts",
     "./site-theme-fix.css": "./src/styles/site-theme-fix.css"
   },
   "peerDependencies": {
-    "vitepress": "^2.0.0-alpha.17",
+    "vitepress": "^2.0.0-alpha.18",
     "vue": "^3.5.0"
   },
   "dependencies": {
-    "vitepress-theme-neptu-blog": "workspace:*"
+    "vitepress-theme-neptu-blog": "workspace:*",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^5.9.3",
+    "vitepress": "2.0.0-alpha.18",
+    "vue": "^3.5.40",
+    "vue-tsc": "^3.3.8"
+  },
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit"
   }
 }

@@ -2,18 +2,18 @@
 
 ## Run
 
-Use node version: 18 or greater
+Use Node.js 20 or later.
 
 - Install dependencies:
 
   ```bash
-  yarn
+  pnpm install
   ```
 
 - Run locally:
 
   ```bash
-  yarn dev
+  pnpm landing:dev
   ```
 
   Go to `http://localhost:5173/`
@@ -21,7 +21,8 @@ Use node version: 18 or greater
 - Build and Preview
 
   ```bash
-  yarn build && yarn preview
+  pnpm landing:build
+  pnpm landing:preview
   ```
 
   Go to `http://localhost:4173/`

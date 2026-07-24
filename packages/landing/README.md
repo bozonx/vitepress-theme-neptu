@@ -4,6 +4,9 @@ VitePress landing theme for Neptu main site.
 
 This is a companion package to `vitepress-theme-neptu-blog`. It reuses shared utilities and transformers from the blog theme and provides landing-page specific layouts and configuration helpers.
 
+The runnable example lives in `docs/landing-example` and can be started from
+the repository root with `pnpm landing:dev`.
+
 ## Installation
 
 ```bash
