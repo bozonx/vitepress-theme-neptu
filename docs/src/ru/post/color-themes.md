@@ -1,9 +1,11 @@
 ---
 title: Цветовые темы
 description: Тема поставляется с восемью готовыми цветовыми схемами и поддерживает полностью пользовательские оттенки через CSS-переменные.
-layout: page
-translations:
-  en: /en/page/color-themes
+date: 2025-06-22T10:00:00Z
+authorId: ivan-k
+tags:
+  - guide
+  - theme
 ---
 
 # Цветовые темы

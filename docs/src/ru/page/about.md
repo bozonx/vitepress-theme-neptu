@@ -20,7 +20,7 @@ frontmatter или конфиг.
 | Frontmatter постов | Посты с тегом [`frontmatter`](../tags/frontmatter/1) |
 | Медиа-компоненты | [Медиа в постах](../post/media-components) |
 | SEO (OG, JSON-LD, canonical, hreflang) | Посты с тегом [`seo`](../tags/seo/1) |
-| Конфигурация | [Уровни конфигурации](config-layers), [темы и шрифты](color-themes), [навигация и футер](nav-sidebar-footer), [ленты и SEO](seo-feeds-search), [локали](locales), [компоненты](components), [расширенные возможности](advanced) |
+| Конфигурация | [Уровни конфигурации](../post/config-layers), [темы и шрифты](../post/color-themes), [навигация и футер](../post/nav-sidebar-footer), [ленты и SEO](../post/seo-feeds-search), [локали](../post/locales), [компоненты](../post/components), [расширенные возможности](../post/advanced) |
 | Типы списков | Сайдбар: Свежие · Популярные · Архив · Авторы · Теги |
 
 ## Запуск локально
@@ -43,4 +43,4 @@ pnpm example:dev
 - отредактируйте `src/site.yaml` и каждый `src/<locale>/_site.yaml`,
 - удалите демо-посты в `src/<locale>/post/` и напишите свои.
 
-См. [Уровни конфигурации](config-layers) — какой файл для чего редактировать.
+См. [Уровни конфигурации](../post/config-layers) — какой файл для чего редактировать.

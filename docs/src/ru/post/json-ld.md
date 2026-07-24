@@ -82,4 +82,4 @@ themeConfig:
 ```
 
 О других SEO-возможностях (OG, canonical, hreflang, RSS) и их переключателях см. в разделе
-[Ленты, поиск и SEO-переключатели](../page/seo-feeds-search).
+[Ленты, поиск и SEO-переключатели](seo-feeds-search).

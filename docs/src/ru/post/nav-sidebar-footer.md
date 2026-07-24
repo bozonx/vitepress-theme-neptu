@@ -1,9 +1,11 @@
 ---
 title: Навигация, сайдбар и футер
 description: Как формируются верхняя панель, секции сайдбара и футер из конфигурации YAML.
-layout: page
-translations:
-  en: /en/page/nav-sidebar-footer
+date: 2025-06-18T10:00:00Z
+authorId: ivan-k
+tags:
+  - guide
+  - config
 ---
 
 # Навигация, сайдбар и футер

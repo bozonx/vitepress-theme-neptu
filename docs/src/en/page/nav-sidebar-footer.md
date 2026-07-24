@@ -2,8 +2,6 @@
 title: Nav, Sidebar & Footer
 description: How the top bar, sidebar sections, and footer are assembled from YAML config.
 layout: page
-translations:
-  ru: /ru/page/nav-sidebar-footer
 ---
 
 # Nav, Sidebar & Footer

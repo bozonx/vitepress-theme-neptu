@@ -1,9 +1,11 @@
 ---
 title: Ленты, поиск и SEO-переключатели
 description: Механизмы сайта — ленты RSS/Atom/JSON, поиск Pagefind, популярные посты через GA4, robots.txt, sitemap и глобальные переключатели SEO.
-layout: page
-translations:
-  en: /en/page/seo-feeds-search
+date: 2025-07-02T09:00:00Z
+authorId: ivan-k
+tags:
+  - seo
+  - guide
 ---
 
 # Ленты, поиск и SEO-переключатели
@@ -60,7 +62,7 @@ themeConfig: {
 Индекс создаётся из собранных файлов production, поэтому поиск доступен после полной
 сборки (`pnpm build && pnpm pagefind`), а не в режиме dev. Исключить отдельный пост из
 индекса можно с помощью `searchIncluded: false` в его фронтматере — см.
-[Превью и поиск](../post/preview-and-search).
+[Превью и поиск](preview-and-search).
 
 ## Популярные посты (Google Analytics 4)
 

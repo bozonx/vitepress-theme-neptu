@@ -2,8 +2,6 @@
 title: Color Themes
 description: The theme ships eight ready-made color schemes and supports fully custom hues via CSS variables.
 layout: page
-translations:
-  ru: /ru/page/color-themes
 ---
 
 # Color Themes

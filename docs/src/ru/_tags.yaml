@@ -9,4 +9,8 @@
 - name: canonical # канонические ссылки / кросспостинг
 - name: i18n # локализация / hreflang
 - name: preview # настройки превью и поиска
+- name: theme # цветовые схемы / шрифты / стилизация
+- name: components # справочник компонентов
+- name: config # уровни конфигурации / навигация / футер
+- name: advanced # хуки / слоты / composables / внешний контент
 

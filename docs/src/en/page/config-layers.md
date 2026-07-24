@@ -2,8 +2,6 @@
 title: Configuration Layers
 description: The theme merges settings from four layers. This page explains what each layer is for and which one to edit.
 layout: page
-translations:
-  ru: /ru/page/config-layers
 ---
 
 # Configuration Layers

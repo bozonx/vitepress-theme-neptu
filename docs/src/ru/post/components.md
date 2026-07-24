@@ -1,9 +1,11 @@
 ---
 title: Компоненты
 description: Категории компонентов темы — макеты, посты, утилиты и doc-components для использования в markdown.
-layout: page
-translations:
-  en: /en/page/components
+date: 2025-06-26T10:00:00Z
+authorId: ivan-k
+tags:
+  - guide
+  - components
 ---
 
 # Компоненты

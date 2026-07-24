@@ -2,8 +2,6 @@
 title: Feeds, Search & SEO Toggles
 description: Site-wide machinery — RSS/Atom/JSON feeds, Pagefind search, popular posts via GA4, robots.txt, sitemap, and the SEO on/off switches.
 layout: page
-translations:
-  ru: /ru/page/seo-feeds-search
 ---
 
 # Feeds, Search & SEO Toggles
