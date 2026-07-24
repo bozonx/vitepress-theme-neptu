@@ -113,3 +113,108 @@ markdown: {
 
 Относительный `href`, такой как `page/about`, автоматически дополняется префиксом текущей
 локали (`/en/page/about`, `/ru/page/about`). Для внешних ссылок используйте абсолютные URL (`https://…`).
+
+## Социальные кнопки поделиться
+
+Тема выводит блок кнопок «поделиться» под каждым постом. Набор сетей и их порядок
+задаются через `themeConfig.socialMediaShares` — массив объектов:
+
+```ts
+interface SocialMediaShare {
+  name: string
+  icon: string
+  title: string
+  urlTemplate: string
+  class?: string
+}
+```
+
+| Поле | Описание |
+|------|----------|
+| `name` | Машинный идентификатор (для справки) |
+| `icon` | Имя иконки Iconify (например `'logos:telegram'`) |
+| `title` | Доступная подпись / tooltip |
+| `urlTemplate` | URL поделиться с плейсхолдерами `{url}` и `{title}` |
+| `class` | Опциональные CSS-классы для кнопки |
+
+### Сети по умолчанию
+
+Встроенные конфигурации локалей уже включают шесть сетей: Telegram, WhatsApp, VK,
+X (Twitter), Facebook, LinkedIn. Можно переопределить весь массив для конкретной локали
+или глобально.
+
+### Добавление своих сетей
+
+Любой сервис с URL поделиться работает. Подставьте `{url}` и `{title}` в шаблон:
+
+```yaml
+# src/ru/_site.yaml
+themeConfig:
+  socialMediaShares:
+    - name: vk
+      icon: 'cib:vk'
+      title: 'ВКонтакте'
+      urlTemplate: 'https://vk.com/share.php?url={url}&title={title}'
+      class: 'text-[#0077ff] hover:text-[#0077ff]'
+    - name: telegram
+      icon: 'logos:telegram'
+      title: 'Телеграм'
+      urlTemplate: 'https://t.me/share/url?url={url}&text={title}'
+    - name: odnoklassniki
+      icon: 'simple-icons:odnoklassniki'
+      title: 'Одноклассники'
+      urlTemplate: 'https://connect.ok.ru/offer?url={url}&title={title}'
+```
+
+> UTM-метки можно добавить прямо в `urlTemplate`:
+> `urlTemplate: 'https://x.com/intent/tweet?text={title}&url={url}%3Futm_source%3Dshare'`
+
+### Скрытие блока
+
+Уберите `socialMediaShares` целиком или задайте пустой массив:
+
+```yaml
+themeConfig:
+  socialMediaShares: []
+```
+
+В обоих случаях блок кнопок не выводится.
+
+### Переопределение для локали
+
+Локаль-специфичный список помещается в `src/<locale>/_site.yaml` — это высший уровень
+в стеке слияния, поэтому он заменяет общий `socialMediaShares` из `src/site.yaml`
+и любые встроенные значения по умолчанию.
+
+## Подвал поста (`postFooter`)
+
+Подвал каждого поста управляется через `themeConfig.postFooter` — упорядоченный массив ключей.
+Уберите ключ, чтобы скрыть блок; измените порядок, чтобы поменять расположение:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  postFooter:
+    - author
+    - donate
+    - comments
+    - social-share
+    - edit-link
+    - tags
+    - similar
+    - popular-link
+```
+
+| Ключ | Блок |
+|------|------|
+| `author` | `PostAuthor` |
+| `donate` | `PostDonateLink` |
+| `comments` | `PostComments` |
+| `social-share` | `PostSocialShare` |
+| `edit-link` | `EditLink` |
+| `tags` | `PostTags` |
+| `similar` | `PostSimilarList` |
+| `popular-link` | Ссылка на популярные посты (только если `popularPosts.enabled: true`) |
+
+Полная кастомизация подвала поста (слоты, замена компонента) описана на странице
+[Расширенные возможности](advanced#кастомизация-подвала-поста).

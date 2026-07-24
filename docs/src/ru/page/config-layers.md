@@ -107,4 +107,155 @@ nav:
       link: '${theme.repo}'
 ```
 
-Подробное справочное руководство см. в `docs/CONFIG_LAYERS.md` репозитория.
+## Поддержка двух форматов (YAML и TypeScript)
+
+Каждый admin-файл поддерживает как **YAML**, так и **TypeScript** с тем же базовым именем:
+
+- `site.yaml` ↔ `site.ts`
+- `_site.yaml` ↔ `_site.ts`
+- `_authors.yaml` ↔ `_authors.ts`
+
+TypeScript имеет приоритет. Если `.ts`-файл существует, `.yaml` игнорируется. Это позволяет
+разработчикам использовать типобезопасную конфигурацию, пока редакторы работают с YAML.
+
+### TypeScript-хелперы
+
+Импортируйте хелперы из `vitepress-theme-neptu-blog/configs` для автодополнения:
+
+```ts
+// site.ts
+import { defineSiteConfig } from 'vitepress-theme-neptu-blog/configs'
+export default defineSiteConfig({
+  themeConfig: {
+    nav: [{ text: 'Главная', link: '/' }],
+  },
+})
+```
+
+```ts
+// src/ru/_site.ts
+import { defineLocaleConfig } from 'vitepress-theme-neptu-blog/configs'
+export default defineLocaleConfig({
+  lang: 'ru',
+  title: 'Мой блог',
+  themeConfig: {
+    footer: { message: 'Сделано на VitePress' },
+  },
+})
+```
+
+```ts
+// src/ru/_authors.ts
+import { defineAuthorsList } from 'vitepress-theme-neptu-blog/configs'
+export default defineAuthorsList([
+  { id: 'alice', name: 'Alice', link: [{ title: 'GitHub', url: 'https://github.com/alice' }] },
+])
+```
+
+## Автообнаружение локалей
+
+Обнаружение локалей — это код уровня разработчика в `.vitepress/config.ts`.
+`defineBlogConfig` сканирует `srcDir` на наличие прямых дочерних папок, содержащих
+`_site.yaml` или `_site.ts`, и регистрирует каждую как локаль VitePress. Папки, начинающиеся
+с `.` или `_`, игнорируются.
+
+Для администраторов добавление локали — это файловая операция:
+
+1. Создайте `src/<locale>/`.
+2. Добавьте `src/<locale>/_site.yaml` или `_site.ts`.
+3. Добавьте контент локали и опционально `src/<locale>/_authors.yaml`.
+
+Изменения в `.vitepress/config.ts` для каждой новой локали не требуются.
+
+## Наследование через `extends` в `_site.yaml`
+
+Локаль может наследовать конфигурацию другой локали через `extends`:
+
+```yaml
+# src/en-US/_site.yaml
+extends: ../en/_site.yaml
+
+themeConfig:
+  nav:
+    - text: Home
+      link: /
+```
+
+Родительский файл загружается первым, затем дочерний переопределяет его. Циклы
+обнаруживаются и сообщаются как ошибка.
+
+## Стратегия слияния авторов
+
+Авторы загружаются из двух источников и сливаются по `id`:
+
+1. `themeConfig.authors` внутри `_site.yaml`
+2. `_authors.yaml` (или `_authors.ts`) в той же папке локали
+
+Если оба файла определяют автора с одинаковым `id`, **отдельный файл побеждает**.
+Новые авторы из отдельного файла добавляются в конец списка.
+
+## Валидация
+
+Admin-редактируемый YAML валидируется Zod-схемами. Неверные поля вызывают
+**предупреждения** в консоли, но не ломают сборку. Это позволяет редакторам
+быстро итерировать, пока опечатки всё равно отлавливаются.
+
+Схемы находятся в `src/configs/siteSchema.ts`.
+
+## Поддержка редакторов
+
+YAML-файлы включают ссылку на схему для редакторов с поддержкой `yaml-language-server`:
+
+```yaml
+# yaml-language-server: $schema=../../schema/site.schema.json
+```
+
+Это обеспечивает автодополнение и валидацию прямо в VS Code с расширением YAML.
+
+JSON-схемы расположены в `schema/site.schema.json` и `schema/authors.schema.json`.
+
+## Горячая перезагрузка admin-файлов
+
+Во время разработки изменения в `site.yaml`, `_site.yaml` или `_authors.yaml` автоматически
+перезапускают dev-сервер VitePress, чтобы правки сразу отображались.
+
+Включите плагин в `.vitepress/config.ts`:
+
+```ts
+import { defineBlogConfig, createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu-blog/configs'
+
+export default async () =>
+  defineBlogConfig({
+    vite: {
+      plugins: [
+        createSiteYamlHotReloadPlugin('/absolute/path/to/src'),
+      ],
+    },
+  })
+```
+
+Плагин отслеживает все `.yaml` и `.ts` варианты конфигурационных файлов и вызывает
+перезапуск сервера при изменениях.
+
+## Правила формы YAML
+
+- Ключи верхнего уровня в admin-файлах ограничены: `lang`, `title`, `titleTemplate`, `description`, `extends`.
+- Всё, что относится к теме, находится под `themeConfig:`.
+- Нет краткого синтаксиса верхнего уровня для `nav`, `sidebar`, `footer`, `donate`,
+  `publisher`, `authors`, `socialMediaShares` или `t`.
+
+Минимальный пример `_site.yaml`:
+
+```yaml
+# yaml-language-server: $schema=../../schema/site.schema.json
+lang: ru
+title: Мой блог
+description: Заметки об инженерии
+
+themeConfig:
+  nav:
+    - text: Посты
+      link: /posts/
+  footer:
+    message: Сделано на VitePress
+```
