@@ -7,7 +7,7 @@
   "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "generate:icons": "pnpm --filter vitepress-theme-neptu-blog generate:icons",
@@ -20,9 +20,9 @@
     "e2e": "pnpm -r --if-present e2e",
     "build": "pnpm -r --if-present build",
     "check": "pnpm generate:icons && pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm e2e",
-    "blog:dev": "pnpm --filter vitepress-theme-neptu-blog-docs dev",
-    "blog:build": "pnpm --filter vitepress-theme-neptu-blog-docs build",
-    "blog:preview": "pnpm --filter vitepress-theme-neptu-blog-docs preview",
+    "docs:dev": "pnpm --filter vitepress-theme-neptu-blog-docs dev",
+    "docs:build": "pnpm --filter vitepress-theme-neptu-blog-docs build",
+    "docs:preview": "pnpm --filter vitepress-theme-neptu-blog-docs preview",
     "landing:dev": "pnpm --filter vitepress-theme-neptu-landing-example dev",
     "landing:build": "pnpm --filter vitepress-theme-neptu-landing-example build",
     "landing:preview": "pnpm --filter vitepress-theme-neptu-landing-example preview"

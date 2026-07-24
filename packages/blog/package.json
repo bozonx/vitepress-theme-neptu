@@ -12,7 +12,7 @@
     "url": "git+https://github.com/bozonx/vitepress-theme-neptu-blog.git"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "bugs": {
     "url": "https://github.com/bozonx/vitepress-theme-neptu-blog/issues"
@@ -21,6 +21,7 @@
     "src",
     "!src/.vitepress",
     "schema",
+    "template",
     "README.md",
     "LICENSE"
   ],
@@ -121,10 +122,7 @@
     "test:coverage": "vitest run --coverage",
     "e2e": "pnpm exec playwright test --config tests/e2e/playwright.config.ts",
     "e2e:ui": "playwright test --config tests/e2e/playwright.config.ts --ui",
-    "e2e:report": "playwright show-report tests/e2e/playwright-report",
-    "docs:dev": "pnpm --filter vitepress-theme-neptu-blog-docs dev",
-    "docs:build": "pnpm --filter vitepress-theme-neptu-blog-docs build",
-    "docs:preview": "pnpm --filter vitepress-theme-neptu-blog-docs preview"
+    "e2e:report": "playwright show-report tests/e2e/playwright-report"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
