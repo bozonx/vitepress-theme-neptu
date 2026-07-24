@@ -3,7 +3,7 @@ title: Превью в списках и поисковый индекс
 description: >
   Управляйте тем, что отображается в карточках постов (previewText / descrAsPreview /
   maxPreviewLength), и тем, включается ли пост в поиск Pagefind.
-date: 2025-01-08T08:00:00Z
+date: 2025-06-05T08:00:00Z
 authorId: ivan-k
 tags:
   - frontmatter

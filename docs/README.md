@@ -1,42 +1,22 @@
-# Blog
+# Documentation & demo site
 
-This example uses the theme in its intended locale-first form:
+This is the documentation site for `vitepress-theme-neptu-blog`, built with the
+theme itself. It doubles as a live demo: every page is a working example of a
+feature. Published at **https://bozonx.github.io/vitepress-theme-neptu-blog**.
 
-- content lives under `src/en/`
-- `/` redirects to a content locale home page
-- the topbar language switcher navigates to the same page in another content locale
-- translations are matched via `frontmatter.translations` or same-relative-path fallback
+The Russian locale (`src/ru/`) is the primary, fully written guide. The English
+locale (`src/en/`) is kept for reference and will be re-synced later.
 
-The example config includes:
+## Run from the repo root
 
-- built-in English locale defaults (labels, translations, social shares)
-- built-in Russian locale defaults
-- per-locale overrides via `src/<locale>/_site.yaml`
+```sh
+pnpm install
+pnpm docs:dev       # dev server
+pnpm docs:build     # production build + Pagefind index
+pnpm docs:preview   # preview the production build
+```
 
-## Run
-
-Use node version: 18 or greater
-
-- Install dependencies:
-
-  ```bash
-  yarn
-  ```
-
-- Run locally:
-
-  ```bash
-  yarn dev
-  ```
-
-  Go to `http://localhost:5173/`
-
-- Build and Preview
-
-  ```bash
-  yarn build && yarn preview
-  ```
-
-  Go to `http://localhost:4173/`
-
-  Local admin panel is on `http://localhost:4173/admin/`
+Content lives under `src/<locale>/` — see the
+[Getting started](https://bozonx.github.io/vitepress-theme-neptu-blog/ru/post/getting-started)
+guide for the structure. To scaffold a new blog, copy the [`template/`](../template)
+directory instead of this site.

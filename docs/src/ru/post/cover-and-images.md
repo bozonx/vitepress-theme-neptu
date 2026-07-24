@@ -3,7 +3,7 @@ title: Обложки и лайтбокс для изображений
 description: >
   Локальные и внешние изображения обложек, coverAlt / coverDescr / coverWidth / coverHeight,
   и просмотр изображений в статье через лайтбокс с зумом.
-date: 2025-04-20T09:00:00Z
+date: 2025-06-20T09:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200

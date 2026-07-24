@@ -3,7 +3,7 @@ title: Блок автора, кнопка видео и выпадающий с
 description: >
   Как authorId отображает карточку автора и мета-тег twitter:creator, а videoLink
   и podcasts добавляют кнопки с призывом к действию в верхней части поста.
-date: 2025-02-14T11:00:00Z
+date: 2025-06-10T11:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200

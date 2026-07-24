@@ -3,7 +3,7 @@ title: Футер поста, шеринг и похожие посты
 description: >
   Что отображается под постом — кнопки шеринга в соцсетях, настраиваемые блоки
   postFooter и автоматический список «похожие посты» — и как всё это настроить.
-date: 2025-01-25T10:00:00Z
+date: 2025-05-30T10:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200

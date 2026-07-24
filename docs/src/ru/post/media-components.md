@@ -3,7 +3,7 @@ title: Медиа-компоненты — YouTube, видео, аудио, ск
 description: >
   Тема глобально регистрирует четыре компонента, доступных в любом markdown без
   импорта: YoutubeVideo, VideoFile, AudioFile, FileDownload.
-date: 2025-03-10T10:00:00Z
+date: 2025-06-15T10:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200

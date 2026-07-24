@@ -3,7 +3,7 @@ title: Локализация и hreflang
 description: >
   Блог поставляется на английском и русском. Как связаны папки локалей,
   переключатель языка, поле translations и автоматические теги hreflang.
-date: 2024-10-02T08:00:00Z
+date: 2025-04-15T08:00:00Z
 authorId: maria-editor
 cover: https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200

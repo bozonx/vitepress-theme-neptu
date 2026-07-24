@@ -8,39 +8,31 @@ translations:
 
 # О демо
 
-Это демонстрационный сайт темы
+Этот сайт — одновременно демо и руководство по теме
 [vitepress-theme-neptu-blog](https://github.com/bozonx/vitepress-theme-neptu-blog).
-Каждый пост и страница показывают реальную возможность темы, а рядом — исходный
-frontmatter или конфиг.
+Каждый пост показывает реальную возможность темы, а рядом — frontmatter или конфиг,
+который её создаёт. Читается как гайд — от запуска до продвинутой кастомизации.
 
-## Как устроены страницы
+## Разделы гайда
 
-| Раздел | Где смотреть |
+| Раздел | С чего начать |
 | --- | --- |
-| Frontmatter постов | Посты с тегом [`frontmatter`](../tags/frontmatter/1) |
-| Медиа-компоненты | [Медиа в постах](../post/media-components) |
-| SEO (OG, JSON-LD, canonical, hreflang) | Посты с тегом [`seo`](../tags/seo/1) |
-| Конфигурация | [Уровни конфигурации](../post/config-layers), [темы и шрифты](../post/color-themes), [навигация и футер](../post/nav-sidebar-footer), [ленты и SEO](../post/seo-feeds-search), [локали](../post/locales), [компоненты](../post/components), [расширенные возможности](../post/advanced) |
+| Быстрый старт | [Запуск за 5 минут](../post/getting-started) · [Структура проекта](../post/project-structure) · [Первый пост](../post/first-post) |
+| Контент | [Все поля frontmatter](../post/full-featured), посты с тегом [`frontmatter`](../tags/frontmatter/1) |
+| Настройка | [Уровни конфигурации](../post/config-layers) · [навигация и футер](../post/nav-sidebar-footer) · [темы и шрифты](../post/color-themes) · [списки и страницы](../post/lists-and-pages) |
+| Мультиязычность | [Локали](../post/locales) · [переводы и hreflang](../post/i18n-hreflang) |
+| Кастомизация | [Компоненты](../post/components) · [хуки и слоты](../post/advanced) |
+| SEO и деплой | [Обзор SEO](../post/seo-overview), посты с тегом [`seo`](../tags/seo/1) · [деплой](../post/deploy) |
 | Типы списков | Сайдбар: Свежие · Популярные · Архив · Авторы · Теги |
 
-## Запуск локально
+## Сделать свой блог
 
-```bash
-git clone https://github.com/bozonx/vitepress-theme-neptu-blog
-cd vitepress-theme-neptu-blog
-pnpm install
-pnpm example:dev
-```
+Основа — стартовый шаблон из папки `template/` репозитория. Скопируйте его и
+подставьте своё:
 
-Затем откройте напечатанный URL. Редактируйте любой файл в `docs/src` —
-страница горячо перезагружается.
+- задайте `siteUrl` в `.vitepress/config.ts`,
+- отредактируйте `src/site.yaml` и `src/<локаль>/_site.yaml`,
+- удалите демо-посты в `src/<локаль>/post/` и напишите свои.
 
-## Создание своего блога
-
-Скопируйте `docs/` в новое место, затем:
-
-- замените `siteUrl` в `.vitepress/config.ts`,
-- отредактируйте `src/site.yaml` и каждый `src/<locale>/_site.yaml`,
-- удалите демо-посты в `src/<locale>/post/` и напишите свои.
-
-См. [Уровни конфигурации](../post/config-layers) — какой файл для чего редактировать.
+Пошагово это описано в разделе [Запуск за 5 минут](../post/getting-started), а
+какой файл за что отвечает — в [Структуре проекта](../post/project-structure).
