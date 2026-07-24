@@ -1,7 +1,7 @@
 {
   "name": "vitepress-theme-neptu-blog",
   "version": "0.19.0",
-  "description": "VitePress custom theme for Neptu blog and other content sites: i18n, RSS, JSON-LD, hreflang, canonical, popular posts via GA, Pagefind, tags/archive/authors layouts.",
+  "description": "Feature-rich VitePress blog theme — multilingual i18n, SEO toolkit (JSON-LD, Open Graph, hreflang, canonical), RSS/Atom/JSON feeds, Pagefind search, GA4 popular posts, Tailwind v4 styling, and built-in layouts for posts, tags, archive, and authors.",
   "types": "src/types.d.ts",
   "type": "module",
   "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
