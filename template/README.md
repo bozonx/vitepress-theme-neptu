@@ -47,7 +47,7 @@ pnpm preview
 │   ├── en/                 # English content locale
 │   │   ├── _authors.yaml   # Author profiles
 │   │   ├── _site.yaml      # Locale site config
-│   │   ├── posts/          # Blog posts (Markdown)
+│   │   ├── post/           # Blog posts (Markdown)
 │   │   └── page/           # Standalone pages (About, Donate, etc.)
 │   └── public/             # Static public assets
 ├── package.json
@@ -61,4 +61,4 @@ pnpm preview
 - **Site Info & Navigation**: Edit `src/site.yaml` and `src/en/_site.yaml` to set your blog title, navigation links, social icons, and footer text.
 - **VitePress & Theme Settings**: Edit `src/.vitepress/config.ts` to set your site URL (`siteUrl`), repository link (`repo`), and search provider settings.
 - **Authors**: Add your author profile in `src/en/_authors.yaml`.
-- **New Posts**: Add new `.md` files in `src/en/posts/`.
+- **New Posts**: Add new `.md` files in `src/en/post/`.

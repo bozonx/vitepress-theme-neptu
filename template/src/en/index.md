@@ -39,7 +39,7 @@ Welcome to your brand new blog site powered by **VitePress** and **Neptu Blog Th
 ### What to do next?
 
 1. Edit `src/site.yaml` or `src/en/_site.yaml` to customize titles, social links, and footer.
-2. Add your posts to `src/en/posts/`.
+2. Add your posts to `src/en/post/`.
 3. Check out the example posts below to see how frontmatter works.
 
 </UtilPageContent>
