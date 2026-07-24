@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../../../schema/site.schema.json
+# yaml-language-server: $schema=../../../packages/blog/schema/site.schema.json
 # When consumed from an installed package, replace the path above with:
 #   # yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu-blog/schema/site.schema.json
 # ---------------------------------------------------------------------------

@@ -1,0 +1,124 @@
+backend:
+  name: github
+  repo:
+  use_graphql: true
+  # site_domain: see Netlify site id
+
+site_url: https://
+media_folder: src/public/media
+public_folder: /media
+slug:
+  encoding: ascii
+  clean_accents: true
+i18n:
+  structure: multiple_folders
+  locales: [en, ru]
+  default_locale: en
+  enforce_required_non_default: false
+  # save_all_locales: false
+collections:
+  - name: doc
+    label: Docs
+    label_singular: Doc
+    description: All the docs
+    i18n: true
+    folder: "src"
+    path: "doc/{{slug}}"
+    preview_path: "{{locale}}/doc/{{slug}}"
+    create: true
+    summary: "{{title}} | {{commit_date}} | {{commit_author}} | {{filename}}.md"
+    sortable_fields: ["commit_date", "title", "commit_author"]
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        preview: false
+        i18n: true
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        required: false
+        preview: false
+        i18n: true
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        i18n: true
+  - name: files
+    label: "Files"
+    i18n: true
+    files:
+      - name: sidebar
+        label: Sidebar translation
+        extension: yaml
+        format: yaml
+        file: "src/site/sidebar.{{locale}}.yaml"
+        i18n: true
+        fields:
+          - name: "title"
+            widget: "hidden"
+            default: Sidebar
+            i18n: duplicate
+          - label: "Body"
+            name: "body"
+            widget: "text"
+            # default_language: yaml
+            i18n: true
+      - name: site
+        label: Site translations
+        extension: yaml
+        format: yaml
+        file: "src/site/site.{{locale}}.yaml"
+        i18n: true
+        fields:
+          - name: "title"
+            widget: "hidden"
+            default: Sidebar
+            i18n: duplicate
+          - label: "Body"
+            name: "body"
+            widget: "text"
+            # default_language: yaml
+            i18n: true
+      - name: donate
+        label: Donate
+        file: "src/{{locale}}/page/donate.md"
+        preview_path: "{{locale}}/page/{{slug}}"
+        i18n: true
+        fields:
+          - label: "Description"
+            name: "description"
+            widget: "text"
+            required: false
+            preview: false
+            i18n: true
+          - label: "Body"
+            name: "body"
+            widget: "markdown"
+            i18n: true
+      - name: links
+        label: Links
+        file: "src/{{locale}}/page/links.md"
+        preview_path: "{{locale}}/page/{{slug}}"
+        i18n: true
+        fields:
+          - label: "Description"
+            name: "description"
+            widget: "text"
+            required: false
+            preview: false
+            i18n: true
+          - label: "Body"
+            name: "body"
+            widget: "markdown"
+            i18n: true
+      - name: index
+        label: Index
+        file: "src/{{locale}}/index.md"
+        preview_path: "{{locale}}"
+        i18n: true
+        fields:
+          - label: "Body"
+            name: "body"
+            widget: "markdown"
+            i18n: true

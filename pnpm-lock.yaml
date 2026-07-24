@@ -6,7 +6,37 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  docs:
+    dependencies:
+      vitepress:
+        specifier: 2.0.0-alpha.18
+        version: 2.0.0-alpha.18(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(postcss@8.5.22)(typescript@5.9.3)(yaml@2.9.0)
+      vitepress-theme-neptu-blog:
+        specifier: workspace:*
+        version: link:../packages/blog
+      vue:
+        specifier: ^3.5.40
+        version: 3.5.40(typescript@5.9.3)
+    devDependencies:
+      '@types/node':
+        specifier: ^26.1.1
+        version: 26.1.1
+      pagefind:
+        specifier: ^1.5.2
+        version: 1.5.2
+      tailwindcss:
+        specifier: ^4.3.3
+        version: 4.3.3
+      typescript:
+        specifier: ^5.9.0
+        version: 5.9.3
+      vue-tsc:
+        specifier: ^3.3.7
+        version: 3.3.7(typescript@5.9.3)
+
+  packages/blog:
     dependencies:
       '@iconify/vue':
         specifier: ^5.0.1
@@ -154,33 +184,17 @@ importers:
         specifier: ^3.3.8
         version: 3.3.8(typescript@5.9.3)
 
-  docs:
+  packages/landing:
     dependencies:
       vitepress:
-        specifier: 2.0.0-alpha.18
+        specifier: ^2.0.0-alpha.17
         version: 2.0.0-alpha.18(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(postcss@8.5.22)(typescript@5.9.3)(yaml@2.9.0)
       vitepress-theme-neptu-blog:
         specifier: workspace:*
-        version: link:..
+        version: link:../blog
       vue:
-        specifier: ^3.5.40
+        specifier: ^3.5.0
         version: 3.5.40(typescript@5.9.3)
-    devDependencies:
-      '@types/node':
-        specifier: ^26.1.1
-        version: 26.1.1
-      pagefind:
-        specifier: ^1.5.2
-        version: 1.5.2
-      tailwindcss:
-        specifier: ^4.3.3
-        version: 4.3.3
-      typescript:
-        specifier: ^5.9.0
-        version: 5.9.3
-      vue-tsc:
-        specifier: ^3.3.7
-        version: 3.3.7(typescript@5.9.3)
 
 packages:
 

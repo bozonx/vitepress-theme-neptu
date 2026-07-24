@@ -1,6 +1,6 @@
 dist
-src/.vitepress/cache/
-src/.vitepress/dist/
+**/.vitepress/cache/
+**/.vitepress/dist/
 .neptu-vault.yaml
 test-results/
 
@@ -32,9 +32,9 @@ pids
 coverage
 
 # Playwright
-tests/e2e/playwright-report/
-tests/e2e/test-results/
-tests/e2e/.cache/
+**/tests/e2e/playwright-report/
+**/tests/e2e/test-results/
+**/tests/e2e/.cache/
 *.lcov
 .nyc_output
 

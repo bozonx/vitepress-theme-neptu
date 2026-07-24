@@ -1,0 +1,26 @@
+{
+  "name": "vitepress-theme-neptu",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Monorepo for the Neptu VitePress themes — blog theme, landing theme, docs, and templates.",
+  "type": "module",
+  "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "generate:icons": "pnpm --filter vitepress-theme-neptu-blog generate:icons",
+    "typecheck": "pnpm --filter vitepress-theme-neptu-blog typecheck",
+    "lint": "pnpm --filter vitepress-theme-neptu-blog lint",
+    "lint:fix": "pnpm --filter vitepress-theme-neptu-blog lint:fix",
+    "test": "pnpm --filter vitepress-theme-neptu-blog test",
+    "test:watch": "pnpm --filter vitepress-theme-neptu-blog test:watch",
+    "test:coverage": "pnpm --filter vitepress-theme-neptu-blog test:coverage",
+    "e2e": "pnpm --filter vitepress-theme-neptu-blog e2e",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm e2e",
+    "docs:dev": "pnpm --filter vitepress-theme-neptu-blog-docs dev",
+    "docs:build": "pnpm --filter vitepress-theme-neptu-blog-docs build",
+    "docs:preview": "pnpm --filter vitepress-theme-neptu-blog-docs preview"
+  }
+}
