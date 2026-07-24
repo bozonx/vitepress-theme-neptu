@@ -1,9 +1,14 @@
-alex:
-  name: 'Ivan Developer'
-  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
-  bio: 'Software engineer, open-source enthusiast, and writer.'
-  social:
-    - icon: 'fa6-brands:github'
-      link: 'https://github.com/'
-    - icon: 'fa6-brands:x-twitter'
-      link: 'https://x.com/'
+# Author profiles for this locale. Referenced from a post via `authorId`.
+- id: 'alex'
+  name: 'Alex Developer'
+  description: 'Software engineer, open-source enthusiast, and writer.'
+  image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
+  imageWidth: 400
+  imageHeight: 400
+  links:
+    - type: 'github'
+      url: 'https://github.com/'
+      title: 'GitHub'
+    - type: 'website'
+      url: 'https://x.com/'
+      title: 'X'

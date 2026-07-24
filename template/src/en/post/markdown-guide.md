@@ -2,7 +2,7 @@
 title: Markdown Feature Guide
 description: A quick reference for Markdown formatting options available in this blog.
 date: 2026-07-20
-author: alex
+authorId: alex
 tags:
   - Guide
   - Markdown
