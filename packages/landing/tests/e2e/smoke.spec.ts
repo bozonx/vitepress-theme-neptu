@@ -72,7 +72,7 @@ test('language switch navigates to ru', async ({ page }) => {
   await expect(langBtn).toBeVisible()
   await langBtn.click()
 
-  const ruLink = page.locator('.switch-lang-btn a[href*="ru"], a[href*="/ru/"]').first()
+  const ruLink = page.locator('.switch-lang-btn a[href*="/ru/"]').first()
   await expect(ruLink).toBeVisible({ timeout: 5000 })
   await ruLink.click()
 

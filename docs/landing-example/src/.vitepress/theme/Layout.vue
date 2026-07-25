@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import DefaultTheme from "vitepress/theme";
-  import { PageFindSearch, NavSearchButton } from 'vitepress-theme-neptu-blog/components';
+  import { PageFindSearch, NavSearchButton, SwitchLang } from 'vitepress-theme-neptu-blog/components';
 
   const { Layout: DefaultLayout } = DefaultTheme;
 </script>
@@ -13,6 +13,9 @@
       <PageFindSearch>
         <NavSearchButton />
       </PageFindSearch>
+    </template>
+    <template #nav-bar-content-after>
+      <SwitchLang :no-bg="true" />
     </template>
   </DefaultLayout>
 </template>
