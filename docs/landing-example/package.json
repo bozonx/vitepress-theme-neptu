@@ -8,9 +8,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "vitepress dev src",
-    "build": "vitepress build src && pnpm pagefind",
+    "build": "VITEPRESS_BASE=/vitepress-theme-neptu-blog/landing/ vitepress build src --base /vitepress-theme-neptu-blog/landing/ && pnpm pagefind",
     "pagefind": "pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'",
-    "preview": "vitepress preview src",
+    "preview": "vitepress preview src --base /vitepress-theme-neptu-blog/landing/",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {

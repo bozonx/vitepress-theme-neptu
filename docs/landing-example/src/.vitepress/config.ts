@@ -6,13 +6,14 @@ import type { LandingUserConfig } from 'vitepress-theme-neptu-landing'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default async () => {
-  const base = process.env.VITEPRESS_BASE || '/'
+  const base = process.env.VITEPRESS_BASE || '/vitepress-theme-neptu-blog/landing/'
 
   const config: LandingUserConfig = {
     srcDir: path.resolve(__dirname, '../'),
     base,
     siteUrl:
-      process.env.SITE_URL || 'https://bozonx.github.io/vitepress-theme-neptu-blog',
+      process.env.SITE_URL ||
+      'https://bozonx.github.io/vitepress-theme-neptu-blog/landing',
 
     head: [
       ['meta', { name: 'format-detection', content: 'telephone=no' }],
