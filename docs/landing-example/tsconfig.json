@@ -18,10 +18,9 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src/.vitepress/**/*.js",
+    "src/.vitepress/**/*.ts",
     "src/.vitepress/**/*.vue",
     "src/**/*.ts",
-    "src/**/*.js",
     "src/**/*.vue",
     "src/**/*.d.ts"
   ],

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import DefaultTheme from "vitepress/theme";
   import { PageFindSearch, NavSearchButton } from 'vitepress-theme-neptu-blog/components';
 

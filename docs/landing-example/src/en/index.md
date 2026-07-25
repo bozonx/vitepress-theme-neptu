@@ -2,19 +2,19 @@
 layout: home
 ---
 
-<script setup>
+<script setup lang="ts">
 import { useData } from "vitepress";
 import { SiteHome } from 'vitepress-theme-neptu-landing/layouts';
 
 const { theme, localeIndex } = useData();
 
 const hero = {
-  name: "",
-  text: "",
-  tagline: "",
+  name: "Neptu Landing",
+  text: "A modern landing page theme for VitePress",
+  tagline: "Built on top of the Neptu blog theme — SEO-first, i18n-ready, fully typed.",
   image: {
     src: theme.value.mainHeroImg,
-    alt: "",
+    alt: "Neptu Landing",
   },
   actions: [
     {
@@ -37,24 +37,24 @@ const hero = {
 const features = [
   {
     icon: "🤝",
-    title: "",
-    details: "",
-    linkText: "Читать о",
-    link: "/ru/doc/",
+    title: "SEO-first",
+    details: "Built-in Open Graph, JSON-LD, canonical links, hreflang, and sitemap.",
+    linkText: "Read more",
+    link: `/${localeIndex.value}/doc/about`,
   },
   {
     icon: "📖",
-    title: "",
-    details: "",
-    linkText: "Читать о",
-    link: "/ru/doc/",
+    title: "i18n-ready",
+    details: "Multi-locale support with YAML-based config and template substitution.",
+    linkText: "Read more",
+    link: `/${localeIndex.value}/doc/about`,
   },
   {
     icon: "⚔️",
-    title: "",
-    details: "",
-    linkText: "Читать о",
-    link: "/ru/doc/",
+    title: "Fully typed",
+    details: "Complete TypeScript support with proper types for config, layouts, and components.",
+    linkText: "Read more",
+    link: `/${localeIndex.value}/doc/about`,
   },
 ]
 </script>

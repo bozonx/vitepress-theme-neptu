@@ -1,30 +1,18 @@
 lang: 'en-US'
-title: ''
-description: ''
+title: 'Neptu Landing'
+description: 'A modern landing page theme for VitePress — SEO-first, i18n-ready, fully typed.'
 
 themeConfig:
   publisher:
-    name: '...'
+    name: 'Neptu'
     url: '${config.siteUrl}/${localeIndex}'
     logo: '${config.siteUrl}/img/home-logo.webp'
-
-  footer:
-    message: 'Copying is allowed only with a link to the source.'
-    copyright: 'Copyright © 2024-present ...'
-
-  nav:
-    - text: '❤️ ${t.donate}'
-      link: '/${localeIndex}/page/donate'
-    - text: '📖 Project'
-      link: '${localeIndex}/doc'
-    - text: '📢 Social media'
-      link: '/${localeIndex}/page/links'
 
   # VitePress native sidebar (keyed by section name).
   # Template substitution and locale-prefixing are applied by loadSiteLocale.
   sidebar:
     doc:
-      - text: ''
+      - text: 'Documentation'
         items:
           - text: 'Introduction'
             link: ''

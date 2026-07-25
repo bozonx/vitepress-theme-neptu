@@ -106,6 +106,8 @@ export namespace NeptuBlogTheme {
     blogUrl?: string
     sidebarMenuLabel?: string
     colorThemeMenuLabel?: string
+    /** Landing-only: hero image URL shown on the home page. */
+    mainHeroImg?: string
 
     seo?: SeoConfig
     socialMediaShares?: SocialMediaShare[]

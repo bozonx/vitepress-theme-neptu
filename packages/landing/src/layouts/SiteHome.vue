@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface HeroAction {
+type HeroAction = {
   link: string
   text: string
   theme?: string
@@ -9,12 +9,12 @@ interface HeroAction {
   rel?: string
 }
 
-interface HeroImage {
+type HeroImage = {
   src: string
   alt?: string
 }
 
-interface Hero {
+type Hero = {
   name?: string
   text?: string
   tagline?: string
@@ -22,7 +22,7 @@ interface Hero {
   image?: string | HeroImage
 }
 
-interface Feature {
+type Feature = {
   title: string
   details: string
   icon?: string | { src: string; alt?: string }
