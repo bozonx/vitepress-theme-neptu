@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-export const mockTheme = ref<any>({
+export const mockTheme = ref<Record<string, unknown>>({
   mainHeroImg: '/img/home-logo.svg',
   blogUrl: 'https://blog.example.com',
   externalLinkIcon: true,
@@ -11,13 +11,13 @@ export const mockTheme = ref<any>({
   },
 })
 
-export const mockLocaleIndex = ref<any>('en')
-export const mockRoute = ref<any>({ path: '/en/' })
-export const mockPage = ref<any>({
+export const mockLocaleIndex = ref<string>('en')
+export const mockRoute = ref<{ path: string }>({ path: '/en/' })
+export const mockPage = ref<{ relativePath: string; title: string }>({
   relativePath: 'en/index.md',
   title: 'Landing',
 })
-export const mockFrontmatter = ref<any>({})
-export const mockIsDark = ref<any>(false)
-export const mockSite = ref<any>({ locales: {}, cleanUrls: true })
-export const mockHash = ref<any>('')
+export const mockFrontmatter = ref<Record<string, unknown>>({})
+export const mockIsDark = ref<boolean>(false)
+export const mockSite = ref<{ locales: Record<string, unknown>; cleanUrls: boolean }>({ locales: {}, cleanUrls: true })
+export const mockHash = ref<string>('')

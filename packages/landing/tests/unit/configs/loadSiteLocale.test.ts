@@ -25,10 +25,13 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
     }
   ),
   isExternalUrl: vi.fn((url: string) => url.startsWith('http')),
-  deepMerge: vi.fn(function deepMerge(a: any, b: any): any {
+  deepMerge: vi.fn(function deepMerge(
+    a: Record<string, unknown>,
+    b: Record<string, unknown>
+  ): Record<string, unknown> {
     if (!a) return b
     if (!b) return a
-    const result: any = { ...a }
+    const result: Record<string, unknown> = { ...a }
     for (const key of Object.keys(b)) {
       if (
         a[key] &&
@@ -38,7 +41,10 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
         typeof b[key] === 'object' &&
         !Array.isArray(b[key])
       ) {
-        result[key] = deepMerge(a[key], b[key])
+        result[key] = deepMerge(
+          a[key] as Record<string, unknown>,
+          b[key] as Record<string, unknown>
+        )
       } else {
         result[key] = b[key]
       }

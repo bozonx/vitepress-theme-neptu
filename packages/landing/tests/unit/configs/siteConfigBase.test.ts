@@ -22,7 +22,7 @@ vi.mock('vitepress-theme-neptu-blog/transformers', () => ({
   addJsonLd: vi.fn(),
   addHreflang: vi.fn(),
   addCanonicalLink: vi.fn(),
-  filterSitemap: vi.fn((items: any[]) => items),
+  filterSitemap: vi.fn((items: unknown[]) => items),
   generateRobotsTxt: vi.fn(),
   mdImage: vi.fn(),
 }))
@@ -31,7 +31,9 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
   omitUndefined: (obj: Record<string, unknown>) =>
     Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)),
   hasNoIndex: vi.fn(() => false),
-  deepMerge: vi.fn((a: any, b: any) => ({ ...a, ...b })),
+  deepMerge: vi.fn(
+    (a: Record<string, unknown>, b: Record<string, unknown>) => ({ ...a, ...b })
+  ),
   resolveBaseLocaleKey: vi.fn(() => 'en'),
   resolveTranslationsByFilePath: vi.fn(),
 }))
@@ -76,7 +78,7 @@ describe('mergeLandingConfig', () => {
       ])
     )
     const customMeta = result.head.find(
-      (h: any[]) => h[1]?.name === 'custom'
+      (h) => (h[1] as Record<string, unknown> | undefined)?.name === 'custom'
     )
     expect(customMeta).toEqual(['meta', { name: 'custom', content: 'value' }])
   })
@@ -141,7 +143,9 @@ describe('mergeLandingConfig', () => {
 
   it('vite includes tailwindcss plugin by default', () => {
     const result = mergeLandingConfig({})
-    const pluginNames = result.vite.plugins.map((p: any) => p?.name).filter(Boolean)
+    const pluginNames = result.vite.plugins
+      .map((p) => (p as { name?: string } | undefined)?.name)
+      .filter(Boolean)
     expect(pluginNames).toContain('tailwindcss')
   })
 
@@ -151,7 +155,7 @@ describe('mergeLandingConfig', () => {
       vite: { plugins: [existing] },
     })
     const twPlugins = result.vite.plugins.filter(
-      (p: any) => p?.name === 'tailwindcss'
+      (p) => (p as { name?: string } | undefined)?.name === 'tailwindcss'
     )
     expect(twPlugins).toHaveLength(1)
   })
@@ -204,7 +208,7 @@ describe('mergeLandingConfig', () => {
     ])
     const result = mergeLandingConfig({ transformHead: customFn })
     const ctx = { head: [], pageData: {}, siteConfig: {} }
-    await (result.transformHead as any)(ctx)
+    await (result.transformHead as unknown as (ctx: unknown) => void)(ctx)
     expect(customFn).toHaveBeenCalledWith(ctx)
   })
 
@@ -216,7 +220,10 @@ describe('mergeLandingConfig', () => {
     const result = mergeLandingConfig({ transformPageData: customFn })
     const pageData = { frontmatter: {}, relativePath: 'en/index.md' }
     const ctx = { siteConfig: {} }
-    await (result.transformPageData as any)(pageData, ctx)
+    await (result.transformPageData as unknown as (
+      pageData: unknown,
+      ctx: unknown
+    ) => void)(pageData, ctx)
     expect(customFn).toHaveBeenCalledWith(pageData, ctx)
     expect(pageData).toMatchObject({
       frontmatter: { title: 'Returned Title' },
@@ -227,8 +234,8 @@ describe('mergeLandingConfig', () => {
   it('calls custom buildEnd if provided', async () => {
     const customFn = vi.fn()
     const result = mergeLandingConfig({ buildEnd: customFn })
-    const cfg = {} as any
-    await (result.buildEnd as any)(cfg)
+    const cfg = {} as Record<string, unknown>
+    await (result.buildEnd as unknown as (cfg: unknown) => void)(cfg)
     expect(customFn).toHaveBeenCalledWith(cfg)
   })
 })
