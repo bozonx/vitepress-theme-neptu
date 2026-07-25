@@ -25,7 +25,6 @@ export const common: Record<string, any> = {
     ],
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
   ],
-  srcExclude: ['site/**', '**/site/**'],
   lastUpdated: true,
   cleanUrls: true,
   lang: 'en-US',

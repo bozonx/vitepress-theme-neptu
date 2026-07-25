@@ -1,40 +1,16 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import yaml from 'yaml'
-import { parseLocaleSite } from 'vitepress-theme-neptu-blog/utils/node'
-import { standardTemplate } from 'vitepress-theme-neptu-blog/utils'
-import { isExternalUrl } from 'vitepress-theme-neptu-blog/utils'
+import {
+  parseLocaleSite,
+  parseSharedSite,
+} from 'vitepress-theme-neptu-blog/utils/node'
+import {
+  standardTemplate,
+  isExternalUrl,
+  deepMerge,
+} from 'vitepress-theme-neptu-blog/utils'
 import siteEn from './siteLocalesBase/en.ts'
 import siteRu from './siteLocalesBase/ru.ts'
 
 const siteBaseLocales: Record<string, any> = { en: siteEn, ru: siteRu }
-
-function loadConfigYamlFile(
-  srcDir: string,
-  filename: string
-): Record<string, any[]> {
-  const filePath = path.join(srcDir, 'site', filename)
-
-  if (!fs.existsSync(filePath)) return {}
-
-  try {
-    const config = yaml.parse(fs.readFileSync(filePath, 'utf8')) as
-      | Record<string, unknown>
-      | undefined
-    const body = config?.body
-
-    return (typeof body === 'string' ? yaml.parse(body) : config ?? {}) as Record<
-      string,
-      any[]
-    >
-  } catch (error) {
-    console.warn(
-      `[vitepress-theme-neptu-landing] Failed to parse ${filePath}:`,
-      (error as Error).message
-    )
-    return {}
-  }
-}
 
 export async function loadSiteLocale(
   localeIndex: string,
@@ -47,19 +23,32 @@ export async function loadSiteLocale(
     theme: { ...(baseLocale.themeConfig || {}), ...config.themeConfig },
     t: baseLocale.t,
   }
-  const site = parseLocaleSite(config.srcDir, params) as any
+
+  // Load shared (<srcDir>/site.yaml) and per-locale (<srcDir>/<locale>/_site.yaml) configs
+  const sharedSite = (await parseSharedSite(config.srcDir, params)) as any
+  const localeSite = (await parseLocaleSite(config.srcDir, params)) as any
+
+  // Merge: shared site → per-locale site
+  const site = deepMerge(sharedSite || {}, localeSite || {})
+
   const {
     lang,
     title,
     description,
+    search,
+    themeConfig: rawThemeConfig = {},
+  } = site
+
+  const {
     t,
     editLink,
     lastUpdated,
-    search,
+    sidebar: rawSidebar,
     ...themeConfig
-  } = site
+  } = rawThemeConfig
 
-  const sidebar = parseLocaleSidebar(config.srcDir, params)
+  // Process VitePress sidebar: template substitution + link prefixing
+  const sidebar = processSidebar(rawSidebar, params)
 
   return {
     lang,
@@ -85,14 +74,16 @@ export async function loadSiteLocale(
   }
 }
 
-export function parseLocaleSidebar(
-  srcDir: string,
+/**
+ * Processes a VitePress sidebar config (keyed by section name) by applying
+ * template substitution to text/link fields and prefixing relative links
+ * with the locale path.
+ */
+function processSidebar(
+  sidebar: Record<string, any[]> | undefined,
   params: any
 ): Record<string, any> {
-  const sidebar = loadConfigYamlFile(
-    srcDir,
-    `sidebar.${params.localeIndex}.yaml`
-  ) as Record<string, any[]>
+  if (!sidebar) return {}
 
   function menuRecursive(items: any[], linkPrePath: string): any[] {
     for (const item of items) {

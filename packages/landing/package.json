@@ -29,8 +29,7 @@
     "vue": "^3.5.0"
   },
   "dependencies": {
-    "vitepress-theme-neptu-blog": "workspace:*",
-    "yaml": "^2.9.0"
+    "vitepress-theme-neptu-blog": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

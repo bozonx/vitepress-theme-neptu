@@ -1,7 +1,0 @@
-title: sidebar
-body: |
-  doc:
-    - text: ""
-      items:
-        - text: "Introduction"
-          link: ""
