@@ -49,6 +49,9 @@ win for advanced/manual setups.
 | `mergeLandingConfig(config)` | Low-level merge without validation warnings. |
 | `loadSiteLocale(localeIndex, config)` | Build a single locale from YAML layers. |
 | `autoLoadSiteLocales(config)` | Auto-discover all locale folders. |
+| `defineSiteConfig(config)` | Identity helper for `site.ts` — re-exported from the blog package. |
+| `defineLocaleConfig(config)` | Identity helper for `_site.ts` — re-exported from the blog package. |
+| `defineAuthorsList(authors)` | Identity helper for `_authors.ts` — re-exported from the blog package. |
 
 ### YAML config layers
 

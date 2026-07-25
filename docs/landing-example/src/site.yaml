@@ -7,6 +7,6 @@ themeConfig:
     - text: '❤️ ${t.donate}'
       link: '/${localeIndex}/page/donate'
     - text: '📖 Project'
-      link: '${localeIndex}/doc'
+      link: '/${localeIndex}/doc'
     - text: '📢 Social media'
       link: '/${localeIndex}/page/links'

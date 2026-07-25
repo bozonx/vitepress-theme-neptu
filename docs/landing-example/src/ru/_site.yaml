@@ -1,0 +1,16 @@
+lang: 'ru-RU'
+title: 'Neptu Landing'
+description: 'Современный лендинг-темплейт для VitePress — SEO-first, i18n, полная типизация.'
+
+themeConfig:
+  publisher:
+    name: 'Neptu'
+    url: '${config.siteUrl}/${localeIndex}'
+    logo: '${config.siteUrl}/img/home-logo.svg'
+
+  sidebar:
+    doc:
+      - text: 'Документация'
+        items:
+          - text: 'Введение'
+            link: ''

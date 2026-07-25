@@ -32,7 +32,12 @@ export default async () => {
     themeConfig: {
       repo: 'https://github.com/bozonx/vitepress-theme-neptu-blog',
       logo: '/img/logo.svg',
+      mainHeroImg: '/img/home-logo.svg',
       blogUrl: 'https://bozonx.github.io/vitepress-theme-neptu-blog',
+      search: {
+        provider: 'pagefind',
+        options: { bodyMarker: 'data-pagefind-body' },
+      },
     },
   }
 

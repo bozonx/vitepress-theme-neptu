@@ -31,10 +31,17 @@
     "./site-theme-fix.css": "./src/styles/site-theme-fix.css"
   },
   "peerDependencies": {
+    "tailwindcss": "^4.0.0",
     "vitepress": "^2.0.0-alpha.18",
     "vue": "^3.5.0"
   },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
     "vitepress-theme-neptu-blog": "workspace:*"
   },
   "devDependencies": {

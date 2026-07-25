@@ -4,6 +4,7 @@ import type {
   TransformContext,
   SiteConfig,
 } from 'vitepress'
+import tailwindcss from '@tailwindcss/vite'
 import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu-blog/utils'
 import { deepMerge } from 'vitepress-theme-neptu-blog/utils'
 import { resolveBaseLocaleKey } from 'vitepress-theme-neptu-blog/utils'
@@ -14,6 +15,7 @@ import {
   addHreflang,
   addJsonLd,
   addOgMetaTags,
+  collectImageDimensions,
   filterSitemap,
   generateRobotsTxt,
   mdImage,
@@ -75,6 +77,21 @@ function mergeReturnedPageData(
 }
 
 // ---------------------------------------------------------------------------
+// Tailwind plugin guard — type-safe name check that handles nested arrays.
+// ---------------------------------------------------------------------------
+
+function hasTailwindPlugin(plugins: unknown): boolean {
+  const flat = Array.isArray(plugins) ? (plugins as unknown[]).flat(10) : []
+  return flat.some(
+    (p) =>
+      p != null &&
+      typeof p === 'object' &&
+      'name' in p &&
+      (p as Record<string, unknown>).name === 'tailwindcss'
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Common defaults
 // ---------------------------------------------------------------------------
 
@@ -82,9 +99,6 @@ const commonThemeConfig = {
   externalLinkIcon: true,
   i18nRouting: true,
   mainHeroImg: '/img/home-logo.webp',
-  lastUpdated: {
-    formatOptions: { dateStyle: 'medium' as const, forceLocale: true },
-  },
   seo: {
     maxDescriptionLength: 300,
     autoCanonical: true,
@@ -182,6 +196,7 @@ export function mergeLandingConfig(
     vite: {
       ...config.vite,
       plugins: [
+        ...(hasTailwindPlugin(config.vite?.plugins) ? [] : [tailwindcss()]),
         ...(config.srcDir
           ? [createSiteYamlHotReloadPlugin(config.srcDir)]
           : []),
@@ -237,6 +252,7 @@ export function mergeLandingConfig(
       const extendedPageData = asExtendedPageData(pageData)
       const extendedSiteConfig = asExtendedSiteConfig(ctx.siteConfig)
 
+      collectImageDimensions(extendedPageData, extendedSiteConfig)
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
       transformPageMeta(extendedPageData)
       resolveDescription(extendedPageData, { siteConfig: extendedSiteConfig })

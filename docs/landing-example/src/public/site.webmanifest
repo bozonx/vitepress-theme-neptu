@@ -1,7 +1,7 @@
 {
-  "name": "",
-  "short_name": "",
-  "description": "...",
+  "name": "Neptu Landing",
+  "short_name": "Neptu",
+  "description": "A modern landing page theme for VitePress",
   "icons": [
     {
       "src": "/img/android-chrome-192x192.png",
