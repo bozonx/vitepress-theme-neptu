@@ -3,6 +3,12 @@ import { createBaseEslintConfig } from '../../eslint.config.base.js'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default defineConfig(
+  {
+    ignores: [
+      'tests/e2e/playwright-report/**',
+      'tests/e2e/test-results/**',
+    ],
+  },
   ...createBaseEslintConfig(),
   {
     // Config/YAML loaders operate on dynamic VitePress site config.

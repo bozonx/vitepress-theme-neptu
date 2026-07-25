@@ -11,7 +11,9 @@
     "build": "VITEPRESS_BASE=/vitepress-theme-neptu-blog/landing/ vitepress build src --base /vitepress-theme-neptu-blog/landing/ && pnpm pagefind",
     "pagefind": "pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'",
     "preview": "vitepress preview src --base /vitepress-theme-neptu-blog/landing/",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "vitepress": "2.0.0-alpha.18",
@@ -20,7 +22,14 @@
     "vue": "^3.5.40"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.7.0",
     "pagefind": "^1.5.2",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "typescript-eslint": "^8.65.0",
+    "vue-eslint-parser": "^10.4.1"
   }
 }

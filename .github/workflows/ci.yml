@@ -53,7 +53,9 @@ jobs:
         run: pnpm build
 
       - name: Install Playwright browsers
-        run: pnpm --filter vitepress-theme-neptu-blog exec playwright install --with-deps chromium
+        run: |
+          pnpm --filter vitepress-theme-neptu-blog exec playwright install --with-deps chromium
+          pnpm --filter vitepress-theme-neptu-landing exec playwright install --with-deps chromium
 
       - name: Run E2E tests
         run: pnpm e2e
