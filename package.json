@@ -1,6 +1,6 @@
 {
   "name": "vitepress-theme-neptu",
-  "version": "0.0.0",
+  "version": "0.20.0",
   "private": true,
   "description": "Monorepo for the Neptu VitePress themes — blog theme, landing theme, docs, and templates.",
   "type": "module",

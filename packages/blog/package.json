@@ -1,6 +1,6 @@
 {
   "name": "vitepress-theme-neptu-blog",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Feature-rich SEO-first VitePress/Tailwind blog theme — built-in archive, tags, authors and post lists, JSON-LD, Open Graph, hreflang, canonical, RSS/Atom/JSON feeds, Pagefind search, GA4 popular posts, i18n.",
   "types": "src/types.d.ts",
   "type": "module",
