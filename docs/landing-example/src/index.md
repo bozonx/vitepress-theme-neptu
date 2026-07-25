@@ -17,8 +17,9 @@ const supportedLocales = Object.keys(site.value.locales)
 
 onMounted(() => {
   if (inBrowser && window.location.pathname === '/') {
-    const langToRedirect = resolveNavigatorLang(supportedLocales, navigator.language)
-    
+    const langToRedirect =
+      (supportedLocales.length && resolveNavigatorLang(navigator, supportedLocales)) || 'en'
+
     window.location.replace('/' + langToRedirect + '/');
   }
 })
