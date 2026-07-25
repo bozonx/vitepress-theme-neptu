@@ -9,6 +9,14 @@
   "engines": {
     "node": ">=22.0.0"
   },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.7.0",
+    "typescript-eslint": "^8.65.0",
+    "vue-eslint-parser": "^10.4.1"
+  },
   "scripts": {
     "generate:icons": "pnpm --filter vitepress-theme-neptu-blog generate:icons",
     "typecheck": "pnpm -r --if-present typecheck",

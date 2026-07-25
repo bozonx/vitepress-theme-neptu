@@ -1,26 +1,13 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["node", "vitest/globals"],
-    "jsx": "preserve",
-    "strict": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": false,
     "useDefineForClassFields": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "verbatimModuleSyntax": false,
-    "skipLibCheck": true,
     "allowJs": true,
     "checkJs": false,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "forceConsistentCasingInFileNames": true,
     "paths": {
       "vitepress-theme-neptu-blog": ["./src/index.ts"],
       "vitepress-theme-neptu-blog/*": ["./src/*"]
