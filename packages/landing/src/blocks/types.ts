@@ -98,6 +98,12 @@ export interface FeatureItem extends HeadingProps {
   rowSpan?: 1 | 2
 }
 
+/** A feature-split row adds actions and bullets to a regular feature item. */
+export interface SplitItem extends FeatureItem {
+  actions?: ActionItem[]
+  bullets?: string[]
+}
+
 export interface LogoItem {
   src: string
   alt?: string

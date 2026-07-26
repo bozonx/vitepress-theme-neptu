@@ -25,11 +25,12 @@ Two independent theme axes control the looks:
 2. **One `hero` per page**, always first — it renders the page `h1`.
 3. **Blocks live inside `<LnPage>`** (component mode) or are produced by
    `<LandingRenderer />` (data mode). Never mix a block into a `vp-doc` page.
-4. A landing page needs `layout: home` **and** `markdownStyles: false` in
-   frontmatter. Without the second key blocks get trapped in the prose column.
+4. A data-driven landing page needs only `layout: landing` and `blocks:` in
+   frontmatter. Component-authored pages may continue using `layout: home` and
+   `<LnPage>`.
 5. **Do not invent props.** The full set is `SectionProps` (below) plus what the
-   block declares in `src/blocks/types.ts`. An unknown block `type` is skipped
-   with a dev warning.
+   block declares in `src/blocks/types.ts`. An unknown block `type` renders a
+   visible development placeholder.
 6. Alternate the `bg` of consecutive sections (`base` → `soft` → `base`) to give
    the page rhythm; use `inverse` or `brand` once or twice at most.
 7. `title` and `text` accept inline HTML — use it for `<br>` and
@@ -82,8 +83,7 @@ markdownStyles: false
 
 ```md
 ---
-layout: home
-markdownStyles: false
+layout: landing
 blocks:
   - type: hero
     title: …
@@ -92,7 +92,6 @@ blocks:
     items: […]
 ---
 
-<LandingRenderer />
 ```
 
 Prefer the data mode when generating a page programmatically: it is validated by
@@ -178,7 +177,7 @@ registerBlockTypes({ 'my-block': MyBlock })
 
 ## Checklist before finishing a page
 
-- [ ] `layout: home` and `markdownStyles: false` are set
+- [ ] data pages use `layout: landing` and `blocks:`
 - [ ] exactly one `hero`, and it is first
 - [ ] backgrounds alternate; no two `brand`/`inverse` sections in a row
 - [ ] every image has meaningful `alt`

@@ -3,7 +3,6 @@ import {
   mergeLandingConfig,
   defineLandingConfig,
   defineLandingConfigSync,
-  mergeSiteConfig,
 } from '../../../src/configs/siteConfigBase.ts'
 import { autoLoadSiteLocales } from '../../../src/configs/loadSiteLocale.ts'
 
@@ -48,16 +47,6 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
       Object.assign(pageData, returned)
     }
   }),
-  hasTailwindPlugin: vi.fn((plugins: unknown) => {
-    const flat = Array.isArray(plugins) ? (plugins as unknown[]).flat(10) : []
-    return flat.some(
-      (p) =>
-        p != null &&
-        typeof p === 'object' &&
-        'name' in p &&
-        (p as Record<string, unknown>).name === 'tailwindcss'
-    )
-  }),
   commonBaseConfig: {
     head: [
       ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
@@ -94,10 +83,6 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
 vi.mock('vitepress-theme-neptu-blog/utils/node', () => ({
   createSiteYamlHotReloadPlugin: vi.fn(() => ({ name: 'hot-reload' })),
   getImageDimensions: vi.fn(),
-}))
-
-vi.mock('@tailwindcss/vite', () => ({
-  default: vi.fn(() => ({ name: 'tailwindcss' })),
 }))
 
 describe('mergeLandingConfig', () => {
@@ -192,25 +177,7 @@ describe('mergeLandingConfig', () => {
   it('vite ssr config marks theme as noExternal', () => {
     const result = mergeLandingConfig({})
     expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-blog')
-  })
-
-  it('vite includes tailwindcss plugin by default', () => {
-    const result = mergeLandingConfig({})
-    const pluginNames = result.vite.plugins
-      .map((p) => (p as { name?: string } | undefined)?.name)
-      .filter(Boolean)
-    expect(pluginNames).toContain('tailwindcss')
-  })
-
-  it('vite does not duplicate tailwindcss if already present', () => {
-    const existing = { name: 'tailwindcss' }
-    const result = mergeLandingConfig({
-      vite: { plugins: [existing] },
-    })
-    const twPlugins = result.vite.plugins.filter(
-      (p) => (p as { name?: string } | undefined)?.name === 'tailwindcss'
-    )
-    expect(twPlugins).toHaveLength(1)
+    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-landing')
   })
 
   it('vite merges with provided config', () => {
@@ -342,11 +309,5 @@ describe('defineLandingConfig', () => {
 
     expect(autoLoadSiteLocales).not.toHaveBeenCalled()
     expect(result.locales.ru.lang).toBe('ru-RU')
-  })
-})
-
-describe('mergeSiteConfig (deprecated alias)', () => {
-  it('is the same function as mergeLandingConfig', () => {
-    expect(mergeSiteConfig).toBe(mergeLandingConfig)
   })
 })

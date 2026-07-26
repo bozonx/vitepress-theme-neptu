@@ -16,6 +16,15 @@ export default {
   },
   t: {
     donate: 'Donate',
+    landing: {
+      carousel: {
+        previous: 'Previous slide',
+        next: 'Next slide',
+        region: 'Carousel',
+        goTo: 'Go to slide {slide}',
+      },
+      pricing: { billingPeriod: 'Billing period', monthly: 'Monthly', yearly: 'Yearly' },
+    },
     ...shared,
   },
   search: {

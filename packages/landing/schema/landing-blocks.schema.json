@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/bozonx/vitepress-theme-neptu-blog/packages/landing/schema/landing-blocks.schema.json",
   "title": "Neptu Landing — page frontmatter",
   "description": "Frontmatter of a landing page rendered by <LandingRenderer />.",
@@ -105,6 +105,20 @@
       },
       "additionalProperties": false
     },
+    "carouselSlide": {
+      "type": "object",
+      "properties": {
+        "eyebrow": { "type": "string" },
+        "title": { "type": "string" },
+        "text": { "type": "string" },
+        "icon": { "$ref": "#/definitions/icon" },
+        "image": { "$ref": "#/definitions/media" },
+        "link": { "type": "string" },
+        "linkText": { "type": "string" },
+        "badge": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
     "block": {
       "type": "object",
       "required": ["type"],
@@ -152,7 +166,7 @@
             {
               "properties": {
                 "type": { "const": "carousel" },
-                "items": { "type": "array", "items": { "$ref": "#/definitions/feature" } },
+                "items": { "type": "array", "items": { "$ref": "#/definitions/carouselSlide" } },
                 "perView": { "enum": [1, 2, 3, 4] },
                 "arrows": { "type": "boolean" },
                 "dots": { "type": "boolean" },
@@ -404,10 +418,22 @@
                 "lightbox": { "type": "boolean" },
                 "ratio": { "type": "string" }
               }
+            },
+            {
+              "not": {
+                "properties": {
+                  "type": {
+                    "enum": ["hero", "features", "feature-split", "bento", "carousel", "logos", "stats", "steps", "testimonials", "pricing", "faq", "cta", "timeline", "team", "gallery"]
+                  }
+                },
+                "required": ["type"]
+              },
+              "additionalProperties": true
             }
           ]
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     }
   }
 }

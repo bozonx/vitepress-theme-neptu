@@ -4,6 +4,7 @@
  * only when at least one plan defines `priceYearly`.
  */
 import { computed, ref } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
@@ -27,10 +28,17 @@ const props = withDefaults(
       note?: string
     }
   >(),
-  { cols: 3, monthlyLabel: 'Monthly', yearlyLabel: 'Yearly', align: 'center' }
+  { cols: 3, align: 'center' }
 )
 
 const yearly = ref(false)
+const { theme } = useData()
+const pricingText = computed(() => {
+  const t = theme.value.t as { landing?: { pricing?: Record<string, string> } } | undefined
+  return t?.landing?.pricing ?? {}
+})
+const monthlyLabel = computed(() => props.monthlyLabel ?? pricingText.value.monthly ?? 'Monthly')
+const yearlyLabel = computed(() => props.yearlyLabel ?? pricingText.value.yearly ?? 'Yearly')
 
 const hasToggle = computed(() =>
   Boolean(props.items?.some((plan) => plan.priceYearly))
@@ -64,7 +72,12 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
       :spacing="!hasToggle"
     />
 
-    <div v-if="hasToggle" class="ln-pricing__toggle" role="group" aria-label="Billing period">
+    <div
+      v-if="hasToggle"
+      class="ln-pricing__toggle"
+      role="group"
+      :aria-label="pricingText.billingPeriod ?? 'Billing period'"
+    >
       <button
         type="button"
         class="ln-pricing__toggle-btn"
@@ -72,7 +85,7 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
         :aria-pressed="!yearly"
         @click="yearly = false"
       >
-        {{ props.monthlyLabel }}
+        {{ monthlyLabel }}
       </button>
       <button
         type="button"
@@ -81,7 +94,7 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
         :aria-pressed="yearly"
         @click="yearly = true"
       >
-        {{ props.yearlyLabel }}
+        {{ yearlyLabel }}
       </button>
     </div>
 

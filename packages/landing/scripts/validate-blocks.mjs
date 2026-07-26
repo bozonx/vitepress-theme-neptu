@@ -1,0 +1,48 @@
+/** Validates `blocks:` frontmatter in Markdown files against the public schema. */
+import { readFileSync, readdirSync } from 'node:fs'
+import { dirname, join, relative, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import Ajv2020 from 'ajv/dist/2020.js'
+import { parse } from 'yaml'
+
+const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const root = resolve(packageRoot, '../..')
+const schema = JSON.parse(
+  readFileSync(resolve(root, 'packages/landing/schema/landing-blocks.schema.json'), 'utf8')
+)
+const validate = new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(schema)
+const ignored = new Set(['.git', 'node_modules', 'dist', '.vitepress', 'coverage', 'playwright-report'])
+const markdownFiles = []
+
+const walk = (directory) => {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (ignored.has(entry.name)) continue
+    const path = join(directory, entry.name)
+    if (entry.isDirectory()) walk(path)
+    else if (entry.isFile() && /\.md$/i.test(entry.name)) markdownFiles.push(path)
+  }
+}
+walk(root)
+
+let invalid = 0
+for (const file of markdownFiles) {
+  const content = readFileSync(file, 'utf8')
+  const match = content.match(/^---\s*\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)
+  if (!match) continue
+  const frontmatter = parse(match[1])
+  if (!frontmatter?.blocks && frontmatter?.layout !== 'landing') continue
+  if (validate(frontmatter)) continue
+
+  invalid += 1
+  console.error(`\n${relative(root, file)}`)
+  for (const error of validate.errors ?? []) {
+    console.error(`  ${error.instancePath || '/'} ${error.message ?? 'is invalid'}`)
+  }
+}
+
+if (invalid) {
+  console.error(`\nLanding block validation failed in ${invalid} file(s).`)
+  process.exit(1)
+}
+
+console.log(`Validated landing blocks in ${markdownFiles.length} Markdown file(s).`)

@@ -7,6 +7,7 @@
  * Use the `slide` scoped slot to render custom content instead of `items`.
  */
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnCard from '../primitives/LnCard.vue'
@@ -43,6 +44,16 @@ const props = withDefaults(
 )
 
 const track = ref<HTMLElement | null>(null)
+const { theme } = useData()
+const landingText = computed(() => {
+  const t = theme.value.t as { landing?: { carousel?: Record<string, string> } } | undefined
+  return t?.landing?.carousel ?? {}
+})
+const message = (key: string, fallback: string, values: Record<string, string | number> = {}): string =>
+  Object.entries(values).reduce(
+    (text, [name, value]) => text.replace(`{${name}}`, String(value)),
+    landingText.value[key] ?? fallback
+  )
 const active = ref(0)
 const canPrev = ref(false)
 const canNext = ref(true)
@@ -146,7 +157,7 @@ onBeforeUnmount(() => {
           type="button"
           class="ln-carousel__arrow"
           :disabled="!canPrev && !props.autoplay"
-          aria-label="Previous slide"
+          :aria-label="message('previous', 'Previous slide')"
           @click="stopAutoplay(); step(-1)"
         >
           <LnIcon icon="fa6-solid:chevron-left" size="0.9rem" />
@@ -155,7 +166,7 @@ onBeforeUnmount(() => {
           type="button"
           class="ln-carousel__arrow"
           :disabled="!canNext && !props.autoplay"
-          aria-label="Next slide"
+          :aria-label="message('next', 'Next slide')"
           @click="stopAutoplay(); step(1)"
         >
           <LnIcon icon="fa6-solid:chevron-right" size="0.9rem" />
@@ -167,7 +178,7 @@ onBeforeUnmount(() => {
       ref="track"
       class="ln-carousel__track"
       role="region"
-      :aria-label="props.ariaLabel ?? props.title ?? 'Carousel'"
+      :aria-label="props.ariaLabel ?? props.title ?? message('region', 'Carousel')"
       tabindex="0"
       @mouseenter="stopAutoplay"
       @focusin="stopAutoplay"
@@ -208,7 +219,7 @@ onBeforeUnmount(() => {
         type="button"
         class="ln-carousel__dot"
         :class="{ 'is-active': i === active }"
-        :aria-label="`Go to slide ${i + 1}`"
+        :aria-label="message('goTo', `Go to slide ${i + 1}`, { slide: i + 1 })"
         :aria-current="i === active ? 'true' : undefined"
         @click="stopAutoplay(); goTo(i)"
       />

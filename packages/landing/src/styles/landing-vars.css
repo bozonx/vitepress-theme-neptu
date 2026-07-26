@@ -34,6 +34,9 @@
   --ln-c-text-3: var(--gray-400, #a1a1aa);
   --ln-c-on-inverse: var(--gray-200, #e4e4e7);
   --ln-c-on-inverse-2: var(--gray-400, #a1a1aa);
+  /* Text placed over arbitrary image/video media. Override per brand if needed. */
+  --ln-c-on-media: #fff;
+  --ln-c-on-media-muted: rgb(255 255 255 / 82%);
 
   /**** Borders */
   --ln-c-border: var(--gray-200, #e4e4e7);

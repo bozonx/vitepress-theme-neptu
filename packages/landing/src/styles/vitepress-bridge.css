@@ -42,20 +42,23 @@ body {
 }
 
 /**
- * Landing pages use `layout: home` + `markdownStyles: false`, which makes
- * VitePress render raw `<Content />`. Blocks handle their own vertical rhythm,
- * so the default bottom margin of `.VPHome` must go.
- */
-.VPHome:has(.ln-page) {
-  margin-bottom: 0;
-}
-
 /* A landing page is edge-to-edge: blocks own the horizontal padding. */
 .ln-page {
   width: 100%;
   font-family: var(--ln-font-body);
   line-height: var(--ln-body-lh);
   color: var(--ln-c-text-1);
+}
+
+/* `layout: landing` is a registered VitePress layout component. Keep the
+ * default chrome, but make its content pane behave like a home page. */
+.VPContent:has(.ln-page) {
+  max-width: none;
+}
+
+.Layout:has(.ln-page) .VPSidebar,
+.Layout:has(.ln-page) .VPLocalNav {
+  display: none;
 }
 
 /* Anchor targets under a sticky nav bar. */

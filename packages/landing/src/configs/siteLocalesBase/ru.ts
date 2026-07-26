@@ -16,6 +16,15 @@ export default {
   },
   t: {
     donate: 'Донат',
+    landing: {
+      carousel: {
+        previous: 'Предыдущий слайд',
+        next: 'Следующий слайд',
+        region: 'Карусель',
+        goTo: 'Перейти к слайду {slide}',
+      },
+      pricing: { billingPeriod: 'Период оплаты', monthly: 'Ежемесячно', yearly: 'Ежегодно' },
+    },
     ...shared,
   },
   search: {

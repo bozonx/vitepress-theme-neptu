@@ -152,9 +152,9 @@ const coverSpec = computed(() =>
 }
 
 .ln-hero--on-media {
-  --ln-c-text-1: #fff;
-  --ln-c-text-2: rgb(255 255 255 / 82%);
-  color: #fff;
+  --ln-c-text-1: var(--ln-c-on-media);
+  --ln-c-text-2: var(--ln-c-on-media-muted);
+  color: var(--ln-c-on-media);
   min-height: min(80vh, 46rem);
   display: flex;
   align-items: center;

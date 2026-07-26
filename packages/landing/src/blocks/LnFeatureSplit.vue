@@ -9,13 +9,7 @@ import LnMedia from '../primitives/LnMedia.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnReveal from '../primitives/LnReveal.vue'
-import type { ActionItem, FeatureItem, SectionProps } from './types.ts'
-
-interface SplitItem extends FeatureItem {
-  actions?: ActionItem[]
-  /** Bullet list under the text. */
-  bullets?: string[]
-}
+import type { SectionProps, SplitItem } from './types.ts'
 
 const props = withDefaults(
   defineProps<

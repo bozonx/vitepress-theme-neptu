@@ -50,6 +50,7 @@ describe('LandingRenderer', () => {
 
     expect(wrapper.findAll('.ln-section').length).toBe(1)
     expect(wrapper.text()).toContain('Kept')
+    expect(wrapper.find('.ln-unknown-block').exists()).toBe(true)
   })
 
   it('ignores a non-array blocks value', () => {

@@ -25,8 +25,10 @@ root with `pnpm landing:dev`.
 - **Agent-ready** — one prop contract across all blocks, a JSON schema for the
   data mode and [`AGENTS.md`](./AGENTS.md) with rules and page recipes
 
-Zero runtime dependencies beyond Vue and VitePress: the carousel is CSS
-scroll-snap, the accordion is `<details>`, the lightbox is `<dialog>`.
+The only runtime helper beyond Vue and VitePress is `@iconify/vue`; theme
+icons are bundled locally, so rendering never depends on Iconify's API. The
+carousel is CSS scroll-snap, the accordion is `<details>`, and the lightbox is
+`<dialog>`.
 
 ## Installation
 
@@ -75,7 +77,6 @@ Blocks and primitives are registered globally — no import block needed.
 ```md
 ---
 layout: home
-markdownStyles: false
 ---
 
 <LnPage>
@@ -103,15 +104,15 @@ markdownStyles: false
 </LnPage>
 ```
 
-`layout: home` drops the docs sidebar; `markdownStyles: false` lets blocks go
-edge-to-edge.
+For component-authored pages, `layout: home` drops the docs sidebar. The
+recommended data mode below needs only `layout: landing`; it renders blocks
+edge-to-edge automatically.
 
 ### The same page as data
 
 ```md
 ---
-layout: home
-markdownStyles: false
+layout: landing
 blocks:
   - type: hero
     title: Everything in YAML
@@ -125,11 +126,13 @@ blocks:
     title: Ready?
 ---
 
-<LandingRenderer />
 ```
 
 Content is separated from markup, which makes translations, CMS editing and
-generation straightforward. Unknown block types are skipped with a dev warning.
+generation straightforward. Built-in blocks are schema-validated by
+`pnpm validate:blocks`; custom types registered with `registerBlockTypes` are
+intentionally accepted by the schema. Unknown runtime types show a visible
+development placeholder and fail production validation.
 
 ## Shared props
 

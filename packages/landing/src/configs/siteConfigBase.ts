@@ -2,7 +2,6 @@ import type {
   UserConfig,
   SiteConfig,
 } from 'vitepress'
-import tailwindcss from '@tailwindcss/vite'
 import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu-blog/utils'
 import { deepMerge } from 'vitepress-theme-neptu-blog/utils'
 import { resolveBaseLocaleKey } from 'vitepress-theme-neptu-blog/utils'
@@ -12,7 +11,6 @@ import {
   asTransformContext,
   asTransformHeadContext,
   mergeReturnedPageData,
-  hasTailwindPlugin,
   commonBaseConfig,
   normalizeSitemapUrl,
   warnMissingRequired,
@@ -127,13 +125,18 @@ export function mergeLandingConfig(
     vite: {
       ...config.vite,
       plugins: [
-        ...(hasTailwindPlugin(config.vite?.plugins) ? [] : [tailwindcss()]),
         ...(config.srcDir
           ? [createSiteYamlHotReloadPlugin(config.srcDir)]
           : []),
         ...(config.vite?.plugins || []),
       ],
-      ssr: { noExternal: ['vitepress-theme-neptu-blog'], ...config.vite?.ssr },
+      ssr: {
+        noExternal: [
+          'vitepress-theme-neptu-blog',
+          'vitepress-theme-neptu-landing',
+        ],
+        ...config.vite?.ssr,
+      },
     },
     sitemap: {
       hostname: config.siteUrl,
@@ -274,9 +277,3 @@ export async function defineLandingConfig(
     locales: hasLocales ? config.locales : await autoLoadSiteLocales(config),
   })
 }
-
-/**
- * @deprecated Use {@link mergeLandingConfig} instead.
- * Kept for backward compatibility.
- */
-export const mergeSiteConfig = mergeLandingConfig

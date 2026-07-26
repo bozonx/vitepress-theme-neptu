@@ -17,6 +17,7 @@ export function registerLandingComponents(app: App): void {
     ...primitives,
     ...blockComponents,
     LandingRenderer,
+    landing: LandingRenderer,
     LnThemePicker,
   })) {
     app.component(name, component)

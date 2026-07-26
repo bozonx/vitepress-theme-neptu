@@ -1,9 +1,8 @@
 ---
-layout: home
-markdownStyles: false
+layout: landing
 
 # Декларативный режим: страница целиком описана данными.
-# Ни строчки Vue — <LandingRenderer /> читает этот массив из frontmatter.
+# Ни строчки Vue — layout сам читает этот массив из frontmatter.
 blocks:
   - type: hero
     variant: split
@@ -120,7 +119,7 @@ blocks:
       - { title: Установить тему, text: Добавьте пакет и укажите его в точке входа темы VitePress. }
       - { title: Собрать страницу, text: Выберите блоки и наполните их текстом — в markdown или в YAML. }
       - { title: Выбрать тему, text: Задайте палитру и стилевой пресет или напишите свой файл переменных. }
-      - { title: Опубликовать, text: Статика, поиск и SEO-теги генерируются автоматически. }
+      - { title: Опубликовать, text: 'Статика, поиск и SEO-теги генерируются автоматически.' }
 
   - type: carousel
     bg: soft
@@ -260,5 +259,3 @@ blocks:
       - { text: Начать, link: /ru/doc }
       - { text: Смотреть блоки, link: /ru/doc/blocks, variant: alt }
 ---
-
-<LandingRenderer />

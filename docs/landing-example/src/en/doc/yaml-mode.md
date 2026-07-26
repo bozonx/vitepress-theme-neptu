@@ -10,8 +10,7 @@ components. One renderer turns it into the same output:
 
 ```md
 ---
-layout: home
-markdownStyles: false
+layout: landing
 blocks:
   - type: hero
     variant: centered
@@ -34,7 +33,6 @@ blocks:
       - { text: Read the docs, link: /doc }
 ---
 
-<LandingRenderer />
 ```
 
 The [Russian home page](/ru/) of this site is written exactly like that — open
@@ -92,5 +90,6 @@ Then use `- type: pricing-calculator` in any page.
 
 ## Validation
 
-An unknown `type` is skipped with a console warning in dev that lists the known
-types, so a typo shows up immediately instead of silently dropping a section.
+An unknown `type` renders a visible development placeholder that lists the
+problem. Run `pnpm validate:blocks` in CI: it rejects unknown properties on
+built-in blocks while leaving registered custom types extensible.

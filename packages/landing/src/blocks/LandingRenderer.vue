@@ -4,8 +4,7 @@
  *
  * ```md
  * ---
- * layout: home
- * markdownStyles: false
+ * layout: landing
  * blocks:
  *   - type: hero
  *     title: Ship faster
@@ -53,7 +52,7 @@ const resolved = computed(() =>
       )
     }
 
-    return { key: `${type}-${index}`, component, props: blockProps }
+    return { key: spec.id ?? `${type}-${index}`, component, props: blockProps, type }
   })
 )
 </script>
@@ -63,6 +62,9 @@ const resolved = computed(() =>
     <slot name="before" />
     <template v-for="entry in resolved" :key="entry.key">
       <component :is="entry.component" v-if="entry.component" v-bind="entry.props" />
+      <div v-else-if="isDev" class="ln-unknown-block" role="alert">
+        Unknown landing block: <code>{{ entry.type || '(missing type)' }}</code>
+      </div>
     </template>
     <slot />
   </LnPage>

@@ -1,9 +1,10 @@
 import './styles/landing.css'
-import './styles/site-theme-fix.css'
 
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import type { EnhanceAppContext, Theme } from 'vitepress'
 import { registerLandingComponents } from './install.ts'
+import { addCollection } from '@iconify/vue'
+import bundledIcons from './generated/icons-bundle.ts'
 
 export type {
   LandingUserConfig,
@@ -41,6 +42,7 @@ export { registerLandingComponents } from './install.ts'
 const theme: Theme = {
   extends: DefaultTheme,
   enhanceApp(ctx: EnhanceAppContext) {
+    for (const collection of bundledIcons) addCollection(collection)
     registerLandingComponents(ctx.app)
   },
 }
