@@ -249,8 +249,8 @@ importers:
         specifier: ^1.2.7
         version: 1.2.7
       '@iconify-json/cbi':
-        specifier: ^1.2.47
-        version: 1.2.47
+        specifier: ^1.2.48
+        version: 1.2.48
       '@iconify-json/cib':
         specifier: ^1.2.3
         version: 1.2.3
@@ -647,8 +647,8 @@ packages:
   '@iconify-json/bi@1.2.7':
     resolution: {integrity: sha512-IPz8WNxmLkH1I9msl+0Q4OnmjjvP4uU0Z61a4i4sqonB6vKSbMGUWuGn8/YuuszlReVj8rf+3gNv5JU8Xoljyg==}
 
-  '@iconify-json/cbi@1.2.47':
-    resolution: {integrity: sha512-m6n5aetQd0uKAfRURgNSpVpndpD7XfC0JiYtUnjOLXMaXxzBlW0XKL3zRxBkULqYbUYOOfMndfBXhXamgPtlKg==}
+  '@iconify-json/cbi@1.2.48':
+    resolution: {integrity: sha512-EwTxhqCDbBwrVGLfHZj/aIKtigb6JWnJIphtypIU809Smdaab7Eejr1FnkxQp90acSU5Jstj/Kvjkf1win+kow==}
 
   '@iconify-json/cib@1.2.3':
     resolution: {integrity: sha512-MMvRXVTHt82z3bYN19JDAjv/X8OBNC/1B3I334SV/1nyhdPeeyvJZVoI1cGuNqYznBjMnWxKPtIhhiVgGQ1CzQ==}
@@ -2624,7 +2624,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/cbi@1.2.47':
+  '@iconify-json/cbi@1.2.48':
     dependencies:
       '@iconify/types': 2.0.0
 

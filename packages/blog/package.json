@@ -143,7 +143,7 @@
   "devDependencies": {
     "@eslint/js": "catalog:",
     "@iconify-json/bi": "^1.2.7",
-    "@iconify-json/cbi": "^1.2.47",
+    "@iconify-json/cbi": "^1.2.48",
     "@iconify-json/cib": "^1.2.3",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",
