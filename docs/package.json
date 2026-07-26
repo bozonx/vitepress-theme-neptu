@@ -15,19 +15,19 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "vitepress": "2.0.0-alpha.18",
+    "vitepress": "catalog:",
     "vitepress-theme-neptu-blog": "workspace:*",
-    "vue": "^3.5.40"
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.7.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-vue": "^10.10.0",
-    "globals": "^17.7.0",
-    "pagefind": "^1.5.2",
-    "tailwindcss": "^4.3.3",
-    "typescript-eslint": "^8.65.0",
-    "vue-eslint-parser": "^10.4.1"
+    "@eslint/js": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-vue": "catalog:",
+    "globals": "catalog:",
+    "pagefind": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vue-eslint-parser": "catalog:"
   }
 }

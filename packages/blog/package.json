@@ -126,7 +126,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "catalog:",
     "feed": "^6.0.0",
     "gray-matter": "^4.0.3",
     "image-size": "^2.0.2",
@@ -141,7 +141,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "catalog:",
     "@iconify-json/bi": "^1.2.7",
     "@iconify-json/cbi": "^1.2.47",
     "@iconify-json/cib": "^1.2.3",
@@ -155,19 +155,19 @@
     "@iconify-json/solar": "^1.2.5",
     "@iconify-json/vscode-icons": "^1.2.67",
     "@iconify/utils": "^3.1.4",
-    "@playwright/test": "^1.61.1",
-    "@vitejs/plugin-vue": "^6.0.8",
-    "@vitest/coverage-v8": "^4.1.10",
-    "@vue/test-utils": "^2.4.11",
-    "eslint": "^10.7.0",
-    "eslint-plugin-vue": "^10.10.0",
-    "globals": "^17.7.0",
-    "happy-dom": "^20.11.0",
-    "tailwindcss": "^4.3.3",
-    "typescript-eslint": "^8.65.0",
-    "vitepress": "2.0.0-alpha.18",
-    "vitest": "^4.1.10",
-    "vue": "^3.5.40",
-    "vue-eslint-parser": "^10.4.1"
+    "@playwright/test": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vue/test-utils": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-vue": "catalog:",
+    "globals": "catalog:",
+    "happy-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitepress": "catalog:",
+    "vitest": "catalog:",
+    "vue": "catalog:",
+    "vue-eslint-parser": "catalog:"
   }
 }

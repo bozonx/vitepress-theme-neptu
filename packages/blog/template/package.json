@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "vitepress": "^2.0.0-alpha.18",
-    "vitepress-theme-neptu-blog": "^0.19.0",
+    "vitepress-theme-neptu-blog": "^0.20.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
