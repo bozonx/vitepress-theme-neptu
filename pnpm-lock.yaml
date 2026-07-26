@@ -273,8 +273,8 @@ importers:
         specifier: ^1.2.10
         version: 1.2.10
       '@iconify-json/simple-icons':
-        specifier: ^1.2.91
-        version: 1.2.91
+        specifier: ^1.2.92
+        version: 1.2.92
       '@iconify-json/solar':
         specifier: ^1.2.5
         version: 1.2.5
@@ -673,6 +673,9 @@ packages:
 
   '@iconify-json/simple-icons@1.2.91':
     resolution: {integrity: sha512-plQJHZxzpkIXaeYjJF0Sc9nkzYF32EDX9olx7j1hcKYFaiTrQXbcngZmvzuV0pG6uZPU3ZuA/GIsgxSHOm6jrQ==}
+
+  '@iconify-json/simple-icons@1.2.92':
+    resolution: {integrity: sha512-hR0ozxR97t1dzWw+esoxFijZ15gagt7EIgF3CNifu2yICXhS7gnun4Y+j+odJQtNSl7wvqMdoLbViIShwe/fdw==}
 
   '@iconify-json/solar@1.2.5':
     resolution: {integrity: sha512-WMAiNwchU8zhfrySww6KQBRIBbsQ6SvgIu2yA+CHGyMima/0KQwT5MXogrZPJGoQF+1Ye3Qj6K+1CiyNn3YkoA==}
@@ -2657,6 +2660,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/simple-icons@1.2.91':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/simple-icons@1.2.92':
     dependencies:
       '@iconify/types': 2.0.0
 
