@@ -16,8 +16,12 @@ export default defineConfig(
     rules: { '@typescript-eslint/no-explicit-any': 'off' },
   },
   {
-    // Renders HTML supplied through site config, mirroring the blog theme's hero.
-    files: ['src/layouts/SiteHome.vue'],
+    /*
+     * Landing copy is authored by the site owner (markdown, YAML or config),
+     * not by visitors, and routinely needs inline markup — `<br>`, `<strong>`,
+     * accent spans. Same trade-off the blog theme's hero makes.
+     */
+    files: ['src/layouts/SiteHome.vue', 'src/blocks/**/*.vue', 'src/primitives/**/*.vue'],
     rules: { 'vue/no-v-html': 'off' },
   },
   eslintConfigPrettier

@@ -8,8 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vitepress dev src",
-    "build": "VITEPRESS_BASE=/vitepress-theme-neptu-blog/landing/ vitepress build src --base /vitepress-theme-neptu-blog/landing/ && pnpm pagefind",
-    "pagefind": "pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'",
+    "build": "VITEPRESS_BASE=/vitepress-theme-neptu-blog/landing/ vitepress build src --base /vitepress-theme-neptu-blog/landing/",
     "preview": "vitepress preview src --base /vitepress-theme-neptu-blog/landing/",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
@@ -27,7 +26,6 @@
     "eslint-config-prettier": "catalog:",
     "eslint-plugin-vue": "catalog:",
     "globals": "catalog:",
-    "pagefind": "catalog:",
     "tailwindcss": "catalog:",
     "typescript-eslint": "catalog:",
     "vue-eslint-parser": "catalog:"

@@ -1,8 +1,52 @@
+/**
+ * Site-level overrides.
+ *
+ * Everything below is optional — it shows the two supported ways to customize
+ * the landing theme without touching a single component:
+ *
+ *  1. override semantic tokens globally;
+ *  2. ship your own preset on either axis.
+ */
+
+/* 1. Global tweaks — a slightly wider container for this demo. */
 :root {
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: linear-gradient(120deg, #41d1ff 30%, #bd34fe);
-  --vp-home-hero-image-background-image: linear-gradient(-45deg,
-      #8b34fe 50%,
-      #474eff 50%);
-  --vp-home-hero-image-filter: blur(68px);
+  --ln-container: 1200px;
+}
+
+/*
+ * 2a. A custom color preset. Activate with `data-theme="neptu"` (set
+ * `themeConfig.defaultColorTheme: 'neptu'` in the config, or from the picker
+ * once you add it to COLOR_THEMES).
+ * A color preset only defines palette primitives — the `--ln-*` layer maps
+ * them onto components for you.
+ */
+[data-theme='neptu'] {
+  --primary-hue: 258;
+  --layout-hue: 258;
+  --primary-btn-bg: hsl(var(--primary-hue), 72%, 52%);
+  --primary-btn-bg-active: hsl(var(--primary-hue), 76%, 40%);
+}
+
+/*
+ * 2b. A custom style preset — shape, density and motion only, no colors.
+ * Activate with `data-ln-style="neptu"`.
+ */
+[data-ln-style='neptu'] {
+  --ln-radius-md: 0.75rem;
+  --ln-radius-lg: 1rem;
+  --ln-btn-radius: 0.75rem;
+  --ln-heading-weight: 800;
+  --ln-card-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+/* Accent span used inside hero titles on the demo pages. */
+.ln-accent {
+  background: linear-gradient(
+    120deg,
+    var(--ln-c-brand),
+    color-mix(in srgb, var(--ln-c-brand) 45%, #e879f9)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

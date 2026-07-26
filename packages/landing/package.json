@@ -1,7 +1,7 @@
 {
   "name": "vitepress-theme-neptu-landing",
   "version": "0.20.0",
-  "description": "VitePress landing theme for Neptu main site",
+  "description": "VitePress theme for project sites: a block-based landing page, optional docs, switchable color and style themes",
   "types": "./src/types.d.ts",
   "type": "module",
   "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
@@ -11,6 +11,8 @@
   },
   "files": [
     "src",
+    "schema",
+    "AGENTS.md",
     "README.md",
     "LICENSE"
   ],
@@ -28,7 +30,29 @@
       "types": "./src/configs/index.ts",
       "import": "./src/configs/index.ts"
     },
-    "./site-theme-fix.css": "./src/styles/site-theme-fix.css"
+    "./blocks": {
+      "types": "./src/blocks/index.ts",
+      "import": "./src/blocks/index.ts"
+    },
+    "./primitives": {
+      "types": "./src/primitives/index.ts",
+      "import": "./src/primitives/index.ts"
+    },
+    "./components": {
+      "types": "./src/components/index.ts",
+      "import": "./src/components/index.ts"
+    },
+    "./composables": {
+      "types": "./src/composables/index.ts",
+      "import": "./src/composables/index.ts"
+    },
+    "./landing.css": "./src/styles/landing.css",
+    "./landing-vars.css": "./src/styles/landing-vars.css",
+    "./style-presets.css": "./src/styles/style-presets.css",
+    "./vitepress-bridge.css": "./src/styles/vitepress-bridge.css",
+    "./site-theme-fix.css": "./src/styles/site-theme-fix.css",
+    "./src/*": "./src/*",
+    "./landing-blocks.schema.json": "./schema/landing-blocks.schema.json"
   },
   "peerDependencies": {
     "tailwindcss": "^4.0.0",
@@ -41,6 +65,7 @@
     }
   },
   "dependencies": {
+    "@iconify/vue": "^5.0.1",
     "@tailwindcss/vite": "catalog:",
     "vitepress-theme-neptu-blog": "workspace:^"
   },

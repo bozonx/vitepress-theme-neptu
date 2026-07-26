@@ -1,0 +1,413 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/bozonx/vitepress-theme-neptu-blog/packages/landing/schema/landing-blocks.schema.json",
+  "title": "Neptu Landing — page frontmatter",
+  "description": "Frontmatter of a landing page rendered by <LandingRenderer />.",
+  "type": "object",
+  "properties": {
+    "layout": { "const": "home" },
+    "markdownStyles": { "const": false },
+    "blocks": {
+      "type": "array",
+      "description": "Ordered list of sections. Rendered top to bottom.",
+      "items": { "$ref": "#/definitions/block" }
+    }
+  },
+  "definitions": {
+    "section": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Anchor id." },
+        "bg": {
+          "enum": ["base", "soft", "mute", "inverse", "brand", "transparent"],
+          "default": "base"
+        },
+        "width": {
+          "enum": ["narrow", "default", "wide", "full"],
+          "default": "default"
+        },
+        "padding": { "enum": ["none", "sm", "md", "lg"], "default": "md" },
+        "align": { "enum": ["start", "center"] },
+        "divider": { "type": "boolean" },
+        "noReveal": { "type": "boolean" },
+        "eyebrow": { "type": "string" },
+        "title": { "type": "string", "description": "Inline HTML allowed." },
+        "text": { "type": "string", "description": "Inline HTML allowed." }
+      }
+    },
+    "icon": {
+      "description": "Iconify name (`fa6-solid:rocket`), emoji, or image path.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "required": ["src"],
+          "properties": { "src": { "type": "string" }, "alt": { "type": "string" } },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "media": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "src": { "type": "string" },
+            "alt": { "type": "string" },
+            "video": { "type": "string" },
+            "poster": { "type": "string" },
+            "width": { "type": ["number", "string"] },
+            "height": { "type": ["number", "string"] },
+            "ratio": { "type": "string", "examples": ["16/9", "4/3"] },
+            "fit": { "enum": ["cover", "contain"] }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "action": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string" },
+        "link": { "type": "string" },
+        "variant": { "enum": ["brand", "alt", "ghost", "outline", "link"] },
+        "size": { "enum": ["sm", "md", "lg"] },
+        "icon": { "type": "string" },
+        "target": { "type": "string" },
+        "rel": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "actions": { "type": "array", "items": { "$ref": "#/definitions/action" } },
+    "feature": {
+      "type": "object",
+      "properties": {
+        "eyebrow": { "type": "string" },
+        "title": { "type": "string" },
+        "text": { "type": "string" },
+        "icon": { "$ref": "#/definitions/icon" },
+        "image": { "$ref": "#/definitions/media" },
+        "link": { "type": "string" },
+        "linkText": { "type": "string" },
+        "badge": { "type": "string" },
+        "target": { "type": "string" },
+        "rel": { "type": "string" },
+        "span": { "enum": [1, 2], "description": "Bento only." },
+        "rowSpan": { "enum": [1, 2], "description": "Bento only." },
+        "bullets": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "feature-split only."
+        },
+        "actions": { "$ref": "#/definitions/actions" }
+      },
+      "additionalProperties": false
+    },
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "allOf": [
+        { "$ref": "#/definitions/section" },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "type": { "const": "hero" },
+                "variant": { "enum": ["split", "centered", "cover", "plain"] },
+                "actions": { "$ref": "#/definitions/actions" },
+                "image": { "$ref": "#/definitions/media" },
+                "note": { "type": "string" },
+                "glow": { "type": "boolean" },
+                "overlay": { "type": "boolean" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "features" },
+                "items": { "type": "array", "items": { "$ref": "#/definitions/feature" } },
+                "cols": { "enum": [1, 2, 3, 4] },
+                "variant": { "enum": ["card", "plain", "bordered"] },
+                "iconPosition": { "enum": ["top", "inline"] },
+                "iconSize": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "feature-split" },
+                "items": { "type": "array", "items": { "$ref": "#/definitions/feature" } },
+                "reverse": { "type": "boolean" },
+                "noAlternate": { "type": "boolean" },
+                "mediaRatio": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "bento" },
+                "items": { "type": "array", "items": { "$ref": "#/definitions/feature" } },
+                "cols": { "enum": [2, 3, 4] }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "carousel" },
+                "items": { "type": "array", "items": { "$ref": "#/definitions/feature" } },
+                "perView": { "enum": [1, 2, 3, 4] },
+                "arrows": { "type": "boolean" },
+                "dots": { "type": "boolean" },
+                "autoplay": { "type": "number", "description": "ms; 0 disables." },
+                "peek": { "type": "boolean" },
+                "ariaLabel": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "logos" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["src"],
+                    "properties": {
+                      "src": { "type": "string" },
+                      "alt": { "type": "string" },
+                      "link": { "type": "string" },
+                      "height": { "type": "string" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "variant": { "enum": ["row", "grid", "marquee"] },
+                "monochrome": { "type": "boolean" },
+                "speed": { "type": "number" },
+                "logoHeight": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "stats" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["value"],
+                    "properties": {
+                      "value": { "type": "string" },
+                      "label": { "type": "string" },
+                      "text": { "type": "string" },
+                      "icon": { "$ref": "#/definitions/icon" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "cols": { "enum": [2, 3, 4] },
+                "variant": { "enum": ["plain", "card", "divided"] }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "steps" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "eyebrow": { "type": "string" },
+                      "title": { "type": "string" },
+                      "text": { "type": "string" },
+                      "label": { "type": "string" },
+                      "icon": { "$ref": "#/definitions/icon" },
+                      "image": { "$ref": "#/definitions/media" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "variant": { "enum": ["row", "column"] },
+                "connector": { "type": "boolean" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "testimonials" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["text"],
+                    "properties": {
+                      "text": { "type": "string" },
+                      "author": { "type": "string" },
+                      "role": { "type": "string" },
+                      "avatar": { "type": "string" },
+                      "logo": { "type": "string" },
+                      "link": { "type": "string" },
+                      "rating": { "type": "number", "minimum": 0, "maximum": 5 }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "cols": { "enum": [1, 2, 3] },
+                "variant": { "enum": ["grid", "masonry", "single"] }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "pricing" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": { "type": "string" },
+                      "text": { "type": "string" },
+                      "badge": { "type": "string" },
+                      "featured": { "type": "boolean" },
+                      "price": { "type": "string" },
+                      "period": { "type": "string" },
+                      "priceYearly": { "type": "string" },
+                      "periodYearly": { "type": "string" },
+                      "features": {
+                        "type": "array",
+                        "items": {
+                          "oneOf": [
+                            { "type": "string" },
+                            {
+                              "type": "object",
+                              "required": ["text"],
+                              "properties": {
+                                "text": { "type": "string" },
+                                "included": { "type": "boolean" }
+                              },
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "action": { "$ref": "#/definitions/action" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "cols": { "enum": [2, 3, 4] },
+                "monthlyLabel": { "type": "string" },
+                "yearlyLabel": { "type": "string" },
+                "note": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "faq" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["question", "answer"],
+                    "properties": {
+                      "question": { "type": "string" },
+                      "answer": { "type": "string" },
+                      "open": { "type": "boolean" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "cols": { "enum": [1, 2] },
+                "exclusive": { "type": "boolean" },
+                "actions": { "$ref": "#/definitions/actions" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "cta" },
+                "variant": { "enum": ["banner", "card", "split"] },
+                "actions": { "$ref": "#/definitions/actions" },
+                "image": { "$ref": "#/definitions/media" },
+                "note": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "timeline" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": { "type": "string" },
+                      "title": { "type": "string" },
+                      "text": { "type": "string" },
+                      "eyebrow": { "type": "string" },
+                      "icon": { "$ref": "#/definitions/icon" },
+                      "state": { "enum": ["done", "active", "planned"] }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "variant": { "enum": ["stacked", "side"] }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "team" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["name"],
+                    "properties": {
+                      "name": { "type": "string" },
+                      "role": { "type": "string" },
+                      "text": { "type": "string" },
+                      "avatar": { "type": "string" },
+                      "links": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["link"],
+                          "properties": {
+                            "link": { "type": "string" },
+                            "icon": { "type": "string" },
+                            "text": { "type": "string" }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "cols": { "enum": [2, 3, 4] },
+                "variant": { "enum": ["card", "plain"] },
+                "avatarShape": { "enum": ["circle", "rounded"] }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "gallery" },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["src"],
+                    "properties": {
+                      "src": { "type": "string" },
+                      "alt": { "type": "string" },
+                      "caption": { "type": "string" },
+                      "link": { "type": "string" },
+                      "ratio": { "type": "string" }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "cols": { "enum": [2, 3, 4] },
+                "variant": { "enum": ["grid", "masonry"] },
+                "lightbox": { "type": "boolean" },
+                "ratio": { "type": "string" }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

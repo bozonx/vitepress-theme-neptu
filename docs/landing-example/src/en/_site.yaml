@@ -12,7 +12,15 @@ themeConfig:
   # Template substitution and locale-prefixing are applied by loadSiteLocale.
   sidebar:
     doc:
-      - text: 'Documentation'
+      - text: 'Guide'
         items:
           - text: 'Introduction'
             link: ''
+          - text: 'Blocks'
+            link: 'blocks'
+          - text: 'Theming'
+            link: 'theming'
+          - text: 'Page as data'
+            link: 'yaml-mode'
+          - text: 'About'
+            link: 'about'

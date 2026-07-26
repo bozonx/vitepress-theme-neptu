@@ -1,0 +1,26 @@
+/**
+ * Single entry point for the landing theme styles.
+ *
+ * Import it once in `.vitepress/theme/index.ts`:
+ *
+ *   import 'vitepress-theme-neptu-landing/landing.css'
+ *
+ * Order matters: palette primitives first, then the color-theme presets that
+ * override them, then the semantic tokens built on top, then the style presets,
+ * then the bridge into the VitePress default theme.
+ */
+
+/* Layer 1 — default palette (shared with the blog theme). */
+@import 'vitepress-theme-neptu-blog/blue-theme.css';
+
+/* Layer 1b — `[data-theme="..."]` color presets. */
+@import 'vitepress-theme-neptu-blog/theme-presets.css';
+
+/* Layer 2 — semantic `--ln-*` tokens. */
+@import './landing-vars.css';
+
+/* Layer 3 — `[data-ln-style="..."]` shape/density presets. */
+@import './style-presets.css';
+
+/* Layer 4 — feed the tokens into the VitePress default theme. */
+@import './vitepress-bridge.css';

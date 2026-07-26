@@ -10,7 +10,15 @@ themeConfig:
 
   sidebar:
     doc:
-      - text: 'Документация'
+      - text: 'Руководство'
         items:
           - text: 'Введение'
             link: ''
+          - text: 'Блоки'
+            link: 'blocks'
+          - text: 'Темизация'
+            link: 'theming'
+          - text: 'Страница как данные'
+            link: 'yaml-mode'
+          - text: 'О теме'
+            link: 'about'

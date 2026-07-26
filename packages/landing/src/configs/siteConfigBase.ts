@@ -36,6 +36,7 @@ import {
 import type { SitemapItem } from 'vitepress-theme-neptu-blog/transformers'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { autoLoadSiteLocales } from './loadSiteLocale.ts'
+import { createLandingHeadScript } from './headScript.ts'
 import type {
   LandingUserConfig,
   ResolvedLandingConfig,
@@ -98,7 +99,20 @@ export function mergeLandingConfig(
     ...config,
     title: config.title || config.en?.title,
     description: config.description || config.en?.description,
-    head: [...(common.head || []), ...(config.head || [])],
+    head: [
+      ...(common.head || []),
+      // Restores the saved theme before the first paint and arms the reveal
+      // animations. Must run inline, before any stylesheet is applied.
+      [
+        'script',
+        {},
+        createLandingHeadScript({
+          colorTheme: config.themeConfig?.defaultColorTheme,
+          landingStyle: config.themeConfig?.defaultLandingStyle,
+        }),
+      ],
+      ...(config.head || []),
+    ],
     locales: Object.fromEntries(
       Object.entries({
         ...(common.locales || {}),

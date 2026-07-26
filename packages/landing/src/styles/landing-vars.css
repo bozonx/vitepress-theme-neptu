@@ -1,0 +1,151 @@
+/**
+ * Semantic tokens of the landing theme.
+ *
+ * Layer 1 — palette primitives (`--gray-*`, `--primary-btn-bg`) come from the
+ * shared Neptu palette, the same one the blog theme uses. A color theme swaps
+ * that layer (see `theme-presets.css` of the blog package).
+ *
+ * Layer 2 — this file. It maps the primitives onto `--ln-*` tokens that every
+ * block consumes. Blocks must never use raw colors or palette primitives
+ * directly: only `--ln-*`. That is what makes a theme replaceable by a single
+ * stylesheet.
+ *
+ * Layer 3 — style presets (`data-ln-style`, see `style-presets.css`) override
+ * shape/density/motion tokens without touching colors.
+ */
+
+:root {
+  /**** Brand */
+  --ln-c-brand: var(--primary-btn-bg, hsl(213, 66%, 46%));
+  --ln-c-brand-active: var(--primary-btn-bg-active, hsl(213, 75%, 32%));
+  --ln-c-brand-soft: color-mix(in srgb, var(--ln-c-brand) 12%, transparent);
+  --ln-c-on-brand: #fff;
+
+  /**** Surfaces */
+  --ln-c-bg: var(--gray-50, #fafafa);
+  --ln-c-bg-soft: var(--gray-100, #f4f4f5);
+  --ln-c-bg-mute: var(--gray-150, #ececef);
+  --ln-c-bg-inverse: var(--gray-900, #18181b);
+  --ln-c-bg-elevated: #fff;
+
+  /**** Text */
+  --ln-c-text-1: var(--gray-800, #27272a);
+  --ln-c-text-2: var(--gray-500, #71717a);
+  --ln-c-text-3: var(--gray-400, #a1a1aa);
+  --ln-c-on-inverse: var(--gray-200, #e4e4e7);
+  --ln-c-on-inverse-2: var(--gray-400, #a1a1aa);
+
+  /**** Borders */
+  --ln-c-border: var(--gray-200, #e4e4e7);
+  --ln-c-border-strong: var(--gray-300, #d4d4d8);
+
+  /**** Shape */
+  --ln-radius-xs: 0.25rem;
+  --ln-radius-sm: 0.5rem;
+  --ln-radius-md: 0.875rem;
+  --ln-radius-lg: 1.25rem;
+  --ln-radius-pill: 999px;
+  --ln-border-width: 1px;
+
+  /**** Elevation */
+  --ln-shadow-1: 0 1px 2px rgb(0 0 0 / 6%);
+  --ln-shadow-2: 0 4px 16px -4px rgb(0 0 0 / 10%);
+  --ln-shadow-3: 0 18px 48px -12px rgb(0 0 0 / 18%);
+
+  /**** Layout */
+  --ln-container: 1152px;
+  --ln-container-narrow: 720px;
+  --ln-container-wide: 1440px;
+  --ln-page-px: 1.5rem;
+  --ln-section-py: clamp(3.5rem, 2rem + 5vw, 7rem);
+  --ln-section-py-sm: clamp(2rem, 1.25rem + 2.5vw, 3.5rem);
+  --ln-section-py-lg: clamp(5rem, 2.5rem + 8vw, 10rem);
+  --ln-gap: clamp(1rem, 0.6rem + 1.2vw, 2rem);
+  --ln-gap-sm: 0.75rem;
+
+  /**** Typography */
+  --ln-font-body: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  --ln-font-display: var(--ln-font-body);
+  --ln-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ln-h1-size: clamp(2.25rem, 1.4rem + 3.4vw, 4rem);
+  --ln-h2-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  --ln-h3-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.375rem);
+  --ln-lead-size: clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
+  --ln-eyebrow-size: 0.8125rem;
+  --ln-heading-weight: 700;
+  --ln-heading-tracking: -0.02em;
+  --ln-heading-lh: 1.12;
+  --ln-body-lh: 1.65;
+
+  /**** Motion */
+  --ln-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ln-duration: 0.28s;
+  --ln-reveal-distance: 16px;
+  --ln-lift: -3px;
+
+  /**** Buttons */
+  --ln-btn-radius: var(--ln-radius-pill);
+  --ln-btn-height: 2.75rem;
+  --ln-btn-px: 1.5rem;
+  --ln-btn-weight: 600;
+  --ln-btn-tracking: 0;
+  --ln-btn-shadow: none;
+  --ln-btn-uppercase: none;
+
+  /**** Cards */
+  --ln-card-bg: var(--ln-c-bg-elevated);
+  --ln-card-border-color: var(--ln-c-border);
+  --ln-card-radius: var(--ln-radius-lg);
+  --ln-card-padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+  --ln-card-shadow: var(--ln-shadow-1);
+  --ln-card-shadow-hover: var(--ln-shadow-2);
+
+  /**** Accents used by decorative block parts */
+  --ln-c-accent-glow: color-mix(in srgb, var(--ln-c-brand) 22%, transparent);
+  --ln-c-overlay: rgb(0 0 0 / 45%);
+}
+
+.dark {
+  --ln-c-brand-soft: color-mix(in srgb, var(--ln-c-brand) 22%, transparent);
+
+  --ln-c-bg: var(--gray-900, #18181b);
+  --ln-c-bg-soft: var(--gray-850, #1f1f23);
+  --ln-c-bg-mute: var(--gray-800, #27272a);
+  --ln-c-bg-inverse: var(--gray-100, #f4f4f5);
+  --ln-c-bg-elevated: var(--gray-800, #27272a);
+
+  --ln-c-text-1: var(--gray-200, #e4e4e7);
+  --ln-c-text-2: var(--gray-400, #a1a1aa);
+  --ln-c-text-3: var(--gray-500, #71717a);
+  --ln-c-on-inverse: var(--gray-800, #27272a);
+  --ln-c-on-inverse-2: var(--gray-600, #52525b);
+
+  --ln-c-border: var(--gray-790, #2f2f36);
+  --ln-c-border-strong: var(--gray-700, #3f3f46);
+
+  --ln-shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+  --ln-shadow-2: 0 4px 16px -4px rgb(0 0 0 / 55%);
+  --ln-shadow-3: 0 18px 48px -12px rgb(0 0 0 / 70%);
+
+  --ln-c-overlay: rgb(0 0 0 / 60%);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --ln-page-px: 2.5rem;
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --ln-page-px: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ln-duration: 0.001s;
+    --ln-reveal-distance: 0px;
+    --ln-lift: 0px;
+  }
+}

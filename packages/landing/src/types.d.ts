@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import type { Theme } from 'vitepress'
+import type { DefaultTheme, Theme } from 'vitepress'
 import type {
   BlogUserConfig,
   ThemeConfig,
@@ -27,13 +27,62 @@ export type {
 }
 
 /**
+ * Chrome-related options owned by the VitePress default theme, which the
+ * landing builds on. Their blog counterparts (`nav`, `sidebar`, `footer`, …)
+ * have a different shape, so the default theme's types win for these keys.
+ */
+export type LandingChromeConfig = Pick<
+  DefaultTheme.Config,
+  | 'nav'
+  | 'sidebar'
+  | 'outline'
+  | 'aside'
+  | 'editLink'
+  | 'lastUpdated'
+  | 'docFooter'
+  | 'footer'
+  | 'socialLinks'
+  | 'logo'
+  | 'siteTitle'
+  | 'darkModeSwitchLabel'
+  | 'sidebarMenuLabel'
+  | 'returnToTopLabel'
+  | 'langMenuLabel'
+  | 'notFound'
+>
+
+/**
+ * `themeConfig` of the landing theme — the blog's config, the default theme's
+ * chrome options, plus the two theme-axis defaults used by the landing.
+ */
+export type LandingThemeConfig = Partial<
+  Omit<ThemeConfig, 't' | keyof LandingChromeConfig>
+> &
+  Partial<LandingChromeConfig> & {
+  t?: DeepPartial<I18n>
+  /**
+   * Color theme applied when the visitor has no saved preference: `blue`,
+   * `green`, `purple`, `amber`, `teal`, `rose`, `magenta`, `monochrome`, or the
+   * id of your own preset.
+   */
+  defaultColorTheme?: string
+  /**
+   * Style preset applied when the visitor has no saved preference: `soft`,
+   * `sharp`, `brutal`, `glass`, `editorial`, or the id of your own preset.
+   */
+  defaultLandingStyle?: string
+}
+
+/**
  * User config for the landing theme. Structurally identical to
  * {@link BlogUserConfig} — the landing reuses the blog's utilities,
  * transformers, and YAML loading pipeline. Blog-specific themeConfig
  * fields (perPage, postList, popularPosts, feeds, …) are all optional
  * and simply ignored by the landing layout.
  */
-export type LandingUserConfig = BlogUserConfig
+export type LandingUserConfig = Omit<BlogUserConfig, 'themeConfig'> & {
+  themeConfig?: LandingThemeConfig
+}
 
 /**
  * Fully resolved config returned by {@link mergeLandingConfig} and
@@ -51,7 +100,7 @@ export type ResolvedLandingConfig = LandingUserConfig & {
       NonNullable<LandingUserConfig['sitemap']>['transformItems']
     >
   }
-  themeConfig: Partial<ThemeConfig> & {
+  themeConfig: LandingThemeConfig & {
     seo: NonNullable<ThemeConfig['seo']>
     t: I18n
   }

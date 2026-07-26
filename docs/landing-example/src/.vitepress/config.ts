@@ -15,30 +15,21 @@ export default async () => {
       process.env.SITE_URL ||
       'https://bozonx.github.io/vitepress-theme-neptu-blog/landing',
 
-    head: [
-      ['meta', { name: 'format-detection', content: 'telephone=no' }],
-      [
-        'link',
-        {
-          rel: 'stylesheet',
-          href: `${base}/pagefind/pagefind-ui.css`.replace(/\/+/g, '/'),
-        },
-      ],
-      [
-        'script',
-        { src: `${base}/pagefind/pagefind-ui.js`.replace(/\/+/g, '/') },
-      ],
-    ],
+    head: [['meta', { name: 'format-detection', content: 'telephone=no' }]],
 
     themeConfig: {
       repo: 'https://github.com/bozonx/vitepress-theme-neptu-blog',
       logo: '/img/logo.svg',
       mainHeroImg: '/img/home-logo.svg',
       blogUrl: 'https://bozonx.github.io/vitepress-theme-neptu-blog',
-      search: {
-        provider: 'pagefind',
-        options: { bodyMarker: 'data-pagefind-body' },
-      },
+
+      // Theme defaults for first-time visitors. The two axes are independent;
+      // the picker remembers the visitor's choice in localStorage.
+      defaultColorTheme: 'blue',
+      defaultLandingStyle: 'soft',
+
+      // The docs half of the template uses the built-in local search.
+      search: { provider: 'local' },
     },
   }
 
