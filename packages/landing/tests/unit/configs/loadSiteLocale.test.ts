@@ -4,14 +4,60 @@ import {
   autoLoadSiteLocales,
 } from '../../../src/configs/loadSiteLocale.ts'
 
-vi.mock('vitepress-theme-neptu-blog/utils/node', () => ({
-  parseLocaleSite: vi.fn(async () => ({})),
-  parseSharedSite: vi.fn(async () => ({})),
-  hasLocaleSite: vi.fn(() => true),
-  resolveEditLinkPattern: vi.fn(
-    (repo: string) => `${repo}/blob/main/{path}`
-  ),
-}))
+vi.mock('vitepress-theme-neptu-blog/utils/node', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('vitepress-theme-neptu-blog/utils/node')>()
+  const mockedHasLocaleSite = vi.fn((_srcDir: string, _name: string) => true)
+  return {
+    ...actual,
+    parseLocaleSite: vi.fn(async () => ({})),
+    parseSharedSite: vi.fn(async () => ({})),
+    hasLocaleSite: mockedHasLocaleSite,
+    resolveEditLinkPattern: vi.fn(
+      (repo: string) => `${repo}/blob/main/{path}`
+    ),
+    autoLoadLocalesFactory: vi.fn(
+      async (options: {
+        config: { srcDir?: string }
+        loadLocale: (localeIndex: string, config: unknown) => Promise<unknown>
+      }) => {
+        const srcDir = options.config.srcDir || ''
+        if (!srcDir) {
+          console.warn(
+            '[vitepress-theme-neptu-landing] autoLoadLocales: `srcDir` is not set; no locales discovered.'
+          )
+          return {}
+        }
+        const fs = await import('node:fs')
+        if (!fs.existsSync(srcDir)) {
+          console.warn(
+            `[vitepress-theme-neptu-landing] autoLoadLocales: \`srcDir\` does not exist: ${srcDir}`
+          )
+          return {}
+        }
+        const entries = await fs.promises.readdir(srcDir, { withFileTypes: true })
+        const candidates = entries
+          .filter((entry) => entry.isDirectory())
+          .map((entry) => entry.name)
+          .filter((name) => !name.startsWith('.') && !name.startsWith('_'))
+          .sort()
+
+        const locales: Record<string, unknown> = {}
+        for (const name of candidates) {
+          if (!mockedHasLocaleSite(srcDir, name)) continue
+          locales[name] = await options.loadLocale(name, options.config)
+        }
+
+        if (Object.keys(locales).length === 0) {
+          console.warn(
+            `[vitepress-theme-neptu-landing] autoLoadLocales: no folders with \`_site.yaml\` or \`_site.ts\` found under ${srcDir}.`
+          )
+        }
+
+        return locales
+      }
+    ),
+  }
+})
 
 vi.mock('vitepress-theme-neptu-blog/utils', () => ({
   standardTemplate: vi.fn(
@@ -56,6 +102,37 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
     if (key.startsWith('ru')) return 'ru'
     return 'en'
   }),
+  extractThemeConfig: vi.fn((site: Record<string, unknown> | undefined) =>
+    (site?.themeConfig as Record<string, unknown> | undefined) ?? {}
+  ),
+  asExtendedPageData: vi.fn((d: unknown) => d),
+  asExtendedSiteConfig: vi.fn((d: unknown) => d),
+  asTransformContext: vi.fn((d: unknown) => d),
+  asTransformHeadContext: vi.fn((d: unknown) => d),
+  mergeReturnedPageData: vi.fn(),
+  hasTailwindPlugin: vi.fn(() => false),
+  commonBaseConfig: {
+    head: [
+      ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
+      ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
+      ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
+      ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/apple-touch-icon.png' }],
+      ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+    ],
+    lastUpdated: true,
+    cleanUrls: true,
+    lang: 'en-US',
+  },
+  commonHead: [
+    ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
+    ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
+    ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/apple-touch-icon.png' }],
+    ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+  ],
+  normalizeSitemapUrl: vi.fn((p: string) => p),
+  warnMissingRequired: vi.fn(),
+  resolveExternalLinkIcon: vi.fn((_u: boolean | undefined, d: boolean) => d),
 }))
 
 const { mockedExistsSync, mockedReaddir } = vi.hoisted(() => ({

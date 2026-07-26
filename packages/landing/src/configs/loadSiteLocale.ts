@@ -1,18 +1,20 @@
-import fs from 'node:fs'
 import {
   parseLocaleSite,
   parseSharedSite,
-  hasLocaleSite,
 } from 'vitepress-theme-neptu-blog/utils/node'
 import {
   standardTemplate,
   isExternalUrl,
   deepMerge,
   resolveBaseLocaleKey,
+  extractThemeConfig,
 } from 'vitepress-theme-neptu-blog/utils'
-import { resolveEditLinkPattern } from 'vitepress-theme-neptu-blog/utils/node'
+import {
+  resolveEditLinkPattern,
+  autoLoadLocalesFactory,
+  type LocaleEntry,
+} from 'vitepress-theme-neptu-blog/utils/node'
 import type {
-  LocaleDefinition,
   LandingUserConfig,
   ThemeConfig,
   I18n,
@@ -20,19 +22,10 @@ import type {
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { common as siteCommon } from './siteConfigBase.ts'
 
-type SiteLocaleEntry = LocaleDefinition & { label?: string }
+type SiteLocaleEntry = LocaleEntry
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
 
 const localeMap = siteBaseLocales as unknown as Record<string, SiteLocaleEntry>
-
-/**
- * Extracts the `themeConfig` block from a site YAML payload.
- */
-function extractThemeConfig(
-  site: Record<string, unknown> | undefined
-): Record<string, unknown> {
-  return (site?.themeConfig as Record<string, unknown> | undefined) ?? {}
-}
 
 interface LocaleYamlChain {
   /** Merged `_site.yaml` payload with `extends` resolved. */
@@ -261,39 +254,9 @@ export async function loadSiteLocale(
 export async function autoLoadSiteLocales(
   config: LandingUserConfig
 ): Promise<Record<string, SiteLocaleEntry>> {
-  const srcDir = config.srcDir || ''
-  if (!srcDir) {
-    console.warn(
-      '[vitepress-theme-neptu-landing] autoLoadSiteLocales: `srcDir` is not set; no locales discovered.'
-    )
-    return {}
-  }
-
-  if (!fs.existsSync(srcDir)) {
-    console.warn(
-      `[vitepress-theme-neptu-landing] autoLoadSiteLocales: \`srcDir\` does not exist: ${srcDir}`
-    )
-    return {}
-  }
-
-  const entries = await fs.promises.readdir(srcDir, { withFileTypes: true })
-  const candidates = entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((name) => !name.startsWith('.') && !name.startsWith('_'))
-    .sort()
-
-  const locales: Record<string, SiteLocaleEntry> = {}
-  for (const name of candidates) {
-    if (!hasLocaleSite(srcDir, name)) continue
-    locales[name] = await loadSiteLocale(name, config)
-  }
-
-  if (Object.keys(locales).length === 0) {
-    console.warn(
-      `[vitepress-theme-neptu-landing] autoLoadSiteLocales: no folders with \`_site.yaml\` or \`_site.ts\` found under ${srcDir}.`
-    )
-  }
-
-  return locales
+  return autoLoadLocalesFactory({
+    config,
+    loadLocale: loadSiteLocale,
+    logPrefix: '[vitepress-theme-neptu-landing]',
+  })
 }

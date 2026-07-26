@@ -36,6 +36,59 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
   ),
   resolveBaseLocaleKey: vi.fn(() => 'en'),
   resolveTranslationsByFilePath: vi.fn(),
+  extractThemeConfig: vi.fn((site: Record<string, unknown> | undefined) =>
+    (site?.themeConfig as Record<string, unknown> | undefined) ?? {}
+  ),
+  asExtendedPageData: vi.fn((d: unknown) => d),
+  asExtendedSiteConfig: vi.fn((d: unknown) => d),
+  asTransformContext: vi.fn((d: unknown) => d),
+  asTransformHeadContext: vi.fn((d: unknown) => d),
+  mergeReturnedPageData: vi.fn((pageData: Record<string, unknown>, returned: unknown) => {
+    if (returned && typeof returned === 'object' && !Array.isArray(returned)) {
+      Object.assign(pageData, returned)
+    }
+  }),
+  hasTailwindPlugin: vi.fn((plugins: unknown) => {
+    const flat = Array.isArray(plugins) ? (plugins as unknown[]).flat(10) : []
+    return flat.some(
+      (p) =>
+        p != null &&
+        typeof p === 'object' &&
+        'name' in p &&
+        (p as Record<string, unknown>).name === 'tailwindcss'
+    )
+  }),
+  commonBaseConfig: {
+    head: [
+      ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
+      ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
+      ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
+      ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/apple-touch-icon.png' }],
+      ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+    ],
+    lastUpdated: true,
+    cleanUrls: true,
+    lang: 'en-US',
+  },
+  commonHead: [
+    ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
+    ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
+    ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/apple-touch-icon.png' }],
+    ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+  ],
+  normalizeSitemapUrl: vi.fn((p: string) => p.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')),
+  warnMissingRequired: vi.fn((_config: unknown, prefix: string) => {
+    if (!(_config as { siteUrl?: string }).siteUrl) {
+      console.warn(`${prefix} \`siteUrl\` is not set.`)
+    }
+    if (!(_config as { locales?: Record<string, unknown> }).locales || Object.keys((_config as { locales?: Record<string, unknown> }).locales || {}).length === 0) {
+      console.warn(`${prefix} \`locales\` is empty.`)
+    }
+  }),
+  resolveExternalLinkIcon: vi.fn((userVal: boolean | undefined, defaultVal: boolean) =>
+    typeof userVal === 'boolean' ? userVal : defaultVal
+  ),
 }))
 
 vi.mock('vitepress-theme-neptu-blog/utils/node', () => ({

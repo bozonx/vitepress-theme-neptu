@@ -1,13 +1,20 @@
 import tailwindcss from '@tailwindcss/vite'
 import { createSiteYamlHotReloadPlugin } from '../utils/node/hotReloadPlugin.ts'
-import type {
-  UserConfig,
-  HeadConfig,
-  TransformContext,
-  SiteConfig,
-} from 'vitepress'
+import type { UserConfig, SiteConfig } from 'vitepress'
 import { omitUndefined, hasNoIndex } from '../utils/shared/index.ts'
 import { deepMerge } from '../utils/shared/merge.ts'
+import {
+  asExtendedPageData,
+  asExtendedSiteConfig,
+  asTransformContext,
+  asTransformHeadContext,
+  mergeReturnedPageData,
+  hasTailwindPlugin,
+  commonBaseConfig,
+  normalizeSitemapUrl,
+  warnMissingRequired,
+  resolveExternalLinkIcon,
+} from '../utils/shared/configHelpers.ts'
 import blogBaseLocales from './blogLocalesBase/index.ts'
 import { addJsonLd } from '../transformers/addJsonLd.ts'
 import { addHreflang } from '../transformers/addHreflang.ts'
@@ -26,69 +33,11 @@ import { collectImageDimensions } from '../transformers/collectImageDimensions.t
 import { mdImage } from '../transformers/mdImage.ts'
 import { autoLoadLocales } from '../utils/node/config.ts'
 import type {
-  ExtendedPageData,
-  ExtendedSiteConfig,
   BlogUserConfig,
   ThemeConfig,
   SeoConfig,
   I18n,
 } from '../types.d.ts'
-
-// ---------------------------------------------------------------------------
-// Type adapters — isolate all `as unknown as` casts in one place so the
-// rest of the file can use named, readable casts instead of inline ones.
-// ---------------------------------------------------------------------------
-
-type TransformHeadContext = {
-  head: HeadConfig[]
-  pageData: ExtendedPageData
-  siteConfig: ExtendedSiteConfig
-  page: string
-}
-
-function asExtendedPageData(pageData: unknown): ExtendedPageData {
-  return pageData as ExtendedPageData
-}
-
-function asTransformContext(ctx: unknown): TransformContext {
-  return ctx as unknown as TransformContext
-}
-
-function asExtendedSiteConfig(siteConfig: unknown): ExtendedSiteConfig {
-  return siteConfig as unknown as ExtendedSiteConfig
-}
-
-function asTransformHeadContext(ctx: unknown): TransformHeadContext {
-  return ctx as unknown as TransformHeadContext
-}
-
-function mergeReturnedPageData(
-  pageData: ExtendedPageData,
-  returnedPageData: unknown
-): void {
-  if (
-    returnedPageData &&
-    typeof returnedPageData === 'object' &&
-    !Array.isArray(returnedPageData)
-  ) {
-    Object.assign(pageData, returnedPageData)
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Tailwind plugin guard — type-safe name check that handles nested arrays.
-// ---------------------------------------------------------------------------
-
-function hasTailwindPlugin(plugins: unknown): boolean {
-  const flat = Array.isArray(plugins) ? (plugins as unknown[]).flat(10) : []
-  return flat.some(
-    (p) =>
-      p != null &&
-      typeof p === 'object' &&
-      'name' in p &&
-      (p as Record<string, unknown>).name === 'tailwindcss'
-  )
-}
 
 type ResolvedBlogConfig = BlogUserConfig & {
   head: NonNullable<UserConfig['head']>
@@ -164,43 +113,11 @@ const commonThemeConfig = {
 } satisfies Partial<ThemeConfig>
 
 export const common: BlogUserConfig = {
-  head: [
-    ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
-
-    ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
-    ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
-    [
-      'link',
-      {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        href: '/img/apple-touch-icon.png',
-      },
-    ],
-    ['link', { rel: 'manifest', href: '/site.webmanifest' }],
-  ],
-  lastUpdated: true,
-  cleanUrls: true,
-  lang: 'en-US',
-
+  ...commonBaseConfig,
   themeConfig: commonThemeConfig,
 }
 
-function warnMissingRequired(config: BlogUserConfig): void {
-  if (!config.siteUrl) {
-    console.warn(
-      '[vitepress-theme-neptu-blog] `siteUrl` is not set. ' +
-        'SEO features (sitemap, RSS, canonical links) may produce broken URLs.'
-    )
-  }
-
-  if (!config.locales || Object.keys(config.locales).length === 0) {
-    console.warn(
-      '[vitepress-theme-neptu-blog] `locales` is empty. ' +
-        'The theme requires at least one locale (e.g. `{ en: { lang: "en-US" } }`).'
-    )
-  }
-}
+const LOG_PREFIX = '[vitepress-theme-neptu-blog]'
 
 /**
  * Low-level config merge without validation warnings.
@@ -215,16 +132,12 @@ function warnMissingRequired(config: BlogUserConfig): void {
  * warnings (e.g. in tests or multi-step merge pipelines).
  */
 export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
-  const externalLinkIcon =
-    typeof config.themeConfig?.externalLinkIcon === 'boolean'
-      ? config.themeConfig.externalLinkIcon
-      : commonThemeConfig.externalLinkIcon
+  const externalLinkIcon = resolveExternalLinkIcon(
+    config.themeConfig?.externalLinkIcon,
+    commonThemeConfig.externalLinkIcon
+  )
 
   const noIndexUrls = new Set<string>()
-
-  function normalizeSitemapUrl(relativePath: string): string {
-    return relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
-  }
 
   return {
     ...common,
@@ -375,7 +288,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
  * merge without locale discovery.
  */
 export function defineBlogConfigSync(config: BlogUserConfig): ResolvedBlogConfig {
-  warnMissingRequired(config)
+  warnMissingRequired(config, LOG_PREFIX)
 
   return mergeBlogConfig(config)
 }

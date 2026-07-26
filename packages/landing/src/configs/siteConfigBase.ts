@@ -1,13 +1,23 @@
 import type {
   UserConfig,
-  HeadConfig,
-  TransformContext,
   SiteConfig,
 } from 'vitepress'
 import tailwindcss from '@tailwindcss/vite'
 import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu-blog/utils'
 import { deepMerge } from 'vitepress-theme-neptu-blog/utils'
 import { resolveBaseLocaleKey } from 'vitepress-theme-neptu-blog/utils'
+import {
+  asExtendedPageData,
+  asExtendedSiteConfig,
+  asTransformContext,
+  asTransformHeadContext,
+  mergeReturnedPageData,
+  hasTailwindPlugin,
+  commonBaseConfig,
+  normalizeSitemapUrl,
+  warnMissingRequired,
+  resolveExternalLinkIcon,
+} from 'vitepress-theme-neptu-blog/utils'
 import { createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu-blog/utils/node'
 import {
   addCanonicalLink,
@@ -27,69 +37,12 @@ import type { SitemapItem } from 'vitepress-theme-neptu-blog/transformers'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { autoLoadSiteLocales } from './loadSiteLocale.ts'
 import type {
-  ExtendedPageData,
-  ExtendedSiteConfig,
   LandingUserConfig,
   ResolvedLandingConfig,
   ThemeConfig,
   SeoConfig,
   I18n,
 } from '../types.d.ts'
-
-// ---------------------------------------------------------------------------
-// Type adapters — isolate all `as unknown as` casts in one place.
-// ---------------------------------------------------------------------------
-
-type TransformHeadContext = {
-  head: HeadConfig[]
-  pageData: ExtendedPageData
-  siteConfig: ExtendedSiteConfig
-  page: string
-}
-
-function asExtendedPageData(pageData: unknown): ExtendedPageData {
-  return pageData as ExtendedPageData
-}
-
-function asTransformContext(ctx: unknown): TransformContext {
-  return ctx as unknown as TransformContext
-}
-
-function asExtendedSiteConfig(siteConfig: unknown): ExtendedSiteConfig {
-  return siteConfig as unknown as ExtendedSiteConfig
-}
-
-function asTransformHeadContext(ctx: unknown): TransformHeadContext {
-  return ctx as unknown as TransformHeadContext
-}
-
-function mergeReturnedPageData(
-  pageData: ExtendedPageData,
-  returnedPageData: unknown
-): void {
-  if (
-    returnedPageData &&
-    typeof returnedPageData === 'object' &&
-    !Array.isArray(returnedPageData)
-  ) {
-    Object.assign(pageData, returnedPageData)
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Tailwind plugin guard — type-safe name check that handles nested arrays.
-// ---------------------------------------------------------------------------
-
-function hasTailwindPlugin(plugins: unknown): boolean {
-  const flat = Array.isArray(plugins) ? (plugins as unknown[]).flat(10) : []
-  return flat.some(
-    (p) =>
-      p != null &&
-      typeof p === 'object' &&
-      'name' in p &&
-      (p as Record<string, unknown>).name === 'tailwindcss'
-  )
-}
 
 // ---------------------------------------------------------------------------
 // Common defaults
@@ -106,43 +59,11 @@ const commonThemeConfig = {
 } satisfies Partial<ThemeConfig>
 
 export const common: LandingUserConfig = {
-  head: [
-    ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
-
-    ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
-    ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
-    [
-      'link',
-      {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        href: '/img/apple-touch-icon.png',
-      },
-    ],
-    ['link', { rel: 'manifest', href: '/site.webmanifest' }],
-  ],
-  lastUpdated: true,
-  cleanUrls: true,
-  lang: 'en-US',
-
+  ...commonBaseConfig,
   themeConfig: commonThemeConfig,
 }
 
-function warnMissingRequired(config: LandingUserConfig): void {
-  if (!config.siteUrl) {
-    console.warn(
-      '[vitepress-theme-neptu-landing] `siteUrl` is not set. ' +
-        'SEO features (sitemap, canonical links) may produce broken URLs.'
-    )
-  }
-
-  if (!config.locales || Object.keys(config.locales).length === 0) {
-    console.warn(
-      '[vitepress-theme-neptu-landing] `locales` is empty. ' +
-        'The theme requires at least one locale (e.g. `{ en: { lang: "en-US" } }`).'
-    )
-  }
-}
+const LOG_PREFIX = '[vitepress-theme-neptu-landing]'
 
 /**
  * Low-level config merge without validation warnings.
@@ -157,16 +78,12 @@ function warnMissingRequired(config: LandingUserConfig): void {
 export function mergeLandingConfig(
   config: LandingUserConfig
 ): ResolvedLandingConfig {
-  const externalLinkIcon =
-    typeof config.themeConfig?.externalLinkIcon === 'boolean'
-      ? config.themeConfig.externalLinkIcon
-      : commonThemeConfig.externalLinkIcon
+  const externalLinkIcon = resolveExternalLinkIcon(
+    config.themeConfig?.externalLinkIcon,
+    commonThemeConfig.externalLinkIcon
+  )
 
   const noIndexUrls = new Set<string>()
-
-  function normalizeSitemapUrl(relativePath: string): string {
-    return relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
-  }
 
   const baseLocaleKey = resolveBaseLocaleKey(
     Object.keys(config.locales || {})[0],
@@ -318,7 +235,7 @@ export function mergeLandingConfig(
 export function defineLandingConfigSync(
   config: LandingUserConfig
 ): ResolvedLandingConfig {
-  warnMissingRequired(config)
+  warnMissingRequired(config, LOG_PREFIX)
   return mergeLandingConfig(config)
 }
 

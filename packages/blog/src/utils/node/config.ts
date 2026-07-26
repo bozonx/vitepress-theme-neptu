@@ -1,11 +1,11 @@
-import fs from 'node:fs'
 import { deepMerge } from '../shared/merge.ts'
 import { mergeAuthorsById } from '../shared/mergeStrategy.ts'
+import { extractThemeConfig } from '../shared/configHelpers.ts'
+import { autoLoadLocalesFactory, type LocaleEntry } from './autoLoadLocales.ts'
 import {
   parseLocaleSite,
   parseSharedSite,
   parseLocaleAuthors,
-  hasLocaleSite,
 } from './i18n.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
@@ -22,20 +22,6 @@ import type {
 } from '../../types.d.ts'
 
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
-
-/**
- * Extracts the `themeConfig` block from a site YAML payload.
- *
- * Both `<srcDir>/site.yaml` (shared) and `<srcDir>/<locale>/_site.yaml`
- * (per-locale) follow the canonical `Partial<BlogUserConfig>` shape:
- * top-level keys for VitePress identity (`lang`, `title`, `titleTemplate`,
- * `description`, `extends`) and a nested `themeConfig:` block for the rest.
- */
-function extractThemeConfig(
-  site: Record<string, unknown> | undefined
-): Record<string, unknown> {
-  return (site?.themeConfig as Record<string, unknown> | undefined) ?? {}
-}
 
 /**
  * Removes `authors` from a nested `themeConfig` so that generic deep-merge
@@ -247,16 +233,9 @@ export async function loadBlogLocale(
     },
   }
 }
-
 /**
  * Auto-discovers every content locale under `config.srcDir` and builds the
  * `locales` map for VitePress.
- *
- * A folder `<srcDir>/<name>/` qualifies as a locale when it contains
- * `_site.yaml` or `_site.ts`. Folder names starting with `.` or `_` are
- * skipped so that VitePress-internal and theme-internal folders are never
- * mis-detected as locales. Results are returned sorted alphabetically by
- * locale key for stable build output.
  *
  * Low-level helper for manually composing locale discovery. Most applications
  * should use `defineBlogConfig` instead:
@@ -270,40 +249,10 @@ export async function loadBlogLocale(
  */
 export async function autoLoadLocales(
   config: BlogUserConfig
-): Promise<Record<string, LocaleDefinition & { label?: string }>> {
-  const srcDir = config.srcDir || ''
-  if (!srcDir) {
-    console.warn(
-      '[vitepress-theme-neptu-blog] autoLoadLocales: `srcDir` is not set; no locales discovered.'
-    )
-    return {}
-  }
-
-  if (!fs.existsSync(srcDir)) {
-    console.warn(
-      `[vitepress-theme-neptu-blog] autoLoadLocales: \`srcDir\` does not exist: ${srcDir}`
-    )
-    return {}
-  }
-
-  const entries = await fs.promises.readdir(srcDir, { withFileTypes: true })
-  const candidates = entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((name) => !name.startsWith('.') && !name.startsWith('_'))
-    .sort()
-
-  const locales: Record<string, LocaleDefinition & { label?: string }> = {}
-  for (const name of candidates) {
-    if (!hasLocaleSite(srcDir, name)) continue
-    locales[name] = await loadBlogLocale(name, config)
-  }
-
-  if (Object.keys(locales).length === 0) {
-    console.warn(
-      `[vitepress-theme-neptu-blog] autoLoadLocales: no folders with \`_site.yaml\` or \`_site.ts\` found under ${srcDir}.`
-    )
-  }
-
-  return locales
+): Promise<Record<string, LocaleEntry>> {
+  return autoLoadLocalesFactory({
+    config,
+    loadLocale: loadBlogLocale,
+    logPrefix: '[vitepress-theme-neptu-blog]',
+  })
 }
