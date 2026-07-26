@@ -62,7 +62,7 @@ const HISTORY_STATE_KEY = 'neptuPagefindModal'
 const CLOSE_BUTTON_CLASS = 'search-modal-close-button'
 const MOBILE_CLOSE_BUTTON_CLASS = 'search-modal-mobile-close-button'
 
-const { theme } = useData<ThemeConfig>()
+const { theme, localeIndex } = useData<ThemeConfig>()
 
 const pageFind = ref<InstanceType<typeof window.PagefindUI> | null>(null)
 const isModalOpen = ref(false)
@@ -105,7 +105,15 @@ const showSearchModal = async () => {
 
   if (window.PagefindUI && !pageFind.value) {
     const customOptions = theme.value?.search?.options || {}
-    const { bodyMarker: _bodyMarker, ...runtimeOptions } = customOptions as Record<string, unknown>
+    const {
+      bodyMarker: _bodyMarker,
+      locales,
+      ...runtimeOptions
+    } = customOptions as Record<string, unknown>
+
+    const localeTranslations = (
+      locales as Record<string, { translations?: Record<string, unknown> }> | undefined
+    )?.[localeIndex.value]?.translations
 
     pageFind.value = new window.PagefindUI({
       element: '#pagefind-search',
@@ -113,7 +121,13 @@ const showSearchModal = async () => {
       showSubResults: true,
       showImages: true,
       ...runtimeOptions,
+      ...(localeTranslations ? { translations: localeTranslations } : {}),
     })
+  } else if (!window.PagefindUI) {
+    console.warn(
+      '[PageFindSearch] window.PagefindUI is not available. ' +
+        'Make sure pagefind-ui.js is loaded (check head config and that pagefind indexing ran during build).'
+    )
   }
 
   focusTimeout = setTimeout(() => {

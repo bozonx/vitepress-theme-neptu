@@ -6,8 +6,6 @@
 </script>
 
 <template>
-  <div id="modals"></div>
-
   <DefaultLayout>
     <template #nav-bar-content-before>
       <PageFindSearch>

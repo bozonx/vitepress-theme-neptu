@@ -119,12 +119,8 @@ export namespace NeptuBlogTheme {
       provider?: string
       options?: {
         bodyMarker?: string
-        translations?: {
-          button?: {
-            buttonText?: string
-            buttonAriaLabel?: string
-          }
-        }
+        translations?: PagefindUITranslations
+        locales?: Record<string, { translations?: PagefindUITranslations }>
         [key: string]: unknown
       }
     }
@@ -132,6 +128,28 @@ export namespace NeptuBlogTheme {
     publisher?: { name?: string; url?: string; logo?: string }
 
     footer?: { message?: string; copyright?: string; links?: NavLink[] }
+  }
+
+  export interface PagefindUITranslations {
+    button?: {
+      buttonText?: string
+      buttonAriaLabel?: string
+    }
+    modal?: {
+      noResultsText?: string
+      resetButtonTitle?: string
+      displayDetails?: string
+      backButtonTitle?: string
+      footer?: {
+        selectText?: string
+        selectKeyAriaLabel?: string
+        navigateText?: string
+        navigateUpKeyAriaLabel?: string
+        navigateDownKeyAriaLabel?: string
+        closeText?: string
+        closeKeyAriaLabel?: string
+      }
+    }
   }
 
   export interface I18n {
@@ -472,6 +490,7 @@ export type AuthorItem = NeptuBlogTheme.AuthorItem
 export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem
 export type LinkItem = NeptuBlogTheme.LinkItem
 export type SocialLink = NeptuBlogTheme.SocialLink
+export type PagefindUITranslations = NeptuBlogTheme.PagefindUITranslations
 
 declare const theme: Theme
 export default theme

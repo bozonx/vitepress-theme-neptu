@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useData } from 'vitepress'
+import { resolveBodyMarker } from 'vitepress-theme-neptu-blog/utils'
+import type { ThemeConfig, PostFrontmatter } from 'vitepress-theme-neptu-blog'
 
 type HeroAction = {
   link: string
@@ -38,9 +41,14 @@ const props = defineProps<{
 }>()
 
 const hero = computed(() => props.hero)
+
+const { theme, frontmatter } = useData<ThemeConfig>()
+const bodyMarker = resolveBodyMarker(theme.value, frontmatter.value as PostFrontmatter)
 </script>
 
 <template>
+  <div id="modals"></div>
+
   <div class="neptu-site-home">
     <section v-if="hero" class="hero">
       <div class="hero-container">
@@ -98,7 +106,7 @@ const hero = computed(() => props.hero)
       </div>
     </section>
 
-    <div class="vp-doc home-content">
+    <div class="vp-doc home-content" v-bind="bodyMarker ? { [bodyMarker]: true } : {}">
       <slot />
     </div>
   </div>

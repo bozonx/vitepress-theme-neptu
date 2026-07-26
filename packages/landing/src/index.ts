@@ -14,6 +14,7 @@ export type {
   LocaleDefinition,
   ExtendedPageData,
   ExtendedSiteConfig,
+  PagefindUITranslations,
 } from './types.d.ts'
 
 export default {
