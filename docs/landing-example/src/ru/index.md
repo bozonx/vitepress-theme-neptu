@@ -52,6 +52,32 @@ blocks:
           export default LandingTheme
         caption: Всё — блоки зарегистрированы глобально.
 
+  - type: content
+    eyebrow: Редакционный контент
+    title: Гибкая секция для текста между витринами
+    content: '<p>Используйте доверенный HTML для подробных объяснений, миссии и служебных примечаний.</p>'
+    actions: [{ text: Читать руководство, link: /ru/doc, variant: alt }]
+
+  - type: collection
+    bg: soft
+    eyebrow: Ресурсы
+    title: Карточки не только для возможностей
+    items:
+      - { title: Быстрый старт, text: Короткое руководство., date: '2026-07-27', tags: [Гайд], link: /ru/doc, linkText: Читать }
+      - { title: Справочник блоков, text: Все props и варианты., meta: [24 блока], link: /ru/doc/blocks, linkText: Смотреть }
+      - title: Темизация
+        text: Выберите один production-пресет.
+        tags: [CSS, Токены]
+        actions: [{ text: Открыть, link: /ru/doc/theming }]
+
+  - type: embed
+    eyebrow: Встраивание
+    title: Карты, календари и виджеты
+    text: iframe загружается лениво и получает доступное название.
+    src: /ru/doc/about
+    embedTitle: Встроенный пример документации
+    ratio: 21/9
+
   - type: logos
     bg: soft
     variant: marquee
@@ -74,7 +100,7 @@ blocks:
     items:
       - icon: fa6-solid:cubes
         title: Блоки вместо вёрстки
-        text: Пятнадцать готовых секций. Страница собирается из них, а не пишется руками.
+        text: Двадцать четыре готовые секции. Страница собирается из них, а не пишется руками.
       - icon: fa6-solid:palette
         title: Две оси темы
         text: Цвет и стиль независимы — восемь палитр на пять стилевых пресетов.
@@ -127,7 +153,7 @@ blocks:
       - eyebrow: Конструктор
         title: Или описать страницу в YAML
         text: Массив <code>blocks:</code> во frontmatter рендерится одним компонентом. Контент отделён от разметки — это упрощает переводы и правки через CMS.
-        bullets: [Один рендерер на пятнадцать типов, Проверка по JSON-схеме, Готово к подключению CMS]
+        bullets: [Один рендерер на двадцать четыре типа, Проверка по JSON-схеме, Готово к подключению CMS]
         image: /img/demo/shot-2.svg
         actions: [{ text: Пример на компонентах, link: /en/, variant: alt }]
 
@@ -168,13 +194,13 @@ blocks:
     bg: inverse
     cols: 4
     items:
-      - { value: '15', label: Блоков, text: и 11 примитивов }
+      - { value: '24', label: Блока, text: и 11 примитивов }
       - { value: '8 × 5', label: Комбинаций темы, text: цвет × стиль }
       - { value: '0', label: Зависимостей, text: кроме Vue и VitePress }
       - { value: '100%', label: Типизации, text: 'пропсы, конфиг, блоки' }
 
   - type: steps
-    id: how
+    id: steps-how
     align: center
     eyebrow: Как это работает
     title: Четыре шага до готового сайта
@@ -243,7 +269,7 @@ blocks:
         price: 0 ₽
         period: навсегда
         text: Вся тема целиком, лицензия MIT.
-        features: [Все 15 блоков, Все пресеты тем, Лендинг + доки + страницы, Поддержка сообщества]
+        features: [Все 24 блока, Все пресеты тем, Лендинг + доки + страницы, Поддержка сообщества]
         action: { text: Начать, link: /ru/doc }
       - title: Studio
         price: 1490 ₽
@@ -278,7 +304,7 @@ blocks:
       - { title: Команда, text: до 10 человек, featured: true, badge: Выбор }
       - { title: Компания, text: без ограничений }
     rows:
-      - { group: Основное, label: Блоки лендинга, values: ['21', '21', '21'] }
+      - { group: Основное, label: Блоки лендинга, values: ['24', '24', '24'] }
       - { group: Основное, label: Цветовые палитры, values: ['8', '8', 'Свои'] }
       - { group: Основное, label: Стилевые пресеты, values: ['5', '5', 'Свои'] }
       - { group: Поддержка, label: Issues на GitHub, values: [true, true, true] }
@@ -304,7 +330,7 @@ blocks:
     title: Что дальше
     variant: side
     items:
-      - { label: Готово, state: done, title: Библиотека блоков v1, text: 'Пятнадцать блоков, одиннадцать примитивов, две оси темы.' }
+      - { label: Готово, state: done, title: Библиотека блоков v1, text: 'Двадцать четыре блока, одиннадцать примитивов, две оси темы.' }
       - { label: Готово, state: done, title: Декларативный рендерер, text: Страницы из frontmatter с проверкой по схеме. }
       - { label: В работе, state: active, title: Интеграция с CMS, text: Маппинг типов блоков в админку Decap CMS. }
       - { label: В планах, state: planned, title: Новые блоки, text: 'Таблица сравнения, табы, контактная форма, тизер блога.' }

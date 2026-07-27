@@ -12,7 +12,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import type { SectionProps } from './types.ts'
+import type { IconLike, SectionProps } from './types.ts'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
@@ -22,16 +22,18 @@ const props = withDefaults(
       text?: string
       /** Short label in front of the text. */
       badge?: string
-      icon?: string
+      icon?: IconLike
       link?: string
       linkText?: string
       /** Show a close button and remember the choice. */
       dismissible?: boolean
       /** `localStorage` key. Change it to re-show a dismissed banner. */
       storageKey?: string
+      placement?: 'inline' | 'top' | 'bottom'
+      sticky?: boolean
     }
   >(),
-  { bg: 'brand', padding: 'none', dismissible: false, storageKey: 'ln-banner' }
+  { bg: 'brand', width: 'wide', padding: 'none', dismissible: false, storageKey: 'ln-banner', placement: 'inline', sticky: false }
 )
 
 const { theme } = useData()
@@ -66,11 +68,12 @@ const dismiss = (): void => {
     v-if="!hidden"
     :id="props.id"
     :bg="props.bg"
-    width="wide"
-    padding="none"
+    :width="props.width"
+    :padding="props.padding"
     :divider="props.divider"
-    no-reveal
+    :no-reveal="props.noReveal"
     class="ln-banner"
+    :class="[`ln-banner--${props.placement}`, { 'ln-banner--sticky': props.sticky }]"
   >
     <div class="ln-banner__inner">
       <LnIcon v-if="props.icon" :icon="props.icon" size="1rem" class="ln-banner__icon" />
@@ -103,6 +106,9 @@ const dismiss = (): void => {
 </template>
 
 <style scoped>
+.ln-banner--sticky { position: sticky; z-index: 50; }
+.ln-banner--sticky.ln-banner--top { top: var(--vp-nav-height, 64px); }
+.ln-banner--sticky.ln-banner--bottom { bottom: 0; }
 .ln-banner__inner {
   display: flex;
   align-items: center;

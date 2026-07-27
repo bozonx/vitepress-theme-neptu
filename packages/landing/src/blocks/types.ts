@@ -85,14 +85,22 @@ export type MediaLike = string | MediaSpec
 /** Icon reference: an Iconify name (`fa6-solid:rocket`), an emoji or an image. */
 export type IconLike = string | { src: string; alt?: string }
 
-export interface FeatureItem extends HeadingProps {
+/** Shared content model for card-based blocks. */
+export interface CardItem extends HeadingProps {
   icon?: IconLike
   image?: MediaLike
   link?: string
   linkText?: string
   badge?: string
+  tags?: string[]
+  meta?: string[]
+  date?: string
+  actions?: ActionItem[]
   target?: string
   rel?: string
+}
+
+export interface FeatureItem extends CardItem {
   /** Bento only: how many grid columns/rows the tile spans. */
   span?: 1 | 2
   rowSpan?: 1 | 2
@@ -117,6 +125,11 @@ export interface StatItem {
   label?: string
   text?: string
   icon?: IconLike
+  trend?: string
+  trendDirection?: 'up' | 'down' | 'neutral'
+  source?: string
+  note?: string
+  link?: string
 }
 
 export interface StepItem extends HeadingProps {
@@ -150,6 +163,9 @@ export interface PricingPlan extends HeadingProps {
   /** e.g. `/ mo`. */
   period?: string
   periodYearly?: string
+  currency?: string
+  discountLabel?: string
+  billingSuffix?: string
   features?: (string | PricingFeature)[]
   action?: ActionItem
   /** Highlight the plan as the recommended one. */
@@ -178,13 +194,24 @@ export interface TeamMember {
   role?: string
   text?: string
   avatar?: string
+  group?: string
+  department?: string
+  meta?: string[]
   links?: { icon?: string; text?: string; link: string }[]
+}
+
+export interface TeamGroup extends HeadingProps {
+  id: string
 }
 
 export interface GalleryItem {
   src: string
   alt?: string
   caption?: string
+  title?: string
+  text?: string
+  tags?: string[]
+  actions?: ActionItem[]
   link?: string
   ratio?: string
 }
@@ -252,21 +279,48 @@ export interface FormField {
   required?: boolean
 }
 
-export interface CarouselSlide extends HeadingProps {
-  image?: MediaLike
-  icon?: IconLike
-  link?: string
-  linkText?: string
-  badge?: string
+export type CollectionItem = CardItem
+
+export type CarouselSlide = CardItem
+
+export interface PricingToggleOptions {
+  monthlyLabel?: string
+  yearlyLabel?: string
+  discountLabel?: string
 }
 
-/**
- * One entry of the declarative `blocks:` array.
- *
- * `type` is the key registered in the block registry; every other key is passed
- * to the block as a prop.
- */
-export interface BlockSpec extends SectionProps {
-  type: string
-  [prop: string]: unknown
-}
+type BlockBase<T extends string, Props = object> = SectionProps & HeadingProps & Props & { type: T }
+
+/** Strict built-in entries of the declarative `blocks:` array. */
+export type BuiltInBlockSpec =
+  | BlockBase<'hero', { variant?: 'split' | 'centered' | 'cover' | 'plain'; actions?: ActionItem[]; image?: MediaLike; note?: string; glow?: boolean; overlay?: boolean }>
+  | BlockBase<'features', { items?: FeatureItem[]; cols?: 1 | 2 | 3 | 4; variant?: 'card' | 'plain' | 'bordered'; iconPosition?: 'top' | 'inline'; iconSize?: string }>
+  | BlockBase<'feature-split', { items?: SplitItem[]; reverse?: boolean; noAlternate?: boolean; mediaRatio?: string }>
+  | BlockBase<'bento', { items?: FeatureItem[]; cols?: 2 | 3 | 4 }>
+  | BlockBase<'carousel', { items?: CarouselSlide[]; perView?: 1 | 2 | 3 | 4; arrows?: boolean; dots?: boolean; autoplay?: number; peek?: boolean; ariaLabel?: string; cardVariant?: 'card' | 'plain' | 'bordered' }>
+  | BlockBase<'collection', { items?: CollectionItem[]; actions?: ActionItem[]; cols?: 1 | 2 | 3 | 4; variant?: 'card' | 'plain' | 'bordered'; layout?: 'grid' | 'list'; imageRatio?: string }>
+  | BlockBase<'content', { content?: string; image?: MediaLike; actions?: ActionItem[]; variant?: 'prose' | 'split' | 'card'; reverse?: boolean }>
+  | BlockBase<'logos', { items?: LogoItem[]; variant?: 'row' | 'grid' | 'marquee'; monochrome?: boolean; speed?: number; logoHeight?: string }>
+  | BlockBase<'stats', { items?: StatItem[]; cols?: 2 | 3 | 4; variant?: 'plain' | 'card' | 'divided' }>
+  | BlockBase<'steps', { items?: StepItem[]; variant?: 'row' | 'column'; connector?: boolean }>
+  | BlockBase<'testimonials', { items?: TestimonialItem[]; cols?: 1 | 2 | 3; variant?: 'grid' | 'masonry' | 'single' }>
+  | BlockBase<'pricing', { items?: PricingPlan[]; cols?: 2 | 3 | 4; monthlyLabel?: string; yearlyLabel?: string; toggle?: PricingToggleOptions; currency?: string; discountLabel?: string; billingSuffix?: string; note?: string }>
+  | BlockBase<'faq', { items?: FaqItem[]; cols?: 1 | 2; exclusive?: boolean; actions?: ActionItem[]; schema?: boolean }>
+  | BlockBase<'cta', { actions?: ActionItem[]; image?: MediaLike; note?: string; variant?: 'banner' | 'card' | 'split'; surface?: SectionBg }>
+  | BlockBase<'timeline', { items?: TimelineItem[]; variant?: 'stacked' | 'side' }>
+  | BlockBase<'team', { items?: TeamMember[]; groups?: TeamGroup[]; cols?: 2 | 3 | 4; variant?: 'card' | 'plain'; avatarShape?: 'circle' | 'rounded' }>
+  | BlockBase<'gallery', { items?: GalleryItem[]; cols?: 2 | 3 | 4; variant?: 'grid' | 'masonry'; lightbox?: boolean; ratio?: string }>
+  | BlockBase<'code', { items?: CodeSample[]; copy?: boolean; chrome?: boolean; variant?: 'stacked' | 'split'; actions?: ActionItem[] }>
+  | BlockBase<'tabs', { items?: TabItem[]; variant?: 'top' | 'side'; initial?: number; mediaRatio?: string }>
+  | BlockBase<'compare', { columns?: CompareColumn[]; rows?: CompareRow[]; rowsLabel?: string; note?: string; stickyHead?: boolean }>
+  | BlockBase<'newsletter', { action?: string; method?: 'post' | 'get'; emailName?: string; emailLabel?: string; placeholder?: string; submitText?: string; fields?: FormField[]; consent?: string; note?: string; ajax?: boolean; successText?: string; errorText?: string; variant?: 'card' | 'banner' }>
+  | BlockBase<'video', { youtube?: string; vimeo?: string; src?: string; poster?: string; caption?: string; ratio?: string; autoplay?: boolean; actions?: ActionItem[] }>
+  | BlockBase<'embed', { src?: string; embedTitle?: string; caption?: string; ratio?: string; loading?: 'lazy' | 'eager'; allow?: string; sandbox?: string; actions?: ActionItem[] }>
+  | BlockBase<'banner', { badge?: string; icon?: IconLike; link?: string; linkText?: string; dismissible?: boolean; storageKey?: string; placement?: 'inline' | 'top' | 'bottom'; sticky?: boolean }>
+
+export type CustomBlockSpec<T extends string> = SectionProps & { type: T; [prop: string]: unknown }
+
+/** Built-ins are strict; pass a custom type union when extending the registry. */
+export type BlockSpec<CustomType extends string = never> =
+  | BuiltInBlockSpec
+  | ([CustomType] extends [never] ? never : CustomBlockSpec<CustomType>)

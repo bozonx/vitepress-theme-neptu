@@ -43,6 +43,7 @@ export default async () => {
       logo: '/img/logo.svg',
       defaultColorTheme: 'blue',
       defaultLandingStyle: 'soft',
+      themePicker: false, // enable only for a demo picker
       search: { provider: 'local' },
     },
   }
@@ -81,7 +82,7 @@ markdownStyles: false
   :items="[
     { icon: '🚀', title: 'Fast', text: 'Static output, no runtime deps.' },
     { icon: '🎨', title: 'Themeable', text: 'Two independent theme axes.' },
-    { icon: '🧩', title: 'Composable', text: 'Fifteen blocks, one contract.' },
+    { icon: '🧩', title: 'Composable', text: 'Twenty-four blocks, one contract.' },
   ]"
 />
 

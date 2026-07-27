@@ -30,4 +30,12 @@ describe('landing blocks schema', () => {
   it('uses the carousel slide contract, not the feature contract', () => {
     expect(validate({ blocks: [{ type: 'carousel', items: [{ title: 'Slide', span: 2 }] }] })).toBe(false)
   })
+
+  it('validates new blocks and shared card fields', () => {
+    expect(validate({ blocks: [
+      { type: 'content', content: '<p>Story</p>', variant: 'card' },
+      { type: 'collection', items: [{ title: 'Guide', date: '2026-07-27', tags: ['Docs'], actions: [{ text: 'Read', link: '/guide' }] }] },
+      { type: 'embed', src: '/map', loading: 'lazy' },
+    ] })).toBe(true)
+  })
 })

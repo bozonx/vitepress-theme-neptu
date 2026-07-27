@@ -6,6 +6,7 @@ import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
+import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import type { FeatureItem, SectionProps } from './types.ts'
 
 const props = withDefaults(
@@ -55,7 +56,7 @@ const props = withDefaults(
         <LnCard
           v-for="(item, i) in props.items"
           :key="`${item.title}-${i}`"
-          :link="item.link"
+          :link="item.actions?.length ? undefined : item.link"
           :target="item.target"
           :rel="item.rel"
           :plain="props.variant !== 'card'"
@@ -81,6 +82,13 @@ const props = withDefaults(
             <p v-if="item.badge" class="ln-feature__badge">{{ item.badge }}</p>
             <h3 v-if="item.title" class="ln-feature__title" v-html="item.title" />
             <p v-if="item.text" class="ln-feature__text" v-html="item.text" />
+            <div v-if="item.meta?.length" class="ln-feature__meta">
+              <span v-for="meta in item.meta" :key="meta">{{ meta }}</span>
+            </div>
+            <div v-if="item.tags?.length" class="ln-feature__tags">
+              <span v-for="tag in item.tags" :key="tag">{{ tag }}</span>
+            </div>
+            <LnButtonGroup v-if="item.actions?.length" :actions="item.actions" size="sm" />
             <span v-if="item.linkText" class="ln-feature__link">{{ item.linkText }}</span>
           </div>
         </LnCard>
@@ -153,6 +161,9 @@ const props = withDefaults(
   font-size: 0.9375rem;
   line-height: var(--ln-body-lh);
 }
+
+.ln-feature__meta, .ln-feature__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; color: var(--ln-c-text-2); font-size: 0.8125rem; }
+.ln-feature__tags span { border-radius: var(--ln-radius-pill); background: var(--ln-c-brand-soft); padding: 0.15rem 0.5rem; color: var(--ln-c-brand-text); }
 
 .ln-feature__link {
   margin-top: auto;

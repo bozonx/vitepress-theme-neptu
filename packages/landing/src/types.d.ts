@@ -71,6 +71,8 @@ export type LandingThemeConfig = Partial<
    * `sharp`, `brutal`, `glass`, `editorial`, or the id of your own preset.
    */
   defaultLandingStyle?: string
+  /** Enable the optional color/style picker UI. Intended mainly for demos. */
+  themePicker?: boolean
 }
 
 /**

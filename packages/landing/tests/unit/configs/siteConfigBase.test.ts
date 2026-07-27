@@ -92,6 +92,7 @@ describe('mergeLandingConfig', () => {
     expect(result.themeConfig.externalLinkIcon).toBe(true)
     expect(result.themeConfig.i18nRouting).toBe(true)
     expect(result.themeConfig.mainHeroImg).toBe('/img/home-logo.webp')
+    expect(result.themeConfig.themePicker).toBe(false)
   })
 
   it('does not throw when themeConfig is missing', () => {

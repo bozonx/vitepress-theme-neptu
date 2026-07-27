@@ -33,8 +33,10 @@ themeConfig: {
 }
 ```
 
-Try the two pickers in the nav bar of this site — every block on the home page
-re-themes without a reload.
+Production sites normally choose one combination and keep it fixed. Theme
+pickers are disabled by default and intended for demos like this one. Enable
+them explicitly with `themePicker: true`; otherwise `<LnThemePicker>` renders
+nothing.
 
 ## The token layers
 
@@ -83,6 +85,7 @@ A color preset defines palette primitives only:
 ```
 
 Then either set `defaultColorTheme: 'ocean'` or set the attribute yourself.
+Custom ids are not added to the built-in demo picker automatically.
 
 ## Your own style preset
 

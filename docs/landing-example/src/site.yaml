@@ -1,7 +1,7 @@
 themeConfig:
   footer:
     message: 'Copying is allowed only with a link to the source.'
-    copyright: 'Copyright © 2024-present Neptu'
+    copyright: 'Copyright © 2026-present Neptu'
 
   nav:
     - text: '📖 Docs'

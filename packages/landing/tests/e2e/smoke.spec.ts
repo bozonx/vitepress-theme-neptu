@@ -21,7 +21,7 @@ test('russian home is rendered from the declarative blocks array', async ({ page
   await page.goto('ru/', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru-RU')
   // Same block markup as the component mode, driven by frontmatter only.
-  await expect(page.locator('.ln-page .ln-section')).toHaveCount(21)
+  await expect(page.locator('.ln-page .ln-section')).toHaveCount(24)
 })
 
 // ---------------------------------------------------------------------------
@@ -31,7 +31,7 @@ test('russian home is rendered from the declarative blocks array', async ({ page
 test('every block of the library is rendered on the home page', async ({ page }) => {
   await page.goto('en/', { waitUntil: 'domcontentloaded' })
 
-  await expect(page.locator('.ln-page .ln-section')).toHaveCount(21)
+  await expect(page.locator('.ln-page .ln-section')).toHaveCount(24)
   await expect(page.locator('.ln-feature')).toHaveCount(6)
   await expect(page.locator('.ln-carousel__slide')).toHaveCount(6)
   await expect(page.locator('.ln-plan')).toHaveCount(3)

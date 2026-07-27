@@ -31,7 +31,7 @@ const props = withDefaults(
   <LnSection
     :id="props.id"
     :bg="props.bg"
-    :width="props.variant === 'single' ? 'narrow' : props.width"
+    :width="props.width"
     :padding="props.padding"
     :divider="props.divider"
     :no-reveal="props.noReveal"

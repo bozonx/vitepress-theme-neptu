@@ -20,6 +20,9 @@ import LnCompare from './LnCompare.vue'
 import LnNewsletter from './LnNewsletter.vue'
 import LnVideo from './LnVideo.vue'
 import LnBanner from './LnBanner.vue'
+import LnContent from './LnContent.vue'
+import LnCollection from './LnCollection.vue'
+import LnEmbed from './LnEmbed.vue'
 
 /**
  * Maps the `type` used in the declarative `blocks:` array to a component.
@@ -49,6 +52,9 @@ export const blockRegistry: Record<string, Component> = {
   newsletter: LnNewsletter,
   video: LnVideo,
   banner: LnBanner,
+  content: LnContent,
+  collection: LnCollection,
+  embed: LnEmbed,
 }
 
 /** Component names used for global registration and in markdown. */
@@ -74,6 +80,9 @@ export const blockComponents = {
   LnNewsletter,
   LnVideo,
   LnBanner,
+  LnContent,
+  LnCollection,
+  LnEmbed,
 } satisfies Record<string, Component>
 
 /** All block types known to the renderer, for docs and error messages. */

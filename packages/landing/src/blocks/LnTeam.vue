@@ -1,12 +1,13 @@
 <script setup lang="ts">
 /** People behind the product: team, maintainers, speakers. */
+import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import { resolveUrl } from '../utils/url.ts'
-import type { SectionProps, TeamMember } from './types.ts'
+import type { SectionProps, TeamGroup, TeamMember } from './types.ts'
 
 const props = withDefaults(
   defineProps<
@@ -15,6 +16,7 @@ const props = withDefaults(
       title?: string
       text?: string
       items?: TeamMember[]
+      groups?: TeamGroup[]
       cols?: 2 | 3 | 4
       variant?: 'card' | 'plain'
       /** Round or squared portraits. */
@@ -23,6 +25,11 @@ const props = withDefaults(
   >(),
   { cols: 4, variant: 'card', avatarShape: 'circle', align: 'center' }
 )
+
+const grouped = computed(() => {
+  if (!props.groups?.length) return [{ id: '', items: props.items ?? [] }]
+  return props.groups.map((group) => ({ ...group, items: (props.items ?? []).filter((member) => member.group === group.id) }))
+})
 
 </script>
 
@@ -43,9 +50,11 @@ const props = withDefaults(
       :align="props.align"
     />
 
-    <LnGrid :cols="props.cols">
+    <section v-for="group in grouped" :key="group.id" class="ln-team__group">
+      <LnHeading v-if="group.title || group.text" :title="group.title" :text="group.text" level="h3" size="card" />
+      <LnGrid :cols="props.cols">
       <LnCard
-        v-for="(member, i) in props.items"
+        v-for="(member, i) in group.items"
         :key="`${member.name}-${i}`"
         :plain="props.variant === 'plain'"
         class="ln-member"
@@ -61,7 +70,9 @@ const props = withDefaults(
         />
         <h3 class="ln-member__name">{{ member.name }}</h3>
         <p v-if="member.role" class="ln-member__role">{{ member.role }}</p>
+        <p v-if="member.department" class="ln-member__department">{{ member.department }}</p>
         <p v-if="member.text" class="ln-member__text">{{ member.text }}</p>
+        <div v-if="member.meta?.length" class="ln-member__meta"><span v-for="meta in member.meta" :key="meta">{{ meta }}</span></div>
 
         <div v-if="member.links?.length" class="ln-member__links">
           <a
@@ -78,8 +89,9 @@ const props = withDefaults(
           </a>
         </div>
       </LnCard>
-      <slot />
-    </LnGrid>
+      </LnGrid>
+    </section>
+    <slot />
   </LnSection>
 </template>
 
@@ -87,6 +99,7 @@ const props = withDefaults(
 .ln-member {
   gap: 0.375rem;
 }
+.ln-team__group + .ln-team__group { margin-top: var(--ln-gap); }
 
 .ln-member--center {
   align-items: center;
@@ -124,6 +137,8 @@ const props = withDefaults(
   font-size: 0.875rem;
   font-weight: 600;
 }
+.ln-member__department { margin: 0; color: var(--ln-c-text-2); font-size: 0.8125rem; }
+.ln-member__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.35rem; color: var(--ln-c-text-2); font-size: 0.75rem; }
 
 .ln-member__text {
   margin: 0.25rem 0 0;

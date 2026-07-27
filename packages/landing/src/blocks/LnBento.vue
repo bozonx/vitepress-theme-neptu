@@ -9,6 +9,7 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
+import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import type { FeatureItem, SectionProps } from './types.ts'
 
 const props = withDefaults(
@@ -60,7 +61,7 @@ const tiles = computed(() =>
       <LnCard
         v-for="({ item, span, rowSpan }, i) in tiles"
         :key="`${item.title}-${i}`"
-        :link="item.link"
+        :link="item.actions?.length ? undefined : item.link"
         :target="item.target"
         :rel="item.rel"
         hoverable
@@ -74,6 +75,8 @@ const tiles = computed(() =>
         <p v-if="item.badge" class="ln-bento__badge">{{ item.badge }}</p>
         <h3 v-if="item.title" class="ln-bento__title" v-html="item.title" />
         <p v-if="item.text" class="ln-bento__text" v-html="item.text" />
+        <div v-if="item.tags?.length" class="ln-bento__tags"><span v-for="tag in item.tags" :key="tag">{{ tag }}</span></div>
+        <LnButtonGroup v-if="item.actions?.length" :actions="item.actions" size="sm" />
         <LnMedia
           v-if="item.image"
           :media="item.image"
@@ -150,6 +153,8 @@ const tiles = computed(() =>
   font-size: 0.9375rem;
   line-height: var(--ln-body-lh);
 }
+.ln-bento__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; color: var(--ln-c-text-2); font-size: 0.8125rem; }
+.ln-bento__tags span { border-radius: var(--ln-radius-pill); background: var(--ln-c-brand-soft); padding: 0.15rem 0.5rem; color: var(--ln-c-brand-text); }
 
 .ln-bento__media {
   margin-top: auto;

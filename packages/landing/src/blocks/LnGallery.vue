@@ -8,6 +8,7 @@ import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
+import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
 import type { GalleryItem, SectionProps } from './types.ts'
 
@@ -85,30 +86,30 @@ const onKeydown = (event: KeyboardEvent): void => {
       :class="`ln-gallery__list--${props.variant}`"
       :style="{ '--ln-gallery-cols': props.cols }"
     >
-      <component
-        :is="item.link ? 'a' : props.lightbox ? 'button' : 'div'"
+      <article
         v-for="(item, i) in props.items"
         :key="`${item.src}-${i}`"
         class="ln-gallery__item"
-        :class="{ 'ln-gallery__item--static': !item.link && !props.lightbox }"
-        :href="resolveUrl(item.link)"
-        :target="externalTarget(item.link)"
-        :rel="item.link && externalTarget(item.link) ? 'noreferrer' : undefined"
-        :type="!item.link && props.lightbox ? 'button' : undefined"
-        @click="!item.link && open(i)"
       >
-        <img
-          :src="resolveUrl(item.src)"
-          :alt="item.alt ?? ''"
-          loading="lazy"
-          :style="
-            props.variant === 'grid'
-              ? { aspectRatio: item.ratio ?? props.ratio }
-              : undefined
-          "
-        />
-        <span v-if="item.caption" class="ln-gallery__caption">{{ item.caption }}</span>
-      </component>
+        <component
+          :is="item.link ? 'a' : props.lightbox ? 'button' : 'div'"
+          class="ln-gallery__media"
+          :class="{ 'ln-gallery__media--static': !item.link && !props.lightbox }"
+          :href="resolveUrl(item.link)" :target="externalTarget(item.link)"
+          :rel="item.link && externalTarget(item.link) ? 'noreferrer' : undefined"
+          :type="!item.link && props.lightbox ? 'button' : undefined"
+          @click="!item.link && open(i)"
+        >
+          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.ratio ?? props.ratio } : undefined" />
+          <span v-if="item.caption" class="ln-gallery__caption">{{ item.caption }}</span>
+        </component>
+        <div v-if="item.title || item.text || item.tags?.length || item.actions?.length" class="ln-gallery__body">
+          <h3 v-if="item.title">{{ item.title }}</h3>
+          <p v-if="item.text">{{ item.text }}</p>
+          <div v-if="item.tags?.length" class="ln-gallery__tags"><span v-for="tag in item.tags" :key="tag">{{ tag }}</span></div>
+          <LnButtonGroup v-if="item.actions?.length" :actions="item.actions" size="sm" />
+        </div>
+      </article>
       <slot />
     </div>
 
@@ -191,41 +192,56 @@ const onKeydown = (event: KeyboardEvent): void => {
 }
 
 .ln-gallery__item {
-  display: block;
-  position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: var(--ln-border-width) solid var(--ln-c-border);
   border-radius: var(--ln-radius-md);
+  background: var(--ln-card-bg);
+}
+
+.ln-gallery__media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 0;
   padding: 0;
   background: none;
   cursor: pointer;
   line-height: 0;
 }
 
-.ln-gallery__item img {
+.ln-gallery__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s var(--ln-ease);
 }
 
-.ln-gallery__item:hover img {
+.ln-gallery__media:hover img {
   transform: scale(1.03);
 }
 
 /* Nothing to click — do not pretend otherwise. */
-.ln-gallery__item--static {
+.ln-gallery__media--static {
   cursor: default;
 }
 
-.ln-gallery__item--static:hover img {
+.ln-gallery__media--static:hover img {
   transform: none;
 }
 
-.ln-gallery__item:focus-visible {
+.ln-gallery__media:focus-visible {
   outline: 2px solid var(--ln-c-brand);
   outline-offset: 3px;
 }
+
+.ln-gallery__body { display: flex; flex-direction: column; gap: 0.65rem; padding: var(--ln-card-padding); line-height: var(--ln-body-lh); }
+.ln-gallery__body h3, .ln-gallery__body p { margin: 0; }
+.ln-gallery__body h3 { font-family: var(--ln-font-display); font-size: var(--ln-h3-size); }
+.ln-gallery__body p { color: var(--ln-c-text-2); }
+.ln-gallery__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ln-gallery__tags span { border-radius: var(--ln-radius-pill); background: var(--ln-c-brand-soft); padding: 0.15rem 0.5rem; color: var(--ln-c-brand-text); font-size: 0.75rem; }
 
 .ln-gallery__caption {
   position: absolute;

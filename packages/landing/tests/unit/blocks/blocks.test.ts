@@ -10,7 +10,7 @@ import { blockTypes, resolveBlock } from '../../../src/blocks/registry.ts'
 
 describe('block registry', () => {
   it('exposes every block type', () => {
-    expect(blockTypes).toHaveLength(21)
+    expect(blockTypes).toHaveLength(24)
     expect(blockTypes).toEqual(
       expect.arrayContaining([
         'hero', 'features', 'faq', 'cta',

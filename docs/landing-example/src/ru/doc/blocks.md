@@ -5,7 +5,7 @@ description: 'Справочник по всем блокам лендинга: 
 
 # Блоки
 
-Пятнадцать блоков и один контракт. Каждый блок — это `<section>`, которая сама
+Двадцать четыре блока и один контракт. Каждый блок — это `<section>`, которая сама
 рисует свою подложку, задаёт вертикальный ритм и ограничивает ширину контента.
 Вёрстку вокруг блоков писать не нужно.
 
@@ -41,6 +41,8 @@ description: 'Справочник по всем блокам лендинга: 
 | `feature-split` | `LnFeatureSplit` | Чередующиеся строки текст + медиа |
 | `bento` | `LnBento` | Плитки разного размера |
 | `carousel` | `LnCarousel` | Прокручиваемый набор карточек |
+| `collection` | `LnCollection` | Ресурсы, статьи, проекты и товары |
+| `content` | `LnContent` | Доверенный rich text и редакционный контент |
 | `logos` | `LnLogoCloud` | Клиенты, спонсоры, интеграции |
 | `stats` | `LnStats` | Ключевые цифры |
 | `steps` | `LnSteps` | Последовательность «как это работает» |
@@ -51,6 +53,13 @@ description: 'Справочник по всем блокам лендинга: 
 | `timeline` | `LnTimeline` | Дорожная карта или история |
 | `team` | `LnTeam` | Люди |
 | `gallery` | `LnGallery` | Скриншоты с лайтбоксом |
+| `code` | `LnCode` | Команды установки и примеры кода |
+| `tabs` | `LnTabs` | Компактные сценарии возможностей |
+| `compare` | `LnCompare` | Сравнение продуктов и тарифов |
+| `newsletter` | `LnNewsletter` | Сбор email и лидов |
+| `video` | `LnVideo` | Ленивое продуктовое видео |
+| `embed` | `LnEmbed` | Карты, календари и виджеты |
+| `banner` | `LnBanner` | Полоса объявления |
 
 ## Общие структуры
 
@@ -212,6 +221,22 @@ description: 'Справочник по всем блокам лендинга: 
 Лайтбокс — нативный `<dialog>`: Esc закрывает, фокус удерживает браузер.
 
 ---
+
+## Новые и расширенные блоки
+
+- `collection` использует общий `CardItem`: `title`, `text`, `image`, `icon`,
+  `badge`, `tags`, `meta`, `date`, `link`, `linkText`, `actions`; доступны
+  `layout: grid | list`, `cols`, `variant` и `imageRatio`.
+- `content` выводит доверенный HTML в вариантах `prose`, `split`, `card` и
+  поддерживает `image`, `actions`, `reverse`. Ввод внешней CMS нужно очищать.
+- `embed` — ленивый iframe с `src`, `embedTitle`, `caption`, `ratio`, `allow`,
+  `sandbox` и `actions`.
+- `gallery` теперь поддерживает `title`, `text`, `tags`, `actions` у элемента.
+- `carousel` использует `CardItem`, полноценные actions и `cardVariant`.
+- `team` поддерживает `groups`, `department` и `meta`.
+- `pricing` поддерживает `currency`, `discountLabel`, `billingSuffix` и `toggle`.
+- `stats` поддерживает `trend`, `trendDirection`, `source`, `note`, `link`.
+- `banner` поддерживает `placement`, `sticky` и не игнорирует shared props.
 
 ## Примитивы
 

@@ -43,6 +43,7 @@ export default async () => {
       logo: '/img/logo.svg',
       defaultColorTheme: 'blue',
       defaultLandingStyle: 'soft',
+      themePicker: false, // включайте только для демо-пикера
       search: { provider: 'local' },
     },
   }
@@ -81,7 +82,7 @@ markdownStyles: false
   :items="[
     { icon: '🚀', title: 'Быстро', text: 'Статика, без рантайм-зависимостей.' },
     { icon: '🎨', title: 'Темизируемо', text: 'Две независимые оси темы.' },
-    { icon: '🧩', title: 'Собирается', text: 'Пятнадцать блоков, один контракт.' },
+    { icon: '🧩', title: 'Собирается', text: 'Двадцать четыре блока, один контракт.' },
   ]"
 />
 

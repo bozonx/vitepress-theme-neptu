@@ -5,7 +5,7 @@ description: 'Reference of every landing block: props, variants and examples'
 
 # Blocks
 
-Fifteen blocks, one contract. Every block is a `<section>` that paints its own
+Twenty-four blocks, one contract. Every block is a `<section>` that paints its own
 surface, owns its vertical rhythm and constrains its content width — you never
 write layout CSS around them.
 
@@ -41,6 +41,8 @@ inside themselves, so the content stays readable without extra props.
 | `feature-split` | `LnFeatureSplit` | Alternating copy + media rows |
 | `bento` | `LnBento` | Tiles of uneven size |
 | `carousel` | `LnCarousel` | Scrollable set of cards |
+| `collection` | `LnCollection` | Resources, posts, projects and products |
+| `content` | `LnContent` | Trusted rich text and editorial copy |
 | `logos` | `LnLogoCloud` | Customers, sponsors, integrations |
 | `stats` | `LnStats` | Key numbers |
 | `steps` | `LnSteps` | "How it works" sequence |
@@ -51,6 +53,13 @@ inside themselves, so the content stays readable without extra props.
 | `timeline` | `LnTimeline` | Roadmap or changelog |
 | `team` | `LnTeam` | People |
 | `gallery` | `LnGallery` | Screenshots with a lightbox |
+| `code` | `LnCode` | Install commands and code samples |
+| `tabs` | `LnTabs` | Compact feature scenarios |
+| `compare` | `LnCompare` | Product or plan comparison |
+| `newsletter` | `LnNewsletter` | Email and lead capture |
+| `video` | `LnVideo` | Lazy product video |
+| `embed` | `LnEmbed` | Maps, calendars and widgets |
+| `banner` | `LnBanner` | Announcement strip |
 
 ## Common item shapes
 
@@ -134,7 +143,7 @@ An item with `link` turns the whole card into a link.
   title="What you get"
   :cols="3"
   :items="[
-    { icon: 'fa6-solid:cubes', title: 'Blocks', text: 'Fifteen sections.' },
+    { icon: 'fa6-solid:cubes', title: 'Blocks', text: 'Twenty-four sections.' },
     { icon: '🎨', title: 'Themes', text: 'Two independent axes.' },
     { icon: '/img/icon.svg', title: 'Typed', text: 'Props and config.' },
   ]"
@@ -166,6 +175,10 @@ take two columns or two rows.
 | `arrows`, `dots` | `boolean` | `true` |
 | `autoplay` | ms, `0` = off | `0` |
 | `peek` | `boolean` | `false` |
+| `cardVariant` | `card \| plain \| bordered` | `card` |
+
+Carousel items use the shared `CardItem` contract and support `tags`, `meta`,
+`actions`, `target` and `rel` in addition to the fields below.
 
 CSS scroll-snap under the hood: it scrolls by touch and keyboard without JS.
 Autoplay stops on hover and focus and never starts under
@@ -194,6 +207,8 @@ Autoplay stops on hover and focus and never starts under
 `items: { value, label?, text?, icon? }[]`, `cols` 2–4,
 `variant: plain | card | divided`.
 
+Items may also define `trend`, `trendDirection`, `source`, `note` and `link`.
+
 ## steps — `LnSteps`
 
 `items: { title, text?, icon?, image?, label? }[]`,
@@ -213,6 +228,8 @@ The marker shows the item's `label`, its `icon`, or the 1-based index.
 | `cols` | `2 \| 3 \| 4` | `3` |
 | `monthlyLabel`, `yearlyLabel` | `string` | `Monthly` / `Yearly` |
 | `note` | `string` | — |
+| `currency`, `billingSuffix`, `discountLabel` | `string` | — |
+| `toggle` | `{ monthlyLabel?, yearlyLabel?, discountLabel? }` | — |
 
 ```ts
 // plan
@@ -245,13 +262,43 @@ indexable. `question` and `answer` accept HTML.
 
 `items: { name, role?, text?, avatar?, links?: { icon?, text?, link }[] }[]`,
 `cols` 2–4, `variant: card | plain`, `avatarShape: circle | rounded`.
+Use `groups: { id, title?, text? }[]` with `item.group`; members also accept
+`department` and `meta: string[]`.
 
 ## gallery — `LnGallery`
 
 `items: { src, alt?, caption?, link?, ratio? }[]`, `cols` 2–4,
 `variant: grid | masonry`, `lightbox: boolean`, `ratio`.
-The lightbox is a native `<dialog>` — Esc closes it, focus is trapped by the
-browser.
+Items also accept `title`, `text`, `tags` and `actions`, so the same block can
+serve as a portfolio or case-study grid. The lightbox is a native `<dialog>`.
+
+## collection — `LnCollection`
+
+Generic resource cards for posts, projects, products and events. Items use
+`CardItem`: `title`, `text`, `image`, `icon`, `badge`, `tags`, `meta`, `date`,
+`link`, `linkText`, `actions`. Props: `cols` 1–4, `layout: grid | list`,
+`variant: card | plain | bordered`, `imageRatio`, and section-level `actions`.
+
+## content — `LnContent`
+
+Trusted editorial content with `variant: prose | split | card`, `content`,
+`image`, `actions` and `reverse`. `content` is rendered as HTML; sanitize input
+from external CMS users before it reaches the page.
+
+## embed — `LnEmbed`
+
+Lazy iframe for maps, calendars, demos and booking widgets. Props: `src`,
+`embedTitle`, `caption`, `ratio`, `loading`, `allow`, `sandbox`, `actions`.
+
+## code, tabs, compare, newsletter, video, banner
+
+- `code`: samples `{ label?, lang?, code, html?, caption? }`, copy and chrome controls.
+- `tabs`: `CardItem`-like tabs, `variant: top | side`, `initial`, `mediaRatio`.
+- `compare`: `columns`, positional `rows[].values`, `rowsLabel`, `stickyHead`.
+- `newsletter`: native or AJAX form with extra fields and consent text.
+- `video`: click-to-load YouTube/Vimeo or native `src` player.
+- `banner`: `placement: inline | top | bottom`, `sticky`, dismiss state, and
+  explicit shared `width`, `padding`, `noReveal` support.
 
 ---
 

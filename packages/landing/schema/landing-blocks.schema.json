@@ -231,6 +231,15 @@
         "badge": {
           "type": "string"
         },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "meta": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "date": { "type": "string" },
         "target": {
           "type": "string"
         },
@@ -289,6 +298,24 @@
           "type": "string"
         },
         "badge": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "meta": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "date": { "type": "string" },
+        "actions": {
+          "$ref": "#/definitions/actions"
+        },
+        "target": {
+          "type": "string"
+        },
+        "rel": {
           "type": "string"
         }
       },
@@ -448,6 +475,9 @@
                 },
                 "ariaLabel": {
                   "type": "string"
+                },
+                "cardVariant": {
+                  "enum": ["card", "plain", "bordered"]
                 }
               }
             },
@@ -522,7 +552,12 @@
                       },
                       "icon": {
                         "$ref": "#/definitions/icon"
-                      }
+                      },
+                      "trend": { "type": "string" },
+                      "trendDirection": { "enum": ["up", "down", "neutral"] },
+                      "source": { "type": "string" },
+                      "note": { "type": "string" },
+                      "link": { "type": "string" }
                     },
                     "additionalProperties": false
                   }
@@ -676,6 +711,9 @@
                       "periodYearly": {
                         "type": "string"
                       },
+                      "currency": { "type": "string" },
+                      "discountLabel": { "type": "string" },
+                      "billingSuffix": { "type": "string" },
                       "features": {
                         "type": "array",
                         "items": {
@@ -720,6 +758,18 @@
                 },
                 "yearlyLabel": {
                   "type": "string"
+                },
+                "currency": { "type": "string" },
+                "discountLabel": { "type": "string" },
+                "billingSuffix": { "type": "string" },
+                "toggle": {
+                  "type": "object",
+                  "properties": {
+                    "monthlyLabel": { "type": "string" },
+                    "yearlyLabel": { "type": "string" },
+                    "discountLabel": { "type": "string" }
+                  },
+                  "additionalProperties": false
                 },
                 "note": {
                   "type": "string"
@@ -875,6 +925,12 @@
                       "avatar": {
                         "type": "string"
                       },
+                      "group": { "type": "string" },
+                      "department": { "type": "string" },
+                      "meta": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
                       "links": {
                         "type": "array",
                         "items": {
@@ -918,6 +974,20 @@
                     "circle",
                     "rounded"
                   ]
+                },
+                "groups": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["id"],
+                    "properties": {
+                      "id": { "type": "string" },
+                      "eyebrow": { "type": "string" },
+                      "title": { "type": "string" },
+                      "text": { "type": "string" }
+                    },
+                    "additionalProperties": false
+                  }
                 }
               }
             },
@@ -942,6 +1012,15 @@
                       },
                       "caption": {
                         "type": "string"
+                      },
+                      "title": { "type": "string" },
+                      "text": { "type": "string" },
+                      "tags": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "actions": {
+                        "$ref": "#/definitions/actions"
                       },
                       "link": {
                         "type": "string"
@@ -1173,7 +1252,46 @@
                 "storageKey": {
                   "type": "string",
                   "description": "Change it to re-show a dismissed banner."
-                }
+                },
+                "placement": { "enum": ["inline", "top", "bottom"] },
+                "sticky": { "type": "boolean" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "content" },
+                "content": { "type": "string" },
+                "image": { "$ref": "#/definitions/media" },
+                "actions": { "$ref": "#/definitions/actions" },
+                "variant": { "enum": ["prose", "split", "card"] },
+                "reverse": { "type": "boolean" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "collection" },
+                "items": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/carouselSlide" }
+                },
+                "actions": { "$ref": "#/definitions/actions" },
+                "cols": { "enum": [1, 2, 3, 4] },
+                "variant": { "enum": ["card", "plain", "bordered"] },
+                "layout": { "enum": ["grid", "list"] },
+                "imageRatio": { "type": "string" }
+              }
+            },
+            {
+              "properties": {
+                "type": { "const": "embed" },
+                "src": { "type": "string" },
+                "embedTitle": { "type": "string" },
+                "caption": { "type": "string" },
+                "ratio": { "type": "string" },
+                "loading": { "enum": ["lazy", "eager"] },
+                "allow": { "type": "string" },
+                "sandbox": { "type": "string" },
+                "actions": { "$ref": "#/definitions/actions" }
               }
             },
             {
@@ -1201,7 +1319,10 @@
                       "compare",
                       "newsletter",
                       "video",
-                      "banner"
+                      "banner",
+                      "content",
+                      "collection",
+                      "embed"
                     ]
                   }
                 },

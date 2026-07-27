@@ -38,9 +38,9 @@ import { createLandingHeadScript } from './headScript.ts'
 import type {
   LandingUserConfig,
   ResolvedLandingConfig,
-  ThemeConfig,
   SeoConfig,
   I18n,
+  LandingThemeConfig,
 } from '../types.d.ts'
 
 // ---------------------------------------------------------------------------
@@ -51,11 +51,12 @@ const commonThemeConfig = {
   externalLinkIcon: true,
   i18nRouting: true,
   mainHeroImg: '/img/home-logo.webp',
+  themePicker: false,
   seo: {
     maxDescriptionLength: 300,
     autoCanonical: true,
   },
-} satisfies Partial<ThemeConfig>
+} satisfies Partial<LandingThemeConfig>
 
 export const common: LandingUserConfig = {
   ...commonBaseConfig,

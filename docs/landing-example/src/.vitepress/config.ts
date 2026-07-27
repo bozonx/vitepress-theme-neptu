@@ -27,6 +27,8 @@ export default async () => {
       // the picker remembers the visitor's choice in localStorage.
       defaultColorTheme: 'blue',
       defaultLandingStyle: 'soft',
+      // Demo only: production sites normally choose one preset and omit the picker.
+      themePicker: true,
 
       // The docs half of the template uses the built-in local search.
       search: { provider: 'local' },

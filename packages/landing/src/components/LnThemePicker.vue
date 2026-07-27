@@ -11,6 +11,7 @@
  * ```
  */
 import { computed, ref } from 'vue'
+import { useData } from 'vitepress'
 import { useColorTheme, useOnClickOutside } from 'vitepress-theme-neptu-blog/composables'
 import { useLandingStyle } from '../composables/useLandingStyle.ts'
 import LnIcon from '../primitives/LnIcon.vue'
@@ -26,6 +27,8 @@ const props = withDefaults(
 
 const { activeTheme, setColorTheme, colorThemes } = useColorTheme()
 const { activeStyle, setLandingStyle, stylePresets } = useLandingStyle()
+const { theme } = useData()
+const enabled = computed(() => theme.value.themePicker === true)
 
 const open = ref(false)
 const root = ref<HTMLElement | null>(null)
@@ -58,7 +61,7 @@ const select = (id: string): void => {
 </script>
 
 <template>
-  <div ref="root" class="ln-picker">
+  <div v-if="enabled" ref="root" class="ln-picker">
     <button
       type="button"
       class="ln-picker__btn"

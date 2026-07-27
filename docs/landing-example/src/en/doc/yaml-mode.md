@@ -24,7 +24,7 @@ blocks:
     items:
       - { icon: 🚀, title: Fast, text: Static output. }
       - { icon: 🎨, title: Themeable, text: Two theme axes. }
-      - { icon: 🧩, title: Composable, text: Fifteen blocks. }
+      - { icon: 🧩, title: Composable, text: Twenty-four blocks. }
 
   - type: cta
     bg: brand
@@ -90,6 +90,10 @@ Then use `- type: pricing-calculator` in any page.
 
 ## Validation
 
-An unknown `type` renders a visible development placeholder that lists the
-problem. Run `pnpm validate:blocks` in CI: it rejects unknown properties on
-built-in blocks while leaving registered custom types extensible.
+An unknown `type` renders a visible development placeholder. The CI validator
+rejects unknown properties, duplicate ids, invalid hero order and unknown
+types. Allow every registered custom type explicitly:
+
+```sh
+pnpm validate:blocks -- --allow-type=pricing-calculator
+```

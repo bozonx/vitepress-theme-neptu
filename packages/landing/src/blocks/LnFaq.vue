@@ -61,7 +61,7 @@ const jsonLd = computed(() => {
   <LnSection
     :id="props.id"
     :bg="props.bg"
-    :width="props.cols === 2 ? props.width : 'narrow'"
+    :width="props.width"
     :padding="props.padding"
     :divider="props.divider"
     :no-reveal="props.noReveal"

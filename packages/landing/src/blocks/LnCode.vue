@@ -91,7 +91,7 @@ const copySample = async (): Promise<void> => {
   <LnSection
     :id="props.id"
     :bg="props.bg"
-    :width="props.variant === 'split' ? (props.width === 'narrow' ? 'default' : props.width) : props.width"
+    :width="props.width"
     :padding="props.padding"
     :divider="props.divider"
     :no-reveal="props.noReveal"

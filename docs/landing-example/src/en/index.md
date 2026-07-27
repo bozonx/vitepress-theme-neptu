@@ -62,7 +62,7 @@ const compareColumns = [
 ]
 
 const compareRows = [
-  { group: 'Essentials', label: 'Landing blocks', values: ['21', '21', '21'] },
+  { group: 'Essentials', label: 'Landing blocks', values: ['24', '24', '24'] },
   { group: 'Essentials', label: 'Color palettes', values: ['8', '8', 'Custom'] },
   { group: 'Essentials', label: 'Style presets', values: ['5', '5', 'Custom'] },
   { group: 'Support', label: 'GitHub issues', values: [true, true, true] },
@@ -71,7 +71,7 @@ const compareRows = [
 ]
 
 const features = [
-  { icon: 'fa6-solid:cubes', title: 'Blocks, not markup', text: 'Fifteen production-ready sections. Compose a page out of them instead of hand-writing layout CSS.' },
+  { icon: 'fa6-solid:cubes', title: 'Blocks, not markup', text: 'Twenty-four production-ready sections. Compose a page out of them instead of hand-writing layout CSS.' },
   { icon: 'fa6-solid:palette', title: 'Two theme axes', text: 'Color and style are independent. Eight palettes × five style presets, switchable at runtime.' },
   { icon: 'fa6-solid:file-code', title: 'YAML or Vue', text: 'Author pages as components, or describe them declaratively in frontmatter and let the renderer do the rest.' },
   { icon: 'fa6-solid:magnifying-glass', title: 'SEO-first', text: 'Open Graph, JSON-LD, hreflang, canonical links and a sitemap — inherited from the blog theme.' },
@@ -99,14 +99,14 @@ const splitItems = [
     eyebrow: 'Constructor',
     title: 'Or describe the page in YAML',
     text: 'Put a <code>blocks:</code> array in frontmatter and render it with a single component. Content stays separate from markup, which makes translation and CMS editing trivial.',
-    bullets: ['One renderer, fifteen types', 'Validated by a JSON schema', 'Ready for a CMS admin UI'],
+    bullets: ['One renderer, twenty-four types', 'Validated by a JSON schema', 'Ready for a CMS admin UI'],
     image: '/img/demo/shot-2.svg',
     actions: [{ text: 'YAML example', link: '/ru/', variant: 'alt' }],
   },
 ]
 
 const stats = [
-  { value: '15', label: 'Blocks', text: 'Plus 11 primitives' },
+  { value: '24', label: 'Blocks', text: 'Plus 11 primitives' },
   { value: '8 × 5', label: 'Theme combos', text: 'Color × style presets' },
   { value: '0', label: 'Runtime deps', text: 'Beyond Vue and VitePress' },
   { value: '100%', label: 'Typed', text: 'Props, config and blocks' },
@@ -137,7 +137,7 @@ const testimonials = [
 const plans = [
   {
     title: 'Open source', price: '$0', period: 'forever', text: 'Everything in the theme, MIT licensed.',
-    features: ['All 15 blocks', 'All theme presets', 'Docs + landing + pages', 'Community support'],
+    features: ['All 24 blocks', 'All theme presets', 'Docs + landing + pages', 'Community support'],
     action: { text: 'Start building', link: `${L}/doc` },
   },
   {
@@ -161,7 +161,7 @@ const faq = [
 ]
 
 const timeline = [
-  { label: 'Shipped', state: 'done', title: 'Block library v1', text: 'Fifteen blocks, eleven primitives, two theme axes.' },
+  { label: 'Shipped', state: 'done', title: 'Block library v1', text: 'Twenty-four blocks, eleven primitives, two theme axes.' },
   { label: 'Shipped', state: 'done', title: 'Declarative renderer', text: 'Frontmatter-driven pages with schema validation.' },
   { label: 'In progress', state: 'active', title: 'CMS integration', text: 'Mapping block types to a Decap CMS admin UI.' },
   { label: 'Planned', state: 'planned', title: 'More blocks', text: 'Comparison table, tabs showcase, contact form, blog teaser.' },
@@ -213,6 +213,33 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   title="One command, then only content"
   text="No build configuration, no plugin wiring."
   :items="codeSamples"
+/>
+
+<LnContent
+  eyebrow="Editorial content"
+  title="A flexible section for the copy between showcases"
+  content="<p>Use trusted HTML or a normal slot for long-form explanations, policy notes and mission statements.</p>"
+  :actions="[{ text: 'Read the guide', link: `${L}/doc`, variant: 'alt' }]"
+/>
+
+<LnCollection
+  bg="soft"
+  eyebrow="Resources"
+  title="Cards for more than features"
+  :items="[
+    { title: 'Getting started', text: 'A short guide.', date: '2026-07-27', tags: ['Guide'], link: `${L}/doc`, linkText: 'Read' },
+    { title: 'Block reference', text: 'Every prop and variant.', meta: ['24 blocks'], link: `${L}/doc/blocks`, linkText: 'Browse' },
+    { title: 'Theming', text: 'Choose one production preset.', tags: ['CSS', 'Tokens'], actions: [{ text: 'Open', link: `${L}/doc/theming` }] },
+  ]"
+/>
+
+<LnEmbed
+  eyebrow="Embed"
+  title="Maps, calendars and widgets"
+  text="The iframe stays lazy and receives an accessible title."
+  :src="`${L}/doc/about`"
+  embed-title="Embedded documentation example"
+  ratio="21/9"
 />
 
 <LnLogoCloud bg="soft" variant="marquee" eyebrow="Trusted by" :items="logos" />

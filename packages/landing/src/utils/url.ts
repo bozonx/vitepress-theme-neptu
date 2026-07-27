@@ -4,7 +4,7 @@
  * Local paths must go through `withBase()` or they break on sites deployed
  * under a sub-path (`base: '/project/'`). External URLs, anchors, `mailto:` and
  * `tel:` links must not. Keeping the rule in one place is what stops the two
- * from drifting apart across fifteen blocks.
+ * from drifting apart across the block library.
  */
 import { withBase } from 'vitepress'
 

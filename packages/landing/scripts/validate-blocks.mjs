@@ -11,6 +11,14 @@ const schema = JSON.parse(
   readFileSync(resolve(root, 'packages/landing/schema/landing-blocks.schema.json'), 'utf8')
 )
 const validate = new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(schema)
+const builtInTypes = new Set(
+  schema.definitions.block.allOf[1].oneOf
+    .map((branch) => branch.properties?.type?.const)
+    .filter(Boolean)
+)
+const allowedCustomTypes = new Set(
+  process.argv.slice(2).flatMap((arg) => arg.startsWith('--allow-type=') ? [arg.slice(13)] : [])
+)
 const ignored = new Set(['.git', 'node_modules', 'dist', '.vitepress', 'coverage', 'playwright-report'])
 const markdownFiles = []
 
@@ -40,13 +48,49 @@ for (const file of markdownFiles) {
     continue
   }
   if (!frontmatter?.blocks && frontmatter?.layout !== 'landing') continue
-  if (validate(frontmatter)) continue
+  const schemaValid = validate(frontmatter)
+  const semanticErrors = []
+  const blocks = Array.isArray(frontmatter.blocks) ? frontmatter.blocks : []
+
+  for (const [index, block] of blocks.entries()) {
+    const type = block?.type
+    if (typeof type === 'string' && !builtInTypes.has(type) && !allowedCustomTypes.has(type)) {
+      semanticErrors.push(`/blocks/${index}/type unknown block type "${type}" (use --allow-type=${type} for a registered custom block)`)
+    }
+  }
+
+  const heroes = blocks.map((block, index) => ({ block, index })).filter(({ block }) => block?.type === 'hero')
+  if (frontmatter.layout === 'landing') {
+    if (heroes.length !== 1) semanticErrors.push(`/blocks must contain exactly one hero (found ${heroes.length})`)
+    else if (blocks.slice(0, heroes[0].index).some((block) => block?.type !== 'banner')) {
+      semanticErrors.push(`/blocks/${heroes[0].index} hero must be first; only banner may precede it`)
+    }
+  }
+
+  const ids = new Map()
+  for (const [index, block] of blocks.entries()) {
+    if (block?.id) {
+      if (ids.has(block.id)) semanticErrors.push(`/blocks/${index}/id duplicate id "${block.id}" (first used at ${ids.get(block.id)})`)
+      else ids.set(block.id, index)
+    }
+
+    if (block?.type === 'compare' && Array.isArray(block.columns)) {
+      for (const [rowIndex, row] of (block.rows ?? []).entries()) {
+        if (Array.isArray(row.values) && row.values.length !== block.columns.length) {
+          semanticErrors.push(`/blocks/${index}/rows/${rowIndex}/values must match columns length ${block.columns.length}`)
+        }
+      }
+    }
+  }
+
+  if (schemaValid && semanticErrors.length === 0) continue
 
   invalid += 1
   console.error(`\n${relative(root, file)}`)
   for (const error of validate.errors ?? []) {
     console.error(`  ${error.instancePath || '/'} ${error.message ?? 'is invalid'}`)
   }
+  for (const error of semanticErrors) console.error(`  ${error}`)
 }
 
 if (invalid) {

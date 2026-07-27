@@ -11,7 +11,7 @@ import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnButton from '../primitives/LnButton.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import type { PricingFeature, PricingPlan, SectionProps } from './types.ts'
+import type { PricingFeature, PricingPlan, PricingToggleOptions, SectionProps } from './types.ts'
 
 const props = withDefaults(
   defineProps<
@@ -24,6 +24,10 @@ const props = withDefaults(
       /** Labels of the period switch. */
       monthlyLabel?: string
       yearlyLabel?: string
+      toggle?: PricingToggleOptions
+      currency?: string
+      discountLabel?: string
+      billingSuffix?: string
       /** Small print under the plans. */
       note?: string
     }
@@ -37,8 +41,9 @@ const pricingText = computed(() => {
   const t = theme.value.t as { landing?: { pricing?: Record<string, string> } } | undefined
   return t?.landing?.pricing ?? {}
 })
-const monthlyLabel = computed(() => props.monthlyLabel ?? pricingText.value.monthly ?? 'Monthly')
-const yearlyLabel = computed(() => props.yearlyLabel ?? pricingText.value.yearly ?? 'Yearly')
+const monthlyLabel = computed(() => props.toggle?.monthlyLabel ?? props.monthlyLabel ?? pricingText.value.monthly ?? 'Monthly')
+const yearlyLabel = computed(() => props.toggle?.yearlyLabel ?? props.yearlyLabel ?? pricingText.value.yearly ?? 'Yearly')
+const toggleDiscount = computed(() => props.toggle?.discountLabel ?? props.discountLabel)
 
 const hasToggle = computed(() =>
   Boolean(props.items?.some((plan) => plan.priceYearly))
@@ -49,6 +54,10 @@ const priceOf = (plan: PricingPlan): string | undefined =>
 
 const periodOf = (plan: PricingPlan): string | undefined =>
   yearly.value && plan.periodYearly ? plan.periodYearly : plan.period
+
+const currencyOf = (plan: PricingPlan): string | undefined => plan.currency ?? props.currency
+const suffixOf = (plan: PricingPlan): string | undefined => plan.billingSuffix ?? props.billingSuffix
+const discountOf = (plan: PricingPlan): string | undefined => plan.discountLabel ?? (yearly.value ? toggleDiscount.value : undefined)
 
 const normalize = (feature: string | PricingFeature): PricingFeature =>
   typeof feature === 'string' ? { text: feature, included: true } : { included: true, ...feature }
@@ -95,6 +104,7 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
         @click="yearly = true"
       >
         {{ yearlyLabel }}
+        <small v-if="toggleDiscount">{{ toggleDiscount }}</small>
       </button>
     </div>
 
@@ -116,12 +126,15 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
           class="ln-plan__price"
           :aria-live="hasToggle ? 'polite' : undefined"
         >
+          <span v-if="currencyOf(plan)" class="ln-plan__currency">{{ currencyOf(plan) }}</span>
           <span
             class="ln-plan__amount"
             :class="{ 'ln-plan__amount--words': !/\d/.test(priceOf(plan) ?? '') }"
           >{{ priceOf(plan) }}</span>
           <span v-if="periodOf(plan)" class="ln-plan__period">{{ periodOf(plan) }}</span>
+          <span v-if="suffixOf(plan)" class="ln-plan__suffix">{{ suffixOf(plan) }}</span>
         </p>
+        <p v-if="discountOf(plan)" class="ln-plan__discount">{{ discountOf(plan) }}</p>
 
         <LnButton
           v-if="plan.action"
@@ -181,6 +194,7 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
     background-color var(--ln-duration) var(--ln-ease),
     color var(--ln-duration) var(--ln-ease);
 }
+.ln-pricing__toggle-btn small { display: block; font-size: 0.65rem; font-weight: 500; }
 
 .ln-pricing__toggle-btn.is-active {
   background-color: var(--ln-c-brand);
@@ -228,6 +242,9 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
   gap: 0.375rem;
   margin: 0.5rem 0;
 }
+.ln-plan__currency { color: var(--ln-c-text-2); font-size: 1rem; font-weight: 700; }
+.ln-plan__suffix { color: var(--ln-c-text-3); font-size: 0.75rem; }
+.ln-plan__discount { margin: -0.35rem 0 0.25rem; color: var(--ln-c-brand-text); font-size: 0.8125rem; font-weight: 600; }
 
 .ln-plan__amount {
   font-family: var(--ln-font-display);

@@ -25,13 +25,13 @@ import type { BlockSpec } from './types.ts'
 
 const props = defineProps<{
   /** Explicit list. Falls back to `frontmatter.blocks`. */
-  blocks?: BlockSpec[]
+  blocks?: BlockSpec<string>[]
 }>()
 
 const { frontmatter } = useData()
 
-const specs = computed<BlockSpec[]>(() => {
-  const list = props.blocks ?? (frontmatter.value.blocks as BlockSpec[] | undefined)
+const specs = computed<BlockSpec<string>[]>(() => {
+  const list = props.blocks ?? (frontmatter.value.blocks as BlockSpec<string>[] | undefined)
   return Array.isArray(list) ? list : []
 })
 

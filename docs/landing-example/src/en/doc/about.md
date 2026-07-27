@@ -13,7 +13,7 @@ and color palettes.
 
 ## What it adds
 
-- **Block library**: fifteen sections and eleven primitives, one prop contract
+- **Block library**: twenty-four sections and eleven primitives, one prop contract
 - **Two theme axes**: color (`data-theme`) and style (`data-ln-style`), switchable at runtime
 - **Declarative pages**: describe a landing in YAML and render it with one component
 - **SEO-first**: Open Graph, JSON-LD, canonical links, hreflang and sitemap

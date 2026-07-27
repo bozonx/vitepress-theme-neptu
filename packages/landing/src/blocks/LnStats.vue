@@ -45,6 +45,7 @@ const props = withDefaults(
       <LnCard
         v-for="(item, i) in props.items"
         :key="`${item.value}-${i}`"
+        :link="item.link"
         :plain="props.variant !== 'card'"
         :padding="props.variant === 'card' ? 'md' : 'sm'"
         class="ln-stat"
@@ -54,6 +55,9 @@ const props = withDefaults(
         <p class="ln-stat__value">{{ item.value }}</p>
         <p v-if="item.label" class="ln-stat__label">{{ item.label }}</p>
         <p v-if="item.text" class="ln-stat__text">{{ item.text }}</p>
+        <p v-if="item.trend" class="ln-stat__trend" :class="`is-${item.trendDirection ?? 'neutral'}`">{{ item.trend }}</p>
+        <p v-if="item.source" class="ln-stat__source">{{ item.source }}</p>
+        <p v-if="item.note" class="ln-stat__note">{{ item.note }}</p>
       </LnCard>
       <slot />
     </LnGrid>
@@ -102,4 +106,7 @@ const props = withDefaults(
   font-size: 0.875rem;
   line-height: 1.5;
 }
+.ln-stat__trend { margin: 0.25rem 0 0; color: var(--ln-c-brand-text); font-size: 0.875rem; font-weight: 600; }
+.ln-stat__trend.is-down { color: var(--ln-c-danger); }
+.ln-stat__source, .ln-stat__note { margin: 0; color: var(--ln-c-text-3); font-size: 0.75rem; line-height: 1.4; }
 </style>

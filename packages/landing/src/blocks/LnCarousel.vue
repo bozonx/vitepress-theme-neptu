@@ -13,6 +13,7 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
+import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import type { CarouselSlide, SectionProps } from './types.ts'
 
 const props = withDefaults(
@@ -31,6 +32,7 @@ const props = withDefaults(
       /** Let slides bleed past the container edge. */
       peek?: boolean
       ariaLabel?: string
+      cardVariant?: 'card' | 'plain' | 'bordered'
     }
   >(),
   {
@@ -40,6 +42,7 @@ const props = withDefaults(
     autoplay: 0,
     peek: false,
     align: 'start',
+    cardVariant: 'card',
   }
 )
 
@@ -245,7 +248,13 @@ onBeforeUnmount(() => {
         :aria-label="message('slideOf', `${i + 1} of ${slideCount}`, { slide: i + 1, total: slideCount })"
       >
         <slot name="slide" :item="item" :index="i">
-          <LnCard :link="item.link" hoverable padding="none" class="ln-carousel__card">
+          <LnCard
+            :link="item.actions?.length ? undefined : item.link"
+            :target="item.target" :rel="item.rel"
+            :plain="props.cardVariant !== 'card'" :hoverable="props.cardVariant === 'card'"
+            padding="none" class="ln-carousel__card"
+            :class="`ln-carousel__card--${props.cardVariant}`"
+          >
             <LnMedia
               v-if="item.image"
               :media="item.image"
@@ -259,7 +268,10 @@ onBeforeUnmount(() => {
               <p v-if="item.eyebrow" class="ln-carousel__eyebrow">{{ item.eyebrow }}</p>
               <h3 v-if="item.title" class="ln-carousel__title" v-html="item.title" />
               <p v-if="item.text" class="ln-carousel__text" v-html="item.text" />
-              <span v-if="item.linkText" class="ln-carousel__link">{{ item.linkText }}</span>
+              <div v-if="item.meta?.length" class="ln-carousel__meta"><span v-for="meta in item.meta" :key="meta">{{ meta }}</span></div>
+              <div v-if="item.tags?.length" class="ln-carousel__tags"><span v-for="tag in item.tags" :key="tag">{{ tag }}</span></div>
+              <LnButtonGroup v-if="item.actions?.length" :actions="item.actions" size="sm" />
+              <span v-else-if="item.linkText" class="ln-carousel__link">{{ item.linkText }}</span>
             </div>
           </LnCard>
         </slot>
@@ -443,6 +455,9 @@ onBeforeUnmount(() => {
   font-size: 0.875rem;
   font-weight: 600;
 }
+.ln-carousel__meta, .ln-carousel__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; color: var(--ln-c-text-2); font-size: 0.8125rem; }
+.ln-carousel__tags span { border-radius: var(--ln-radius-pill); background: var(--ln-c-brand-soft); padding: 0.15rem 0.5rem; color: var(--ln-c-brand-text); }
+.ln-carousel__card--bordered { border-color: var(--ln-c-border-strong); }
 
 .ln-carousel__dots {
   display: flex;

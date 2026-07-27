@@ -14,9 +14,9 @@ root with `pnpm landing:dev`.
 
 ## What is in the box
 
-- **21 blocks** — hero, features, feature-split, bento, tabs, carousel, logos,
-  stats, steps, code, video, compare, testimonials, pricing, faq, cta,
-  newsletter, timeline, team, gallery, banner
+- **24 blocks** — hero, features, feature-split, bento, tabs, carousel,
+  collection, content, logos, stats, steps, code, video, embed, compare,
+  testimonials, pricing, faq, cta, newsletter, timeline, team, gallery, banner
 - **11 primitives** — page, section, container, grid, heading, button, button
   group, card, media, icon, reveal
 - **Two theme axes** — color (`data-theme`) and style (`data-ln-style`), both
@@ -59,6 +59,8 @@ export default async () => {
       logo: '/img/logo.svg',
       defaultColorTheme: 'blue',
       defaultLandingStyle: 'soft',
+      // Optional demo UI; production default is false.
+      themePicker: false,
       search: { provider: 'local' },
     },
   }
@@ -96,7 +98,7 @@ layout: home
   :items="[
     { icon: '🚀', title: 'Fast', text: 'Static output, no runtime deps.' },
     { icon: '🎨', title: 'Themeable', text: 'Two independent theme axes.' },
-    { icon: '🧩', title: 'Composable', text: 'Fifteen blocks, one contract.' },
+    { icon: '🧩', title: 'Composable', text: 'Twenty-four blocks, one contract.' },
   ]"
 />
 
@@ -133,7 +135,8 @@ Content is separated from markup, which makes translations, CMS editing and
 generation straightforward. Built-in blocks are schema-validated by
 `pnpm validate:blocks`; custom types registered with `registerBlockTypes` are
 intentionally accepted by the schema. Unknown runtime types show a visible
-development placeholder and fail production validation.
+development placeholder. The validation command rejects unknown types unless
+they are explicitly allowed with `--allow-type=my-block`.
 
 ## Shared props
 
@@ -168,7 +171,9 @@ A new theme is a CSS file, not a component change:
 }
 ```
 
-Add the pickers to your nav bar:
+Production sites normally choose one palette and one style. The optional picker
+is disabled by default; enable it for a demo with `themePicker: true`, then add
+the pickers to your nav bar:
 
 ```vue
 <template #nav-bar-content-after>
@@ -178,6 +183,9 @@ Add the pickers to your nav bar:
 ```
 
 Full token list with defaults: `src/styles/landing-vars.css`.
+
+Custom preset ids can be used as defaults or set directly on `<html>`. The
+built-in picker lists built-in presets only.
 
 ## Package entry points
 
@@ -207,6 +215,12 @@ Full token list with defaults: `src/styles/landing-vars.css`.
 
 - `<srcDir>/site.yaml` — cross-locale shared layer
 - `<srcDir>/<locale>/_site.yaml` — per-locale layer (supports `extends:`)
+
+Priority, from lowest to highest: built-in defaults → `config.ts` → shared
+`site.yaml` → locale `_site.yaml`. Objects are deep-merged; arrays are replaced.
+An `extends: en` key in a locale file inherits that locale before applying the
+current file. Strings may use `${localeIndex}`, `${config.*}`, `${theme.*}` and
+`${t.*}` template values.
 
 Top-level keys: `lang`, `title`, `titleTemplate`, `description`. Everything else
 goes under `themeConfig:`.

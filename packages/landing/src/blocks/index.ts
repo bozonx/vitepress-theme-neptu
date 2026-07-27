@@ -19,6 +19,9 @@ export { default as LnCompare } from './LnCompare.vue'
 export { default as LnNewsletter } from './LnNewsletter.vue'
 export { default as LnVideo } from './LnVideo.vue'
 export { default as LnBanner } from './LnBanner.vue'
+export { default as LnContent } from './LnContent.vue'
+export { default as LnCollection } from './LnCollection.vue'
+export { default as LnEmbed } from './LnEmbed.vue'
 export { default as LandingRenderer } from './LandingRenderer.vue'
 
 export {
