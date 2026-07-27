@@ -127,13 +127,14 @@ blocks:
   - type: cta
     bg: brand
     title: Ready?
+    actions: [{ text: Read the docs, link: /doc }]
 ---
 
 ```
 
 Content is separated from markup, which makes translations, CMS editing and
 generation straightforward. Built-in blocks are schema-validated by
-`pnpm validate:blocks`; custom types registered with `registerBlockTypes` are
+`pnpm exec neptu-landing src`; custom types registered with `registerBlockTypes` are
 intentionally accepted by the schema. Unknown runtime types show a visible
 development placeholder. The validation command rejects unknown types unless
 they are explicitly allowed with `--allow-type=my-block`.
@@ -144,8 +145,13 @@ collection-like blocks need at least one item, CTAs need linked actions, and
 be composed with slots.
 
 For TypeScript-authored data, use `defineBuiltInBlocks([...])` to retain the
-strict built-in union. If you register custom types, opt in explicitly with
+strict built-in union, including the same required fields as the schema. If you
+register custom types, opt in explicitly with
 `defineCustomBlocks<'my-block'>([...])`.
+
+Block actions always navigate and therefore require both `text` and `link`.
+For an event-handling button without a URL, compose a custom section with the
+`LnButton` primitive instead.
 
 ## Shared props
 

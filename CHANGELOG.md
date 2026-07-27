@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `packages/landing`: publishable `neptu-landing` validation CLI with explicit file/directory targets, plus `hasBlockType()` and `unregisterBlockTypes()` registry helpers.
 - `packages/landing`: six new blocks — `code` (copy-ready samples with tabs, no runtime highlighter), `tabs` (WAI-ARIA feature tabs), `compare` (comparison table with sticky head and row groups), `newsletter` (native form posting to any endpoint, optional background submit), `video` (click-to-load YouTube/Vimeo facade, no third-party cookies before consent) and `banner` (dismissable announcement strip).
 - `packages/landing`: `--ln-c-brand-text` token — the brand color for text, re-derived by `LnSection` on `inverse` and `brand` surfaces so accents never disappear into their background.
 - `packages/landing`: `LnFaq` emits `FAQPage` JSON-LD (`schema` prop, on by default).
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Breaking** `packages/landing`: declarative TypeScript block specs now enforce the same required fields and non-empty collections as the JSON Schema; block actions require a `link`, and replacing a registered block requires `{ override: true }`.
 - **Breaking** `packages/landing`: the default export is now a full theme — the VitePress default theme extended with the block library and the style layers — instead of a bare `Layout: SiteHome`. Use `export default LandingTheme`, or `{ ...LandingTheme, Layout }` to add nav bar slots. `SiteHome` is still exported from `…/layouts`.
 - `packages/landing`: `themeConfig` types for `nav`, `sidebar`, `footer`, `socialLinks` and other chrome options now come from the VitePress default theme (`LandingChromeConfig`), matching the theme the landing actually renders.
 - `docs/landing-example`: search switched from Pagefind to the built-in VitePress local search, which drops the extra build step and the head scripts.

@@ -88,6 +88,13 @@ export default LandingTheme
 
 Then use `- type: pricing-calculator` in any page.
 
+Registration rejects duplicate names. Replacing a built-in or an existing
+custom type must be deliberate:
+
+```ts
+registerBlockTypes({ pricing: CustomPricing }, { override: true })
+```
+
 ## Validation
 
 An unknown `type` renders a visible development placeholder. The CI validator
@@ -95,5 +102,8 @@ rejects unknown properties, duplicate ids, invalid hero order and unknown
 types. Allow every registered custom type explicitly:
 
 ```sh
-pnpm validate:blocks -- --allow-type=pricing-calculator
+pnpm exec neptu-landing src --allow-type=pricing-calculator
 ```
+
+The CLI accepts one or more Markdown files or directories and defaults to the
+current directory.

@@ -65,7 +65,7 @@ inside themselves, so the content stays readable without extra props.
 
 ```ts
 // action — used by hero, cta, faq, feature-split, pricing
-{ text, link?, variant?: 'brand'|'alt'|'ghost'|'outline'|'link', size?, icon?, target? }
+{ text, link, variant?: 'brand'|'alt'|'ghost'|'outline'|'link', size?, icon?, target? }
 
 // media — anywhere an image is accepted
 '/img/shot.png' | { src?, alt?, video?, poster?, ratio?, fit?: 'cover'|'contain' }

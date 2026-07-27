@@ -12,10 +12,14 @@
   "files": [
     "src",
     "schema",
+    "scripts/validate-blocks.mjs",
     "AGENTS.md",
     "README.md",
     "LICENSE"
   ],
+  "bin": {
+    "neptu-landing": "./scripts/validate-blocks.mjs"
+  },
   "exports": {
     ".": {
       "types": "./src/types.d.ts",
@@ -59,7 +63,9 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
-    "vitepress-theme-neptu-blog": "workspace:^"
+    "ajv": "^8.20.0",
+    "vitepress-theme-neptu-blog": "workspace:^",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@eslint/js": "catalog:",
@@ -68,7 +74,6 @@
     "@vitejs/plugin-vue": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "@vue/test-utils": "catalog:",
-    "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "eslint": "catalog:",
     "eslint-plugin-vue": "catalog:",
@@ -78,12 +83,11 @@
     "vitepress": "catalog:",
     "vitest": "catalog:",
     "vue": "catalog:",
-    "vue-eslint-parser": "catalog:",
-    "yaml": "^2.9.0"
+    "vue-eslint-parser": "catalog:"
   },
   "scripts": {
     "generate:icons": "node scripts/generate-icon-bundle.mjs",
-    "validate:blocks": "node scripts/validate-blocks.mjs",
+    "validate:blocks": "node scripts/validate-blocks.mjs ../..",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

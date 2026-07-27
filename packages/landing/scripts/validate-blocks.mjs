@@ -1,14 +1,14 @@
+#!/usr/bin/env node
 /** Validates `blocks:` frontmatter in Markdown files against the public schema. */
 import { readFileSync, readdirSync } from 'node:fs'
-import { dirname, join, relative, resolve } from 'node:path'
+import { dirname, extname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Ajv2020 from 'ajv/dist/2020.js'
 import { parse } from 'yaml'
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const root = resolve(packageRoot, '../..')
 const schema = JSON.parse(
-  readFileSync(resolve(root, 'packages/landing/schema/landing-blocks.schema.json'), 'utf8')
+  readFileSync(resolve(packageRoot, 'schema/landing-blocks.schema.json'), 'utf8')
 )
 const validate = new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(schema)
 const builtInTypes = new Set(
@@ -16,21 +16,37 @@ const builtInTypes = new Set(
     .map((branch) => branch.properties?.type?.const)
     .filter(Boolean)
 )
-const allowedCustomTypes = new Set(
-  process.argv.slice(2).flatMap((arg) => arg.startsWith('--allow-type=') ? [arg.slice(13)] : [])
-)
+const args = process.argv.slice(2)
+if (args.includes('--help') || args.includes('-h')) {
+  console.log(`Usage: neptu-landing [path ...] [--allow-type=name]
+
+Validate landing blocks in Markdown files. Paths default to the current directory.
+Pass files or directories; directories are searched recursively.`)
+  process.exit(0)
+}
+const allowedCustomTypes = new Set(args.flatMap((arg) => arg.startsWith('--allow-type=') ? [arg.slice(13)] : []))
+const inputPaths = args.filter((arg) => !arg.startsWith('--')).map((path) => resolve(path))
+const roots = inputPaths.length ? inputPaths : [process.cwd()]
 const ignored = new Set(['.git', 'node_modules', 'dist', '.vitepress', 'coverage', 'playwright-report'])
 const markdownFiles = []
 
-const walk = (directory) => {
-  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+const walk = (path) => {
+  const entries = readdirSync(path, { withFileTypes: true })
+  for (const entry of entries) {
     if (ignored.has(entry.name)) continue
-    const path = join(directory, entry.name)
-    if (entry.isDirectory()) walk(path)
-    else if (entry.isFile() && /\.md$/i.test(entry.name)) markdownFiles.push(path)
+    const child = join(path, entry.name)
+    if (entry.isDirectory()) walk(child)
+    else if (entry.isFile() && extname(entry.name).toLowerCase() === '.md') markdownFiles.push(child)
   }
 }
-walk(root)
+for (const path of roots) {
+  if (extname(path).toLowerCase() === '.md') markdownFiles.push(path)
+  else walk(path)
+}
+
+const displayRoot = roots.length === 1 && extname(roots[0]).toLowerCase() !== '.md'
+  ? roots[0]
+  : process.cwd()
 
 let invalid = 0
 for (const file of markdownFiles) {
@@ -43,7 +59,7 @@ for (const file of markdownFiles) {
   } catch (error) {
     // Broken YAML is a finding, not a reason to abort the whole run.
     invalid += 1
-    console.error(`\n${relative(root, file)}`)
+    console.error(`\n${relative(displayRoot, file)}`)
     console.error(`  ${error.message.split('\n')[0]}`)
     continue
   }
@@ -95,7 +111,7 @@ const ids = new Map()
   if (schemaValid && semanticErrors.length === 0) continue
 
   invalid += 1
-  console.error(`\n${relative(root, file)}`)
+  console.error(`\n${relative(displayRoot, file)}`)
   for (const error of validate.errors ?? []) {
     console.error(`  ${error.instancePath || '/'} ${error.message ?? 'is invalid'}`)
   }

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import LandingRenderer from '../../../src/blocks/LandingRenderer.vue'
-import { registerBlockTypes, blockRegistry } from '../../../src/blocks/registry.ts'
+import { registerBlockTypes, unregisterBlockTypes } from '../../../src/blocks/registry.ts'
 import { defineBuiltInBlocks, defineCustomBlocks } from '../../../src/blocks/types.ts'
 import { mockFrontmatter } from '../../mocks/vitepress'
 
@@ -11,6 +11,17 @@ afterEach(() => {
 })
 
 describe('LandingRenderer', () => {
+  it('keeps data-mode required fields strict at compile time', () => {
+    // @ts-expect-error a declarative hero requires a title
+    defineBuiltInBlocks([{ type: 'hero' }])
+    // @ts-expect-error collection-like blocks require at least one item
+    defineBuiltInBlocks([{ type: 'features', items: [] }])
+    // @ts-expect-error block actions must have a destination
+    defineBuiltInBlocks([{ type: 'cta', title: 'Go', actions: [{ text: 'Start' }] }])
+    // @ts-expect-error a video requires a source
+    defineBuiltInBlocks([{ type: 'video' }])
+  })
+
   it('exports explicit helpers for strict built-in and opt-in custom data', () => {
     expect(defineBuiltInBlocks([{ type: 'hero', title: 'Hello' }])[0].type).toBe('hero')
     expect(defineCustomBlocks<'custom-block'>([{ type: 'custom-block', emphasis: true }])[0].type).toBe('custom-block')
@@ -79,7 +90,7 @@ describe('LandingRenderer', () => {
 
       expect(wrapper.find('.custom').exists()).toBe(true)
     } finally {
-      delete blockRegistry['custom-block']
+      unregisterBlockTypes('custom-block')
     }
   })
 })

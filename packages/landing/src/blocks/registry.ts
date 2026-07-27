@@ -87,14 +87,45 @@ export const blockComponents = {
 
 /** All block types known to the renderer, for docs and error messages. */
 export const blockTypes: string[] = Object.keys(blockRegistry)
+const builtInBlockTypes = new Set(blockTypes)
+
+export interface RegisterBlockTypesOptions {
+  /** Explicitly allow replacing an existing custom or built-in type. */
+  override?: boolean
+}
 
 /**
  * Registers extra block types, or overrides built-in ones with your own
  * components. Call it before the renderer mounts, e.g. in `enhanceApp`.
  */
-export function registerBlockTypes(blocks: Record<string, Component>): void {
+export function registerBlockTypes(
+  blocks: Record<string, Component>,
+  options: RegisterBlockTypesOptions = {}
+): void {
+  const collisions = Object.keys(blocks).filter((type) => type in blockRegistry)
+  if (collisions.length && !options.override) {
+    throw new Error(
+      `[neptu-landing] Block type already registered: ${collisions.join(', ')}. ` +
+        'Pass { override: true } to replace it explicitly.'
+    )
+  }
   Object.assign(blockRegistry, blocks)
   blockTypes.splice(0, blockTypes.length, ...Object.keys(blockRegistry))
+}
+
+/** Removes registered custom types. Built-in types cannot be removed. */
+export function unregisterBlockTypes(types: string | string[]): void {
+  for (const type of Array.isArray(types) ? types : [types]) {
+    if (builtInBlockTypes.has(type)) {
+      throw new Error(`[neptu-landing] Cannot unregister built-in block type "${type}".`)
+    }
+    delete blockRegistry[type]
+  }
+  blockTypes.splice(0, blockTypes.length, ...Object.keys(blockRegistry))
+}
+
+export function hasBlockType(type: string): boolean {
+  return type in blockRegistry
 }
 
 /** Resolves a block type, returning `undefined` for unknown ones. */

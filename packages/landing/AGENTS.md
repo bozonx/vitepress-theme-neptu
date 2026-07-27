@@ -28,6 +28,9 @@ The optional picker is intended for demos and requires `themePicker: true`.
 `id`, `bg`, `width`, `padding`, `align`, `divider`, `noReveal`.
 Most blocks also accept `eyebrow`, `title`, `text`.
 
+Every item in `actions` requires both `text` and `link`. Use the `LnButton`
+primitive in component mode for event-handling buttons without a destination.
+
 Card-based blocks share `CardItem`: `title`, `text`, `eyebrow`, `icon`,
 `image`, `badge`, `tags`, `meta`, `date`, `link`, `linkText`, `actions`.
 
@@ -72,13 +75,15 @@ blocks:
   - type: cta
     bg: brand
     title: Ready?
+    actions:
+      - { text: Get started, link: /docs }
 ---
 ```
 
-Run `pnpm validate:blocks`. Registered custom types must be allowed explicitly:
+Run `pnpm exec neptu-landing src`. Registered custom types must be allowed explicitly:
 
 ```sh
-pnpm validate:blocks -- --allow-type=my-block
+pnpm exec neptu-landing src --allow-type=my-block
 ```
 
 ## Component mode and extension

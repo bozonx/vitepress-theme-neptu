@@ -11,7 +11,13 @@ import LnCode from '../../../src/blocks/LnCode.vue'
 import LnNewsletter from '../../../src/blocks/LnNewsletter.vue'
 import LnTeam from '../../../src/blocks/LnTeam.vue'
 import LnTabs from '../../../src/blocks/LnTabs.vue'
-import { blockTypes, resolveBlock } from '../../../src/blocks/registry.ts'
+import {
+  blockTypes,
+  hasBlockType,
+  registerBlockTypes,
+  resolveBlock,
+  unregisterBlockTypes,
+} from '../../../src/blocks/registry.ts'
 
 describe('block registry', () => {
   it('exposes every block type', () => {
@@ -27,6 +33,19 @@ describe('block registry', () => {
   it('resolves known types and returns undefined for unknown ones', () => {
     expect(resolveBlock('hero')).toBeTruthy()
     expect(resolveBlock('nope')).toBeUndefined()
+  })
+
+  it('requires explicit overrides and safely unregisters custom types', () => {
+    const component = defineComponent({ template: '<div />' })
+
+    expect(() => registerBlockTypes({ hero: component })).toThrow(/override: true/)
+    registerBlockTypes({ 'test-custom': component })
+    expect(hasBlockType('test-custom')).toBe(true)
+    expect(() => registerBlockTypes({ 'test-custom': component })).toThrow(/override: true/)
+
+    unregisterBlockTypes('test-custom')
+    expect(hasBlockType('test-custom')).toBe(false)
+    expect(() => unregisterBlockTypes('hero')).toThrow(/built-in/)
   })
 })
 
