@@ -4,7 +4,7 @@
  * team...). Renders an `<a>` when `link` is set so the whole card is clickable.
  */
 import { computed } from 'vue'
-import { withBase } from 'vitepress'
+import { externalTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<{
@@ -23,14 +23,8 @@ const props = withDefaults(
   { hoverable: false, featured: false, padding: 'md', plain: false, tag: 'div' }
 )
 
-const isExternal = computed(() => /^(https?:)?\/\//.test(props.link ?? ''))
-const href = computed(() => {
-  if (!props.link) return undefined
-  return isExternal.value || props.link.startsWith('#')
-    ? props.link
-    : withBase(props.link)
-})
-const target = computed(() => props.target ?? (isExternal.value ? '_blank' : undefined))
+const href = computed(() => resolveUrl(props.link))
+const target = computed(() => props.target ?? externalTarget(props.link))
 </script>
 
 <template>

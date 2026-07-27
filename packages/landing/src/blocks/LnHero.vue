@@ -13,6 +13,7 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import type { ActionItem, MediaLike, SectionProps } from './types.ts'
+import { resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
@@ -44,9 +45,15 @@ const props = withDefaults(
 const isCover = computed(() => props.variant === 'cover')
 const isCentered = computed(() => props.variant === 'centered' || isCover.value)
 const align = computed(() => props.align ?? (isCentered.value ? 'center' : 'start'))
-const coverSpec = computed(() =>
-  typeof props.image === 'string' ? { src: props.image } : (props.image ?? {})
-)
+const coverSpec = computed(() => {
+  const spec = typeof props.image === 'string' ? { src: props.image } : (props.image ?? {})
+  return {
+    ...spec,
+    src: resolveUrl(spec.src),
+    video: resolveUrl(spec.video),
+    poster: resolveUrl(spec.poster),
+  }
+})
 </script>
 
 <template>
@@ -61,7 +68,14 @@ const coverSpec = computed(() =>
         loop
         playsinline
       />
-      <img v-else-if="coverSpec.src" :src="coverSpec.src" :alt="''" />
+      <!-- The cover image is the LCP element: never lazy, always first in line. -->
+      <img
+        v-else-if="coverSpec.src"
+        :src="coverSpec.src"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+      />
       <div v-if="props.overlay" class="ln-hero__overlay" />
     </div>
 

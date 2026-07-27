@@ -61,36 +61,58 @@ let timer: ReturnType<typeof setInterval> | null = null
 
 const slideCount = computed(() => props.items?.length ?? 0)
 
+const prefersReducedMotion = (): boolean =>
+  typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
+
 const slides = (): HTMLElement[] =>
   track.value ? (Array.from(track.value.children) as HTMLElement[]) : []
+
+/**
+ * Slide position inside the scroll container.
+ *
+ * `offsetLeft` is measured against the nearest positioned ancestor — which is
+ * the section, not the track — so the track's own offset has to be subtracted
+ * before it can be compared with `scrollLeft`.
+ */
+const offsetInTrack = (child: HTMLElement): number => {
+  const el = track.value
+  return child.offsetLeft - (el?.offsetLeft ?? 0)
+}
 
 const syncState = (): void => {
   const el = track.value
   if (!el) return
 
   const children = slides()
-  const center = el.scrollLeft + el.clientWidth / 2
+  const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4
   let closest = 0
   let min = Number.POSITIVE_INFINITY
 
+  /*
+   * Slides snap on their leading edge, so the active one is the first visible
+   * slide — not the one nearest the centre, which with `perView: 3` would light
+   * up the middle dot on a freshly loaded page.
+   */
   children.forEach((child, i) => {
-    const distance = Math.abs(child.offsetLeft + child.clientWidth / 2 - center)
+    const distance = Math.abs(offsetInTrack(child) - el.scrollLeft)
     if (distance < min) {
       min = distance
       closest = i
     }
   })
 
-  active.value = closest
+  // At the end of the track the trailing slides can never lead: without this
+  // the last dots would be unreachable.
+  active.value = atEnd ? Math.max(children.length - 1, 0) : closest
   canPrev.value = el.scrollLeft > 4
-  canNext.value = el.scrollLeft + el.clientWidth < el.scrollWidth - 4
+  canNext.value = !atEnd
 }
 
 const goTo = (index: number): void => {
   const el = track.value
   const child = slides()[index]
   if (!el || !child) return
-  el.scrollTo({ left: child.offsetLeft - el.offsetLeft, behavior: 'smooth' })
+  el.scrollTo({ left: offsetInTrack(child), behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
 }
 
 const step = (delta: number): void => {
@@ -102,32 +124,50 @@ const step = (delta: number): void => {
   goTo(next)
 }
 
-const stopAutoplay = (): void => {
+/** Autoplay is on until the visitor takes over — see `paused`. */
+const paused = ref(false)
+
+const clearTimer = (): void => {
   if (timer) clearInterval(timer)
   timer = null
 }
 
-const startAutoplay = (): void => {
-  if (!props.autoplay || slideCount.value < 2) return
-  stopAutoplay()
+const runTimer = (): void => {
+  clearTimer()
+  if (!props.autoplay || paused.value || slideCount.value < 2) return
+  if (typeof document !== 'undefined' && document.hidden) return
   timer = setInterval(() => step(1), props.autoplay)
 }
+
+/** Visitor interaction wins over autoplay, permanently. */
+const stopAutoplay = (): void => {
+  paused.value = true
+  clearTimer()
+}
+
+const togglePlay = (): void => {
+  paused.value = !paused.value
+  runTimer()
+}
+
+/** A background tab must not keep scrolling — and must resume when it returns. */
+const onVisibility = (): void => runTimer()
 
 onMounted(() => {
   syncState()
   track.value?.addEventListener('scroll', syncState, { passive: true })
   window.addEventListener('resize', syncState, { passive: true })
+  document.addEventListener('visibilitychange', onVisibility)
 
-  const reduced =
-    typeof matchMedia === 'function' &&
-    matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (!reduced) startAutoplay()
+  paused.value = prefersReducedMotion()
+  runTimer()
 })
 
 onBeforeUnmount(() => {
-  stopAutoplay()
+  clearTimer()
   track.value?.removeEventListener('scroll', syncState)
   window.removeEventListener('resize', syncState)
+  document.removeEventListener('visibilitychange', onVisibility)
 })
 </script>
 
@@ -152,32 +192,45 @@ onBeforeUnmount(() => {
         :spacing="false"
       />
 
-      <div v-if="props.arrows && slideCount > 1" class="ln-carousel__arrows">
+      <div v-if="(props.arrows || props.autoplay) && slideCount > 1" class="ln-carousel__arrows">
+        <!-- WCAG 2.2.2: moving content needs a visible pause control. -->
         <button
+          v-if="props.autoplay"
           type="button"
           class="ln-carousel__arrow"
-          :disabled="!canPrev && !props.autoplay"
-          :aria-label="message('previous', 'Previous slide')"
-          @click="stopAutoplay(); step(-1)"
+          :aria-label="paused ? message('play', 'Start the slideshow') : message('pause', 'Pause the slideshow')"
+          @click="togglePlay"
         >
-          <LnIcon icon="fa6-solid:chevron-left" size="0.9rem" />
+          <LnIcon :icon="paused ? 'fa6-solid:play' : 'fa6-solid:pause'" size="0.8rem" />
         </button>
-        <button
-          type="button"
-          class="ln-carousel__arrow"
-          :disabled="!canNext && !props.autoplay"
-          :aria-label="message('next', 'Next slide')"
-          @click="stopAutoplay(); step(1)"
-        >
-          <LnIcon icon="fa6-solid:chevron-right" size="0.9rem" />
-        </button>
+        <template v-if="props.arrows">
+          <button
+            type="button"
+            class="ln-carousel__arrow"
+            :disabled="!canPrev && !props.autoplay"
+            :aria-label="message('previous', 'Previous slide')"
+            @click="stopAutoplay(); step(-1)"
+          >
+            <LnIcon icon="fa6-solid:chevron-left" size="0.9rem" />
+          </button>
+          <button
+            type="button"
+            class="ln-carousel__arrow"
+            :disabled="!canNext && !props.autoplay"
+            :aria-label="message('next', 'Next slide')"
+            @click="stopAutoplay(); step(1)"
+          >
+            <LnIcon icon="fa6-solid:chevron-right" size="0.9rem" />
+          </button>
+        </template>
       </div>
     </div>
 
     <div
       ref="track"
       class="ln-carousel__track"
-      role="region"
+      role="group"
+      aria-roledescription="carousel"
       :aria-label="props.ariaLabel ?? props.title ?? message('region', 'Carousel')"
       tabindex="0"
       @mouseenter="stopAutoplay"
@@ -187,7 +240,9 @@ onBeforeUnmount(() => {
         v-for="(item, i) in props.items"
         :key="`${item.title}-${i}`"
         class="ln-carousel__slide"
-        :aria-label="`${i + 1} / ${slideCount}`"
+        role="group"
+        aria-roledescription="slide"
+        :aria-label="message('slideOf', `${i + 1} of ${slideCount}`, { slide: i + 1, total: slideCount })"
       >
         <slot name="slide" :item="item" :index="i">
           <LnCard :link="item.link" hoverable padding="none" class="ln-carousel__card">
@@ -267,7 +322,7 @@ onBeforeUnmount(() => {
 
 .ln-carousel__arrow:hover:not(:disabled) {
   border-color: var(--ln-c-brand);
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-carousel__arrow:disabled {
@@ -288,6 +343,12 @@ onBeforeUnmount(() => {
 
 .ln-carousel__track::-webkit-scrollbar {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ln-carousel__track {
+    scroll-behavior: auto;
+  }
 }
 
 .ln-carousel__track:focus-visible {
@@ -334,7 +395,7 @@ onBeforeUnmount(() => {
 }
 
 .ln-carousel__icon {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-carousel__badge {
@@ -343,7 +404,7 @@ onBeforeUnmount(() => {
   border-radius: var(--ln-radius-pill);
   background-color: var(--ln-c-brand-soft);
   padding: 0.125rem 0.625rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -378,7 +439,7 @@ onBeforeUnmount(() => {
 .ln-carousel__link {
   margin-top: auto;
   padding-top: 0.5rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.875rem;
   font-weight: 600;
 }

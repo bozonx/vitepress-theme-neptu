@@ -138,7 +138,7 @@ const props = withDefaults(
 
 .ln-timeline__item.is-active .ln-timeline__marker {
   border-color: var(--ln-c-brand);
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   box-shadow: 0 0 0 4px var(--ln-c-brand-soft);
 }
 

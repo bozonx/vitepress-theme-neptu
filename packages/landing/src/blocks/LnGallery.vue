@@ -4,10 +4,11 @@
  * so focus trapping and Esc-to-close come from the platform.
  */
 import { computed, ref } from 'vue'
-import { withBase } from 'vitepress'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
+import { externalTarget, resolveUrl } from '../utils/url.ts'
 import type { GalleryItem, SectionProps } from './types.ts'
 
 const props = withDefaults(
@@ -30,7 +31,13 @@ const props = withDefaults(
 const dialog = ref<HTMLDialogElement | null>(null)
 const current = ref(0)
 
-const resolve = (url: string) => (/^(https?:)?\/\//.test(url) ? url : withBase(url))
+const { theme } = useData()
+const galleryText = computed(() => {
+  const t = theme.value.t as { landing?: { gallery?: Record<string, string> } } | undefined
+  return t?.landing?.gallery ?? {}
+})
+const label = (key: string, fallback: string): string => galleryText.value[key] ?? fallback
+
 const activeItem = computed(() => props.items?.[current.value])
 
 const open = (index: number): void => {
@@ -45,6 +52,14 @@ const move = (delta: number): void => {
   const total = props.items?.length ?? 0
   if (!total) return
   current.value = (current.value + delta + total) % total
+}
+
+/** Esc comes from `<dialog>` itself; arrows have to be wired up by hand. */
+const onKeydown = (event: KeyboardEvent): void => {
+  if (event.key === 'ArrowRight') move(1)
+  else if (event.key === 'ArrowLeft') move(-1)
+  else return
+  event.preventDefault()
 }
 </script>
 
@@ -75,12 +90,15 @@ const move = (delta: number): void => {
         v-for="(item, i) in props.items"
         :key="`${item.src}-${i}`"
         class="ln-gallery__item"
-        :href="item.link"
+        :class="{ 'ln-gallery__item--static': !item.link && !props.lightbox }"
+        :href="resolveUrl(item.link)"
+        :target="externalTarget(item.link)"
+        :rel="item.link && externalTarget(item.link) ? 'noreferrer' : undefined"
         :type="!item.link && props.lightbox ? 'button' : undefined"
         @click="!item.link && open(i)"
       >
         <img
-          :src="resolve(item.src)"
+          :src="resolveUrl(item.src)"
           :alt="item.alt ?? ''"
           loading="lazy"
           :style="
@@ -94,24 +112,48 @@ const move = (delta: number): void => {
       <slot />
     </div>
 
-    <dialog v-if="props.lightbox" ref="dialog" class="ln-gallery__dialog" @click="close">
+    <dialog
+      v-if="props.lightbox"
+      ref="dialog"
+      class="ln-gallery__dialog"
+      :aria-label="props.title ?? label('region', 'Image viewer')"
+      @click="close"
+      @keydown="onKeydown"
+    >
       <div class="ln-gallery__viewer" @click.stop>
         <img
           v-if="activeItem"
-          :src="resolve(activeItem.src)"
+          :src="resolveUrl(activeItem.src)"
           :alt="activeItem.alt ?? ''"
         />
         <p v-if="activeItem?.caption" class="ln-gallery__viewer-caption">
           {{ activeItem.caption }}
         </p>
 
-        <button type="button" class="ln-gallery__nav ln-gallery__nav--prev" aria-label="Previous image" @click="move(-1)">
+        <button
+          v-if="(props.items?.length ?? 0) > 1"
+          type="button"
+          class="ln-gallery__nav ln-gallery__nav--prev"
+          :aria-label="label('previous', 'Previous image')"
+          @click="move(-1)"
+        >
           <LnIcon icon="fa6-solid:chevron-left" size="1rem" />
         </button>
-        <button type="button" class="ln-gallery__nav ln-gallery__nav--next" aria-label="Next image" @click="move(1)">
+        <button
+          v-if="(props.items?.length ?? 0) > 1"
+          type="button"
+          class="ln-gallery__nav ln-gallery__nav--next"
+          :aria-label="label('next', 'Next image')"
+          @click="move(1)"
+        >
           <LnIcon icon="fa6-solid:chevron-right" size="1rem" />
         </button>
-        <button type="button" class="ln-gallery__close" aria-label="Close" @click="close">
+        <button
+          type="button"
+          class="ln-gallery__close"
+          :aria-label="label('close', 'Close')"
+          @click="close"
+        >
           <LnIcon icon="fa6-solid:xmark" size="1rem" />
         </button>
       </div>
@@ -171,6 +213,15 @@ const move = (delta: number): void => {
   transform: scale(1.03);
 }
 
+/* Nothing to click — do not pretend otherwise. */
+.ln-gallery__item--static {
+  cursor: default;
+}
+
+.ln-gallery__item--static:hover img {
+  transform: none;
+}
+
 .ln-gallery__item:focus-visible {
   outline: 2px solid var(--ln-c-brand);
   outline-offset: 3px;
@@ -180,8 +231,8 @@ const move = (delta: number): void => {
   position: absolute;
   inset: auto 0 0 0;
   padding: 2rem 0.875rem 0.75rem;
-  background: linear-gradient(transparent, rgb(0 0 0 / 72%));
-  color: #fff;
+  background: linear-gradient(transparent, var(--ln-c-media-scrim));
+  color: var(--ln-c-on-media);
   font-size: 0.8125rem;
   line-height: 1.4;
   text-align: left;
@@ -200,7 +251,7 @@ const move = (delta: number): void => {
 }
 
 .ln-gallery__dialog::backdrop {
-  background: rgb(0 0 0 / 82%);
+  background: var(--ln-c-backdrop);
 }
 
 .ln-gallery__viewer {
@@ -217,7 +268,7 @@ const move = (delta: number): void => {
 
 .ln-gallery__viewer-caption {
   margin: 0.75rem 0 0;
-  color: #fff;
+  color: var(--ln-c-on-media);
   font-size: 0.875rem;
   line-height: 1.5;
   text-align: center;
@@ -233,15 +284,15 @@ const move = (delta: number): void => {
   height: 2.5rem;
   border: 0;
   border-radius: var(--ln-radius-pill);
-  background-color: rgb(255 255 255 / 14%);
-  color: #fff;
+  background-color: var(--ln-c-on-media-veil);
+  color: var(--ln-c-on-media);
   cursor: pointer;
   transition: background-color var(--ln-duration) var(--ln-ease);
 }
 
 .ln-gallery__nav:hover,
 .ln-gallery__close:hover {
-  background-color: rgb(255 255 255 / 28%);
+  background-color: var(--ln-c-on-media-veil-hover);
 }
 
 .ln-gallery__nav--prev {

@@ -109,7 +109,7 @@ const props = withDefaults(
   border: var(--ln-border-width) solid var(--ln-c-border);
   border-radius: var(--ln-radius-pill);
   background-color: var(--ln-c-bg);
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-family: var(--ln-font-display);
   font-weight: 700;
 }
@@ -146,7 +146,7 @@ const props = withDefaults(
 
 .ln-step__eyebrow {
   margin: 0;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;

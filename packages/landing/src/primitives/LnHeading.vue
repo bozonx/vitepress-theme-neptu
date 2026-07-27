@@ -65,7 +65,7 @@ const props = withDefaults(
 
 .ln-heading__eyebrow {
   margin: 0;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: var(--ln-eyebrow-size);
   font-weight: 600;
   letter-spacing: 0.08em;

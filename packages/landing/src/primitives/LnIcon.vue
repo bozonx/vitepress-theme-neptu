@@ -8,6 +8,7 @@
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import type { IconLike } from '../blocks/types.ts'
+import { resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<{
@@ -29,7 +30,7 @@ const kind = computed<'none' | 'iconify' | 'image' | 'text'>(() => {
 })
 
 const imageSrc = computed(() =>
-  typeof props.icon === 'object' ? props.icon.src : (props.icon as string)
+  resolveUrl(typeof props.icon === 'object' ? props.icon.src : (props.icon as string))
 )
 const imageAlt = computed(() =>
   typeof props.icon === 'object' ? (props.icon.alt ?? '') : (props.label ?? '')

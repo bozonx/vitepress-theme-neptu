@@ -4,9 +4,9 @@
  * them infinitely; it pauses on hover and is disabled under reduced motion.
  */
 import { computed } from 'vue'
-import { withBase } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
+import { externalTarget, resolveUrl } from '../utils/url.ts'
 import type { LogoItem, SectionProps } from './types.ts'
 
 const props = withDefaults(
@@ -34,9 +34,12 @@ const props = withDefaults(
   }
 )
 
-const resolve = (url: string) => (/^(https?:)?\/\//.test(url) ? url : withBase(url))
-/** The marquee needs the list twice to loop seamlessly. */
-const marqueeItems = computed(() => [...(props.items ?? []), ...(props.items ?? [])])
+/**
+ * The marquee scrolls one full group and restarts. Both groups must be
+ * *separate flex items* with their own inner gap: translating a single flat
+ * list by -50% lands half a gap off and the loop visibly jumps.
+ */
+const marqueeGroups = computed(() => [false, true])
 </script>
 
 <template>
@@ -63,18 +66,31 @@ const marqueeItems = computed(() => [...(props.items ?? []), ...(props.items ?? 
 
     <div v-if="props.variant === 'marquee'" class="ln-logos__marquee">
       <div class="ln-logos__track">
-        <span
-          v-for="(logo, i) in marqueeItems"
-          :key="`${logo.src}-${i}`"
-          class="ln-logos__item"
+        <!-- The second group is a visual duplicate: hide it from screen readers. -->
+        <div
+          v-for="(isClone, g) in marqueeGroups"
+          :key="`group-${g}`"
+          class="ln-logos__group"
+          :aria-hidden="isClone ? 'true' : undefined"
         >
-          <img
-            :src="resolve(logo.src)"
-            :alt="logo.alt ?? ''"
-            :style="logo.height ? { height: logo.height } : undefined"
-            loading="lazy"
-          />
-        </span>
+          <component
+            :is="logo.link && !isClone ? 'a' : 'span'"
+            v-for="(logo, i) in props.items"
+            :key="`${logo.src}-${i}`"
+            class="ln-logos__item"
+            :href="!isClone ? resolveUrl(logo.link) : undefined"
+            :target="!isClone ? externalTarget(logo.link) : undefined"
+            :rel="logo.link && !isClone && externalTarget(logo.link) ? 'noreferrer' : undefined"
+            :tabindex="isClone ? -1 : undefined"
+          >
+            <img
+              :src="resolveUrl(logo.src)"
+              :alt="isClone ? '' : (logo.alt ?? '')"
+              :style="logo.height ? { height: logo.height } : undefined"
+              loading="lazy"
+            />
+          </component>
+        </div>
       </div>
     </div>
 
@@ -84,12 +100,12 @@ const marqueeItems = computed(() => [...(props.items ?? []), ...(props.items ?? 
         v-for="(logo, i) in props.items"
         :key="`${logo.src}-${i}`"
         class="ln-logos__item"
-        :href="logo.link"
-        :target="logo.link && /^https?:/.test(logo.link) ? '_blank' : undefined"
-        rel="noreferrer"
+        :href="resolveUrl(logo.link)"
+        :target="externalTarget(logo.link)"
+        :rel="logo.link && externalTarget(logo.link) ? 'noreferrer' : undefined"
       >
         <img
-          :src="resolve(logo.src)"
+          :src="resolveUrl(logo.src)"
           :alt="logo.alt ?? ''"
           :style="logo.height ? { height: logo.height } : undefined"
           loading="lazy"
@@ -147,6 +163,10 @@ const marqueeItems = computed(() => [...(props.items ?? []), ...(props.items ?? 
 }
 
 /**** Marquee */
+.ln-logos {
+  --ln-marquee-gap: clamp(2rem, 1rem + 4vw, 5rem);
+}
+
 .ln-logos__marquee {
   overflow: hidden;
   width: 100%;
@@ -156,21 +176,36 @@ const marqueeItems = computed(() => [...(props.items ?? []), ...(props.items ?? 
 .ln-logos__track {
   display: flex;
   align-items: center;
-  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  /* Same gap between groups as inside them, so the seam is invisible. */
+  gap: var(--ln-marquee-gap);
   width: max-content;
   animation: ln-marquee var(--ln-marquee-speed) linear infinite;
 }
 
-.ln-logos__marquee:hover .ln-logos__track {
+.ln-logos__group {
+  display: flex;
+  align-items: center;
+  gap: var(--ln-marquee-gap);
+  flex: none;
+}
+
+.ln-logos__marquee:hover .ln-logos__track,
+.ln-logos__marquee:focus-within .ln-logos__track {
   animation-play-state: paused;
 }
 
+/**
+ * Distance = one group + one gap. The track is `2 × group + gap`, so a group is
+ * `(track − gap) / 2` and the shift becomes `50% + gap / 2` of the track — the
+ * clone lands exactly where the original started. A plain `-50%` is off by half
+ * a gap, which is the classic marquee stutter.
+ */
 @keyframes ln-marquee {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - var(--ln-marquee-gap) / 2));
   }
 }
 
@@ -180,6 +215,15 @@ const marqueeItems = computed(() => [...(props.items ?? []), ...(props.items ?? 
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+  }
+
+  .ln-logos__group[aria-hidden='true'] {
+    display: none;
+  }
+
+  .ln-logos__group {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 </style>

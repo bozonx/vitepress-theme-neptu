@@ -52,7 +52,6 @@ const props = withDefaults(
     />
 
     <LnGrid :cols="props.cols">
-      <slot>
         <LnCard
           v-for="(item, i) in props.items"
           :key="`${item.title}-${i}`"
@@ -85,7 +84,8 @@ const props = withDefaults(
             <span v-if="item.linkText" class="ln-feature__link">{{ item.linkText }}</span>
           </div>
         </LnCard>
-      </slot>
+      <!-- Appended after the items, like in every other block. -->
+      <slot />
     </LnGrid>
   </LnSection>
 </template>
@@ -110,7 +110,7 @@ const props = withDefaults(
 }
 
 .ln-feature__icon {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-feature__image {
@@ -130,7 +130,7 @@ const props = withDefaults(
   border-radius: var(--ln-radius-pill);
   background-color: var(--ln-c-brand-soft);
   padding: 0.125rem 0.625rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -157,7 +157,7 @@ const props = withDefaults(
 .ln-feature__link {
   margin-top: auto;
   padding-top: 0.25rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.875rem;
   font-weight: 600;
 }

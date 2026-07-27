@@ -2,8 +2,9 @@
 .dark {
   --primary-hue: 115;
   --layout-hue: 115;
-  --primary-btn-bg: hsl(var(--primary-hue), 70%, 37%);
-  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 30%);
+  /* Lightness is capped so white text on the brand surface clears WCAG AA (4.5:1). */
+  --primary-btn-bg: hsl(var(--primary-hue), 70%, 31%);
+  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 24%);
   --gray-50: hsl(var(--layout-hue), 1.6%, 98%);
   --gray-100: hsl(var(--layout-hue), 1.5%, 95.88%);
   --gray-150: hsl(var(--layout-hue), 1.4%, 93%);

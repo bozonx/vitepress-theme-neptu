@@ -29,7 +29,16 @@ for (const file of markdownFiles) {
   const content = readFileSync(file, 'utf8')
   const match = content.match(/^---\s*\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)
   if (!match) continue
-  const frontmatter = parse(match[1])
+  let frontmatter
+  try {
+    frontmatter = parse(match[1])
+  } catch (error) {
+    // Broken YAML is a finding, not a reason to abort the whole run.
+    invalid += 1
+    console.error(`\n${relative(root, file)}`)
+    console.error(`  ${error.message.split('\n')[0]}`)
+    continue
+  }
   if (!frontmatter?.blocks && frontmatter?.layout !== 'landing') continue
   if (validate(frontmatter)) continue
 

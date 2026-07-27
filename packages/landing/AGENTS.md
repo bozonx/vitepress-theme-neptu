@@ -22,7 +22,8 @@ Two independent theme axes control the looks:
 1. **Never hardcode colors, radii, shadows or spacing** in a block or a custom
    section. Use `--ln-*` tokens. Raw hex values and palette primitives
    (`--gray-*`) are a bug.
-2. **One `hero` per page**, always first — it renders the page `h1`.
+2. **One `hero` per page**, always first — it renders the page `h1`. Only
+   `banner` may come before it.
 3. **Blocks live inside `<LnPage>`** (component mode) or are produced by
    `<LandingRenderer />` (data mode). Never mix a block into a `vp-doc` page.
 4. A data-driven landing page needs only `layout: landing` and `blocks:` in
@@ -52,13 +53,28 @@ Most blocks also take `eyebrow`, `title`, `text` and an `items` array.
 
 ## Block types
 
-`hero` · `features` · `feature-split` · `bento` · `carousel` · `logos` ·
-`stats` · `steps` · `testimonials` · `pricing` · `faq` · `cta` · `timeline` ·
-`team` · `gallery`
+`hero` · `features` · `feature-split` · `bento` · `tabs` · `carousel` ·
+`logos` · `stats` · `steps` · `code` · `video` · `compare` · `testimonials` ·
+`pricing` · `faq` · `cta` · `newsletter` · `timeline` · `team` · `gallery` ·
+`banner`
 
 Component names are the PascalCase form with an `Ln` prefix: `features` →
 `LnFeatureGrid`, `feature-split` → `LnFeatureSplit`, `logos` → `LnLogoCloud`,
-the rest are literal (`hero` → `LnHero`).
+`newsletter` → `LnNewsletter`, the rest are literal (`hero` → `LnHero`).
+
+Picking between the close ones:
+
+| Need | Block |
+|------|-------|
+| 3–6 short capabilities | `features` |
+| 2–4 capabilities explained with a screenshot each | `feature-split` |
+| the same, but in one screenful | `tabs` |
+| uneven tiles, one hero tile | `bento` |
+| install command, API snippet, config sample | `code` |
+| product tour, recorded demo | `video` |
+| plans or competitors side by side, many rows | `compare` |
+| collecting an email | `newsletter` |
+| release / webinar strip above the hero | `banner` |
 
 Authoritative prop definitions: `src/blocks/types.ts`.
 JSON Schema for the data mode: `schema/landing-blocks.schema.json`.
@@ -102,20 +118,24 @@ the schema and cannot produce broken markup.
 Proven block orders — start from one of these instead of inventing a structure.
 
 **SaaS product**
-`hero(split)` → `logos(marquee)` → `features(3)` → `feature-split` →
-`stats(inverse)` → `testimonials` → `pricing` → `faq` → `cta(brand)`
+`hero(split)` → `logos(marquee)` → `features(3)` → `tabs` → `stats(inverse)` →
+`testimonials` → `pricing` → `compare` → `faq` → `cta(brand)`
 
 **Open-source project**
-`hero(centered)` → `features(3)` → `bento` → `steps` → `timeline` → `team` →
-`faq` → `cta(brand)`
+`hero(centered)` → `code` → `features(3)` → `bento` → `steps` → `timeline` →
+`team` → `faq` → `cta(brand)`
 
 **Course or info product**
-`hero(cover)` → `stats` → `steps(column)` → `feature-split` → `testimonials` →
-`pricing` → `faq` → `cta(banner)`
+`hero(cover)` → `stats` → `video` → `steps(column)` → `feature-split` →
+`testimonials` → `pricing` → `faq` → `newsletter` → `cta(banner)`
 
 **Agency or portfolio**
 `hero(split)` → `logos` → `gallery` → `feature-split` → `testimonials(single)` →
 `team` → `cta(card)`
+
+**Developer tool**
+`banner` → `hero(split)` → `code` → `features(3)` → `tabs(side)` →
+`logos` → `compare` → `faq` → `cta(brand)`
 
 ## Writing a theme
 
@@ -174,6 +194,31 @@ Custom block type for the data mode:
 import { registerBlockTypes } from 'vitepress-theme-neptu-landing/blocks'
 registerBlockTypes({ 'my-block': MyBlock })
 ```
+
+## Notes on the interactive blocks
+
+- `code` does **not** highlight anything at runtime. Pass raw `code` (perfect
+  for shell commands) or pre-highlighted `html`; in component mode put a normal
+  fenced block in the default slot and VitePress highlights it for you. The copy
+  button always copies `code`.
+- `compare` `rows[].values` is **positional** — one entry per `columns` entry,
+  in order. `true` / `false` become a check or a dash.
+- `newsletter` posts a native `<form>` to `action` (Formspree, Netlify Forms,
+  Buttondown, your own handler). Add `ajax: true` to submit in the background
+  and keep the visitor on the page.
+- `video` loads nothing from YouTube or Vimeo until the visitor clicks play, so
+  no third-party cookies are set on the first visit. Use `src` for a
+  self-hosted file.
+- `banner` remembers dismissal in `localStorage` under `storageKey`; change the
+  key to show a new announcement to everyone again.
+
+## Colors
+
+`--ln-c-brand` is a **surface** color — it is tuned so that white text on top
+of it passes AA. Anything that paints letters uses `--ln-c-brand-text`, which
+`LnSection` re-derives on `inverse` and `brand` backgrounds. In custom CSS
+follow the same split: `background-color: var(--ln-c-brand)`,
+`color: var(--ln-c-brand-text)`.
 
 ## Checklist before finishing a page
 

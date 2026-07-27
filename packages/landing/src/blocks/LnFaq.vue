@@ -3,6 +3,7 @@
  * FAQ accordion built on native `<details>`: it opens and closes without JS,
  * is keyboard accessible by default and is indexed by search engines.
  */
+import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
@@ -20,10 +21,40 @@ const props = withDefaults(
       exclusive?: boolean
       /** Actions under the list — "still have questions?". */
       actions?: ActionItem[]
+      /** Emit `FAQPage` structured data for search engines. */
+      schema?: boolean
     }
   >(),
-  { cols: 1, exclusive: false, width: 'narrow', align: 'start' }
+  { cols: 1, exclusive: false, width: 'narrow', align: 'start', schema: true }
 )
+
+const stripTags = (html: string): string => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+
+/**
+ * `FAQPage` JSON-LD, built from the same items the block renders — so the
+ * markup and the structured data can never disagree. Google reads the answer
+ * as text, hence the tag stripping.
+ */
+const jsonLd = computed(() => {
+  if (!props.schema || !props.items?.length) return undefined
+  const data = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: props.items.map((item) => ({
+      '@type': 'Question',
+      name: stripTags(item.question),
+      acceptedAnswer: { '@type': 'Answer', text: stripTags(item.answer) },
+    })),
+  })
+
+  /**
+   * The payload is injected as raw markup — text interpolation would escape
+   * the quotes into entities, and a `<script>` body is raw text that no parser
+   * unescapes, leaving a crawler with broken JSON. Escaping `<` is what keeps
+   * a closing script tag inside an answer from ending the block early.
+   */
+  return data.replace(/</g, '\\u003c')
+})
 </script>
 
 <template>
@@ -66,6 +97,13 @@ const props = withDefaults(
       :align="props.align"
       class="ln-faq__actions"
     />
+
+    <!--
+      A literal `<script>` cannot be written inside a template, so the tag is
+      built dynamically. The content is JSON serialised above, not user markup.
+    -->
+    <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component, vue/no-v-html -->
+    <component :is="'script'" v-if="jsonLd" type="application/ld+json" v-html="jsonLd" />
   </LnSection>
 </template>
 
@@ -111,7 +149,7 @@ const props = withDefaults(
 }
 
 .ln-faq__question:hover {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-faq__question:focus-visible {
@@ -155,7 +193,7 @@ const props = withDefaults(
 }
 
 .ln-faq__answer :deep(a) {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-faq__answer :deep(p) {

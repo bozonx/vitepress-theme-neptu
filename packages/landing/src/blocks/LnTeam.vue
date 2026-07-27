@@ -1,11 +1,11 @@
 <script setup lang="ts">
 /** People behind the product: team, maintainers, speakers. */
-import { withBase } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
+import { resolveUrl } from '../utils/url.ts'
 import type { SectionProps, TeamMember } from './types.ts'
 
 const props = withDefaults(
@@ -24,8 +24,6 @@ const props = withDefaults(
   { cols: 4, variant: 'card', avatarShape: 'circle', align: 'center' }
 )
 
-const resolve = (url?: string) =>
-  !url || /^(https?:)?\/\//.test(url) ? url : withBase(url)
 </script>
 
 <template>
@@ -57,11 +55,11 @@ const resolve = (url?: string) =>
           v-if="member.avatar"
           class="ln-member__avatar"
           :class="`ln-member__avatar--${props.avatarShape}`"
-          :src="resolve(member.avatar)"
+          :src="resolveUrl(member.avatar)"
           :alt="member.name"
           loading="lazy"
         />
-        <p class="ln-member__name">{{ member.name }}</p>
+        <h3 class="ln-member__name">{{ member.name }}</h3>
         <p v-if="member.role" class="ln-member__role">{{ member.role }}</p>
         <p v-if="member.text" class="ln-member__text">{{ member.text }}</p>
 
@@ -112,6 +110,8 @@ const resolve = (url?: string) =>
 
 .ln-member__name {
   margin: 0;
+  border: 0;
+  padding: 0;
   font-family: var(--ln-font-display);
   font-size: 1.0625rem;
   font-weight: 600;
@@ -120,7 +120,7 @@ const resolve = (url?: string) =>
 
 .ln-member__role {
   margin: 0;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -148,6 +148,6 @@ const resolve = (url?: string) =>
 }
 
 .ln-member__link:hover {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 </style>

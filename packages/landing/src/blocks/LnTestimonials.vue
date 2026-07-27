@@ -3,12 +3,12 @@
  * Social proof. `grid` for a few strong quotes, `masonry` for many short ones,
  * `single` for one hero-sized testimonial.
  */
-import { withBase } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
+import { resolveUrl } from '../utils/url.ts'
 import type { SectionProps, TestimonialItem } from './types.ts'
 
 const props = withDefaults(
@@ -25,8 +25,6 @@ const props = withDefaults(
   { cols: 3, variant: 'grid', align: 'center' }
 )
 
-const resolve = (url?: string) =>
-  !url || /^(https?:)?\/\//.test(url) ? url : withBase(url)
 </script>
 
 <template>
@@ -58,7 +56,13 @@ const resolve = (url?: string) =>
         :link="item.link"
         class="ln-quote"
       >
-        <div v-if="item.rating" class="ln-quote__rating" :aria-label="`${item.rating} / 5`">
+        <!-- `role="img"` — without it the label on a plain div is dropped by AT. -->
+        <div
+          v-if="item.rating"
+          class="ln-quote__rating"
+          role="img"
+          :aria-label="`${item.rating} / 5`"
+        >
           <LnIcon
             v-for="star in Math.round(item.rating)"
             :key="star"
@@ -73,7 +77,7 @@ const resolve = (url?: string) =>
           <img
             v-if="item.avatar"
             class="ln-quote__avatar"
-            :src="resolve(item.avatar)"
+            :src="resolveUrl(item.avatar)"
             :alt="item.author ?? ''"
             loading="lazy"
           />
@@ -84,7 +88,7 @@ const resolve = (url?: string) =>
           <img
             v-if="item.logo"
             class="ln-quote__logo"
-            :src="resolve(item.logo)"
+            :src="resolveUrl(item.logo)"
             alt=""
             loading="lazy"
           />
@@ -108,7 +112,7 @@ const resolve = (url?: string) =>
 .ln-quote__rating {
   display: flex;
   gap: 0.125rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-quote__text {

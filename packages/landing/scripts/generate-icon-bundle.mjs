@@ -11,9 +11,10 @@ const source = JSON.parse(
   readFileSync(resolve(root, 'node_modules/@iconify-json/fa6-solid/icons.json'), 'utf8')
 )
 const names = [
-  'bolt', 'check', 'chevron-left', 'chevron-right', 'cubes', 'file-code',
-  'language', 'magnifying-glass', 'mobile-screen', 'paintbrush', 'palette',
-  'robot', 'rocket', 'shapes', 'star', 'universal-access', 'xmark',
+  'bolt', 'check', 'chevron-left', 'chevron-right', 'copy', 'cubes',
+  'envelope', 'file-code', 'language', 'magnifying-glass', 'minus',
+  'mobile-screen', 'paintbrush', 'palette', 'pause', 'play', 'robot', 'rocket',
+  'shapes', 'star', 'universal-access', 'xmark',
 ]
 const collection = {
   prefix: source.prefix,

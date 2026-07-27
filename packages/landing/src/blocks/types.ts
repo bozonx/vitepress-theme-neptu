@@ -189,6 +189,69 @@ export interface GalleryItem {
   ratio?: string
 }
 
+/** One tab of a `code` block. */
+export interface CodeSample {
+  /** Tab label. Defaults to `lang` or the 1-based position. */
+  label?: string
+  /** Language name shown in the header, e.g. `bash`, `ts`. */
+  lang?: string
+  /** Raw source. Always what the copy button puts on the clipboard. */
+  code: string
+  /**
+   * Pre-highlighted markup for the same source. Rendered instead of `code`
+   * when present — that is how a build-time highlighter plugs in.
+   */
+  html?: string
+  /** Small note under the sample. */
+  caption?: string
+}
+
+/** One tab of a `tabs` block. */
+export interface TabItem extends HeadingProps {
+  /** Tab label. Falls back to `title`. */
+  label?: string
+  icon?: IconLike
+  image?: MediaLike
+  bullets?: string[]
+  actions?: ActionItem[]
+  badge?: string
+}
+
+/** A column of a `compare` block — one product, plan or option. */
+export interface CompareColumn {
+  title: string
+  text?: string
+  /** Highlight the column as the recommended one. */
+  featured?: boolean
+  badge?: string
+  action?: ActionItem
+}
+
+/**
+ * A row of a `compare` block.
+ *
+ * `values` is positional — one entry per column. `true` / `false` render as a
+ * check or a dash, anything else is printed as text.
+ */
+export interface CompareRow {
+  label: string
+  /** Extra explanation shown under the label. */
+  text?: string
+  values: (boolean | string | number | null)[]
+  /** Start a new labelled group of rows. */
+  group?: string
+}
+
+/** A field of a `newsletter` block, beyond the built-in email input. */
+export interface FormField {
+  name: string
+  label?: string
+  placeholder?: string
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'hidden'
+  value?: string
+  required?: boolean
+}
+
 export interface CarouselSlide extends HeadingProps {
   image?: MediaLike
   icon?: IconLike

@@ -92,6 +92,8 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
   background-color: var(--ln-c-bg-inverse);
   --ln-c-text-1: var(--ln-c-on-inverse);
   --ln-c-text-2: var(--ln-c-on-inverse-2);
+  /* The inverse surface flips between light and dark — re-derive brand text. */
+  --ln-c-brand-text: color-mix(in srgb, var(--ln-c-brand) 62%, var(--ln-c-on-inverse));
   --ln-c-border: color-mix(in srgb, currentcolor 18%, transparent);
   --ln-card-bg: color-mix(in srgb, currentcolor 6%, transparent);
   --ln-card-border-color: color-mix(in srgb, currentcolor 14%, transparent);
@@ -101,6 +103,9 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
 .ln-section--bg-brand {
   background-color: var(--ln-c-brand);
   --ln-c-text-1: var(--ln-c-on-brand);
+  /* Brand-on-brand is invisible: eyebrows and accents fall back to the ink. */
+  --ln-c-brand-text: var(--ln-c-on-brand);
+  --ln-c-brand-soft: color-mix(in srgb, var(--ln-c-on-brand) 16%, transparent);
   --ln-c-text-2: color-mix(in srgb, var(--ln-c-on-brand) 78%, transparent);
   --ln-c-border: color-mix(in srgb, var(--ln-c-on-brand) 26%, transparent);
   --ln-card-bg: color-mix(in srgb, var(--ln-c-on-brand) 10%, transparent);

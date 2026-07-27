@@ -4,8 +4,8 @@
  * `<button>` otherwise, so it works for both navigation and interactions.
  */
 import { computed } from 'vue'
-import { withBase } from 'vitepress'
 import LnIcon from './LnIcon.vue'
+import { externalTarget, resolveUrl } from '../utils/url.ts'
 import type { ButtonSize, ButtonVariant } from '../blocks/types.ts'
 
 const props = withDefaults(
@@ -26,14 +26,8 @@ const props = withDefaults(
   { variant: 'brand', size: 'md', iconRight: false, disabled: false, block: false }
 )
 
-const isExternal = computed(() => /^(https?:)?\/\//.test(props.link ?? ''))
-const href = computed(() => {
-  if (!props.link) return undefined
-  return isExternal.value || props.link.startsWith('#')
-    ? props.link
-    : withBase(props.link)
-})
-const target = computed(() => props.target ?? (isExternal.value ? '_blank' : undefined))
+const href = computed(() => resolveUrl(props.link))
+const target = computed(() => props.target ?? externalTarget(props.link))
 const rel = computed(
   () => props.rel ?? (target.value === '_blank' ? 'noreferrer' : undefined)
 )
@@ -131,7 +125,7 @@ const rel = computed(
 }
 .ln-btn--alt:hover {
   border-color: var(--ln-c-brand);
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-btn--outline {
@@ -141,7 +135,7 @@ const rel = computed(
 }
 .ln-btn--outline:hover {
   border-color: var(--ln-c-brand);
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-btn--ghost {
@@ -150,12 +144,12 @@ const rel = computed(
 }
 .ln-btn--ghost:hover {
   background-color: var(--ln-c-brand-soft);
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-btn--link {
   background-color: transparent;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   height: auto;
   padding: 0;
   border-radius: 0;

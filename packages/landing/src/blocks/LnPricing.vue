@@ -110,7 +110,12 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
         <h3 v-if="plan.title" class="ln-plan__title">{{ plan.title }}</h3>
         <p v-if="plan.text" class="ln-plan__text" v-html="plan.text" />
 
-        <p v-if="priceOf(plan)" class="ln-plan__price">
+        <!-- The price changes without a page move: announce it. -->
+        <p
+          v-if="priceOf(plan)"
+          class="ln-plan__price"
+          :aria-live="hasToggle ? 'polite' : undefined"
+        >
           <span
             class="ln-plan__amount"
             :class="{ 'ln-plan__amount--words': !/\d/.test(priceOf(plan) ?? '') }"
@@ -267,7 +272,7 @@ const normalize = (feature: string | PricingFeature): PricingFeature =>
 
 .ln-plan__features li :deep(.ln-icon) {
   margin-top: 0.2rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-plan__features li.is-excluded {

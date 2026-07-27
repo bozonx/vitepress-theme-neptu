@@ -14,6 +14,12 @@ import LnCta from './LnCta.vue'
 import LnTimeline from './LnTimeline.vue'
 import LnTeam from './LnTeam.vue'
 import LnGallery from './LnGallery.vue'
+import LnCode from './LnCode.vue'
+import LnTabs from './LnTabs.vue'
+import LnCompare from './LnCompare.vue'
+import LnNewsletter from './LnNewsletter.vue'
+import LnVideo from './LnVideo.vue'
+import LnBanner from './LnBanner.vue'
 
 /**
  * Maps the `type` used in the declarative `blocks:` array to a component.
@@ -37,6 +43,12 @@ export const blockRegistry: Record<string, Component> = {
   timeline: LnTimeline,
   team: LnTeam,
   gallery: LnGallery,
+  code: LnCode,
+  tabs: LnTabs,
+  compare: LnCompare,
+  newsletter: LnNewsletter,
+  video: LnVideo,
+  banner: LnBanner,
 }
 
 /** Component names used for global registration and in markdown. */
@@ -56,6 +68,12 @@ export const blockComponents = {
   LnTimeline,
   LnTeam,
   LnGallery,
+  LnCode,
+  LnTabs,
+  LnCompare,
+  LnNewsletter,
+  LnVideo,
+  LnBanner,
 } satisfies Record<string, Component>
 
 /** All block types known to the renderer, for docs and error messages. */

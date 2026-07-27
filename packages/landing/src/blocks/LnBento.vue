@@ -3,6 +3,7 @@
  * Bento grid — feature tiles of uneven size. Set `span` / `rowSpan` on an item
  * to make it take two columns or two rows.
  */
+import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnCard from '../primitives/LnCard.vue'
@@ -22,6 +23,19 @@ const props = withDefaults(
     }
   >(),
   { cols: 3, align: 'start' }
+)
+
+/**
+ * Spans are resolved here instead of in CSS: `grid-column: span min(…)` relies
+ * on math functions in an `<integer>` context, which is not reliable across
+ * browsers — an invalid declaration would silently flatten the whole grid.
+ */
+const tiles = computed(() =>
+  (props.items ?? []).map((item) => ({
+    item,
+    span: Math.min(item.span ?? 1, props.cols),
+    rowSpan: item.rowSpan ?? 1,
+  }))
 )
 </script>
 
@@ -44,7 +58,7 @@ const props = withDefaults(
 
     <div class="ln-bento__grid" :style="{ '--ln-bento-cols': props.cols }">
       <LnCard
-        v-for="(item, i) in props.items"
+        v-for="({ item, span, rowSpan }, i) in tiles"
         :key="`${item.title}-${i}`"
         :link="item.link"
         :target="item.target"
@@ -52,8 +66,8 @@ const props = withDefaults(
         hoverable
         class="ln-bento__tile"
         :style="{
-          '--ln-tile-span': item.span ?? 1,
-          '--ln-tile-row-span': item.rowSpan ?? 1,
+          '--ln-tile-span': span,
+          '--ln-tile-row-span': rowSpan,
         }"
       >
         <LnIcon v-if="item.icon" :icon="item.icon" class="ln-bento__icon" />
@@ -93,7 +107,7 @@ const props = withDefaults(
   }
 
   .ln-bento__tile {
-    grid-column: span min(var(--ln-tile-span, 1), var(--ln-bento-cols, 3));
+    grid-column: span var(--ln-tile-span, 1);
     grid-row: span var(--ln-tile-row-span, 1);
   }
 }
@@ -104,7 +118,7 @@ const props = withDefaults(
 }
 
 .ln-bento__icon {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-bento__badge {
@@ -113,7 +127,7 @@ const props = withDefaults(
   border-radius: var(--ln-radius-pill);
   background-color: var(--ln-c-brand-soft);
   padding: 0.125rem 0.625rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -143,7 +157,7 @@ const props = withDefaults(
 
 .ln-bento__link {
   margin-top: auto;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.875rem;
   font-weight: 600;
 }

@@ -29,8 +29,9 @@
 [data-theme='green'] {
   --primary-hue: 115;
   --layout-hue: 115;
-  --primary-btn-bg: hsl(var(--primary-hue), 70%, 37%);
-  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 30%);
+  /* Lightness is capped so white text on the brand surface clears WCAG AA (4.5:1). */
+  --primary-btn-bg: hsl(var(--primary-hue), 70%, 31%);
+  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 24%);
   --gray-50: hsl(var(--layout-hue), 1.6%, 98%);
   --gray-100: hsl(var(--layout-hue), 1.5%, 95.88%);
   --gray-150: hsl(var(--layout-hue), 1.4%, 93%);
@@ -85,8 +86,9 @@
 [data-theme='amber'] {
   --primary-hue: 30;
   --layout-hue: 30;
-  --primary-btn-bg: hsl(var(--primary-hue), 66%, 46%);
-  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 32%);
+  /* Lightness is capped so white text on the brand surface clears WCAG AA (4.5:1). */
+  --primary-btn-bg: hsl(var(--primary-hue), 66%, 40%);
+  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 28%);
   --gray-50: hsl(var(--layout-hue), 16%, 98%);
   --gray-100: hsl(var(--layout-hue), 14.29%, 95.88%);
   --gray-150: hsl(var(--layout-hue), 14%, 93%);
@@ -113,8 +115,9 @@
 [data-theme='teal'] {
   --primary-hue: 180;
   --layout-hue: 180;
-  --primary-btn-bg: hsl(var(--primary-hue), 66%, 46%);
-  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 32%);
+  /* Lightness is capped so white text on the brand surface clears WCAG AA (4.5:1). */
+  --primary-btn-bg: hsl(var(--primary-hue), 66%, 31%);
+  --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 24%);
   --gray-50: hsl(var(--layout-hue), 16%, 98%);
   --gray-100: hsl(var(--layout-hue), 14.29%, 95.88%);
   --gray-150: hsl(var(--layout-hue), 14%, 93%);

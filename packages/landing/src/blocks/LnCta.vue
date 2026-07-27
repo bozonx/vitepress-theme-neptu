@@ -5,7 +5,7 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnMedia from '../primitives/LnMedia.vue'
-import type { ActionItem, MediaLike, SectionProps } from './types.ts'
+import type { ActionItem, MediaLike, SectionBg, SectionProps } from './types.ts'
 
 const props = withDefaults(
   defineProps<
@@ -21,9 +21,14 @@ const props = withDefaults(
        * `split` — copy left, actions right.
        */
       variant?: 'banner' | 'card' | 'split'
+      /**
+       * `card` only: surface the panel sits on. `bg` colors the panel itself,
+       * so this is what keeps the page-level background alternation working.
+       */
+      surface?: SectionBg
     }
   >(),
-  { variant: 'banner', bg: 'brand', align: 'center' }
+  { variant: 'banner', bg: 'brand', align: 'center', surface: 'base' }
 )
 
 /** On a brand surface the default brand button would be invisible. */
@@ -33,7 +38,7 @@ const onBrand = computed(() => props.bg === 'brand')
 <template>
   <LnSection
     :id="props.id"
-    :bg="props.variant === 'card' ? 'base' : props.bg"
+    :bg="props.variant === 'card' ? props.surface : props.bg"
     :width="props.width"
     :padding="props.padding"
     :divider="props.divider"
@@ -103,6 +108,8 @@ const onBrand = computed(() => props.bg === 'brand')
   border-color: transparent;
   --ln-c-text-1: var(--ln-c-on-brand);
   --ln-c-text-2: color-mix(in srgb, var(--ln-c-on-brand) 80%, transparent);
+  --ln-c-brand-text: var(--ln-c-on-brand);
+  --ln-c-brand-soft: color-mix(in srgb, var(--ln-c-on-brand) 16%, transparent);
   color: var(--ln-c-on-brand);
 }
 
@@ -111,6 +118,7 @@ const onBrand = computed(() => props.bg === 'brand')
   border-color: transparent;
   --ln-c-text-1: var(--ln-c-on-inverse);
   --ln-c-text-2: var(--ln-c-on-inverse-2);
+  --ln-c-brand-text: color-mix(in srgb, var(--ln-c-brand) 62%, var(--ln-c-on-inverse));
   color: var(--ln-c-on-inverse);
 }
 

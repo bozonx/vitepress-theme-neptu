@@ -45,6 +45,13 @@ body {
 /* A landing page is edge-to-edge: blocks own the horizontal padding. */
 .ln-page {
   width: 100%;
+  min-width: 0;
+  /*
+   * Last line of defence for the page body: `clip` contains a stray horizontal
+   * overflow without creating a scroll container, so `position: sticky` inside
+   * the blocks keeps working.
+   */
+  overflow-x: clip;
   font-family: var(--ln-font-body);
   line-height: var(--ln-body-lh);
   color: var(--ln-c-text-1);
@@ -54,11 +61,29 @@ body {
  * default chrome, but make its content pane behave like a home page. */
 .VPContent:has(.ln-page) {
   max-width: none;
+  /*
+   * The content pane is a flex item: without this it is sized by its widest
+   * child, so one full-bleed block (a marquee, a wide table) widens the whole
+   * page instead of scrolling or clipping inside its own section.
+   */
+  min-width: 0;
 }
 
 .Layout:has(.ln-page) .VPSidebar,
 .Layout:has(.ln-page) .VPLocalNav {
   display: none;
+}
+
+/*
+ * The default theme paints the nav bar background full-bleed with
+ * `margin-right: -100vw; padding-right: 100vw`. On a page with no sidebar that
+ * padding lands outside the viewport and the whole document gains ~100vw of
+ * horizontal scroll. `clip` contains it on the x axis only, so the nav
+ * dropdowns still open downwards.
+ */
+.Layout:has(.ln-page) .VPNav {
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 /* Anchor targets under a sticky nav bar. */

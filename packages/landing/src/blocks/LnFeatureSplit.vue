@@ -10,6 +10,7 @@ import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnReveal from '../primitives/LnReveal.vue'
 import type { SectionProps, SplitItem } from './types.ts'
+import { externalTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
@@ -76,7 +77,13 @@ const isReversed = (index: number): boolean =>
             :actions="item.actions"
             class="ln-split__actions"
           />
-          <a v-else-if="item.link && item.linkText" class="ln-split__link" :href="item.link">
+          <a
+            v-else-if="item.link && item.linkText"
+            class="ln-split__link"
+            :href="resolveUrl(item.link)"
+            :target="item.target ?? externalTarget(item.link)"
+            :rel="item.rel ?? (externalTarget(item.link) ? 'noreferrer' : undefined)"
+          >
             {{ item.linkText }}
           </a>
         </div>
@@ -123,7 +130,7 @@ const isReversed = (index: number): boolean =>
 }
 
 .ln-split__icon {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-split__badge {
@@ -132,7 +139,7 @@ const isReversed = (index: number): boolean =>
   border-radius: var(--ln-radius-pill);
   background-color: var(--ln-c-brand-soft);
   padding: 0.125rem 0.625rem;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -169,7 +176,7 @@ const isReversed = (index: number): boolean =>
 }
 
 .ln-split__link {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
   font-weight: 600;
   text-decoration: none;
 }

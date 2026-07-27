@@ -13,6 +13,12 @@ export { default as LnCta } from './LnCta.vue'
 export { default as LnTimeline } from './LnTimeline.vue'
 export { default as LnTeam } from './LnTeam.vue'
 export { default as LnGallery } from './LnGallery.vue'
+export { default as LnCode } from './LnCode.vue'
+export { default as LnTabs } from './LnTabs.vue'
+export { default as LnCompare } from './LnCompare.vue'
+export { default as LnNewsletter } from './LnNewsletter.vue'
+export { default as LnVideo } from './LnVideo.vue'
+export { default as LnBanner } from './LnBanner.vue'
 export { default as LandingRenderer } from './LandingRenderer.vue'
 
 export {

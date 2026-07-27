@@ -9,9 +9,14 @@ import LnGallery from '../../../src/blocks/LnGallery.vue'
 import { blockTypes, resolveBlock } from '../../../src/blocks/registry.ts'
 
 describe('block registry', () => {
-  it('exposes all fifteen block types', () => {
-    expect(blockTypes).toHaveLength(15)
-    expect(blockTypes).toEqual(expect.arrayContaining(['hero', 'features', 'faq', 'cta']))
+  it('exposes every block type', () => {
+    expect(blockTypes).toHaveLength(21)
+    expect(blockTypes).toEqual(
+      expect.arrayContaining([
+        'hero', 'features', 'faq', 'cta',
+        'code', 'tabs', 'compare', 'newsletter', 'video', 'banner',
+      ])
+    )
   })
 
   it('resolves known types and returns undefined for unknown ones', () => {
@@ -134,7 +139,12 @@ describe('LnCarousel', () => {
     expect(wrapper.findAll('.ln-carousel__slide')).toHaveLength(3)
     expect(wrapper.findAll('.ln-carousel__dot')).toHaveLength(3)
     expect(wrapper.findAll('.ln-carousel__arrow')).toHaveLength(2)
-    expect(wrapper.find('.ln-carousel__track').attributes('role')).toBe('region')
+    // A labelled `group` with a role description is what AT needs here — an
+    // `aria-label` on a plain region says nothing about the slides.
+    const track = wrapper.find('.ln-carousel__track')
+    expect(track.attributes('role')).toBe('group')
+    expect(track.attributes('aria-roledescription')).toBe('carousel')
+    expect(wrapper.find('.ln-carousel__slide').attributes('aria-roledescription')).toBe('slide')
   })
 
   it('hides the controls for a single slide', () => {

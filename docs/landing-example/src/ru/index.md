@@ -4,6 +4,16 @@ layout: landing
 # Декларативный режим: страница целиком описана данными.
 # Ни строчки Vue — layout сам читает этот массив из frontmatter.
 blocks:
+  - type: banner
+    bg: brand
+    badge: v0.20
+    icon: fa6-solid:bolt
+    text: 'Вышла версия 0.20 — шесть новых блоков и правки доступности'
+    link: /ru/doc/blocks
+    linkText: Что нового
+    dismissible: true
+    storageKey: ln-demo-banner-0-20
+
   - type: hero
     variant: split
     padding: lg
@@ -20,6 +30,27 @@ blocks:
       - text: Все блоки
         link: /ru/doc/blocks
         variant: alt
+
+  - type: code
+    bg: soft
+    align: center
+    eyebrow: Установка
+    title: Одна команда — и тема на месте
+    text: 'Дальше только контент: layout, blocks и ваши тексты.'
+    items:
+      - label: pnpm
+        lang: bash
+        code: pnpm add vitepress-theme-neptu-landing
+      - label: npm
+        lang: bash
+        code: npm i vitepress-theme-neptu-landing
+      - label: theme/index.ts
+        lang: ts
+        code: |
+          import LandingTheme from 'vitepress-theme-neptu-landing'
+
+          export default LandingTheme
+        caption: Всё — блоки зарегистрированы глобально.
 
   - type: logos
     bg: soft
@@ -100,6 +131,39 @@ blocks:
         image: /img/demo/shot-2.svg
         actions: [{ text: Пример на компонентах, link: /en/, variant: alt }]
 
+  - type: tabs
+    id: how
+    bg: soft
+    variant: top
+    align: center
+    eyebrow: Как это работает
+    title: Один набор данных — три способа работы
+    items:
+      - label: YAML
+        icon: fa6-solid:file-code
+        title: Страница как данные
+        text: Массив blocks во frontmatter проверяется JSON-схемой, поэтому сломать разметку невозможно.
+        image: /img/demo/shot-1.svg
+        bullets:
+          - Валидация на CI командой <code>validate:blocks</code>
+          - Тот же формат читают ИИ-агенты
+      - label: Компоненты
+        icon: fa6-solid:cubes
+        title: Страница как разметка
+        text: Те же блоки доступны как глобальные компоненты — без импортов.
+        image: /img/demo/shot-2.svg
+        bullets:
+          - Слоты у каждого блока
+          - Свои секции из примитивов
+      - label: Своя тема
+        icon: fa6-solid:palette
+        title: Тема как один CSS-файл
+        text: Цветовой и стилевой пресеты независимы и переключаются атрибутами на html.
+        image: /img/demo/shot-3.svg
+        bullets:
+          - Только <code>--ln-*</code> токены
+          - Никаких правок в блоках
+
   - type: stats
     bg: inverse
     cols: 4
@@ -134,6 +198,15 @@ blocks:
       - { image: /img/demo/shot-4.svg, badge: Пример, title: Пресет 4, text: Автопрокрутка по желанию., linkText: Открыть, link: /ru/doc/blocks }
       - { image: /img/demo/shot-5.svg, badge: Шаблон, title: Пресет 5, text: Любое число слайдов в ряду., linkText: Открыть, link: /ru/doc/blocks }
       - { image: /img/demo/shot-6.svg, badge: Пример, title: Пресет 6, text: Слот для своей вёрстки слайда., linkText: Открыть, link: /ru/doc/blocks }
+
+  - type: video
+    align: center
+    eyebrow: Демо
+    title: Три минуты про сборку страницы
+    text: Плеер не грузится, пока вы не нажмёте play — никаких сторонних кук на первом визите.
+    youtube: dQw4w9WgXcQ
+    poster: /img/demo/shot-3.svg
+    caption: Сборка лендинга с нуля
 
   - type: testimonials
     align: center
@@ -192,6 +265,26 @@ blocks:
           - { text: On-prem CMS, included: false }
         action: { text: Связаться, link: /ru/page/links, variant: alt }
 
+  - type: compare
+    id: compare
+    bg: soft
+    align: center
+    eyebrow: Сравнение
+    title: Что входит в тарифы
+    rowsLabel: Возможности
+    note: Все тарифы включают исходники и MIT-лицензию.
+    columns:
+      - { title: Свободно, text: для личных сайтов }
+      - { title: Команда, text: до 10 человек, featured: true, badge: Выбор }
+      - { title: Компания, text: без ограничений }
+    rows:
+      - { group: Основное, label: Блоки лендинга, values: ['21', '21', '21'] }
+      - { group: Основное, label: Цветовые палитры, values: ['8', '8', 'Свои'] }
+      - { group: Основное, label: Стилевые пресеты, values: ['5', '5', 'Свои'] }
+      - { group: Поддержка, label: Issues на GitHub, values: [true, true, true] }
+      - { group: Поддержка, label: Приватный канал, values: [false, true, true] }
+      - { group: Поддержка, label: Помощь с миграцией, values: [false, false, true] }
+
   - type: gallery
     id: gallery
     eyebrow: Галерея
@@ -248,6 +341,18 @@ blocks:
         answer: 'Страница отображается и скроллится: аккордеон, карусель и вся вёрстка — чистый CSS. JS нужен только для анимации появления, переключателей темы и лайтбокса.'
     actions:
       - { text: Читать документацию, link: /ru/doc }
+
+  - type: newsletter
+    id: subscribe
+    bg: soft
+    align: center
+    eyebrow: Рассылка
+    title: Письмо о новых блоках
+    text: Раз в месяц — что появилось в теме и как это использовать.
+    action: https://example.com/subscribe
+    submitText: Подписаться
+    consent: 'Согласен с <a href="/ru/page/privacy">политикой конфиденциальности</a>'
+    note: Отписаться можно в один клик.
 
   - type: cta
     variant: banner

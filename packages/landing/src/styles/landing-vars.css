@@ -20,6 +20,15 @@
   --ln-c-brand-active: var(--primary-btn-bg-active, hsl(213, 75%, 32%));
   --ln-c-brand-soft: color-mix(in srgb, var(--ln-c-brand) 12%, transparent);
   --ln-c-on-brand: #fff;
+  /**
+   * Brand color used as *text* on a page surface.
+   *
+   * `--ln-c-brand` is tuned for white text on top of it, which makes it too
+   * dark to read on a dark page — and invisible on a brand surface. Anything
+   * that paints letters uses this token; borders, fills and markers keep
+   * `--ln-c-brand`. `LnSection` re-points it on `inverse` and `brand`.
+   */
+  --ln-c-brand-text: var(--ln-c-brand);
 
   /**** Surfaces */
   --ln-c-bg: var(--gray-50, #fafafa);
@@ -37,6 +46,21 @@
   /* Text placed over arbitrary image/video media. Override per brand if needed. */
   --ln-c-on-media: #fff;
   --ln-c-on-media-muted: rgb(255 255 255 / 82%);
+  /* Scrim under a caption laid over a photo, and the two chrome veils on top of one. */
+  --ln-c-media-scrim: rgb(0 0 0 / 72%);
+  --ln-c-on-media-veil: rgb(255 255 255 / 14%);
+  --ln-c-on-media-veil-hover: rgb(255 255 255 / 28%);
+  /* Modal backdrop (lightbox). */
+  --ln-c-backdrop: rgb(0 0 0 / 82%);
+
+  /**** Status — form errors and the like. */
+  --ln-c-danger: hsl(0, 70%, 42%);
+
+  /**** Code surface — always dark, in both page themes: a terminal is a terminal. */
+  --ln-c-code-bg: var(--gray-900, #18181b);
+  --ln-c-code-text: var(--gray-100, #f4f4f5);
+  --ln-c-code-muted: var(--gray-400, #a1a1aa);
+  --ln-c-code-border: color-mix(in srgb, var(--gray-100, #f4f4f5) 16%, transparent);
 
   /**** Borders */
   --ln-c-border: var(--gray-200, #e4e4e7);
@@ -110,6 +134,8 @@
 
 .dark {
   --ln-c-brand-soft: color-mix(in srgb, var(--ln-c-brand) 22%, transparent);
+  /* Lifted off the dark surface — the button color itself sits too low. */
+  --ln-c-brand-text: color-mix(in srgb, var(--ln-c-brand) 68%, #fff);
 
   --ln-c-bg: var(--gray-900, #18181b);
   --ln-c-bg-soft: var(--gray-850, #1f1f23);
@@ -122,6 +148,8 @@
   --ln-c-text-3: var(--gray-500, #71717a);
   --ln-c-on-inverse: var(--gray-800, #27272a);
   --ln-c-on-inverse-2: var(--gray-600, #52525b);
+
+  --ln-c-danger: hsl(0, 80%, 68%);
 
   --ln-c-border: var(--gray-790, #2f2f36);
   --ln-c-border-strong: var(--gray-700, #3f3f46);

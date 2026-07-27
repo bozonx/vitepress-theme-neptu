@@ -17,6 +17,59 @@ const heroActions = [
 
 const logos = [1, 2, 3, 4, 5, 6].map((i) => ({ src: `/img/demo/logo-${i}.svg`, alt: `Company ${i}` }))
 
+const codeSamples = [
+  { label: 'pnpm', lang: 'bash', code: 'pnpm add vitepress-theme-neptu-landing' },
+  { label: 'npm', lang: 'bash', code: 'npm i vitepress-theme-neptu-landing' },
+  {
+    label: 'theme/index.ts',
+    lang: 'ts',
+    code: "import LandingTheme from 'vitepress-theme-neptu-landing'\n\nexport default LandingTheme",
+    caption: 'That is the whole setup — every block is registered globally.',
+  },
+]
+
+const tabItems = [
+  {
+    label: 'YAML',
+    icon: 'fa6-solid:file-code',
+    title: 'The page as data',
+    text: 'A blocks array in the frontmatter, validated against a JSON schema — broken markup is not reachable.',
+    image: '/img/demo/shot-1.svg',
+    bullets: ['Checked on CI by <code>validate:blocks</code>', 'The same format AI agents read'],
+  },
+  {
+    label: 'Components',
+    icon: 'fa6-solid:cubes',
+    title: 'The page as markup',
+    text: 'The same blocks are global components — no imports, no layout CSS of your own.',
+    image: '/img/demo/shot-2.svg',
+    bullets: ['Slots on every block', 'Custom sections from the primitives'],
+  },
+  {
+    label: 'Your own theme',
+    icon: 'fa6-solid:palette',
+    title: 'The theme as one CSS file',
+    text: 'Color and shape are independent axes, both switched by an attribute on <html>.',
+    image: '/img/demo/shot-3.svg',
+    bullets: ['Only <code>--ln-*</code> tokens', 'No changes inside the blocks'],
+  },
+]
+
+const compareColumns = [
+  { title: 'Free', text: 'personal sites' },
+  { title: 'Team', text: 'up to 10 people', featured: true, badge: 'Popular' },
+  { title: 'Company', text: 'no limits' },
+]
+
+const compareRows = [
+  { group: 'Essentials', label: 'Landing blocks', values: ['21', '21', '21'] },
+  { group: 'Essentials', label: 'Color palettes', values: ['8', '8', 'Custom'] },
+  { group: 'Essentials', label: 'Style presets', values: ['5', '5', 'Custom'] },
+  { group: 'Support', label: 'GitHub issues', values: [true, true, true] },
+  { group: 'Support', label: 'Private channel', values: [false, true, true] },
+  { group: 'Support', label: 'Migration help', values: [false, false, true] },
+]
+
 const features = [
   { icon: 'fa6-solid:cubes', title: 'Blocks, not markup', text: 'Fifteen production-ready sections. Compose a page out of them instead of hand-writing layout CSS.' },
   { icon: 'fa6-solid:palette', title: 'Two theme axes', text: 'Color and style are independent. Eight palettes × five style presets, switchable at runtime.' },
@@ -130,6 +183,17 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
 
 <LnPage>
 
+<LnBanner
+  bg="brand"
+  badge="v0.20"
+  icon="fa6-solid:bolt"
+  text="Version 0.20 is out — six new blocks and a round of accessibility fixes"
+  :link="`${L}/doc/blocks`"
+  link-text="See what changed"
+  dismissible
+  storage-key="ln-demo-banner-0-20"
+/>
+
 <LnHero
   variant="split"
   padding="lg"
@@ -140,6 +204,15 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   note="MIT licensed · works with VitePress 2"
   :actions="heroActions"
   image="/img/demo/shot-1.svg"
+/>
+
+<LnCode
+  bg="soft"
+  align="center"
+  eyebrow="Install"
+  title="One command, then only content"
+  text="No build configuration, no plugin wiring."
+  :items="codeSamples"
 />
 
 <LnLogoCloud bg="soft" variant="marquee" eyebrow="Trusted by" :items="logos" />
@@ -170,6 +243,15 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   :items="splitItems"
 />
 
+<LnTabs
+  id="authoring-tabs"
+  bg="soft"
+  align="center"
+  eyebrow="How it works"
+  title="One set of data, three ways to work"
+  :items="tabItems"
+/>
+
 <LnStats bg="inverse" :items="stats" :cols="4" />
 
 <LnSteps
@@ -190,6 +272,16 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   :per-view="3"
 />
 
+<LnVideo
+  align="center"
+  eyebrow="Demo"
+  title="Three minutes on building a page"
+  text="Nothing is loaded from YouTube until you press play — no third-party cookies on the first visit."
+  youtube="dQw4w9WgXcQ"
+  poster="/img/demo/shot-3.svg"
+  caption="Building a landing page from scratch"
+/>
+
 <LnTestimonials
   id="testimonials"
   align="center"
@@ -208,6 +300,18 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   text="Everything here is open source; the paid tiers only demonstrate the block."
   :items="plans"
   note="Prices are fictional — this is a demo page."
+/>
+
+<LnCompare
+  id="compare"
+  bg="soft"
+  align="center"
+  eyebrow="Compare"
+  title="What each plan includes"
+  rows-label="Features"
+  :columns="compareColumns"
+  :rows="compareRows"
+  note="Every plan ships the sources under the MIT license."
 />
 
 <LnGallery
@@ -242,6 +346,19 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   :items="faq"
   exclusive
   :actions="[{ text: 'Read the docs', link: `${L}/doc` }]"
+/>
+
+<LnNewsletter
+  id="subscribe"
+  bg="soft"
+  align="center"
+  eyebrow="Newsletter"
+  title="One email when new blocks land"
+  text="Once a month: what shipped and how to use it."
+  action="https://example.com/subscribe"
+  submit-text="Subscribe"
+  consent="I agree to the <a href='/en/page/privacy'>privacy policy</a>"
+  note="Unsubscribe in one click."
 />
 
 <LnCta

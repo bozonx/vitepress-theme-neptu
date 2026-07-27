@@ -1,8 +1,8 @@
 <script setup lang="ts">
 /** Image or video frame with a fixed aspect ratio and themed shape. */
 import { computed } from 'vue'
-import { withBase } from 'vitepress'
 import type { MediaLike } from '../blocks/types.ts'
+import { resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<{
@@ -23,13 +23,9 @@ const spec = computed(() =>
   typeof props.media === 'string' ? { src: props.media } : (props.media ?? {})
 )
 
-const isExternal = (url?: string) => /^(https?:)?\/\//.test(url ?? '')
-const resolve = (url?: string) =>
-  !url || isExternal(url) ? url : withBase(url)
-
-const src = computed(() => resolve(spec.value.src))
-const video = computed(() => resolve(spec.value.video))
-const poster = computed(() => resolve(spec.value.poster))
+const src = computed(() => resolveUrl(spec.value.src))
+const video = computed(() => resolveUrl(spec.value.video))
+const poster = computed(() => resolveUrl(spec.value.poster))
 const alt = computed(() => spec.value.alt ?? props.alt ?? '')
 const ratio = computed(() => spec.value.ratio ?? props.ratio)
 const fit = computed(() => spec.value.fit ?? props.fit ?? 'cover')

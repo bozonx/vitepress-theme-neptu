@@ -14,8 +14,9 @@ root with `pnpm landing:dev`.
 
 ## What is in the box
 
-- **15 blocks** — hero, features, feature-split, bento, carousel, logos, stats,
-  steps, testimonials, pricing, faq, cta, timeline, team, gallery
+- **21 blocks** — hero, features, feature-split, bento, tabs, carousel, logos,
+  stats, steps, code, video, compare, testimonials, pricing, faq, cta,
+  newsletter, timeline, team, gallery, banner
 - **11 primitives** — page, section, container, grid, heading, button, button
   group, card, media, icon, reveal
 - **Two theme axes** — color (`data-theme`) and style (`data-ln-style`), both

@@ -77,7 +77,7 @@ const props = withDefaults(
 }
 
 .ln-stat__icon {
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-stat__value {
@@ -87,7 +87,7 @@ const props = withDefaults(
   font-weight: var(--ln-heading-weight);
   letter-spacing: var(--ln-heading-tracking);
   line-height: 1.1;
-  color: var(--ln-c-brand);
+  color: var(--ln-c-brand-text);
 }
 
 .ln-stat__label {
