@@ -1,11 +1,16 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { defineComponent } from 'vue'
 import LnHero from '../../../src/blocks/LnHero.vue'
 import LnFeatureGrid from '../../../src/blocks/LnFeatureGrid.vue'
 import LnPricing from '../../../src/blocks/LnPricing.vue'
 import LnFaq from '../../../src/blocks/LnFaq.vue'
 import LnCarousel from '../../../src/blocks/LnCarousel.vue'
 import LnGallery from '../../../src/blocks/LnGallery.vue'
+import LnCode from '../../../src/blocks/LnCode.vue'
+import LnNewsletter from '../../../src/blocks/LnNewsletter.vue'
+import LnTeam from '../../../src/blocks/LnTeam.vue'
+import LnTabs from '../../../src/blocks/LnTabs.vue'
 import { blockTypes, resolveBlock } from '../../../src/blocks/registry.ts'
 
 describe('block registry', () => {
@@ -120,6 +125,39 @@ describe('LnFaq', () => {
     expect(items).toHaveLength(2)
     expect(items[0].attributes('open')).toBeDefined()
     expect(items[0].attributes('name')).toBe('ln-faq-faq')
+  })
+
+  it('uses a distinct native details group when no section id is supplied', () => {
+    // eslint-disable-next-line vue/one-component-per-file
+    const wrapper = mount(defineComponent({ components: { LnFaq }, template: '<LnFaq exclusive :items="[{ question: \'A\', answer: \'A\' }]" /><LnFaq exclusive :items="[{ question: \'B\', answer: \'B\' }]" />' }))
+    const details = wrapper.findAll('details')
+    expect(details[0].attributes('name')).not.toBe(details[1].attributes('name'))
+  })
+})
+
+describe('generated control ids', () => {
+  it('does not duplicate ids between anonymous tab, code and form blocks', () => {
+    // eslint-disable-next-line vue/one-component-per-file
+    const wrapper = mount(defineComponent({
+      components: { LnTabs, LnCode, LnNewsletter },
+      template: '<LnTabs :items="[{ title: \'One\' }]" /><LnCode :items="[{ code: \'echo ok\' }, { code: \'echo again\' }]" /><LnNewsletter />',
+    }))
+    expect(wrapper.find('[role="tab"]').attributes('id')).not.toBe(wrapper.find('.ln-code__tab').attributes('id'))
+    expect(wrapper.find('input[type="email"]').attributes('id')).not.toBe('ln-form-email')
+  })
+})
+
+describe('LnTeam', () => {
+  it('keeps ungrouped members visible and resolves local profile links', () => {
+    const wrapper = mount(LnTeam, {
+      props: {
+        groups: [{ id: 'core', title: 'Core' }],
+        items: [{ name: 'Ada', group: 'core' }, { name: 'Lin', group: 'missing', links: [{ text: 'Profile', link: '/people/lin' }] }],
+      },
+    })
+    expect(wrapper.text()).toContain('Ada')
+    expect(wrapper.text()).toContain('Lin')
+    expect(wrapper.find('.ln-member__link').attributes('href')).toBe('/people/lin')
   })
 })
 

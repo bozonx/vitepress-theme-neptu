@@ -45,6 +45,8 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
 .ln-section__inner {
   margin-inline: auto;
   width: 100%;
+  container-type: inline-size;
+  container-name: ln-section;
 }
 
 .ln-section__inner--narrow {

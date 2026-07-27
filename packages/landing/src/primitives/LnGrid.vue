@@ -15,15 +15,22 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div
-    class="ln-grid"
-    :class="[`ln-grid--${props.cols}`, `ln-grid--gap-${props.gap}`, { 'ln-grid--stretch': props.stretch }]"
-  >
-    <slot />
+  <div class="ln-grid-wrap">
+    <div
+      class="ln-grid"
+      :class="[`ln-grid--${props.cols}`, `ln-grid--gap-${props.gap}`, { 'ln-grid--stretch': props.stretch }]"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
 <style scoped>
+.ln-grid-wrap {
+  container-type: inline-size;
+  container-name: ln-grid;
+}
+
 .ln-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -45,7 +52,7 @@ const props = withDefaults(
   height: 100%;
 }
 
-@media (min-width: 640px) {
+@container ln-grid (min-width: 40rem) {
   .ln-grid--2,
   .ln-grid--3,
   .ln-grid--4,
@@ -55,7 +62,7 @@ const props = withDefaults(
   }
 }
 
-@media (min-width: 960px) {
+@container ln-grid (min-width: 60rem) {
   .ln-grid--3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -69,4 +76,5 @@ const props = withDefaults(
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
+
 </style>

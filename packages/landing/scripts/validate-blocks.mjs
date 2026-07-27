@@ -67,7 +67,7 @@ for (const file of markdownFiles) {
     }
   }
 
-  const ids = new Map()
+const ids = new Map()
   for (const [index, block] of blocks.entries()) {
     if (block?.id) {
       if (ids.has(block.id)) semanticErrors.push(`/blocks/${index}/id duplicate id "${block.id}" (first used at ${ids.get(block.id)})`)
@@ -78,6 +78,15 @@ for (const file of markdownFiles) {
       for (const [rowIndex, row] of (block.rows ?? []).entries()) {
         if (Array.isArray(row.values) && row.values.length !== block.columns.length) {
           semanticErrors.push(`/blocks/${index}/rows/${rowIndex}/values must match columns length ${block.columns.length}`)
+        }
+      }
+    }
+
+    if (block?.type === 'team' && Array.isArray(block.groups) && Array.isArray(block.items)) {
+      const groupIds = new Set(block.groups.map((group) => group?.id))
+      for (const [memberIndex, member] of block.items.entries()) {
+        if (member?.group && !groupIds.has(member.group)) {
+          semanticErrors.push(`/blocks/${index}/items/${memberIndex}/group references unknown group "${member.group}"`)
         }
       }
     }

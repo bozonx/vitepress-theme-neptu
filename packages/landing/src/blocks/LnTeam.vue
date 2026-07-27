@@ -6,7 +6,7 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import { resolveUrl } from '../utils/url.ts'
+import { externalTarget, resolveUrl } from '../utils/url.ts'
 import type { SectionProps, TeamGroup, TeamMember } from './types.ts'
 
 const props = withDefaults(
@@ -28,7 +28,14 @@ const props = withDefaults(
 
 const grouped = computed(() => {
   if (!props.groups?.length) return [{ id: '', items: props.items ?? [] }]
-  return props.groups.map((group) => ({ ...group, items: (props.items ?? []).filter((member) => member.group === group.id) }))
+  const members = props.items ?? []
+  const groupIds = new Set(props.groups.map((group) => group.id))
+  const declared = props.groups.map((group) => ({
+    ...group,
+    items: members.filter((member) => member.group === group.id),
+  }))
+  const ungrouped = members.filter((member) => !member.group || !groupIds.has(member.group))
+  return ungrouped.length ? [...declared, { id: '__ungrouped', items: ungrouped }] : declared
 })
 
 </script>
@@ -78,10 +85,10 @@ const grouped = computed(() => {
           <a
             v-for="(link, li) in member.links"
             :key="li"
-            :href="link.link"
+            :href="resolveUrl(link.link)"
             class="ln-member__link"
-            :target="/^https?:/.test(link.link) ? '_blank' : undefined"
-            rel="noreferrer"
+            :target="externalTarget(link.link)"
+            :rel="externalTarget(link.link) ? 'noreferrer' : undefined"
             :aria-label="link.text ?? link.link"
           >
             <LnIcon v-if="link.icon" :icon="link.icon" size="1.05rem" />

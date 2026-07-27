@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import LandingRenderer from '../../../src/blocks/LandingRenderer.vue'
 import { registerBlockTypes, blockRegistry } from '../../../src/blocks/registry.ts'
+import { defineBuiltInBlocks, defineCustomBlocks } from '../../../src/blocks/types.ts'
 import { mockFrontmatter } from '../../mocks/vitepress'
 
 afterEach(() => {
@@ -10,6 +11,11 @@ afterEach(() => {
 })
 
 describe('LandingRenderer', () => {
+  it('exports explicit helpers for strict built-in and opt-in custom data', () => {
+    expect(defineBuiltInBlocks([{ type: 'hero', title: 'Hello' }])[0].type).toBe('hero')
+    expect(defineCustomBlocks<'custom-block'>([{ type: 'custom-block', emphasis: true }])[0].type).toBe('custom-block')
+  })
+
   it('renders blocks passed as a prop', () => {
     const wrapper = mount(LandingRenderer, {
       props: {

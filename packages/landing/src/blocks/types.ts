@@ -77,6 +77,12 @@ export interface MediaSpec {
   ratio?: string
   /** `contain` keeps the whole image visible, `cover` fills the frame. */
   fit?: 'cover' | 'contain'
+  /** Explicitly mark an image as decorative when it has no useful text alternative. */
+  decorative?: boolean
+  /** Play ambient video automatically. Respects `prefers-reduced-motion`. */
+  autoplay?: boolean
+  /** Show native controls for a video. Defaults to true when autoplay is off. */
+  controls?: boolean
 }
 
 /** Either a plain image path or a full media spec. */
@@ -324,3 +330,21 @@ export type CustomBlockSpec<T extends string> = SectionProps & { type: T; [prop:
 export type BlockSpec<CustomType extends string = never> =
   | BuiltInBlockSpec
   | ([CustomType] extends [never] ? never : CustomBlockSpec<CustomType>)
+
+/**
+ * Keeps a data-mode block list narrow to built-in contracts. Use it when
+ * declaring blocks in TypeScript before passing them to `LandingRenderer`.
+ */
+export function defineBuiltInBlocks(blocks: BuiltInBlockSpec[]): BuiltInBlockSpec[] {
+  return blocks
+}
+
+/**
+ * Opt into dynamic registered block types explicitly, without weakening the
+ * built-in block contract in the common case.
+ */
+export function defineCustomBlocks<CustomType extends string>(
+  blocks: BlockSpec<CustomType>[]
+): BlockSpec<CustomType>[] {
+  return blocks
+}

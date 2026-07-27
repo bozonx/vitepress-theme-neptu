@@ -9,7 +9,7 @@
  * can also drop a normal fenced block into the default slot and let VitePress
  * highlight it.
  */
-import { computed, ref } from 'vue'
+import { computed, ref, useId } from 'vue'
 import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
@@ -46,6 +46,8 @@ const label = (key: string, fallback: string): string => codeText.value[key] ?? 
 const active = ref(0)
 const copied = ref(false)
 let resetTimer: ReturnType<typeof setTimeout> | null = null
+const generatedId = useId()
+const uid = computed(() => props.id ?? `ln-code-${generatedId}`)
 
 const samples = computed(() => props.items ?? [])
 const current = computed(() => samples.value[active.value])
@@ -129,14 +131,14 @@ const copySample = async (): Promise<void> => {
           >
             <button
               v-for="(sample, i) in samples"
-              :id="`${props.id ?? 'ln-code'}-tab-${i}`"
+              :id="`${uid}-tab-${i}`"
               :key="`tab-${i}`"
               type="button"
               role="tab"
               class="ln-code__tab"
               :class="{ 'is-active': i === active }"
               :aria-selected="i === active"
-              :aria-controls="`${props.id ?? 'ln-code'}-panel-${i}`"
+              :aria-controls="`${uid}-panel-${i}`"
               :tabindex="i === active ? 0 : -1"
               @click="select(i)"
               @keydown="onTabKeydown($event, i)"
@@ -161,11 +163,11 @@ const copySample = async (): Promise<void> => {
         <div
           v-for="(sample, i) in samples"
           v-show="i === active"
-          :id="`${props.id ?? 'ln-code'}-panel-${i}`"
+          :id="`${uid}-panel-${i}`"
           :key="`panel-${i}`"
           class="ln-code__panel"
           :role="samples.length > 1 ? 'tabpanel' : undefined"
-          :aria-labelledby="samples.length > 1 ? `${props.id ?? 'ln-code'}-tab-${i}` : undefined"
+          :aria-labelledby="samples.length > 1 ? `${uid}-tab-${i}` : undefined"
           :tabindex="samples.length > 1 ? 0 : undefined"
         >
           <!-- eslint-disable-next-line vue/no-v-html -- pre-highlighted markup is author-supplied -->

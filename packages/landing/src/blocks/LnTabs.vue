@@ -7,7 +7,7 @@
  * All panels stay in the DOM (hidden with `v-show`) so the copy is indexed by
  * search engines and found by in-page search.
  */
-import { computed, ref } from 'vue'
+import { computed, ref, useId } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
@@ -34,7 +34,8 @@ const props = withDefaults(
 
 const tabs = computed(() => props.items ?? [])
 const active = ref(Math.min(Math.max(props.initial, 0), Math.max(tabs.value.length - 1, 0)))
-const uid = computed(() => props.id ?? 'ln-tabs')
+const generatedId = useId()
+const uid = computed(() => props.id ?? `ln-tabs-${generatedId}`)
 const labelOf = (tab: TabItem, index: number): string => tab.label ?? tab.title ?? `${index + 1}`
 
 const onKeydown = (event: KeyboardEvent, index: number): void => {

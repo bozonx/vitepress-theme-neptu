@@ -3,7 +3,7 @@
  * FAQ accordion built on native `<details>`: it opens and closes without JS,
  * is keyboard accessible by default and is indexed by search engines.
  */
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
@@ -55,6 +55,8 @@ const jsonLd = computed(() => {
    */
   return data.replace(/</g, '\\u003c')
 })
+const generatedId = useId()
+const exclusiveName = computed(() => `ln-faq-${props.id ?? generatedId}`)
 </script>
 
 <template>
@@ -79,7 +81,7 @@ const jsonLd = computed(() => {
         v-for="(item, i) in props.items"
         :key="`${item.question}-${i}`"
         class="ln-faq__item"
-        :name="props.exclusive ? `ln-faq-${props.id ?? 'default'}` : undefined"
+        :name="props.exclusive ? exclusiveName : undefined"
         :open="item.open"
       >
         <summary class="ln-faq__question">

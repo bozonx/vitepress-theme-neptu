@@ -138,12 +138,27 @@ intentionally accepted by the schema. Unknown runtime types show a visible
 development placeholder. The validation command rejects unknown types unless
 they are explicitly allowed with `--allow-type=my-block`.
 
+Data mode rejects incomplete interactive content: a `hero` needs a title,
+collection-like blocks need at least one item, CTAs need linked actions, and
+`video` / `embed` need a source. Components remain more permissive so they can
+be composed with slots.
+
+For TypeScript-authored data, use `defineBuiltInBlocks([...])` to retain the
+strict built-in union. If you register custom types, opt in explicitly with
+`defineCustomBlocks<'my-block'>([...])`.
+
 ## Shared props
 
 Every block accepts `id`, `bg` (`base` `soft` `mute` `inverse` `brand`
 `transparent`), `width` (`narrow` `default` `wide` `full`), `padding` (`none`
 `sm` `md` `lg`), `align` (`start` `center`), `divider` and `noReveal`, plus the
 header trio `eyebrow` / `title` / `text` and its own `items`.
+
+Interactive blocks generate stable internal ids automatically. Set `id` when
+you need a section anchor or a predictable DOM id. For meaningful images, use
+the object form (`{ src, alt }`); use `decorative: true` only for imagery that
+does not convey content. Ambient video is opt-in with `autoplay: true` and is
+disabled for visitors who prefer reduced motion.
 
 Types: `src/blocks/types.ts`. Schema: `schema/landing-blocks.schema.json`.
 

@@ -38,4 +38,11 @@ describe('landing blocks schema', () => {
       { type: 'embed', src: '/map', loading: 'lazy' },
     ] })).toBe(true)
   })
+
+  it('rejects incomplete data-mode blocks and inert actions', () => {
+    expect(validate({ blocks: [{ type: 'hero' }] })).toBe(false)
+    expect(validate({ blocks: [{ type: 'video', title: 'Demo' }] })).toBe(false)
+    expect(validate({ blocks: [{ type: 'features', items: [] }] })).toBe(false)
+    expect(validate({ blocks: [{ type: 'cta', title: 'Go', actions: [{ text: 'Start' }] }] })).toBe(false)
+  })
 })

@@ -11,7 +11,7 @@
  * Set `ajax` to keep the visitor on the page — then the response is posted in
  * the background and a status message replaces the form.
  */
-import { computed, ref } from 'vue'
+import { computed, ref, useId } from 'vue'
 import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
@@ -65,6 +65,8 @@ const label = (key: string, fallback: string): string => formText.value[key] ?? 
 
 const state = ref<'idle' | 'sending' | 'done' | 'error'>('idle')
 const visibleFields = computed(() => props.fields ?? [])
+const generatedId = useId()
+const formId = computed(() => props.id ?? `ln-form-${generatedId}`)
 
 const onSubmit = async (event: Event): Promise<void> => {
   if (!props.ajax || !props.action) return
@@ -123,12 +125,12 @@ const onSubmit = async (event: Event): Promise<void> => {
             <input type="hidden" :name="field.name" :value="field.value" />
           </template>
           <template v-else>
-            <label class="ln-form__label" :for="`${props.id ?? 'ln-form'}-${field.name}`">
+            <label class="ln-form__label" :for="`${formId}-${field.name}`">
               {{ field.label ?? field.name }}
             </label>
             <textarea
               v-if="field.type === 'textarea'"
-              :id="`${props.id ?? 'ln-form'}-${field.name}`"
+              :id="`${formId}-${field.name}`"
               class="ln-form__input ln-form__input--area"
               :name="field.name"
               :placeholder="field.placeholder"
@@ -137,7 +139,7 @@ const onSubmit = async (event: Event): Promise<void> => {
             />
             <input
               v-else
-              :id="`${props.id ?? 'ln-form'}-${field.name}`"
+              :id="`${formId}-${field.name}`"
               class="ln-form__input"
               :type="field.type ?? 'text'"
               :name="field.name"
@@ -150,11 +152,11 @@ const onSubmit = async (event: Event): Promise<void> => {
 
         <div class="ln-form__row">
           <div class="ln-form__field ln-form__field--grow">
-            <label class="ln-form__label ln-form__label--visually-hidden" :for="`${props.id ?? 'ln-form'}-email`">
+            <label class="ln-form__label ln-form__label--visually-hidden" :for="`${formId}-email`">
               {{ props.emailLabel ?? label('email', 'Email') }}
             </label>
             <input
-              :id="`${props.id ?? 'ln-form'}-email`"
+              :id="`${formId}-email`"
               class="ln-form__input"
               type="email"
               :name="props.emailName"

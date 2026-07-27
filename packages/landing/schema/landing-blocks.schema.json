@@ -152,6 +152,15 @@
                 "cover",
                 "contain"
               ]
+            },
+            "decorative": {
+              "type": "boolean"
+            },
+            "autoplay": {
+              "type": "boolean"
+            },
+            "controls": {
+              "type": "boolean"
             }
           },
           "additionalProperties": false
@@ -161,7 +170,8 @@
     "action": {
       "type": "object",
       "required": [
-        "text"
+        "text",
+        "link"
       ],
       "properties": {
         "text": {
@@ -1332,6 +1342,18 @@
               },
               "additionalProperties": true
             }
+          ]
+        },
+        {
+          "allOf": [
+            { "if": { "properties": { "type": { "const": "hero" } }, "required": ["type"] }, "then": { "required": ["title"] } },
+            { "if": { "properties": { "type": { "enum": ["features", "feature-split", "bento", "carousel", "collection", "logos", "stats", "steps", "testimonials", "pricing", "faq", "timeline", "team", "gallery", "code", "tabs"] } }, "required": ["type"] }, "then": { "required": ["items"], "properties": { "items": { "type": "array", "minItems": 1 } } } },
+            { "if": { "properties": { "type": { "const": "compare" } }, "required": ["type"] }, "then": { "required": ["columns", "rows"], "properties": { "columns": { "type": "array", "minItems": 1 }, "rows": { "type": "array", "minItems": 1 } } } },
+            { "if": { "properties": { "type": { "const": "cta" } }, "required": ["type"] }, "then": { "required": ["title", "actions"], "properties": { "actions": { "type": "array", "minItems": 1 } } } },
+            { "if": { "properties": { "type": { "const": "newsletter" } }, "required": ["type"] }, "then": { "required": ["action"] } },
+            { "if": { "properties": { "type": { "const": "video" } }, "required": ["type"] }, "then": { "anyOf": [{ "required": ["youtube"] }, { "required": ["vimeo"] }, { "required": ["src"] }] } },
+            { "if": { "properties": { "type": { "const": "embed" } }, "required": ["type"] }, "then": { "required": ["src"] } },
+            { "if": { "properties": { "type": { "const": "banner" } }, "required": ["type"] }, "then": { "required": ["text"] } }
           ]
         }
       ],

@@ -7,7 +7,7 @@
  * - `cover` — copy over a full-bleed background image/video
  * - `plain` — copy only
  */
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
@@ -43,6 +43,23 @@ const props = withDefaults(
 )
 
 const isCover = computed(() => props.variant === 'cover')
+const coverVideo = ref<HTMLVideoElement | null>(null)
+const motionAllowed = ref(false)
+const videoPaused = ref(false)
+onMounted(() => {
+  motionAllowed.value = typeof matchMedia !== 'function' || !matchMedia('(prefers-reduced-motion: reduce)').matches
+})
+const toggleBackgroundVideo = (): void => {
+  const video = coverVideo.value
+  if (!video) return
+  if (video.paused) {
+    void video.play()
+    videoPaused.value = false
+  } else {
+    video.pause()
+    videoPaused.value = true
+  }
+}
 const isCentered = computed(() => props.variant === 'centered' || isCover.value)
 const align = computed(() => props.align ?? (isCentered.value ? 'center' : 'start'))
 const coverSpec = computed(() => {
@@ -61,9 +78,10 @@ const coverSpec = computed(() => {
     <div v-if="isCover" class="ln-hero__bg" aria-hidden="true">
       <video
         v-if="coverSpec.video"
+        ref="coverVideo"
         :src="coverSpec.video"
         :poster="coverSpec.poster"
-        autoplay
+        :autoplay="motionAllowed"
         muted
         loop
         playsinline
@@ -90,6 +108,16 @@ const coverSpec = computed(() => {
       :class="[`ln-hero--${props.variant}`, { 'ln-hero--on-media': isCover }]"
     >
       <div v-if="props.glow" class="ln-hero__glow" aria-hidden="true" />
+
+      <button
+        v-if="isCover && coverSpec.video && motionAllowed"
+        type="button"
+        class="ln-hero__motion-toggle"
+        :aria-pressed="videoPaused"
+        @click="toggleBackgroundVideo"
+      >
+        {{ videoPaused ? 'Play background video' : 'Pause background video' }}
+      </button>
 
       <div class="ln-hero__grid">
         <div class="ln-hero__copy">
@@ -184,6 +212,26 @@ const coverSpec = computed(() => {
   transform: translateX(-50%);
   background: radial-gradient(closest-side, var(--ln-c-accent-glow), transparent);
   pointer-events: none;
+}
+
+.ln-hero__motion-toggle {
+  position: absolute;
+  right: var(--ln-page-px);
+  bottom: 1rem;
+  z-index: 2;
+  border: var(--ln-border-width) solid var(--ln-c-border);
+  border-radius: var(--ln-radius-pill);
+  background: var(--ln-c-on-media-veil);
+  padding: 0.45rem 0.75rem;
+  color: var(--ln-c-on-media);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.ln-hero__motion-toggle:focus-visible {
+  outline: 2px solid var(--ln-c-brand);
+  outline-offset: 2px;
 }
 
 .ln-hero__grid {

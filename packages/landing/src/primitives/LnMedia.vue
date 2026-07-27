@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /** Image or video frame with a fixed aspect ratio and themed shape. */
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { MediaLike } from '../blocks/types.ts'
 import { resolveUrl } from '../utils/url.ts'
 
@@ -15,6 +15,9 @@ const props = withDefaults(
     shadow?: boolean
     border?: boolean
     eager?: boolean
+    /** Override the media spec for component-authored content. */
+    autoplay?: boolean
+    controls?: boolean
   }>(),
   { rounded: 'lg', shadow: false, border: false, eager: false }
 )
@@ -26,9 +29,15 @@ const spec = computed(() =>
 const src = computed(() => resolveUrl(spec.value.src))
 const video = computed(() => resolveUrl(spec.value.video))
 const poster = computed(() => resolveUrl(spec.value.poster))
-const alt = computed(() => spec.value.alt ?? props.alt ?? '')
+const alt = computed(() => spec.value.decorative ? '' : (spec.value.alt ?? props.alt ?? ''))
 const ratio = computed(() => spec.value.ratio ?? props.ratio)
 const fit = computed(() => spec.value.fit ?? props.fit ?? 'cover')
+const reducedMotion = ref(true)
+onMounted(() => {
+  reducedMotion.value = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
+})
+const autoplay = computed(() => Boolean(spec.value.autoplay ?? props.autoplay) && !reducedMotion.value)
+const controls = computed(() => spec.value.controls ?? props.controls ?? !autoplay.value)
 </script>
 
 <template>
@@ -47,7 +56,8 @@ const fit = computed(() => spec.value.fit ?? props.fit ?? 'cover')
         :src="video"
         :poster="poster"
         :style="{ objectFit: fit }"
-        autoplay
+        :autoplay="autoplay"
+        :controls="controls"
         muted
         loop
         playsinline

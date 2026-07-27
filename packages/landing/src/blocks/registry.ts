@@ -94,6 +94,7 @@ export const blockTypes: string[] = Object.keys(blockRegistry)
  */
 export function registerBlockTypes(blocks: Record<string, Component>): void {
   Object.assign(blockRegistry, blocks)
+  blockTypes.splice(0, blockTypes.length, ...Object.keys(blockRegistry))
 }
 
 /** Resolves a block type, returning `undefined` for unknown ones. */
