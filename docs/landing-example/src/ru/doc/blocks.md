@@ -1,260 +1,562 @@
 ---
 title: Блоки
-description: 'Справочник по всем блокам лендинга: пропсы, варианты и примеры'
+description: 'Справочник по всем блокам лендинга: параметры, ограничения и YAML-примеры'
 ---
 
 # Блоки
 
-Двадцать четыре блока и один контракт. Каждый блок — это `<section>`, которая сама
-рисует свою подложку, задаёт вертикальный ритм и ограничивает ширину контента.
-Вёрстку вокруг блоков писать не нужно.
+Лендинг состоит из 24 полновесных секций. Блок сам задаёт фон, вертикальные
+отступы и ширину контента; внешняя обёртка для него не нужна. Ниже приведены
+параметры для YAML- и компонентного режима. В YAML `type` выбирает блок, а
+остальные ключи становятся его пропсами.
 
-Живые примеры: [английская главная](/en/) (компонентный режим) и
-[русская](/ru/) (декларативный).
+Живые примеры: [русская главная](/ru/) в YAML-режиме и
+[английская](/en/) в компонентном режиме.
 
 ## Общие пропсы
 
-Есть у каждого блока:
+Каждый блок принимает следующие параметры.
 
 | Проп | Тип | По умолчанию | Описание |
 |------|-----|--------------|----------|
-| `id` | `string` | — | Якорь, он же цель внутренних ссылок. |
-| `bg` | `base \| soft \| mute \| inverse \| brand \| transparent` | `base` | Подложка секции. |
-| `width` | `narrow \| default \| wide \| full` | `default` | Максимальная ширина контента. |
+| `id` | `string` | — | Уникальный якорь для внутренней ссылки. |
+| `bg` | `base \| soft \| mute \| inverse \| brand \| transparent` | `base` | Фон секции. |
+| `width` | `narrow \| default \| wide \| full` | `default` | Максимальная ширина контента. У отдельных блоков свой default. |
 | `padding` | `none \| sm \| md \| lg` | `md` | Вертикальные отступы. |
-| `align` | `start \| center` | зависит | Выравнивание заголовка секции. |
-| `divider` | `boolean` | `false` | Линия сверху секции. |
-| `noReveal` | `boolean` | `false` | Отключить анимацию появления. |
+| `align` | `start \| center` | зависит от блока | Выравнивание заголовка и действий. |
+| `divider` | `boolean` | `false` | Тонкая линия перед секцией. |
+| `noReveal` | `boolean` | `false` | Отключает анимацию появления, кроме hero: у него она всегда выключена. |
 
-Почти у всех блоков есть тройка заголовка — `eyebrow`, `title`, `text` — и
-список `items`. В `title` и `text` можно писать инлайновый HTML.
+Большинство блоков также принимают `eyebrow`, `title` и `text`. В `title`,
+`text`, FAQ и HTML-контенте допускается инлайновый HTML. Передавайте только
+доверенный HTML: блоки не очищают его от небезопасной разметки.
 
-Небазовые подложки (`soft`, `inverse`, `brand`) сами переопределяют внутри себя
-токены текста и карточек, поэтому контент остаётся читаемым без лишних пропсов.
+### Повторяющиеся структуры
+
+```ts
+// action: text и link обязательны
+{ text: 'Начать', link: '/ru/doc', variant?: 'brand'|'alt'|'ghost'|'outline'|'link',
+  size?: 'sm'|'md'|'lg', icon?: string, target?: string, rel?: string }
+
+// media: строка или полная спецификация
+'/img/shot.png' | { src?, alt?, video?, poster?, width?, height?, ratio?,
+  fit?: 'cover'|'contain', decorative?, autoplay?, controls? }
+
+// icon: имя Iconify, эмодзи или картинка
+'fa6-solid:rocket' | '🚀' | { src: '/img/icon.svg', alt?: 'Логотип' }
+```
+
+`link` у карточки делает кликабельной всю карточку. Если у той же карточки есть
+`actions`, используйте действия вместо `link`: вложенные ссылки недопустимы.
 
 ## Каталог
 
-| Тип (YAML) | Компонент | Для чего |
-|------------|-----------|----------|
+| Тип | Компонент | Назначение |
+|-----|-----------|------------|
 | `hero` | `LnHero` | Первый экран |
-| `features` | `LnFeatureGrid` | Сетка возможностей |
-| `feature-split` | `LnFeatureSplit` | Чередующиеся строки текст + медиа |
-| `bento` | `LnBento` | Плитки разного размера |
-| `carousel` | `LnCarousel` | Прокручиваемый набор карточек |
-| `collection` | `LnCollection` | Ресурсы, статьи, проекты и товары |
-| `content` | `LnContent` | Доверенный rich text и редакционный контент |
-| `logos` | `LnLogoCloud` | Клиенты, спонсоры, интеграции |
-| `stats` | `LnStats` | Ключевые цифры |
-| `steps` | `LnSteps` | Последовательность «как это работает» |
-| `testimonials` | `LnTestimonials` | Отзывы |
-| `pricing` | `LnPricing` | Тарифы с переключателем периода |
-| `faq` | `LnFaq` | Аккордеон вопросов |
-| `cta` | `LnCta` | Призыв к действию |
-| `timeline` | `LnTimeline` | Дорожная карта или история |
-| `team` | `LnTeam` | Люди |
-| `gallery` | `LnGallery` | Скриншоты с лайтбоксом |
-| `code` | `LnCode` | Команды установки и примеры кода |
-| `tabs` | `LnTabs` | Компактные сценарии возможностей |
-| `compare` | `LnCompare` | Сравнение продуктов и тарифов |
-| `newsletter` | `LnNewsletter` | Сбор email и лидов |
-| `video` | `LnVideo` | Ленивое продуктовое видео |
-| `embed` | `LnEmbed` | Карты, календари и виджеты |
-| `banner` | `LnBanner` | Полоса объявления |
+| `features`, `feature-split`, `bento`, `tabs` | соответствующие `Ln*` | Возможности и сценарии |
+| `carousel`, `collection`, `content`, `gallery` | соответствующие `Ln*` | Контент и ресурсы |
+| `logos`, `stats`, `testimonials`, `team` | соответствующие `Ln*` | Доказательства и люди |
+| `steps`, `timeline`, `code`, `video`, `embed` | соответствующие `Ln*` | Процесс, демо и встраивания |
+| `pricing`, `compare`, `faq`, `newsletter`, `cta` | соответствующие `Ln*` | Конверсионные секции |
+| `banner` | `LnBanner` | Объявление |
 
-## Общие структуры
+## `hero` — `LnHero`
 
-```ts
-// action — используется в hero, cta, faq, feature-split, pricing
-{ text, link?, variant?: 'brand'|'alt'|'ghost'|'outline'|'link', size?, icon?, target? }
-
-// media — везде, где принимается изображение
-'/img/shot.png' | { src?, alt?, video?, poster?, ratio?, fit?: 'cover'|'contain' }
-
-// icon — имя Iconify, эмодзи или путь к картинке
-'fa6-solid:rocket' | '🚀' | '/img/icon.svg'
-```
-
----
-
-## hero — `LnHero`
+Первый экран. На странице в режиме `layout: landing` нужен ровно один `hero`; до
+него разрешён только `banner`. `hero` рендерит `h1`.
 
 | Проп | Тип | По умолчанию |
 |------|-----|--------------|
+| `title` | `string` | — |
 | `variant` | `split \| centered \| cover \| plain` | `split` |
-| `eyebrow`, `title`, `text`, `note` | `string` | — |
-| `actions` | `action[]` | — |
-| `image` | media | — |
+| `actions`, `image`, `note` | `action[]`, media, `string` | — |
 | `glow` | `boolean` | `false` |
-| `overlay` | `boolean` (для `cover`) | `true` |
+| `overlay` | `boolean`, только `cover` | `true` |
 
-Слоты: `before`, `title`, `text`, `after`, `media`.
-
-::: code-group
-
-```md [Компонент]
-<LnHero
-  variant="split"
-  glow
-  eyebrow="Тема для VitePress"
-  title='Собирается из <span class="ln-accent">блоков</span>'
-  text="Лендинг, документация и страницы в одном месте."
-  image="/img/demo/shot-1.svg"
-  :actions="[{ text: 'Начать', link: '/doc' }]"
-/>
-```
-
-```yaml [Данные]
+```yaml
 - type: hero
   variant: split
-  glow: true
-  eyebrow: Тема для VitePress
   title: Собирается из блоков
-  text: Лендинг, документация и страницы в одном месте.
   image: /img/demo/shot-1.svg
-  actions:
-    - { text: Начать, link: /doc }
+  actions: [{ text: Начать, link: /ru/doc }]
 ```
 
-:::
+`cover` принимает фото или видео через `image`; для видео укажите `video` и,
+при необходимости, `poster`. Оверлей включён по умолчанию для читаемости текста.
 
-Вариант `cover` — для фонового фото или видео: текст центрируется, а оверлей
-сохраняет читаемость. Hero на странице должен быть один: он рендерит `h1`.
+## `features` — `LnFeatureGrid`
 
-## features — `LnFeatureGrid`
+Сетка карточек. Элемент принимает общий `CardItem`: `icon`, `image`, `title`,
+`text`, `badge`, `link`, `linkText`, `tags`, `meta`, `date` и `actions`.
 
 | Проп | Тип | По умолчанию |
 |------|-----|--------------|
-| `items` | `{ icon?, image?, title, text?, link?, linkText?, badge? }[]` | — |
+| `items` | `CardItem[]` | обязательно |
 | `cols` | `1 \| 2 \| 3 \| 4` | `3` |
 | `variant` | `card \| plain \| bordered` | `card` |
 | `iconPosition` | `top \| inline` | `top` |
 | `iconSize` | CSS-размер | `1.75rem` |
 
-Если у элемента есть `link`, вся карточка становится ссылкой.
+```yaml
+- type: features
+  title: Возможности
+  items: [{ icon: '🚀', title: Быстро, text: Статический сайт. }]
+```
 
-## feature-split — `LnFeatureSplit`
+## `feature-split` — `LnFeatureSplit`
 
-Строки «текст + медиа» с чередованием сторон.
-Пропсы: `items` (элемент features плюс `bullets?: string[]` и
-`actions?: action[]`), `reverse`, `noAlternate`, `mediaRatio`.
-
-## bento — `LnBento`
-
-Те же элементы, что у `features`, плюс `span` и `rowSpan` (`1` или `2`) —
-плитка занимает две колонки или две строки.
-
-## carousel — `LnCarousel`
+Чередующиеся строки «текст + медиа». Каждый элемент — `CardItem` плюс
+`bullets?: string[]` и `actions?: action[]`.
 
 | Проп | Тип | По умолчанию |
 |------|-----|--------------|
-| `items` | `{ image?, icon?, badge?, eyebrow?, title?, text?, link?, linkText? }[]` | — |
-| `perView` | `1 \| 2 \| 3 \| 4` | `3` |
-| `arrows`, `dots` | `boolean` | `true` |
-| `autoplay` | мс, `0` — выкл. | `0` |
-| `peek` | `boolean` | `false` |
+| `items` | `SplitItem[]` | обязательно |
+| `reverse` | `boolean` | `false` |
+| `noAlternate` | `boolean` | `false` |
+| `mediaRatio` | CSS aspect-ratio | — |
 
-Внутри — CSS scroll-snap: прокрутка пальцем и с клавиатуры работает без JS.
-Автопрокрутка останавливается на наведении и фокусе и не запускается при
-`prefers-reduced-motion`. Свой слайд — через скоуп-слот `slide`.
-
-## logos — `LnLogoCloud`
-
-`items: { src, alt?, link?, height? }[]`, `variant: row | grid | marquee`,
-`monochrome`, `speed` (секунды для бегущей строки), `logoHeight`.
-
-## stats — `LnStats`
-
-`items: { value, label?, text?, icon? }[]`, `cols` 2–4,
-`variant: plain | card | divided`.
-
-## steps — `LnSteps`
-
-`items: { title, text?, icon?, image?, label? }[]`,
-`variant: row | column`, `connector: boolean`.
-В маркере выводится `label`, иконка или порядковый номер.
-
-## testimonials — `LnTestimonials`
-
-`items: { text, author?, role?, avatar?, logo?, rating?, link? }[]`,
-`cols` 1–3, `variant: grid | masonry | single`.
-
-## pricing — `LnPricing`
-
-```ts
-// план
-{
-  title, text?, badge?, featured?,
-  price, period?,                 // показывается на вкладке «месяц»
-  priceYearly?, periodYearly?,    // наличие включает переключатель периода
-  features: (string | { text, included?: false })[],
-  action: { text, link, variant? },
-}
+```yaml
+- type: feature-split
+  items: [{ title: YAML или Vue, text: Выберите способ сборки., image: /img/demo/shot-1.svg }]
 ```
 
-Плюс `cols` 2–4, `monthlyLabel`, `yearlyLabel`, `note`.
+## `bento` — `LnBento`
 
-## faq — `LnFaq`
+Сетка возможностей с плитками разного размера. Элемент — `CardItem` плюс
+`span` и `rowSpan` со значением `1` или `2`.
 
-`items: { question, answer, open? }[]`, `cols` 1–2, `exclusive`, `actions`.
-Построен на `<details>`: работает без JavaScript и индексируется поиском.
-В `question` и `answer` можно писать HTML.
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `FeatureItem[]` | обязательно |
+| `cols` | `2 \| 3 \| 4` | `3` |
 
-## cta — `LnCta`
+```yaml
+- type: bento
+  items: [{ title: Большая плитка, text: Занимает две колонки., span: 2 }]
+```
 
-`variant: banner | card | split`, плюс `title`, `text`, `note`, `actions`,
-`image`. На `bg="brand"` цвета кнопок инвертируются автоматически.
+## `carousel` — `LnCarousel`
 
-## timeline — `LnTimeline`
+Горизонтальный набор `CardItem`. Нативная прокрутка и scroll-snap остаются
+доступны без JavaScript; стрелки, точки и автопрокрутка требуют JavaScript.
 
-`items: { label?, title, text?, icon?, state?: 'done' | 'active' | 'planned' }[]`,
-`variant: stacked | side`.
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `CardItem[]` | обязательно |
+| `perView` | `1 \| 2 \| 3 \| 4` | `3` |
+| `arrows`, `dots` | `boolean` | `true` |
+| `autoplay` | миллисекунды, `0` — выкл. | `0` |
+| `peek` | `boolean` | `false` |
+| `cardVariant` | `card \| plain \| bordered` | `card` |
+| `ariaLabel` | `string` | заголовок или «Carousel» |
 
-## team — `LnTeam`
+```yaml
+- type: carousel
+  title: Ресурсы
+  items: [{ title: Быстрый старт, link: /ru/doc }]
+```
 
-`items: { name, role?, text?, avatar?, links?: { icon?, text?, link }[] }[]`,
-`cols` 2–4, `variant: card | plain`, `avatarShape: circle | rounded`.
+Автопрокрутка останавливается при наведении и фокусе и не запускается при
+`prefers-reduced-motion`. Слот `slide` заменяет разметку одного слайда.
 
-## gallery — `LnGallery`
+## `collection` — `LnCollection`
 
-`items: { src, alt?, caption?, link?, ratio? }[]`, `cols` 2–4,
-`variant: grid | masonry`, `lightbox`, `ratio`.
-Лайтбокс — нативный `<dialog>`: Esc закрывает, фокус удерживает браузер.
+Коллекция статей, проектов или товаров. Элементы — `CardItem`; у блока есть
+также действия после сетки.
 
----
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `CardItem[]` | обязательно |
+| `actions` | `action[]` | — |
+| `layout` | `grid \| list` | `grid` |
+| `cols` | `1 \| 2 \| 3 \| 4` | `3` |
+| `variant` | `card \| plain \| bordered` | `card` |
+| `imageRatio` | CSS aspect-ratio | `16/9` |
 
-## Новые и расширенные блоки
+```yaml
+- type: collection
+  items: [{ title: Руководство, date: '2026-07-27', link: /ru/doc, linkText: Читать }]
+```
 
-- `collection` использует общий `CardItem`: `title`, `text`, `image`, `icon`,
-  `badge`, `tags`, `meta`, `date`, `link`, `linkText`, `actions`; доступны
-  `layout: grid | list`, `cols`, `variant` и `imageRatio`.
-- `content` выводит доверенный HTML в вариантах `prose`, `split`, `card` и
-  поддерживает `image`, `actions`, `reverse`. Ввод внешней CMS нужно очищать.
-- `embed` — ленивый iframe с `src`, `embedTitle`, `caption`, `ratio`, `allow`,
-  `sandbox` и `actions`.
-- `gallery` теперь поддерживает `title`, `text`, `tags`, `actions` у элемента.
-- `carousel` использует `CardItem`, полноценные actions и `cardVariant`.
-- `team` поддерживает `groups`, `department` и `meta`.
-- `pricing` поддерживает `currency`, `discountLabel`, `billingSuffix` и `toggle`.
-- `stats` поддерживает `trend`, `trendDirection`, `source`, `note`, `link`.
-- `banner` поддерживает `placement`, `sticky` и не игнорирует shared props.
+## `content` — `LnContent`
+
+Секция для редакционного текста. `content` рендерится как HTML; для
+компонентного режима вместо него можно передать обычный слот.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `content` | доверенный HTML | — |
+| `image`, `actions` | media, `action[]` | — |
+| `variant` | `prose \| split \| card` | `prose` |
+| `reverse` | `boolean` | `false` |
+
+```yaml
+- type: content
+  title: Подробнее
+  content: '<p>Только доверенный HTML.</p>'
+```
+
+## `logos` — `LnLogoCloud`
+
+Логотипы клиентов, партнёров или интеграций.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `{ src, alt?, link?, height? }[]` | обязательно |
+| `variant` | `row \| grid \| marquee` | `row` |
+| `monochrome` | `boolean` | `true` |
+| `speed` | секунды, для `marquee` | `32` |
+| `logoHeight` | CSS-размер | `2rem` |
+
+```yaml
+- type: logos
+  variant: marquee
+  items: [{ src: /img/demo/logo-1.svg, alt: Acme }]
+```
+
+## `stats` — `LnStats`
+
+Ключевые цифры. Элемент: `value` (обязательно), `label`, `text`, `icon`,
+`trend`, `trendDirection: up|down|neutral`, `source`, `note`, `link`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `StatItem[]` | обязательно |
+| `cols` | `2 \| 3 \| 4` | `3` |
+| `variant` | `plain \| card \| divided` | `plain` |
+
+```yaml
+- type: stats
+  items: [{ value: '24', label: Блока, text: и 11 примитивов }]
+```
+
+## `steps` — `LnSteps`
+
+Последовательность шагов. В маркере выводится `label`, затем `icon`, затем
+порядковый номер.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `{ title, text?, icon?, image?, label? }[]` | обязательно |
+| `variant` | `row \| column` | `row` |
+| `connector` | `boolean` | `true` |
+
+```yaml
+- type: steps
+  items: [{ title: Установить тему, text: Добавьте пакет. }]
+```
+
+## `testimonials` — `LnTestimonials`
+
+Отзывы: `text` обязателен; доступны `author`, `role`, `avatar`, `logo`, `link`
+и `rating`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `TestimonialItem[]` | обязательно |
+| `cols` | `1 \| 2 \| 3` | `3` |
+| `variant` | `grid \| masonry \| single` | `grid` |
+
+```yaml
+- type: testimonials
+  items: [{ text: Понятный способ собрать сайт., author: Анна }]
+```
+
+## `pricing` — `LnPricing`
+
+Тарифы. У плана `title` обязателен; используйте `price`, `period`, `features`,
+`action`, `featured`, `badge`. Если хотя бы у одного плана есть `priceYearly`,
+появится переключатель периода.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `PricingPlan[]` | обязательно |
+| `cols` | `2 \| 3 \| 4` | `3` |
+| `monthlyLabel`, `yearlyLabel`, `discountLabel` | `string` | локализованный текст |
+| `toggle` | `{ monthlyLabel?, yearlyLabel?, discountLabel? }` | — |
+| `currency`, `billingSuffix`, `note` | `string` | — |
+
+```yaml
+- type: pricing
+  items:
+    - title: Pro
+      price: '9'
+      period: / месяц
+      priceYearly: '90'
+      periodYearly: / год
+      features: [Проекты без ограничений, { text: Приоритетная поддержка, included: false }]
+      action: { text: Выбрать, link: /ru/page/donate }
+```
+
+## `faq` — `LnFaq`
+
+Аккордеон на нативном `<details>`: ответы доступны без JavaScript и читаются
+поисковыми роботами. Вопрос и ответ принимают HTML.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `{ question, answer, open? }[]` | обязательно |
+| `cols` | `1 \| 2` | `1` |
+| `exclusive` | `boolean` | `false` |
+| `schema` | `boolean` | `true` |
+| `actions` | `action[]` | — |
+
+```yaml
+- type: faq
+  items: [{ question: Нужен ли Vue-код?, answer: Нет, можно использовать YAML. }]
+```
+
+`schema: false` отключает JSON-LD `FAQPage`.
+
+## `cta` — `LnCta`
+
+Призыв к действию. Для YAML обязательны `title` и хотя бы одно действие.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `variant` | `banner \| card \| split` | `banner` |
+| `title`, `text`, `note`, `actions`, `image` | строка, `action[]`, media | — |
+| `bg` | общий фон / фон панели | `brand` |
+| `surface` | `SectionBg`, только `card` | `base` |
+
+```yaml
+- type: cta
+  title: Готовы начать?
+  actions: [{ text: Читать документацию, link: /ru/doc }]
+```
+
+Для `variant: card` `surface` задаёт фон секции, а `bg` — фон самой панели.
+
+## `timeline` — `LnTimeline`
+
+Дорожная карта или история. Элемент: `title`, `text`, `label`, `icon` и
+`state: done|active|planned`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `TimelineItem[]` | обязательно |
+| `variant` | `stacked \| side` | `stacked` |
+
+```yaml
+- type: timeline
+  items: [{ label: v1.0, title: Первый релиз, state: done }]
+```
+
+## `team` — `LnTeam`
+
+Команда. Участник требует `name`; доступны `role`, `text`, `avatar`,
+`department`, `meta`, `group` и `links: [{ icon?, text?, link }]`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `TeamMember[]` | обязательно |
+| `groups` | `{ id, title?, text? }[]` | — |
+| `cols` | `2 \| 3 \| 4` | `4` |
+| `variant` | `card \| plain` | `card` |
+| `avatarShape` | `circle \| rounded` | `circle` |
+
+```yaml
+- type: team
+  groups: [{ id: design, title: Дизайн }]
+  items: [{ name: Анна, role: Дизайнер, group: design }]
+```
+
+Значение `group` у участника должно существовать в `groups` — это проверяет
+валидатор.
+
+## `gallery` — `LnGallery`
+
+Галерея с нативным лайтбоксом `<dialog>`. Элемент требует `src`; дополнительно
+поддерживаются `alt`, `caption`, `title`, `text`, `tags`, `actions`, `link` и
+`ratio`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `GalleryItem[]` | обязательно |
+| `cols` | `2 \| 3 \| 4` | `3` |
+| `variant` | `grid \| masonry` | `grid` |
+| `lightbox` | `boolean` | `true` |
+| `ratio` | CSS aspect-ratio | `4/3` |
+
+```yaml
+- type: gallery
+  items: [{ src: /img/demo/shot-1.svg, alt: Главный экран, caption: YAML-режим }]
+```
+
+Esc закрывает лайтбокс; управление фокусом обеспечивает браузер.
+
+## `code` — `LnCode`
+
+Вкладки с кодом и кнопкой копирования. В каждом элементе `code` обязателен;
+`html` позволяет передать заранее подсвеченную разметку того же кода.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `{ code, label?, lang?, html?, caption? }[]` | обязательно |
+| `copy`, `chrome` | `boolean` | `true` |
+| `variant` | `stacked \| split` | `stacked` |
+| `actions` | `action[]` | — |
+
+```yaml
+- type: code
+  items: [{ label: pnpm, lang: bash, code: pnpm add vitepress-theme-neptu-landing }]
+```
+
+## `tabs` — `LnTabs`
+
+Переключаемые сценарии. Элемент: `label` (иначе берётся `title`), `icon`,
+`title`, `text`, `image`, `bullets`, `actions`, `badge`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `items` | `TabItem[]` | обязательно |
+| `variant` | `top \| side` | `top` |
+| `initial` | индекс первой вкладки | `0` |
+| `mediaRatio` | CSS aspect-ratio | `16/9` |
+
+```yaml
+- type: tabs
+  items: [{ label: YAML, title: Страница как данные, text: Без Vue-разметки. }]
+```
+
+## `compare` — `LnCompare`
+
+Таблица сравнения. В YAML `columns` и `rows` обязательны; количество `values`
+в каждой строке должно совпадать с числом колонок.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `columns` | `{ title, text?, featured?, badge?, action? }[]` | обязательно |
+| `rows` | `{ label, text?, group?, values }[]` | обязательно |
+| `rowsLabel`, `note` | `string` | — |
+| `stickyHead` | `boolean` | `true` |
+
+```yaml
+- type: compare
+  columns: [{ title: Free }, { title: Pro, featured: true }]
+  rows: [{ label: Проекты, values: ['3', Без ограничений] }]
+```
+
+В `values` можно передавать строки, числа, `true` и `false`; булевы значения
+отображаются как доступность функции.
+
+## `newsletter` — `LnNewsletter`
+
+Обычная HTML-форма. В YAML `action` обязателен и должен указывать endpoint
+вашего обработчика (например, Netlify Forms или Formspree). В компонентном
+режиме отсутствие `action` оставляет форму в режиме предпросмотра.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `action` | URL endpoint | обязательно в YAML |
+| `method` | `post \| get` | `post` |
+| `emailName`, `emailLabel`, `placeholder`, `submitText` | `string` | локализованный текст |
+| `fields` | `{ name, label?, placeholder?, type?, value?, required? }[]` | — |
+| `consent`, `note`, `successText`, `errorText` | `string` | — |
+| `ajax` | `boolean` | `false` |
+| `variant` | `card \| banner` | `card` |
+
+```yaml
+- type: newsletter
+  title: Получать обновления
+  action: https://example.com/subscribe
+  consent: 'Согласен с <a href="/privacy">политикой</a>.'
+```
+
+При `ajax: false` форма отправляется нативно и работает без JavaScript. При
+`ajax: true` endpoint должен корректно отвечать на `fetch` и CORS-запросы.
+
+## `video` — `LnVideo`
+
+Видео с ленивой фасадной загрузкой YouTube/Vimeo или нативный плеер для файла.
+В YAML укажите хотя бы один источник: `youtube`, `vimeo` или `src`. Если
+указать несколько, приоритет у `youtube`, затем у `vimeo`.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `youtube`, `vimeo`, `src` | id или URL / путь к файлу | хотя бы один обязателен |
+| `poster`, `caption`, `ratio` | `string` | `ratio: 16/9` |
+| `autoplay` | `boolean`, только `src` | `false` |
+| `actions` | `action[]` | — |
+
+```yaml
+- type: video
+  title: Демонстрация
+  youtube: dQw4w9WgXcQ
+  caption: Демонстрация продукта
+```
+
+YouTube загружается только после нажатия и использует домен `youtube-nocookie`.
+
+## `embed` — `LnEmbed`
+
+Ленивый iframe для карты, календаря или стороннего виджета. В YAML `src`
+обязателен; задавайте `embedTitle`, если заголовок блока не объясняет содержимое.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `src` | URL | обязательно |
+| `embedTitle`, `caption`, `ratio` | `string` | `ratio: 16/9` |
+| `loading` | `lazy \| eager` | `lazy` |
+| `allow`, `sandbox` | строка атрибутов iframe | — |
+| `actions` | `action[]` | — |
+
+```yaml
+- type: embed
+  title: Календарь
+  src: https://calendar.example.com/embed
+  embedTitle: Календарь встреч
+  sandbox: allow-scripts allow-forms
+```
+
+Ограничения `sandbox` и `allow` подбирайте под конкретный сервис: слишком
+строгий `sandbox` может лишить виджет нужных возможностей.
+
+## `banner` — `LnBanner`
+
+Полоса объявления. Это единственный блок, который разрешено поставить перед
+`hero` в YAML-лендинге.
+
+| Проп | Тип | По умолчанию |
+|------|-----|--------------|
+| `text` | строка или доверенный HTML | обязательно |
+| `badge`, `icon`, `link`, `linkText` | строка, icon | — |
+| `dismissible` | `boolean` | `false` |
+| `storageKey` | `string` | `ln-banner` |
+| `placement` | `inline \| top \| bottom` | `inline` |
+| `sticky` | `boolean` | `false` |
+
+```yaml
+- type: banner
+  badge: Новое
+  text: Вышла версия 0.20.
+  link: /ru/doc/blocks
+  linkText: Смотреть изменения
+  dismissible: true
+  storageKey: landing-v0-20
+```
+
+Закрытие запоминается в `localStorage` по `storageKey`; меняйте ключ при новом
+объявлении, чтобы снова показать баннер посетителям.
 
 ## Примитивы
 
-Из них собраны блоки; используйте их напрямую для своих секций — тогда ваша
-вёрстка наследует те же токены.
+Если готового блока недостаточно, соберите секцию из примитивов — она унаследует
+те же токены и адаптивность.
 
 | Компонент | Назначение |
 |-----------|------------|
-| `LnPage` | Корневая обёртка страницы-лендинга |
-| `LnSection` | Подложка + ритм + ширина |
+| `LnPage` | Корневая обёртка компонентного лендинга |
+| `LnSection` | Фон, ритм и ширина |
 | `LnContainer` | Ограничение ширины вне секции |
 | `LnGrid` | Адаптивная сетка (`cols`, `gap`) |
-| `LnHeading` | Надзаголовок + заголовок + лид |
+| `LnHeading` | Надзаголовок, заголовок и лид |
 | `LnButton`, `LnButtonGroup` | Кнопки и ряды действий |
-| `LnCard` | Карточка, кликабельная при наличии `link` |
-| `LnMedia` | Кадр изображения или видео с пропорцией |
+| `LnCard` | Карточка; при `link` становится ссылкой |
+| `LnMedia` | Изображение или видео с пропорцией |
 | `LnIcon` | Iconify, эмодзи или картинка |
-| `LnReveal` | Обёртка для анимации появления |
+| `LnReveal` | Анимация появления |
 
 ```md
 <LnSection bg="soft" width="narrow" padding="lg">
