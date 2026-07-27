@@ -7,6 +7,7 @@ import LnCompare from '../../../src/blocks/LnCompare.vue'
 import LnNewsletter from '../../../src/blocks/LnNewsletter.vue'
 import LnVideo from '../../../src/blocks/LnVideo.vue'
 import LnBanner from '../../../src/blocks/LnBanner.vue'
+import { mockSite } from '../../mocks/vitepress'
 
 describe('LnCode', () => {
   const items = [
@@ -154,6 +155,35 @@ describe('LnNewsletter', () => {
     expect(wrapper.find('form').exists()).toBe(false)
     expect(wrapper.find('.ln-form__status--ok').exists()).toBe(true)
   })
+
+  it('serializes form data as query params for a GET ajax submit', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true })
+    vi.stubGlobal('fetch', fetchMock)
+
+    const wrapper = mount(LnNewsletter, {
+      props: { action: 'https://example.com/f', method: 'get', ajax: true },
+    })
+    await wrapper.find('form').trigger('submit')
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    const [url, init] = fetchMock.mock.calls[0]
+    // GET must not send a body — data goes in the query string.
+    expect(init.method).toBe('GET')
+    expect(init.body).toBeUndefined()
+    expect(url).toContain('https://example.com/f?')
+    expect(url).toContain('email=')
+  })
+
+  it('resolves a local action through the site base', () => {
+    mockSite.value = { ...mockSite.value, base: '/project/' }
+
+    const wrapper = mount(LnNewsletter, {
+      props: { action: '/subscribe', ajax: true },
+    })
+
+    expect(wrapper.find('form').attributes('action')).toBe('/project/subscribe')
+  })
 })
 
 describe('LnVideo', () => {
@@ -176,6 +206,18 @@ describe('LnVideo', () => {
 
     expect(wrapper.find('video').attributes('controls')).toBeDefined()
     expect(wrapper.find('.ln-video__facade').exists()).toBe(false)
+  })
+
+  it('places the figcaption inside the figure element', () => {
+    const wrapper = mount(LnVideo, {
+      props: { youtube: 'dQw4w9WgXcQ', caption: 'Demo video' },
+    })
+
+    const figure = wrapper.find('figure')
+    expect(figure.exists()).toBe(true)
+    const figcaption = figure.find('figcaption')
+    expect(figcaption.exists()).toBe(true)
+    expect(figcaption.text()).toBe('Demo video')
   })
 })
 

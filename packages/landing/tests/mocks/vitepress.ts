@@ -19,5 +19,5 @@ export const mockPage = ref<{ relativePath: string; title: string }>({
 })
 export const mockFrontmatter = ref<Record<string, unknown>>({})
 export const mockIsDark = ref<boolean>(false)
-export const mockSite = ref<{ locales: Record<string, unknown>; cleanUrls: boolean }>({ locales: {}, cleanUrls: true })
+export const mockSite = ref<{ locales: Record<string, unknown>; cleanUrls: boolean; base?: string }>({ locales: {}, cleanUrls: true })
 export const mockHash = ref<string>('')

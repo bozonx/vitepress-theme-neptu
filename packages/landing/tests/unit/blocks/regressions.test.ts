@@ -12,6 +12,8 @@ import LnBento from '../../../src/blocks/LnBento.vue'
 import LnFaq from '../../../src/blocks/LnFaq.vue'
 import LnIcon from '../../../src/primitives/LnIcon.vue'
 import LnCta from '../../../src/blocks/LnCta.vue'
+import LnButton from '../../../src/primitives/LnButton.vue'
+import { resolveUrl, sanitizeUrl } from '../../../src/utils/url.ts'
 import { mockSite } from '../../mocks/vitepress'
 
 describe('site base handling', () => {
@@ -151,5 +153,41 @@ describe('LnCta card variant', () => {
 
     expect(wrapper.find('.ln-section').classes()).toContain('ln-section--bg-soft')
     expect(wrapper.find('.ln-cta__panel').attributes('data-ln-cta-bg')).toBe('brand')
+  })
+})
+
+describe('dangerous URL scheme filtering', () => {
+  it('strips javascript: URLs to undefined in resolveUrl', () => {
+    expect(resolveUrl('javascript:alert(1)')).toBeUndefined()
+  })
+
+  it('strips data: URLs to undefined in resolveUrl', () => {
+    expect(resolveUrl('data:text/html,<script>alert(1)</script>')).toBeUndefined()
+  })
+
+  it('allows safe schemes (https, mailto, tel) through resolveUrl', () => {
+    expect(resolveUrl('https://example.com')).toBe('https://example.com')
+    expect(resolveUrl('mailto:hi@example.com')).toBe('mailto:hi@example.com')
+    expect(resolveUrl('tel:+1234567890')).toBe('tel:+1234567890')
+  })
+
+  it('leaves anchors and local paths untouched', () => {
+    expect(resolveUrl('#section')).toBe('#section')
+    expect(resolveUrl('/page')).toBe('/page')
+  })
+
+  it('renders a javascript: link as undefined href in LnButton', () => {
+    const wrapper = mount(LnButton, {
+      props: { text: 'Bad', link: 'javascript:alert(1)' },
+    })
+
+    // A button element is rendered when href is undefined — never an anchor.
+    expect(wrapper.find('a').exists()).toBe(false)
+    expect(wrapper.find('button').exists()).toBe(true)
+  })
+
+  it('sanitizeUrl passes through safe external URLs', () => {
+    expect(sanitizeUrl('https://example.com')).toBe('https://example.com')
+    expect(sanitizeUrl('mailto:a@b.com')).toBe('mailto:a@b.com')
   })
 })

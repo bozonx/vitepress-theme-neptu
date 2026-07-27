@@ -16,6 +16,7 @@ import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
+import { resolveUrl } from '../utils/url.ts'
 import type { FormField, SectionProps } from './types.ts'
 
 const props = withDefaults(
@@ -68,6 +69,8 @@ const visibleFields = computed(() => props.fields ?? [])
 const generatedId = useId()
 const formId = computed(() => props.id ?? `ln-form-${generatedId}`)
 
+const resolvedAction = computed(() => resolveUrl(props.action))
+
 const onSubmit = async (event: Event): Promise<void> => {
   if (!props.ajax || !props.action) return
 
@@ -75,11 +78,24 @@ const onSubmit = async (event: Event): Promise<void> => {
   const form = event.target as HTMLFormElement
   state.value = 'sending'
   try {
-    const response = await fetch(props.action, {
-      method: props.method,
-      body: new FormData(form),
-      headers: { Accept: 'application/json' },
-    })
+    const url = resolvedAction.value
+    if (!url) throw new Error('No action URL')
+    const formData = new FormData(form)
+    // GET requests must not have a body — the browser rejects it.
+    // Serialize the form data as query params instead.
+    const params = new URLSearchParams()
+    for (const [key, value] of formData) params.append(key, String(value))
+    const response =
+      props.method === 'get'
+        ? await fetch(`${url}?${params}`, {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+          })
+        : await fetch(url, {
+            method: props.method,
+            body: formData,
+            headers: { Accept: 'application/json' },
+          })
     state.value = response.ok ? 'done' : 'error'
     if (response.ok) form.reset()
   } catch {
@@ -116,7 +132,7 @@ const onSubmit = async (event: Event): Promise<void> => {
       <form
         v-else
         class="ln-form__form"
-        :action="props.action"
+        :action="resolvedAction"
         :method="props.method"
         @submit="onSubmit"
       >

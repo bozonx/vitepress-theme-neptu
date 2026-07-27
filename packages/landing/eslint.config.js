@@ -24,5 +24,11 @@ export default defineConfig(
     files: ['src/layouts/SiteHome.vue', 'src/blocks/**/*.vue', 'src/primitives/**/*.vue'],
     rules: { 'vue/no-v-html': 'off' },
   },
+  {
+    // Tests routinely mount multiple components in a single defineComponent
+    // wrapper — the rule is about source files, not test harnesses.
+    files: ['tests/**/*.ts'],
+    rules: { 'vue/one-component-per-file': 'off' },
+  },
   eslintConfigPrettier
 )

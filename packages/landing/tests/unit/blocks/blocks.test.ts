@@ -147,7 +147,6 @@ describe('LnFaq', () => {
   })
 
   it('uses a distinct native details group when no section id is supplied', () => {
-    // eslint-disable-next-line vue/one-component-per-file
     const wrapper = mount(defineComponent({ components: { LnFaq }, template: '<LnFaq exclusive :items="[{ question: \'A\', answer: \'A\' }]" /><LnFaq exclusive :items="[{ question: \'B\', answer: \'B\' }]" />' }))
     const details = wrapper.findAll('details')
     expect(details[0].attributes('name')).not.toBe(details[1].attributes('name'))
@@ -156,7 +155,6 @@ describe('LnFaq', () => {
 
 describe('generated control ids', () => {
   it('does not duplicate ids between anonymous tab, code and form blocks', () => {
-    // eslint-disable-next-line vue/one-component-per-file
     const wrapper = mount(defineComponent({
       components: { LnTabs, LnCode, LnNewsletter },
       template: '<LnTabs :items="[{ title: \'One\' }]" /><LnCode :items="[{ code: \'echo ok\' }, { code: \'echo again\' }]" /><LnNewsletter />',

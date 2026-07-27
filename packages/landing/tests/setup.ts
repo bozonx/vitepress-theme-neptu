@@ -47,4 +47,5 @@ vi.mock('@iconify/vue', () => ({
 
 afterEach(() => {
   document.body.innerHTML = ''
+  mockSite.value = { locales: {}, cleanUrls: true }
 })

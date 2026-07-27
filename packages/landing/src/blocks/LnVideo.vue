@@ -104,45 +104,47 @@ const playerLabel = computed(() => props.caption ?? props.title ?? label('player
       :align="props.align"
     />
 
-    <figure class="ln-video__frame" :style="{ aspectRatio: props.ratio }">
-      <!-- Self-hosted: no facade needed, the browser player is already cheap. -->
-      <video
-        v-if="fileSrc"
-        class="ln-video__player"
-        :src="fileSrc"
-        :poster="posterSrc"
-        :autoplay="props.autoplay"
-        :muted="props.autoplay"
-        :aria-label="playerLabel"
-        controls
-        playsinline
-      />
+    <figure class="ln-video__figure">
+      <div class="ln-video__frame" :style="{ aspectRatio: props.ratio }">
+        <!-- Self-hosted: no facade needed, the browser player is already cheap. -->
+        <video
+          v-if="fileSrc"
+          class="ln-video__player"
+          :src="fileSrc"
+          :poster="posterSrc"
+          :autoplay="props.autoplay"
+          :muted="props.autoplay"
+          :aria-label="playerLabel"
+          controls
+          playsinline
+        />
 
-      <iframe
-        v-else-if="playing && embedSrc"
-        class="ln-video__player"
-        :src="embedSrc"
-        :title="playerLabel"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-      />
+        <iframe
+          v-else-if="playing && embedSrc"
+          class="ln-video__player"
+          :src="embedSrc"
+          :title="playerLabel"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        />
 
-      <button
-        v-else-if="embedSrc"
-        type="button"
-        class="ln-video__facade"
-        :aria-label="`${label('play', 'Play')}: ${playerLabel}`"
-        @click="playing = true"
-      >
-        <img v-if="posterSrc" :src="posterSrc" alt="" loading="lazy" />
-        <span class="ln-video__button" aria-hidden="true">
-          <LnIcon icon="fa6-solid:play" size="1.25rem" />
-        </span>
-      </button>
+        <button
+          v-else-if="embedSrc"
+          type="button"
+          class="ln-video__facade"
+          :aria-label="`${label('play', 'Play')}: ${playerLabel}`"
+          @click="playing = true"
+        >
+          <img v-if="posterSrc" :src="posterSrc" alt="" loading="lazy" />
+          <span class="ln-video__button" aria-hidden="true">
+            <LnIcon icon="fa6-solid:play" size="1.25rem" />
+          </span>
+        </button>
+      </div>
+
+      <figcaption v-if="props.caption" class="ln-video__caption">{{ props.caption }}</figcaption>
     </figure>
-
-    <figcaption v-if="props.caption" class="ln-video__caption">{{ props.caption }}</figcaption>
 
     <LnButtonGroup
       v-if="props.actions?.length"
@@ -155,9 +157,12 @@ const playerLabel = computed(() => props.caption ?? props.title ?? label('player
 </template>
 
 <style scoped>
+.ln-video__figure {
+  margin: 0;
+}
+
 .ln-video__frame {
   position: relative;
-  margin: 0;
   overflow: hidden;
   width: 100%;
   border-radius: var(--ln-radius-lg);
