@@ -11,7 +11,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 //
 // In vitepress-theme-neptu-blog, configuration is layered:
 //   1. Developer Layer (.vitepress/config.ts) — secrets, env vars, dynamic hooks
-//   2. Admin Layer (src/site.yaml & src/<locale>/_site.yaml) — pure presentation, nav, sidebar
+//   2. Admin Layer (src/site.yaml & src/<locale>/_site.yaml) — pure presentation: nav, sidebar,
+//      footer, donate, socialMediaShares, publisher, authors, icons, i18n labels
 // =============================================================================
 
 /** Number of posts rendered per pagination page. */
@@ -104,8 +105,9 @@ export default async () => {
     // -------------------------------------------------------------------------
     // Theme Configuration (`themeConfig`)
     //
-    // Note: Admin-editable presentation (nav, sidebar, footer, social shares, icons,
-    // authors) belongs in `src/site.yaml` or `src/<locale>/_site.yaml`.
+    // Note: Admin-editable presentation (nav, sidebar, footer, donate, socialMediaShares,
+    // publisher, authors, icons, i18n labels) belongs in `src/site.yaml` or
+    // `src/<locale>/_site.yaml`.
     // Keep this block focused on code-bound, environment-driven settings.
     // -------------------------------------------------------------------------
     themeConfig: {
@@ -133,11 +135,12 @@ export default async () => {
       // similarPostsCount: 5,
 
       /**
-       * RSS / Atom feed output settings.
+       * RSS / Atom / JSON feed output settings.
+       * Supported formats: 'rss', 'atom', 'json'. Defaults to all three.
        */
       // feeds: {
       //   maxPosts: 50,
-      //   formats: ['rss', 'atom'],
+      //   formats: ['rss', 'atom', 'json'],
       // },
 
       /**
@@ -170,10 +173,17 @@ export default async () => {
 
       /**
        * SEO metadata & OpenGraph defaults.
+       * Toggle individual SEO features or set maxDescriptionLength.
+       * All flags default to true; set to false to disable.
        */
       // seo: {
-      //   ogImage: '/images/og-default.png',
-      //   twitterCard: 'summary_large_image',
+      //   og: true,              // OpenGraph meta tags
+      //   jsonLd: true,          // JSON-LD structured data
+      //   hreflang: true,        // hreflang alternate language links
+      //   canonical: true,       // canonical link tags
+      //   autoCanonical: true,   // auto-generate canonical from siteUrl + path
+      //   rss: true,            // RSS/Atom feed <link> tags in <head>
+      //   maxDescriptionLength: 300,
       // },
 
       /**
@@ -183,6 +193,82 @@ export default async () => {
       // t: {
       //   popularPosts: 'Popular Articles',
       // },
+
+      // -----------------------------------------------------------------------
+      // UI Toggles & Display Options
+      // -----------------------------------------------------------------------
+
+      /** Show external link icon next to outbound links (default: true). */
+      // externalLinkIcon: true,
+
+      /** Enable theme (light/dark) switcher button in sidebar (default: true). */
+      // themeSwitcher: true,
+
+      /** Enable i18n-aware routing for locale prefixes (default: true). */
+      // i18nRouting: true,
+
+      /** Max number of items in pagination (default: 5). */
+      // paginationMaxItems: 5,
+
+      /** Parallax background offset in px for home page (default: 300). */
+      // homeBgParallaxOffset: 300,
+
+      // -----------------------------------------------------------------------
+      // Sidebar & Branding
+      // -----------------------------------------------------------------------
+
+      /** Blog/site name — used as site title and sidebar title fallback. */
+      // blogTitle: 'My Blog',
+
+      /** Sidebar logo image URL (displayed above sidebar title). */
+      // sidebarLogoSrc: '/logo.png',
+
+      /** Sidebar logo height in px (width auto-scales). */
+      // sidebarLogoHeight: 32,
+
+      /** Sidebar menu button label (default: 'Menu'). */
+      // sidebarMenuLabel: 'Menu',
+
+      /** Color theme switcher menu label (default: 'Theme'). */
+      // colorThemeMenuLabel: 'Theme',
+
+      // -----------------------------------------------------------------------
+      // SEO Extras
+      // -----------------------------------------------------------------------
+
+      /** Twitter @handle for Twitter card meta tags. */
+      // twitterSite: '@yourhandle',
+
+      /** Publisher info for JSON-LD structured data. */
+      // publisher: {
+      //   name: 'My Company',
+      //   url: 'https://example.com',
+      //   logo: 'https://example.com/logo.png',
+      // },
+
+      // -----------------------------------------------------------------------
+      // Landing Page (landing starter only)
+      // -----------------------------------------------------------------------
+
+      /** Hero image URL shown on the landing home page. */
+      // mainHeroImg: '/images/hero.png',
+
+      /** Optional URL of a companion blog, used by the landing starter. */
+      // blogUrl: 'https://example.com/blog',
+
+      // -----------------------------------------------------------------------
+      // Custom Icons (override default Iconify icon names)
+      // -----------------------------------------------------------------------
+
+      // donateIcon: 'fa6-solid:hand-holding-heart',
+      // recentIcon: 'fa6-solid:bolt',
+      // popularIcon: 'fa6-solid:star',
+      // byDateIcon: 'fa6-solid:calendar-days',
+      // authorsIcon: 'mdi:users',
+      // rssIcon: 'bi:rss-fill',
+      // atomIcon: 'vscode-icons:file-type-atom',
+      // youtubeIcon: 'fa6-brands:youtube',
+      // tagsIcon: 'fa6-solid:tag',
     },
   }
 
