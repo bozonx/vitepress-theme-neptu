@@ -204,6 +204,10 @@ themeConfig:
   # Publisher info used in JSON-LD structured data.
   publisher:
     name: My Blog
+    # String values support ${...} template substitution.
+    # Available context: config (BlogUserConfig), theme (merged themeConfig),
+    # t (translations), localeIndex.
+    # Example: url: ${config.siteUrl}
     url: https://example.com
     # Set this only after adding the corresponding public image, for example:
     # logo: /img/logo.png
@@ -437,3 +441,22 @@ themeConfig:
   #   const { theme } = useUiTheme()
   #   console.log(theme.value.myCustomField)        // "hello"
   #   console.log(theme.value.myCustomConfig)       // { featureEnabled: true, ... }
+
+  # --- Template Substitution -------------------------------------------------
+  # Any string value in this file (and in _site.yaml) supports ${...}
+  # substitution applied to the raw YAML text before parsing.
+  #
+  # Context keys available in site.yaml:
+  #   config       — BlogUserConfig from config.ts
+  #   theme        — merged themeConfig (built-ins + config.ts)
+  #   t            — translation keys from merged theme
+  #   localeIndex  — current locale key (e.g. "en", "ru")
+  #
+  # In _site.yaml the `theme` context additionally includes values
+  # from site.yaml, so cross-references between layers work there.
+  #
+  # Dot-notation is supported: ${theme.publisher.url}, ${config.siteUrl}
+  # Example:
+  #   publisher:
+  #     url: ${config.siteUrl}
+  #     logo: ${config.siteUrl}/img/logo.png
