@@ -3,12 +3,19 @@
 # ============================================================================
 # Neptu Blog — Shared Site Configuration (site.yaml)
 #
-# This file is the cross-locale admin layer. It is deep-merged on top of
-# `.vitepress/config.ts` and built-in defaults. Per-locale overrides live in
-# `<srcDir>/<locale>/_site.yaml`.
+# Cross-locale admin-editable layer applied to every locale. Sits between
+# `.vitepress/config.ts` and per-locale `_site.yaml` files in priority order:
 #
-# Top-level keys are VitePress locale-identity fields.
-# Everything theme-related goes under `themeConfig:`.
+#   built-in theme defaults  →  built-in content-locale defaults
+#     →  config.ts  →  src/site.yaml  →  src/<locale>/_site.yaml
+#
+# Use this file for theme settings that are the SAME for every locale but
+# the content team wants to edit without touching `config.ts` (and without
+# duplicating the value in each locale yaml).
+#
+# Shape mirrors `Partial<BlogUserConfig>` — everything theme-related goes
+# under `themeConfig:`. Per-locale identity (`lang`, `title`, `description`)
+# does not belong here; put it in `src/<locale>/_site.yaml` instead.
 # ============================================================================
 
 # --- Top-level VitePress locale identity ------------------------------------
@@ -117,9 +124,9 @@ themeConfig:
 
   # --- Sidebar ---------------------------------------------------------------
   # Logo image URL shown at the top of the sidebar.
-  # sidebarLogoSrc: /logo.svg
+  sidebarLogoSrc: /logo.svg
   # Logo height in pixels.
-  # sidebarLogoHeight: 36
+  sidebarLogoHeight: 36
   # Custom label for the sidebar menu toggle button (mobile).
   # sidebarMenuLabel: Menu
   # Custom label for the color theme switcher menu button.
@@ -205,10 +212,10 @@ themeConfig:
 
   # --- Publisher (JSON-LD / SEO) ---------------------------------------------
   # Publisher info used in JSON-LD structured data.
-  # publisher:
-  #   name: My Blog
-  #   url: https://example.com
-  #   logo: /logo.png
+  publisher:
+    name: My Blog
+    url: https://example.com
+    logo: /logo.png
 
   # --- Authors ---------------------------------------------------------------
   # List of blog authors. Each author must have a unique `id` and a `name`.

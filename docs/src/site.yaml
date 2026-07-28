@@ -1,227 +1,33 @@
 # yaml-language-server: $schema=../../packages/blog/schema/site.schema.json
-# ---------------------------------------------------------------------------
-# Cross-locale shared site config — admin-editable layer applied to every
-# locale. Sits between `.vitepress/config.ts` and per-locale `_site.yaml`
-# files in priority order:
-#
-#   built-in theme defaults  →  built-in content-locale defaults
-#     →  config.ts  →  src/site.yaml  →  src/<locale>/_site.yaml
-#
-# Use this file for theme settings that are the SAME for every locale but
-# the content team wants to edit without touching `config.ts` (and without
-# duplicating the value in each locale yaml).
-#
-# Shape mirrors `Partial<BlogUserConfig>` — everything theme-related goes
-# under `themeConfig:`. Per-locale identity (`lang`, `title`, `description`)
-# does not belong here; put it in `src/<locale>/_site.yaml` instead.
-# ---------------------------------------------------------------------------
 
 themeConfig:
-  # Site identity (cross-locale fallback). Per-locale `_site.yaml` usually
-  # overrides this with the localized name.
-  # blogTitle: 'My Blog'
-
-  # -------------------------------------------------------------------------
-  # Branding & layout
-  # -------------------------------------------------------------------------
   sidebarLogoSrc: '/img/sidebar-logo.jpg'
   sidebarLogoHeight: 158
-  # sidebarMenuLabel: 'Menu'
-  # sidebarTagsCount: 15
-  # similarPostsCount: 5
-  # homeBgParallaxOffset: 300
-  # paginationMaxItems: 5
-  # externalLinkIcon: true
-
-  # -------------------------------------------------------------------------
-  # RSS / Atom / JSON feed generation
-  # -------------------------------------------------------------------------
-  # feeds:
-  #   maxPosts: 50
-  #   formats: ['rss', 'atom', 'json']
-
-  # -------------------------------------------------------------------------
-  # SEO — all features are enabled by default. Override per-page via the
-  # `seo` frontmatter key.
-  # -------------------------------------------------------------------------
-  # seo:
-  #   og: true
-  #   jsonLd: true
-  #   hreflang: true
-  #   canonical: true
-  #   autoCanonical: true
-  #   rss: true
-  #   maxDescriptionLength: 300
-
-  # -------------------------------------------------------------------------
-  # Twitter / X card
-  # -------------------------------------------------------------------------
-  # twitterSite: '@your_handle'         # Site's Twitter/X handle. Added as twitter:site meta tag on every page.
-
-  # -------------------------------------------------------------------------
-  # Icon overrides (Iconify icon strings — browse at icon.icones.es).
-  # -------------------------------------------------------------------------
-  # donateIcon: 'fa6-solid:hand-holding-heart'
-  # recentIcon: 'fa6-solid:bolt'
-  # popularIcon: 'fa6-solid:star'
-  # byDateIcon: 'fa6-solid:calendar-days'
-  # authorsIcon: 'mdi:users'
-  # rssIcon: 'bi:rss-fill'
-  # atomIcon: 'vscode-icons:file-type-atom'
-  # youtubeIcon: 'fa6-brands:youtube'
-  # tagsIcon: 'fa6-solid:tag'
-
-  # -------------------------------------------------------------------------
-  # Post list card display
-  # -------------------------------------------------------------------------
-  # postList:
-  #   showDate: true
-  #   showTags: true
-  #   showThumbnail: true
-  #   showPreview: true
-  #   showAuthor: true
-  #   maxPreviewLength: 300
-
-  # -------------------------------------------------------------------------
-  # Post footer blocks — reorder or omit to customize.
-  # Available: 'author' | 'donate' | 'comments' | 'social-share' |
-  #            'edit-link' | 'tags' | 'similar' | 'popular-link'
-  # -------------------------------------------------------------------------
-  # postFooter:
-  #   - author
-  #   - donate
-  #   - comments
-  #   - social-share
-  #   - edit-link
-  #   - tags
-  #   - similar
-  #   - popular-link
-
-  # -------------------------------------------------------------------------
-  # Edit link (shown in post footer when `repo` is set in config.ts).
-  # -------------------------------------------------------------------------
   editLink:
     pattern: 'https://github.com/your-org/your-blog/edit/main/src/:path'
-  #   text: 'Edit this page on GitHub'
-
-  # -------------------------------------------------------------------------
-  # Donate button — rendered only when nav.donate and/or sidebar.donate is true.
-  # Relative URLs are automatically prefixed with the current locale.
-  # -------------------------------------------------------------------------
   donate:
     url: 'page/donate'
-    # postDonateCall: 'Thank you! ❤️'
-    # icon: 'fa6-solid:hand-holding-heart'
-
-  # -------------------------------------------------------------------------
-  # Publisher info — used in the auto-generated JSON-LD for every page.
-  # -------------------------------------------------------------------------
   publisher:
-    #   name: 'Your Blog'
-    #   url: 'https://myblog.org'
     logo: 'https://myblog.org/logo.png'
-
-  # -------------------------------------------------------------------------
-  # Social sharing buttons in the post footer.
-  # The default share buttons are used when this section is absent.
-  # Uncomment to replace, or set `socialMediaShares: []` to hide the block.
-  # {url} and {title} are replaced with the current page URL and title.
-  # -------------------------------------------------------------------------
-  # socialMediaShares:
-  #   - name: twitter
-  #     icon: 'fa6-brands:x-twitter'
-  #     title: 'Share on X'
-  #     urlTemplate: 'https://twitter.com/intent/tweet?url={url}&text={title}'
-  #   - name: telegram
-  #     icon: 'fa6-brands:telegram'
-  #     title: 'Share on Telegram'
-  #     urlTemplate: 'https://t.me/share/url?url={url}&text={title}'
-  #     # class: 'custom-share-button'
-
-  # Authors live in per-locale `src/<locale>/_authors.yaml` files (merged by `id`).
-  # You can also declare them inline here under `authors:` — both sources are
-  # merged by id, with `_authors.yaml` winning on conflicts.
-
-  # -------------------------------------------------------------------------
-  # Top bar
-  # -------------------------------------------------------------------------
   nav:
     donate: true
-    #   links:
-    #     - text: 'About'
-    #       href: '/about'
-    #       # icon: 'mdi:information-outline'
-    #       # iconClass: 'muted'
-    #       # class: 'custom-nav-link'
-    #       # desktopOnly: true
-    #       # mobileOnly: false
     socialLinks:
       - icon: 'fa6-brands:github-alt'
         link: '${theme.repo}'
-        # url: "https://github.com/"  # alternative to link
-        # class: "custom-social-link"
-        # iconClass: "text-xl"
         desktopOnly: true
-        # mobileOnly: false
-
-  # -------------------------------------------------------------------------
-  # Sidebar
-  # -------------------------------------------------------------------------
   sidebar:
-    popular: true # Show popular posts section. Requires popularPosts.enabled.
-    recent: true # Show recent posts section.
-    archive: true # Show archive (by year) section.
-    authors: true # Show authors section.
-    tags: true # Show tags cloud.
-    donate: true # Show donate button at the bottom.
-    rssFeed: true # Show RSS feed link.
-    atomFeed: true # Show Atom feed link.
-    #   links:
-    #     - text: 'About'
-    #       href: '/about'
-    #       # icon: 'mdi:information-outline'
-    #       # iconClass: 'muted'
-    #       # class: 'custom-sidebar-link'
-    #       # desktopOnly: false
-    #       # mobileOnly: false
-    #   bottomLinks:
-    #     - text: 'Privacy policy'
-    #       href: '/privacy'
-    #       # icon: 'mdi:shield-outline'
-    #       # iconClass: 'muted'
-    #       # class: 'custom-bottom-link'
-    #       # desktopOnly: false
-    #       # mobileOnly: false
+    popular: true
+    recent: true
+    archive: true
+    authors: true
+    tags: true
+    donate: true
+    rssFeed: true
+    atomFeed: true
     socialLinks:
       - icon: 'fa6-brands:github'
         link: '${theme.repo}'
-        # class: 'custom-social-link'
-        # iconClass: 'text-xl'
-        # desktopOnly: false
-        # mobileOnly: false
-
-  # -------------------------------------------------------------------------
-  # Footer
-  # -------------------------------------------------------------------------
   footer:
-    #   message: 'Released under the MIT License.'
-    #   copyright: '© 2026 Your Name'
     links:
-      #     - text: 'Privacy policy'
-      #       href: '/privacy'
-      #       # icon: 'mdi:shield-outline'
-      #       # iconClass: 'muted'
-      #       # class: 'custom-footer-link'
-      #       # desktopOnly: false
-      #       # mobileOnly: false
-      #     - text: 'RSS'
-      #       href: '/feed.xml'
-      #       # icon: 'bi:rss-fill'
-      #       # iconClass: 'muted'
-      #       # class: 'custom-footer-link'
-      #       # desktopOnly: false
-      #       # mobileOnly: false
-      # Cross-locale fallback footer link (each locale overrides `footer` in
-      # its own `_site.yaml`, so this only applies to locales that don't).
       - text: 'About'
         href: 'page/about'

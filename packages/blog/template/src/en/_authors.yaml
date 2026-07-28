@@ -1,14 +1,61 @@
-# Author profiles for this locale. Referenced from a post via `authorId`.
-- id: 'alex'
+# ─────────────────────────────────────────────────────────────────────
+# Author profiles for this locale.
+# Referenced from a post via the `authorId` frontmatter field.
+#
+# This file is an array of Author objects — each entry must have at least
+# an `id`. Entries with the same `id` across layers are shallow-merged
+# (child overrides parent field-by-field).
+#
+# Schema: packages/blog/schema/authors.schema.json
+# ─────────────────────────────────────────────────────────────────────
+
+- # Unique stable identifier. Referenced from post frontmatter (`authorId`)
+  # and used to merge entries across config layers. Required.
+  id: 'alex'
+
+  # Display name shown on the author page and in post metadata.
   name: 'Alex Developer'
+
+  # Short bio / description. Supports inline HTML (rendered via v-html).
   description: 'Software engineer, open-source enthusiast, and writer.'
+
+  # Compact avatar image URL for list previews (e.g. post cards).
+  # Optional; if omitted, list views fall back to `image` or no avatar.
+  # avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
+
+  # Full-size author headshot shown on the author page.
+  # Optional; when present, the image is displayed in a <figure> with lightbox.
   image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
+
+  # Pixel width of `image`. Used for the <img> width attribute.
+  # Optional but recommended for layout stability (CLS prevention).
   imageWidth: 400
+
+  # Pixel height of `image`. Used for the <img> height attribute.
+  # Optional but recommended for layout stability (CLS prevention).
   imageHeight: 400
+
+  # Overrides the auto-generated author page link.
+  # Set this to point to a custom about-page URL instead of the built-in author page.
+  # aboutUrl: 'https://example.com/about-alex'
+
+  # Twitter/X username without the leading '@'.
+  # Used for Twitter Card meta tags and social integrations.
+  # twitterHandle: 'alexdev'
+
+  # Social media / external links displayed below the author description.
+  # Each link renders as an icon button; the icon is resolved by `type`.
+  # Supported types: site, youtube, x, facebook, instagram, tiktok, vk,
+  #   mastodon, diaspora.
+  # Unrecognized types fall back to the generic "site" (globe) icon.
   links:
+      # Link type — controls which icon is displayed.
     - type: 'github'
+      # Full URL to the external resource.
       url: 'https://github.com/'
+      # Accessible label / tooltip text shown on hover.
       title: 'GitHub'
+
     - type: 'website'
       url: 'https://x.com/'
       title: 'X'
