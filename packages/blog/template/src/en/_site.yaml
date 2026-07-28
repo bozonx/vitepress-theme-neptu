@@ -106,7 +106,10 @@ themeConfig:
   # `.vitepress/config.ts` and `src/site.yaml`. Prefer global config for
   # site-wide behavior; override here only when this locale intentionally differs.
   # -------------------------------------------------------------------------
-  # langMenuLabel: 'Interface language'  # tooltip on the language switcher
+  # Locale-specific UI labels (override built-in defaults per locale):
+  # sidebarMenuLabel: 'Menu'           # mobile sidebar toggle / aria-label
+  # colorThemeMenuLabel: 'Theme'       # color theme switcher tooltip
+  # langMenuLabel: 'Interface language'  # language switcher tooltip
   editLink:
     # pattern: "https://github.com/user/repo/edit/main/example/blog/src/:path"
     text: 'Edit this page on GitHub'

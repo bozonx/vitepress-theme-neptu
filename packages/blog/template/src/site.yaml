@@ -109,14 +109,12 @@ themeConfig:
   # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×360) is
   # recommended for retina displays.
   sidebarLogoSrc: /logo.png
-  # Logo height in pixels.
+  # Logo height in pixels — used only as a placeholder so the browser can
+  # reserve vertical space before the image loads (prevents layout shift / CLS).
+  # The image is NOT compressed to this height: CSS `h-auto` keeps the natural
+  # aspect ratio. Set this to the image's height at 320px render width
+  # (e.g. for a 640×360 source, use 180).
   sidebarLogoHeight: 180
-  # Custom label for the sidebar menu toggle button (mobile).
-  # sidebarMenuLabel: Menu
-  # Custom label for the color theme switcher menu button.
-  # colorThemeMenuLabel: Theme
-  # Custom label for the locale/language switcher.
-  # langMenuLabel: Language
 
   # --- Standard VitePress theme labels used by this layout ------------------
   # These are native VitePress Default Theme options, supported here as well.
