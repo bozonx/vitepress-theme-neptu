@@ -19,6 +19,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // =============================================================================
 
 /**
+ * Number of posts per page in archive/tag/author listings.
+ * Exported here because path generators (`*.paths.js`) import it at build time
+ * to compute pagination routes. Also passed to `themeConfig.perPage` below so
+ * the runtime UI stays in sync with the generated pages.
+ */
+export const PER_PAGE = 10
+
+/**
  * Build-time post preview options.
  * `maxPreviewLength` is used by data loaders at build time.
  */
@@ -111,6 +119,9 @@ export default async () => {
     // Keep this block focused on code-bound, environment-driven settings.
     // -------------------------------------------------------------------------
     themeConfig: {
+      /** Pagination — must match the `PER_PAGE` constant above (used by paths.js). */
+      perPage: PER_PAGE,
+
       /** Search provider integration (Pagefind). */
       search: {
         provider: 'pagefind',

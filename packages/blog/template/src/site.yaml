@@ -47,8 +47,9 @@ themeConfig:
   # twitterSite: myblog
 
   # --- Pagination & Listing --------------------------------------------------
-  # Number of posts per page in archive/tag/author listings.
-  # perPage: 10
+  # `perPage` is a build-time parameter — configure it in `.vitepress/config.ts`
+  # (exported as `PER_PAGE`) because path generators (`*.paths.js`) import it
+  # at build time to compute pagination routes.
 
   # Maximum number of tags shown in the sidebar tag cloud.
   # sidebarTagsCount: 15

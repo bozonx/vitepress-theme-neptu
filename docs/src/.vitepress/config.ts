@@ -6,6 +6,11 @@ import type { BlogUserConfig, ThemeConfig } from 'vitepress-theme-neptu-blog'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+/**
+ * Number of posts per page in archive/tag/author listings.
+ * Exported here because path generators (`*.paths.js`) import it at build time.
+ * Also passed to `themeConfig.perPage` below to keep runtime in sync.
+ */
 export const PER_PAGE = 10
 
 export const postList = {
