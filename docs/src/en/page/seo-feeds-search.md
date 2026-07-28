@@ -57,7 +57,7 @@ themeConfig: {
 ```
 
 The index is built from the production output, so search works after a full
-build (`pnpm build && pnpm pagefind`), not in dev. Exclude a single post from
+build (`npm run build`), not in dev. Exclude a single post from
 the index with `searchIncluded: false` in its frontmatter — see
 [Preview & Search](../post/preview-and-search).
 

@@ -2,7 +2,7 @@
 
 ## Run
 
-Use Node.js 22 or later.
+Use Node.js 22 or later. This monorepo uses pnpm workspaces — run from the repo root:
 
 - Install dependencies:
 

@@ -18,8 +18,9 @@ const heroActions = [
 const logos = [1, 2, 3, 4, 5, 6].map((i) => ({ src: `/img/demo/logo-${i}.svg`, alt: `Company ${i}` }))
 
 const codeSamples = [
-  { label: 'pnpm', lang: 'bash', code: 'pnpm add vitepress-theme-neptu-landing' },
   { label: 'npm', lang: 'bash', code: 'npm i vitepress-theme-neptu-landing' },
+  { label: 'pnpm', lang: 'bash', code: 'pnpm add vitepress-theme-neptu-landing' },
+  { label: 'yarn', lang: 'bash', code: 'yarn add vitepress-theme-neptu-landing' },
   {
     label: 'theme/index.ts',
     lang: 'ts',

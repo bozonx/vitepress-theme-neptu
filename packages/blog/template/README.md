@@ -1,20 +1,21 @@
 # Neptu Blog Starter Template
 
-A clean, production-ready starter blog template powered by [VitePress](https://vitepress.dev/) and [`vitepress-theme-neptu-blog`](https://github.com/bozonx/vitepress-theme-neptu-blog).
+A clean, production-ready starter blog template powered by [VitePress](https://vitepress.dev/) and [`vitepress-theme-neptu`](https://github.com/bozonx/vitepress-theme-neptu).
 
 ## 🚀 Quick Start
 
 ### 1. Install dependencies
 
 ```bash
-pnpm install
-# or npm install / yarn install
+npm install
+# or: pnpm install / yarn install
 ```
 
 ### 2. Start local development server
 
 ```bash
-pnpm dev
+npm run dev
+# or: pnpm dev / yarn dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
@@ -22,7 +23,8 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ### 3. Build for production
 
 ```bash
-pnpm build
+npm run build
+# or: pnpm build / yarn build
 ```
 
 This compiles the static site into `src/.vitepress/dist` and indexes content using [Pagefind](https://pagefind.app/).
@@ -30,7 +32,8 @@ This compiles the static site into `src/.vitepress/dist` and indexes content usi
 ### 4. Preview production build
 
 ```bash
-pnpm preview
+npm run preview
+# or: pnpm preview / yarn preview
 ```
 
 ---

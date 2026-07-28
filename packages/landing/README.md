@@ -10,7 +10,7 @@ transformers, SEO pipeline and color palettes. The chrome (nav bar, docs
 sidebar, outline, search) comes from the VitePress default theme.
 
 The runnable example lives in `docs/landing-example` and starts from the repo
-root with `pnpm landing:dev`.
+root with `pnpm landing:dev` (monorepo uses pnpm workspaces).
 
 ## What is in the box
 
@@ -34,7 +34,9 @@ carousel is CSS scroll-snap, the accordion is `<details>`, and the lightbox is
 ## Installation
 
 ```bash
-pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
+npm install vitepress-theme-neptu-landing vitepress-theme-neptu-blog
+# or: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
+# or: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
 ```
 
 `.vitepress/theme/index.ts`:
@@ -134,7 +136,7 @@ blocks:
 
 Content is separated from markup, which makes translations, CMS editing and
 generation straightforward. Built-in blocks are schema-validated by
-`pnpm exec neptu-landing src`; custom types registered with `registerBlockTypes` are
+`npx neptu-landing src`; custom types registered with `registerBlockTypes` are
 intentionally accepted by the schema. Unknown runtime types show a visible
 development placeholder. The validation command rejects unknown types unless
 they are explicitly allowed with `--allow-type=my-block`.

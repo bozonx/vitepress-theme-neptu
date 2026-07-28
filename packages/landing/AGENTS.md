@@ -80,10 +80,10 @@ blocks:
 ---
 ```
 
-Run `pnpm exec neptu-landing src`. Registered custom types must be allowed explicitly:
+Run `npx neptu-landing src`. Registered custom types must be allowed explicitly:
 
 ```sh
-pnpm exec neptu-landing src --allow-type=my-block
+npx neptu-landing src --allow-type=my-block
 ```
 
 ## Component mode and extension

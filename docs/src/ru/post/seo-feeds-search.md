@@ -45,7 +45,7 @@ themeConfig: {
 },
 ```
 
-Индекс строится из production-сборки, поэтому поиск работает после `pnpm build`, а
+Индекс строится из production-сборки, поэтому поиск работает после `npm run build`, а
 не в режиме dev. Исключить пост из индекса можно через `searchIncluded: false` — см.
 [Превью и поиск](preview-and-search).
 

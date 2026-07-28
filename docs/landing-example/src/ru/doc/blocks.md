@@ -400,7 +400,7 @@ Esc закрывает лайтбокс; управление фокусом о�
 
 ```yaml
 - type: code
-  items: [{ label: pnpm, lang: bash, code: pnpm add vitepress-theme-neptu-landing }]
+  items: [{ label: npm, lang: bash, code: npm i vitepress-theme-neptu-landing }]
 ```
 
 ## `tabs` — `LnTabs`

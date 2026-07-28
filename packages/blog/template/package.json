@@ -2,7 +2,7 @@
   "name": "my-neptu-blog",
   "version": "0.1.0",
   "private": true,
-  "description": "Starter blog built with vitepress-theme-neptu-blog",
+  "description": "Starter blog built with vitepress-theme-neptu",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev src",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "vitepress": "^2.0.0-alpha.18",
-    "vitepress-theme-neptu-blog": "^0.20.0",
+    "vitepress-theme-neptu": "^0.20.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {

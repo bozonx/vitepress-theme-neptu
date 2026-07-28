@@ -35,8 +35,8 @@ The fastest way to a working blog is to copy the starter template in
 git clone https://github.com/bozonx/vitepress-theme-neptu-blog
 cp -r vitepress-theme-neptu-blog/packages/blog/template my-blog
 cd my-blog
-pnpm install
-pnpm dev
+npm install      # or: pnpm install / yarn install
+npm run dev      # or: pnpm dev / yarn dev
 ```
 
 Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu-blog/ru/post/getting-started).
@@ -44,7 +44,8 @@ Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-nep
 ### Adding to an existing VitePress project
 
 ```sh
-pnpm add -D vitepress-theme-neptu-blog
+npm install -D vitepress-theme-neptu-blog
+# or: pnpm add -D vitepress-theme-neptu-blog / yarn add -D vitepress-theme-neptu-blog
 ```
 
 ```ts
@@ -77,7 +78,7 @@ Configuration, frontmatter, components, and SEO are documented in full on the
 ## Development
 
 This repo is a pnpm workspace (the blog theme is in `packages/blog`, the docs
-site is in `docs/`):
+site is in `docs/`). The monorepo uses pnpm for workspace management:
 
 ```sh
 pnpm install

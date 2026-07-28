@@ -326,7 +326,7 @@ CMS, API или на другом сайте, синхронизируйте е�
 {
   "scripts": {
     "prebuild": "node scripts/sync-remote-posts.mjs",
-    "build": "vitepress build src && pnpm pagefind"
+    "build": "vitepress build src && pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'"
   }
 }
 ```
@@ -370,7 +370,8 @@ ${markdown}
 Установите конвертер в проект сайта, а не в пакет темы:
 
 ```sh
-pnpm add -D turndown
+npm install -D turndown
+# или: pnpm add -D turndown / yarn add -D turndown
 ```
 
 ### Пользовательские data-лоадеры

@@ -15,7 +15,7 @@ landing example is in [`docs/landing-example`](./docs/landing-example).
 
 ## Development
 
-pnpm workspace. From the repo root:
+This monorepo uses pnpm workspaces. From the repo root:
 
 ```sh
 pnpm install
@@ -27,6 +27,9 @@ pnpm check           # validate every workspace package
 Root scripts run matching scripts in every workspace package; you can also run
 a package's own scripts directly, e.g.
 `pnpm --filter vitepress-theme-neptu-blog test`.
+
+End-user projects (the blog template or a standalone installation) work with
+npm, pnpm or yarn — see the [blog README](./packages/blog/README.md).
 
 ## License
 

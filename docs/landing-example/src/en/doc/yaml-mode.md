@@ -102,7 +102,7 @@ rejects unknown properties, duplicate ids, invalid hero order and unknown
 types. Allow every registered custom type explicitly:
 
 ```sh
-pnpm exec neptu-landing src --allow-type=pricing-calculator
+npx neptu-landing src --allow-type=pricing-calculator
 ```
 
 The CLI accepts one or more Markdown files or directories and defaults to the

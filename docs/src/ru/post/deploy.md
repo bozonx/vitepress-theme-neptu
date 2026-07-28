@@ -18,14 +18,14 @@ Pages, Netlify, Vercel, Cloudflare Pages или обычный веб-серве
 ## Сборка
 
 ```bash
-pnpm build
+npm run build      # или: pnpm build / yarn build
 ```
 
 Команда собирает сайт в `src/.vitepress/dist` и строит поисковый индекс Pagefind.
 Посмотреть результат локально:
 
 ```bash
-pnpm preview
+npm run preview    # или: pnpm preview / yarn preview
 ```
 
 Содержимое `src/.vitepress/dist` — это и есть готовый сайт. Загрузите эту папку на
@@ -52,7 +52,7 @@ pnpm preview
 // package.json
 {
   "scripts": {
-    "build": "vitepress build src --base /my-blog/ && pnpm pagefind"
+    "build": "vitepress build src --base /my-blog/ && pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'"
   }
 }
 ```
@@ -83,13 +83,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+          cache: npm
+      - run: npm ci
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: src/.vitepress/dist
@@ -106,7 +105,7 @@ jobs:
 
 Если вы используете [популярные посты через GA4](seo-feeds-search), добавьте секреты
 `GA_PROPERTY_ID` и `GA_CREDENTIALS_JSON` в **Settings → Secrets and variables →
-Actions** и пробросьте их в шаг `pnpm build` через `env:`.
+Actions** и пробросьте их в шаг `npm run build` через `env:`.
 
 ## Другие хостинги
 
@@ -114,7 +113,7 @@ Actions** и пробросьте их в шаг `pnpm build` через `env:`.
 
 | Параметр | Значение |
 | --- | --- |
-| Команда сборки | `pnpm build` |
+| Команда сборки | `npm run build` |
 | Каталог публикации | `src/.vitepress/dist` |
 | Версия Node.js | 18 или новее |
 

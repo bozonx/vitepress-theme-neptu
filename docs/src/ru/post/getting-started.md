@@ -36,15 +36,15 @@ cd my-blog
 ## Шаг 2. Установите зависимости
 
 ```bash
-pnpm install
+npm install      # или: pnpm install / yarn install
 ```
 
-Подойдёт и `npm install`, и `yarn`. Нужен Node.js версии 18 или новее.
+Нужен Node.js версии 18 или новее.
 
 ## Шаг 3. Запустите локальный сервер
 
 ```bash
-pnpm dev
+npm run dev      # или: pnpm dev / yarn dev
 ```
 
 Откройте `http://localhost:5173` — блог уже работает.
@@ -53,8 +53,8 @@ pnpm dev
 ## Шаг 4. Соберите продакшн-версию
 
 ```bash
-pnpm build
-pnpm preview
+npm run build      # или: pnpm build / yarn build
+npm run preview    # или: pnpm preview / yarn preview
 ```
 
 `build` собирает статический сайт в `src/.vitepress/dist` и строит поисковый

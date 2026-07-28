@@ -9,6 +9,8 @@ locale (`src/en/`) is kept for reference and will be re-synced later.
 
 ## Run from the repo root
 
+This monorepo uses pnpm workspaces:
+
 ```sh
 pnpm install
 pnpm docs:dev       # dev server

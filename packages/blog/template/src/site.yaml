@@ -1,14 +1,99 @@
 # yaml-language-server: $schema=../node_modules/vitepress-theme-neptu-blog/schema/site.schema.json
 
+# ============================================================================
+# Neptu Blog — Shared Site Configuration (site.yaml)
+#
+# This file is the cross-locale admin layer. It is deep-merged on top of
+# `.vitepress/config.ts` and built-in defaults. Per-locale overrides live in
+# `<srcDir>/<locale>/_site.yaml`.
+#
+# Top-level keys are VitePress locale-identity fields.
+# Everything theme-related goes under `themeConfig:`.
+# ============================================================================
+
+# --- Top-level VitePress locale identity ------------------------------------
+# IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
+# lang: en-US
+
+# Site title for this locale. Falls back to themeConfig.blogTitle when omitted.
+# title: My Blog
+
+# Per-page title template. Use ':title' as the placeholder for the page title.
+# titleTemplate: ':title | My Blog'
+
+# Site description used for SEO meta tags and RSS/Atom feeds.
+# description: My personal blog about technology
+
+# Absolute public base URL of the site, including protocol and without a
+# trailing slash. If VitePress `base` is used, include that path too.
+# Used for sitemap, RSS feeds, canonical links, Open Graph, and JSON-LD.
+# siteUrl: https://example.com/blog
+
+# Per-locale only (_site.yaml). Name of another locale whose _site config is
+# inherited as the base; current values override the parent.
+# extends: en
+
+# ============================================================================
+# Theme Configuration
+# ============================================================================
 themeConfig:
+
+  # --- General ---------------------------------------------------------------
+  # Show an external-link icon next to outbound links.
+  externalLinkIcon: true
+
+  # Show a light/dark theme switcher button in the navbar.
+  # themeSwitcher: true
+
+  # When true, routes users to their-language version of a page if available.
+  # i18nRouting: false
+
+  # GitHub repository URL, used by edit-link and social link placeholders
+  # (e.g. '${theme.repo}' resolves to this value).
+  # repo: https://github.com/your-username/my-blog
+
+  # Blog/site name. Used as the site title fallback and sidebar title fallback.
+  # blogTitle: My Blog
+
+  # Optional URL of a companion blog, used by the landing starter theme.
+  # blogUrl: https://example.com
+
+  # Twitter/X @handle (without @) for SEO meta tags.
+  # twitterSite: myblog
+
+  # --- Pagination & Listing --------------------------------------------------
+  # Number of posts per page in archive/tag/author listings.
+  # perPage: 10
+
+  # Maximum number of tags shown in the sidebar tag cloud.
+  # sidebarTagsCount: 15
+
+  # Number of similar posts to display in the post-footer "similar" block.
+  # similarPostsCount: 5
+
+  # Maximum number of pagination items shown at once.
+  # paginationMaxItems: 5
+
+  # Parallax background offset (in px) for the home page hero section.
+  # homeBgParallaxOffset: 300
+
+  # --- Post List Card --------------------------------------------------------
+  # Controls what is shown on each post card in list/archive/tag views.
   postList:
     showDate: true
     showTags: true
     showThumbnail: true
     showPreview: true
     showAuthor: true
+    # Maximum number of characters for the post preview text.
     maxPreviewLength: 300
 
+  # --- Post Footer Blocks ----------------------------------------------------
+  # Ordered list of post-footer blocks. Supported keys:
+  #   'author', 'donate', 'comments', 'social-share', 'edit-link',
+  #   'tags', 'similar', 'popular-link'.
+  # Omit a key to hide the block; reorder to change layout.
+  # Defaults to all blocks in the order shown below.
   postFooter:
     - author
     - donate
@@ -18,35 +103,229 @@ themeConfig:
     - tags
     - similar
 
-  editLink:
-    pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
+  # --- Icons -----------------------------------------------------------------
+  # Override any sidebar/nav icon with an Iconify icon name.
+  # donateIcon: 'fa6-solid:hand-holding-heart'
+  # recentIcon: 'fa6-solid:bolt'
+  # popularIcon: 'fa6-solid:star'
+  # byDateIcon: 'fa6-solid:calendar-days'
+  # authorsIcon: 'mdi:users'
+  # rssIcon: 'bi:rss-fill'
+  # atomIcon: 'vscode-icons:file-type-atom'
+  # youtubeIcon: 'fa6-brands:youtube'
+  # tagsIcon: 'fa6-solid:tag'
 
-  donate:
-    url: 'page/donate'
+  # --- Sidebar ---------------------------------------------------------------
+  # Logo image URL shown at the top of the sidebar.
+  # sidebarLogoSrc: /logo.svg
+  # Logo height in pixels.
+  # sidebarLogoHeight: 36
+  # Custom label for the sidebar menu toggle button (mobile).
+  # sidebarMenuLabel: Menu
+  # Custom label for the color theme switcher menu button.
+  # colorThemeMenuLabel: Theme
 
-  nav:
+  # Sidebar sections and links configuration.
+  sidebar:
+    # Show the "Recent posts" section.
+    recent: true
+    # Show the "Popular posts" section (requires popularPosts.enabled).
+    popular: false
+    # Show the "Archive" (by year) section.
+    archive: true
+    # Show the "Authors" section.
+    authors: true
+    # Show the "Tags" cloud section.
+    tags: true
+    # Show a donate link/button in the sidebar.
     donate: true
+    # Show an RSS feed link.
+    rssFeed: true
+    # Show an Atom feed link.
+    atomFeed: true
+    # Override the sidebar title. Defaults to `blogTitle`. Set `false` to hide.
+    # blogTitle: My Blog
+    # Custom navigation links shown at the top of the sidebar.
+    # links:
+    #   - text: Home
+    #     href: /
+    #     icon: 'fa6-solid:house'
+    # Custom navigation links shown at the bottom of the sidebar.
+    # bottomLinks:
+    #   - text: Privacy
+    #     href: /privacy
+    # Social links shown in the sidebar.
     socialLinks:
       - icon: 'fa6-brands:github'
         link: '${theme.repo}'
+
+  # --- Navigation Bar --------------------------------------------------------
+  nav:
+    # Show a donate button in the navbar.
+    donate: true
+    # Custom navigation links shown in the navbar.
+    # links:
+    #   - text: About
+    #     href: /about
+    #     icon: 'fa6-solid:circle-info'
+    # Social links shown in the navbar.
+    socialLinks:
+      - icon: 'fa6-brands:github'
+        link: '${theme.repo}'
+        # Show this link only on desktop (hidden on mobile).
         desktopOnly: true
 
-  sidebar:
-    popular: false
-    recent: true
-    archive: true
-    authors: true
-    tags: true
-    donate: true
-    rssFeed: true
-    atomFeed: true
-    socialLinks:
-      - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
+  # --- Donate ----------------------------------------------------------------
+  donate:
+    # URL of the donate page (relative to site root).
+    url: 'page/donate'
+    # Override the donate icon (Iconify name).
+    # icon: 'fa6-solid:hand-holding-heart'
+    # Call-to-action text shown after the donate block on post pages.
+    # postDonateCall: 'If you found this post useful, consider supporting.'
 
+  # --- Edit Link -------------------------------------------------------------
+  # VitePress built-in: adds an "Edit this page" link on post pages.
+  editLink:
+    # URL pattern with `:path` placeholder for the file path in the repo.
+    pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
+    # Custom link text (defaults to the i18n translation).
+    # text: Edit this page
+
+  # --- Footer ----------------------------------------------------------------
   footer:
+    # Copyright-free message shown on the left side of the footer.
     message: 'Released under the MIT License.'
+    # Copyright line shown on the right side of the footer.
     copyright: 'Copyright © 2026-present'
+    # Custom links shown in the footer.
     links:
       - text: 'About'
         href: 'page/about'
+
+  # --- Publisher (JSON-LD / SEO) ---------------------------------------------
+  # Publisher info used in JSON-LD structured data.
+  # publisher:
+  #   name: My Blog
+  #   url: https://example.com
+  #   logo: /logo.png
+
+  # --- Authors ---------------------------------------------------------------
+  # List of blog authors. Each author must have a unique `id` and a `name`.
+  # Authors are merged by-id across locale files.
+  # authors:
+  #   - id: jane-doe
+  #     name: Jane Doe
+  #     avatar: /avatars/jane.jpg
+  #     image: /authors/jane-banner.jpg
+  #     imageWidth: 400
+  #     imageHeight: 200
+  #     description: Tech writer and open-source enthusiast.
+  #     aboutUrl: /page/about-jane
+  #     twitterHandle: janedoe
+  #     links:
+  #       - type: twitter
+  #         url: https://twitter.com/janedoe
+  #         title: Jane on Twitter
+
+  # --- Social Media Share Buttons --------------------------------------------
+  # Sharing platforms rendered in the post-footer "social-share" block.
+  # `urlTemplate` must contain `{url}` and optionally `{title}` placeholders.
+  # socialMediaShares:
+  #   - name: twitter
+  #     icon: 'fa6-brands:x-twitter'
+  #     title: Share on X
+  #     urlTemplate: 'https://twitter.com/intent/tweet?url={url}&text={title}'
+  #   - name: facebook
+  #     icon: 'fa6-brands:facebook'
+  #     title: Share on Facebook
+  #     urlTemplate: 'https://www.facebook.com/sharer/sharer.php?u={url}'
+  #   - name: linkedin
+  #     icon: 'fa6-brands:linkedin'
+  #     title: Share on LinkedIn
+  #     urlTemplate: 'https://www.linkedin.com/sharing/share-offsite/?url={url}'
+
+  # --- Feeds (RSS / Atom / JSON) ---------------------------------------------
+  # feeds:
+  #   # Maximum number of posts included in generated feeds.
+  #   maxPosts: 50
+  #   # Feed formats to generate. Supported: 'rss', 'atom', 'json'.
+  #   formats:
+  #     - rss
+  #     - atom
+  #     - json
+
+  # --- SEO -------------------------------------------------------------------
+  # seo:
+  #   # Generate Open Graph meta tags.
+  #   og: true
+  #   # Generate JSON-LD structured data.
+  #   jsonLd: true
+  #   # Generate hreflang alternate-language link tags.
+  #   hreflang: true
+  #   # Generate canonical link tags.
+  #   canonical: true
+  #   # Auto-generate canonical URLs from the page path.
+  #   autoCanonical: true
+  #   # Add RSS/Atom feed <link> tags to <head>.
+  #   rss: true
+  #   # Maximum description length for meta tags (truncated if exceeded).
+  #   maxDescriptionLength: 300
+
+  # --- Popular Posts ---------------------------------------------------------
+  # popularPosts:
+  #   enabled: false
+  #   # Sort metric: 'pageviews', 'uniquePageviews', or 'avgTimeOnPage'.
+  #   sortBy: pageviews
+  #   dataSource:
+  #     provider: ga4
+  #     # GA4 property ID (required when enabled).
+  #     propertyId: '123456789'
+  #     # Path to GA4 service-account credentials JSON file.
+  #     credentialsJson: /path/to/credentials.json
+  #     # Look-back window in days for analytics data.
+  #     dataPeriodDays: 30
+  #     # Maximum number of rows to fetch from analytics.
+  #     dataLimit: 1000
+
+  # --- Search ----------------------------------------------------------------
+  # Local search powered by Pagefind.
+  # search:
+  #   provider: local
+  #   options:
+  #     # CSS marker that wraps searchable content (default: 'vp-doc').
+  #     bodyMarker: 'vp-doc'
+  #     # Override Pagefind UI translations.
+  #     translations:
+  #       button:
+  #         buttonText: Search
+  #         buttonAriaLabel: Search
+  #     # Per-locale Pagefind UI translations.
+  #     locales:
+  #       ru:
+  #         translations:
+  #           button:
+  #             buttonText: Поиск
+
+  # --- Landing-only (home page) ----------------------------------------------
+  # Hero image URL shown on the home page (landing starter only).
+  # mainHeroImg: /hero.jpg
+
+  # --- i18n Translations -----------------------------------------------------
+  # Partial translation overrides. Deep-merged over built-in locale defaults.
+  # Only supply the keys you want to override.
+  # t:
+  #   popularPosts: Popular
+  #   similarPosts: Similar posts
+  #   shareSocialMedia: Share
+  #   links:
+  #     aboutBlog: About blog
+  #     donate: Donate
+  #     recent: Recent
+  #     popular: Popular
+  #     byDate: By date
+  #     links: Links
+  #     authors: Authors
+  #     aboutUs: About us
+  #     rssFeed: RSS feed
+  #     atomFeed: Atom feed

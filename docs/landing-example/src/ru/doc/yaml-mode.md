@@ -102,5 +102,5 @@ registerBlockTypes({ pricing: CustomPricing }, { override: true })
 разрешайте явно:
 
 ```sh
-pnpm validate:blocks -- --allow-type=pricing-calculator
+npx neptu-landing src --allow-type=pricing-calculator
 ```

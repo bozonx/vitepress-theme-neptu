@@ -38,12 +38,15 @@ blocks:
     title: Одна команда — и тема на месте
     text: 'Дальше только контент: layout, blocks и ваши тексты.'
     items:
-      - label: pnpm
-        lang: bash
-        code: pnpm add vitepress-theme-neptu-landing
       - label: npm
         lang: bash
         code: npm i vitepress-theme-neptu-landing
+      - label: pnpm
+        lang: bash
+        code: pnpm add vitepress-theme-neptu-landing
+      - label: yarn
+        lang: bash
+        code: yarn add vitepress-theme-neptu-landing
       - label: theme/index.ts
         lang: ts
         code: |
