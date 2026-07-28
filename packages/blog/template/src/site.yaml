@@ -50,6 +50,8 @@ themeConfig:
   # `perPage` is a build-time parameter — configure it in `.vitepress/config.ts`
   # (exported as `PER_PAGE`) because path generators (`*.paths.js`) import it
   # at build time to compute pagination routes.
+  # Setting `perPage` here or in `_site.yaml` is rejected by the schema and
+  # a warning is emitted at build time to prevent desynchronisation.
 
   # Maximum number of tags shown in the sidebar tag cloud.
   # sidebarTagsCount: 15
@@ -104,7 +106,7 @@ themeConfig:
   # --- Sidebar ---------------------------------------------------------------
   # Logo image URL shown at the top of the sidebar.
   # Use a raster image (PNG/WebP) with a fixed resolution; the <img> element
-  # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×72) is
+  # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×360) is
   # recommended for retina displays.
   sidebarLogoSrc: /logo.png
   # Logo height in pixels.

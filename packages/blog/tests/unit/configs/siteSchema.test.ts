@@ -19,7 +19,6 @@ describe('SiteYamlSchema', () => {
       extends: 'en',
       themeConfig: {
         blogTitle: 'Blog',
-        perPage: 10,
         authors: [{ id: 'a', name: 'A' }],
       },
     })
@@ -41,9 +40,9 @@ describe('SiteYamlSchema', () => {
     expect(SiteYamlSchema.safeParse({ base: '/blog/' }).success).toBe(false)
   })
 
-  it('rejects perPage with wrong type', () => {
+  it('rejects perPage in YAML (build-time only field)', () => {
     const result = SiteYamlSchema.safeParse({
-      themeConfig: { perPage: '10' },
+      themeConfig: { perPage: 10 },
     })
     expect(result.success).toBe(false)
   })
@@ -89,7 +88,7 @@ describe('validateAndWarn', () => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     validateAndWarn(
       SiteYamlSchema,
-      { lang: 42, themeConfig: { perPage: 'x' } },
+      { lang: 42, themeConfig: { perPage: 10 } },
       '/src/en/_site.yaml'
     )
     expect(spy).toHaveBeenCalledTimes(2)
