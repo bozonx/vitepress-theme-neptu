@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import DefaultTheme from 'vitepress/theme-without-fonts'
+import LandingTheme from 'vitepress-theme-neptu-landing'
 import { LnThemePicker } from 'vitepress-theme-neptu-landing/components'
 
-const { Layout: DefaultLayout } = DefaultTheme
+const { Layout: LandingLayout } = LandingTheme
 </script>
 
 <template>
-  <DefaultLayout>
+  <LandingLayout>
     <!--
       Both theme axes live in the nav bar: color (`data-theme`) and
       style (`data-ln-style`). Language and dark mode come from the
@@ -18,7 +18,7 @@ const { Layout: DefaultLayout } = DefaultTheme
         <LnThemePicker axis="style" />
       </div>
     </template>
-  </DefaultLayout>
+  </LandingLayout>
 </template>
 
 <style scoped>

@@ -1,4 +1,4 @@
-import shared from 'vitepress-theme-neptu-blog/configs/sharedLocalesBase/ru'
+import shared from 'vitepress-theme-neptu/configs/sharedLocalesBase/ru'
 
 export default {
   label: 'Русский',

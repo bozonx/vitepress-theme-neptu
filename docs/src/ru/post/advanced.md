@@ -54,7 +54,7 @@ export default async () => defineBlogConfig({
 ## Пользовательский макет поста
 
 Каждый строительный блок поста экспортируется из
-`vitepress-theme-neptu-blog/components`, поэтому вы можете собрать собственный макет поста,
+`vitepress-theme-neptu/components`, поэтому вы можете собрать собственный макет поста,
 сохранив общий интерфейс темы:
 
 ```vue
@@ -62,7 +62,7 @@ export default async () => defineBlogConfig({
 import {
   PostDate, PostAuthor, PostImage, PostTags,
   PostSocialShare, PostSimilarList, PostFooter,
-} from 'vitepress-theme-neptu-blog/components'
+} from 'vitepress-theme-neptu/components'
 </script>
 
 <template>
@@ -117,7 +117,7 @@ contentLayout: CustomPost
 ```vue
 <!-- .vitepress/theme/Layout.vue -->
 <script setup>
-import Theme from 'vitepress-theme-neptu-blog'
+import Theme from 'vitepress-theme-neptu'
 const { Layout } = Theme
 </script>
 
@@ -247,11 +247,11 @@ export default async () => defineBlogConfig({
 ## Composables
 
 Используйте логику темы в своих Vue-компонентах, импортируя из
-`vitepress-theme-neptu-blog/composables`:
+`vitepress-theme-neptu/composables`:
 
 ```vue
 <script setup lang="ts">
-import { useLightbox, useBreakpoint } from 'vitepress-theme-neptu-blog/composables'
+import { useLightbox, useBreakpoint } from 'vitepress-theme-neptu/composables'
 
 const { isOpen, open, close } = useLightbox()
 const { isMobile } = useBreakpoint()
@@ -272,7 +272,7 @@ const { isMobile } = useBreakpoint()
 
 ## Утилиты разметки
 
-Импортируйте вспомогательные функции из `vitepress-theme-neptu-blog/utils`:
+Импортируйте вспомогательные функции из `vitepress-theme-neptu/utils`:
 
 ```ts
 import {
@@ -280,7 +280,7 @@ import {
   isUtilPage,
   isPost,
   resolveArticlePreview,
-} from 'vitepress-theme-neptu-blog/utils'
+} from 'vitepress-theme-neptu/utils'
 
 function myHelper(frontmatter) {
   if (isPage(frontmatter)) {
@@ -381,7 +381,7 @@ npm install -D turndown
 
 ```ts
 // src/ru/loadPosts.data.ts
-import { loadPostsDataFromFiles } from 'vitepress-theme-neptu-blog/list-helpers/node'
+import { loadPostsDataFromFiles } from 'vitepress-theme-neptu/list-helpers/node'
 
 export default {
   watch: ['./post/*.md'],
@@ -437,7 +437,7 @@ defineProps<{ src: string; title?: string }>()
 
 ```ts
 // .vitepress/theme/index.ts
-import Theme from 'vitepress-theme-neptu-blog'
+import Theme from 'vitepress-theme-neptu'
 import ExternalEmbed from './ExternalEmbed.vue'
 
 export default {

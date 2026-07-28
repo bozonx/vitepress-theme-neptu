@@ -1,15 +1,15 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { defineBlogConfig } from 'vitepress-theme-neptu-blog/configs'
-import type { BlogUserConfig, ThemeConfig } from 'vitepress-theme-neptu-blog'
+import { defineBlogConfig } from 'vitepress-theme-neptu/configs'
+import type { BlogUserConfig, ThemeConfig } from 'vitepress-theme-neptu'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // =============================================================================
 // Developer-level Constants & Dynamic Integrations
 //
-// In vitepress-theme-neptu-blog, configuration is layered:
+// In vitepress-theme-neptu, configuration is layered:
 //   1. Developer Layer (.vitepress/config.ts) — secrets, env vars, dynamic hooks
 //   2. Shared admin layer (src/site.yaml) — safe settings shared by all locales
 //   3. Locale admin layer (src/<locale>/_site.yaml) — identity, translations and local overrides

@@ -12,7 +12,7 @@ const L = `/${localeIndex.value}`
 const heroActions = [
   { text: 'Get started', link: `${L}/doc`, variant: 'brand' },
   { text: 'All blocks', link: `${L}/doc/blocks`, variant: 'alt' },
-  { text: 'GitHub', link: 'https://github.com/bozonx/vitepress-theme-neptu-blog', variant: 'ghost', icon: 'fa6-brands:github' },
+  { text: 'GitHub', link: 'https://github.com/bozonx/vitepress-theme-neptu', variant: 'ghost', icon: 'fa6-brands:github' },
 ]
 
 const logos = [1, 2, 3, 4, 5, 6].map((i) => ({ src: `/img/demo/logo-${i}.svg`, alt: `Company ${i}` }))

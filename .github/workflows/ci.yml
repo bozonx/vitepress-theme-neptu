@@ -46,7 +46,7 @@ jobs:
 
       - name: Install Playwright browsers
         run: |
-          npx -w vitepress-theme-neptu-blog playwright install --with-deps chromium
+          npx -w vitepress-theme-neptu playwright install --with-deps chromium
           npx -w vitepress-theme-neptu-landing playwright install --with-deps chromium
 
       - name: Run E2E tests

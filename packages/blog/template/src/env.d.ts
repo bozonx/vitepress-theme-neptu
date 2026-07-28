@@ -7,19 +7,19 @@ declare module '*.vue' {
 }
 
 declare module '*/loadPosts.data' {
-  import type { PostLite } from 'vitepress-theme-neptu-blog'
+  import type { PostLite } from 'vitepress-theme-neptu'
 
   export const data: { posts: PostLite[] }
 }
 
 declare module '*/loadPosts.data.js' {
-  import type { PostLite } from 'vitepress-theme-neptu-blog'
+  import type { PostLite } from 'vitepress-theme-neptu'
 
   export const data: { posts: PostLite[] }
 }
 
 declare module '*/loadPosts.data.ts' {
-  import type { PostLite } from 'vitepress-theme-neptu-blog'
+  import type { PostLite } from 'vitepress-theme-neptu'
 
   export const data: { posts: PostLite[] }
 }

@@ -10,7 +10,7 @@ export {
   defineLocaleConfig,
   defineAuthorsList,
   type SiteYamlConfig,
-} from 'vitepress-theme-neptu-blog/configs'
-export { createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu-blog/utils/node'
-export { resolveTranslationsByFilePath } from 'vitepress-theme-neptu-blog/utils'
-export { getImageDimensions } from 'vitepress-theme-neptu-blog/utils/node'
+} from 'vitepress-theme-neptu/configs'
+export { createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu/utils/node'
+export { resolveTranslationsByFilePath } from 'vitepress-theme-neptu/utils'
+export { getImageDimensions } from 'vitepress-theme-neptu/utils/node'

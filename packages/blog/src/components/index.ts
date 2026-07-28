@@ -1,8 +1,8 @@
 // Public components barrel.
-// Import from `vitepress-theme-neptu-blog/components` in your blog markdown
+// Import from `vitepress-theme-neptu/components` in your blog markdown
 // or theme overrides:
 //
-//   import { HomeHero, TagPostsList } from 'vitepress-theme-neptu-blog/components'
+//   import { HomeHero, TagPostsList } from 'vitepress-theme-neptu/components'
 
 export { default as HomeHero } from './utility/HomeHero.vue'
 export { default as HomeTags } from './utility/HomeTags.vue'

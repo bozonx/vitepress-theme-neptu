@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import 'vitepress-theme-neptu-blog/tailwind-source.css';
+@import 'vitepress-theme-neptu/tailwind-source.css';
 
 .home-layout {
   background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2560&auto=format&fit=crop');

@@ -1,8 +1,8 @@
-import 'vitepress-theme-neptu-blog/blue-theme.css'
-import 'vitepress-theme-neptu-blog/pagefind-fix.css'
+import 'vitepress-theme-neptu/blue-theme.css'
+import 'vitepress-theme-neptu/pagefind-fix.css'
 
 import Layout from './Layout.vue'
-import Theme from 'vitepress-theme-neptu-blog'
+import Theme from 'vitepress-theme-neptu'
 import './styles.css'
 
 export default {

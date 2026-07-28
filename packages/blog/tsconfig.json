@@ -9,8 +9,8 @@
     "allowJs": true,
     "checkJs": false,
     "paths": {
-      "vitepress-theme-neptu-blog": ["./src/index.ts"],
-      "vitepress-theme-neptu-blog/*": ["./src/*"]
+      "vitepress-theme-neptu": ["./src/index.ts"],
+      "vitepress-theme-neptu/*": ["./src/*"]
     }
   },
   "include": [

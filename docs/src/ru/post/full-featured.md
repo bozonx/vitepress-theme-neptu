@@ -14,7 +14,7 @@ tags:
   - frontmatter
   - guide
 descrAsPreview: true
-commentLink: https://github.com/bozonx/vitepress-theme-neptu-blog/discussions
+commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
 podcastLang: RU

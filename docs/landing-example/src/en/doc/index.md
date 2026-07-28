@@ -18,9 +18,9 @@ block library, a two-axis theme system and a declarative page format.
 ## Install
 
 ```bash
-npm install vitepress-theme-neptu-landing vitepress-theme-neptu-blog
-# or: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
-# or: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
+npm install vitepress-theme-neptu-landing vitepress-theme-neptu
+# or: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu
+# or: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu
 ```
 
 `.vitepress/theme/index.ts`:

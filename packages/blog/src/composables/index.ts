@@ -1,8 +1,8 @@
 // Public composables barrel.
-// Import from `vitepress-theme-neptu-blog/composables` in your custom components
+// Import from `vitepress-theme-neptu/composables` in your custom components
 // or theme overrides:
 //
-//   import { useLightbox, useBreakpoint } from 'vitepress-theme-neptu-blog/composables'
+//   import { useLightbox, useBreakpoint } from 'vitepress-theme-neptu/composables'
 
 export * from './useBreakpoint.ts'
 export * from './useContentLangs.ts'

@@ -1,4 +1,4 @@
-import { makeMonthsParams } from 'vitepress-theme-neptu-blog/list-helpers/node';
+import { makeMonthsParams } from 'vitepress-theme-neptu/list-helpers/node';
 import getAllPosts from "../../../getAllPosts.js";
 
 export default {

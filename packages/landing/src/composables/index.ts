@@ -11,4 +11,4 @@ export {
   useColorTheme,
   COLOR_THEMES,
   type ColorThemeOption,
-} from 'vitepress-theme-neptu-blog/composables'
+} from 'vitepress-theme-neptu/composables'

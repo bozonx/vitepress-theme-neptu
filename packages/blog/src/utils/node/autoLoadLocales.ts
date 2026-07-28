@@ -12,7 +12,7 @@ export interface AutoLoadLocalesOptions<TConfig> {
     localeIndex: string,
     config: TConfig
   ) => Promise<LocaleEntry>
-  /** Prefix for console warnings, e.g. `[vitepress-theme-neptu-blog]`. */
+  /** Prefix for console warnings, e.g. `[vitepress-theme-neptu]`. */
   logPrefix: string
 }
 

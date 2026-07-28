@@ -154,7 +154,7 @@ themeConfig:
 
 ```vue
 <script setup lang="ts">
-import { useUiTheme } from 'vitepress-theme-neptu-blog/composables'
+import { useUiTheme } from 'vitepress-theme-neptu/composables'
 
 const { theme } = useUiTheme()
 console.log(theme.value.myCustomField)   // "hello"

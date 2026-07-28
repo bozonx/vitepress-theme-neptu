@@ -8,7 +8,7 @@ head:
 ---
 
 <script setup>
-import { PopularPostsList } from 'vitepress-theme-neptu-blog/components'
+import { PopularPostsList } from 'vitepress-theme-neptu/components'
 import { useData } from 'vitepress'
 
 const { params } = useData()

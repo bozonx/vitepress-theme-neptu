@@ -31,7 +31,7 @@ export async function importConfigModule<T = unknown>(
     return mod as T
   } catch (error) {
     console.warn(
-      `[vitepress-theme-neptu-blog] Failed to load TS config ${absPath}:`,
+      `[vitepress-theme-neptu] Failed to load TS config ${absPath}:`,
       (error as Error)?.message
     )
     return undefined

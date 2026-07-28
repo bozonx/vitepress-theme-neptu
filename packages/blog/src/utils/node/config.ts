@@ -120,7 +120,7 @@ async function loadLocaleYamlChain(
   if (visited.has(localeIndex)) {
     const chain = [...visited, localeIndex].join(' -> ')
     console.warn(
-      `[vitepress-theme-neptu-blog] Cycle detected in _site.yaml \`extends\` chain: ${chain}`
+      `[vitepress-theme-neptu] Cycle detected in _site.yaml \`extends\` chain: ${chain}`
     )
     return { site: {}, authors: [], socialShares: [] }
   }
@@ -363,6 +363,6 @@ export async function autoLoadLocales(
   return autoLoadLocalesFactory({
     config,
     loadLocale: loadBlogLocale,
-    logPrefix: '[vitepress-theme-neptu-blog]',
+    logPrefix: '[vitepress-theme-neptu]',
   })
 }

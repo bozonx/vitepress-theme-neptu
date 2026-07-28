@@ -6,7 +6,7 @@ import {
   HomeHero,
   HomeTags,
   UtilPageContent,
-} from 'vitepress-theme-neptu-blog/components'
+} from 'vitepress-theme-neptu/components'
 import { useData } from 'vitepress'
 
 const { theme } = useData()

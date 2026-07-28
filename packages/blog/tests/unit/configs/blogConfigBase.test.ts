@@ -224,13 +224,13 @@ describe('mergeBlogConfig', () => {
 
   it('vite ssr config marks theme as noExternal', () => {
     const result = mergeBlogConfig({})
-    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-blog')
+    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu')
   })
 
   it('vite merges with provided config', () => {
     const result = mergeBlogConfig({ vite: { build: { target: 'esnext' } } })
     expect(result.vite.build.target).toBe('esnext')
-    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-blog')
+    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu')
   })
 
   it('resolves title from config', () => {

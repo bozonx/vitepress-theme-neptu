@@ -12,7 +12,7 @@ descrAsPreview: true
 jsonLd: |
   "@type": TechArticle
   proficiencyLevel: Beginner
-  dependencies: VitePress, vitepress-theme-neptu-blog
+  dependencies: VitePress, vitepress-theme-neptu
 translations:
   en: /en/post/json-ld
 ---
@@ -40,7 +40,7 @@ translations:
 jsonLd: |
   "@type": TechArticle
   proficiencyLevel: Beginner
-  dependencies: VitePress, vitepress-theme-neptu-blog
+  dependencies: VitePress, vitepress-theme-neptu
 ```
 
 ## Вложенные объекты и массивы

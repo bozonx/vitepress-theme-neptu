@@ -1,4 +1,4 @@
-import { makeYearPostsParams } from 'vitepress-theme-neptu-blog/list-helpers/node';
+import { makeYearPostsParams } from 'vitepress-theme-neptu/list-helpers/node';
 import { PER_PAGE } from "../../../.vitepress/config.js";
 import getAllPosts from "../../getAllPosts.js";
 

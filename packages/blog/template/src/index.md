@@ -9,7 +9,7 @@ head:
 <script setup>
 import { useData, inBrowser } from 'vitepress'
 import { onMounted } from 'vue'
-import { resolveNavigatorLang } from 'vitepress-theme-neptu-blog/utils/client'
+import { resolveNavigatorLang } from 'vitepress-theme-neptu/utils/client'
 
 const { site } = useData()
 const defaultLocale = 'en'

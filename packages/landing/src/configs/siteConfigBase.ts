@@ -2,9 +2,9 @@ import type {
   UserConfig,
   SiteConfig,
 } from 'vitepress'
-import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu-blog/utils'
-import { deepMerge } from 'vitepress-theme-neptu-blog/utils'
-import { resolveBaseLocaleKey } from 'vitepress-theme-neptu-blog/utils'
+import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu/utils'
+import { deepMerge } from 'vitepress-theme-neptu/utils'
+import { resolveBaseLocaleKey } from 'vitepress-theme-neptu/utils'
 import {
   asExtendedPageData,
   asExtendedSiteConfig,
@@ -17,8 +17,8 @@ import {
   resolveSitemapSiteUrl,
   warnMissingRequired,
   resolveExternalLinkIcon,
-} from 'vitepress-theme-neptu-blog/utils'
-import { createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu-blog/utils/node'
+} from 'vitepress-theme-neptu/utils'
+import { createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu/utils/node'
 import {
   addCanonicalLink,
   addDescriptionMetaTag,
@@ -32,8 +32,8 @@ import {
   resolveDescription,
   transformPageMeta,
   transformTitle,
-} from 'vitepress-theme-neptu-blog/transformers'
-import type { SitemapItem } from 'vitepress-theme-neptu-blog/transformers'
+} from 'vitepress-theme-neptu/transformers'
+import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { autoLoadSiteLocales } from './loadSiteLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
@@ -136,7 +136,7 @@ export function mergeLandingConfig(
       ],
       ssr: {
         noExternal: [
-          'vitepress-theme-neptu-blog',
+          'vitepress-theme-neptu',
           'vitepress-theme-neptu-landing',
         ],
         ...config.vite?.ssr,

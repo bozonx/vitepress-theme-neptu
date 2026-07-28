@@ -30,14 +30,14 @@ CSS в `.vitepress/theme/index.ts`. В данном демо сейчас исп
 
 ```ts
 // .vitepress/theme/index.ts
-import 'vitepress-theme-neptu-blog/blue-theme.css'
-// import 'vitepress-theme-neptu-blog/green-theme.css'
-// import 'vitepress-theme-neptu-blog/purple-theme.css'
-// import 'vitepress-theme-neptu-blog/amber-theme.css'
-// import 'vitepress-theme-neptu-blog/teal-theme.css'
-// import 'vitepress-theme-neptu-blog/rose-theme.css'
-// import 'vitepress-theme-neptu-blog/magenta-theme.css'
-// import 'vitepress-theme-neptu-blog/monochrome-theme.css'
+import 'vitepress-theme-neptu/blue-theme.css'
+// import 'vitepress-theme-neptu/green-theme.css'
+// import 'vitepress-theme-neptu/purple-theme.css'
+// import 'vitepress-theme-neptu/amber-theme.css'
+// import 'vitepress-theme-neptu/teal-theme.css'
+// import 'vitepress-theme-neptu/rose-theme.css'
+// import 'vitepress-theme-neptu/magenta-theme.css'
+// import 'vitepress-theme-neptu/monochrome-theme.css'
 ```
 
 ## Динамическое переключение темы (`themeSwitcher`)

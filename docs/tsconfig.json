@@ -6,8 +6,8 @@
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "paths": {
-      "vitepress-theme-neptu-blog": ["../packages/blog/src/index.ts"],
-      "vitepress-theme-neptu-blog/*": ["../packages/blog/src/*"]
+      "vitepress-theme-neptu": ["../packages/blog/src/index.ts"],
+      "vitepress-theme-neptu/*": ["../packages/blog/src/*"]
     }
   },
   "include": [

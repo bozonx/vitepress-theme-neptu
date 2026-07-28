@@ -14,7 +14,7 @@ export default async () => {
     base,
     siteUrl:
       process.env.SITE_URL ||
-      'https://bozonx.github.io/vitepress-theme-neptu-blog/landing',
+      'https://bozonx.github.io/vitepress-theme-neptu/landing',
 
     head: [
       ['meta', { name: 'format-detection', content: 'telephone=no' }],
@@ -23,7 +23,7 @@ export default async () => {
     ],
 
     themeConfig: {
-      repo: 'https://github.com/bozonx/vitepress-theme-neptu-blog',
+      repo: 'https://github.com/bozonx/vitepress-theme-neptu',
       logo: '/img/logo.svg',
       mainHeroImg: '/img/home-logo.svg',
 

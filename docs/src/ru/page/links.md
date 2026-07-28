@@ -11,6 +11,6 @@ translations:
 Это обычный документ с `layout: page`, на который ведут **нижние ссылки
 сайдбара** (`sidebar.bottomLinks` в `_site.yaml`).
 
-- [GitHub](https://github.com/bozonx/vitepress-theme-neptu-blog)
+- [GitHub](https://github.com/bozonx/vitepress-theme-neptu)
 - [YouTube](https://youtube.com/)
 - [Telegram](https://t.me/)

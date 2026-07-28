@@ -100,9 +100,9 @@ const ThemeConfigSchema = z
     externalLinkIcon: z.boolean().optional(),
     themeSwitcher: z.boolean().optional(),
     i18nRouting: z.boolean().optional(),
-    perPage: z.never().optional(
-      'perPage is a build-time parameter — set it in .vitepress/config.ts, not in YAML'
-    ),
+    perPage: z.never({
+      error: 'perPage is a build-time parameter — set it in .vitepress/config.ts, not in YAML',
+    }).optional(),
     similarPostsCount: z.number().optional(),
     sidebarTagsCount: z.number().optional(),
     paginationMaxItems: z.number().optional(),
@@ -227,7 +227,7 @@ export function validateAndWarn<T>(
   for (const issue of result.error.issues) {
     const pathStr = issue.path.length ? issue.path.join('.') : '(root)'
     console.warn(
-      `[vitepress-theme-neptu-blog] ${fileLabel} — ${pathStr}: ${issue.message}`
+      `[vitepress-theme-neptu] ${fileLabel} — ${pathStr}: ${issue.message}`
     )
   }
   return value

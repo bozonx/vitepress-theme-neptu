@@ -9,7 +9,7 @@ head:
 
 <script setup>
 import { useData } from 'vitepress'
-import { MonthsOfYear } from 'vitepress-theme-neptu-blog/components'
+import { MonthsOfYear } from 'vitepress-theme-neptu/components'
 
 const { params } = useData()
 </script>

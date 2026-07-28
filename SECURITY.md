@@ -16,7 +16,7 @@ You will receive a response within 48 hours. Please do not disclose the issue pu
 
 This policy covers the following npm packages published from this repository:
 
-- `vitepress-theme-neptu-blog`
+- `vitepress-theme-neptu`
 - `vitepress-theme-neptu-landing`
 
 ## Supported Versions

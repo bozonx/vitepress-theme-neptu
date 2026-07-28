@@ -11,7 +11,7 @@ import type {
   ExtendedPageData,
   ExtendedSiteConfig,
   PagefindUITranslations,
-} from 'vitepress-theme-neptu-blog'
+} from 'vitepress-theme-neptu'
 
 export type {
   Author,

@@ -85,7 +85,7 @@ layout: home
 heroImg: /img/sidebar-logo.jpg
 ---
 <script setup>
-import { HomeHero, HomeTags, HomePopularPosts } from 'vitepress-theme-neptu-blog/components'
+import { HomeHero, HomeTags, HomePopularPosts } from 'vitepress-theme-neptu/components'
 import { useData } from 'vitepress'
 const { theme, frontmatter } = useData()
 </script>

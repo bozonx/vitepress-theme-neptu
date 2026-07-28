@@ -6,7 +6,7 @@ Monorepo for the **Neptu** family of VitePress themes and their tooling.
 
 | Package | Path | Description |
 | --- | --- | --- |
-| [`vitepress-theme-neptu-blog`](./packages/blog) | `packages/blog` | SEO-first blog theme — post lists, tags, authors, archive, feeds, search, i18n. |
+| [`vitepress-theme-neptu`](./packages/blog) | `packages/blog` | SEO-first blog theme — post lists, tags, authors, archive, feeds, search, i18n. |
 | [`vitepress-theme-neptu-landing`](./packages/landing) | `packages/landing` | Landing/site theme built on top of the blog theme. |
 | Docs & demos | `docs` | Published blog docs and the runnable landing example. |
 
@@ -26,7 +26,7 @@ npm run check           # validate every workspace package
 
 Root scripts run matching scripts in every workspace package; you can also run
 a package's own scripts directly, e.g.
-`npm run test -w vitepress-theme-neptu-blog`.
+`npm run test -w vitepress-theme-neptu`.
 
 End-user projects (the blog template or a standalone installation) work with
 npm, pnpm or yarn — see the [blog README](./packages/blog/README.md).

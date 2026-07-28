@@ -1,19 +1,19 @@
 import {
   parseLocaleSite,
   parseSharedSite,
-} from 'vitepress-theme-neptu-blog/utils/node'
+} from 'vitepress-theme-neptu/utils/node'
 import {
   standardTemplate,
   isExternalUrl,
   deepMerge,
   resolveBaseLocaleKey,
   extractThemeConfig,
-} from 'vitepress-theme-neptu-blog/utils'
+} from 'vitepress-theme-neptu/utils'
 import {
   resolveEditLinkPattern,
   autoLoadLocalesFactory,
   type LocaleEntry,
-} from 'vitepress-theme-neptu-blog/utils/node'
+} from 'vitepress-theme-neptu/utils/node'
 import type {
   LandingUserConfig,
   ThemeConfig,

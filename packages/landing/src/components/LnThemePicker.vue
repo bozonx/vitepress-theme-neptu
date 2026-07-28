@@ -12,7 +12,7 @@
  */
 import { computed, ref } from 'vue'
 import { useData } from 'vitepress'
-import { useColorTheme, useOnClickOutside } from 'vitepress-theme-neptu-blog/composables'
+import { useColorTheme, useOnClickOutside } from 'vitepress-theme-neptu/composables'
 import { useLandingStyle } from '../composables/useLandingStyle.ts'
 import LnIcon from '../primitives/LnIcon.vue'
 

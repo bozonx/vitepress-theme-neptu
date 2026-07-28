@@ -28,7 +28,7 @@ export interface SiteYamlConfig {
  *
  * ```ts
  * // src/en/_site.ts
- * import { defineLocaleConfig } from 'vitepress-theme-neptu-blog/configs'
+ * import { defineLocaleConfig } from 'vitepress-theme-neptu/configs'
  * export default defineLocaleConfig({ lang: 'en-US', themeConfig: { ... } })
  * ```
  */
@@ -41,7 +41,7 @@ export function defineLocaleConfig(config: SiteYamlConfig): SiteYamlConfig {
  *
  * ```ts
  * // src/site.ts
- * import { defineSiteConfig } from 'vitepress-theme-neptu-blog/configs'
+ * import { defineSiteConfig } from 'vitepress-theme-neptu/configs'
  * export default defineSiteConfig({ themeConfig: { publisher: { ... } } })
  * ```
  */
@@ -54,7 +54,7 @@ export function defineSiteConfig(config: SiteYamlConfig): SiteYamlConfig {
  *
  * ```ts
  * // src/en/_authors.ts
- * import { defineAuthorsList } from 'vitepress-theme-neptu-blog/configs'
+ * import { defineAuthorsList } from 'vitepress-theme-neptu/configs'
  * export default defineAuthorsList([{ id: 'ivan', name: 'Ivan K', ... }])
  * ```
  */

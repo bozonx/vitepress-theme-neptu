@@ -28,8 +28,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'vitepress-theme-neptu-blog': path.resolve(__dirname, './src/index.ts'),
-      'vitepress-theme-neptu-blog/*': path.resolve(__dirname, './src/*'),
+      'vitepress-theme-neptu': path.resolve(__dirname, './src/index.ts'),
+      'vitepress-theme-neptu/*': path.resolve(__dirname, './src/*'),
     },
   },
 })

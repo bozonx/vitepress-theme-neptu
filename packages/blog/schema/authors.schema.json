@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://unpkg.com/vitepress-theme-neptu-blog/schema/authors.schema.json",
+  "$id": "https://unpkg.com/vitepress-theme-neptu/schema/authors.schema.json",
   "title": "Neptu blog authors list (_authors.yaml)",
   "description": "Array of Author objects. Posts reference an author via the `authorId` frontmatter field.",
   "type": "array",

@@ -11,7 +11,7 @@ vi.mock('../../../src/configs/loadSiteLocale.ts', () => ({
   loadSiteLocale: vi.fn(async () => ({ lang: 'en-US' })),
 }))
 
-vi.mock('vitepress-theme-neptu-blog/transformers', () => ({
+vi.mock('vitepress-theme-neptu/transformers', () => ({
   collectImageDimensions: vi.fn(),
   transformTitle: vi.fn(),
   transformPageMeta: vi.fn(),
@@ -26,7 +26,7 @@ vi.mock('vitepress-theme-neptu-blog/transformers', () => ({
   mdImage: vi.fn(),
 }))
 
-vi.mock('vitepress-theme-neptu-blog/utils', () => ({
+vi.mock('vitepress-theme-neptu/utils', () => ({
   omitUndefined: (obj: Record<string, unknown>) =>
     Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)),
   hasNoIndex: vi.fn(() => false),
@@ -100,7 +100,7 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
   ),
 }))
 
-vi.mock('vitepress-theme-neptu-blog/utils/node', () => ({
+vi.mock('vitepress-theme-neptu/utils/node', () => ({
   createSiteYamlHotReloadPlugin: vi.fn(() => ({ name: 'hot-reload' })),
   getImageDimensions: vi.fn(),
 }))
@@ -210,7 +210,7 @@ describe('mergeLandingConfig', () => {
 
   it('vite ssr config marks theme as noExternal', () => {
     const result = mergeLandingConfig({})
-    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-blog')
+    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu')
     expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-landing')
   })
 
@@ -219,7 +219,7 @@ describe('mergeLandingConfig', () => {
       vite: { build: { target: 'esnext' } },
     })
     expect(result.vite.build.target).toBe('esnext')
-    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu-blog')
+    expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu')
   })
 
   it('includes lastUpdated at top level', () => {

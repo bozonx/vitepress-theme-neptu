@@ -12,7 +12,7 @@ descrAsPreview: true
 jsonLd: |
   "@type": TechArticle
   proficiencyLevel: Beginner
-  dependencies: VitePress, vitepress-theme-neptu-blog
+  dependencies: VitePress, vitepress-theme-neptu
 translations:
   ru: /ru/post/json-ld
 ---
@@ -41,7 +41,7 @@ post upgrades its type to `TechArticle` and adds two fields:
 jsonLd: |
   "@type": TechArticle
   proficiencyLevel: Beginner
-  dependencies: VitePress, vitepress-theme-neptu-blog
+  dependencies: VitePress, vitepress-theme-neptu
 ```
 
 ## Nested objects and arrays

@@ -24,7 +24,7 @@ descrAsPreview: true
 # previewText: "Or set explicit preview text — use one or the other, not both."
 
 # --- Footer links --------------------------------------------------------
-commentLink: https://github.com/bozonx/vitepress-theme-neptu-blog/discussions
+commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 
 # --- Video button (top of post) ------------------------------------------
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ

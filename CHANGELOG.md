@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI workflow: `concurrency` group changed to per-branch (`${{ github.workflow }}-${{ github.ref }}`) with `cancel-in-progress: true`.
 - CI workflow: removed hardcoded `version: 10` from `pnpm/action-setup` — now uses `packageManager` field.
 - `docs/tsconfig.json` now extends `tsconfig.base.json` instead of duplicating compiler options.
-- `packages/landing`: `vitepress-theme-neptu-blog` dependency changed from `workspace:*` to `workspace:^`.
+- `packages/landing`: `vitepress-theme-neptu` dependency changed from `workspace:*` to `workspace:^`.
 - `packages/blog/template/package.json`: blog dependency bumped from `^0.19.0` to `^0.20.0`.
 
 ### Fixed

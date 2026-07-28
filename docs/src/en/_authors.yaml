@@ -7,10 +7,10 @@
   imageWidth: 400 # real dimensions of the image — set both to avoid layout shift
   imageHeight: 400
   twitterHandle: 'neptu_blog' # used for the twitter:creator meta tag on this author's posts
-  aboutUrl: 'https://github.com/bozonx/vitepress-theme-neptu-blog'
+  aboutUrl: 'https://github.com/bozonx/vitepress-theme-neptu'
   links:
     - type: 'github'
-      url: 'https://github.com/bozonx/vitepress-theme-neptu-blog'
+      url: 'https://github.com/bozonx/vitepress-theme-neptu'
       title: 'GitHub'
     - type: 'website'
       url: 'https://myblog.org'

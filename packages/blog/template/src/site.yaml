@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../node_modules/vitepress-theme-neptu-blog/schema/site.schema.json
+# yaml-language-server: $schema=../node_modules/vitepress-theme-neptu/schema/site.schema.json
 
 # ============================================================================
 # Neptu Blog — Shared Site Configuration (site.yaml)

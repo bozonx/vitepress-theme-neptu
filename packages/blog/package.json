@@ -1,21 +1,21 @@
 {
-  "name": "vitepress-theme-neptu-blog",
+  "name": "vitepress-theme-neptu",
   "version": "0.20.0",
   "description": "Feature-rich SEO-first VitePress/Tailwind blog theme — built-in archive, tags, authors and post lists, JSON-LD, Open Graph, hreflang, canonical, RSS/Atom/JSON feeds, Pagefind search, GA4 popular posts, i18n.",
   "types": "src/types.d.ts",
   "type": "module",
   "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/bozonx/vitepress-theme-neptu-blog#readme",
+  "homepage": "https://github.com/bozonx/vitepress-theme-neptu#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bozonx/vitepress-theme-neptu-blog.git"
+    "url": "git+https://github.com/bozonx/vitepress-theme-neptu.git"
   },
   "engines": {
     "node": ">=22.0.0"
   },
   "bugs": {
-    "url": "https://github.com/bozonx/vitepress-theme-neptu-blog/issues"
+    "url": "https://github.com/bozonx/vitepress-theme-neptu/issues"
   },
   "files": [
     "src",

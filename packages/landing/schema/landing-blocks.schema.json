@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/bozonx/vitepress-theme-neptu-blog/packages/landing/schema/landing-blocks.schema.json",
+  "$id": "https://github.com/bozonx/vitepress-theme-neptu/packages/landing/schema/landing-blocks.schema.json",
   "title": "Neptu Landing — page frontmatter",
   "description": "Frontmatter of a landing page rendered by <LandingRenderer />.",
   "type": "object",

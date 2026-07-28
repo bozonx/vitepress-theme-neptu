@@ -1,5 +1,5 @@
 // Public layouts barrel.
-// Import from `vitepress-theme-neptu-blog/layouts`.
+// Import from `vitepress-theme-neptu/layouts`.
 
 export { default as Layout } from './NeptuLayout.vue'
 export { default as DefaultLayout } from './DefaultLayout.vue'

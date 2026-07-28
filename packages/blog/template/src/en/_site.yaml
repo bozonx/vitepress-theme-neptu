@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../../node_modules/vitepress-theme-neptu-blog/schema/site.schema.json
+# yaml-language-server: $schema=../../../node_modules/vitepress-theme-neptu/schema/site.schema.json
 # ---------------------------------------------------------------------------
 # Level 3 of 3 — per-locale admin configuration. Overrides Level 1
 # (`.vitepress/config.ts`) and Level 2 (`src/site.yaml`) for this locale only.

@@ -4,7 +4,7 @@ layout: util
 ---
 
 <script setup>
-import { AuthorDetails } from 'vitepress-theme-neptu-blog/components'
+import { AuthorDetails } from 'vitepress-theme-neptu/components'
 import { useData } from 'vitepress'
 
 const { params } = useData()

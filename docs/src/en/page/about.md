@@ -9,7 +9,7 @@ translations:
 # About This Demo
 
 This is the example site that ships with
-[vitepress-theme-neptu-blog](https://github.com/bozonx/vitepress-theme-neptu-blog).
+[vitepress-theme-neptu](https://github.com/bozonx/vitepress-theme-neptu).
 It plays three roles at once:
 
 1. **Visual documentation** — every post and page demonstrates a real feature,
@@ -31,8 +31,8 @@ It plays three roles at once:
 ## Run it locally
 
 ```bash
-git clone https://github.com/bozonx/vitepress-theme-neptu-blog
-cd vitepress-theme-neptu-blog
+git clone https://github.com/bozonx/vitepress-theme-neptu
+cd vitepress-theme-neptu
 npm install
 npm run docs:dev
 ```

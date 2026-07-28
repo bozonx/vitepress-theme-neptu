@@ -13,7 +13,7 @@ tags:
   - frontmatter
   - guide
 descrAsPreview: true
-commentLink: https://github.com/bozonx/vitepress-theme-neptu-blog/discussions
+commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 translations:
   en: /en/post/post-footer-and-sharing
 ---

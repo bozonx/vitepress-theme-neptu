@@ -10,15 +10,15 @@ Thank you for your interest in contributing! This document covers the basics.
 ## Getting Started
 
 ```bash
-git clone https://github.com/bozonx/vitepress-theme-neptu-blog.git
-cd vitepress-theme-neptu-blog
+git clone https://github.com/bozonx/vitepress-theme-neptu.git
+cd vitepress-theme-neptu
 npm install
 ```
 
 ## Monorepo Layout
 
 ```
-packages/blog     — blog theme (vitepress-theme-neptu-blog)
+packages/blog     — blog theme (vitepress-theme-neptu)
 packages/landing  — landing theme (vitepress-theme-neptu-landing)
 docs              — documentation site
 docs/landing-example — landing example site
@@ -68,5 +68,5 @@ dependency, update the version in each `package.json` that uses it and run
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/bozonx/vitepress-theme-neptu-blog/issues).
+Use [GitHub Issues](https://github.com/bozonx/vitepress-theme-neptu/issues).
 For security vulnerabilities, see [SECURITY.md](./SECURITY.md).

@@ -1,9 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const previewCmd = 'npm run preview -w vitepress-theme-neptu-blog-docs -- --port 4173 --host 127.0.0.1'
+const previewCmd = 'npm run preview -w vitepress-theme-neptu-docs -- --port 4173 --host 127.0.0.1'
 // On CI the docs are already built by a separate workflow step;
 // locally we build first to ensure the preview server has content to serve.
-const webServerCommand = `npm run build -w vitepress-theme-neptu-blog-docs && ${previewCmd}`
+const webServerCommand = `npm run build -w vitepress-theme-neptu-docs && ${previewCmd}`
 
 export default defineConfig({
   testDir: '.',
@@ -14,7 +14,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: [['list'], ['html', { outputFolder: './playwright-report', open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:4173/vitepress-theme-neptu-blog/',
+    baseURL: 'http://127.0.0.1:4173/vitepress-theme-neptu/',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -25,7 +25,7 @@ export default defineConfig({
   ],
   webServer: {
     command: webServerCommand,
-    url: 'http://127.0.0.1:4173/vitepress-theme-neptu-blog/',
+    url: 'http://127.0.0.1:4173/vitepress-theme-neptu/',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },

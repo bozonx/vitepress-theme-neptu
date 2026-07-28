@@ -134,7 +134,7 @@ export async function parseLocaleAuthors(
   }
   if (value && typeof value === 'object' && Object.keys(value).length > 0) {
     console.warn(
-      `[vitepress-theme-neptu-blog] ${fileLabel}: expected an array of authors; ignoring.`
+      `[vitepress-theme-neptu] ${fileLabel}: expected an array of authors; ignoring.`
     )
   }
   return []

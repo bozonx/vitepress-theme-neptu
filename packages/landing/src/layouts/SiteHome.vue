@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData } from 'vitepress'
-import { resolveBodyMarker } from 'vitepress-theme-neptu-blog/utils'
-import type { ThemeConfig, PostFrontmatter } from 'vitepress-theme-neptu-blog'
+import { resolveBodyMarker } from 'vitepress-theme-neptu/utils'
+import type { ThemeConfig, PostFrontmatter } from 'vitepress-theme-neptu'
 
 type HeroAction = {
   link: string

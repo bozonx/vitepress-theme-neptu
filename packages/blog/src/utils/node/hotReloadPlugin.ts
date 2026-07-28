@@ -50,7 +50,7 @@ export function createSiteYamlHotReloadPlugin(srcDir: string): Plugin {
   }
 
   return {
-    name: 'vitepress-theme-neptu-blog:site-yaml-hot-reload',
+    name: 'vitepress-theme-neptu:site-yaml-hot-reload',
     configureServer(server: ViteDevServer) {
       // Register explicit watch patterns so additions are also caught on
       // platforms where the default recursive watch skips new files.

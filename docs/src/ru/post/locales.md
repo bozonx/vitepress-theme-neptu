@@ -155,7 +155,7 @@ themeConfig:
 
 **`lightbox`** — подписи лайтбокса изображений: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel`.
 
-Полные значения по умолчанию для каждой локали — в `src/configs/blogLocalesBase/<locale>.ts` и `src/configs/sharedLocalesBase/<locale>.ts`. В стартовом шаблоне [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml) все ключи закомментированы как справочник.
+Полные значения по умолчанию для каждой локали — в `src/configs/blogLocalesBase/<locale>.ts` и `src/configs/sharedLocalesBase/<locale>.ts`. В стартовом шаблоне [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml) все ключи закомментированы как справочник.
 
 ## Переключение языка
 

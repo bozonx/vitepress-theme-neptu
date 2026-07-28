@@ -25,7 +25,7 @@ What actually happened.
 
 ## Environment
 
-- Package: (e.g. vitepress-theme-neptu-blog)
+- Package: (e.g. vitepress-theme-neptu)
 - Version: (e.g. 0.20.0)
 - VitePress version:
 - Node.js version:

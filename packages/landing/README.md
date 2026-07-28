@@ -5,7 +5,7 @@ blocks on the home route, documentation next to it, and standalone pages
 wherever you need them. The documentation part is optional — without it you get
 a plain landing site.
 
-It is a companion to `vitepress-theme-neptu-blog` and reuses its utilities,
+It is a companion to `vitepress-theme-neptu` and reuses its utilities,
 transformers, SEO pipeline and color palettes. The chrome (nav bar, docs
 sidebar, outline, search) comes from the VitePress default theme.
 
@@ -34,9 +34,9 @@ carousel is CSS scroll-snap, the accordion is `<details>`, and the lightbox is
 ## Installation
 
 ```bash
-npm install vitepress-theme-neptu-landing vitepress-theme-neptu-blog
-# or: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
-# or: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
+npm install vitepress-theme-neptu-landing vitepress-theme-neptu
+# or: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu
+# or: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu
 ```
 
 `.vitepress/theme/index.ts`:

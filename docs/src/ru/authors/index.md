@@ -8,7 +8,7 @@ head:
 ---
 
 <script setup>
-import { NeptuAuthors } from 'vitepress-theme-neptu-blog/components'
+import { NeptuAuthors } from 'vitepress-theme-neptu/components'
 </script>
 
 <NeptuAuthors />

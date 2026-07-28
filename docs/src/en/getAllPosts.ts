@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { loadPostsData } from 'vitepress-theme-neptu-blog/list-helpers/node'
+import { loadPostsData } from 'vitepress-theme-neptu/list-helpers/node'
 
 import { popularPosts, postList } from '../.vitepress/config.js'
 

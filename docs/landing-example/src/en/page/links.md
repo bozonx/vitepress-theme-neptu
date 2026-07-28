@@ -9,5 +9,5 @@ next: false
 
 # Social media
 
-- [GitHub](https://github.com/bozonx/vitepress-theme-neptu-blog)
+- [GitHub](https://github.com/bozonx/vitepress-theme-neptu)
 - [Telegram](https://t.me/)

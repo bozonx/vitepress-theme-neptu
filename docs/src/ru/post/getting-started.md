@@ -25,8 +25,8 @@ descrAsPreview: true
 установка: скопируйте её содержимое в новую папку своего блога.
 
 ```bash
-git clone https://github.com/bozonx/vitepress-theme-neptu-blog
-cp -r vitepress-theme-neptu-blog/packages/blog/template my-blog
+git clone https://github.com/bozonx/vitepress-theme-neptu
+cp -r vitepress-theme-neptu/packages/blog/template my-blog
 cd my-blog
 ```
 

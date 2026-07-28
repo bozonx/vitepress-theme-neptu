@@ -56,7 +56,7 @@ export default async () => defineBlogConfig({
 
 This file has one effective root key, `themeConfig`. It is the complete, self-documented reference for safe settings shared by every locale. Use it for the default value; do not duplicate a value in each locale.
 
-`themeConfig` groups are: general (`repo`, `blogTitle`, switches), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml).
+`themeConfig` groups are: general (`repo`, `blogTitle`, switches), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml).
 
 Set `repo` here when it is shared by every locale. It automatically supplies
 the `editLink.pattern` for GitHub, GitLab, Bitbucket, Gitea, Forgejo and
@@ -135,7 +135,7 @@ The theme ships with built-in UI translations for 21 locales (`en`, `ru`, `es`, 
 
 **`lightbox`** — image lightbox labels: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel`.
 
-The full default values for each locale are in `src/configs/blogLocalesBase/<locale>.ts` and `src/configs/sharedLocalesBase/<locale>.ts`. The starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml) has every key commented as a reference.
+The full default values for each locale are in `src/configs/blogLocalesBase/<locale>.ts` and `src/configs/sharedLocalesBase/<locale>.ts`. The starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml) has every key commented as a reference.
 
 ## Level 3 — `src/<locale>/_site.yaml`
 
@@ -185,7 +185,7 @@ themeConfig:
     - social-share
 ```
 
-This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate`, `editLink`, `socialMediaShares`, `seo`, `feeds`, etc. See the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml) for the full parameter reference — do not duplicate parameters that are already defined there.
+This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate`, `editLink`, `socialMediaShares`, `seo`, `feeds`, etc. See the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml) for the full parameter reference — do not duplicate parameters that are already defined there.
 
 ## Authors — `_authors.yaml`
 
@@ -222,7 +222,7 @@ Access in a Vue component:
 
 ```vue
 <script setup lang="ts">
-import { useUiTheme } from 'vitepress-theme-neptu-blog/composables'
+import { useUiTheme } from 'vitepress-theme-neptu/composables'
 
 const { theme } = useUiTheme()
 console.log(theme.value.myCustomField)   // "hello"

@@ -18,7 +18,7 @@ translations:
 ---
 
 Welcome! This whole site is a **living manual** for
-[vitepress-theme-neptu-blog](https://github.com/bozonx/vitepress-theme-neptu-blog).
+[vitepress-theme-neptu](https://github.com/bozonx/vitepress-theme-neptu).
 Instead of separate docs, each post and page here *is* the documentation: you see
 a feature rendered, then the exact frontmatter or config that produced it.
 

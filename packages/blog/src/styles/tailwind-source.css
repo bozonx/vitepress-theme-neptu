@@ -7,7 +7,7 @@
  * Usage (in your project's app.css):
  *
  *   @import "tailwindcss";
- *   @import "vitepress-theme-neptu-blog/tailwind-source.css";
+ *   @import "vitepress-theme-neptu/tailwind-source.css";
  *
  *   @theme {
  *     --color-brand-1: oklch(0.5 0.2 240);
@@ -15,7 +15,7 @@
  *   }
  *
  * Then import only your own compiled CSS in your theme/index.js. Do NOT also
- * import "vitepress-theme-neptu-blog/tw-styles.css" — that is the prebuilt
+ * import "vitepress-theme-neptu/tw-styles.css" — that is the prebuilt
  * fallback for users without Tailwind in their project.
  *
  * `@source` paths are resolved relative to this file. From src/styles/ this

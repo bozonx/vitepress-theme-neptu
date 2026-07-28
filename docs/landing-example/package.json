@@ -8,15 +8,15 @@
   "license": "MIT",
   "scripts": {
     "dev": "vitepress dev src",
-    "build": "VITEPRESS_BASE=/vitepress-theme-neptu-blog/landing/ vitepress build src --base /vitepress-theme-neptu-blog/landing/",
-    "preview": "vitepress preview src --base /vitepress-theme-neptu-blog/landing/",
+    "build": "VITEPRESS_BASE=/vitepress-theme-neptu/landing/ vitepress build src --base /vitepress-theme-neptu/landing/",
+    "preview": "vitepress preview src --base /vitepress-theme-neptu/landing/",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "vitepress": "2.0.0-alpha.18",
-    "vitepress-theme-neptu-blog": "*",
+    "vitepress-theme-neptu": "*",
     "vitepress-theme-neptu-landing": "*",
     "vue": "^3.5.40"
   },

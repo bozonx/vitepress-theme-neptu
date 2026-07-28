@@ -4,8 +4,8 @@ import {
   autoLoadSiteLocales,
 } from '../../../src/configs/loadSiteLocale.ts'
 
-vi.mock('vitepress-theme-neptu-blog/utils/node', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('vitepress-theme-neptu-blog/utils/node')>()
+vi.mock('vitepress-theme-neptu/utils/node', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('vitepress-theme-neptu/utils/node')>()
   const mockedHasLocaleSite = vi.fn((_srcDir: string, _name: string) => true)
   return {
     ...actual,
@@ -59,7 +59,7 @@ vi.mock('vitepress-theme-neptu-blog/utils/node', async (importOriginal) => {
   }
 })
 
-vi.mock('vitepress-theme-neptu-blog/utils', () => ({
+vi.mock('vitepress-theme-neptu/utils', () => ({
   standardTemplate: vi.fn(
     (tmpl: string | null | undefined, data: Record<string, unknown> | null) => {
       if (!tmpl) return ''
@@ -164,7 +164,7 @@ vi.mock('node:fs', async (importOriginal) => {
 })
 
 const { parseLocaleSite, parseSharedSite, hasLocaleSite } = await import(
-  'vitepress-theme-neptu-blog/utils/node'
+  'vitepress-theme-neptu/utils/node'
 )
 
 // existsSync mock is accessed via mockedExistsSync directly

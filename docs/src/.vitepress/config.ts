@@ -1,8 +1,8 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { defineBlogConfig } from 'vitepress-theme-neptu-blog/configs'
-import type { BlogUserConfig, ThemeConfig } from 'vitepress-theme-neptu-blog'
+import { defineBlogConfig } from 'vitepress-theme-neptu/configs'
+import type { BlogUserConfig, ThemeConfig } from 'vitepress-theme-neptu'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -36,7 +36,7 @@ export default async () => {
   const config: BlogUserConfig = {
     srcDir: path.resolve(__dirname, '../'),
     base,
-    siteUrl: process.env.SITE_URL || 'https://bozonx.github.io/vitepress-theme-neptu-blog',
+    siteUrl: process.env.SITE_URL || 'https://bozonx.github.io/vitepress-theme-neptu',
 
     head: [
       ['meta', { name: 'format-detection', content: 'telephone=no' }],

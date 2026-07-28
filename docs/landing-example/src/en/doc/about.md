@@ -25,4 +25,4 @@ and color palettes.
 Start with the [Introduction](./), then browse the
 [block reference](./blocks) and the [theming guide](./theming).
 Source and issues: the
-[GitHub repository](https://github.com/bozonx/vitepress-theme-neptu-blog).
+[GitHub repository](https://github.com/bozonx/vitepress-theme-neptu).

@@ -24,4 +24,4 @@ prev: false
 Прочитайте [Введение](./), затем [справочник по блокам](./blocks) и
 [руководство по темизации](./theming).
 Исходники и задачи — в
-[репозитории на GitHub](https://github.com/bozonx/vitepress-theme-neptu-blog).
+[репозитории на GitHub](https://github.com/bozonx/vitepress-theme-neptu).

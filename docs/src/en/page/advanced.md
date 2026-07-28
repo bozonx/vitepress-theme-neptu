@@ -51,7 +51,7 @@ hooks fire first.
 ## Custom post layout
 
 Every post building block is exported from
-`vitepress-theme-neptu-blog/components`, so you can assemble your own post layout
+`vitepress-theme-neptu/components`, so you can assemble your own post layout
 while keeping the theme chrome:
 
 ```vue
@@ -59,7 +59,7 @@ while keeping the theme chrome:
 import {
   PostDate, PostAuthor, PostImage, PostTags,
   PostSocialShare, PostSimilarList, PostFooter,
-} from 'vitepress-theme-neptu-blog/components'
+} from 'vitepress-theme-neptu/components'
 </script>
 
 <template>

@@ -11,10 +11,10 @@
  */
 
 /* Layer 1 — default palette (shared with the blog theme). */
-@import 'vitepress-theme-neptu-blog/blue-theme.css';
+@import 'vitepress-theme-neptu/blue-theme.css';
 
 /* Layer 1b — `[data-theme="..."]` color presets. */
-@import 'vitepress-theme-neptu-blog/theme-presets.css';
+@import 'vitepress-theme-neptu/theme-presets.css';
 
 /* Layer 2 — semantic `--ln-*` tokens. */
 @import './landing-vars.css';

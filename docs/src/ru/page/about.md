@@ -9,7 +9,7 @@ translations:
 # О демо
 
 Этот сайт — одновременно демо и руководство по теме
-[vitepress-theme-neptu-blog](https://github.com/bozonx/vitepress-theme-neptu-blog).
+[vitepress-theme-neptu](https://github.com/bozonx/vitepress-theme-neptu).
 Каждый пост показывает реальную возможность темы, а рядом — frontmatter или конфиг,
 который её создаёт. Читается как гайд — от запуска до продвинутой кастомизации.
 

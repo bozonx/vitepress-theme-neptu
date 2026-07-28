@@ -18,9 +18,9 @@ prev: false
 ## Установка
 
 ```bash
-npm install vitepress-theme-neptu-landing vitepress-theme-neptu-blog
-# или: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
-# или: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu-blog
+npm install vitepress-theme-neptu-landing vitepress-theme-neptu
+# или: pnpm add vitepress-theme-neptu-landing vitepress-theme-neptu
+# или: yarn add vitepress-theme-neptu-landing vitepress-theme-neptu
 ```
 
 `.vitepress/theme/index.ts`:

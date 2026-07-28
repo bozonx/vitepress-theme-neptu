@@ -119,7 +119,7 @@ export const common: BlogUserConfig = {
   themeConfig: commonThemeConfig,
 }
 
-const LOG_PREFIX = '[vitepress-theme-neptu-blog]'
+const LOG_PREFIX = '[vitepress-theme-neptu]'
 
 /**
  * Low-level config merge without validation warnings.
@@ -159,7 +159,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
         ...(config.srcDir ? [createSiteYamlHotReloadPlugin(config.srcDir)] : []),
         ...(config.vite?.plugins || []),
       ],
-      ssr: { noExternal: ['vitepress-theme-neptu-blog'], ...config.vite?.ssr },
+      ssr: { noExternal: ['vitepress-theme-neptu'], ...config.vite?.ssr },
     },
     sitemap: {
       hostname: sitemapSiteUrl.hostname,
