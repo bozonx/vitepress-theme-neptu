@@ -110,6 +110,12 @@ themeConfig:
   # sidebarMenuLabel: 'Menu'           # mobile sidebar toggle / aria-label
   # colorThemeMenuLabel: 'Theme'       # color theme switcher tooltip
   # langMenuLabel: 'Interface language'  # language switcher tooltip
+  # returnToTopLabel: 'Back to top'    # "back to top" button text
+  # lightModeSwitchTitle: 'Switch to light theme'
+  # darkModeSwitchTitle: 'Switch to dark theme'
+  # notFound:
+  #   title: 'Page not found'
+  #   linkText: 'Take me home'
   editLink:
     # pattern: "https://github.com/user/repo/edit/main/example/blog/src/:path"
     text: 'Edit this page on GitHub'

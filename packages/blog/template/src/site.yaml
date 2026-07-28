@@ -116,14 +116,9 @@ themeConfig:
   # (e.g. for a 640×360 source, use 180).
   sidebarLogoHeight: 180
 
-  # --- Standard VitePress theme labels used by this layout ------------------
-  # These are native VitePress Default Theme options, supported here as well.
-  # returnToTopLabel: Back to top
-  # lightModeSwitchTitle: Switch to light theme
-  # darkModeSwitchTitle: Switch to dark theme
-  # notFound:
-  #   title: PAGE NOT FOUND
-  #   linkText: Take me home
+  # NOTE: VitePress Default Theme labels (returnToTopLabel,
+  # lightModeSwitchTitle, darkModeSwitchTitle, notFound) are NOT set here —
+  # they have built-in per-locale defaults and belong in Level 3 (`_site.yaml`).
 
   # Sidebar sections and links configuration.
   sidebar:
