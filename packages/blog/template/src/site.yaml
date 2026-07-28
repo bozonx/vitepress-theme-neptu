@@ -18,27 +18,15 @@
 # does not belong here; put it in `src/<locale>/_site.yaml` instead.
 # ============================================================================
 
-# --- Top-level VitePress locale identity ------------------------------------
-# IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
-# lang: en-US
-
-# Site title for this locale. Falls back to themeConfig.blogTitle when omitted.
-# title: My Blog
-
-# Per-page title template. Use ':title' as the placeholder for the page title.
-# titleTemplate: ':title | My Blog'
-
-# Site description used for SEO meta tags and RSS/Atom feeds.
-# description: My personal blog about technology
+# --- Top-level fields -------------------------------------------------------
+# Most top-level fields (lang, title, titleTemplate, description, extends) are
+# per-locale and belong in `src/<locale>/_site.yaml`, NOT here.
+# The only top-level field that makes sense in this shared file is `siteUrl`:
 
 # Absolute public base URL of the site, including protocol and without a
 # trailing slash. If VitePress `base` is used, include that path too.
 # Used for sitemap, RSS feeds, canonical links, Open Graph, and JSON-LD.
 # siteUrl: https://example.com/blog
-
-# Per-locale only (_site.yaml). Name of another locale whose _site config is
-# inherited as the base; current values override the parent.
-# extends: en
 
 # ============================================================================
 # Theme Configuration

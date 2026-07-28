@@ -32,8 +32,31 @@
 # Popular prefixes used in this theme: fa6-solid, fa6-brands, mdi, solar, bi.
 # Example: icon: "fa6-solid:hand-holding-heart"
 # ---------------------------------------------------------------------------
+# --- Top-level VitePress locale identity ------------------------------------
+# These fields are per-locale and live ONLY in _site.yaml (not in site.yaml).
+
+# IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
 lang: 'en-US'
+
+# Site title for this locale. Falls back to themeConfig.blogTitle when omitted.
+# title: My Blog
+
+# Per-page title template. Use ':title' as the placeholder for the page title.
+# titleTemplate: ':title | ${theme.blogTitle}'
+
+# Site description used for SEO meta tags and RSS/Atom feeds.
 description: 'Welcome to my new blog'
+
+# Absolute public base URL of the site, including protocol and without a
+# trailing slash. If VitePress `base` is used, include that path too.
+# Used for sitemap, RSS feeds, canonical links, Open Graph, and JSON-LD.
+# Usually set once in site.yaml or config.ts; override here only if this
+# locale lives at a different URL.
+# siteUrl: https://example.com/blog
+
+# Name of another locale whose _site config is inherited as the base;
+# current values override the parent.
+# extends: en
 
 themeConfig:
   # -------------------------------------------------------------------------
@@ -58,10 +81,9 @@ themeConfig:
 
   # -------------------------------------------------------------------------
   # Locale-specific theme overrides. Same keys as global `themeConfig` in
-  # `.vitepress/config.ts`. Prefer global config for site-wide behavior;
-  # override here only when this locale intentionally differs.
+  # `.vitepress/config.ts` and `src/site.yaml`. Prefer global config for
+  # site-wide behavior; override here only when this locale intentionally differs.
   # -------------------------------------------------------------------------
-  # titleTemplate: ":title | ${theme.blogTitle}"
   # perPage: 10
   # langMenuLabel: 'Interface language'  # tooltip on the language switcher
   editLink:
