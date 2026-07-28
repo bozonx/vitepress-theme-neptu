@@ -90,6 +90,26 @@ themeConfig:
 
 Prefer Level 2 for a shared value. An override in this file is intentional: language, copy, a locale-specific URL, or a genuine regional UI difference.
 
+### Fine-grained `themeConfig` overrides
+
+Objects deep-merge across layers, so you can override individual sub-keys without re-declaring the entire block. Only specify what differs for this locale — the rest is inherited from Level 2.
+
+```yaml
+# src/en/_site.yaml — override only the sub-keys that differ
+themeConfig:
+  # Hide preview text on post cards, keep all other postList defaults from site.yaml
+  postList:
+    showPreview: false
+
+  # Reorder post-footer blocks for this locale only
+  postFooter:
+    - author
+    - tags
+    - social-share
+```
+
+This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate`, `editLink`, `socialMediaShares`, `seo`, `feeds`, etc. See the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml) for the full parameter reference — do not duplicate parameters that are already defined there.
+
 ## Authors — `_authors.yaml`
 
 `_authors.yaml` is an array of profiles. Required: `id`; supported optional fields: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `aboutUrl`, `twitterHandle`, and `links[]` (`type`, `url`, `title`). It has its own self-documenting example and schema. It merges with inline `themeConfig.authors` by `id`; the dedicated file wins for a conflicting field.

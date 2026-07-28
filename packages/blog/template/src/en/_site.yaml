@@ -77,6 +77,31 @@ themeConfig:
   # src/site.yaml for details.
 
   # -------------------------------------------------------------------------
+  # Fine-grained themeConfig overrides
+  #
+  # Every themeConfig key from Level 2 (`src/site.yaml`) can be overridden
+  # here for this locale only. Objects deep-merge, so you only need to
+  # specify the sub-keys that differ — the rest is inherited from Level 2.
+  #
+  # For example, to show post thumbnails but hide the preview text in this
+  # locale while keeping all other postList defaults from site.yaml:
+  #
+  #   postList:
+  #     showPreview: false
+  #
+  # To reorder post-footer blocks for this locale without re-listing every
+  # block from site.yaml:
+  #
+  #   postFooter:
+  #     - author
+  #     - tags
+  #     - social-share
+  #
+  # Other commonly overridden keys: sidebar, nav, footer, donate, editLink,
+  # socialMediaShares, seo, feeds, popularPosts.sortBy, sidebarTagsCount,
+  # similarPostsCount. See src/site.yaml for the full reference — do not
+  # duplicate parameters that are already defined there.
+  # -------------------------------------------------------------------------
   # Locale-specific theme overrides. Same keys as global `themeConfig` in
   # `.vitepress/config.ts` and `src/site.yaml`. Prefer global config for
   # site-wide behavior; override here only when this locale intentionally differs.
