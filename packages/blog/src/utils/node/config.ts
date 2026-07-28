@@ -138,10 +138,21 @@ export async function loadBlogLocale(
   // Template substitution context uses common+config defaults so that
   // ${theme.*} can reference values declared in config.ts.
   // ------------------------------------------------------------------
-  const sharedThemeBaseForTemplate = {
-    ...(blogCommon.themeConfig || {}),
-    ...(config.themeConfig || {}),
-  } as Record<string, unknown>
+  // Keep this order identical to the public three-layer contract:
+  // built-ins → developer config.ts → shared site.yaml → locale _site.yaml.
+  // In particular, config.themeConfig must participate in the final locale
+  // config, not merely be available while interpolating YAML templates.
+  const builtInTheme = deepMerge(
+    (blogCommon.themeConfig || {}) as Record<string, unknown>,
+    {
+      ...(baseLocale.themeConfig || {}),
+      t: { ...baseLocale.t },
+    }
+  )
+  const sharedThemeBaseForTemplate = deepMerge(
+    builtInTheme,
+    (config.themeConfig || {}) as Record<string, unknown>
+  )
   const sharedSite = (await parseSharedSite(config.srcDir || '', {
     localeIndex,
     config,
@@ -152,13 +163,7 @@ export async function loadBlogLocale(
     stripThemeAuthors(sharedSite)
   const sharedThemeConfig = extractThemeConfig(sharedSiteSanitized)
 
-  const resolvedTheme = deepMerge(
-    deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig),
-    {
-      ...(baseLocale.themeConfig || {}),
-      t: { ...baseLocale.t },
-    }
-  )
+  const resolvedTheme = deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig)
   const templateParams = {
     config,
     theme: resolvedTheme,
@@ -179,11 +184,6 @@ export async function loadBlogLocale(
     description,
   } = site
   const localeThemeConfig = extractThemeConfig(site)
-  const title =
-    rawTitle ??
-    (localeThemeConfig.blogTitle as string | undefined) ??
-    (sharedThemeConfig.blogTitle as string | undefined)
-
   const mergedAuthorsList = mergeAuthorsById(sharedAuthors, chain.authors)
   const authors = mergedAuthorsList.length
     ? mergedAuthorsList.map((item) => {
@@ -200,13 +200,10 @@ export async function loadBlogLocale(
       })
     : undefined
 
-  const mergedThemeConfig = deepMerge(
-    deepMerge(
-      (baseLocale.themeConfig || {}) as Record<string, unknown>,
-      sharedThemeConfig
-    ),
-    localeThemeConfig
-  )
+  const mergedThemeConfig = deepMerge(resolvedTheme, localeThemeConfig)
+  const title =
+    rawTitle ?? (mergedThemeConfig.blogTitle as string | undefined)
+  const resolvedRepo = mergedThemeConfig.repo as string | undefined
 
   return {
     lang: typeof lang === 'string' ? lang : undefined,
@@ -217,18 +214,16 @@ export async function loadBlogLocale(
     themeConfig: {
       ...mergedThemeConfig,
       editLink: {
-        ...(config.themeConfig?.repo
-          ? { pattern: resolveEditLinkPattern(config.themeConfig.repo) }
+        ...(resolvedRepo
+          ? { pattern: resolveEditLinkPattern(resolvedRepo) }
           : {}),
-        ...baseLocale.themeConfig?.editLink,
-        ...(sharedThemeConfig.editLink as Record<string, unknown> | undefined),
+        ...(mergedThemeConfig.editLink as Record<string, unknown> | undefined),
         ...(localeThemeConfig.editLink as Record<string, unknown> | undefined),
       } as EditLinkConfig,
       t: {
-        ...baseLocale.t,
-        ...((sharedThemeConfig.t || {}) as Record<string, unknown>),
+        ...((mergedThemeConfig.t || {}) as Record<string, unknown>),
         ...((localeThemeConfig.t || {}) as Record<string, unknown>),
-      } as I18n,
+      } as unknown as I18n,
       authors,
     },
   }

@@ -1,6 +1,6 @@
 ---
 layout: home
-heroImg: /img/home-logo.webp
+heroImg: /img/sidebar-logo.jpg
 ---
 <script setup>
 import {

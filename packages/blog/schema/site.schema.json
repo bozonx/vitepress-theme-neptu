@@ -1,213 +1,51 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://unpkg.com/vitepress-theme-neptu-blog/schema/site.schema.json",
-  "title": "Neptu blog site config (site.yaml / _site.yaml)",
-  "description": "Admin-editable site configuration for vitepress-theme-neptu-blog. Top-level VitePress locale identity + nested themeConfig block. Unknown keys are preserved — this schema is intentionally permissive and validates only the commonly-mistyped fields.",
+  "title": "Neptu Blog admin site config",
+  "description": "Level 2 site.yaml and Level 3 <locale>/_site.yaml. Root fields are locale identity only; VitePress build fields, base, srcDir and siteUrl belong in .vitepress/config.ts.",
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "lang": {
-      "type": "string",
-      "description": "IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'."
-    },
-    "title": {
-      "type": "string",
-      "description": "Site title for this locale. Defaults to themeConfig.blogTitle when omitted."
-    },
-    "titleTemplate": {
-      "type": "string",
-      "description": "Per-page title template. Use ':title' as placeholder."
-    },
-    "description": {
-      "type": "string",
-      "description": "Site description used for SEO meta tags and feeds."
-    },
-    "extends": {
-      "type": "string",
-      "description": "Per-locale file only. Name of another locale whose _site config is inherited as the base; current values override the parent."
-    },
+    "siteUrl": false,
+    "base": false,
+    "srcDir": false,
+    "lang": { "type": "string", "description": "Level 3: IETF language tag." },
+    "title": { "type": "string", "description": "Level 3: locale site title." },
+    "titleTemplate": { "type": "string", "description": "Level 3: use :title as page-title placeholder." },
+    "description": { "type": "string", "description": "Level 3: locale SEO and feed description." },
+    "extends": { "type": "string", "description": "Level 3: parent locale directory name, such as en; not a file path." },
     "themeConfig": {
       "type": "object",
       "additionalProperties": true,
-      "description": "Theme-specific configuration. Shape mirrors `ThemeConfig` from the theme types.",
+      "description": "Level 2 shared defaults or Level 3 locale overrides. Objects deep-merge; arrays replace; authors merge by id.",
       "properties": {
-        "blogTitle": {
-          "type": "string",
-          "description": "Blog name. Used for SEO, tab titles and sidebar heading."
-        },
-        "perPage": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Posts per page in archive/tag/author listings."
-        },
-        "similarPostsCount": { "type": "integer", "minimum": 0 },
-        "sidebarTagsCount": { "type": "integer", "minimum": 0 },
-        "paginationMaxItems": { "type": "integer", "minimum": 1 },
-        "homeBgParallaxOffset": { "type": "integer" },
-        "sidebarLogoSrc": { "type": "string" },
-        "sidebarLogoHeight": { "type": "integer" },
-        "repo": { "type": "string" },
-        "twitterSite": { "type": "string" },
-        "externalLinkIcon": { "type": "boolean" },
-        "seo": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "autoCanonical": { "type": "boolean" }
-          }
-        },
-        "postFooter": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "author",
-              "donate",
-              "comments",
-              "social-share",
-              "edit-link",
-              "tags",
-              "similar",
-              "popular-link"
-            ]
-          }
-        },
-        "postList": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "showDate": { "type": "boolean" },
-            "showTags": { "type": "boolean" },
-            "showThumbnail": { "type": "boolean" },
-            "showPreview": { "type": "boolean" },
-            "showAuthor": { "type": "boolean" },
-            "maxPreviewLength": { "type": "integer", "minimum": 0 }
-          }
-        },
-        "donate": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "url": { "type": "string" },
-            "icon": { "type": "string" },
-            "postDonateCall": { "type": "string" }
-          }
-        },
-        "publisher": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "name": { "type": "string" },
-            "url": { "type": "string" },
-            "logo": { "type": "string" }
-          }
-        },
+        "blogTitle": { "type": "string" }, "blogUrl": { "type": "string" }, "mainHeroImg": { "type": "string" },
+        "repo": { "type": "string", "description": "Repository URL; also supplies the default edit-link pattern." },
+        "twitterSite": { "type": "string" }, "externalLinkIcon": { "type": "boolean" }, "themeSwitcher": { "type": "boolean" }, "i18nRouting": { "type": "boolean" },
+        "perPage": { "type": "integer", "minimum": 1 }, "sidebarTagsCount": { "type": "integer", "minimum": 0 }, "similarPostsCount": { "type": "integer", "minimum": 0 }, "homeBgParallaxOffset": { "type": "number" }, "paginationMaxItems": { "type": "integer", "minimum": 1 },
+        "sidebarLogoSrc": { "type": "string" }, "sidebarLogoHeight": { "type": "integer", "minimum": 1 }, "sidebarMenuLabel": { "type": "string" }, "colorThemeMenuLabel": { "type": "string" }, "langMenuLabel": { "type": "string" },
+        "donateIcon": { "type": "string" }, "recentIcon": { "type": "string" }, "popularIcon": { "type": "string" }, "byDateIcon": { "type": "string" }, "authorsIcon": { "type": "string" }, "rssIcon": { "type": "string" }, "atomIcon": { "type": "string" }, "youtubeIcon": { "type": "string" }, "tagsIcon": { "type": "string" },
+        "postList": { "type": "object", "properties": { "showDate": { "type": "boolean" }, "showTags": { "type": "boolean" }, "showThumbnail": { "type": "boolean" }, "showPreview": { "type": "boolean" }, "showAuthor": { "type": "boolean" }, "maxPreviewLength": { "type": "integer", "minimum": 0 } }, "additionalProperties": true },
+        "postFooter": { "type": "array", "items": { "type": "string", "enum": ["author", "donate", "comments", "social-share", "edit-link", "tags", "similar", "popular-link"] } },
+        "popularPosts": { "type": "object", "description": "Keep enabled and dataSource credentials in config.ts; this layer may override sortBy.", "properties": { "enabled": { "type": "boolean" }, "sortBy": { "enum": ["pageviews", "uniquePageviews", "avgTimeOnPage"] }, "dataSource": { "type": "object", "properties": { "provider": { "const": "ga4" }, "propertyId": { "type": ["string", "null"] }, "credentialsJson": { "type": ["string", "null"] }, "dataPeriodDays": { "type": "integer", "minimum": 1 }, "dataLimit": { "type": "integer", "minimum": 1 } }, "additionalProperties": true } }, "additionalProperties": true },
+        "feeds": { "type": "object", "properties": { "maxPosts": { "type": "integer", "minimum": 0 }, "formats": { "type": "array", "items": { "enum": ["rss", "atom", "json"] } } }, "additionalProperties": true },
+        "seo": { "type": "object", "properties": { "og": { "type": "boolean" }, "jsonLd": { "type": "boolean" }, "hreflang": { "type": "boolean" }, "canonical": { "type": "boolean" }, "autoCanonical": { "type": "boolean" }, "rss": { "type": "boolean" }, "maxDescriptionLength": { "type": "integer", "minimum": 0 } }, "additionalProperties": true },
+        "search": { "type": "object", "description": "Configure provider and assets in config.ts.", "properties": { "provider": { "type": "string" }, "options": { "type": "object", "properties": { "bodyMarker": { "type": "string" }, "translations": { "type": "object" }, "locales": { "type": "object" } }, "additionalProperties": true } }, "additionalProperties": true },
+        "nav": { "oneOf": [{ "type": "object", "properties": { "donate": { "type": "boolean" }, "links": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } }, "socialLinks": { "type": "array", "items": { "$ref": "#/$defs/SocialLink" } } }, "additionalProperties": true }, { "type": "array", "items": { "type": "object", "properties": { "text": { "type": "string" }, "link": { "type": "string" }, "activeMatch": { "type": "string" }, "items": { "type": "array" } }, "additionalProperties": true } }] },
+        "sidebar": { "type": "object", "properties": { "recent": { "type": "boolean" }, "popular": { "type": "boolean" }, "archive": { "type": "boolean" }, "authors": { "type": "boolean" }, "tags": { "type": "boolean" }, "donate": { "type": "boolean" }, "rssFeed": { "type": "boolean" }, "atomFeed": { "type": "boolean" }, "blogTitle": { "type": ["string", "boolean"] }, "links": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } }, "bottomLinks": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } }, "socialLinks": { "type": "array", "items": { "$ref": "#/$defs/SocialLink" } } }, "additionalProperties": true },
+        "donate": { "type": "object", "properties": { "url": { "type": "string" }, "icon": { "type": "string" }, "postDonateCall": { "type": "string" } }, "additionalProperties": true },
+        "editLink": { "type": "object", "properties": { "pattern": { "type": "string" }, "text": { "type": "string" } }, "additionalProperties": true },
+        "publisher": { "type": "object", "properties": { "name": { "type": "string" }, "url": { "type": "string" }, "logo": { "type": "string" } }, "additionalProperties": true },
+        "footer": { "type": "object", "properties": { "message": { "type": "string" }, "copyright": { "type": "string" }, "links": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } } }, "additionalProperties": true },
         "authors": { "$ref": "./authors.schema.json" },
-        "nav": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "donate": { "type": "boolean" },
-            "links": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } },
-            "socialLinks": {
-              "type": "array",
-              "items": { "$ref": "#/$defs/SocialLink" }
-            }
-          }
-        },
-        "sidebar": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "recent": { "type": "boolean" },
-            "popular": { "type": "boolean" },
-            "archive": { "type": "boolean" },
-            "authors": { "type": "boolean" },
-            "tags": { "type": "boolean" },
-            "donate": { "type": "boolean" },
-            "rssFeed": { "type": "boolean" },
-            "atomFeed": { "type": "boolean" },
-            "blogTitle": { "type": ["boolean", "string"] },
-            "links": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } },
-            "bottomLinks": {
-              "type": "array",
-              "items": { "$ref": "#/$defs/NavLink" }
-            },
-            "socialLinks": {
-              "type": "array",
-              "items": { "$ref": "#/$defs/SocialLink" }
-            }
-          }
-        },
-        "footer": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "message": { "type": "string" },
-            "copyright": { "type": "string" },
-            "links": { "type": "array", "items": { "$ref": "#/$defs/NavLink" } }
-          }
-        },
-        "socialMediaShares": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": true,
-            "required": ["name", "urlTemplate"],
-            "properties": {
-              "name": { "type": "string" },
-              "icon": { "type": "string" },
-              "title": { "type": "string" },
-              "urlTemplate": { "type": "string" },
-              "class": { "type": "string" }
-            }
-          }
-        },
-        "editLink": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "pattern": { "type": "string" },
-            "text": { "type": "string" }
-          }
-        },
-        "t": {
-          "type": "object",
-          "additionalProperties": true,
-          "description": "Translation strings. Keys mirror the built-in I18n interface."
-        }
+        "socialMediaShares": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "icon": { "type": "string" }, "title": { "type": "string" }, "urlTemplate": { "type": "string" }, "class": { "type": "string" } }, "additionalProperties": true } },
+        "t": { "type": "object", "description": "Partial built-in translation overrides; nested objects are deep-merged.", "properties": { "popularPosts": { "type": "string" }, "similarPosts": { "type": "string" }, "shareSocialMedia": { "type": "string" }, "currentLang": { "type": "string" }, "tagBadgeCount": { "type": "string" }, "tagPageHeader": { "type": "string" }, "tags": { "type": "string" }, "allTags": { "type": "string" }, "paginationToStart": { "type": "string" }, "paginationToEnd": { "type": "string" }, "toHome": { "type": "string" }, "toBlog": { "type": "string" }, "author": { "type": "string" }, "year": { "type": "string" }, "showMorePosts": { "type": "string" }, "listenPodcast": { "type": "string" }, "commentLink": { "type": "string" }, "allTagsCall": { "type": "string" }, "popularPostsCall": { "type": "string" }, "viewInAnotherLanguage": { "type": "string" }, "postVideoButton": { "type": "string" }, "allPostsOfAuthor": { "type": "string" }, "closeMenu": { "type": "string" }, "allPostsOfYear": { "type": "string" }, "pageNotFound": { "type": "string" }, "postsCount": { "type": "string" }, "editLink": { "type": "string" }, "postsCountForms": { "type": "array", "items": { "type": "string" } }, "search": { "type": "string" }, "searchInBlog": { "type": "string" }, "links": { "type": "object", "additionalProperties": { "type": "string" } }, "months": { "type": "array", "items": { "type": "string" } }, "podcasts": { "type": "object", "additionalProperties": { "type": "string" } }, "audioFile": { "type": "object", "additionalProperties": { "type": "string" } }, "fileDownload": { "type": "object", "additionalProperties": { "type": "string" } }, "videoFile": { "type": "object", "additionalProperties": { "type": "string" } }, "lightbox": { "type": "object", "additionalProperties": { "type": "string" } } }, "additionalProperties": true },
+        "returnToTopLabel": { "type": "string", "description": "Native VitePress Default Theme label." }, "lightModeSwitchTitle": { "type": "string" }, "darkModeSwitchTitle": { "type": "string" }, "notFound": { "type": "object", "additionalProperties": true }
       }
     }
   },
   "$defs": {
-    "NavLink": {
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "text": { "type": "string" },
-        "href": { "type": "string" },
-        "link": { "type": "string" },
-        "icon": { "type": "string" },
-        "iconClass": { "type": "string" },
-        "class": { "type": "string" },
-        "mobileOnly": { "type": "boolean" },
-        "desktopOnly": { "type": "boolean" },
-        "header": { "type": "string" }
-      }
-    },
-    "SocialLink": {
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "icon": { "type": "string" },
-        "link": { "type": "string" },
-        "url": { "type": "string" },
-        "title": { "type": "string" },
-        "class": { "type": "string" },
-        "iconClass": { "type": "string" },
-        "mobileOnly": { "type": "boolean" },
-        "desktopOnly": { "type": "boolean" }
-      }
-    }
+    "NavLink": { "type": "object", "properties": { "text": { "type": "string" }, "href": { "type": "string" }, "icon": { "type": "string" }, "iconClass": { "type": "string" }, "class": { "type": "string" }, "mobileOnly": { "type": "boolean" }, "desktopOnly": { "type": "boolean" }, "header": { "type": "string" } }, "additionalProperties": true },
+    "SocialLink": { "type": "object", "properties": { "icon": { "type": "string" }, "link": { "type": "string" }, "url": { "type": "string" }, "title": { "type": "string" }, "class": { "type": "string" }, "iconClass": { "type": "string" }, "mobileOnly": { "type": "boolean" }, "desktopOnly": { "type": "boolean" } }, "additionalProperties": true }
   }
 }

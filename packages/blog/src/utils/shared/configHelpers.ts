@@ -62,22 +62,14 @@ export function hasTailwindPlugin(plugins: unknown): boolean {
 // ---------------------------------------------------------------------------
 
 /**
- * Default `<head>` entries shared by both blog and landing themes:
- * X-UA-Compatible meta, favicon links, apple-touch-icon, web manifest.
+ * Default `<head>` entries shared by both blog and landing themes.
+ *
+ * Favicon and manifest URLs deliberately are not supplied here. They live in
+ * a site's `public/` directory and their location depends on VitePress
+ * `base`; a root-relative default breaks project GitHub Pages deployments.
  */
 export const commonHead: HeadConfig[] = [
   ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
-  ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],
-  ['link', { rel: 'icon', sizes: '32x32', href: '/img/favicon-32x32.png' }],
-  [
-    'link',
-    {
-      rel: 'apple-touch-icon',
-      sizes: '180x180',
-      href: '/img/apple-touch-icon.png',
-    },
-  ],
-  ['link', { rel: 'manifest', href: '/site.webmanifest' }],
 ]
 
 /**
@@ -97,6 +89,46 @@ export const commonBaseConfig = {
  */
 export function normalizeSitemapUrl(relativePath: string): string {
   return relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+}
+
+/**
+ * Makes VitePress sitemap items safe for sites hosted below a domain root.
+ * VitePress treats sitemap item URLs as root-relative when serializing them,
+ * so a pathname in `siteUrl` alone is otherwise discarded.
+ */
+export function resolveSitemapSiteUrl(siteUrl: string | undefined): {
+  hostname: string | undefined
+  basePath: string
+} {
+  if (!siteUrl) return { hostname: undefined, basePath: '' }
+
+  try {
+    const url = new URL(siteUrl)
+    return {
+      hostname: url.origin,
+      basePath: url.pathname.replace(/^\/+|\/+$/g, ''),
+    }
+  } catch {
+    return { hostname: siteUrl, basePath: '' }
+  }
+}
+
+export function prefixSitemapItems<T extends { url: string; links: Array<{ url?: string }> }>(
+  items: T[],
+  basePath: string
+): T[] {
+  if (!basePath) return items
+
+  const prefix = (url: string | undefined): string | undefined => {
+    if (!url || /^(?:[a-z]+:)?\/\//i.test(url)) return url
+    return `${basePath}/${url.replace(/^\/+/, '')}`
+  }
+
+  return items.map((item) => ({
+    ...item,
+    url: prefix(item.url) || item.url,
+    links: item.links.map((link) => ({ ...link, url: prefix(link.url) })),
+  }))
 }
 
 /**

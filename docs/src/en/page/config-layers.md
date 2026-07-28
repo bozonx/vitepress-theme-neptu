@@ -1,109 +1,108 @@
 ---
-title: Configuration Layers
-description: The theme merges settings from four layers. This page explains what each layer is for and which one to edit.
+title: Configuration layers
+description: 'Three clear configuration layers: developer wiring, shared administration, and per-locale administration.'
 layout: page
 ---
 
-# Configuration Layers
+# Configuration layers
 
-Theme settings are resolved by merging **four layers** in priority order. Later
-layers win over earlier ones:
+There are **three editable layers**. Built-in theme and language defaults are an implementation detail beneath them. Later layers override earlier values.
 
-```
-built-in theme defaults
-  → .vitepress/config.ts        (developer-owned, needs code)
-    → src/site.yaml             (admin-editable, cross-locale)
-      → src/<locale>/_site.yaml (admin-editable, per-locale)
+```text
+1. .vitepress/config.ts        developer: code, build and integrations
+   → 2. src/site.yaml          admin: safe settings shared by every locale
+     → 3. src/<locale>/_site.yaml  admin: one locale's identity and overrides
 ```
 
-## Which layer do I edit?
+## Pick the file by responsibility
 
-| I want to change… | Edit this file |
+| Responsibility | File |
 | --- | --- |
-| `siteUrl`, env-driven values, Vite plugins, search provider, popular-posts (GA4) | `.vitepress/config.ts` |
-| Presentation shared by all locales (footer, publisher, icons, SEO toggles) | `src/site.yaml` |
-| Localized identity & overrides (`lang`, `blogTitle`, nav labels, translations) | `src/<locale>/_site.yaml` |
+| Vite/VitePress options, `srcDir`, `base`, `siteUrl`, environment variables, plugins, hooks, search assets, GA4 credentials | `.vitepress/config.ts` |
+| Static theme settings shared by all languages: branding, navigation defaults, sidebar, feeds, SEO switches, icons, publisher | `src/site.yaml` |
+| One language's `lang`, title, description, translations, labels, navigation text and any intentional theme override | `src/<locale>/_site.yaml` |
+| Author profiles for one locale | `src/<locale>/_authors.yaml` |
 
-**Rule of thumb:** if it needs JavaScript or a secret, it goes in `config.ts`.
-If a non-developer might want to change it, put it in YAML.
+The YAML levels are deliberately **not** full VitePress configurations. They never accept build hooks, plugins, `base`, `srcDir`, or `siteUrl`. This keeps secrets and build behaviour in code and makes YAML safe for content administrators.
 
-## Layer 1 — `.vitepress/config.ts`
+## Level 1 — `.vitepress/config.ts`
 
-Code-only wiring. This is where `defineBlogConfig` runs and auto-discovers
-locale folders (any `src/<locale>/` that has a `_site.yaml`).
+This is the only developer-owned file. It is a normal `BlogUserConfig` / VitePress config, so the complete standard VitePress option reference remains the [VitePress site-config reference](https://vitepress.dev/reference/site-config). The theme-specific options that belong here are integration options:
+
+| Field | Purpose |
+| --- | --- |
+| `srcDir` | Content root; required for automatic locale discovery. |
+| `base` | Public subpath, such as `/blog/`. |
+| `siteUrl` | Absolute public URL; required for sitemap, feeds, canonical, Open Graph and JSON-LD. |
+| `head` | External assets and metadata, including Pagefind assets. |
+| `vite`, `markdown`, `sitemap` | Native VitePress/Vite build configuration. |
+| `transformPageData`, `transformHead`, `buildEnd` | Custom lifecycle hooks, executed after theme hooks. |
+| `themeConfig.search` | Pagefind provider/options and its integration assets. |
+| `themeConfig.popularPosts.enabled` / `.dataSource` | GA4 integration; keep credentials and env-derived values here. |
 
 ```ts
-// .vitepress/config.ts (excerpt)
-export default async () => {
-  const config: BlogUserConfig = {
-    srcDir: path.resolve(__dirname, '../'),
-    siteUrl: 'https://myblog.org', // absolute, no trailing slash — used for
-                                   // canonical, sitemap, RSS, OG, hreflang
-    themeConfig: {
-      repo: 'https://github.com/your-org/your-blog',
-      perPage: 10,
-      search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
-      popularPosts, // env-driven (GA4), must stay in code
-    },
-  }
-  return defineBlogConfig(config)
-}
+export default async () => defineBlogConfig({
+  srcDir: path.resolve(__dirname, '../'),
+  base: process.env.VITEPRESS_BASE || '/',
+  siteUrl: process.env.SITE_URL || 'https://example.com',
+  themeConfig: {
+    search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
+    popularPosts: { enabled: Boolean(process.env.GA_PROPERTY_ID), dataSource: { provider: 'ga4' } },
+  },
+})
 ```
 
-## Layer 2 — `src/site.yaml` (cross-locale)
+## Level 2 — `src/site.yaml`
 
-Everything under `themeConfig:` that is the **same for every locale** but a
-content editor may want to change without touching code:
+This file has one effective root key, `themeConfig`. It is the complete, self-documented reference for safe settings shared by every locale. Use it for the default value; do not duplicate a value in each locale.
 
-```yaml
-themeConfig:
-  publisher:
-    logo: 'https://myblog.org/logo.png'
-  editLink:
-    pattern: 'https://github.com/your-org/your-blog/edit/main/src/:path'
-  sidebar:
-    popular: true
-    recent: true
-    archive: true
-    authors: true
-    tags: true
-```
+`themeConfig` groups are: general (`repo`, `blogTitle`, switches), listing (`perPage`, `postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml).
 
-## Layer 3 — `src/<locale>/_site.yaml` (per-locale)
+Arrays replace an earlier array as a whole. Objects deep-merge. `authors` is the exception: entries merge by their stable `id`.
 
-Localized identity and any overrides that differ for this language. Top-level
-keys are `lang`, `title`, `titleTemplate`, `description`; everything else nests
-under `themeConfig:`.
+## Level 3 — `src/<locale>/_site.yaml`
 
-```yaml
-lang: 'en-US'
-description: 'Example Blog Description'
-themeConfig:
-  blogTitle: 'Neptu Blog Theme'
-  footer:
-    copyright: 'Copyright © 2026 Your Name.'
-```
+Use this for one locale only. Its root fields are exactly:
 
-## String templates in YAML
-
-Inside any `_site.yaml` you can interpolate dynamic values (resolved before the
-YAML is parsed):
-
-| Template | Resolves to |
+| Root field | Purpose |
 | --- | --- |
-| `${theme.<key>}` | any merged `themeConfig` value, e.g. `${theme.repo}` |
-| `${t.<key>}` | a translation string, e.g. `${t.links.donate}` |
-| `${config.siteUrl}` | the site URL from `config.ts` |
-| `${localeIndex}` | current locale folder name, e.g. `en` |
+| `lang` | IETF language tag, e.g. `en-US`. |
+| `title` | Locale site title. |
+| `titleTemplate` | Page-title template; use `:title`. |
+| `description` | Locale SEO/feed description. |
+| `extends` | Parent **locale directory name**, e.g. `en`; never a file path. |
+| `themeConfig` | Any safe theme setting from Level 2, as a locale override. |
 
 ```yaml
-publisher:
-  name: '${theme.blogTitle}'
-  url: '${config.siteUrl}'
-nav:
-  socialLinks:
-    - icon: 'fa6-brands:github'
-      link: '${theme.repo}'
+# src/en-GB/_site.yaml
+extends: en
+lang: en-GB
+title: Example blog
+description: Notes for UK readers.
+themeConfig:
+  blogTitle: Example blog
+  langMenuLabel: Change language
+  nav:
+    links:
+      - text: About
+        href: page/about
 ```
 
-See `docs/CONFIG_LAYERS.md` in the repo for the full reference.
+Prefer Level 2 for a shared value. An override in this file is intentional: language, copy, a locale-specific URL, or a genuine regional UI difference.
+
+## Authors — `_authors.yaml`
+
+`_authors.yaml` is an array of profiles. Required: `id`; supported optional fields: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `aboutUrl`, `twitterHandle`, and `links[]` (`type`, `url`, `title`). It has its own self-documenting example and schema. It merges with inline `themeConfig.authors` by `id`; the dedicated file wins for a conflicting field.
+
+## YAML templates and validation
+
+Only YAML supports templates, resolved before parsing:
+
+| Template | Value |
+| --- | --- |
+| `${theme.key}` | Previously resolved merged theme value. |
+| `${t.key}` | Built-in or overridden translation. |
+| `${config.siteUrl}` | Level-1 public site URL. |
+| `${localeIndex}` | Current locale directory name. |
+
+YAML files link to `site.schema.json` / `authors.schema.json` for editor completion and validation. The schemas describe all public Neptu fields; unknown keys remain warnings-compatible for future VitePress extensions. TypeScript variants (`site.ts`, `_site.ts`, `_authors.ts`) take precedence over YAML and use `defineSiteConfig`, `defineLocaleConfig`, and `defineAuthorsList` respectively.

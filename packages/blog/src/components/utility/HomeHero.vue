@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NeptuBtn from '../NeptuBtn.vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 
 const { localeIndex } = useData()
@@ -23,6 +23,9 @@ const props = defineProps<{
   buttons?: HeroButton[]
   img?: HeroImage
 }>()
+
+const homeHref = `/${localeIndex.value}/recent/1`
+const imageSrc = (src: string) => (src.startsWith('/') ? withBase(src) : src)
 </script>
 
 <template>
@@ -42,10 +45,10 @@ const props = defineProps<{
         v-if="props.img"
         :aria-label="theme.t.toHome"
         class="home-logo flex justify-center"
-        :href="`/${localeIndex}/recent/1`"
+        :href="withBase(homeHref)"
       >
         <img
-          :src="props.img.src"
+          :src="imageSrc(props.img.src)"
           :alt="props.img.alt"
           width="320"
           height="320"

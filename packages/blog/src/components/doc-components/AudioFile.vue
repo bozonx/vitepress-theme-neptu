@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { Icon } from '@iconify/vue'
+import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import {
@@ -28,6 +29,10 @@ const props = withDefaults(
   }
 )
 
+const mediaUrl = computed(() =>
+  encodeMediaUrl(props.url.startsWith('/') ? withBase(props.url) : props.url)
+)
+
 // Computed filename for download (used in the download attribute)
 const downloadFilename = computed(() => {
   if (props.filename) {
@@ -49,12 +54,12 @@ const downloadFile = async () => {
       return
     }
 
-    downloadFileUtil(encodeMediaUrl(props.url), downloadFilename.value)
+    downloadFileUtil(mediaUrl.value, downloadFilename.value)
   } catch {
     hasError.value = true
     errorMessage.value = theme.value.t.audioFile.errorDownloadingFile
     // On error, open the file in a new tab
-    window.open(encodeMediaUrl(props.url), '_blank')
+    window.open(mediaUrl.value, '_blank')
   }
 }
 
@@ -292,7 +297,7 @@ onUnmounted(() => {
     <!-- Hidden audio element with lazy loading -->
     <audio
       ref="audioRef"
-      :src="isPlayerVisible ? encodeMediaUrl(props.url) : undefined"
+      :src="isPlayerVisible ? mediaUrl : undefined"
       :preload="isPlayerVisible ? 'metadata' : 'none'"
       aria-hidden="true"
       @loadedmetadata="handleLoadedMetadata"

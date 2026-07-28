@@ -42,6 +42,7 @@ const getFileTypeIcon = (extension: string | undefined) => {
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
+import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import {
@@ -59,6 +60,10 @@ const props = defineProps<{
   containerClass?: string
   disabled?: boolean
 }>()
+
+const mediaUrl = computed(() =>
+  encodeMediaUrl(props.url.startsWith('/') ? withBase(props.url) : props.url)
+)
 
 // Computed filename for download (used in the download attribute)
 const downloadFilename = computed(() => {
@@ -86,10 +91,10 @@ const downloadFile = async () => {
   if (props.disabled) return
 
   try {
-    downloadFileUtil(encodeMediaUrl(props.url), downloadFilename.value)
+    downloadFileUtil(mediaUrl.value, downloadFilename.value)
   } catch {
     // On error, open the file in a new tab
-    window.open(encodeMediaUrl(props.url), '_blank')
+    window.open(mediaUrl.value, '_blank')
   }
 }
 

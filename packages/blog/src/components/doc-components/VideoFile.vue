@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
 import { Icon } from '@iconify/vue'
+import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import {
@@ -29,6 +30,9 @@ const props = withDefaults(
 const videoRef = ref<HTMLVideoElement | null>(null)
 const hasError = ref(false)
 const errorMessage = ref('')
+const mediaUrl = computed(() =>
+  encodeMediaUrl(props.url.startsWith('/') ? withBase(props.url) : props.url)
+)
 
 const downloadFilename = computed(() => {
   if (props.filename) return props.filename
@@ -38,9 +42,9 @@ const downloadFilename = computed(() => {
 const downloadFile = () => {
   if (props.disabled) return
   try {
-    downloadFileUtil(encodeMediaUrl(props.url), downloadFilename.value)
+    downloadFileUtil(mediaUrl.value, downloadFilename.value)
   } catch {
-    window.open(encodeMediaUrl(props.url), '_blank')
+    window.open(mediaUrl.value, '_blank')
   }
 }
 
@@ -103,7 +107,7 @@ onUnmounted(() => {
       <video
         ref="videoRef"
         class="video-element w-full rounded-lg"
-        :src="encodeMediaUrl(props.url)"
+        :src="mediaUrl"
         controls
         preload="metadata"
         :aria-label="downloadFilename"

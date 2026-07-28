@@ -1,13 +1,16 @@
 import type { Author, ThemeConfig } from '../types.d.ts'
 
 /**
- * Shape shared by the three TS/YAML config sources that the theme consumes:
+ * Shape shared by the two site-admin config sources that the theme consumes:
  *   - `<srcDir>/site.yaml` / `<srcDir>/site.ts` (cross-locale admin layer)
  *   - `<srcDir>/<locale>/_site.yaml` / `<srcDir>/<locale>/_site.ts` (per-locale admin layer)
  *
- * The `extends` field is only meaningful for the per-locale variant.
- * The shared `site.yaml` should leave `lang` / `title` / `description`
- * empty — those belong in `<locale>/_site.*`.
+ * This is deliberately not `BlogUserConfig`: Vite/VitePress options, build
+ * hooks, `base`, `srcDir`, and `siteUrl` belong exclusively in
+ * `.vitepress/config.ts`. The `extends` field is only meaningful for the
+ * per-locale variant and contains a locale directory name (for example `en`),
+ * not a path to a YAML file. The shared `site.yaml` has no meaningful root
+ * fields; its cross-locale settings live under `themeConfig`.
  */
 export interface SiteYamlConfig {
   lang?: string

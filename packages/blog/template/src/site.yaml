@@ -3,30 +3,21 @@
 # ============================================================================
 # Neptu Blog — Shared Site Configuration (site.yaml)
 #
-# Cross-locale admin-editable layer applied to every locale. Sits between
-# `.vitepress/config.ts` and per-locale `_site.yaml` files in priority order:
+# Level 2 of 3 — cross-locale admin configuration. Applied to every locale and
+# sits between developer `config.ts` and per-locale `_site.yaml` files:
 #
 #   built-in theme defaults  →  built-in content-locale defaults
 #     →  config.ts  →  src/site.yaml  →  src/<locale>/_site.yaml
 #
-# Use this file for theme settings that are the SAME for every locale but
-# the content team wants to edit without touching `config.ts` (and without
-# duplicating the value in each locale yaml).
+# Use this file only for safe, presentation/content settings that are the SAME
+# for every locale. Do not put JavaScript, environment variables, VitePress
+# build options, plugins, hooks, `base`, `srcDir`, or `siteUrl` here: those
+# are Level 1 (`.vitepress/config.ts`) settings.
 #
-# Shape mirrors `Partial<BlogUserConfig>` — everything theme-related goes
-# under `themeConfig:`. Per-locale identity (`lang`, `title`, `description`)
-# does not belong here; put it in `src/<locale>/_site.yaml` instead.
+# This file has one effective root key: `themeConfig`. Per-locale identity
+# (`lang`, `title`, `titleTemplate`, `description`, `extends`) belongs in
+# Level 3, `src/<locale>/_site.yaml`.
 # ============================================================================
-
-# --- Top-level fields -------------------------------------------------------
-# Most top-level fields (lang, title, titleTemplate, description, extends) are
-# per-locale and belong in `src/<locale>/_site.yaml`, NOT here.
-# The only top-level field that makes sense in this shared file is `siteUrl`:
-
-# Absolute public base URL of the site, including protocol and without a
-# trailing slash. If VitePress `base` is used, include that path too.
-# Used for sitemap, RSS feeds, canonical links, Open Graph, and JSON-LD.
-# siteUrl: https://example.com/blog
 
 # ============================================================================
 # Theme Configuration
@@ -45,7 +36,7 @@ themeConfig:
 
   # GitHub repository URL, used by edit-link and social link placeholders
   # (e.g. '${theme.repo}' resolves to this value).
-  # repo: https://github.com/your-username/my-blog
+  repo: https://github.com/your-username/my-blog
 
   # Blog/site name. Used as the site title fallback and sidebar title fallback.
   # blogTitle: My Blog
@@ -119,6 +110,17 @@ themeConfig:
   # sidebarMenuLabel: Menu
   # Custom label for the color theme switcher menu button.
   # colorThemeMenuLabel: Theme
+  # Custom label for the locale/language switcher.
+  # langMenuLabel: Language
+
+  # --- Standard VitePress theme labels used by this layout ------------------
+  # These are native VitePress Default Theme options, supported here as well.
+  # returnToTopLabel: Back to top
+  # lightModeSwitchTitle: Switch to light theme
+  # darkModeSwitchTitle: Switch to dark theme
+  # notFound:
+  #   title: PAGE NOT FOUND
+  #   linkText: Take me home
 
   # Sidebar sections and links configuration.
   sidebar:
@@ -267,40 +269,21 @@ themeConfig:
   #   # Maximum description length for meta tags (truncated if exceeded).
   #   maxDescriptionLength: 300
 
-  # --- Popular Posts ---------------------------------------------------------
+  # --- Popular Posts (Level 1 integration) ----------------------------------
+  # Configure GA4 credentials and enablement in `.vitepress/config.ts`, not
+  # here. This file may safely override only display behaviour such as
+  # `sortBy` after the integration has been enabled in Level 1.
   # popularPosts:
   #   enabled: false
   #   # Sort metric: 'pageviews', 'uniquePageviews', or 'avgTimeOnPage'.
   #   sortBy: pageviews
   #   dataSource:
   #     provider: ga4
-  #     # GA4 property ID (required when enabled).
-  #     propertyId: '123456789'
-  #     # Path to GA4 service-account credentials JSON file.
-  #     credentialsJson: /path/to/credentials.json
-  #     # Look-back window in days for analytics data.
-  #     dataPeriodDays: 30
-  #     # Maximum number of rows to fetch from analytics.
-  #     dataLimit: 1000
+  #   # `enabled` and `dataSource` stay in config.ts because they use env/secrets.
 
-  # --- Search ----------------------------------------------------------------
-  # Local search powered by Pagefind.
-  # search:
-  #   provider: local
-  #   options:
-  #     # CSS marker that wraps searchable content (default: 'vp-doc').
-  #     bodyMarker: 'vp-doc'
-  #     # Override Pagefind UI translations.
-  #     translations:
-  #       button:
-  #         buttonText: Search
-  #         buttonAriaLabel: Search
-  #     # Per-locale Pagefind UI translations.
-  #     locales:
-  #       ru:
-  #         translations:
-  #           button:
-  #             buttonText: Поиск
+  # --- Search (Level 1 integration) -----------------------------------------
+  # Configure Pagefind assets, provider and options in `.vitepress/config.ts`.
+  # Per-locale visible search labels belong under `themeConfig.t` in _site.yaml.
 
   # --- Landing-only (home page) ----------------------------------------------
   # Hero image URL shown on the home page (landing starter only).
@@ -313,6 +296,33 @@ themeConfig:
   #   popularPosts: Popular
   #   similarPosts: Similar posts
   #   shareSocialMedia: Share
+  #   currentLang: Current language
+  #   tagBadgeCount: posts
+  #   tagPageHeader: Posts tagged
+  #   tags: Tags
+  #   allTags: All tags
+  #   paginationToStart: First page
+  #   paginationToEnd: Last page
+  #   toHome: Home
+  #   toBlog: Blog
+  #   author: Author
+  #   year: Year
+  #   showMorePosts: More posts
+  #   listenPodcast: Listen
+  #   commentLink: Comments
+  #   allTagsCall: All tags
+  #   popularPostsCall: Popular posts
+  #   viewInAnotherLanguage: Read in another language
+  #   postVideoButton: Watch video
+  #   allPostsOfAuthor: All posts by author
+  #   closeMenu: Close menu
+  #   allPostsOfYear: All posts of year
+  #   pageNotFound: Page not found
+  #   postsCount: posts
+  #   editLink: Edit this page
+  #   postsCountForms: [post, posts, posts]
+  #   search: Search
+  #   searchInBlog: Search this blog
   #   links:
   #     aboutBlog: About blog
   #     donate: Donate
@@ -324,3 +334,10 @@ themeConfig:
   #     aboutUs: About us
   #     rssFeed: RSS feed
   #     atomFeed: Atom feed
+  #   # Arrays or objects keyed by number/platform are accepted here.
+  #   months: [January, February, March, April, May, June, July, August, September, October, November, December]
+  #   podcasts: { spotify: Spotify }
+  #   audioFile: {}
+  #   fileDownload: {}
+  #   videoFile: {}
+  #   lightbox: {}

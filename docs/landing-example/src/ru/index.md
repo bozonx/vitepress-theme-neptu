@@ -380,7 +380,7 @@ blocks:
     text: Раз в месяц — что появилось в теме и как это использовать.
     action: https://example.com/subscribe
     submitText: Подписаться
-    consent: 'Согласен с <a href="/ru/page/privacy">политикой конфиденциальности</a>'
+    consent: 'Согласен с <a href="page/links">условиями</a>'
     note: Отписаться можно в один клик.
 
   - type: cta

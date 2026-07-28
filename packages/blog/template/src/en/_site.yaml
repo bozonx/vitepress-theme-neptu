@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=../../../node_modules/vitepress-theme-neptu-blog/schema/site.schema.json
 # ---------------------------------------------------------------------------
-# Per-locale site config — admin-editable layer that overrides settings from
-# `.vitepress/config.ts` and the cross-locale `src/site.yaml`.
+# Level 3 of 3 — per-locale admin configuration. Overrides Level 1
+# (`.vitepress/config.ts`) and Level 2 (`src/site.yaml`) for this locale only.
 #
-# Shape mirrors `Partial<BlogUserConfig>` (VitePress LocaleSpecificConfig):
+# This is not a full VitePress config. Its allowed root fields are:
 # - top-level: `lang`, `title`, `titleTemplate`, `description`
 # - everything else nests under `themeConfig:`.
 #
@@ -15,6 +15,7 @@
 #                         ${theme.donate.url}, ${theme.editLink.text}
 #   ${t.<key>}          — translation strings (from themeConfig.t or
 #                         built-in locale files). Example: ${t.links.donate}
+#   ${config.siteUrl}   — public site URL from Level 1 config.ts.
 #   ${localeIndex}      — current locale folder name (e.g. "en").
 #
 # Common theme keys you can reference:
@@ -47,13 +48,6 @@ lang: 'en-US'
 # Site description used for SEO meta tags and RSS/Atom feeds.
 description: 'Welcome to my new blog'
 
-# Absolute public base URL of the site, including protocol and without a
-# trailing slash. If VitePress `base` is used, include that path too.
-# Used for sitemap, RSS feeds, canonical links, Open Graph, and JSON-LD.
-# Usually set once in site.yaml or config.ts; override here only if this
-# locale lives at a different URL.
-# siteUrl: https://example.com/blog
-
 # Name of another locale whose _site config is inherited as the base;
 # current values override the parent.
 # extends: en
@@ -61,8 +55,9 @@ description: 'Welcome to my new blog'
 themeConfig:
   # -------------------------------------------------------------------------
   # Translations — overrides built-in `t` strings for this locale only.
-  # The theme ships English/Russian defaults in `blogLocalesBase/<lang>.ts`;
-  # only the keys you list here are overridden.
+  # The theme ships multilanguage defaults in `blogLocalesBase/<lang>.ts`;
+  # only the keys you list here are overridden. The complete key reference is
+  # in the Level-2 `src/site.yaml` translation section and in site.schema.json.
   # -------------------------------------------------------------------------
   # t:
   #   popularPosts: "Popular Posts"

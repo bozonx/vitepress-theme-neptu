@@ -82,7 +82,7 @@ layout: page
 ```md
 ---
 layout: home
-heroImg: /img/home-logo.webp
+heroImg: /img/sidebar-logo.jpg
 ---
 <script setup>
 import { HomeHero, HomeTags, HomePopularPosts } from 'vitepress-theme-neptu-blog/components'

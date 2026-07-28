@@ -6,7 +6,8 @@ import type { LandingUserConfig } from 'vitepress-theme-neptu-landing'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default async () => {
-  const base = process.env.VITEPRESS_BASE || '/vitepress-theme-neptu-blog/landing/'
+  const base = process.env.VITEPRESS_BASE || '/'
+  const assetUrl = (path: string) => `${base}${path.replace(/^\//, '')}`
 
   const config: LandingUserConfig = {
     srcDir: path.resolve(__dirname, '../'),
@@ -15,7 +16,11 @@ export default async () => {
       process.env.SITE_URL ||
       'https://bozonx.github.io/vitepress-theme-neptu-blog/landing',
 
-    head: [['meta', { name: 'format-detection', content: 'telephone=no' }]],
+    head: [
+      ['meta', { name: 'format-detection', content: 'telephone=no' }],
+      ['link', { rel: 'icon', type: 'image/svg+xml', href: assetUrl('/img/logo.svg') }],
+      ['link', { rel: 'manifest', href: assetUrl('/site.webmanifest') }],
+    ],
 
     themeConfig: {
       repo: 'https://github.com/bozonx/vitepress-theme-neptu-blog',

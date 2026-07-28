@@ -13,6 +13,8 @@ import {
   mergeReturnedPageData,
   commonBaseConfig,
   normalizeSitemapUrl,
+  prefixSitemapItems,
+  resolveSitemapSiteUrl,
   warnMissingRequired,
   resolveExternalLinkIcon,
 } from 'vitepress-theme-neptu-blog/utils'
@@ -84,6 +86,7 @@ export function mergeLandingConfig(
   )
 
   const noIndexUrls = new Set<string>()
+  const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
 
   const baseLocaleKey = resolveBaseLocaleKey(
     Object.keys(config.locales || {})[0],
@@ -140,11 +143,14 @@ export function mergeLandingConfig(
       },
     },
     sitemap: {
-      hostname: config.siteUrl,
+      hostname: sitemapSiteUrl.hostname,
       transformItems: (items) => {
-        return filterSitemap(
-          items as unknown as SitemapItem[],
-          noIndexUrls
+        return prefixSitemapItems(
+          filterSitemap(
+            items as unknown as SitemapItem[],
+            noIndexUrls
+          ),
+          sitemapSiteUrl.basePath
         )
       },
       ...config.sitemap,

@@ -385,7 +385,7 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   text="Once a month: what shipped and how to use it."
   action="https://example.com/subscribe"
   submit-text="Subscribe"
-  consent="I agree to the <a href='/en/page/privacy'>privacy policy</a>"
+  consent="I agree to the <a href='page/links'>terms</a>"
   note="Unsubscribe in one click."
 />
 

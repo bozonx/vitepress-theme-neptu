@@ -36,11 +36,29 @@ describe('SiteYamlSchema', () => {
     expect(result.success).toBe(false)
   })
 
+  it('rejects developer-only fields in YAML', () => {
+    expect(SiteYamlSchema.safeParse({ siteUrl: 'https://example.com' }).success).toBe(false)
+    expect(SiteYamlSchema.safeParse({ base: '/blog/' }).success).toBe(false)
+  })
+
   it('rejects perPage with wrong type', () => {
     const result = SiteYamlSchema.safeParse({
       themeConfig: { perPage: '10' },
     })
     expect(result.success).toBe(false)
+  })
+
+  it('validates documented nested theme fields', () => {
+    const result = SiteYamlSchema.safeParse({
+      themeConfig: {
+        langMenuLabel: 'Change language',
+        feeds: { formats: ['rss', 'atom'] },
+        seo: { canonical: true, maxDescriptionLength: 300 },
+        nav: { links: [{ text: 'About', href: 'page/about' }] },
+        popularPosts: { sortBy: 'pageviews' },
+      },
+    })
+    expect(result.success).toBe(true)
   })
 })
 

@@ -262,6 +262,34 @@ describe('loadBlogLocale', () => {
     expect((sidebar.bottomLinks as any[]).length).toBe(1)
     expect((sidebar.bottomLinks as any[])[0].text).toBe('Privacy')
   })
+
+  it('keeps config.ts theme values in the resolved locale configuration', async () => {
+    vi.mocked(parseSharedSite).mockResolvedValue({
+      themeConfig: { seo: { og: false } },
+    })
+    siteMocks.en = {
+      themeConfig: { seo: { jsonLd: false } },
+    }
+
+    const result = await loadBlogLocale('en', {
+      srcDir: '/src',
+      themeConfig: {
+        repo: 'https://github.com/example/blog',
+        popularPosts: { enabled: true, sortBy: 'pageviews' },
+        seo: { hreflang: false },
+      },
+    })
+
+    expect(result.themeConfig!.popularPosts).toMatchObject({ enabled: true })
+    expect(result.themeConfig!.seo).toMatchObject({
+      og: false,
+      jsonLd: false,
+      hreflang: false,
+    })
+    expect((result.themeConfig!.editLink as any).pattern).toContain(
+      'https://github.com/example/blog/edit/'
+    )
+  })
 })
 
 describe('autoLoadLocales', () => {

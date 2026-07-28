@@ -67,6 +67,26 @@ vi.mock('vitepress-theme-neptu-blog/utils', () => ({
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
   ],
   normalizeSitemapUrl: vi.fn((p: string) => p.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')),
+  resolveSitemapSiteUrl: vi.fn((siteUrl: string | undefined) => {
+    if (!siteUrl) return { hostname: undefined, basePath: '' }
+    const url = new URL(siteUrl)
+    return {
+      hostname: url.origin,
+      basePath: url.pathname.replace(/^\/+|\/+$/g, ''),
+    }
+  }),
+  prefixSitemapItems: vi.fn((items: Array<{ url: string; links: Array<{ url?: string }> }>, basePath: string) =>
+    basePath
+      ? items.map((item) => ({
+          ...item,
+          url: `${basePath}/${item.url}`,
+          links: item.links.map((link) => ({
+            ...link,
+            url: link.url ? `${basePath}/${link.url}` : link.url,
+          })),
+        }))
+      : items
+  ),
   warnMissingRequired: vi.fn((_config: unknown, prefix: string) => {
     if (!(_config as { siteUrl?: string }).siteUrl) {
       console.warn(`${prefix} \`siteUrl\` is not set.`)
@@ -155,6 +175,19 @@ describe('mergeLandingConfig', () => {
   it('sitemap hostname comes from siteUrl', () => {
     const result = mergeLandingConfig({ siteUrl: 'https://landing.example.com' })
     expect(result.sitemap.hostname).toBe('https://landing.example.com')
+  })
+
+  it('preserves the siteUrl pathname in sitemap entries', () => {
+    const result = mergeLandingConfig({
+      siteUrl: 'https://landing.example.com/project/landing',
+    })
+    expect(result.sitemap.hostname).toBe('https://landing.example.com')
+    expect(result.sitemap.transformItems([{ url: 'en/', links: [{ url: 'en/', lang: 'en-US' }] }])).toEqual([
+      {
+        url: 'project/landing/en/',
+        links: [{ url: 'project/landing/en/', lang: 'en-US' }],
+      },
+    ])
   })
 
   it('deep merges themeConfig.seo', () => {

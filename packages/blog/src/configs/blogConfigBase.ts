@@ -12,6 +12,8 @@ import {
   hasTailwindPlugin,
   commonBaseConfig,
   normalizeSitemapUrl,
+  prefixSitemapItems,
+  resolveSitemapSiteUrl,
   warnMissingRequired,
   resolveExternalLinkIcon,
 } from '../utils/shared/configHelpers.ts'
@@ -138,6 +140,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
   )
 
   const noIndexUrls = new Set<string>()
+  const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
 
   return {
     ...common,
@@ -164,9 +167,12 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       ssr: { noExternal: ['vitepress-theme-neptu-blog'], ...config.vite?.ssr },
     },
     sitemap: {
-      hostname: config.siteUrl,
+      hostname: sitemapSiteUrl.hostname,
       transformItems: (items) => {
-        return filterSitemap(items as unknown as SitemapItem[], noIndexUrls)
+        return prefixSitemapItems(
+          filterSitemap(items as unknown as SitemapItem[], noIndexUrls),
+          sitemapSiteUrl.basePath
+        )
       },
       ...config.sitemap,
     } as UserConfig['sitemap'],

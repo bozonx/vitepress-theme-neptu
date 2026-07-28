@@ -107,6 +107,8 @@ export namespace NeptuBlogTheme {
     blogUrl?: string
     sidebarMenuLabel?: string
     colorThemeMenuLabel?: string
+    /** Accessible label / tooltip for the locale switcher. */
+    langMenuLabel?: string
     /** Landing-only: hero image URL shown on the home page. */
     mainHeroImg?: string
 

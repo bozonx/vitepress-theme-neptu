@@ -125,6 +125,16 @@ describe('mergeBlogConfig', () => {
     expect(result.sitemap.hostname).toBe('https://blog.example.com')
   })
 
+  it('preserves the siteUrl pathname in sitemap entries', () => {
+    const result = mergeBlogConfig({
+      siteUrl: 'https://blog.example.com/project',
+    })
+    expect(result.sitemap.hostname).toBe('https://blog.example.com')
+    expect(result.sitemap.transformItems([{ url: 'en/', links: [{ url: 'en/', lang: 'en-US' }] }])).toEqual([
+      { url: 'project/en/', links: [{ url: 'project/en/', lang: 'en-US' }] },
+    ])
+  })
+
   it('deep merges themeConfig.popularPosts.dataSource', () => {
     const result = mergeBlogConfig({
       themeConfig: {
