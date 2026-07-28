@@ -116,6 +116,8 @@ themeConfig:
   # notFound:
   #   title: 'Page not found'
   #   linkText: 'Take me home'
+
+  # --- Edit Link -------------------------------------------------------------
   editLink:
     # pattern: "https://github.com/user/repo/edit/main/example/blog/src/:path"
     text: 'Edit this page on GitHub'

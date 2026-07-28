@@ -46,63 +46,6 @@ themeConfig:
   # Twitter/X @handle (without @) for SEO meta tags.
   # twitterSite: myblog
 
-  # --- Pagination & Listing --------------------------------------------------
-  # `perPage` is a build-time parameter — configure it in `.vitepress/config.ts`
-  # (exported as `PER_PAGE`) because path generators (`*.paths.js`) import it
-  # at build time to compute pagination routes.
-  # Setting `perPage` here or in `_site.yaml` is rejected by the schema and
-  # a warning is emitted at build time to prevent desynchronisation.
-
-  # Maximum number of tags shown in the sidebar tag cloud.
-  # sidebarTagsCount: 15
-
-  # Number of similar posts to display in the post-footer "similar" block.
-  # similarPostsCount: 5
-
-  # Maximum number of pagination items shown at once.
-  # paginationMaxItems: 5
-
-  # Parallax background offset (in px) for the home page hero section.
-  # homeBgParallaxOffset: 300
-
-  # --- Post List Card --------------------------------------------------------
-  # Controls what is shown on each post card in list/archive/tag views.
-  postList:
-    showDate: true
-    showTags: true
-    showThumbnail: true
-    showPreview: true
-    showAuthor: true
-    # Maximum number of characters for the post preview text.
-    maxPreviewLength: 300
-
-  # --- Post Footer Blocks ----------------------------------------------------
-  # Ordered list of post-footer blocks. Supported keys:
-  #   'author', 'donate', 'comments', 'social-share', 'edit-link',
-  #   'tags', 'similar', 'popular-link'.
-  # Omit a key to hide the block; reorder to change layout.
-  # Defaults to all blocks in the order shown below.
-  postFooter:
-    - author
-    - donate
-    - comments
-    - social-share
-    - edit-link
-    - tags
-    - similar
-
-  # --- Icons -----------------------------------------------------------------
-  # Override any sidebar/nav icon with an Iconify icon name.
-  # donateIcon: 'fa6-solid:hand-holding-heart'
-  # recentIcon: 'fa6-solid:bolt'
-  # popularIcon: 'fa6-solid:star'
-  # byDateIcon: 'fa6-solid:calendar-days'
-  # authorsIcon: 'mdi:users'
-  # rssIcon: 'bi:rss-fill'
-  # atomIcon: 'vscode-icons:file-type-atom'
-  # youtubeIcon: 'fa6-brands:youtube'
-  # tagsIcon: 'fa6-solid:tag'
-
   # --- Sidebar ---------------------------------------------------------------
   # Logo image URL shown at the top of the sidebar.
   # Use a raster image (PNG/WebP) with a fixed resolution; the <img> element
@@ -199,6 +142,63 @@ themeConfig:
     links:
       - text: 'About'
         href: 'page/about'
+
+  # --- Post List Card --------------------------------------------------------
+  # Controls what is shown on each post card in list/archive/tag views.
+  postList:
+    showDate: true
+    showTags: true
+    showThumbnail: true
+    showPreview: true
+    showAuthor: true
+    # Maximum number of characters for the post preview text.
+    maxPreviewLength: 300
+
+  # --- Post Footer Blocks ----------------------------------------------------
+  # Ordered list of post-footer blocks. Supported keys:
+  #   'author', 'donate', 'comments', 'social-share', 'edit-link',
+  #   'tags', 'similar', 'popular-link'.
+  # Omit a key to hide the block; reorder to change layout.
+  # Defaults to all blocks in the order shown below.
+  postFooter:
+    - author
+    - donate
+    - comments
+    - social-share
+    - edit-link
+    - tags
+    - similar
+
+  # --- Pagination & Listing --------------------------------------------------
+  # `perPage` is a build-time parameter — configure it in `.vitepress/config.ts`
+  # (exported as `PER_PAGE`) because path generators (`*.paths.js`) import it
+  # at build time to compute pagination routes.
+  # Setting `perPage` here or in `_site.yaml` is rejected by the schema and
+  # a warning is emitted at build time to prevent desynchronisation.
+
+  # Maximum number of tags shown in the sidebar tag cloud.
+  # sidebarTagsCount: 15
+
+  # Number of similar posts to display in the post-footer "similar" block.
+  # similarPostsCount: 5
+
+  # Maximum number of pagination items shown at once.
+  # paginationMaxItems: 5
+
+  # Parallax background offset (in px) for the home page hero section.
+  # homeBgParallaxOffset: 300
+
+  # --- Icons -----------------------------------------------------------------
+  # Override any sidebar/nav icon with an Iconify icon name.
+  # donateIcon: 'fa6-solid:hand-holding-heart'
+  # recentIcon: 'fa6-solid:bolt'
+  # popularIcon: 'fa6-solid:star'
+  # byDateIcon: 'fa6-solid:calendar-days'
+  # authorsIcon: 'mdi:users'
+  # rssIcon: 'bi:rss-fill'
+  # atomIcon: 'vscode-icons:file-type-atom'
+  # youtubeIcon: 'fa6-brands:youtube'
+  # tagsIcon: 'fa6-solid:tag'
 
   # --- Publisher (JSON-LD / SEO) ---------------------------------------------
   # Publisher info used in JSON-LD structured data.

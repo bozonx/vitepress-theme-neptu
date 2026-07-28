@@ -48,9 +48,12 @@ export default async () => {
     ],
 
     themeConfig: {
+      // Core
       repo: 'https://github.com/bozonx/vitepress-theme-neptu',
       perPage: PER_PAGE,
       themeSwitcher: true,
+
+      // Integrations
       search: {
         provider: 'pagefind',
         options: { bodyMarker: 'data-pagefind-body' },
