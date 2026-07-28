@@ -53,7 +53,8 @@ my-blog/
 | --- | --- |
 | Название блога, навигация, футер | `src/<локаль>/_site.yaml` |
 | Настройки для всех локалей сразу | `src/site.yaml` |
-| `siteUrl`, поиск, ссылка на репозиторий | `src/.vitepress/config.ts` |
+| `siteUrl`, поиск, build-time пагинация и интеграции с env | `src/.vitepress/config.ts` |
+| Ссылка на репозиторий и автоматическая ссылка «редактировать страницу» | `src/site.yaml` |
 | Авторы | `src/<локаль>/_authors.yaml` |
 | Цветовая схема и свои стили | `src/.vitepress/theme/` |
 | Картинки и медиа | `src/public/` |

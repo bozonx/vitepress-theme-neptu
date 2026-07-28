@@ -1,5 +1,5 @@
 import { deepMerge } from '../shared/merge.ts'
-import { mergeAuthorsById } from '../shared/mergeStrategy.ts'
+import { mergeAuthorsById, mergeSocialMediaSharesByName } from '../shared/mergeStrategy.ts'
 import { extractThemeConfig } from '../shared/configHelpers.ts'
 import { autoLoadLocalesFactory, type LocaleEntry } from './autoLoadLocales.ts'
 import {
@@ -16,6 +16,7 @@ import { resolveEditLinkPattern } from './editLink.ts'
 import type {
   LocaleDefinition,
   Author,
+  SocialMediaShare,
   BlogUserConfig,
   ThemeConfig,
   I18n,
@@ -24,15 +25,25 @@ import type {
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
 
 /**
- * Removes `authors` from a nested `themeConfig` so that generic deep-merge
- * does not touch authors — they are merged separately with a by-id strategy.
+ * Removes `authors` and `socialMediaShares` from a nested `themeConfig` so
+ * that generic deep-merge does not touch them — they are merged separately
+ * with by-id / by-name strategies.
  */
-function stripThemeAuthors(
+function stripThemeArrays(
   site: Record<string, unknown>
-): { site: Record<string, unknown>; authors: Author[] } {
+): {
+  site: Record<string, unknown>
+  authors: Author[]
+  socialShares: SocialMediaShare[]
+} {
   const themeConfig = extractThemeConfig(site)
-  const { authors: themeAuthors, ...themeConfigRest } = themeConfig as {
+  const {
+    authors: themeAuthors,
+    socialMediaShares: themeSocialShares,
+    ...themeConfigRest
+  } = themeConfig as {
     authors?: Author[]
+    socialMediaShares?: SocialMediaShare[]
     [key: string]: unknown
   }
   const { themeConfig: _tc, ...siteRest } = site
@@ -42,14 +53,19 @@ function stripThemeAuthors(
         ? { ...siteRest, themeConfig: themeConfigRest }
         : siteRest,
     authors: Array.isArray(themeAuthors) ? (themeAuthors as Author[]) : [],
+    socialShares: Array.isArray(themeSocialShares)
+      ? (themeSocialShares as SocialMediaShare[])
+      : [],
   }
 }
 
 interface LocaleYamlChain {
-  /** Merged `_site.yaml` payload with `authors` stripped and `extends` resolved. */
+  /** Merged `_site.yaml` payload with `authors`/`socialMediaShares` stripped and `extends` resolved. */
   site: Record<string, unknown>
   /** Merged authors list from every step of the `extends` chain. */
   authors: Author[]
+  /** Merged socialMediaShares list from every step of the `extends` chain. */
+  socialShares: SocialMediaShare[]
 }
 
 /**
@@ -70,7 +86,7 @@ async function loadLocaleYamlChain(
     console.warn(
       `[vitepress-theme-neptu-blog] Cycle detected in _site.yaml \`extends\` chain: ${chain}`
     )
-    return { site: {}, authors: [] }
+    return { site: {}, authors: [], socialShares: [] }
   }
   const nextVisited = new Set(visited).add(localeIndex)
 
@@ -81,15 +97,16 @@ async function loadLocaleYamlChain(
     string,
     unknown
   >
-  const { site: siteWithoutAuthors, authors: siteAuthors } = stripThemeAuthors(rawSite)
+  const { site: siteWithoutArrays, authors: siteAuthors, socialShares: siteSocialShares } =
+    stripThemeArrays(rawSite)
   const authorsFile = (await parseLocaleAuthors(srcDir, localeParams)) as Author[]
   const currentAuthors = mergeAuthorsById(siteAuthors, authorsFile)
 
   const extendsKey =
-    typeof siteWithoutAuthors.extends === 'string'
-      ? (siteWithoutAuthors.extends as string)
+    typeof siteWithoutArrays.extends === 'string'
+      ? (siteWithoutArrays.extends as string)
       : null
-  const { extends: _extends, ...siteRest } = siteWithoutAuthors
+  const { extends: _extends, ...siteRest } = siteWithoutArrays
 
   if (extendsKey) {
     const parent = await loadLocaleYamlChain(
@@ -101,10 +118,11 @@ async function loadLocaleYamlChain(
     return {
       site: deepMerge(parent.site, siteRest),
       authors: mergeAuthorsById(parent.authors, currentAuthors),
+      socialShares: mergeSocialMediaSharesByName(parent.socialShares, siteSocialShares),
     }
   }
 
-  return { site: siteRest, authors: currentAuthors }
+  return { site: siteRest, authors: currentAuthors, socialShares: siteSocialShares }
 }
 
 /**
@@ -142,16 +160,33 @@ export async function loadBlogLocale(
   // built-ins → developer config.ts → shared site.yaml → locale _site.yaml.
   // In particular, config.themeConfig must participate in the final locale
   // config, not merely be available while interpolating YAML templates.
+  // Strip socialMediaShares from built-in locale and config.ts layers so
+  // they are merged by name instead of replaced by deepMerge.
+  const {
+    socialMediaShares: baseSocialShares,
+    ...baseLocaleThemeRest
+  } = (baseLocale.themeConfig || {}) as {
+    socialMediaShares?: SocialMediaShare[]
+    [key: string]: unknown
+  }
+  const {
+    socialMediaShares: configSocialShares,
+    ...configThemeRest
+  } = (config.themeConfig || {}) as {
+    socialMediaShares?: SocialMediaShare[]
+    [key: string]: unknown
+  }
+
   const builtInTheme = deepMerge(
     (blogCommon.themeConfig || {}) as Record<string, unknown>,
     {
-      ...(baseLocale.themeConfig || {}),
+      ...baseLocaleThemeRest,
       t: { ...baseLocale.t },
     }
   )
   const sharedThemeBaseForTemplate = deepMerge(
     builtInTheme,
-    (config.themeConfig || {}) as Record<string, unknown>
+    configThemeRest as Record<string, unknown>
   )
   const sharedSite = (await parseSharedSite(config.srcDir || '', {
     localeIndex,
@@ -159,8 +194,8 @@ export async function loadBlogLocale(
     theme: sharedThemeBaseForTemplate,
     t: (sharedThemeBaseForTemplate.t as Record<string, unknown> | undefined) ?? {},
   })) as Record<string, unknown>
-  const { site: sharedSiteSanitized, authors: sharedAuthors } =
-    stripThemeAuthors(sharedSite)
+  const { site: sharedSiteSanitized, authors: sharedAuthors, socialShares: sharedSocialShares } =
+    stripThemeArrays(sharedSite)
   const sharedThemeConfig = extractThemeConfig(sharedSiteSanitized)
 
   const resolvedTheme = deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig)
@@ -185,6 +220,19 @@ export async function loadBlogLocale(
   } = site
   const localeThemeConfig = extractThemeConfig(site)
   const mergedAuthorsList = mergeAuthorsById(sharedAuthors, chain.authors)
+
+  // Merge socialMediaShares in priority order (low→high):
+  // built-in locale → config.ts → shared site.yaml → locale _site.yaml
+  const mergedSocialShares = mergeSocialMediaSharesByName(
+    mergeSocialMediaSharesByName(
+      mergeSocialMediaSharesByName(
+        baseSocialShares,
+        configSocialShares,
+      ),
+      sharedSocialShares,
+    ),
+    chain.socialShares,
+  )
   const authors = mergedAuthorsList.length
     ? mergedAuthorsList.map((item) => {
         const imageDimensions = item.image
@@ -225,6 +273,9 @@ export async function loadBlogLocale(
         ...((localeThemeConfig.t || {}) as Record<string, unknown>),
       } as unknown as I18n,
       authors,
+      ...(mergedSocialShares.length > 0
+        ? { socialMediaShares: mergedSocialShares }
+        : {}),
     },
   }
 }

@@ -78,4 +78,20 @@ describe('PostSocialShare', () => {
     const anchor = wrapper.find('a')
     expect(anchor.classes()).toContain('custom-class')
   })
+
+  it('filters out items with enabled: false', () => {
+    mockTheme.value = {
+      socialMediaShares: [
+        { name: 'telegram', icon: 't', title: 'Telegram', urlTemplate: 'https://t.me/share?url={url}' },
+        { name: 'vk', icon: 'v', title: 'VK', urlTemplate: 'https://vk.com/share?url={url}', enabled: false },
+      ],
+      t: { shareSocialMedia: 'Share' },
+    }
+    const wrapper = mount(PostSocialShare, {
+      global: { stubs: { Icon: IconStub } },
+    })
+    const anchors = wrapper.findAll('a')
+    expect(anchors).toHaveLength(1)
+    expect(anchors[0].attributes('title')).toBe('Telegram')
+  })
 })

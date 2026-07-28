@@ -17,7 +17,9 @@ interface ShareItem {
   class?: string
 }
 
-const socialItems = computed(() => theme.value.socialMediaShares || [])
+const socialItems = computed(() =>
+  (theme.value.socialMediaShares || []).filter((item) => item.enabled !== false)
+)
 
 const items = computed<ShareItem[]>(() => {
   const currentUrl = typeof document !== 'undefined' ? document.URL : ''

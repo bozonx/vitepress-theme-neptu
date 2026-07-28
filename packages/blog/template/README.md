@@ -62,6 +62,7 @@ npm run preview
 ## ⚙️ Customization
 
 - **Site Info & Navigation**: Edit `src/site.yaml` and `src/en/_site.yaml` to set your blog title, navigation links, social icons, and footer text.
-- **VitePress & Theme Settings**: Edit `src/.vitepress/config.ts` to set your site URL (`siteUrl`), repository link (`repo`), and search provider settings.
+- **VitePress & integrations**: Edit `src/.vitepress/config.ts` to set your site URL (`siteUrl`), search provider, build-time pagination, and environment-backed integrations.
+- **Repository & edit links**: Set `themeConfig.repo` in `src/site.yaml`. The edit-link URL is generated from this repository URL automatically; use `editLink.pattern` only for a custom repository layout.
 - **Authors**: Add your author profile in `src/en/_authors.yaml`.
 - **New Posts**: Add new `.md` files in `src/en/post/`.

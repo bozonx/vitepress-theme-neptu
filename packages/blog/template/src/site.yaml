@@ -108,13 +108,14 @@ themeConfig:
   # Use a raster image (PNG/WebP) with a fixed resolution; the <img> element
   # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×360) is
   # recommended for retina displays.
-  sidebarLogoSrc: /logo.png
+  # Add an image to `src/public/` first, then point to it from the public root.
+  # sidebarLogoSrc: /img/sidebar-logo.png
   # Logo height in pixels — used only as a placeholder so the browser can
   # reserve vertical space before the image loads (prevents layout shift / CLS).
   # The image is NOT compressed to this height: CSS `h-auto` keeps the natural
   # aspect ratio. Set this to the image's height at 320px render width
   # (e.g. for a 640×360 source, use 180).
-  sidebarLogoHeight: 180
+  # sidebarLogoHeight: 180
 
   # NOTE: VitePress Default Theme labels (returnToTopLabel,
   # lightModeSwitchTitle, darkModeSwitchTitle, notFound) are NOT set here —
@@ -204,7 +205,8 @@ themeConfig:
   publisher:
     name: My Blog
     url: https://example.com
-    logo: /logo.png
+    # Set this only after adding the corresponding public image, for example:
+    # logo: /img/logo.png
 
   # --- Authors ---------------------------------------------------------------
   # List of blog authors. Each author must have a unique `id` and a `name`.
@@ -227,19 +229,27 @@ themeConfig:
   # --- Social Media Share Buttons --------------------------------------------
   # Sharing platforms rendered in the post-footer "social-share" block.
   # `urlTemplate` must contain `{url}` and optionally `{title}` placeholders.
+  #
+  # Built-in buttons are defined per-locale (e.g. Telegram, WhatsApp, VK, X,
+  # Facebook, LinkedIn for `en`). Entries here are **merged by `name`** with
+  # the built-in list — you can override fields on existing buttons or add
+  # new ones. Set `enabled: false` to hide a built-in button without
+  # removing it from the defaults.
+  #
   # socialMediaShares:
-  #   - name: twitter
+  #   # Override the icon/title on a built-in button
+  #   - name: x
   #     icon: 'fa6-brands:x-twitter'
   #     title: Share on X
   #     urlTemplate: 'https://twitter.com/intent/tweet?url={url}&text={title}'
-  #   - name: facebook
-  #     icon: 'fa6-brands:facebook'
-  #     title: Share on Facebook
-  #     urlTemplate: 'https://www.facebook.com/sharer/sharer.php?u={url}'
-  #   - name: linkedin
-  #     icon: 'fa6-brands:linkedin'
-  #     title: Share on LinkedIn
-  #     urlTemplate: 'https://www.linkedin.com/sharing/share-offsite/?url={url}'
+  #   # Add a new button
+  #   - name: reddit
+  #     icon: 'fa6-brands:reddit'
+  #     title: Share on Reddit
+  #     urlTemplate: 'https://www.reddit.com/submit?url={url}&title={title}'
+  #   # Disable a built-in button
+  #   - name: vk
+  #     enabled: false
 
   # --- Feeds (RSS / Atom / JSON) ---------------------------------------------
   # feeds:

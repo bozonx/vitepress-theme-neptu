@@ -354,6 +354,7 @@ export namespace NeptuBlogTheme {
     title: string
     urlTemplate: string
     class?: string
+    enabled?: boolean
   }
 
   export interface Tag {
@@ -500,6 +501,7 @@ export type AuthorItem = NeptuBlogTheme.AuthorItem
 export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem
 export type LinkItem = NeptuBlogTheme.LinkItem
 export type SocialLink = NeptuBlogTheme.SocialLink
+export type SocialMediaShare = NeptuBlogTheme.SocialMediaShare
 export type PagefindUITranslations = NeptuBlogTheme.PagefindUITranslations
 
 declare const theme: Theme

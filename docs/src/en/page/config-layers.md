@@ -58,6 +58,12 @@ This file has one effective root key, `themeConfig`. It is the complete, self-do
 
 `themeConfig` groups are: general (`repo`, `blogTitle`, switches), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml).
 
+Set `repo` here when it is shared by every locale. It automatically supplies
+the `editLink.pattern` for GitHub, GitLab, Bitbucket, Gitea, Forgejo and
+Codeberg, using the `main` branch and `src/` directory. Usually a locale only
+needs `editLink.text`; set `editLink.pattern` yourself only when its branch or
+source path differs from those defaults.
+
 **Exception — `perPage`:** Unlike every other `themeConfig` field, `perPage` **cannot** be set in `site.yaml` or `_site.yaml`. It is a build-time parameter that path generators (`*.paths.js`) import at build time to compute pagination routes. Setting it in YAML would desynchronise the generated routes from the runtime value. Configure `perPage` only in `.vitepress/config.ts` (e.g. `export const PER_PAGE = 10` and `themeConfig: { perPage: PER_PAGE }`). The schema rejects `perPage` in YAML and emits a build-time warning.
 
 Arrays replace an earlier array as a whole. Objects deep-merge. `authors` is the exception: entries merge by their stable `id`.

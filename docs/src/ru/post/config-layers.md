@@ -60,6 +60,11 @@ export default async () => defineBlogConfig({
 
 В `themeConfig` документированы группы: общие (`repo`, `blogTitle`, переключатели), списки (`postList`, `postFooter`), иконки, sidebar, `nav`, donate, edit link, footer, publisher, authors, social sharing, feeds, SEO, `popularPosts.sortBy`, landing-поля и переводы `t`. Каждое поле прокомментировано прямо в `packages/blog/template/src/site.yaml`.
 
+Укажите общий для языков `repo` здесь. Тема сама построит `editLink.pattern`
+для GitHub, GitLab, Bitbucket, Gitea, Forgejo и Codeberg, предполагая ветку
+`main` и каталог `src/`. Обычно в локали достаточно задать `editLink.text`;
+`editLink.pattern` нужен только для нестандартной ветки или пути к исходникам.
+
 **Исключение — `perPage`:** В отличие от остальных полей `themeConfig`, `perPage` **нельзя** задавать в `site.yaml` или `_site.yaml`. Это build-time параметр: генераторы путей (`*.paths.js`) импортируют его на этапе сборки для расчёта маршрутов пагинации. Значение в YAML рассинхронизирует сгенерированные маршруты и рантайм. Настраивайте `perPage` только в `.vitepress/config.ts` (например, `export const PER_PAGE = 10` и `themeConfig: { perPage: PER_PAGE }`). Схема отклоняет `perPage` в YAML и выводит предупреждение при сборке.
 
 Объекты объединяются рекурсивно, массивы заменяются целиком. Исключение — `authors`: записи объединяются по стабильному `id`.

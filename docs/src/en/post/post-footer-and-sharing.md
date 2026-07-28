@@ -38,13 +38,17 @@ themeConfig:
     - donate        # donate call-to-action
     - comments      # commentLink button
     - social-share  # share buttons (see below)
-    - edit-link     # "Edit this page" (needs repo + editLink)
+    - edit-link     # "Edit this page" (set repo; its URL is generated automatically)
     - tags          # this post's tags
     - similar       # similar posts list
     - popular-link  # link to the Popular listing
 ```
 
 Drop any line to hide that block; change the order to rearrange the stack.
+
+Set `themeConfig.repo` once in `src/site.yaml` and the theme derives the edit
+URL for the supported Git hosts. `editLink.text` only changes the label; use
+`editLink.pattern` solely to override the generated branch or source path.
 
 ## Social share buttons
 

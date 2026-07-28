@@ -7,7 +7,7 @@ themeConfig:
   donate:
     url: 'page/donate'
   publisher:
-    logo: 'https://myblog.org/logo.png'
+    logo: '/img/sidebar-logo.jpg'
   nav:
     donate: true
     socialLinks:

@@ -185,6 +185,7 @@ const ThemeConfigSchema = z
     socialMediaShares: z.array(z.looseObject({
       name: z.string().optional(), icon: z.string().optional(), title: z.string().optional(),
       urlTemplate: z.string().optional(), class: z.string().optional(),
+      enabled: z.boolean().optional(),
     })).optional(),
     t: TranslationSchema.optional(),
     authors: z.array(AuthorSchema).optional(),
