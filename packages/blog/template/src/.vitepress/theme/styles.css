@@ -1,14 +1,157 @@
-/* Custom CSS overrides for your blog */
+/* ============================================================
+ * Custom CSS overrides for your blog
+ *
+ * This file is loaded AFTER all theme styles, so every rule
+ * here wins over the defaults. The theme is built on CSS
+ * custom properties (variables) — override them instead of
+ * writing hard-coded values whenever possible.
+ *
+ * Architecture overview (low → high priority):
+ *
+ *   1. blog-vars.css       — :root + .dark tokens (layout, buttons, links…)
+ *   2. theme-presets.css   — [data-theme='…'] color palettes (blue, green, …)
+ *   3. <theme>-theme.css   — the one imported in theme/index.ts (default palette)
+ *   4. styles.css          — THIS FILE (your overrides)
+ *
+ * Available built-in themes (set in theme/index.ts):
+ *   blue, green, purple, amber, teal, rose, magenta, monochrome
+ * ============================================================ */
 
 @import 'tailwindcss';
 @import 'vitepress-theme-neptu-blog/tailwind-source.css';
 
-/* :root {
-  --primary-hue: 115;
-  --layout-hue: 115;
-} */
+/* ------------------------------------------------------------
+ * 1. Color palette — hue shift
+ *
+ * Every built-in theme defines two hue variables:
+ *   --primary-hue  — accent / brand color (buttons, links, tags)
+ *   --layout-hue   — gray ramp tint (backgrounds, borders, text)
+ *
+ * Override them globally to re-tint the entire blog without
+ * picking a specific preset.
+ * ------------------------------------------------------------ */
+/* :root { */
+/*   --primary-hue: 115; */  /* e.g. green accent everywhere */
+/*   --layout-hue: 115;  */  /* match gray ramp to the same hue */
+/* } */
 
-/* .home-layout {
-  background-image: url('https://...');
-  background-color: #000000;
-} */
+/* ------------------------------------------------------------
+ * 2. Brand button colors
+ *
+ * --primary-btn-bg        — normal state
+ * --primary-btn-bg-active — pressed / active state
+ *
+ * Keep lightness ≤ 46% so white text clears WCAG AA (4.5:1).
+ * ------------------------------------------------------------ */
+/* :root { */
+/*   --primary-btn-bg: hsl(var(--primary-hue), 66%, 46%); */
+/*   --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 32%); */
+/* } */
+
+/* ------------------------------------------------------------
+ * 3. Dark mode overrides
+ *
+ * Scope changes to `.dark` so they only apply when the user
+ * has switched to dark appearance.
+ * ------------------------------------------------------------ */
+/* .dark { */
+/*   --primary-btn-bg: hsl(var(--primary-hue), 80%, 40%); */
+/*   --body-bg: var(--gray-900); */
+/*   --body-text-color: var(--gray-200); */
+/* } */
+
+/* ------------------------------------------------------------
+ * 4. Layout tokens
+ *
+ *   --page-max-width         — max content width (default 840px)
+ *   --body-font-size         — base font size (1.125rem)
+ *   --body-line-height       — base line height (1.75rem)
+ *   --list-item-thumb-width  — post list thumbnail width (280px)
+ *   --font-body              — font-family stack
+ * ------------------------------------------------------------ */
+/* :root { */
+/*   --page-max-width: 760px; */
+/*   --body-font-size: 1.0625rem; */
+/*   --font-body: 'Inter', system-ui, sans-serif; */
+/* } */
+
+/* ------------------------------------------------------------
+ * 5. Link colors
+ *
+ *   --link-hue    — normal link color (default 232 = blue)
+ *   --visited-hue — visited link color (default 287 = purple)
+ *   --link-a-text — computed link text color
+ * ------------------------------------------------------------ */
+/* :root { */
+/*   --link-hue: 213; */
+/*   --link-a-text: hsl(var(--link-hue), 74%, 44%); */
+/* } */
+/* .dark { */
+/*   --link-a-text: hsl(var(--link-hue), 100%, 76%); */
+/* } */
+
+/* ------------------------------------------------------------
+ * 6. Buttons & tags
+ *
+ *   --btn-bg            — secondary button background
+ *   --btn-text          — secondary button text
+ *   --btn-bg-active     — secondary button pressed state
+ *   --tag-item-bg       — tag pill background
+ *   --tag-item-bg-active — tag pill pressed state
+ * ------------------------------------------------------------ */
+/* :root { */
+/*   --btn-bg: var(--gray-150); */
+/*   --btn-text: var(--gray-700); */
+/*   --tag-item-bg: var(--primary-btn-bg); */
+/* } */
+
+/* ------------------------------------------------------------
+ * 7. Sidebar / drawer
+ *
+ *   --drawer-bg            — sidebar background
+ *   --drawer-border-color  — sidebar border
+ *   --backdrop-bg          — mobile overlay backdrop
+ * ------------------------------------------------------------ */
+/* :root { */
+/*   --drawer-bg: var(--gray-50); */
+/*   --drawer-border-color: var(--gray-200); */
+/*   --backdrop-bg: rgba(0, 0, 0, 0.85); */
+/* } */
+
+/* ------------------------------------------------------------
+ * 8. Home page background
+ *
+ * The home layout (layout: home in frontmatter) uses the
+ * `.home-layout` class. Set a background image and/or color.
+ *
+ * Frontmatter alternatives (no CSS needed):
+ *   homeBackground: parallax | none
+ *   homeBackgroundImage: https://…
+ *   homeTheme: dark | light
+ *   homeMaxWidth: 800
+ *   homeBgParallaxOffset: 200
+ * ------------------------------------------------------------ */
+/* .home-layout { */
+/*   background-image: url('https://images.unsplash.com/…'); */
+/*   background-color: #000000; */
+/* } */
+
+/* ------------------------------------------------------------
+ * 9. Per-theme overrides
+ *
+ * Target a specific color theme by its [data-theme] selector.
+ * This lets you fine-tune one palette without affecting others.
+ * ------------------------------------------------------------ */
+/* [data-theme='green'] { */
+/*   --primary-btn-bg: hsl(115, 70%, 31%); */
+/* } */
+
+/* ------------------------------------------------------------
+ * 10. Custom utility classes
+ *
+ * Tailwind is available — use @utility to register custom
+ * utilities, or write plain CSS classes below.
+ * ------------------------------------------------------------ */
+/* @utility text-balance { */
+/*   text-wrap: balance; */
+/* } */
