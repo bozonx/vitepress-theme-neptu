@@ -106,3 +106,30 @@ Only YAML supports templates, resolved before parsing:
 | `${localeIndex}` | Current locale directory name. |
 
 YAML files link to `site.schema.json` / `authors.schema.json` for editor completion and validation. The schemas describe all public Neptu fields; unknown keys remain warnings-compatible for future VitePress extensions. TypeScript variants (`site.ts`, `_site.ts`, `_authors.ts`) take precedence over YAML and use `defineSiteConfig`, `defineLocaleConfig`, and `defineAuthorsList` respectively.
+
+## Custom fields in `themeConfig`
+
+You can add **any own fields** to `themeConfig` — they pass through the entire merge pipeline and are accessible at runtime via `useUiTheme()`. Objects deep-merge across layers; arrays replace.
+
+```yaml
+# src/site.yaml
+themeConfig:
+  myCustomField: "hello"
+  myCustomConfig:
+    featureEnabled: true
+    apiUrl: "https://api.example.com"
+```
+
+Access in a Vue component:
+
+```vue
+<script setup lang="ts">
+import { useUiTheme } from 'vitepress-theme-neptu-blog/composables'
+
+const { theme } = useUiTheme()
+console.log(theme.value.myCustomField)   // "hello"
+console.log(theme.value.myCustomConfig)  // { featureEnabled: true, apiUrl: "..." }
+</script>
+```
+
+Custom fields can be set at any layer: `config.ts`, `site.yaml`, or `_site.yaml`. Values merge by priority — lowest to highest.

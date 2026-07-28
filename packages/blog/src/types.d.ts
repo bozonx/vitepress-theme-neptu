@@ -470,6 +470,16 @@ export namespace NeptuBlogTheme {
 }
 
 export type ThemeConfig = NeptuBlogTheme.Config
+/**
+ * Same as `ThemeConfig` but also allows arbitrary user-defined keys.
+ * The theme deep-merges and preserves any extra fields declared in
+ * `themeConfig` (config.ts, site.yaml, or _site.yaml), making them
+ * accessible at runtime via `useUiTheme()`. Known Neptu fields keep
+ * their specific types; custom fields resolve to `unknown`.
+ */
+export type RuntimeThemeConfig = NeptuBlogTheme.Config & {
+  [key: string]: unknown
+}
 export type DeepPartial<T> = NeptuBlogTheme.DeepPartial<T>
 export type PostLite = NeptuBlogTheme.PostLite
 export type Post = NeptuBlogTheme.Post

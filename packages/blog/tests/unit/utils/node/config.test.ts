@@ -263,6 +263,59 @@ describe('loadBlogLocale', () => {
     expect((sidebar.bottomLinks as any[])[0].text).toBe('Privacy')
   })
 
+  it('preserves custom themeConfig fields from shared site.yaml through to final locale', async () => {
+    vi.mocked(parseSharedSite).mockResolvedValue({
+      themeConfig: {
+        mySharedCustom: 'from-site-yaml',
+        mySharedObject: { key: 'shared-value' },
+      },
+    })
+
+    const result = await loadBlogLocale('en', { srcDir: '/src' })
+
+    expect((result.themeConfig as any).mySharedCustom).toBe('from-site-yaml')
+    expect((result.themeConfig as any).mySharedObject).toEqual({
+      key: 'shared-value',
+    })
+  })
+
+  it('preserves custom themeConfig fields from per-locale _site.yaml and deep-merges with shared', async () => {
+    vi.mocked(parseSharedSite).mockResolvedValue({
+      themeConfig: {
+        myCustom: { shared: 'from-site-yaml', locale: 'default' },
+      },
+    })
+    siteMocks['en'] = {
+      themeConfig: {
+        myCustom: { locale: 'from-_site-yaml' },
+        myLocaleCustom: 'only-in-locale',
+      },
+    }
+
+    const result = await loadBlogLocale('en', { srcDir: '/src' })
+
+    // Deep merge: shared key preserved, locale key overridden
+    expect((result.themeConfig as any).myCustom).toEqual({
+      shared: 'from-site-yaml',
+      locale: 'from-_site-yaml',
+    })
+    // Locale-only custom field present
+    expect((result.themeConfig as any).myLocaleCustom).toBe('only-in-locale')
+  })
+
+  it('preserves custom themeConfig fields from config.ts through to final locale', async () => {
+    const result = await loadBlogLocale('en', {
+      srcDir: '/src',
+      themeConfig: {
+        myConfigCustom: 'from-config-ts',
+        myConfigObject: { value: 123 },
+      } as any,
+    })
+
+    expect((result.themeConfig as any).myConfigCustom).toBe('from-config-ts')
+    expect((result.themeConfig as any).myConfigObject).toEqual({ value: 123 })
+  })
+
   it('keeps config.ts theme values in the resolved locale configuration', async () => {
     vi.mocked(parseSharedSite).mockResolvedValue({
       themeConfig: { seo: { og: false } },

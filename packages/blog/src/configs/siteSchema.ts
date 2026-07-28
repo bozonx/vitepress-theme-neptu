@@ -104,6 +104,7 @@ const ThemeConfigSchema = z
     similarPostsCount: z.number().optional(),
     sidebarTagsCount: z.number().optional(),
     paginationMaxItems: z.number().optional(),
+    homeBgParallaxOffset: z.number().optional(),
     postFooter: z.array(z.string()).optional(),
     postList: z.looseObject({
       showDate: z.boolean().optional(),
@@ -185,6 +186,10 @@ const ThemeConfigSchema = z
     })).optional(),
     t: TranslationSchema.optional(),
     authors: z.array(AuthorSchema).optional(),
+    returnToTopLabel: z.string().optional(),
+    lightModeSwitchTitle: z.string().optional(),
+    darkModeSwitchTitle: z.string().optional(),
+    notFound: z.looseObject({}).optional(),
   })
   .optional()
 

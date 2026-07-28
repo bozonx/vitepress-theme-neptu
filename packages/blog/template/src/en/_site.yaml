@@ -73,13 +73,14 @@ themeConfig:
   # Also you can override other fields from category "Branding & layout"
   # like sidebarLogoSrc, sidebarMenuLabel etc.
   # Also you can override all other themeConfig fields from src/site.yaml
+  # Custom fields are also supported — see the "Custom Fields" section in
+  # src/site.yaml for details.
 
   # -------------------------------------------------------------------------
   # Locale-specific theme overrides. Same keys as global `themeConfig` in
   # `.vitepress/config.ts` and `src/site.yaml`. Prefer global config for
   # site-wide behavior; override here only when this locale intentionally differs.
   # -------------------------------------------------------------------------
-  # perPage: 10
   # langMenuLabel: 'Interface language'  # tooltip on the language switcher
   editLink:
     # pattern: "https://github.com/user/repo/edit/main/example/blog/src/:path"

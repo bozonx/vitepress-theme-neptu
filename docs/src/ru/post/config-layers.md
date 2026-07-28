@@ -108,3 +108,30 @@ themeConfig:
 | `${localeIndex}` | имя текущей папки локали. |
 
 Файлы подключают `site.schema.json` и `authors.schema.json` для автодополнения в редакторе. Схемы перечисляют все публичные поля Neptu; неизвестные поля сохраняются для совместимости с будущими расширениями VitePress. TypeScript-варианты `site.ts`, `_site.ts`, `_authors.ts` имеют приоритет над YAML; для них есть `defineSiteConfig`, `defineLocaleConfig`, `defineAuthorsList`.
+
+## Пользовательские поля в `themeConfig`
+
+В `themeConfig` можно добавлять **любые собственные поля** — они проходят через весь конвейер слияния и доступны в рантайме через `useUiTheme()`. Объекты рекурсивно объединяются между уровнями, массивы заменяются целиком.
+
+```yaml
+# src/site.yaml
+themeConfig:
+  myCustomField: "hello"
+  myCustomConfig:
+    featureEnabled: true
+    apiUrl: "https://api.example.com"
+```
+
+Доступ в Vue-компоненте:
+
+```vue
+<script setup lang="ts">
+import { useUiTheme } from 'vitepress-theme-neptu-blog/composables'
+
+const { theme } = useUiTheme()
+console.log(theme.value.myCustomField)   // "hello"
+console.log(theme.value.myCustomConfig)  // { featureEnabled: true, apiUrl: "..." }
+</script>
+```
+
+Поля можно задавать на любом уровне: `config.ts`, `site.yaml` или `_site.yaml`. Значения сливаются по приоритету — от низкого к высокому.

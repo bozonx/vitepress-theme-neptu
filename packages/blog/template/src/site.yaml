@@ -288,7 +288,7 @@ themeConfig:
   # Hero image URL shown on the home page (landing starter only).
   # mainHeroImg: /hero.jpg
 
-  # --- i18n Translations -----------------------------------------------------
+# --- i18n Translations -----------------------------------------------------
   # Partial translation overrides. Deep-merged over built-in locale defaults.
   # Only supply the keys you want to override.
   # t:
@@ -340,3 +340,19 @@ themeConfig:
   #   fileDownload: {}
   #   videoFile: {}
   #   lightbox: {}
+
+  # --- Custom Fields ---------------------------------------------------------
+  # You can add any own fields to `themeConfig` — they are preserved through
+  # the merge pipeline and accessible at runtime via `useUiTheme()` in your
+  # Vue components. Objects are deep-merged across layers; arrays replace.
+  #
+  # Example:
+  #   myCustomField: "hello"
+  #   myCustomConfig:
+  #     featureEnabled: true
+  #     apiUrl: "https://api.example.com"
+  #
+  # Access in a component:
+  #   const { theme } = useUiTheme()
+  #   console.log(theme.value.myCustomField)        // "hello"
+  #   console.log(theme.value.myCustomConfig)       // { featureEnabled: true, ... }

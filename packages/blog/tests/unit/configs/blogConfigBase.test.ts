@@ -178,6 +178,30 @@ describe('mergeBlogConfig', () => {
     expect(result.themeConfig.postList?.maxPreviewLength).toBe(120)
   })
 
+  it('preserves custom/unknown themeConfig fields through merge', () => {
+    const result = mergeBlogConfig({
+      themeConfig: {
+        myCustomField: 'hello',
+        myCustomObject: { nested: { value: 42 } },
+        myCustomArray: [1, 2, 3],
+      } as any,
+    })
+    expect((result.themeConfig as any).myCustomField).toBe('hello')
+    expect((result.themeConfig as any).myCustomObject).toEqual({
+      nested: { value: 42 },
+    })
+    expect((result.themeConfig as any).myCustomArray).toEqual([1, 2, 3])
+  })
+
+  it('deep-merges custom themeConfig objects from config over defaults', () => {
+    const result = mergeBlogConfig({
+      themeConfig: {
+        myCustom: { a: 1, b: 2 },
+      } as any,
+    })
+    expect((result.themeConfig as any).myCustom).toEqual({ a: 1, b: 2 })
+  })
+
   it('markdown config includes lazyLoading image', () => {
     const result = mergeBlogConfig({})
     expect(result.markdown.image.lazyLoading).toBe(true)
