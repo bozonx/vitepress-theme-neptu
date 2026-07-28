@@ -1,38 +1,22 @@
 # yaml-language-server: $schema=../../../packages/blog/schema/site.schema.json
-# ---------------------------------------------------------------------------
-# Per-locale site config for Russian. Mirrors src/en/_site.yaml.
-# See src/en/_site.yaml for the full reference and the ${...} template syntax.
-# ---------------------------------------------------------------------------
 lang: 'ru-RU'
 description: 'Демонстрационный блог темы vitepress-theme-neptu-blog'
 
 themeConfig:
-  # Название блога. Используется в заголовках вкладок, SEO и заголовке сайдбара.
   blogTitle: 'Тема Neptu для блога'
-
   editLink:
     text: 'Редактировать эту страницу на GitHub'
-
   donate:
     postDonateCall: 'Если блог оказался полезным — поддержите его.'
-
   publisher:
     name: '${theme.blogTitle}'
     url: '${config.siteUrl}'
-
-  # -------------------------------------------------------------------------
-  # Верхняя панель
-  # -------------------------------------------------------------------------
   nav:
     links:
       - text: 'Внешняя ссылка'
         href: 'https://example.org/'
         icon: 'solar:document-linear'
         desktopOnly: true
-
-  # -------------------------------------------------------------------------
-  # Сайдбар
-  # -------------------------------------------------------------------------
   sidebar:
     bottomLinks:
       - { header: '${t.links.links}' }
@@ -42,10 +26,6 @@ themeConfig:
       - text: 'Мы в соцсетях'
         href: 'page/links'
         icon: 'fa6-solid:share-nodes'
-
-  # -------------------------------------------------------------------------
-  # Подвал
-  # -------------------------------------------------------------------------
   footer:
     message: 'Копирование разрешено только со ссылкой на источник.'
     copyright: 'Copyright © 2026-present Your Name.'

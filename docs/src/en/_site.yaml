@@ -1,197 +1,34 @@
 # yaml-language-server: $schema=../../../packages/blog/schema/site.schema.json
-# When consumed from an installed package, replace the path above with:
-#   # yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu-blog/schema/site.schema.json
-# ---------------------------------------------------------------------------
-# Per-locale site config — admin-editable layer that overrides settings from
-# `.vitepress/config.ts` and the cross-locale `src/site.yaml`.
-#
-# Shape mirrors `Partial<BlogUserConfig>` (VitePress LocaleSpecificConfig):
-# - top-level: `lang`, `title`, `titleTemplate`, `description`
-# - everything else nests under `themeConfig:`.
-#
-# STRING TEMPLATES (resolved before YAML parsing)
-# You can reference dynamic values with ${...} anywhere in this file.
-#
-#   ${theme.<key>}      — any value from the merged themeConfig.
-#                         Use dot-notation for nested keys, e.g.:
-#                         ${theme.donate.url}, ${theme.editLink.text}
-#   ${t.<key>}          — translation strings (from themeConfig.t or
-#                         built-in locale files). Example: ${t.links.donate}
-#   ${localeIndex}      — current locale folder name (e.g. "en").
-#
-# Common theme keys you can reference:
-#   blogTitle, repo, donateIcon, recentIcon, popularIcon, youtubeIcon,
-#   and any other key declared in .vitepress/config.ts or src/site.yaml.
-#
-# Examples:
-#   titleTemplate: ":title | ${theme.blogTitle}"
-#   nav.links: [{ text: "${t.links.donate}", href: "page/donate", icon: "${theme.donateIcon}" }]
-#   sidebar.bottomLinks: [{ text: "YouTube", href: "...", icon: "${theme.youtubeIcon}" }]
-#
-# ICONS
-# Every `icon:` field accepts an Iconify string: "<prefix>:<icon-name>".
-# Browse and search icons at https://icones.es (or https://iconify.design).
-# Popular prefixes used in this theme: fa6-solid, fa6-brands, mdi, solar, bi.
-# Example: icon: "fa6-solid:hand-holding-heart"
-# ---------------------------------------------------------------------------
 lang: 'en-US'
 description: 'Example Blog Description'
 
 themeConfig:
-  # -------------------------------------------------------------------------
-  # Translations — overrides built-in `t` strings for this locale only.
-  # The theme ships English/Russian defaults in `blogLocalesBase/<lang>.ts`;
-  # only the keys you list here are overridden.
-  # -------------------------------------------------------------------------
-  # t:
-  #   popularPosts: "Popular Posts"
-  #   similarPosts: "Similar Posts"
-  #   shareSocialMedia: "Share on Social Media"
-  #   viewInAnotherLanguage: "Read this page in another language"
-  #   links:
-  #     aboutBlog: "About This Blog"
-  #     donate: "Donate"
-
-  # Blog name. Used for browser tab titles, SEO metadata, and the sidebar heading.
   blogTitle: 'Neptu Blog Theme'
-  # Also you can override other fields from category "Branding & layout"
-  # like sidebarLogoSrc, sidebarMenuLabel etc
-  # Also you can override all other themeConfig fields from src/site.yaml
-
-  # -------------------------------------------------------------------------
-  # Locale-specific theme overrides. Same keys as global `themeConfig` in
-  # `.vitepress/config.ts`. Prefer global config for site-wide behavior;
-  # override here only when this locale intentionally differs.
-  # -------------------------------------------------------------------------
-  # titleTemplate: ":title | ${theme.blogTitle}"
-  # perPage: 10
-  # langMenuLabel: 'Interface language'  # tooltip on the language switcher
   editLink:
-    # pattern: "https://github.com/user/repo/edit/main/example/blog/src/:path"
     text: 'Edit this page on GitHub'
-
-  # -------------------------------------------------------------------------
-  # Donate button — rendered only when nav.donate and/or sidebar.donate is true.
-  # Relative URLs are automatically prefixed with the current locale.
-  # -------------------------------------------------------------------------
   donate:
-    # url: "page/donate"
     postDonateCall: 'If you find this blog useful, consider supporting it.'
-    # icon: "${theme.donateIcon}"  # override the default heart icon
-
-  # -------------------------------------------------------------------------
-  # Publisher info — used in the auto-generated JSON-LD for every page.
-  # -------------------------------------------------------------------------
   publisher:
     name: '${theme.blogTitle}'
     url: '${config.siteUrl}'
-  #  logo: 'https://myblog.org/img/logo.png'
-
-  # Authors live in the sibling `_authors.yaml` file (merged by `id`).
-  # You can also declare them inline here under `authors:` — both sources are
-  # merged by id, with `_authors.yaml` winning on conflicts.
-
-  # -------------------------------------------------------------------------
-  # Social sharing buttons in the post footer.
-  # The English locale includes default share buttons. Uncomment to replace,
-  # or set `socialMediaShares: []` to hide the share block.
-  # {url} and {title} are replaced with the current page URL and title.
-  # -------------------------------------------------------------------------
-  # socialMediaShares:
-  #   - name: twitter
-  #     icon: "fa6-brands:x-twitter"
-  #     title: "Share on X"
-  #     urlTemplate: "https://twitter.com/intent/tweet?url={url}&text={title}"
-  #   - name: telegram
-  #     icon: "fa6-brands:telegram"
-  #     title: "Share on Telegram"
-  #     urlTemplate: "https://t.me/share/url?url={url}&text={title}"
-  #     class: "custom-share-button"
-
-  # -------------------------------------------------------------------------
-  # Top bar
-  # -------------------------------------------------------------------------
   nav:
-    # Show the donate button in the top bar.
-    # donate: true
     links:
       - text: 'Some link'
         href: 'https://example.org/'
         icon: 'solar:document-linear'
         desktopOnly: true
-        # iconClass: 'muted'
-        # class: 'custom-nav-link'
-      # - text: "${t.links.donate}"
-      #   href: "page/donate"
-      #   icon: "${theme.donateIcon}"
-      #   # iconClass: 'muted'
-      #   # class: 'custom-nav-link'
-      #   mobileOnly: true   # show only on mobile (where sidebar is hidden)
-    # socialLinks:
-    #   - icon: 'fa6-brands:github-alt'
-    #     link: '${theme.repo}'
-    #     # url: "https://github.com/"  # alternative to link
-    #     # class: "custom-social-link"
-    #     # iconClass: "text-xl"
-    #     desktopOnly: true
-    #     # mobileOnly: false
-
-  # -------------------------------------------------------------------------
-  # Sidebar
-  # -------------------------------------------------------------------------
   sidebar:
-    # blogTitle: false  # Set false to hide the blog title below the logo, or a string to override it.
-    # popular: true # Show popular posts section. Requires popularPosts.enabled.
-    # recent: true # Show recent posts section.
-    # archive: true # Show archive (by year) section.
-    # authors: true # Show authors section.
-    # tags: true # Show tags cloud.
-    # donate: true # Show donate button at the bottom.
-    # rssFeed: true # Show RSS feed link.
-    # atomFeed: true # Show Atom feed link.
-    # links:
-    #   - text: "${t.links.recent}"
-    #     href: "recent/1"
-    #     icon: "${theme.recentIcon}"
-    #     # iconClass: 'muted'
-    #     # class: 'custom-sidebar-link'
-    #     # desktopOnly: false
-    #     # mobileOnly: false
     bottomLinks:
       - { header: '${t.links.links}' }
       - text: 'Our YouTube channel'
         href: 'https://www.youtube.com/'
         icon: '${theme.youtubeIcon}'
-        # iconClass: 'muted'
-        # class: 'custom-bottom-link'
-        # desktopOnly: false
-        # mobileOnly: false
       - text: 'We in social media'
         href: 'page/links'
         icon: 'fa6-solid:share-nodes'
-        # iconClass: 'muted'
-        # class: 'custom-bottom-link'
-        # desktopOnly: false
-        # mobileOnly: false
-    # socialLinks:
-    #   - icon: 'fa6-brands:github-alt'
-    #     link: '${theme.repo}'
-    #     # class: 'custom-social-link'
-    #     # iconClass: 'text-xl'
-    #     # desktopOnly: false
-    #     # mobileOnly: false
-
-  # -------------------------------------------------------------------------
-  # Footer
-  # -------------------------------------------------------------------------
   footer:
     message: 'Copying allowed only with a link to the source.'
     copyright: 'Copyright © 2026-present Your Name.'
     links:
       - text: '${t.links.aboutBlog}'
         href: 'page/about'
-        # icon: "mdi:information-outline"
-        # iconClass: "muted"
-        # class: "custom-footer-link"
-        # mobileOnly: false
-        # desktopOnly: false
