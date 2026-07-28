@@ -3,8 +3,7 @@
 themeConfig:
   sidebarLogoSrc: '/img/sidebar-logo.jpg'
   sidebarLogoHeight: 180
-  editLink:
-    pattern: 'https://github.com/your-org/your-blog/edit/main/src/:path'
+  # editLink pattern is auto-generated from `repo` (set in config.ts).
   donate:
     url: 'page/donate'
   publisher:

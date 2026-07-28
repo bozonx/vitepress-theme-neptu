@@ -182,8 +182,9 @@ themeConfig:
   # --- Edit Link -------------------------------------------------------------
   # VitePress built-in: adds an "Edit this page" link on post pages.
   editLink:
-    # URL pattern with `:path` placeholder for the file path in the repo.
-    pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
+    # The pattern is auto-generated from `repo` above (supports GitHub, GitLab,
+    # Bitbucket, Gitea, Forgejo, Codeberg). Uncomment to override.
+    # pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
     # Custom link text (defaults to the i18n translation).
     # text: Edit this page
 
