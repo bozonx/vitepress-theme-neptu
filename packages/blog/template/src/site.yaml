@@ -103,9 +103,12 @@ themeConfig:
 
   # --- Sidebar ---------------------------------------------------------------
   # Logo image URL shown at the top of the sidebar.
-  sidebarLogoSrc: /logo.svg
+  # Use a raster image (PNG/WebP) with a fixed resolution; the <img> element
+  # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×72) is
+  # recommended for retina displays.
+  sidebarLogoSrc: /logo.png
   # Logo height in pixels.
-  sidebarLogoHeight: 36
+  sidebarLogoHeight: 180
   # Custom label for the sidebar menu toggle button (mobile).
   # sidebarMenuLabel: Menu
   # Custom label for the color theme switcher menu button.

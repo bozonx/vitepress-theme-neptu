@@ -100,7 +100,9 @@ const ThemeConfigSchema = z
     externalLinkIcon: z.boolean().optional(),
     themeSwitcher: z.boolean().optional(),
     i18nRouting: z.boolean().optional(),
-    perPage: z.number().optional(),
+    perPage: z.never().optional(
+      'perPage is a build-time parameter — set it in .vitepress/config.ts, not in YAML'
+    ),
     similarPostsCount: z.number().optional(),
     sidebarTagsCount: z.number().optional(),
     paginationMaxItems: z.number().optional(),

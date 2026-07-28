@@ -2,7 +2,7 @@
 
 themeConfig:
   sidebarLogoSrc: '/img/sidebar-logo.jpg'
-  sidebarLogoHeight: 158
+  sidebarLogoHeight: 180
   editLink:
     pattern: 'https://github.com/your-org/your-blog/edit/main/src/:path'
   donate:
