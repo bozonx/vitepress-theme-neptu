@@ -17,8 +17,8 @@
       title: 'Сайт'
 
 - id: 'maria-editor'
-  name: 'Мария Э'
-  description: 'Приглашённый редактор. Автор постов про SEO.'
+  name: 'Мария Фернандес'
+  description: 'Вымышленный редактор. Автор постов про SEO.'
   image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop'
   imageWidth: 400
   imageHeight: 400

@@ -22,3 +22,15 @@ Content lives under `src/<locale>/` — see the
 [Getting started](https://bozonx.github.io/vitepress-theme-neptu-blog/ru/post/getting-started)
 guide for the structure. To scaffold a new blog, copy the
 [`packages/blog/template/`](../packages/blog/template) directory instead of this site.
+
+## GitHub Pages base path
+
+The `build` and `preview` scripts in `package.json` use
+`--base /vitepress-theme-neptu-blog/` because this site is deployed to a
+GitHub Pages subpath (`bozonx.github.io/vitepress-theme-neptu-blog`). The
+`VITEPRESS_BASE` env var is also set so runtime code can resolve the prefix.
+
+This is **deployment-specific**. A site served from the domain root (e.g.
+`myblog.com` or `localhost`) should use the VitePress default `base: '/'` — no
+`--base` flag or `VITEPRESS_BASE` override is needed. The blog and landing
+templates ship with `base: '/'` by default.

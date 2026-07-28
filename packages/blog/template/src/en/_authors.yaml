@@ -11,10 +11,10 @@
 
 - # Unique stable identifier. Referenced from post frontmatter (`authorId`)
   # and used to merge entries across config layers. Required.
-  id: 'alex'
+  id: 'ivan'
 
   # Display name shown on the author page and in post metadata.
-  name: 'Alex Developer'
+  name: 'Ivan Developer'
 
   # Short bio / description. Supports inline HTML (rendered via v-html).
   description: 'Software engineer, open-source enthusiast, and writer.'
@@ -37,7 +37,7 @@
 
   # Overrides the auto-generated author page link.
   # Set this to point to a custom about-page URL instead of the built-in author page.
-  # aboutUrl: 'https://example.com/about-alex'
+  # aboutUrl: 'https://example.com/about-ivan'
 
   # Twitter/X username without the leading '@'.
   # Used for Twitter Card meta tags and social integrations.

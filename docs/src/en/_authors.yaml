@@ -1,20 +1,11 @@
 # yaml-language-server: $schema=../../../packages/blog/schema/authors.schema.json
-# ---------------------------------------------------------------------------
-# Per-locale authors list. Entries are merged by `id` with any authors
-# declared in `_site.yaml > themeConfig.authors`; same `id` overrides
-# parent/sibling entries. Posts reference an author via the `authorId`
-# frontmatter field, and each author gets a generated listing page at
-# `/en/authors/<id>/1` (see the "Authors" section in the sidebar).
-# ---------------------------------------------------------------------------
 
-# Primary author — used by most demo posts.
 - id: 'ivan-k'
   name: 'Ivan K'
   description: 'Maintainer of the theme. Writes most of the demo content you see here.'
   image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
   imageWidth: 400 # real dimensions of the image — set both to avoid layout shift
   imageHeight: 400
-  # avatar: '/img/avatar.png'        # optional square thumbnail for post cards
   twitterHandle: 'neptu_blog' # used for the twitter:creator meta tag on this author's posts
   aboutUrl: 'https://github.com/bozonx/vitepress-theme-neptu-blog'
   links:
@@ -25,11 +16,9 @@
       url: 'https://myblog.org'
       title: 'Website'
 
-# Second author — exists so the "Authors" listing has more than one entry
-# and you can see how a multi-author blog looks.
 - id: 'maria-editor'
-  name: 'Maria E'
-  description: 'Guest editor. Author of the SEO-focused posts in this demo.'
+  name: 'Maria Fernandes'
+  description: 'Imaginary editor. Author of the SEO-focused posts in this demo.'
   image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop'
   imageWidth: 400
   imageHeight: 400
