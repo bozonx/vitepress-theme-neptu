@@ -3,6 +3,7 @@ dist
 **/.vitepress/dist/
 .neptu-vault.yaml
 test-results/
+_cacache
 
 # Local env files
 *.local

@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=../../../../packages/blog/schema/site.schema.json
+
 lang: 'ru-RU'
 title: 'Neptu Landing'
 description: 'Современный лендинг-темплейт для VitePress — SEO-first, i18n, полная типизация.'

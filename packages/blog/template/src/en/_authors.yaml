@@ -6,7 +6,7 @@
 # an `id`. Entries with the same `id` across layers are shallow-merged
 # (child overrides parent field-by-field).
 #
-# Schema: packages/blog/schema/authors.schema.json
+# yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu-blog/schema/authors.schema.json
 # ─────────────────────────────────────────────────────────────────────
 
 - # Unique stable identifier. Referenced from post frontmatter (`authorId`)
