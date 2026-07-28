@@ -345,11 +345,82 @@ themeConfig:
   #     atomFeed: Atom feed
   #   # Arrays or objects keyed by number/platform are accepted here.
   #   months: [January, February, March, April, May, June, July, August, September, October, November, December]
-  #   podcasts: { spotify: Spotify }
-  #   audioFile: {}
-  #   fileDownload: {}
-  #   videoFile: {}
-  #   lightbox: {}
+  #   podcasts:
+  #     site: "Release's page"
+  #     rss: RSS Feed
+  #     castbox: Castbox
+  #     soundstream: Sound stream
+  #     spotify: Spotify
+  #     youtube: YouTube
+  #     amazonmusic: Amazon Music
+  #     iheartradio: iHeart Radio
+  #     tunein: TuneIn
+  #     vk: VK
+  #     yandexmusic: Yandex Music
+  #     deezer: Deezer
+  #     pocketcasts: Pocket casts
+  #     applepodcasts: Apple podcasts
+  #     overcast: Overcast
+  #     zvuk: Zvuk
+  #     podcastaddiction: Podcast addiction
+  #   audioFile:
+  #     downloadFile: Download
+  #     playAudio: Play audio
+  #     pauseAudio: Pause audio
+  #     startAudioPlayback: Start audio playback
+  #     pauseAudioPlayback: Pause audio playback
+  #     resumeAudioPlayback: Resume audio playback
+  #     stopAudio: Stop audio
+  #     stopAudioPlayback: Stop audio playback and reset to beginning
+  #     hidePlayer: Hide audio player controls
+  #     hidePlayerTitle: Hide player
+  #     audioFile: Audio file
+  #     downloadAudioFile: Download
+  #     currentTime: Current time
+  #     audioProgress: Audio progress
+  #     volumeControl: Volume control
+  #     volumePercent: volume
+  #     retryWithValidUrl: Retry with valid URL
+  #     retry: Retry
+  #     invalidUrlProvided: Invalid URL provided
+  #     invalidAudioUrlProvided: Invalid audio URL provided
+  #     errorDownloadingFile: Error downloading file
+  #     errorPlayingAudioFile: Error playing audio file
+  #     audioPlaybackAborted: Audio playback was aborted
+  #     networkErrorLoadingAudio: Network error occurred while loading audio
+  #     audioDecodingError: Audio decoding error
+  #     audioFormatNotSupported: Audio format not supported
+  #     unknownAudioError: Unknown audio error occurred
+  #     errorLoadingAudioFile: Error loading audio file
+  #   fileDownload:
+  #     fileDownload: File download
+  #     downloadFile: Download file
+  #     downloadFileWithName: Download file
+  #     fileType: File type
+  #     fileSize: File size
+  #     downloadStarted: File download started
+  #     downloadError: Error downloading file
+  #     invalidUrlProvided: Invalid URL provided
+  #     retryDownload: Retry download
+  #     retry: Retry
+  #   videoFile:
+  #     downloadFile: Download
+  #     videoFile: Video file
+  #     downloadVideoFile: Download
+  #     retry: Retry
+  #     videoPlaybackAborted: Video playback was aborted
+  #     networkErrorLoadingVideo: Network error occurred while loading video
+  #     videoDecodingError: Video decoding error
+  #     videoFormatNotSupported: Video format not supported
+  #     unknownVideoError: Unknown video error occurred
+  #     errorLoadingVideoFile: Error loading video file
+  #   lightbox:
+  #     prev: Previous
+  #     next: Next
+  #     close: Close
+  #     resetZoom: Reset zoom
+  #     dialogTitle: Image
+  #     loadingIndicatorLabel: Loading...
 
   # --- Custom Fields ---------------------------------------------------------
   # You can add any own fields to `themeConfig` — they are preserved through

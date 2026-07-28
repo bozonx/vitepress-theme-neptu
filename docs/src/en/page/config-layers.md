@@ -68,6 +68,75 @@ source path differs from those defaults.
 
 Arrays replace an earlier array as a whole. Objects deep-merge. `authors` is the exception: entries merge by their stable `id`.
 
+### Translation keys (`themeConfig.t`)
+
+The theme ships with built-in UI translations for 21 locales (`en`, `ru`, `es`, `zh`, `sr`, `pt`, `fr`, `de`, `tr`, `ja`, `ko`, `it`, `pl`, `lv`, `nl`, `sv`, `cs`, `hi`, `th`, `he`, `ar`). Override only the keys you need — the rest is inherited from the built-in locale defaults. All `t` overrides can be placed at any layer: `config.ts`, `site.yaml` (shared), or `_site.yaml` (per-locale).
+
+**Top-level string keys:**
+
+| Key | Default (en) |
+| --- | --- |
+| `popularPosts` | Popular Posts |
+| `similarPosts` | Similar Posts |
+| `shareSocialMedia` | Share on Social Media |
+| `currentLang` | Current language |
+| `tagBadgeCount` | The number of posts on this tag |
+| `tagPageHeader` | All Posts by Tag |
+| `tags` | Tags |
+| `allTags` | All Tags |
+| `paginationToStart` | First Page |
+| `paginationToEnd` | Last Page |
+| `toHome` | Go to the home page |
+| `toBlog` | Go to blog |
+| `author` | Author |
+| `year` | Year |
+| `showMorePosts` | Load More |
+| `listenPodcast` | Listen to podcast |
+| `commentLink` | Discuss this post |
+| `allTagsCall` | View All Tags |
+| `popularPostsCall` | View All Popular Posts |
+| `viewInAnotherLanguage` | View in another language |
+| `postVideoButton` | Watch Video |
+| `allPostsOfAuthor` | Posts of the author |
+| `closeMenu` | Close menu |
+| `allPostsOfYear` | All posts of the year |
+| `pageNotFound` | 404 not found |
+| `postsCount` | Publications |
+| `editLink` | Found an error? Suggest an edit |
+| `search` | Search |
+| `searchInBlog` | Search in this blog |
+
+**`postsCountForms`** — array of plural forms. English: `['Publication', 'Publications']` (2 forms). Russian: `['статья', 'статьи', 'статей']` (3 forms).
+
+**`months`** — array of 12 month names, January through December.
+
+**`links`** — navigation/sidebar labels:
+
+| Key | Default (en) |
+| --- | --- |
+| `links.aboutBlog` | About This Blog |
+| `links.donate` | Donate |
+| `links.recent` | Recent |
+| `links.popular` | Popular |
+| `links.byDate` | By Date |
+| `links.links` | Links |
+| `links.authors` | Authors |
+| `links.aboutUs` | About Us |
+| `links.rssFeed` | RSS feed |
+| `links.atomFeed` | Atom feed |
+
+**`podcasts`** — podcast platform labels: `site`, `rss`, `castbox`, `soundstream`, `spotify`, `youtube`, `amazonmusic`, `iheartradio`, `tunein`, `vk`, `yandexmusic`, `deezer`, `pocketcasts`, `applepodcasts`, `overcast`, `zvuk`, `podcastaddiction`.
+
+**`audioFile`** — audio player labels: `downloadFile`, `playAudio`, `pauseAudio`, `startAudioPlayback`, `pauseAudioPlayback`, `resumeAudioPlayback`, `stopAudio`, `stopAudioPlayback`, `hidePlayer`, `hidePlayerTitle`, `audioFile`, `downloadAudioFile`, `currentTime`, `audioProgress`, `volumeControl`, `volumePercent`, `retryWithValidUrl`, `retry`, `invalidUrlProvided`, `invalidAudioUrlProvided`, `errorDownloadingFile`, `errorPlayingAudioFile`, `audioPlaybackAborted`, `networkErrorLoadingAudio`, `audioDecodingError`, `audioFormatNotSupported`, `unknownAudioError`, `errorLoadingAudioFile`.
+
+**`fileDownload`** — file download labels: `fileDownload`, `downloadFile`, `downloadFileWithName`, `fileType`, `fileSize`, `downloadStarted`, `downloadError`, `invalidUrlProvided`, `retryDownload`, `retry`.
+
+**`videoFile`** — video player labels: `downloadFile`, `videoFile`, `downloadVideoFile`, `retry`, `videoPlaybackAborted`, `networkErrorLoadingVideo`, `videoDecodingError`, `videoFormatNotSupported`, `unknownVideoError`, `errorLoadingVideoFile`.
+
+**`lightbox`** — image lightbox labels: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel`.
+
+The full default values for each locale are in `src/configs/blogLocalesBase/<locale>.ts` and `src/configs/sharedLocalesBase/<locale>.ts`. The starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml) has every key commented as a reference.
+
 ## Level 3 — `src/<locale>/_site.yaml`
 
 Use this for one locale only. Its root fields are exactly:

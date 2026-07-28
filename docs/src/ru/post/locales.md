@@ -88,8 +88,10 @@ URL — источник истины.
 
 ## Строки переводов от администратора
 
-Администраторы добавляют или переопределяют строки переводов для локали в
-`src/<locale>/_site.yaml`:
+Администраторы переопределяют строки переводов через `themeConfig.t` на любом
+уровне: `config.ts`, `site.yaml` (кросс-локальный) или `_site.yaml` (для одной
+локали). Deep-merge: указываются только нужные ключи, остальные наследуются из
+встроенного слоя.
 
 ```yaml
 # src/ru/_site.yaml
@@ -101,7 +103,59 @@ themeConfig:
       donate: 'Поддержать'
 ```
 
-Переопределяются только указанные ключи; остальные берутся из встроенного слоя.
+### Полный список ключей `t`
+
+**Строковые ключи верхнего уровня:**
+
+| Ключ | Значение по умолчанию (en) |
+| --- | --- |
+| `popularPosts` | Popular Posts |
+| `similarPosts` | Similar Posts |
+| `shareSocialMedia` | Share on Social Media |
+| `currentLang` | Current language |
+| `tagBadgeCount` | The number of posts on this tag |
+| `tagPageHeader` | All Posts by Tag |
+| `tags` | Tags |
+| `allTags` | All Tags |
+| `paginationToStart` | First Page |
+| `paginationToEnd` | Last Page |
+| `toHome` | Go to the home page |
+| `toBlog` | Go to blog |
+| `author` | Author |
+| `year` | Year |
+| `showMorePosts` | Load More |
+| `listenPodcast` | Listen to podcast |
+| `commentLink` | Discuss this post |
+| `allTagsCall` | View All Tags |
+| `popularPostsCall` | View All Popular Posts |
+| `viewInAnotherLanguage` | View in another language |
+| `postVideoButton` | Watch Video |
+| `allPostsOfAuthor` | Posts of the author |
+| `closeMenu` | Close menu |
+| `allPostsOfYear` | All posts of the year |
+| `pageNotFound` | 404 not found |
+| `postsCount` | Publications |
+| `editLink` | Found an error? Suggest an edit |
+| `search` | Search |
+| `searchInBlog` | Search in this blog |
+
+**`postsCountForms`** — массив форм множественного числа. Английский: `['Publication', 'Publications']` (2 формы). Русский: `['статья', 'статьи', 'статей']` (3 формы).
+
+**`months`** — массив из 12 названий месяцев, с января по декабрь.
+
+**`links`** — подписи навигации и сайдбара: `aboutBlog`, `donate`, `recent`, `popular`, `byDate`, `links`, `authors`, `aboutUs`, `rssFeed`, `atomFeed`.
+
+**`podcasts`** — подписи платформ подкастов: `site`, `rss`, `castbox`, `soundstream`, `spotify`, `youtube`, `amazonmusic`, `iheartradio`, `tunein`, `vk`, `yandexmusic`, `deezer`, `pocketcasts`, `applepodcasts`, `overcast`, `zvuk`, `podcastaddiction`.
+
+**`audioFile`** — подписи аудиоплеера: `downloadFile`, `playAudio`, `pauseAudio`, `startAudioPlayback`, `pauseAudioPlayback`, `resumeAudioPlayback`, `stopAudio`, `stopAudioPlayback`, `hidePlayer`, `hidePlayerTitle`, `audioFile`, `downloadAudioFile`, `currentTime`, `audioProgress`, `volumeControl`, `volumePercent`, `retryWithValidUrl`, `retry`, `invalidUrlProvided`, `invalidAudioUrlProvided`, `errorDownloadingFile`, `errorPlayingAudioFile`, `audioPlaybackAborted`, `networkErrorLoadingAudio`, `audioDecodingError`, `audioFormatNotSupported`, `unknownAudioError`, `errorLoadingAudioFile`.
+
+**`fileDownload`** — подписи скачивания файлов: `fileDownload`, `downloadFile`, `downloadFileWithName`, `fileType`, `fileSize`, `downloadStarted`, `downloadError`, `invalidUrlProvided`, `retryDownload`, `retry`.
+
+**`videoFile`** — подписи видеоплеера: `downloadFile`, `videoFile`, `downloadVideoFile`, `retry`, `videoPlaybackAborted`, `networkErrorLoadingVideo`, `videoDecodingError`, `videoFormatNotSupported`, `unknownVideoError`, `errorLoadingVideoFile`.
+
+**`lightbox`** — подписи лайтбокса изображений: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel`.
+
+Полные значения по умолчанию для каждой локали — в `src/configs/blogLocalesBase/<locale>.ts` и `src/configs/sharedLocalesBase/<locale>.ts`. В стартовом шаблоне [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu-blog/tree/main/packages/blog/template/src/site.yaml) все ключи закомментированы как справочник.
 
 ## Переключение языка
 
