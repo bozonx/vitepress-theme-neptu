@@ -15,13 +15,20 @@
  *
  * Available built-in themes (set in theme/index.ts):
  *   blue, green, purple, amber, teal, rose, magenta, monochrome
+ *
+ * Quick start:
+ *   - To re-tint colors: override --primary-hue / --layout-hue (§1)
+ *   - To change content width: override --page-max-width (§5)
+ *   - To change font: override --font-body (§5)
+ *   - To tweak dark mode: add rules under .dark (§13)
+ *   - To customize a single palette: use [data-theme='…'] (§14)
  * ============================================================ */
 
 @import 'tailwindcss';
 @import 'vitepress-theme-neptu-blog/tailwind-source.css';
 
-/* ------------------------------------------------------------
- * 1. Color palette — hue shift
+/* ============================================================
+ * §1. Color palette — hue shift
  *
  * Every built-in theme defines two hue variables:
  *   --primary-hue  — accent / brand color (buttons, links, tags)
@@ -29,97 +36,173 @@
  *
  * Override them globally to re-tint the entire blog without
  * picking a specific preset.
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* :root { */
 /*   --primary-hue: 115; */  /* e.g. green accent everywhere */
 /*   --layout-hue: 115;  */  /* match gray ramp to the same hue */
 /* } */
 
-/* ------------------------------------------------------------
- * 2. Brand button colors
+/* ============================================================
+ * §2. Gray ramp
  *
- * --primary-btn-bg        — normal state
- * --primary-btn-bg-active — pressed / active state
+ * The theme defines a 20-step gray ramp (--gray-50 … --gray-950)
+ * tinted by --layout-hue. Each step is used across backgrounds,
+ * borders, text, and UI elements. Override individual steps for
+ * fine-grained control.
+ *
+ * Full ramp: 50, 100, 150, 200, 270, 300, 350, 400, 500, 600,
+ *           700, 770, 790, 800, 850, 900, 900-trans, 950
+ * ============================================================ */
+/* :root { */
+/*   --gray-50:  hsl(var(--layout-hue), 16%, 98%); */   /* lightest bg */
+/*   --gray-200: hsl(var(--layout-hue), 13%, 91%); */   /* borders */
+/*   --gray-500: hsl(var(--layout-hue), 9%, 46%);  */   /* muted text */
+/*   --gray-900: hsl(var(--layout-hue), 39%, 11%); */   /* darkest bg */
+/* } */
+
+/* ============================================================
+ * §3. Brand button colors
+ *
+ *   --primary-btn-bg        — normal state
+ *   --primary-btn-bg-active — pressed / active state
  *
  * Keep lightness ≤ 46% so white text clears WCAG AA (4.5:1).
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* :root { */
 /*   --primary-btn-bg: hsl(var(--primary-hue), 66%, 46%); */
 /*   --primary-btn-bg-active: hsl(var(--primary-hue), 75%, 32%); */
 /* } */
 
-/* ------------------------------------------------------------
- * 3. Dark mode overrides
+/* ============================================================
+ * §4. Links
  *
- * Scope changes to `.dark` so they only apply when the user
- * has switched to dark appearance.
- * ------------------------------------------------------------ */
+ *   --link-hue       — normal link color (default 232 = blue)
+ *   --visited-hue    — visited link color (default 287 = purple)
+ *   --link-a-text    — computed link text color
+ *   --link-a-visited — computed visited link color
+ * ============================================================ */
+/* :root { */
+/*   --link-hue: 213; */
+/*   --link-a-text: hsl(var(--link-hue), 74%, 44%); */
+/*   --link-a-visited: hsl(var(--visited-hue), 50%, 44%); */
+/* } */
 /* .dark { */
-/*   --primary-btn-bg: hsl(var(--primary-hue), 80%, 40%); */
-/*   --body-bg: var(--gray-900); */
-/*   --body-text-color: var(--gray-200); */
+/*   --link-a-text: hsl(var(--link-hue), 100%, 76%); */
+/*   --link-a-visited: hsl(var(--visited-hue), 50%, 59%); */
 /* } */
 
-/* ------------------------------------------------------------
- * 4. Layout tokens
+/* ============================================================
+ * §5. Layout tokens
  *
  *   --page-max-width         — max content width (default 840px)
+ *   --list-item-thumb-width  — post list thumbnail width (280px)
  *   --body-font-size         — base font size (1.125rem)
  *   --body-line-height       — base line height (1.75rem)
- *   --list-item-thumb-width  — post list thumbnail width (280px)
+ *   --font-size-mobile       — mobile font size (1.125rem)
+ *   --line-height-mobile     — mobile line height (1.75rem)
+ *   --body-bg                — page background
+ *   --body-text-color        — body text color
+ *   --util-page-header-color — header color on utility pages
  *   --font-body              — font-family stack
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* :root { */
 /*   --page-max-width: 760px; */
 /*   --body-font-size: 1.0625rem; */
 /*   --font-body: 'Inter', system-ui, sans-serif; */
 /* } */
 
-/* ------------------------------------------------------------
- * 5. Link colors
+/* ============================================================
+ * §6. Special buttons
  *
- *   --link-hue    — normal link color (default 232 = blue)
- *   --visited-hue — visited link color (default 287 = purple)
- *   --link-a-text — computed link text color
- * ------------------------------------------------------------ */
+ *   --podcast-btn-bg  — podcast button background
+ *   --video-link-bg   — video link button background
+ *   --donate-btn      — donate button / icon color
+ * ============================================================ */
 /* :root { */
-/*   --link-hue: 213; */
-/*   --link-a-text: hsl(var(--link-hue), 74%, 44%); */
-/* } */
-/* .dark { */
-/*   --link-a-text: hsl(var(--link-hue), 100%, 76%); */
+/*   --podcast-btn-bg: hsl(263, 60%, 40%); */
+/*   --video-link-bg: hsl(4, 65%, 41%); */
+/*   --donate-btn: hsl(0, 48%, 39%); */
 /* } */
 
-/* ------------------------------------------------------------
- * 6. Buttons & tags
+/* ============================================================
+ * §7. Secondary buttons & tags
  *
  *   --btn-bg            — secondary button background
  *   --btn-text          — secondary button text
  *   --btn-bg-active     — secondary button pressed state
+ *   --btn-bg-disabled   — secondary button disabled state
+ *   --dropdown-list-bg  — dropdown menu background
  *   --tag-item-bg       — tag pill background
  *   --tag-item-bg-active — tag pill pressed state
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* :root { */
 /*   --btn-bg: var(--gray-150); */
 /*   --btn-text: var(--gray-700); */
+/*   --btn-bg-active: var(--gray-270); */
+/*   --btn-bg-disabled: var(--gray-300); */
 /*   --tag-item-bg: var(--primary-btn-bg); */
 /* } */
 
-/* ------------------------------------------------------------
- * 7. Sidebar / drawer
+/* ============================================================
+ * §8. TopBar (mobile)
+ *
+ *   --topbar-mobile-bg     — mobile topbar background
+ *   --topbar-mobile-border — mobile topbar border
+ * ============================================================ */
+/* :root { */
+/*   --topbar-mobile-bg: var(--gray-50); */
+/*   --topbar-mobile-border: var(--gray-300); */
+/* } */
+
+/* ============================================================
+ * §9. Sidebar / drawer
  *
  *   --drawer-bg            — sidebar background
  *   --drawer-border-color  — sidebar border
  *   --backdrop-bg          — mobile overlay backdrop
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* :root { */
 /*   --drawer-bg: var(--gray-50); */
 /*   --drawer-border-color: var(--gray-200); */
 /*   --backdrop-bg: rgba(0, 0, 0, 0.85); */
 /* } */
 
-/* ------------------------------------------------------------
- * 8. Home page background
+/* ============================================================
+ * §10. Theme toggle (SwitchAppearance)
+ *
+ *   --switch-appearance-border-color        — toggle border
+ *   --switch-appearance-bg-color            — toggle background
+ *   --switch-appearance-border-color-hover  — toggle border on hover
+ *   --switch-appearance-check-bg            — toggle knob background
+ *   --switch-appearance-icon-color          — toggle icon color
+ * ============================================================ */
+/* :root { */
+/*   --switch-appearance-border-color: var(--gray-300); */
+/*   --switch-appearance-bg-color: rgba(142, 150, 170, 0.14); */
+/*   --switch-appearance-icon-color: rgba(60, 60, 67, 0.78); */
+/* } */
+
+/* ============================================================
+ * §11. VitePress & search tokens
+ *
+ * These bridge the theme into VitePress's own CSS variables,
+ * used by the search button, search modal, and Pagefind.
+ *
+ *   --vp-c-divider     — divider lines
+ *   --vp-c-bg-soft     — soft background
+ *   --vp-c-brand-1     — brand color (mapped to --primary-btn-bg)
+ *   --vp-c-bg          — background
+ *   --vp-c-text-2      — secondary text
+ *   --search-modal-content-bg  — search modal background
+ *   --search-input-btn-border-color — search input border (dark only)
+ * ============================================================ */
+/* :root { */
+/*   --vp-c-divider: var(--gray-300); */
+/*   --vp-c-bg: var(--gray-50); */
+/* } */
+
+/* ============================================================
+ * §12. Home page background
  *
  * The home layout (layout: home in frontmatter) uses the
  * `.home-layout` class. Set a background image and/or color.
@@ -130,28 +213,62 @@
  *   homeTheme: dark | light
  *   homeMaxWidth: 800
  *   homeBgParallaxOffset: 200
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* .home-layout { */
 /*   background-image: url('https://images.unsplash.com/…'); */
 /*   background-color: #000000; */
 /* } */
 
-/* ------------------------------------------------------------
- * 9. Per-theme overrides
+/* ============================================================
+ * §13. Dark mode overrides
+ *
+ * Scope changes to `.dark` so they only apply when the user
+ * has switched to dark appearance.
+ * ============================================================ */
+/* .dark { */
+/*   --primary-btn-bg: hsl(var(--primary-hue), 80%, 40%); */
+/*   --body-bg: var(--gray-900); */
+/*   --body-text-color: var(--gray-200); */
+/* } */
+
+/* ============================================================
+ * §14. Per-theme overrides
  *
  * Target a specific color theme by its [data-theme] selector.
  * This lets you fine-tune one palette without affecting others.
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* [data-theme='green'] { */
 /*   --primary-btn-bg: hsl(115, 70%, 31%); */
 /* } */
 
-/* ------------------------------------------------------------
- * 10. Custom utility classes
+/* ============================================================
+ * §15. CSS class reference
+ *
+ * Key classes used by the theme that you can target:
+ *
+ *   .card-item              — post card in list/grid view
+ *   .card-item-header       — post card title (line-clamped)
+ *   .card-item-img-col      — thumbnail column in card
+ *   .card-item-interactive  — interactive elements above overlay
+ *   .content-page           — article content wrapper
+ *   .content-page figure    — figure blocks (from mdImage plugin)
+ *   .content-page figcaption — figure captions
+ *   .vp-doc                 — VitePress doc content (articles)
+ *   .simple-page            — utility page wrapper (tags, archive…)
+ *   .simple-page h1         — utility page header
+ *   .donate-icon            — donate icon
+ *   .muted                  — muted text
+ *   .home-layout            — home page layout
+ *   .search-modal           — search modal overlay
+ *   .sidebar-link           — sidebar navigation links
+ * ============================================================ */
+
+/* ============================================================
+ * §16. Custom utility classes
  *
  * Tailwind is available — use @utility to register custom
  * utilities, or write plain CSS classes below.
- * ------------------------------------------------------------ */
+ * ============================================================ */
 /* @utility text-balance { */
 /*   text-wrap: balance; */
 /* } */
