@@ -39,7 +39,7 @@ export default async () => {
     ],
 
     themeConfig: {
-      repo: 'https://github.com/bozonx/vitepress-theme-neptu-blog',
+      repo: 'https://github.com/bozonx/vitepress-theme-neptu',
       perPage: PER_PAGE,
       themeSwitcher: true,
       search: {
