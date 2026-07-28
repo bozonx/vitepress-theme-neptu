@@ -26,7 +26,6 @@ export default async () => {
       repo: 'https://github.com/bozonx/vitepress-theme-neptu-blog',
       logo: '/img/logo.svg',
       mainHeroImg: '/img/home-logo.svg',
-      blogUrl: 'https://bozonx.github.io/vitepress-theme-neptu-blog',
 
       // Theme defaults for first-time visitors. The two axes are independent;
       // the picker remembers the visitor's choice in localStorage.

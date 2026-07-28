@@ -94,7 +94,6 @@ export const AuthorsListSchema = z.array(AuthorSchema)
 const ThemeConfigSchema = z
   .looseObject({
     blogTitle: z.string().optional(),
-    blogUrl: z.string().optional(),
     mainHeroImg: z.string().optional(),
     repo: z.string().optional(),
     twitterSite: z.string().optional(),

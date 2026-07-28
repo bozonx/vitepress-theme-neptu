@@ -103,8 +103,6 @@ export namespace NeptuBlogTheme {
     sidebarLogoHeight?: number
     /** Blog/site name. Used as the site title fallback and sidebar title fallback. */
     blogTitle?: string
-    /** Optional URL of a companion blog, used by the landing starter. */
-    blogUrl?: string
     sidebarMenuLabel?: string
     colorThemeMenuLabel?: string
     /** Accessible label / tooltip for the locale switcher. */

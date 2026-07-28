@@ -38,11 +38,10 @@ themeConfig:
   # (e.g. '${theme.repo}' resolves to this value).
   repo: https://github.com/your-username/my-blog
 
-  # Blog/site name. Used as the site title fallback and sidebar title fallback.
+  # Blog/site name. Used as a fallback for the site title (when no top-level
+  # `title` is set in _site.yaml) and as the default sidebar title.
+  # Override per-sidebar with `sidebar.blogTitle`, or set it to `false` to hide.
   # blogTitle: My Blog
-
-  # Optional URL of a companion blog, used by the landing starter theme.
-  # blogUrl: https://example.com
 
   # Twitter/X @handle (without @) for SEO meta tags.
   # twitterSite: myblog

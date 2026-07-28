@@ -19,7 +19,7 @@
       "additionalProperties": true,
       "description": "Level 2 shared defaults or Level 3 locale overrides. Objects deep-merge; arrays replace; authors merge by id.",
       "properties": {
-        "blogTitle": { "type": "string" }, "blogUrl": { "type": "string" }, "mainHeroImg": { "type": "string" },
+        "blogTitle": { "type": "string" }, "mainHeroImg": { "type": "string" },
         "repo": { "type": "string", "description": "Repository URL; also supplies the default edit-link pattern." },
         "twitterSite": { "type": "string" }, "externalLinkIcon": { "type": "boolean" }, "themeSwitcher": { "type": "boolean" }, "i18nRouting": { "type": "boolean" },
         "perPage": { "type": "integer", "minimum": 1 }, "sidebarTagsCount": { "type": "integer", "minimum": 0 }, "similarPostsCount": { "type": "integer", "minimum": 0 }, "homeBgParallaxOffset": { "type": "number" }, "paginationMaxItems": { "type": "integer", "minimum": 1 },
