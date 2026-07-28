@@ -29,13 +29,13 @@
     "vue-tsc": "^3.3.8"
   },
   "scripts": {
-    "generate:icons": "npm run generate:icons -w vitepress-theme-neptu-blog",
+    "generate:icons": "npm run generate:icons --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "test:watch": "npm run test:watch -w vitepress-theme-neptu-blog",
-    "test:coverage": "npm run test:coverage -w vitepress-theme-neptu-blog",
+    "test:watch": "npm run test:watch --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
     "e2e": "npm run e2e --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
     "validate:blocks": "npm run validate:blocks -w vitepress-theme-neptu-landing",
@@ -45,6 +45,8 @@
     "docs:preview": "npm run preview -w vitepress-theme-neptu-blog-docs",
     "landing:dev": "npm run dev -w vitepress-theme-neptu-landing-example",
     "landing:build": "npm run build -w vitepress-theme-neptu-landing-example",
-    "landing:preview": "npm run preview -w vitepress-theme-neptu-landing-example"
+    "landing:preview": "npm run preview -w vitepress-theme-neptu-landing-example",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   }
 }
