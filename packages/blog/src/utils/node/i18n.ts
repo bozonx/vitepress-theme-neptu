@@ -49,6 +49,26 @@ function parseYamlWithTemplate(
   }
 }
 
+/** Interpolates every string leaf while preserving the input object shape. */
+export function resolveConfigTemplates<T>(
+  value: T,
+  props: Record<string, unknown>
+): T {
+  if (typeof value === 'string') return standardTemplate(value, props) as T
+  if (Array.isArray(value)) {
+    return value.map((item) => resolveConfigTemplates(item, props)) as T
+  }
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>).map(([key, item]) => [
+        key,
+        resolveConfigTemplates(item, props),
+      ])
+    ) as T
+  }
+  return value
+}
+
 /**
  * Loads a config file that can exist either as TypeScript (with a default
  * export) or YAML (with `${...}` template substitution). TS variant is

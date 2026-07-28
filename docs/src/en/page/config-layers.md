@@ -197,7 +197,8 @@ Only YAML supports templates, resolved before parsing:
 
 | Template | Value |
 | --- | --- |
-| `${theme.key}` | Previously resolved merged theme value. |
+| `${theme.key}` | Merged theme value. |
+| `${site.title}` | Resolved locale site title. |
 | `${t.key}` | Built-in or overridden translation. |
 | `${config.siteUrl}` | Level-1 public site URL. |
 | `${localeIndex}` | Current locale directory name. |

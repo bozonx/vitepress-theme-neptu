@@ -75,6 +75,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
           (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
         )
         const configuredMaxPosts = Number(
+          locale.themeConfig?.feeds?.maxPosts ??
           config.userConfig?.themeConfig?.feeds?.maxPosts
         )
         const maxPosts =
@@ -93,11 +94,22 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
               continue
             }
 
-            const description = fm.description
-              ? fm.description
+            const explicitDescription =
+              typeof fm.description === 'string' ? fm.description.trim() : ''
+            const configuredMaxDescriptionLength = Number(
+              locale.themeConfig?.seo?.maxDescriptionLength ??
+              config.userConfig?.themeConfig?.seo?.maxDescriptionLength
+            )
+            const maxDescriptionLength =
+              Number.isFinite(configuredMaxDescriptionLength) &&
+              configuredMaxDescriptionLength >= 0
+                ? configuredMaxDescriptionLength
+                : 300
+            const description = explicitDescription
+              ? explicitDescription
               : extractDescriptionFromMd(
                   src!,
-                  config.userConfig?.themeConfig?.seo?.maxDescriptionLength || 300
+                  maxDescriptionLength
                 )
             const guid = createPostGuid(siteUrl, url, fm.date)
             const categories = formatTagsForRss(fm.tags, siteUrl, localeIndex)

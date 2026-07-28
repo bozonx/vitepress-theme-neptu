@@ -50,8 +50,8 @@ describe('standardTemplate', () => {
     expect(standardTemplate('${user.name}', { user: { name: 'Alice' } })).toBe('Alice')
   })
 
-  it('replaces unknown keys with empty string', () => {
-    expect(standardTemplate('${unknown}', {})).toBe('')
+  it('preserves unknown keys for a later config-merge pass', () => {
+    expect(standardTemplate('${unknown}', {})).toBe('${unknown}')
   })
 
   it('replaces multiple occurrences', () => {

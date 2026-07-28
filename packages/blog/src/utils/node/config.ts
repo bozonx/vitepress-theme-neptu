@@ -6,6 +6,7 @@ import {
   parseLocaleSite,
   parseSharedSite,
   parseLocaleAuthors,
+  resolveConfigTemplates,
 } from './i18n.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
@@ -23,6 +24,41 @@ import type {
 } from '../../types.d.ts'
 
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
+
+function resolveLocaleTemplates(
+  site: Record<string, unknown>,
+  theme: Record<string, unknown>,
+  config: BlogUserConfig,
+  localeIndex: string
+): { site: Record<string, unknown>; theme: Record<string, unknown> } {
+  let resolvedSite = site
+  let resolvedTheme = theme
+
+  // Resolve references to sibling/inherited values, e.g.
+  // `publisher.name: '${site.title}'`. A bounded loop keeps cycles
+  // harmless: unresolved placeholders stay visible instead of disappearing.
+  for (let pass = 0; pass < 8; pass++) {
+    const context = {
+      config,
+      localeIndex,
+      site: resolvedSite,
+      theme: resolvedTheme,
+      t: (resolvedTheme.t as Record<string, unknown> | undefined) ?? {},
+    }
+    const nextSite = resolveConfigTemplates(resolvedSite, context)
+    const nextTheme = resolveConfigTemplates(resolvedTheme, context)
+    if (
+      JSON.stringify(nextSite) === JSON.stringify(resolvedSite) &&
+      JSON.stringify(nextTheme) === JSON.stringify(resolvedTheme)
+    ) {
+      break
+    }
+    resolvedSite = nextSite
+    resolvedTheme = nextTheme
+  }
+
+  return { site: resolvedSite, theme: resolvedTheme }
+}
 
 /**
  * Removes `authors` and `socialMediaShares` from a nested `themeConfig` so
@@ -212,12 +248,6 @@ export async function loadBlogLocale(
     new Set()
   )
   const site = chain.site
-  const {
-    lang,
-    title: rawTitle,
-    titleTemplate,
-    description,
-  } = site
   const localeThemeConfig = extractThemeConfig(site)
   const mergedAuthorsList = mergeAuthorsById(sharedAuthors, chain.authors)
 
@@ -233,22 +263,44 @@ export async function loadBlogLocale(
     ),
     chain.socialShares,
   )
+  const rawMergedThemeConfig = deepMerge(resolvedTheme, localeThemeConfig)
+  const templated = resolveLocaleTemplates(
+    site,
+    rawMergedThemeConfig,
+    config,
+    localeIndex
+  )
+  const templatedSite = templated.site
+  const mergedThemeConfig = templated.theme
+  const templateContext = {
+    config,
+    localeIndex,
+    site: templatedSite,
+    theme: mergedThemeConfig,
+    t: (mergedThemeConfig.t as Record<string, unknown> | undefined) ?? {},
+  }
   const authors = mergedAuthorsList.length
     ? mergedAuthorsList.map((item) => {
-        const imageDimensions = item.image
-          ? getImageDimensions(item.image as string, config.srcDir || '')
+        const templatedAuthor = resolveConfigTemplates(item, templateContext)
+        const imageDimensions = templatedAuthor.image
+          ? getImageDimensions(templatedAuthor.image as string, config.srcDir || '')
           : null
 
         return {
-          ...item,
-          description: mdToHtml(item.description),
+          ...templatedAuthor,
+          description: mdToHtml(templatedAuthor.description),
           imageHeight: imageDimensions?.height,
           imageWidth: imageDimensions?.width,
         }
       })
     : undefined
 
-  const mergedThemeConfig = deepMerge(resolvedTheme, localeThemeConfig)
+  const {
+    lang,
+    title: rawTitle,
+    titleTemplate,
+    description,
+  } = templatedSite
   const title =
     rawTitle ?? (mergedThemeConfig.blogTitle as string | undefined)
   const resolvedRepo = mergedThemeConfig.repo as string | undefined
@@ -257,7 +309,10 @@ export async function loadBlogLocale(
     lang: typeof lang === 'string' ? lang : undefined,
     label: baseLocale.label,
     title: typeof title === 'string' ? title : undefined,
-    titleTemplate: typeof titleTemplate === 'string' ? titleTemplate : undefined,
+    titleTemplate:
+      typeof titleTemplate === 'string' || typeof titleTemplate === 'boolean'
+        ? titleTemplate
+        : undefined,
     description: typeof description === 'string' ? description : undefined,
     themeConfig: {
       ...mergedThemeConfig,
@@ -266,15 +321,24 @@ export async function loadBlogLocale(
           ? { pattern: resolveEditLinkPattern(resolvedRepo) }
           : {}),
         ...(mergedThemeConfig.editLink as Record<string, unknown> | undefined),
-        ...(localeThemeConfig.editLink as Record<string, unknown> | undefined),
+        ...(
+          extractThemeConfig(templatedSite).editLink as
+            | Record<string, unknown>
+            | undefined
+        ),
       } as EditLinkConfig,
       t: {
         ...((mergedThemeConfig.t || {}) as Record<string, unknown>),
-        ...((localeThemeConfig.t || {}) as Record<string, unknown>),
+        ...((extractThemeConfig(templatedSite).t || {}) as Record<string, unknown>),
       } as unknown as I18n,
       authors,
       ...(mergedSocialShares.length > 0
-        ? { socialMediaShares: mergedSocialShares }
+        ? {
+            socialMediaShares: resolveConfigTemplates(
+              mergedSocialShares,
+              templateContext
+            )
+          }
         : {}),
     },
   }

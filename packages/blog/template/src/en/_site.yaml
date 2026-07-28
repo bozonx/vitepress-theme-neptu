@@ -7,7 +7,7 @@
 # - top-level: `lang`, `title`, `titleTemplate`, `description`
 # - everything else nests under `themeConfig:`.
 #
-# STRING TEMPLATES (resolved before YAML parsing)
+# STRING TEMPLATES (resolved after the locale config is merged)
 # You can reference dynamic values with ${...} anywhere in this file.
 #
 #   ${theme.<key>}      — any value from the merged themeConfig.
@@ -17,13 +17,14 @@
 #                         built-in locale files). Example: ${t.links.donate}
 #   ${config.siteUrl}   — public site URL from Level 1 config.ts.
 #   ${localeIndex}      — current locale folder name (e.g. "en").
+#   ${site.title}       — resolved locale site title.
 #
 # Common theme keys you can reference:
 #   blogTitle, repo, donateIcon, recentIcon, popularIcon, youtubeIcon,
 #   and any other key declared in .vitepress/config.ts or src/site.yaml.
 #
 # Examples:
-#   titleTemplate: ":title | ${theme.blogTitle}"
+#   titleTemplate: ":title | ${site.title}"
 #   nav.links: [{ text: "${t.links.donate}", href: "page/donate", icon: "${theme.donateIcon}" }]
 #   sidebar.bottomLinks: [{ text: "YouTube", href: "...", icon: "${theme.youtubeIcon}" }]
 #
@@ -39,11 +40,13 @@
 # IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
 lang: 'en-US'
 
-# Site title for this locale. Falls back to themeConfig.blogTitle when omitted.
-# title: My Blog
+# Canonical site title for this locale: browser tabs, SEO, feeds and the
+# sidebar default all use it. Set themeConfig.blogTitle only to override the
+# visual sidebar label.
+title: 'My Neptu Blog'
 
 # Per-page title template. Use ':title' as the placeholder for the page title.
-# titleTemplate: ':title | ${theme.blogTitle}'
+# titleTemplate: ':title | ${site.title}'
 
 # Site description used for SEO meta tags and RSS/Atom feeds.
 description: 'Welcome to my new blog'
@@ -68,8 +71,8 @@ themeConfig:
   #     aboutBlog: "About This Blog"
   #     donate: "Donate"
 
-  # Blog name. Used for browser tab titles, SEO metadata, and the sidebar heading.
-  blogTitle: 'My Neptu Blog'
+  # Optional visual sidebar label. Usually omit it and use the locale `title`.
+  # blogTitle: 'My Neptu Blog'
   # Also you can override other fields from category "Branding & layout"
   # like sidebarLogoSrc, sidebarMenuLabel etc.
   # Also you can override all other themeConfig fields from src/site.yaml
@@ -135,7 +138,7 @@ themeConfig:
   # Publisher info — used in the auto-generated JSON-LD for every page.
   # -------------------------------------------------------------------------
   publisher:
-    name: '${theme.blogTitle}'
+    name: '${site.title}'
     url: '${config.siteUrl}'
   #  logo: 'https://myblog.org/img/logo.png'
 

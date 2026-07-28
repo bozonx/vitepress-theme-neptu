@@ -75,4 +75,31 @@ Body content`)
 
     expect(item.preview).toBe('Custom preview.')
   })
+
+  it('keeps SEO description out of a card unless descrAsPreview opts in', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Hello
+description: Search-engine summary.
+---
+
+Independent body excerpt.`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+
+    expect(item.preview).toBe('Independent body excerpt.')
+  })
+
+  it('uses description as a card preview only when descrAsPreview is true', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Hello
+description: Search-engine summary.
+descrAsPreview: true
+---
+
+Independent body excerpt.`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+
+    expect(item.preview).toBe('Search-engine summary.')
+  })
 })

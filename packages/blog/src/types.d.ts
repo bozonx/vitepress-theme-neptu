@@ -35,7 +35,7 @@ export namespace NeptuBlogTheme {
         link?: string
         lang?: string
         title?: string
-        titleTemplate?: string
+        titleTemplate?: string | boolean
         description?: string
         themeConfig?: Partial<Config>
       }
@@ -101,7 +101,11 @@ export namespace NeptuBlogTheme {
 
     sidebarLogoSrc?: string
     sidebarLogoHeight?: number
-    /** Blog/site name. Used as the site title fallback and sidebar title fallback. */
+    /**
+     * Optional visual name for the blog UI. Prefer the locale-level `title`
+     * for the site identity and browser title; this value remains a backwards-
+     * compatible fallback and can override the sidebar label.
+     */
     blogTitle?: string
     sidebarMenuLabel?: string
     colorThemeMenuLabel?: string
@@ -439,7 +443,7 @@ export namespace NeptuBlogTheme {
   export interface LocaleDefinition {
     lang?: string
     title?: string
-    titleTemplate?: string
+    titleTemplate?: string | boolean
     description?: string
     head?: DefaultTheme.Config['head']
     themeConfig?: DeepPartial<Config>

@@ -21,13 +21,13 @@ import blogBaseLocales from './blogLocalesBase/index.ts'
 import { addJsonLd } from '../transformers/addJsonLd.ts'
 import { addHreflang } from '../transformers/addHreflang.ts'
 import { addOgMetaTags } from '../transformers/addOgMetaTags.ts'
-import { addDescriptionMetaTag } from '../transformers/addDescriptionMetaTag.ts'
 import { addRssLinks } from '../transformers/addRssLinks.ts'
 import { filterSitemap } from '../transformers/filterSitemap.ts'
 import type { SitemapItem } from '../transformers/filterSitemap.ts'
 import { generateRssFeed } from '../transformers/generateRssFeed.ts'
 import { generateRobotsTxt } from '../transformers/generateRobotsTxt.ts'
 import { transformPageMeta } from '../transformers/transformPageMeta.ts'
+import { transformDescription } from '../transformers/transformDescription.ts'
 import { transformTitle } from '../transformers/transformTitle.ts'
 import { resolveDescription } from '../transformers/resolveDescription.ts'
 import { addCanonicalLink } from '../transformers/addCanonicalLink.ts'
@@ -148,15 +148,10 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     title: config.title || config.en?.title,
     description: config.description || config.en?.description,
     head: [...(common.head || []), ...(config.head || [])],
-    locales: Object.fromEntries(
-      Object.entries({ ...(common.locales || {}), ...(config.locales || {}) }).map(
-        ([key, locale]) => {
-          const titleTemplate =
-            locale.titleTemplate ?? (locale.title ? `:title | ${locale.title}` : undefined)
-          return [key, titleTemplate ? { ...locale, titleTemplate } : locale]
-        }
-      )
-    ),
+    // Keep the locale identity fields native. VitePress already uses `title`
+    // as the default suffix and avoids duplicating it on a home page; creating
+    // `:title | ${locale.title}` here defeats that behaviour.
+    locales: { ...(common.locales || {}), ...(config.locales || {}) },
     vite: {
       ...config.vite,
       plugins: [
@@ -232,6 +227,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
 
       collectImageDimensions(extendedPageData, extendedSiteConfig)
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
+      transformDescription(extendedPageData, { siteConfig: extendedSiteConfig })
       transformPageMeta(extendedPageData)
       resolveDescription(extendedPageData, { siteConfig: extendedSiteConfig })
 
@@ -261,7 +257,6 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
 
       const isNoIndex = hasNoIndex(extendedCtx.pageData.frontmatter?.head)
 
-      addDescriptionMetaTag(extendedCtx)
       if (isSeoEnabled('og')) addOgMetaTags(extendedCtx)
       if (!isNoIndex && isSeoEnabled('jsonLd')) addJsonLd(extendedCtx)
       if (!isNoIndex && isSeoEnabled('hreflang')) addHreflang(extendedCtx)

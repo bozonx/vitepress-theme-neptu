@@ -12,7 +12,7 @@ import { useUiTheme } from '../../composables/useUiTheme.ts'
 import type { PostLite, SideBarItem } from '../../types.d.ts'
 
 const props = defineProps<{ isMobile: boolean; localePosts?: PostLite[] }>()
-const { localeIndex } = useData()
+const { localeIndex, site } = useData()
 const { theme } = useUiTheme()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
@@ -270,12 +270,12 @@ onUnmounted(() => {
         <h4
           v-if="
             theme.sidebar?.blogTitle !== false &&
-            (theme.sidebar?.blogTitle || theme.blogTitle)
+            (theme.sidebar?.blogTitle || theme.blogTitle || site.title)
           "
           class="sidebar-site-title text-sm muted font-bold px-1 pt-[0.35rem] pb-3 pl-[0.65rem]"
         >
           <a :href="withBase(`/${localeIndex}/`)" :title="theme.t.toHome">
-            {{ theme.sidebar?.blogTitle || theme.blogTitle }}
+            {{ theme.sidebar?.blogTitle || theme.blogTitle || site.title }}
           </a>
         </h4>
 

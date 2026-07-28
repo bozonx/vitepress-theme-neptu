@@ -15,7 +15,7 @@ import type { Author, ThemeConfig } from '../types.d.ts'
 export interface SiteYamlConfig {
   lang?: string
   title?: string
-  titleTemplate?: string
+  titleTemplate?: string | boolean
   description?: string
   /** Inherit from another locale's `_site.*`. Per-locale files only. */
   extends?: string

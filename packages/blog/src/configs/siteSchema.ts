@@ -204,7 +204,7 @@ export const SiteYamlSchema = z.looseObject({
   srcDir: z.never().optional(),
   lang: z.string().optional(),
   title: z.string().optional(),
-  titleTemplate: z.string().optional(),
+  titleTemplate: z.union([z.string(), z.boolean()]).optional(),
   description: z.string().optional(),
   extends: z.string().optional(),
   themeConfig: ThemeConfigSchema,

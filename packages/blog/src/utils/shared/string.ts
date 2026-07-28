@@ -100,7 +100,9 @@ export function standardTemplate(
         stringValue = match[0]
       } else {
         const value = deepGet(data, key)
-        stringValue = value === null || value === undefined ? '' : String(value)
+        // Config files are parsed before their locale inheritance is merged.
+        // Keep unresolved placeholders for the later, merged-config pass.
+        stringValue = value === null || value === undefined ? match[0] : String(value)
       }
     }
     res = res.replace(replaceRegex, stringValue)
@@ -201,4 +203,3 @@ export function transliterate(rawStr: string, lang?: string): string {
 
   return slug(rawStr, { locale: lang })
 }
-

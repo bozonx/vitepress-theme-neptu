@@ -21,6 +21,7 @@ import {
   SHARED_SITE_FILE,
   LOCALE_AUTHORS_FILE,
   LOCALE_SITE_TS_FILE,
+  resolveConfigTemplates,
 } from '../../../../src/utils/node/i18n.ts'
 import { importConfigModule } from '../../../../src/utils/node/tsLoader.ts'
 
@@ -113,6 +114,25 @@ describe('parseSharedSite', () => {
     expect(existsSyncMock).toHaveBeenCalledWith(
       expect.stringContaining(`/my-src/${SHARED_SITE_FILE}`)
     )
+  })
+})
+
+describe('resolveConfigTemplates', () => {
+  it('resolves string leaves after locale config has been merged', () => {
+    const result = resolveConfigTemplates(
+      {
+        title: '${site.title}',
+        themeConfig: {
+          publisher: { name: '${site.title}' },
+        },
+      },
+      { site: { title: 'Acme Blog' } }
+    )
+
+    expect(result).toEqual({
+      title: 'Acme Blog',
+      themeConfig: { publisher: { name: 'Acme Blog' } },
+    })
   })
 })
 

@@ -38,9 +38,9 @@ themeConfig:
   # (e.g. '${theme.repo}' resolves to this value).
   repo: https://github.com/your-username/my-blog
 
-  # Blog/site name. Used as a fallback for the site title (when no top-level
-  # `title` is set in _site.yaml) and as the default sidebar title.
-  # Override per-sidebar with `sidebar.blogTitle`, or set it to `false` to hide.
+  # Optional visual sidebar title. The canonical browser/SEO/feed title is the
+  # top-level `title` in each locale's _site.yaml. Override per-sidebar with
+  # `sidebar.blogTitle`, or set it to `false` to hide.
   # blogTitle: My Blog
 
   # Twitter/X @handle (without @) for SEO meta tags.
@@ -82,7 +82,8 @@ themeConfig:
     rssFeed: true
     # Show an Atom feed link.
     atomFeed: true
-    # Override the sidebar title. Defaults to `blogTitle`. Set `false` to hide.
+    # Override the sidebar title. Defaults to `blogTitle`, then locale `title`.
+    # Set `false` to hide.
     # blogTitle: My Blog
     # Custom navigation links shown at the top of the sidebar.
     # links:

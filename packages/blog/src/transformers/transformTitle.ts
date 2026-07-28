@@ -2,8 +2,8 @@ import { mustacheTemplate } from '../utils/shared/index.ts'
 import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
 
 /**
- * If page.frontmatter.title is a template string, then replace it with the
- * template string.
+ * Resolve the theme's dynamic-route title syntax. Static titles are left to
+ * VitePress so its native Markdown-to-text title inference remains intact.
  */
 export function transformTitle(
   pageData: ExtendedPageData,
@@ -12,7 +12,8 @@ export function transformTitle(
   // Root-level files have no locale prefix, so there's no locale context to resolve template data.
   if (pageData.filePath.indexOf('/') < 0) return
 
-  if (!pageData.frontmatter.title) return
+  const title = pageData.frontmatter.title
+  if (typeof title !== 'string' || !title.includes('{{')) return
 
   const localeIndex = pageData.filePath.split('/')[0]!
 
@@ -21,10 +22,11 @@ export function transformTitle(
     params: pageData.params || {},
   }
 
-  pageData.frontmatter.title = mustacheTemplate(
-    pageData.frontmatter.title,
+  const resolvedTitle = mustacheTemplate(
+    title,
     options,
     { eval: true }
   )
-  pageData.title = pageData.frontmatter.title
+  pageData.frontmatter.title = resolvedTitle
+  pageData.title = resolvedTitle
 }

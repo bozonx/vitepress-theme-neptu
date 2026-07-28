@@ -25,6 +25,10 @@ describe('SiteYamlSchema', () => {
     expect(result.success).toBe(true)
   })
 
+  it('accepts false to disable a locale title suffix', () => {
+    expect(SiteYamlSchema.safeParse({ titleTemplate: false }).success).toBe(true)
+  })
+
   it('passes through unknown top-level keys', () => {
     const result = SiteYamlSchema.safeParse({ customKey: 'value' })
     expect(result.success).toBe(true)

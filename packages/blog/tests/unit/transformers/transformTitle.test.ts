@@ -72,12 +72,12 @@ describe('transformTitle', () => {
     expect(pageData.frontmatter.title).toBe('Site: MySite')
   })
 
-  it('updates pageData.title as well', () => {
+  it('leaves a static title to VitePress', () => {
     const pageData = createPageData({
       frontmatter: { title: 'New Title' },
       title: 'Old Title',
     })
     transformTitle(pageData, { siteConfig: createSiteConfig() })
-    expect(pageData.title).toBe('New Title')
+    expect(pageData.title).toBe('Old Title')
   })
 })

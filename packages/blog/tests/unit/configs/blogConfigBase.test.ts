@@ -22,6 +22,10 @@ vi.mock('../../../src/transformers/transformTitle.ts', () => ({
   transformTitle: vi.fn(),
 }))
 
+vi.mock('../../../src/transformers/transformDescription.ts', () => ({
+  transformDescription: vi.fn(),
+}))
+
 vi.mock('../../../src/transformers/transformPageMeta.ts', () => ({
   transformPageMeta: vi.fn(),
 }))
@@ -88,6 +92,17 @@ describe('mergeBlogConfig', () => {
   it('merges locales', () => {
     const result = mergeBlogConfig({ locales: { de: { label: 'Deutsch' } } })
     expect(result.locales.de).toEqual({ label: 'Deutsch' })
+  })
+
+  it('keeps VitePress titleTemplate native instead of synthesizing one', () => {
+    const result = mergeBlogConfig({
+      locales: {
+        en: { title: 'My Blog' },
+        ru: { title: 'Мой блог', titleTemplate: false },
+      },
+    })
+    expect(result.locales.en).toEqual({ title: 'My Blog' })
+    expect(result.locales.ru).toEqual({ title: 'Мой блог', titleTemplate: false })
   })
 
   it('preserves themeConfig.feeds.formats array', () => {

@@ -159,6 +159,42 @@ describe('generateRssFeed', () => {
     })
   })
 
+  it('uses locale feed and SEO limits before global values', async () => {
+    loadMock.mockResolvedValue([
+      {
+        url: '/en/post/first',
+        frontmatter: { title: 'First', date: '2024-03-02' },
+        src: '# First\n\nA long body used as the generated description.',
+      },
+      {
+        url: '/en/post/second',
+        frontmatter: { title: 'Second', date: '2024-03-01' },
+        src: '# Second\n\nAnother generated description.',
+      },
+    ])
+
+    await generateRssFeed({
+      outDir: '/tmp/dist',
+      site: {
+        locales: {
+          en: {
+            title: 'English Blog',
+            description: 'Desc',
+            themeConfig: { feeds: { maxPosts: 1 }, seo: { maxDescriptionLength: 12 } },
+          },
+        },
+      },
+      userConfig: {
+        siteUrl: 'https://example.com',
+        themeConfig: { feeds: { maxPosts: 2, formats: ['rss'] }, seo: { maxDescriptionLength: 120 } },
+      },
+    } as any)
+
+    const rssPayload = JSON.parse(writeFileSync.mock.calls[0]![1])
+    expect(rssPayload.items).toHaveLength(1)
+    expect(rssPayload.items[0].description.length).toBeLessThanOrEqual(12)
+  })
+
   it('keeps atom feed links localized when atom is enabled', async () => {
     loadMock.mockResolvedValue([])
 

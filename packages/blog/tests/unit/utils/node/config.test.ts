@@ -29,6 +29,7 @@ vi.mock('../../../../src/utils/node/i18n.ts', () => ({
   parseLocaleAuthors: vi.fn(async (_srcDir: string, props: any) => {
     return authorsMocks[props.localeIndex] ?? []
   }),
+  resolveConfigTemplates: vi.fn((value: unknown) => value),
   hasLocaleSite: vi.fn(
     (srcDir: string, locale: string) =>
       siteMocks[locale] !== undefined || hasSiteYamlPath(srcDir, locale)

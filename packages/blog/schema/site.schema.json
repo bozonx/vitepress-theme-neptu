@@ -11,7 +11,7 @@
     "srcDir": false,
     "lang": { "type": "string", "description": "Level 3: IETF language tag." },
     "title": { "type": "string", "description": "Level 3: locale site title." },
-    "titleTemplate": { "type": "string", "description": "Level 3: use :title as page-title placeholder." },
+    "titleTemplate": { "type": ["string", "boolean"], "description": "Level 3: use :title as page-title placeholder; false disables the suffix." },
     "description": { "type": "string", "description": "Level 3: locale SEO and feed description." },
     "extends": { "type": "string", "description": "Level 3: parent locale directory name, such as en; not a file path." },
     "themeConfig": {

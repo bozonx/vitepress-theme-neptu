@@ -21,16 +21,28 @@ describe('resolveDescription', () => {
     expect(readFile).not.toHaveBeenCalled()
   })
 
-  it('skips when description is already set and non-empty', () => {
+  it('preserves the description already resolved by VitePress', () => {
     const pageData: Record<string, any> = {
       frontmatter: { layout: 'post', description: 'Existing desc' },
-      description: undefined,
+      description: 'Existing desc',
       filePath: 'en/post/hello.md',
     }
     const readFile = vi.fn().mockReturnValue('raw content')
     resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: {} } as any }, readFile)
     expect(readFile).not.toHaveBeenCalled()
     expect(pageData.description).toBe('Existing desc')
+  })
+
+  it('preserves a description declared through frontmatter.head', () => {
+    const pageData: Record<string, any> = {
+      frontmatter: { layout: 'post', head: [['meta', { name: 'description', content: 'Head desc' }]] },
+      description: 'Head desc',
+      filePath: 'en/post/hello.md',
+    }
+    const readFile = vi.fn()
+    resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: {} } as any }, readFile)
+    expect(pageData.description).toBe('Head desc')
+    expect(readFile).not.toHaveBeenCalled()
   })
 
   it('reads file and extracts description for post', () => {
@@ -56,6 +68,32 @@ describe('resolveDescription', () => {
     }
     resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: { themeConfig: { seo: { maxDescriptionLength: 50 } } } } as any }, readFile)
     expect(pageData.description).toBe('content')
+  })
+
+  it('uses locale SEO length before the global fallback', async () => {
+    const readFile = vi.fn().mockReturnValue('content')
+    resolveDescription(
+      {
+        frontmatter: { layout: 'post' },
+        description: '',
+        filePath: 'en/post/hello.md',
+      } as any,
+      {
+        siteConfig: {
+          srcDir: '/src',
+          site: { locales: { en: { themeConfig: { seo: { maxDescriptionLength: 123 } } } } },
+          userConfig: { themeConfig: { seo: { maxDescriptionLength: 50 } } },
+        },
+      } as any,
+      readFile
+    )
+    const { extractDescriptionFromMd } = await import('../../../src/utils/node/index.ts')
+    expect(vi.mocked(extractDescriptionFromMd)).toHaveBeenLastCalledWith(
+      'content',
+      123,
+      undefined,
+      'en/post/hello.md'
+    )
   })
 
   it('catches file read errors gracefully', () => {
