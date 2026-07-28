@@ -15,19 +15,19 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "vitepress": "catalog:",
-    "vitepress-theme-neptu-blog": "workspace:*",
-    "vitepress-theme-neptu-landing": "workspace:*",
-    "vue": "catalog:"
+    "vitepress": "2.0.0-alpha.18",
+    "vitepress-theme-neptu-blog": "*",
+    "vitepress-theme-neptu-landing": "*",
+    "vue": "^3.5.40"
   },
   "devDependencies": {
-    "@eslint/js": "catalog:",
-    "eslint": "catalog:",
-    "eslint-config-prettier": "catalog:",
-    "eslint-plugin-vue": "catalog:",
-    "globals": "catalog:",
-    "tailwindcss": "catalog:",
-    "typescript-eslint": "catalog:",
-    "vue-eslint-parser": "catalog:"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.7.0",
+    "tailwindcss": "^4.3.3",
+    "typescript-eslint": "^8.65.0",
+    "vue-eslint-parser": "^10.4.1"
   }
 }

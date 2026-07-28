@@ -10,7 +10,7 @@ transformers, SEO pipeline and color palettes. The chrome (nav bar, docs
 sidebar, outline, search) comes from the VitePress default theme.
 
 The runnable example lives in `docs/landing-example` and starts from the repo
-root with `pnpm landing:dev` (monorepo uses pnpm workspaces).
+root with `npm run landing:dev` (monorepo uses npm workspaces).
 
 ## What is in the box
 

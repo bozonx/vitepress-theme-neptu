@@ -5,14 +5,14 @@ Thank you for your interest in contributing! This document covers the basics.
 ## Prerequisites
 
 - Node.js >= 22 (see `.node-version`)
-- pnpm 11+ (version is pinned via `packageManager` in `package.json`)
+- npm 10+ (bundled with Node.js 22)
 
 ## Getting Started
 
 ```bash
 git clone https://github.com/bozonx/vitepress-theme-neptu-blog.git
 cd vitepress-theme-neptu-blog
-pnpm install
+npm install
 ```
 
 ## Monorepo Layout
@@ -28,25 +28,25 @@ docs/landing-example — landing example site
 
 ```bash
 # Run all checks
-pnpm check
+npm run check
 
 # Individual tasks
-pnpm typecheck
-pnpm lint
-pnpm test
-pnpm build
-pnpm e2e
+npm run typecheck
+npm run lint
+npm run test
+npm run build
+npm run e2e
 
 # Dev servers
-pnpm docs:dev
-pnpm landing:dev
+npm run docs:dev
+npm run landing:dev
 ```
 
 ## Making Changes
 
 1. Create a branch from `main`.
 2. Make your changes. Keep commits focused.
-3. Run `pnpm check` to verify everything passes.
+3. Run `npm run check` to verify everything passes.
 4. Open a pull request with a clear description.
 
 ### Commit Messages
@@ -62,8 +62,9 @@ chore: bump dependencies
 
 ### Dependency Versions
 
-Shared dependency versions are managed via pnpm `catalog:` in `pnpm-workspace.yaml`.
-To bump a shared dependency, update the catalog entry and run `pnpm install`.
+Shared dependency versions are managed via npm workspaces. To bump a shared
+dependency, update the version in each `package.json` that uses it and run
+`npm install`.
 
 ## Reporting Issues
 

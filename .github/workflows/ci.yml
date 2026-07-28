@@ -20,44 +20,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build icon bundle
-        run: pnpm generate:icons
+        run: npm run generate:icons
 
       - name: Type check
-        run: pnpm typecheck
+        run: npm run typecheck
 
       - name: Lint
-        run: pnpm lint
+        run: npm run lint
 
       - name: Run unit tests
-        run: pnpm test
+        run: npm run test
 
       - name: Build documentation and landing example
-        run: pnpm build
+        run: npm run build
 
       - name: Install Playwright browsers
         run: |
-          pnpm --filter vitepress-theme-neptu-blog exec playwright install --with-deps chromium
-          pnpm --filter vitepress-theme-neptu-landing exec playwright install --with-deps chromium
+          npx -w vitepress-theme-neptu-blog playwright install --with-deps chromium
+          npx -w vitepress-theme-neptu-landing playwright install --with-deps chromium
 
       - name: Run E2E tests
-        run: pnpm e2e
+        run: npm run e2e
 
       - name: Build landing example for Pages
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        run: pnpm landing:build
+        run: npm run landing:build
 
       - name: Merge landing into docs dist
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')

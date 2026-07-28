@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev src",
-    "build": "vitepress build src && pnpm pagefind",
+    "build": "vitepress build src && npm run pagefind",
     "pagefind": "pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'",
     "preview": "vitepress preview src",
     "typecheck": "vue-tsc --noEmit"

@@ -64,26 +64,26 @@
   "dependencies": {
     "@iconify/vue": "^5.0.1",
     "ajv": "^8.20.0",
-    "vitepress-theme-neptu-blog": "workspace:^",
+    "vitepress-theme-neptu-blog": "*",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
-    "@eslint/js": "catalog:",
+    "@eslint/js": "^10.0.1",
     "@iconify-json/fa6-solid": "^1.2.4",
-    "@playwright/test": "catalog:",
-    "@vitejs/plugin-vue": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "@vue/test-utils": "catalog:",
+    "@playwright/test": "^1.61.1",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vitest/coverage-v8": "^4.1.10",
+    "@vue/test-utils": "^2.4.11",
     "ajv-formats": "^3.0.1",
-    "eslint": "catalog:",
-    "eslint-plugin-vue": "catalog:",
-    "globals": "catalog:",
-    "happy-dom": "catalog:",
-    "typescript-eslint": "catalog:",
-    "vitepress": "catalog:",
-    "vitest": "catalog:",
-    "vue": "catalog:",
-    "vue-eslint-parser": "catalog:"
+    "eslint": "^10.7.0",
+    "eslint-plugin-vue": "^10.10.0",
+    "globals": "^17.7.0",
+    "happy-dom": "^20.11.0",
+    "typescript-eslint": "^8.65.0",
+    "vitepress": "2.0.0-alpha.18",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.40",
+    "vue-eslint-parser": "^10.4.1"
   },
   "scripts": {
     "generate:icons": "node scripts/generate-icon-bundle.mjs",
@@ -94,7 +94,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "e2e": "pnpm exec playwright test --config tests/e2e/playwright.config.ts",
+    "e2e": "npx playwright test --config tests/e2e/playwright.config.ts",
     "e2e:ui": "playwright test --config tests/e2e/playwright.config.ts --ui",
     "e2e:report": "playwright show-report tests/e2e/playwright-report"
   }

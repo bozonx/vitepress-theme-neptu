@@ -2,18 +2,18 @@
 
 ## Run
 
-Use Node.js 22 or later. This monorepo uses pnpm workspaces — run from the repo root:
+Use Node.js 22 or later. This monorepo uses npm workspaces — run from the repo root:
 
 - Install dependencies:
 
   ```bash
-  pnpm install
+  npm install
   ```
 
 - Run locally:
 
   ```bash
-  pnpm landing:dev
+  npm run landing:dev
   ```
 
   Go to `http://localhost:5173/`
@@ -21,8 +21,8 @@ Use Node.js 22 or later. This monorepo uses pnpm workspaces — run from the rep
 - Build and Preview
 
   ```bash
-  pnpm landing:build
-  pnpm landing:preview
+  npm run landing:build
+  npm run landing:preview
   ```
 
   Go to `http://localhost:4173/`

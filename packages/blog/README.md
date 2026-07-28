@@ -77,16 +77,16 @@ Configuration, frontmatter, components, and SEO are documented in full on the
 
 ## Development
 
-This repo is a pnpm workspace (the blog theme is in `packages/blog`, the docs
-site is in `docs/`). The monorepo uses pnpm for workspace management:
+This repo is an npm workspace (the blog theme is in `packages/blog`, the docs
+site is in `docs/`). The monorepo uses npm for workspace management:
 
 ```sh
-pnpm install
-pnpm docs:dev       # run the documentation/demo site
-pnpm test           # unit tests
-pnpm e2e            # end-to-end tests
-pnpm lint           # eslint
-pnpm typecheck      # typescript
+npm install
+npm run docs:dev       # run the documentation/demo site
+npm run test           # unit tests
+npm run e2e            # end-to-end tests
+npm run lint           # eslint
+npm run typecheck      # typescript
 ```
 
 ## License

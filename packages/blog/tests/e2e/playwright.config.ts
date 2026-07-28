@@ -1,9 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const previewCmd = 'pnpm --filter vitepress-theme-neptu-blog-docs preview --port 4173 --host 127.0.0.1'
+const previewCmd = 'npm run preview -w vitepress-theme-neptu-blog-docs -- --port 4173 --host 127.0.0.1'
 // On CI the docs are already built by a separate workflow step;
 // locally we build first to ensure the preview server has content to serve.
-const webServerCommand = `pnpm --filter vitepress-theme-neptu-blog-docs build && ${previewCmd}`
+const webServerCommand = `npm run build -w vitepress-theme-neptu-blog-docs && ${previewCmd}`
 
 export default defineConfig({
   testDir: '.',

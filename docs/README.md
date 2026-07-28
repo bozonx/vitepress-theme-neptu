@@ -9,13 +9,13 @@ locale (`src/en/`) is kept for reference and will be re-synced later.
 
 ## Run from the repo root
 
-This monorepo uses pnpm workspaces:
+This monorepo uses npm workspaces:
 
 ```sh
-pnpm install
-pnpm docs:dev       # dev server
-pnpm docs:build     # production build + Pagefind index
-pnpm docs:preview   # preview the production build
+npm install
+npm run docs:dev       # dev server
+npm run docs:build     # production build + Pagefind index
+npm run docs:preview   # preview the production build
 ```
 
 Content lives under `src/<locale>/` — see the

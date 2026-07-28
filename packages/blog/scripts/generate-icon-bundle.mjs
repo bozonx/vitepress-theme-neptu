@@ -144,7 +144,12 @@ function scanCodebaseForIcons(dirs) {
           for (const match of matches) {
             const prefix = match[1]
             const name = match[2]
-            const pkgPath = resolve(root, `node_modules/@iconify-json/${prefix}/icons.json`)
+            let pkgPath
+            try {
+              pkgPath = fileURLToPath(import.meta.resolve(`@iconify-json/${prefix}/icons.json`))
+            } catch {
+              continue
+            }
             if (existsSync(pkgPath)) {
               if (!result[prefix]) result[prefix] = new Set()
               result[prefix].add(name)
@@ -180,8 +185,8 @@ for (const [prefix, nameSet] of Object.entries(scanned)) {
  * @returns {Record<string, unknown>}
  */
 function loadIconSet(setName) {
-  const path = resolve(root, `node_modules/@iconify-json/${setName}/icons.json`)
-  return JSON.parse(readFileSync(path, 'utf-8'))
+  const iconPath = import.meta.resolve(`@iconify-json/${setName}/icons.json`)
+  return JSON.parse(readFileSync(fileURLToPath(iconPath), 'utf-8'))
 }
 
 /**

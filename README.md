@@ -15,18 +15,18 @@ landing example is in [`docs/landing-example`](./docs/landing-example).
 
 ## Development
 
-This monorepo uses pnpm workspaces. From the repo root:
+This monorepo uses npm workspaces. From the repo root:
 
 ```sh
-pnpm install
-pnpm docs:dev        # run the published blog docs
-pnpm landing:dev     # run the landing example
-pnpm check           # validate every workspace package
+npm install
+npm run docs:dev        # run the published blog docs
+npm run landing:dev     # run the landing example
+npm run check           # validate every workspace package
 ```
 
 Root scripts run matching scripts in every workspace package; you can also run
 a package's own scripts directly, e.g.
-`pnpm --filter vitepress-theme-neptu-blog test`.
+`npm run test -w vitepress-theme-neptu-blog`.
 
 End-user projects (the blog template or a standalone installation) work with
 npm, pnpm or yarn — see the [blog README](./packages/blog/README.md).

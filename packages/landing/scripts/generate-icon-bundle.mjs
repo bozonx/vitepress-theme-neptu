@@ -7,8 +7,9 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const iconPath = import.meta.resolve('@iconify-json/fa6-solid/icons.json')
 const source = JSON.parse(
-  readFileSync(resolve(root, 'node_modules/@iconify-json/fa6-solid/icons.json'), 'utf8')
+  readFileSync(fileURLToPath(iconPath), 'utf8')
 )
 const names = [
   'bolt', 'check', 'chevron-left', 'chevron-right', 'copy', 'cubes',

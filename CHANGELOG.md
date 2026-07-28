@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Migrated monorepo from pnpm to npm: replaced `pnpm-workspace.yaml` with `workspaces` in root `package.json`, inlined all `catalog:` versions into individual `package.json` files, replaced pnpm commands in scripts with npm equivalents, updated CI workflow and documentation.
+
 ### Added
 
 - `packages/landing`: publishable `neptu-landing` validation CLI with explicit file/directory targets, plus `hasBlockType()` and `unregisterBlockTypes()` registry helpers.
