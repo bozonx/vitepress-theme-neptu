@@ -1,6 +1,5 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-
 import { defineBlogConfig } from 'vitepress-theme-neptu/configs'
 import type { BlogUserConfig, ThemeConfig } from 'vitepress-theme-neptu'
 
