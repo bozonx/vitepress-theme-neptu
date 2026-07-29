@@ -39,6 +39,17 @@ describe('HomeHero', () => {
     expect(link.find('img').attributes('alt')).toBe('Logo')
   })
 
+  it('does not render image link when img.src is undefined', () => {
+    const wrapper = mount(HomeHero, {
+      props: {
+        firstLine: 'Hello',
+        img: { alt: 'Logo' },
+      },
+    })
+
+    expect(wrapper.find('a.home-logo').exists()).toBe(false)
+  })
+
   it('does not render image link when img is absent', () => {
     const wrapper = mount(HomeHero, {
       props: {

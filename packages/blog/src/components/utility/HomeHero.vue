@@ -13,7 +13,7 @@ interface HeroButton {
 }
 
 interface HeroImage {
-  src: string
+  src?: string
   alt?: string
 }
 
@@ -25,7 +25,7 @@ const props = defineProps<{
 }>()
 
 const homeHref = `/${localeIndex.value}/recent/1`
-const imageSrc = (src: string) => (src.startsWith('/') ? withBase(src) : src)
+const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 </script>
 
 <template>
@@ -42,7 +42,7 @@ const imageSrc = (src: string) => (src.startsWith('/') ? withBase(src) : src)
         ></p>
       </div>
       <a
-        v-if="props.img"
+        v-if="props.img?.src"
         :aria-label="theme.t.toHome"
         class="home-logo flex justify-center"
         :href="withBase(homeHref)"
