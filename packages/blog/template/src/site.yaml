@@ -22,12 +22,15 @@ themeConfig:
 
   # --- General ---------------------------------------------------------------
   # Show an external-link icon next to outbound links.
+  # Default: true
   externalLinkIcon: true
 
   # Show a light/dark theme switcher button in the navbar.
+  # Default: false (hidden)
   # themeSwitcher: true
 
   # When true, routes users to their-language version of a page if available.
+  # Default: true
   # i18nRouting: false
 
   # GitHub repository URL, used by edit-link and social link placeholders
@@ -37,9 +40,11 @@ themeConfig:
   # Optional visual sidebar title. The canonical browser/SEO/feed title is the
   # top-level `title` in each locale's _site.yaml. Override per-sidebar with
   # `sidebar.blogTitle`, or set it to `false` to hide.
+  # Default: falls back to locale `title`
   # blogTitle: My Blog
 
   # Twitter/X @handle (without @) for SEO meta tags.
+  # Default: none
   # twitterSite: myblog
 
   # --- Sidebar ---------------------------------------------------------------
@@ -48,6 +53,7 @@ themeConfig:
   # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×360) is
   # recommended for retina displays.
   # Add an image to `src/public/` first, then point to it from the public root.
+  # Default: none (no logo)
   # sidebarLogoSrc: /img/sidebar-logo.png
 
   # Logo height in pixels — used only as a placeholder so the browser can
@@ -55,9 +61,11 @@ themeConfig:
   # The image is NOT compressed to this height: CSS `h-auto` keeps the natural
   # aspect ratio. Set this to the image's height at 320px render width
   # (e.g. for a 640×360 source, use 180).
+  # Default: 158
   # sidebarLogoHeight: 180
 
   # Sidebar sections and links configuration.
+  # All boolean flags below default to false (hidden) when not specified.
   sidebar:
     # Show the "Recent posts" section.
     recent: true
@@ -77,6 +85,7 @@ themeConfig:
     atomFeed: true
     # Override the sidebar title. Defaults to `blogTitle`, then locale `title`.
     # Set `false` to hide.
+    # Default: falls back to `blogTitle`, then locale `title`
     # blogTitle: My Blog
     # Custom navigation links shown at the top of the sidebar.
     # links:
@@ -95,6 +104,7 @@ themeConfig:
   # --- Navigation Bar --------------------------------------------------------
   nav:
     # Show a donate button in the navbar.
+    # Default: false
     donate: true
     # Custom navigation links shown in the navbar.
     # links:
@@ -111,10 +121,13 @@ themeConfig:
   # --- Donate ----------------------------------------------------------------
   donate:
     # URL of the donate page (relative to site root).
+    # Default: none (required if donate is shown)
     url: 'page/donate'
     # Override the donate icon (Iconify name).
+    # Default: 'fa6-solid:hand-holding-heart' (falls back to `donateIcon`)
     # icon: 'fa6-solid:hand-holding-heart'
     # Call-to-action text shown after the donate block on post pages.
+    # Default: none (block is hidden when not set)
     # postDonateCall: 'If you found this post useful, consider supporting.'
 
   # --- Edit Link -------------------------------------------------------------
@@ -122,8 +135,10 @@ themeConfig:
   editLink:
     # The pattern is auto-generated from `repo` above (supports GitHub, GitLab,
     # Bitbucket, Gitea, Forgejo, Codeberg). Uncomment to override.
+    # Default: auto-generated from `repo` (e.g. 'https://github.com/.../edit/main/src/:path')
     # pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
     # Custom link text (defaults to the i18n translation).
+    # Default: i18n translation key `editLink`
     # text: Edit this page
 
   # --- Footer ----------------------------------------------------------------
@@ -139,6 +154,7 @@ themeConfig:
 
   # --- Post List Card --------------------------------------------------------
   # Controls what is shown on each post card in list/archive/tag views.
+  # All boolean flags default to true.
   postList:
     showDate: true
     showTags: true
@@ -146,6 +162,7 @@ themeConfig:
     showPreview: true
     showAuthor: true
     # Maximum number of characters for the post preview text.
+    # Default: 300
     maxPreviewLength: 300
 
   # --- Post Footer Blocks ----------------------------------------------------
@@ -171,15 +188,19 @@ themeConfig:
   # a warning is emitted at build time to prevent desynchronisation.
 
   # Maximum number of tags shown in the sidebar tag cloud.
+  # Default: 15
   # sidebarTagsCount: 15
 
   # Number of similar posts to display in the post-footer "similar" block.
+  # Default: 5
   # similarPostsCount: 5
 
   # Maximum number of pagination items shown at once.
+  # Default: 5
   # paginationMaxItems: 5
 
   # Parallax background offset (in px) for the home page hero section.
+  # Default: 300
   # homeBgParallaxOffset: 300
 
   # --- Icons -----------------------------------------------------------------
@@ -252,14 +273,17 @@ themeConfig:
   # --- Feeds (RSS / Atom / JSON) ---------------------------------------------
   # feeds:
   #   # Maximum number of posts included in generated feeds.
+  #   # Default: 50
   #   maxPosts: 50
   #   # Feed formats to generate. Supported: 'rss', 'atom', 'json'.
+  #   # Default: ['rss', 'atom', 'json']
   #   formats:
   #     - rss
   #     - atom
   #     - json
 
   # --- SEO -------------------------------------------------------------------
+  # All boolean flags below default to true.
   # seo:
   #   # Generate Open Graph meta tags.
   #   og: true
@@ -274,6 +298,7 @@ themeConfig:
   #   # Add RSS/Atom feed <link> tags to <head>.
   #   rss: true
   #   # Maximum description length for meta tags (truncated if exceeded).
+  #   # Default: 300
   #   maxDescriptionLength: 300
 
   # --- Popular Posts (Level 1 integration) ----------------------------------
@@ -281,11 +306,16 @@ themeConfig:
   # here. This file may safely override only display behaviour such as
   # `sortBy` after the integration has been enabled in Level 1.
   # popularPosts:
+  #   # Default: false
   #   enabled: false
   #   # Sort metric: 'pageviews', 'uniquePageviews', or 'avgTimeOnPage'.
+  #   # Default: 'pageviews'
   #   sortBy: pageviews
   #   dataSource:
+  #     # Default: 'ga4'
   #     provider: ga4
+  #     # dataPeriodDays default: 30
+  #     # dataLimit default: 1000
   #   # `enabled` and `dataSource` stay in config.ts because they use env/secrets.
 
   # --- Search (Level 1 integration) -----------------------------------------
@@ -294,6 +324,7 @@ themeConfig:
 
   # --- Landing-only (home page) ----------------------------------------------
   # Hero image URL shown on the home page (landing starter only).
+  # Default: none
   # mainHeroImg: /hero.jpg
 
 # --- i18n Translations -----------------------------------------------------

@@ -9,12 +9,6 @@ themeConfig:
     url: 'page/donate'
   publisher:
     logo: '/img/sidebar-logo.jpg'
-  nav:
-    donate: true
-    socialLinks:
-      - icon: 'fa6-brands:github-alt'
-        link: '${theme.repo}'
-        desktopOnly: true
   sidebar:
     popular: true
     recent: true
@@ -27,6 +21,12 @@ themeConfig:
     socialLinks:
       - icon: 'fa6-brands:github'
         link: '${theme.repo}'
+  nav:
+    donate: true
+    socialLinks:
+      - icon: 'fa6-brands:github-alt'
+        link: '${theme.repo}'
+        desktopOnly: true
   footer:
     links:
       - text: 'About'
