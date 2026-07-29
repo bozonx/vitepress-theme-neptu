@@ -34,3 +34,7 @@ themeConfig:
       link: '/${localeIndex}/doc/theming'
     - text: '📢 Соцсети'
       link: '/${localeIndex}/page/links'
+
+  footer:
+    message: 'Копирование разрешено только со ссылкой на источник.'
+    copyright: 'Copyright © 2026-present Neptu'

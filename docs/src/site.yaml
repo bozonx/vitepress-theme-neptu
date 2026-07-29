@@ -28,7 +28,3 @@ themeConfig:
       - icon: 'fa6-brands:github-alt'
         link: '${theme.repo}'
         desktopOnly: true
-  footer:
-    links:
-      - text: 'About'
-        href: 'page/about'

@@ -162,17 +162,6 @@ themeConfig:
     # Default: i18n translation key `editLink`
     # text: Edit this page
 
-  # --- Footer ----------------------------------------------------------------
-  footer:
-    # Copyright-free message shown on the left side of the footer.
-    message: 'Released under the MIT License.'
-    # Copyright line shown on the right side of the footer.
-    copyright: 'Copyright © 2026-present'
-    # Custom links shown in the footer.
-    links:
-      - text: 'About'
-        href: 'page/about'
-
   # --- Post List Card --------------------------------------------------------
   # Controls what is shown on each post card in list/archive/tag views.
   # All boolean flags default to true.
