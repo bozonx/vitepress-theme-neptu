@@ -24,3 +24,13 @@ themeConfig:
             link: 'yaml-mode'
           - text: 'О теме'
             link: 'about'
+
+  nav:
+    - text: '📖 Документация'
+      link: '/${localeIndex}/doc'
+    - text: '🧩 Блоки'
+      link: '/${localeIndex}/doc/blocks'
+    - text: '🎨 Темизация'
+      link: '/${localeIndex}/doc/theming'
+    - text: '📢 Соцсети'
+      link: '/${localeIndex}/page/links'

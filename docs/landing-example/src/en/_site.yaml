@@ -26,3 +26,13 @@ themeConfig:
             link: 'yaml-mode'
           - text: 'About'
             link: 'about'
+
+  nav:
+    - text: '📖 Docs'
+      link: '/${localeIndex}/doc'
+    - text: '🧩 Blocks'
+      link: '/${localeIndex}/doc/blocks'
+    - text: '🎨 Theming'
+      link: '/${localeIndex}/doc/theming'
+    - text: '📢 Social media'
+      link: '/${localeIndex}/page/links'

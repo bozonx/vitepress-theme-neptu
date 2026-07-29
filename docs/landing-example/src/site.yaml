@@ -7,13 +7,3 @@ themeConfig:
   footer:
     message: 'Copying is allowed only with a link to the source.'
     copyright: 'Copyright © 2026-present Neptu'
-
-  nav:
-    - text: '📖 Docs'
-      link: '/${localeIndex}/doc'
-    - text: '🧩 Blocks'
-      link: '/${localeIndex}/doc/blocks'
-    - text: '🎨 Theming'
-      link: '/${localeIndex}/doc/theming'
-    - text: '📢 Social media'
-      link: '/${localeIndex}/page/links'
