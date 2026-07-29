@@ -24,7 +24,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
  * to compute pagination routes. Also passed to `themeConfig.perPage` below so
  * the runtime UI stays in sync with the generated pages.
  */
-export const PER_PAGE = 10
+export const PER_PAGE = 15
 
 /**
  * Build-time post preview options.
@@ -75,6 +75,11 @@ export default async () => {
     /** Head meta tags and external asset links injected into HTML `<head>`. */
     head: [
       ['meta', { name: 'format-detection', content: 'telephone=no' }],
+
+      // Favicon & web app manifest (place assets in src/public/img/)
+      // ['link', { rel: 'icon', sizes: '192x192', href: `${base}img/android-chrome-192x192.png`.replace(/\/+/g, '/') }],
+      // ['link', { rel: 'apple-touch-icon', sizes: '192x192', href: `${base}img/android-chrome-192x192.png`.replace(/\/+/g, '/') }],
+      // ['link', { rel: 'manifest', href: `${base}site.webmanifest`.replace(/\/+/g, '/') }],
 
       // Pagefind search UI stylesheets & scripts (built during production build)
       ['link', { rel: 'stylesheet', href: `${base}/pagefind/pagefind-ui.css`.replace(/\/+/g, '/') }],
@@ -132,10 +137,6 @@ export default async () => {
 
       /** Popular posts metrics configuration (GA4). */
       popularPosts,
-
-      // Presentation, SEO display switches, feeds, labels, icons, navigation,
-      // authors and all other static theme options are documented next to their
-      // fields in src/site.yaml. Put a locale-specific override in _site.yaml.
     },
   }
 

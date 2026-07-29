@@ -3,7 +3,8 @@
 themeConfig:
   sidebarLogoSrc: '/img/sidebar-logo.jpg'
   sidebarLogoHeight: 180
-  # editLink pattern is auto-generated from `repo` (set in config.ts).
+  # GitHub repository URL — used by edit-link auto-generation and `${theme.repo}` template references.
+  repo: 'https://github.com/bozonx/vitepress-theme-neptu'
   donate:
     url: 'page/donate'
   publisher:
