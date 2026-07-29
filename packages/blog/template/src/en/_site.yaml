@@ -1,41 +1,13 @@
 # yaml-language-server: $schema=../../../node_modules/vitepress-theme-neptu/schema/site.schema.json
 # ---------------------------------------------------------------------------
-# Level 3 of 3 — per-locale admin configuration. Overrides Level 1
-# (`.vitepress/config.ts`) and Level 2 (`src/site.yaml`) for this locale only.
+# Level 3 of 3 — per-locale admin configuration.
+# Overrides Level 1 (`.vitepress/config.ts`) and Level 2 (`src/site.yaml`)
+# for this locale only.
 #
-# This is not a full VitePress config. Its allowed root fields are:
-# - top-level: `lang`, `title`, `titleTemplate`, `description`
-# - everything else nests under `themeConfig:`.
-#
-# STRING TEMPLATES (resolved after the locale config is merged)
-# You can reference dynamic values with ${...} anywhere in this file.
-#
-#   ${theme.<key>}      — any value from the merged themeConfig.
-#                         Use dot-notation for nested keys, e.g.:
-#                         ${theme.donate.url}, ${theme.editLink.text}
-#   ${t.<key>}          — translation strings (from themeConfig.t or
-#                         built-in locale files). Example: ${t.links.donate}
-#   ${config.siteUrl}   — public site URL from Level 1 config.ts.
-#   ${localeIndex}      — current locale folder name (e.g. "en").
-#   ${site.title}       — resolved locale site title.
-#
-# Common theme keys you can reference:
-#   blogTitle, repo, donateIcon, recentIcon, popularIcon, youtubeIcon,
-#   and any other key declared in .vitepress/config.ts or src/site.yaml.
-#
-# Examples:
-#   titleTemplate: ":title | ${site.title}"
-#   nav.links: [{ text: "${t.links.donate}", href: "page/donate", icon: "${theme.donateIcon}" }]
-#   sidebar.bottomLinks: [{ text: "YouTube", href: "...", icon: "${theme.youtubeIcon}" }]
-#
-# ICONS
-# Every `icon:` field accepts an Iconify string: "<prefix>:<icon-name>".
-# Browse and search icons at https://icones.es (or https://iconify.design).
-# Popular prefixes used in this theme: fa6-solid, fa6-brands, mdi, solar, bi.
-# Example: icon: "fa6-solid:hand-holding-heart"
+# String templates (${...}) are supported — see `src/site.yaml` for the
+# full reference. In _site.yaml the `theme` context additionally includes
+# values from site.yaml.
 # ---------------------------------------------------------------------------
-# --- Top-level VitePress locale identity ------------------------------------
-# These fields are per-locale and live ONLY in _site.yaml (not in site.yaml).
 
 # IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
 lang: 'en-US'
@@ -56,21 +28,6 @@ description: 'Welcome to my new blog'
 # extends: en
 
 themeConfig:
-  # -------------------------------------------------------------------------
-  # Translations — overrides built-in `t` strings for this locale only.
-  # The theme ships multilanguage defaults in `blogLocalesBase/<lang>.ts`;
-  # only the keys you list here are overridden. The complete key reference is
-  # in the Level-2 `src/site.yaml` translation section and in site.schema.json.
-  # -------------------------------------------------------------------------
-  # t:
-  #   popularPosts: "Popular Posts"
-  #   similarPosts: "Similar Posts"
-  #   shareSocialMedia: "Share on Social Media"
-  #   viewInAnotherLanguage: "Read this page in another language"
-  #   links:
-  #     aboutBlog: "About This Blog"
-  #     donate: "Donate"
-
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
   # blogTitle: 'My Neptu Blog'
   # Also you can override other fields from category "Branding & layout"
@@ -172,6 +129,7 @@ themeConfig:
     links:
       - text: 'About'
         href: 'page/about'
+        # Iconify string: "<prefix>:<icon-name>". Browse at https://icones.es
         icon: 'solar:document-linear'
         # iconClass: 'muted'
         # class: 'custom-nav-link'
@@ -262,3 +220,18 @@ themeConfig:
   #       - type: twitter
   #         url: https://twitter.com/janedoe
   #         title: Jane on Twitter
+
+  # -------------------------------------------------------------------------
+  # Translations — overrides built-in `t` strings for this locale only.
+  # The theme ships multilanguage defaults in `blogLocalesBase/<lang>.ts`;
+  # only the keys you list here are overridden. The complete key reference is
+  # in the Level-2 `src/site.yaml` translation section and in site.schema.json.
+  # -------------------------------------------------------------------------
+  # t:
+  #   popularPosts: "Popular Posts"
+  #   similarPosts: "Similar Posts"
+  #   shareSocialMedia: "Share on Social Media"
+  #   viewInAnotherLanguage: "Read this page in another language"
+  #   links:
+  #     aboutBlog: "About This Blog"
+  #     donate: "Donate"
