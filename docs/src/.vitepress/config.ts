@@ -45,7 +45,6 @@ export default async () => {
     themeConfig: {
       // Core
       perPage: PER_PAGE,
-      themeSwitcher: true,
 
       // Integrations
       search: {

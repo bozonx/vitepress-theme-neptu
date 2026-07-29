@@ -15,6 +15,27 @@
 # are Level 1 (`.vitepress/config.ts`) settings.
 # ============================================================================
 
+
+# --- Template Substitution -------------------------------------------------
+# Any string value in this file (and in _site.yaml) supports ${...}
+# substitution applied to the raw YAML text before parsing.
+#
+# Context keys available in site.yaml:
+#   config       — BlogUserConfig from config.ts
+#   theme        — merged themeConfig (built-ins + config.ts)
+#   t            — translation keys from merged theme
+#   localeIndex  — current locale key (e.g. "en", "ru")
+#
+# In _site.yaml the `theme` context additionally includes values
+# from site.yaml, so cross-references between layers work there.
+#
+# Dot-notation is supported: ${theme.publisher.url}, ${config.siteUrl}
+# Example:
+#   publisher:
+#     url: ${config.siteUrl}
+#     logo: ${config.siteUrl}/img/logo.png
+
+
 # ============================================================================
 # Theme Configuration
 # ============================================================================
@@ -184,8 +205,6 @@ themeConfig:
   # `perPage` is a build-time parameter — configure it in `.vitepress/config.ts`
   # (exported as `PER_PAGE`) because path generators (`*.paths.js`) import it
   # at build time to compute pagination routes.
-  # Setting `perPage` here or in `_site.yaml` is rejected by the schema and
-  # a warning is emitted at build time to prevent desynchronisation.
 
   # Maximum number of tags shown in the sidebar tag cloud.
   # Default: 15
@@ -226,24 +245,6 @@ themeConfig:
     url: https://example.com
     # Set this only after adding the corresponding public image, for example:
     # logo: /img/logo.png
-
-  # --- Authors ---------------------------------------------------------------
-  # List of blog authors. Each author must have a unique `id` and a `name`.
-  # Authors are merged by-id across locale files.
-  # authors:
-  #   - id: jane-doe
-  #     name: Jane Doe
-  #     avatar: /avatars/jane.jpg
-  #     image: /authors/jane-banner.jpg
-  #     imageWidth: 400
-  #     imageHeight: 200
-  #     description: Tech writer and open-source enthusiast.
-  #     aboutUrl: /page/about-jane
-  #     twitterHandle: janedoe
-  #     links:
-  #       - type: twitter
-  #         url: https://twitter.com/janedoe
-  #         title: Jane on Twitter
 
   # --- Social Media Share Buttons --------------------------------------------
   # Sharing platforms rendered in the post-footer "social-share" block.
@@ -301,33 +302,12 @@ themeConfig:
   #   # Default: 300
   #   maxDescriptionLength: 300
 
-  # --- Popular Posts (Level 1 integration) ----------------------------------
-  # Configure GA4 credentials and enablement in `.vitepress/config.ts`, not
-  # here. This file may safely override only display behaviour such as
-  # `sortBy` after the integration has been enabled in Level 1.
-  # popularPosts:
-  #   # Default: false
-  #   enabled: false
-  #   # Sort metric: 'pageviews', 'uniquePageviews', or 'avgTimeOnPage'.
-  #   # Default: 'pageviews'
-  #   sortBy: pageviews
-  #   dataSource:
-  #     # Default: 'ga4'
-  #     provider: ga4
-  #     # dataPeriodDays default: 30
-  #     # dataLimit default: 1000
-  #   # `enabled` and `dataSource` stay in config.ts because they use env/secrets.
-
-  # --- Search (Level 1 integration) -----------------------------------------
-  # Configure Pagefind assets, provider and options in `.vitepress/config.ts`.
-  # Per-locale visible search labels belong under `themeConfig.t` in _site.yaml.
-
-  # --- Landing-only (home page) ----------------------------------------------
+  # --- Home page ------------------------------------------------------------
   # Hero image URL shown on the home page (landing starter only).
   # Default: none
   # mainHeroImg: /hero.jpg
 
-# --- i18n Translations -----------------------------------------------------
+  # --- i18n Translations ----------------------------------------------------
   # Partial translation overrides. Deep-merged over built-in locale defaults.
   # Only supply the keys you want to override.
   # t:
@@ -466,22 +446,3 @@ themeConfig:
   #   const { theme } = useUiTheme()
   #   console.log(theme.value.myCustomField)        // "hello"
   #   console.log(theme.value.myCustomConfig)       // { featureEnabled: true, ... }
-
-  # --- Template Substitution -------------------------------------------------
-  # Any string value in this file (and in _site.yaml) supports ${...}
-  # substitution applied to the raw YAML text before parsing.
-  #
-  # Context keys available in site.yaml:
-  #   config       — BlogUserConfig from config.ts
-  #   theme        — merged themeConfig (built-ins + config.ts)
-  #   t            — translation keys from merged theme
-  #   localeIndex  — current locale key (e.g. "en", "ru")
-  #
-  # In _site.yaml the `theme` context additionally includes values
-  # from site.yaml, so cross-references between layers work there.
-  #
-  # Dot-notation is supported: ${theme.publisher.url}, ${config.siteUrl}
-  # Example:
-  #   publisher:
-  #     url: ${config.siteUrl}
-  #     logo: ${config.siteUrl}/img/logo.png

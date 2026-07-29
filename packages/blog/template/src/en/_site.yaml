@@ -244,3 +244,21 @@ themeConfig:
         # class: "custom-footer-link"
         # mobileOnly: false
         # desktopOnly: false
+
+  # --- Authors ---------------------------------------------------------------
+  # List of blog authors. Each author must have a unique `id` and a `name`.
+  # Authors are merged by-id across locale files.
+  # authors:
+  #   - id: jane-doe
+  #     name: Jane Doe
+  #     avatar: /avatars/jane.jpg
+  #     image: /authors/jane-banner.jpg
+  #     imageWidth: 400
+  #     imageHeight: 200
+  #     description: Tech writer and open-source enthusiast.
+  #     aboutUrl: /page/about-jane
+  #     twitterHandle: janedoe
+  #     links:
+  #       - type: twitter
+  #         url: https://twitter.com/janedoe
+  #         title: Jane on Twitter
