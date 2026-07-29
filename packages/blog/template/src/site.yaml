@@ -13,10 +13,6 @@
 # for every locale. Do not put JavaScript, environment variables, VitePress
 # build options, plugins, hooks, `base`, `srcDir`, or `siteUrl` here: those
 # are Level 1 (`.vitepress/config.ts`) settings.
-#
-# This file has one effective root key: `themeConfig`. Per-locale identity
-# (`lang`, `title`, `titleTemplate`, `description`, `extends`) belongs in
-# Level 3, `src/<locale>/_site.yaml`.
 # ============================================================================
 
 # ============================================================================
@@ -53,16 +49,13 @@ themeConfig:
   # recommended for retina displays.
   # Add an image to `src/public/` first, then point to it from the public root.
   # sidebarLogoSrc: /img/sidebar-logo.png
+
   # Logo height in pixels — used only as a placeholder so the browser can
   # reserve vertical space before the image loads (prevents layout shift / CLS).
   # The image is NOT compressed to this height: CSS `h-auto` keeps the natural
   # aspect ratio. Set this to the image's height at 320px render width
   # (e.g. for a 640×360 source, use 180).
   # sidebarLogoHeight: 180
-
-  # NOTE: VitePress Default Theme labels (returnToTopLabel,
-  # lightModeSwitchTitle, darkModeSwitchTitle, notFound) are NOT set here —
-  # they have built-in per-locale defaults and belong in Level 3 (`_site.yaml`).
 
   # Sidebar sections and links configuration.
   sidebar:
