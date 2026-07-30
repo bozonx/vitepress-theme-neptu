@@ -12,25 +12,6 @@ coverAlt: Notebook on table
 
 # Welcome to My New Blog
 
-This is your first post! You can write standard Markdown here, including:
-
-- **Bold** and *italic* text
-- Code blocks with syntax highlighting
-- Images, callouts, tables, and custom Vue components
-
-```js
-console.log("Hello from Neptu Blog!");
-```
-
-## Frontmatter Options
-
-Each post can specify frontmatter metadata:
-
-- `title`: Post title
-- `description`: Short post summary
-- `date`: Publication date (`YYYY-MM-DD`)
-- `authorId`: Author ID (defined in `_authors.yaml`)
-- `tags`: List of tags for categorizing your content
-- `cover`: Cover image URL, with optional `coverAlt` for its alt text
+This is your first post! You can write standard Markdown here.
 
 Happy blogging!
