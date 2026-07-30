@@ -128,3 +128,8 @@ src/
 
 Locale folders are discovered automatically: add `ru/` next to `en/` with its
 own `_site.yaml` and the locale shows up in the language menu.
+
+The locale folder is required even for a single-language site. One `en/`
+folder is a complete setup and does not require translations. `src/index.md`
+is reserved for the language selector; it may recommend the browser's language
+but does not redirect automatically.

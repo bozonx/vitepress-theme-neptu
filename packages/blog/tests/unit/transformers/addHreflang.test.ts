@@ -79,6 +79,15 @@ describe('addHreflang', () => {
     expect(defaultLink?.[1]?.href).toBe('https://example.com/en/post/hello')
   })
 
+  it('uses the root language selector as x-default for locale home pages', () => {
+    const ctx = createContext({
+      pageData: { relativePath: 'en/index.md' } as any,
+    })
+    addHreflang(ctx)
+    const defaultLink = ctx.head.find((h) => h[1]?.hreflang === 'x-default')
+    expect(defaultLink?.[1]?.href).toBe('https://example.com/')
+  })
+
   it('uses locale code when lang is missing', () => {
     const ctx = createContext({
       siteConfig: {

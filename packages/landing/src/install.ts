@@ -3,6 +3,7 @@ import * as primitives from './primitives/index.ts'
 import { blockComponents } from './blocks/registry.ts'
 import LandingRenderer from './blocks/LandingRenderer.vue'
 import LnThemePicker from './components/LnThemePicker.vue'
+import { LocaleSelector } from 'vitepress-theme-neptu/components'
 
 /**
  * Registers every block, primitive and helper component globally, so markdown
@@ -19,6 +20,7 @@ export function registerLandingComponents(app: App): void {
     LandingRenderer,
     landing: LandingRenderer,
     LnThemePicker,
+    LocaleSelector,
   })) {
     app.component(name, component)
   }

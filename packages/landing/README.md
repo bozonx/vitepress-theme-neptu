@@ -75,6 +75,46 @@ export default async () => {
 `<srcDir>/<locale>/_site.yaml` or `_site.ts`, applies the SEO transformers and
 injects the inline script that restores the theme without a flash.
 
+### Required content structure
+
+Landing follows the same strict convention as the blog theme:
+
+```text
+src/
+├── site.yaml
+├── index.md             # neutral language selector
+└── en/
+    ├── _site.yaml
+    ├── index.md         # landing page
+    ├── doc/             # optional
+    └── page/            # optional
+```
+
+The locale directory is required even when the site has only one language;
+one directory does not imply that translations must be created. Do not place
+locale content directly under `src/`. Add sibling locale directories only when
+their content exists. The root selector should render ordinary locale links
+and may visually recommend the browser's language, but should not redirect
+automatically.
+
+Use the landing theme's built-in root layout:
+
+```yaml
+---
+layout: locale-selector
+navbar: false
+sidebar: false
+localeSelector:
+  title: Choose your language
+  description: Select the language you want to use.
+  recommendedLabel: Recommended for your browser
+head:
+  - - meta
+    - name: robots
+      content: noindex
+---
+```
+
 ## Building a page
 
 Blocks and primitives are registered globally — no import block needed.

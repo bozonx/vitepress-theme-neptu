@@ -250,6 +250,8 @@ export async function loadSiteLocale(
  * A folder `<srcDir>/<name>/` qualifies as a locale when it contains
  * `_site.yaml` or `_site.ts`. Folder names starting with `.` or `_` are
  * skipped. Results are returned sorted alphabetically by locale key.
+ * This locale directory is required even for a single-language Neptu site;
+ * root-level content is reserved for the language selector.
  */
 export async function autoLoadSiteLocales(
   config: LandingUserConfig

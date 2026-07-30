@@ -34,8 +34,19 @@ src/
   ru/   ← _site.yaml, posts, listing routes
 ```
 
+This is the required structure for single-language sites too. Keeping only
+`src/en/` is complete and does not require creating translations. Neptu does
+not treat root-level posts and pages as a second content mode: `src/index.md`
+is reserved for a neutral language selector.
+
 Every locale gets its own home page, feeds, sitemap entries, and full set of
 listing layouts (recent / popular / archive / authors / tags).
+
+The root selector renders ordinary links to every locale. Browser-language
+detection may mark one link as recommended, but it does not redirect. For a
+single-language deployment that needs an immediate `/` → `/en/` transition,
+configure a permanent HTTP 301 or 308 redirect at the hosting layer instead of
+adding a JavaScript timer.
 
 ## Linking translations
 

@@ -4,6 +4,7 @@
 //
 //   import { HomeHero, TagPostsList } from 'vitepress-theme-neptu/components'
 
+export { default as LocaleSelector } from './LocaleSelector.vue'
 export { default as HomeHero } from './utility/HomeHero.vue'
 export { default as HomeTags } from './utility/HomeTags.vue'
 export { default as HomePopularPosts } from './utility/HomePopularPosts.vue'

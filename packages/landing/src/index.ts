@@ -5,6 +5,7 @@ import type { EnhanceAppContext, Theme } from 'vitepress'
 import { registerLandingComponents } from './install.ts'
 import { addCollection } from '@iconify/vue'
 import bundledIcons from './generated/icons-bundle.ts'
+import LandingLayout from './layouts/LandingLayout.vue'
 
 export type {
   LandingUserConfig,
@@ -41,6 +42,7 @@ export { registerLandingComponents } from './install.ts'
  */
 const theme: Theme = {
   extends: DefaultTheme,
+  Layout: LandingLayout,
   enhanceApp(ctx: EnhanceAppContext) {
     for (const collection of bundledIcons) addCollection(collection)
     registerLandingComponents(ctx.app)

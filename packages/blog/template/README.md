@@ -47,6 +47,7 @@ npm run preview
 │   │   ├── config.ts       # Main VitePress & theme config
 │   │   └── theme/          # Theme customization & components
 │   ├── site.yaml           # Global cross-locale site config
+│   ├── index.md            # Language selector (never locale content)
 │   ├── en/                 # English content locale
 │   │   ├── _authors.yaml   # Author profiles
 │   │   ├── _site.yaml      # Locale site config
@@ -56,6 +57,15 @@ npm run preview
 ├── package.json
 └── README.md
 ```
+
+This structure is required for both single-language and multilingual Neptu
+sites. Keeping only `src/en/` is a complete single-language setup; it does not
+mean that you must create translations. Do not move locale content directly
+under `src/`. When another language is needed, add a sibling such as `src/ru/`.
+
+The root `src/index.md` is a neutral language selector. It contains crawlable
+links and only highlights the browser's likely language; it deliberately does
+not perform an automatic browser-language redirect.
 
 ---
 

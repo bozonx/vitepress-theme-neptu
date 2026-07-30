@@ -17,7 +17,8 @@ Start there. This README only covers the essentials.
 
 ## Features
 
-- **Multilingual by design** — locale-prefixed routing, separate UI and content locales
+- **Multilingual by design** — one strict locale-prefixed content structure for
+  both single-language and multilingual sites
 - **Auto-generated lists** — recent, popular, archive, authors, tags
 - **Feeds** — RSS / Atom / JSON per locale
 - **Search** — Pagefind integration
@@ -71,6 +72,27 @@ export default async () =>
     srcDir: 'src',
   })
 ```
+
+### Required content structure
+
+Neptu intentionally uses one structure for every site:
+
+```text
+src/
+├── site.yaml
+└── en/
+    ├── _site.yaml
+    ├── index.md
+    ├── post/
+    └── page/
+```
+
+A single-language site still has exactly one locale directory, such as
+`src/en/`; this does not require adding translations. Add another directory
+only when you actually publish another language. Root-level content pages are
+not a second supported mode: `src/index.md` is reserved for the language
+selector. It renders normal links to every locale and may recommend the
+browser's language, but must not redirect automatically.
 
 Configuration, frontmatter, components, and SEO are documented in full on the
 [live site](https://bozonx.github.io/vitepress-theme-neptu).

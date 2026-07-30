@@ -75,17 +75,24 @@ export function addHreflang({
 
   if (alternates.length <= 1) return
 
-  const defaultAlternate =
+  // The root language selector is the neutral fallback for locale home pages.
+  // Inner pages keep the primary locale's corresponding page as x-default so
+  // a search result does not discard the reader's requested destination.
+  const isLocaleHomePage = /^[^/]+\/index\.md$/.test(relativePath)
+  const primaryAlternate =
     alternates.find(
       (alternate) => alternate.code === Object.keys(locales)[0]
     ) || alternates[0]
+  const defaultHref = isLocaleHomePage
+    ? `${siteUrl}/`
+    : primaryAlternate.tag[1].href
 
   head.push(...alternates.map((alternate) => alternate.tag), [
     'link',
     {
       rel: 'alternate',
       hreflang: 'x-default',
-      href: defaultAlternate.tag[1].href,
+      href: defaultHref,
     },
   ])
 }
