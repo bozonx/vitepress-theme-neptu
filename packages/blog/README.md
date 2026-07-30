@@ -94,6 +94,29 @@ not a second supported mode: `src/index.md` is reserved for the language
 selector. It renders normal links to every locale and may recommend the
 browser's language, but must not redirect automatically.
 
+The standard config helpers enforce this contract at build time: a manual
+`locales.root` entry or any root Markdown file other than `src/index.md` stops
+the build with a migration hint instead of producing partially broken SEO and
+locale URLs.
+
+Use the starter's root selector or import it in your own `src/index.md`:
+
+```md
+---
+layout: false
+head:
+  - - meta
+    - name: robots
+      content: noindex
+---
+
+<script setup>
+import { LocaleSelector } from 'vitepress-theme-neptu/components'
+</script>
+
+<LocaleSelector />
+```
+
 Configuration, frontmatter, components, and SEO are documented in full on the
 [live site](https://bozonx.github.io/vitepress-theme-neptu).
 

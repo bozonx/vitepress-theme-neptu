@@ -11,7 +11,8 @@ const pageNotFoundText = computed(
 const toHomeText = computed(
   () => theme.value.notFound?.linkText || theme.value.t?.toHome || 'Home'
 )
-// VitePress uses 'root' for the default locale; map it to '/' to avoid '/root/'
+// The neutral selector and unmatched root routes use VitePress' `root` index.
+// Map that internal value to `/`; Neptu does not expose a `/root/` locale.
 const homeLink = computed(() =>
   localeIndex.value === 'root' ? '/' : `/${localeIndex.value}/`
 )

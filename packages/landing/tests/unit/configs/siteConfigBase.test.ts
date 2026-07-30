@@ -101,6 +101,11 @@ vi.mock('vitepress-theme-neptu/utils', () => ({
 }))
 
 vi.mock('vitepress-theme-neptu/utils/node', () => ({
+  assertStrictLocaleStructure: vi.fn((config: { locales?: Record<string, unknown> }) => {
+    if (Object.hasOwn(config.locales || {}, 'root')) {
+      throw new Error('`root` content locale is not supported')
+    }
+  }),
   createSiteYamlHotReloadPlugin: vi.fn(() => ({ name: 'hot-reload' })),
   getImageDimensions: vi.fn(),
 }))
@@ -316,6 +321,15 @@ describe('defineLandingConfigSync', () => {
     defineLandingConfigSync({ siteUrl: 'https://example.com' })
     expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('locales'))
     warnSpy.mockRestore()
+  })
+
+  it('rejects the VitePress root content locale', () => {
+    expect(() =>
+      defineLandingConfigSync({
+        siteUrl: 'https://example.com',
+        locales: { root: { lang: 'en-US' } },
+      })
+    ).toThrow('`root` content locale is not supported')
   })
 })
 

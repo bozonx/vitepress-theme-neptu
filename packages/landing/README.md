@@ -97,6 +97,10 @@ their content exists. The root selector should render ordinary locale links
 and may visually recommend the browser's language, but should not redirect
 automatically.
 
+The config helper enforces this contract at build time. A manual
+`locales.root` entry or any root Markdown file other than `src/index.md` is an
+error with a migration hint, rather than a partially supported second mode.
+
 Use the landing theme's built-in root layout:
 
 ```yaml

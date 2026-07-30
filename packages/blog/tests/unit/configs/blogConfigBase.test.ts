@@ -365,6 +365,15 @@ describe('defineBlogConfigSync', () => {
     warnSpy.mockRestore()
   })
 
+  it('rejects the VitePress root content locale', () => {
+    expect(() =>
+      defineBlogConfigSync({
+        siteUrl: 'https://example.com',
+        locales: { root: { lang: 'en-US' } },
+      })
+    ).toThrow('`root` content locale is not supported')
+  })
+
 })
 
 describe('defineBlogConfig', () => {

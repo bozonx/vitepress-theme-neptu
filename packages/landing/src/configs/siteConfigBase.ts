@@ -18,7 +18,10 @@ import {
   warnMissingRequired,
   resolveExternalLinkIcon,
 } from 'vitepress-theme-neptu/utils'
-import { createSiteYamlHotReloadPlugin } from 'vitepress-theme-neptu/utils/node'
+import {
+  assertStrictLocaleStructure,
+  createSiteYamlHotReloadPlugin,
+} from 'vitepress-theme-neptu/utils/node'
 import {
   addCanonicalLink,
   addDescriptionMetaTag,
@@ -260,6 +263,7 @@ export function defineLandingConfigSync(
   config: LandingUserConfig
 ): ResolvedLandingConfig {
   warnMissingRequired(config, LOG_PREFIX)
+  assertStrictLocaleStructure(config, LOG_PREFIX)
   return mergeLandingConfig(config)
 }
 

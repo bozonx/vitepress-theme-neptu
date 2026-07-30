@@ -38,6 +38,8 @@ This is the required structure for single-language sites too. Keeping only
 `src/en/` is complete and does not require creating translations. Neptu does
 not treat root-level posts and pages as a second content mode: `src/index.md`
 is reserved for a neutral language selector.
+The config helper enforces this at build time: `locales.root` and root Markdown
+files other than `src/index.md` fail with a migration hint.
 
 Every locale gets its own home page, feeds, sitemap entries, and full set of
 listing layouts (recent / popular / archive / authors / tags).

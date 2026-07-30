@@ -103,25 +103,35 @@ onMounted(() => {
 
 <style scoped>
 .locale-selector {
+  --locale-selector-text: var(--body-text-color, var(--ln-c-text-1, var(--vp-c-text-1, #172033)));
+  --locale-selector-brand-text: var(--link-a-text, var(--ln-c-brand-text, var(--vp-c-brand-1, #3451b2)));
   box-sizing: border-box;
   display: grid;
   min-height: 100vh;
   min-height: 100svh;
   place-items: center;
-  padding: 2rem 1rem;
-  color: var(--vp-c-text-1, #172033);
+  padding: clamp(1rem, 4vw, 3rem);
+  color: var(--locale-selector-text);
   background:
-    radial-gradient(circle at top, color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, transparent), transparent 42%),
+    radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 18%, transparent), transparent 38%),
+    radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--vp-c-brand-2, #5672cd) 9%, transparent), transparent 30%),
     var(--vp-c-bg, #fff);
 }
 
 .locale-selector__panel {
-  width: min(100%, 34rem);
+  box-sizing: border-box;
+  width: min(100%, 42rem);
+  padding: clamp(1.5rem, 5vw, 3.25rem);
+  background: color-mix(in srgb, var(--vp-c-bg, #fff) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vp-c-divider, #e2e2e3) 82%, transparent);
+  border-radius: 1.5rem;
+  box-shadow: 0 1.5rem 5rem color-mix(in srgb, #000 16%, transparent);
+  backdrop-filter: blur(18px);
 }
 
 .locale-selector__eyebrow {
   margin: 0 0 0.75rem;
-  color: var(--vp-c-brand-1, #3451b2);
+  color: var(--locale-selector-brand-text);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -130,9 +140,12 @@ onMounted(() => {
 
 .locale-selector h1 {
   margin: 0;
-  font-size: clamp(2rem, 7vw, 3.5rem);
+  color: var(--locale-selector-text);
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 750;
   letter-spacing: -0.04em;
-  line-height: 1.05;
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
 .locale-selector__description {
@@ -144,7 +157,7 @@ onMounted(() => {
 
 .locale-selector__links {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.8rem;
 }
 
 .locale-selector__link {
@@ -152,10 +165,11 @@ onMounted(() => {
   grid-template-columns: minmax(0, 1fr) auto auto;
   gap: 1rem;
   align-items: center;
-  padding: 1rem 1.1rem;
-  color: inherit;
+  min-height: 5rem;
+  padding: 1rem 1.15rem;
+  color: var(--locale-selector-text);
   text-decoration: none;
-  background: color-mix(in srgb, var(--vp-c-bg-soft, #f6f6f7) 90%, transparent);
+  background: color-mix(in srgb, var(--vp-c-bg-soft, #f6f6f7) 86%, transparent);
   border: 1px solid var(--vp-c-divider, #e2e2e3);
   border-radius: 0.9rem;
   transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
@@ -164,7 +178,7 @@ onMounted(() => {
 .locale-selector__link:hover,
 .locale-selector__link:focus-visible,
 .locale-selector__link--recommended {
-  background: var(--vp-c-bg-soft, #f6f6f7);
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 10%, var(--vp-c-bg-soft, #f6f6f7));
   border-color: var(--vp-c-brand-1, #3451b2);
 }
 
@@ -183,7 +197,9 @@ onMounted(() => {
 }
 
 .locale-selector__link strong {
+  color: var(--locale-selector-text);
   font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .locale-selector__link small {
@@ -194,18 +210,26 @@ onMounted(() => {
 }
 
 .locale-selector__recommended {
-  color: var(--vp-c-brand-1, #3451b2);
+  padding: 0.3rem 0.55rem;
+  color: var(--locale-selector-brand-text);
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 12%, transparent);
+  border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 650;
   text-align: right;
 }
 
 .locale-selector__arrow {
-  color: var(--vp-c-brand-1, #3451b2);
+  color: var(--locale-selector-brand-text);
   font-size: 1.25rem;
 }
 
 @media (max-width: 32rem) {
+  .locale-selector__panel {
+    padding: 1.35rem;
+    border-radius: 1.1rem;
+  }
+
   .locale-selector__recommended {
     display: none;
   }

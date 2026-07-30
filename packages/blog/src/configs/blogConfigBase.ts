@@ -34,6 +34,7 @@ import { addCanonicalLink } from '../transformers/addCanonicalLink.ts'
 import { collectImageDimensions } from '../transformers/collectImageDimensions.ts'
 import { mdImage } from '../transformers/mdImage.ts'
 import { autoLoadLocales } from '../utils/node/config.ts'
+import { assertStrictLocaleStructure } from '../utils/node/localeStructure.ts'
 import type {
   BlogUserConfig,
   ThemeConfig,
@@ -290,6 +291,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
  */
 export function defineBlogConfigSync(config: BlogUserConfig): ResolvedBlogConfig {
   warnMissingRequired(config, LOG_PREFIX)
+  assertStrictLocaleStructure(config, LOG_PREFIX)
 
   return mergeBlogConfig(config)
 }

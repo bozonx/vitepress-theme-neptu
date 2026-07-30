@@ -50,7 +50,7 @@ describe('NotFound', () => {
     expect(wrapper.find('a').text()).toBe('Fallback Home')
   })
 
-  it('links to "/" when localeIndex is "root" (single-locale site)', () => {
+  it('links to the language selector when localeIndex is "root"', () => {
     mockLocaleIndex.value = 'root'
     mockTheme.value = {
       t: { pageNotFound: 'Not found', toHome: 'Home' },
