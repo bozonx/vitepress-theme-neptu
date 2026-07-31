@@ -18,7 +18,16 @@ const localeDate = computed(() => makeHumanDate(rawDate.value, lang.value || 'en
 
 <template>
   <div v-if="rawDate" class="text-base muted post-date">
-    <time :datetime="rawDate" class="space-x-1">
+    <!--
+      `date[datetime]` makes Pagefind read the ISO value from the attribute,
+      exposing the post date both as sortable data and as result metadata.
+    -->
+    <time
+      :datetime="rawDate"
+      class="space-x-1"
+      data-pagefind-sort="date[datetime]"
+      data-pagefind-meta="date[datetime]"
+    >
       <template v-for="item in localeDate.split(' ')" :key="item">
         <!-- Year link -->
         <BaseLink

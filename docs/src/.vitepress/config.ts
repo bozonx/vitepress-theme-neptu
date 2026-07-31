@@ -37,8 +37,6 @@ export default async () => {
       ['link', { rel: 'icon', sizes: '192x192', href: assetUrl('/img/android-chrome-192x192.png') }],
       ['link', { rel: 'apple-touch-icon', sizes: '192x192', href: assetUrl('/img/android-chrome-192x192.png') }],
       ['link', { rel: 'manifest', href: assetUrl('/site.webmanifest') }],
-      ['link', { rel: 'stylesheet', href: `${base}/pagefind/pagefind-ui.css`.replace(/\/+/g, '/') }],
-      ['script', { src: `${base}/pagefind/pagefind-ui.js`.replace(/\/+/g, '/') }],
     ],
 
     themeConfig: {

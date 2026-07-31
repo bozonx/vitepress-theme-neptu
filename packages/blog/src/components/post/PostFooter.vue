@@ -39,33 +39,46 @@ const blocks = computed(() => {
 </script>
 
 <template>
+  <!--
+    Everything here except the tag list is navigation chrome, not article text:
+    it is marked with `data-pagefind-ignore` so it never leaks into search
+    snippets. The tag list stays indexed and provides the `tag` search filter.
+  -->
   <template v-for="name in blocks" :key="name">
     <template v-if="name === 'author'">
-      <slot name="author">
-        <PostAuthor class="mt-10" />
-      </slot>
+      <div data-pagefind-ignore>
+        <slot name="author">
+          <PostAuthor class="mt-10" />
+        </slot>
+      </div>
     </template>
 
     <template v-else-if="name === 'donate'">
-      <slot name="donate">
-        <PostDonateLink class="mt-10" />
-      </slot>
+      <div data-pagefind-ignore>
+        <slot name="donate">
+          <PostDonateLink class="mt-10" />
+        </slot>
+      </div>
     </template>
 
     <template v-else-if="name === 'comments'">
-      <slot name="comments">
-        <PostComments class="mt-10" />
-      </slot>
+      <div data-pagefind-ignore>
+        <slot name="comments">
+          <PostComments class="mt-10" />
+        </slot>
+      </div>
     </template>
 
     <template v-else-if="name === 'social-share'">
-      <slot name="social-share">
-        <PostSocialShare class="mt-10" />
-      </slot>
+      <div data-pagefind-ignore>
+        <slot name="social-share">
+          <PostSocialShare class="mt-10" />
+        </slot>
+      </div>
     </template>
 
     <template v-else-if="name === 'edit-link'">
-      <div class="flex mt-10">
+      <div class="flex mt-10" data-pagefind-ignore>
         <slot name="edit-link">
           <EditLink />
         </slot>
@@ -73,19 +86,27 @@ const blocks = computed(() => {
     </template>
 
     <template v-else-if="name === 'tags'">
-      <slot name="tags">
-        <PostTags class="mt-10" />
-      </slot>
+      <div>
+        <slot name="tags">
+          <PostTags class="mt-10" />
+        </slot>
+      </div>
     </template>
 
     <template v-else-if="name === 'similar'">
-      <slot name="similar">
-        <PostSimilarList class="mt-14" :locale-posts="localePosts" />
-      </slot>
+      <div data-pagefind-ignore>
+        <slot name="similar">
+          <PostSimilarList class="mt-14" :locale-posts="localePosts" />
+        </slot>
+      </div>
     </template>
 
     <template v-else-if="name === 'popular-link'">
-      <div v-if="theme.popularPosts?.enabled" class="mt-10">
+      <div
+        v-if="theme.popularPosts?.enabled"
+        class="mt-10"
+        data-pagefind-ignore
+      >
         <slot name="popular-link">
           <NeptuBtnLink
             :href="`/popular/1`"

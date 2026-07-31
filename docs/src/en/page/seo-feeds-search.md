@@ -43,23 +43,29 @@ Output paths per locale: `/en/feed.rss`, `/en/feed.atom`, `/en/feed.json`.
 ## Search (Pagefind)
 
 Search is powered by [Pagefind](https://pagefind.app), which indexes the built
-site. Two pieces wire it up:
+site. One config key wires it up:
 
 ```ts
-// .vitepress/config.ts — assets + provider
-head: [
-  ['link', { rel: 'stylesheet', href: '/pagefind/pagefind-ui.css' }],
-  ['script', { src: '/pagefind/pagefind-ui.js' }],
-],
+// .vitepress/config.ts
 themeConfig: {
   search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
 },
 ```
 
-The index is built from the production output, so search works after a full
-build (`npm run build`), not in dev. Exclude a single post from
-the index with `searchIncluded: false` in its frontmatter — see
+You do **not** need to add `pagefind-ui.css` / `pagefind-ui.js` to `head`: the
+search modal loads them on first open. That keeps ~135 KB off every page load
+and keeps dev free of 404s for the index files.
+
+The index is built from the production output (the `pagefind` step after
+`vitepress build`), so search only works after `npm run build` + `npm run
+preview`, not in dev — opening it in dev logs a console warning. Exclude a
+single post from the index with `searchIncluded: false` in its frontmatter — see
 [Preview & Search](../post/preview-and-search).
+
+Only article text is indexed: the author, comments, share, similar-posts and
+"Popular" blocks are marked with `data-pagefind-ignore` and never show up in
+snippets. Post tags are exposed as the `tag` filter and the post date as the
+`date` sort.
 
 ## Popular posts (Google Analytics 4)
 

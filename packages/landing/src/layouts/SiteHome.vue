@@ -43,7 +43,9 @@ const props = defineProps<{
 const hero = computed(() => props.hero)
 
 const { theme, frontmatter } = useData<ThemeConfig>()
-const bodyMarker = resolveBodyMarker(theme.value, frontmatter.value as PostFrontmatter)
+const bodyMarker = computed(() =>
+  resolveBodyMarker(theme.value, frontmatter.value as PostFrontmatter)
+)
 </script>
 
 <template>

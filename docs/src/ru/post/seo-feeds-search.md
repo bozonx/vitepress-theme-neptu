@@ -32,22 +32,28 @@ themeConfig:
 ## Поиск (Pagefind)
 
 Поиск работает на [Pagefind](https://pagefind.app): он индексирует уже собранный
-сайт. За это отвечают два элемента конфигурации:
+сайт. Достаточно одного элемента конфигурации:
 
 ```ts
-// .vitepress/config.ts — ресурсы и провайдер
-head: [
-  ['link', { rel: 'stylesheet', href: '/pagefind/pagefind-ui.css' }],
-  ['script', { src: '/pagefind/pagefind-ui.js' }],
-],
+// .vitepress/config.ts
 themeConfig: {
   search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
 },
 ```
 
-Индекс строится из production-сборки, поэтому поиск работает после `npm run build`, а
-не в режиме dev. Исключить пост из индекса можно через `searchIncluded: false` — см.
+Подключать `pagefind-ui.css` и `pagefind-ui.js` в `head` не нужно: модалка поиска
+грузит их сама при первом открытии. Это экономит ~135 КБ на каждой загрузке
+страницы и избавляет dev-режим от 404 на несуществующие файлы индекса.
+
+Индекс строится из production-сборки (шаг `pagefind` после `vitepress build`),
+поэтому поиск работает только после `npm run build` + `npm run preview`, а не в
+режиме dev — при открытии поиска в dev будет предупреждение в консоли.
+Исключить пост из индекса можно через `searchIncluded: false` — см.
 [Превью и поиск](preview-and-search).
+
+Индексируется только текст статьи: блоки автора, комментариев, шаринга, похожих
+постов и ссылки «Популярное» помечены `data-pagefind-ignore` и не попадают в
+сниппеты. Теги поста доступны как фильтр `tag`, а дата — как сортировка `date`.
 
 ## Популярные посты (Google Analytics 4)
 

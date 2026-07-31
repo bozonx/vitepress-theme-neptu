@@ -21,11 +21,45 @@ test.describe('Pagefind Search Modal', () => {
     const searchBtn = page.locator('.search-input-btn').first()
     await searchBtn.click()
 
-    const searchInput = page.locator('#search-modal input, .pagefind-ui__search-input').first()
+    const searchInput = page
+      .locator('#search-modal input, .pagefind-ui__search-input')
+      .first()
     await expect(searchInput).toBeVisible()
 
     await searchInput.fill('Neptu')
-    const searchDrawer = page.locator('#search-modal .pagefind-ui__drawer, #search-modal .pagefind-ui__result').first()
+    const searchDrawer = page
+      .locator(
+        '#search-modal .pagefind-ui__drawer, #search-modal .pagefind-ui__result'
+      )
+      .first()
     await expect(searchDrawer).toBeVisible({ timeout: 10000 })
+  })
+
+  test('navigates to a result and keeps history sane', async ({ page }) => {
+    await page.goto('en/recent/1', { waitUntil: 'domcontentloaded' })
+    const startUrl = page.url()
+
+    await page.locator('.search-input-btn').first().click()
+    const searchInput = page
+      .locator('#search-modal input, .pagefind-ui__search-input')
+      .first()
+    await searchInput.fill('Neptu')
+
+    const firstResult = page
+      .locator('#search-modal .pagefind-ui__result-link')
+      .first()
+    await expect(firstResult).toBeVisible({ timeout: 10000 })
+    const resultHref = await firstResult.getAttribute('href')
+    await firstResult.click()
+
+    // The modal closes and the router actually lands on the result page.
+    await expect(page.locator('#search-modal')).toBeHidden()
+    await expect(page).toHaveURL(
+      new RegExp(`${resultHref?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`)
+    )
+
+    // Going back returns to the page the search started from, not to the result.
+    await page.goBack()
+    await expect(page).toHaveURL(startUrl)
   })
 })

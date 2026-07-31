@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import PageContent from '../components/PageContent.vue'
 import LayoutAside from '../components/layout-parts/LayoutAside.vue'
@@ -19,7 +19,9 @@ const { theme, frontmatter } = useData<ThemeConfig>()
 const { isMobile } = useBreakpoint()
 const { scrollY } = useScrollY()
 const sidebarRef = ref<InstanceType<typeof SideBar> | null>(null)
-const bodyMarker = resolveBodyMarker(theme.value, frontmatter.value)
+const bodyMarker = computed(() =>
+  resolveBodyMarker(theme.value, frontmatter.value)
+)
 
 useSwipeDrawer({
   enabled: () => isMobile.value,

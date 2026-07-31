@@ -15,6 +15,8 @@ const {
   sizeSm?: boolean
   class?: string | Record<string, unknown> | unknown[]
   activeCompareMethod?: 'soft' | 'pagination' | 'softPagination' | 'none' | 'strict'
+  /** Pagefind filter name to expose each tag under (e.g. `tag`). */
+  pagefindFilter?: string
 }>()
 const emit = defineEmits<{
   (e: 'itemClick'): void
@@ -35,7 +37,11 @@ const sizeClass = computed(() => {
     v-if="tags.length"
     :class="['flex flex-wrap list-none p-0 m-0', sizeClass, customClass]"
   >
-    <li v-for="(item, index) in tags" :key="item.slug || item.name || index">
+    <li
+      v-for="(item, index) in tags"
+      :key="item.slug || item.name || index"
+      v-bind="pagefindFilter ? { 'data-pagefind-filter': pagefindFilter } : {}"
+    >
       <TagItem
         v-bind="item"
         :size-xl="sizeXl"

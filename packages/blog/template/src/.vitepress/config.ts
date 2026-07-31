@@ -81,9 +81,8 @@ export default async () => {
       // ['link', { rel: 'apple-touch-icon', sizes: '192x192', href: `${base}img/android-chrome-192x192.png`.replace(/\/+/g, '/') }],
       // ['link', { rel: 'manifest', href: `${base}site.webmanifest`.replace(/\/+/g, '/') }],
 
-      // Pagefind search UI stylesheets & scripts (built during production build)
-      ['link', { rel: 'stylesheet', href: `${base}/pagefind/pagefind-ui.css`.replace(/\/+/g, '/') }],
-      ['script', { src: `${base}/pagefind/pagefind-ui.js`.replace(/\/+/g, '/') }],
+      // Pagefind UI assets (pagefind-ui.css / pagefind-ui.js) are loaded lazily
+      // by the search modal on first open — nothing to add here.
 
       // Example: Google Analytics 4 tracking script injection
       // ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX' }],

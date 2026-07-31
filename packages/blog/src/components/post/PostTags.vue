@@ -19,7 +19,7 @@ const tags = computed(() =>
     <div class="md:flex">
       <p class="md:mt-1 md:mr-2 max-md:mb-3 muted">{{ theme.t.tags }}:</p>
 
-      <TagsList :tags="tags">
+      <TagsList :tags="tags" pagefind-filter="tag">
         <template #after>
           <li class="flex items-center ml-2 max-md:mt-2">
             <NeptuBtnLink href="tags" :icon="theme.tagsIcon">{{
