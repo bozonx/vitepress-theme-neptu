@@ -16,6 +16,8 @@ themeConfig:
         items:
           - text: 'Введение'
             link: ''
+          - text: 'Структура и медиа'
+            link: 'structure'
           - text: 'Блоки'
             link: 'blocks'
           - text: 'Темизация'

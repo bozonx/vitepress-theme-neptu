@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
+
 const props = defineProps<{
   src?: string
   description?: string
@@ -6,13 +8,18 @@ const props = defineProps<{
   height?: number | string
   width?: number | string
 }>()
+
+// Site-root paths need the configured `base` prefix; relative and external
+// URLs are used as-is.
+const imageSrc = (src?: string): string | undefined =>
+  src?.startsWith('/') ? withBase(src) : src
 </script>
 
 <template>
   <figure v-if="props.src">
-    <a :href="props.src" class="lightbox" :aria-label="props.alt || 'Open image'">
+    <a :href="imageSrc(props.src)" class="lightbox" :aria-label="props.alt || 'Open image'">
       <img
-        :src="props.src"
+        :src="imageSrc(props.src)"
         :alt="props.alt || undefined"
         :height="props.height"
         :width="props.width"

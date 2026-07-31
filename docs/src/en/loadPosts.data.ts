@@ -4,7 +4,7 @@ import { loadPostsDataFromFiles } from 'vitepress-theme-neptu/list-helpers/node'
 import { popularPosts, postList } from '../.vitepress/config.js'
 
 export default {
-  watch: [`./${POSTS_DIR}/*.md`],
+  watch: [`./${POSTS_DIR}/**/*.md`],
   async load(watchedFiles: string[]) {
     return {
       posts: await loadPostsDataFromFiles(watchedFiles, {

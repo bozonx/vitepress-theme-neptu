@@ -9,6 +9,15 @@ describe('filterSitemap', () => {
     expect(filterSitemap([])).toEqual([])
   })
 
+  it('keeps single-locale pages that have no hreflang alternates', () => {
+    const items = [
+      { url: 'ru/post/untranslated' },
+      { url: 'ru/post/my-article/' },
+    ] as SitemapItem[]
+
+    expect(filterSitemap(items)).toEqual(items)
+  })
+
   it('filters out items without url or links', () => {
     const items: SitemapItem[] = [
       { url: 'en/', links: [] },

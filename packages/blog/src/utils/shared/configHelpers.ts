@@ -113,7 +113,9 @@ export function resolveSitemapSiteUrl(siteUrl: string | undefined): {
   }
 }
 
-export function prefixSitemapItems<T extends { url: string; links: Array<{ url?: string }> }>(
+export function prefixSitemapItems<
+  T extends { url: string; links?: Array<{ url?: string }> },
+>(
   items: T[],
   basePath: string
 ): T[] {
@@ -127,7 +129,8 @@ export function prefixSitemapItems<T extends { url: string; links: Array<{ url?:
   return items.map((item) => ({
     ...item,
     url: prefix(item.url) || item.url,
-    links: item.links.map((link) => ({ ...link, url: prefix(link.url) })),
+    // `links` (hreflang alternates) is absent for single-locale pages.
+    links: item.links?.map((link) => ({ ...link, url: prefix(link.url) })),
   }))
 }
 

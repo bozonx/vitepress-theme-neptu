@@ -18,6 +18,66 @@ vi.mock('../../../src/utils/node/image.ts', () => ({
 import { makePreviewItem } from '../../../src/list-helpers/makePreviewItem.ts'
 
 describe('makePreviewItem', () => {
+  it('builds a folder URL for a folder-per-article post', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Folder post
+---
+
+Body`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/my-article/index.md', {
+      srcDir: '/tmp/site/src',
+    })
+
+    expect(item.url).toBe('/en/post/my-article/')
+  })
+
+  it('keeps nested posts in their own subfolder URL', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Nested post
+---
+
+Body`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/2026/trip/day-one.md', {
+      srcDir: '/tmp/site/src',
+    })
+
+    expect(item.url).toBe('/en/post/2026/trip/day-one')
+  })
+
+  it('turns a co-located cover into a site-root path', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Folder post
+cover: ./media/cover.jpg
+---
+
+Body`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/my-article/index.md', {
+      srcDir: '/tmp/site/src',
+    })
+
+    expect(item.cover).toBe('/en/post/my-article/media/cover.jpg')
+    expect(item.thumbnail).toBe('/en/post/my-article/media/cover.jpg')
+    expect(item.frontmatter.cover).toBe('/en/post/my-article/media/cover.jpg')
+  })
+
+  it('leaves a public cover path untouched', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Public cover
+cover: /img/cover.jpg
+---
+
+Body`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/hello.md', {
+      srcDir: '/tmp/site/src',
+    })
+
+    expect(item.cover).toBe('/img/cover.jpg')
+  })
+
   it('normalizes string and object tags from frontmatter', () => {
     readFileSyncMock.mockReturnValue(`---
 title: Hello

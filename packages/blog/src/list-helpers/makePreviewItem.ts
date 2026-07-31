@@ -6,7 +6,11 @@ import {
   parseMdFile,
   extractDescriptionFromContent,
 } from '../utils/node/markdown.ts'
-import { normalizeTags, resolvePreviewText } from '../utils/shared/index.ts'
+import {
+  normalizeTags,
+  resolvePreviewText,
+  resolveContentMediaPath,
+} from '../utils/shared/index.ts'
 import { getImageDimensions } from '../utils/node/image.ts'
 import type { PostFrontmatter, Tag } from '../types.d.ts'
 
@@ -40,7 +44,10 @@ export function makePreviewItem(
   const relativePath = path.relative(baseDir, filePath)
   const lang = relativePath.split('/')[0]!
 
-  const url = '/' + relativePath.replace(/\.md$/, '')
+  // `post/my-article/index.md` is served as `/post/my-article/`, not
+  // `/post/my-article/index`.
+  const url =
+    '/' + relativePath.replace(/\.md$/, '').replace(/(^|\/)index$/, '$1')
   const rawContent = fs.readFileSync(filePath, DEFAULT_ENCODE)
   const { frontmatter, content } = parseMdFile(rawContent, filePath)
   const fm = frontmatter as PostFrontmatter
@@ -55,8 +62,16 @@ export function makePreviewItem(
   // Get image dimensions if cover is provided
   let coverDimensions = null
   if (fm.cover) {
-    coverDimensions = getImageDimensions(fm.cover, baseDir)
+    // `relativePath` lets co-located covers (`./cover.jpg`, `./media/cover.jpg`)
+    // resolve against the post's own folder.
+    coverDimensions = getImageDimensions(fm.cover, baseDir, relativePath)
   }
+
+  // A preview is rendered on list pages, so a path relative to the post
+  // itself has to become a site-root path.
+  const cover = resolveContentMediaPath(fm.cover, relativePath, {
+    allowBare: true,
+  }) as string | undefined
 
   return {
     url,
@@ -65,11 +80,11 @@ export function makePreviewItem(
     title: fm.title,
     tags: normalizeTags(fm.tags, lang) || [],
     preview,
-    thumbnail: fm.cover,
-    cover: fm.cover,
+    thumbnail: cover,
+    cover,
     coverHeight: coverDimensions?.height,
     coverWidth: coverDimensions?.width,
-    frontmatter: fm,
+    frontmatter: { ...fm, cover },
   }
 }
 

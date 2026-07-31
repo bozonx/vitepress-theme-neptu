@@ -6,7 +6,7 @@ const EXCLUDED_ROUTES_REGEXP = new RegExp(
 
 export interface SitemapItem {
   url: string
-  links: Array<{ url?: string; [key: string]: unknown }>
+  links?: Array<{ url?: string; [key: string]: unknown }>
   [key: string]: unknown
 }
 
@@ -20,7 +20,9 @@ export function filterSitemap(
 ): SitemapItem[] {
   return items
     .filter((item) => {
-      if (!item.url || !item.links) return false
+      // `links` holds the hreflang alternates and is absent for pages that
+      // exist in a single locale — those still belong in the sitemap.
+      if (!item.url) return false
       else if (item.url.startsWith('/')) return false
       else if (item.url.match(/^[^/]+\/$/)) return true
       else if (EXCLUDED_ROUTES_REGEXP.test(item.url)) return false
@@ -28,7 +30,7 @@ export function filterSitemap(
       else return true
     })
     .map((item) => {
-      if (item.url.indexOf('/') === item.url.length - 1) {
+      if (item.links && item.url.indexOf('/') === item.url.length - 1) {
         return { ...item, links: item.links.filter((link) => link.url) }
       } else return item
     })

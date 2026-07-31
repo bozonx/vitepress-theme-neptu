@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite'
 import { createSiteYamlHotReloadPlugin } from '../utils/node/hotReloadPlugin.ts'
+import { createColocatedMediaPlugin } from '../utils/node/colocatedMedia.ts'
 import type { UserConfig, SiteConfig } from 'vitepress'
 import { omitUndefined, hasNoIndex } from '../utils/shared/index.ts'
 import { deepMerge } from '../utils/shared/merge.ts'
@@ -33,6 +34,7 @@ import { transformTitle } from '../transformers/transformTitle.ts'
 import { resolveDescription } from '../transformers/resolveDescription.ts'
 import { addCanonicalLink } from '../transformers/addCanonicalLink.ts'
 import { collectImageDimensions } from '../transformers/collectImageDimensions.ts'
+import { resolveMediaPaths } from '../transformers/resolveMediaPaths.ts'
 import { mdImage } from '../transformers/mdImage.ts'
 import { autoLoadLocales } from '../utils/node/config.ts'
 import { assertStrictLocaleStructure } from '../utils/node/localeStructure.ts'
@@ -179,7 +181,12 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       ...config.vite,
       plugins: [
         ...(hasTailwindPlugin(config.vite?.plugins) ? [] : [tailwindcss()]),
-        ...(config.srcDir ? [createSiteYamlHotReloadPlugin(config.srcDir)] : []),
+        ...(config.srcDir
+          ? [
+              createSiteYamlHotReloadPlugin(config.srcDir),
+              createColocatedMediaPlugin(config.srcDir),
+            ]
+          : []),
         ...(config.vite?.plugins || []),
       ],
       ssr: { noExternal: ['vitepress-theme-neptu'], ...config.vite?.ssr },
@@ -249,6 +256,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       const extendedSiteConfig = asExtendedSiteConfig(ctx.siteConfig)
 
       collectImageDimensions(extendedPageData, extendedSiteConfig)
+      resolveMediaPaths(extendedPageData)
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
       transformDescription(extendedPageData, { siteConfig: extendedSiteConfig })
       transformPageMeta(extendedPageData)

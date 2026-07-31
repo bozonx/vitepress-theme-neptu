@@ -21,6 +21,7 @@ import {
 import {
   assertStrictLocaleStructure,
   createSiteYamlHotReloadPlugin,
+  createColocatedMediaPlugin,
 } from 'vitepress-theme-neptu/utils/node'
 import {
   addCanonicalLink,
@@ -29,6 +30,7 @@ import {
   addJsonLd,
   addOgMetaTags,
   collectImageDimensions,
+  resolveMediaPaths,
   filterSitemap,
   generateRobotsTxt,
   mdImage,
@@ -37,6 +39,7 @@ import {
   transformTitle,
 } from 'vitepress-theme-neptu/transformers'
 import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
+import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { autoLoadSiteLocales } from './loadSiteLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
@@ -133,7 +136,10 @@ export function mergeLandingConfig(
       ...config.vite,
       plugins: [
         ...(config.srcDir
-          ? [createSiteYamlHotReloadPlugin(config.srcDir)]
+          ? [
+              createSiteYamlHotReloadPlugin(config.srcDir),
+              createColocatedMediaPlugin(config.srcDir),
+            ]
           : []),
         ...(config.vite?.plugins || []),
       ],
@@ -197,6 +203,11 @@ export function mergeLandingConfig(
       const extendedSiteConfig = asExtendedSiteConfig(ctx.siteConfig)
 
       collectImageDimensions(extendedPageData, extendedSiteConfig)
+      resolveMediaPaths(extendedPageData)
+      extendedPageData.frontmatter.blocks = resolveBlockMedia(
+        extendedPageData.frontmatter.blocks,
+        extendedPageData.relativePath
+      ) as typeof extendedPageData.frontmatter.blocks
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
       transformPageMeta(extendedPageData)
       resolveDescription(extendedPageData, { siteConfig: extendedSiteConfig })

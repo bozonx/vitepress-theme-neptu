@@ -15,6 +15,12 @@ descrAsPreview: true
 Пост — это обычный Markdown-файл в папке `src/<локаль>/post/`. Имя файла
 становится адресом страницы: `post/my-first-post.md` → `/ru/post/my-first-post`.
 
+Пост можно оформить и папкой: `post/my-first-post/index.md` откроется по
+адресу `/ru/post/my-first-post/`, а рядом с текстом будут лежать его
+картинки. Подробнее — в разделах
+[Структура проекта](project-structure) и
+[Где хранить изображения и медиа](media-asset-placement).
+
 ## Минимальный пост
 
 Создайте файл `src/ru/post/my-first-post.md`:

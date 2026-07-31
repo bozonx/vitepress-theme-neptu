@@ -18,7 +18,20 @@ import {
   validatePostForRss,
   validateRssConfig,
 } from '../utils/node/index.ts'
+import { resolveContentMediaPath } from '../utils/shared/media.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
+
+/**
+ * Rebuilds the Markdown path of a post from its route, so co-located media
+ * paths can be resolved against the post's own folder.
+ *
+ * `/ru/post/my-article/` → `ru/post/my-article/index.md`
+ */
+function mdPathFromUrl(url: string): string {
+  const clean = url.replace(/^\//, '')
+
+  return clean.endsWith('/') ? `${clean}index.md` : `${clean}.md`
+}
 
 /**
  * Generates RSS and Atom feeds for all locales.
@@ -66,8 +79,10 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
       })
 
       try {
+        // Recursive: posts may live in a folder of their own
+        // (`post/my-article/index.md`) or in deeper subfolders.
         const posts = await createContentLoader(
-          `${localeIndex}/${POSTS_DIR}/*.md`,
+          `${localeIndex}/${POSTS_DIR}/**/*.md`,
           { includeSrc: true }
         ).load()
 
@@ -120,7 +135,12 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
               id: guid,
               link: `${siteUrl}${url}`,
               date: fm.date ? new Date(fm.date) : new Date(),
-              image: makeAbsoluteUrl(siteUrl, fm.cover),
+              image: makeAbsoluteUrl(
+                siteUrl,
+                resolveContentMediaPath(fm.cover, mdPathFromUrl(url), {
+                  allowBare: true,
+                }) as string | undefined
+              ),
               author: makeAuthorForRss(
                 config,
                 fm,

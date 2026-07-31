@@ -1,3 +1,53 @@
+const NON_PATH_PREFIX = /^([a-z][a-z0-9+.-]*:|\/\/|#|\?)/i
+
+/**
+ * True when `value` is a path pointing at a file inside the content tree
+ * (co-located media), rather than a site-root path or an external URL.
+ *
+ * With `allowBare` a path without a leading `./` (e.g. `media/cover.jpg`) also
+ * counts. Use it for fields that can only ever hold a path, such as `cover`.
+ */
+export function isContentRelativePath(
+  value: unknown,
+  { allowBare = false }: { allowBare?: boolean } = {}
+): value is string {
+  if (typeof value !== 'string' || !value) return false
+  if (value.startsWith('/') || NON_PATH_PREFIX.test(value)) return false
+  if (value.startsWith('./') || value.startsWith('../')) return true
+
+  return allowBare
+}
+
+/**
+ * Turns a path relative to a Markdown file into a site-root path.
+ *
+ * `./media/cover.jpg` inside `ru/post/my-article/index.md`
+ * becomes `/ru/post/my-article/media/cover.jpg`.
+ *
+ * Needed wherever the value is consumed away from its own page — list
+ * previews, RSS items, `og:image`, JSON-LD — since a relative path would
+ * otherwise resolve against whatever page is being rendered. Site-root
+ * paths, external URLs and `data:` URIs are returned unchanged.
+ */
+export function resolveContentMediaPath(
+  value: unknown,
+  mdRelativePath: string | undefined,
+  options: { allowBare?: boolean } = {}
+): unknown {
+  if (!mdRelativePath || !isContentRelativePath(value, options)) return value
+
+  const mdDir = mdRelativePath.replace(/\\/g, '/').split('/').slice(0, -1)
+  const segments: string[] = [...mdDir]
+
+  for (const segment of value.replace(/\\/g, '/').split('/')) {
+    if (!segment || segment === '.') continue
+    else if (segment === '..') segments.pop()
+    else segments.push(segment)
+  }
+
+  return '/' + segments.join('/')
+}
+
 /**
  * Encodes a URL by encoding individual path segments while preserving
  * the overall URL structure. Works for both absolute and relative URLs.

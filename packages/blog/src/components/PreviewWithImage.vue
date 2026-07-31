@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
+
 import BaseLink from './BaseLink.vue'
 import TagsList from './TagsList.vue'
 import type { TagInfo } from '../types.d.ts'
@@ -21,6 +23,11 @@ const props = withDefaults(
   }>(),
   { showDate: true, showTags: true, showThumbnail: true, showPreview: true }
 )
+
+// Site-root paths need the configured `base` prefix; relative and external
+// URLs are used as-is.
+const thumbnailSrc = (src?: string): string | undefined =>
+  src?.startsWith('/') ? withBase(src) : src
 </script>
 
 <template>
@@ -28,7 +35,7 @@ const props = withDefaults(
     <div class="card-item-img-col shrink-0 mr-4">
       <BaseLink v-if="props.postUrl" :href="props.postUrl" class="block">
         <img
-          :src="props.thumbnail"
+          :src="thumbnailSrc(props.thumbnail)"
           :height="coverHeight"
           :width="coverWidth"
           loading="lazy"
@@ -40,7 +47,7 @@ const props = withDefaults(
       </BaseLink>
       <img
         v-else
-        :src="props.thumbnail"
+        :src="thumbnailSrc(props.thumbnail)"
         :height="coverHeight"
         :width="coverWidth"
         loading="lazy"

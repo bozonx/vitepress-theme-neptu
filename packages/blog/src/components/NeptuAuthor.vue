@@ -7,9 +7,9 @@
       v-if="author?.image"
       class="author-image-container w-full mx-auto md:w-[280px] md:shrink-0"
     >
-      <a :href="author.image" class="lightbox" :aria-label="author?.name || 'Open image'">
+      <a :href="authorImage" class="lightbox" :aria-label="author?.name || 'Open image'">
         <img
-          :src="author.image"
+          :src="authorImage"
           :alt="author?.name"
           :height="author?.imageHeight"
           :width="author?.imageWidth"
@@ -29,11 +29,17 @@
 </template>
 
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import { computed } from 'vue'
 import SocialMediaLinks from './SocialMediaLinks.vue'
 import type { Author } from '../types.d.ts'
 
 const props = defineProps<{ author?: Author }>()
+// Site-root paths need the configured `base` prefix; external URLs do not.
+const authorImage = computed(() => {
+  const image = props.author?.image
+  return image?.startsWith('/') ? withBase(image) : image
+})
 const socialLinks = computed(() =>
   (props.author?.links || [])
     .filter((item) => item.url && item.type)

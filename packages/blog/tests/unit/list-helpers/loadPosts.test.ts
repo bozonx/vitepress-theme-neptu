@@ -50,6 +50,25 @@ describe('loadPostsData', () => {
     expect(posts[1].url).toContain('post2')
   })
 
+  it('reads posts from nested folders', async () => {
+    mockReaddir.mockResolvedValue([
+      'flat.md',
+      'my-article',
+      'my-article/index.md',
+      'my-article/media',
+      'grouped/sub/deep.md',
+    ])
+    const posts = await loadPostsData('/content/en')
+    expect(mockReaddir).toHaveBeenCalledWith('/content/en/post', {
+      recursive: true,
+    })
+    expect(posts.map((post) => post.url)).toEqual([
+      '/content/en/post/flat.html',
+      '/content/en/post/grouped/sub/deep.html',
+      '/content/en/post/my-article/index.html',
+    ])
+  })
+
   it('returns cached results on second call', async () => {
     mockReaddir.mockResolvedValue(['a.md'])
     const first = await loadPostsData('/content/en')
@@ -135,6 +154,24 @@ describe('loadPostsDataFromFiles', () => {
   it('passes maxPreviewLength to preview item builder', async () => {
     await loadPostsDataFromFiles(['/a.md'], { maxPreviewLength: 80 })
     expect(mockMakePreviewItem).toHaveBeenCalledWith('/a.md', { maxPreviewLength: 80, srcDir: undefined })
+  })
+
+  it('infers srcDir from the posts directory for nested posts', async () => {
+    await loadPostsDataFromFiles(['/site/src/en/post/my-article/index.md'])
+    expect(mockMakePreviewItem).toHaveBeenCalledWith(
+      '/site/src/en/post/my-article/index.md',
+      { maxPreviewLength: undefined, srcDir: '/site/src' }
+    )
+  })
+
+  it('prefers an explicit srcDir over the inferred one', async () => {
+    await loadPostsDataFromFiles(['/site/src/en/post/a.md'], {
+      srcDir: '/custom',
+    })
+    expect(mockMakePreviewItem).toHaveBeenCalledWith(
+      '/site/src/en/post/a.md',
+      { maxPreviewLength: undefined, srcDir: '/custom' }
+    )
   })
 
   it('throws when makePreviewItem fails', async () => {

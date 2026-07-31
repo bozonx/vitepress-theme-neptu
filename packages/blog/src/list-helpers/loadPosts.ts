@@ -57,8 +57,10 @@ export async function loadPostsData(
   }
 
   try {
-    const files = await fs.readdir(postsDir)
-    const mdFiles = files.filter((file) => file.endsWith('.md'))
+    // Recursive: posts may live in subfolders — a folder per article
+    // (`post/my-article/index.md`) or any deeper grouping.
+    const files = await fs.readdir(postsDir, { recursive: true })
+    const mdFiles = files.filter((file) => file.endsWith('.md')).sort()
     const fullPaths = mdFiles.map((file) => path.join(postsDir, file))
     const posts = fullPaths.map((filePath) =>
       makePreviewItem(filePath, { maxPreviewLength: options.maxPreviewLength, srcDir })
@@ -79,6 +81,23 @@ export async function loadPostsData(
   }
 }
 
+/**
+ * Derives `srcDir` from a post path by locating the posts directory:
+ * `<srcDir>/<locale>/<postsDir>/…/post.md`.
+ *
+ * Lets nested posts (`post/my-article/index.md`) resolve their locale and URL
+ * without the caller having to pass `srcDir` explicitly.
+ */
+function inferSrcDir(filePath: string, postsDirName: string): string | undefined {
+  const segments = filePath.split(path.sep)
+  const postsIndex = segments.lastIndexOf(postsDirName)
+
+  // Needs at least `<srcDir>/<locale>/<postsDir>` before the file name.
+  if (postsIndex < 2) return undefined
+
+  return segments.slice(0, postsIndex - 1).join(path.sep)
+}
+
 export async function loadPostsDataFromFiles(
   files: string[],
   options: LoadPostsOptions = {}
@@ -88,6 +107,7 @@ export async function loadPostsDataFromFiles(
     dataSource = null,
     ignoreCache = false,
     cache: cacheOpt,
+    postsDir: postsDirName = POSTS_DIR,
     srcDir,
   } = options
   const fullPaths = files
@@ -105,7 +125,10 @@ export async function loadPostsDataFromFiles(
 
   try {
     const posts = fullPaths.map((filePath) =>
-      makePreviewItem(filePath, { maxPreviewLength: options.maxPreviewLength, srcDir })
+      makePreviewItem(filePath, {
+        maxPreviewLength: options.maxPreviewLength,
+        srcDir: srcDir ?? inferSrcDir(filePath, postsDirName),
+      })
     ) as Post[]
 
     cache[cacheKey] = posts

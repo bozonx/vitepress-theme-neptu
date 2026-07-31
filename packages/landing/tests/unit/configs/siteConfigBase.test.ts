@@ -13,6 +13,7 @@ vi.mock('../../../src/configs/loadSiteLocale.ts', () => ({
 
 vi.mock('vitepress-theme-neptu/transformers', () => ({
   collectImageDimensions: vi.fn(),
+  resolveMediaPaths: vi.fn(),
   transformTitle: vi.fn(),
   transformPageMeta: vi.fn(),
   resolveDescription: vi.fn(),
@@ -34,6 +35,7 @@ vi.mock('vitepress-theme-neptu/utils', () => ({
     (a: Record<string, unknown>, b: Record<string, unknown>) => ({ ...a, ...b })
   ),
   resolveBaseLocaleKey: vi.fn(() => 'en'),
+  resolveContentMediaPath: vi.fn((value: unknown) => value),
   resolveTranslationsByFilePath: vi.fn(),
   extractThemeConfig: vi.fn((site: Record<string, unknown> | undefined) =>
     (site?.themeConfig as Record<string, unknown> | undefined) ?? {}
@@ -107,6 +109,7 @@ vi.mock('vitepress-theme-neptu/utils/node', () => ({
     }
   }),
   createSiteYamlHotReloadPlugin: vi.fn(() => ({ name: 'hot-reload' })),
+  createColocatedMediaPlugin: vi.fn(() => ({ name: 'colocated-media' })),
   getImageDimensions: vi.fn(),
 }))
 
