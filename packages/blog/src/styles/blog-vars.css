@@ -16,6 +16,14 @@
 
   /**** Layout */
   --page-max-width: 840px;
+  /**** LayoutAside (right column, ad slot) */
+  /* Informational: the breakpoint itself lives in LayoutAside.vue, because
+     media queries cannot read custom properties. */
+  --aside-breakpoint: 1550px;
+  --aside-width: 300px;
+  --aside-padding-x: 1rem;
+  --aside-gap: 1.5rem;
+  --aside-top: 100px;
   --list-item-thumb-width: 280px;
   --body-font-size: 1.125rem;
   --body-line-height: 1.75rem;

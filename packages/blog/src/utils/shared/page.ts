@@ -29,6 +29,45 @@ export function isPopularRoute(routPath: string): boolean {
   return routPath.includes('/popular/')
 }
 
+/**
+ * Layouts that render the aside column unless `themeConfig.asideLayouts`
+ * says otherwise. The home page and plain `page` layouts are excluded.
+ */
+export const DEFAULT_ASIDE_LAYOUTS = [
+  'post',
+  'util',
+  'tag',
+  'archive',
+  'author',
+]
+
+/**
+ * Layout key used to match a page against `themeConfig.asideLayouts`.
+ * A page with no `layout` is a post.
+ */
+export function resolveLayoutKey(frontmatter: Frontmatter | null | undefined): string {
+  const layout = frontmatter?.layout
+
+  return typeof layout === 'string' && layout ? layout : 'post'
+}
+
+/**
+ * Whether the aside column should be rendered for the current page.
+ * Frontmatter `aside` wins over `themeConfig.asideLayouts`; the home page
+ * never renders an aside because it uses its own full-takeover layout.
+ */
+export function isAsideEnabled(
+  theme: ThemeConfig | null | undefined,
+  frontmatter: Frontmatter | null | undefined
+): boolean {
+  if (isHomePage(frontmatter)) return false
+  if (typeof frontmatter?.aside === 'boolean') return frontmatter.aside
+
+  const layouts = theme?.asideLayouts ?? DEFAULT_ASIDE_LAYOUTS
+
+  return layouts.includes(resolveLayoutKey(frontmatter))
+}
+
 export function isAuthorPage(filePath: string | null | undefined): boolean {
   if (!filePath) return false
 

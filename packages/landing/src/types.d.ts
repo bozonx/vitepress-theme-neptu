@@ -37,6 +37,7 @@ export type LandingChromeConfig = Pick<
   | 'sidebar'
   | 'outline'
   | 'aside'
+  | 'carbonAds'
   | 'editLink'
   | 'lastUpdated'
   | 'docFooter'

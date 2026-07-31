@@ -11,7 +11,7 @@ import TopBar from '../components/layout-parts/TopBar.vue'
 import { useBreakpoint } from '../composables/useBreakpoint.ts'
 import { useScrollY } from '../composables/useScrollY.ts'
 import { useSwipeDrawer } from '../composables/useSwipeDrawer.ts'
-import { resolveBodyMarker } from '../utils/shared/index.ts'
+import { isAsideEnabled, resolveBodyMarker } from '../utils/shared/index.ts'
 
 import type { ThemeConfig } from '../types.d.ts'
 
@@ -22,6 +22,7 @@ const sidebarRef = ref<InstanceType<typeof SideBar> | null>(null)
 const bodyMarker = computed(() =>
   resolveBodyMarker(theme.value, frontmatter.value)
 )
+const showAside = computed(() => isAsideEnabled(theme.value, frontmatter.value))
 
 useSwipeDrawer({
   enabled: () => isMobile.value,
@@ -96,7 +97,7 @@ useSwipeDrawer({
           </div>
         </main>
 
-        <LayoutAside>
+        <LayoutAside v-if="showAside && $slots.aside">
           <slot name="aside" />
         </LayoutAside>
       </div>

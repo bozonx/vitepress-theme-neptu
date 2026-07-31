@@ -82,3 +82,60 @@ describe('DefaultLayout', () => {
     expect(wrapper.find('.mt-30.pb-12').exists()).toBe(true)
   })
 })
+
+describe('DefaultLayout aside', () => {
+  beforeEach(() => {
+    mockFrontmatter.value = {}
+    mockTheme.value = {}
+  })
+
+  const mountLayout = (slots: Record<string, string> = {}) =>
+    mount(DefaultLayout, {
+      slots,
+      global: {
+        stubs: layoutStubs,
+      },
+    })
+
+  it('does not reserve the aside column when no aside slot is given', () => {
+    expect(mountLayout().find('.layout-aside-stub').exists()).toBe(false)
+  })
+
+  it('renders the aside slot content on a post', () => {
+    const wrapper = mountLayout({ aside: '<div class="ad-unit">Ad</div>' })
+
+    expect(wrapper.find('.layout-aside-stub').exists()).toBe(true)
+    expect(wrapper.find('.ad-unit').exists()).toBe(true)
+  })
+
+  it('skips the aside on layouts excluded by default', () => {
+    mockFrontmatter.value = { layout: 'page' }
+
+    expect(
+      mountLayout({ aside: '<div class="ad-unit">Ad</div>' })
+        .find('.layout-aside-stub')
+        .exists()
+    ).toBe(false)
+  })
+
+  it('skips the aside when the page opts out via frontmatter', () => {
+    mockFrontmatter.value = { layout: 'post', aside: false }
+
+    expect(
+      mountLayout({ aside: '<div class="ad-unit">Ad</div>' })
+        .find('.layout-aside-stub')
+        .exists()
+    ).toBe(false)
+  })
+
+  it('renders the aside on a layout enabled through themeConfig', () => {
+    mockFrontmatter.value = { layout: 'page' }
+    mockTheme.value = { asideLayouts: ['post', 'page'] }
+
+    expect(
+      mountLayout({ aside: '<div class="ad-unit">Ad</div>' })
+        .find('.layout-aside-stub')
+        .exists()
+    ).toBe(true)
+  })
+})

@@ -81,6 +81,18 @@ export namespace NeptuBlogTheme {
      */
     postFooter?: string[]
 
+    /**
+     * Layouts that render the right-hand aside column (the `aside` slot of
+     * `Layout.vue`, typically used for ad units). Supported keys: 'post',
+     * 'page', 'util', 'tag', 'archive', 'author', plus the name of any custom
+     * `contentLayout`. Defaults to `['post', 'util', 'tag', 'archive',
+     * 'author']` — everything except the home page and `layout: page`.
+     *
+     * Per-page frontmatter `aside: true | false` overrides this list.
+     * The column itself is only visible from 1550px viewport width.
+     */
+    asideLayouts?: string[]
+
     donateIcon?: string
     recentIcon?: string
     popularIcon?: string
@@ -417,6 +429,11 @@ export namespace NeptuBlogTheme {
     descrAsPreview?: boolean
     jsonLd?: string
     searchIncluded?: boolean
+    /**
+     * Force the right-hand aside column on or off for this page, overriding
+     * `themeConfig.asideLayouts`. Ignored on the home page.
+     */
+    aside?: boolean
     /** Podcast platform → episode URL map, rendered as the podcast dropdown. */
     podcasts?: Record<string, string>
     /** Optional language label shown next to the podcast button, e.g. `EN`. */

@@ -24,6 +24,8 @@ themeConfig:
             link: 'theming'
           - text: 'Страница как данные'
             link: 'yaml-mode'
+          - text: 'Реклама и правая колонка'
+            link: 'ads'
           - text: 'О теме'
             link: 'about'
 

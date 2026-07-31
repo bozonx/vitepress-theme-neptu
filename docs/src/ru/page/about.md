@@ -21,7 +21,7 @@ translations:
 | Контент | [Все поля frontmatter](../post/full-featured), посты с тегом [`frontmatter`](../tags/frontmatter/1) |
 | Настройка | [Уровни конфигурации](../post/config-layers) · [навигация и футер](../post/nav-sidebar-footer) · [темы и шрифты](../post/color-themes) · [списки и страницы](../post/lists-and-pages) |
 | Мультиязычность | [Локали](../post/locales) · [переводы и hreflang](../post/i18n-hreflang) |
-| Кастомизация | [Компоненты](../post/components) · [хуки и слоты](../post/advanced) |
+| Кастомизация | [Компоненты](../post/components) · [хуки и слоты](../post/advanced) · [правая колонка и реклама](../post/aside-and-ads) |
 | SEO и деплой | [Обзор SEO](../post/seo-overview), посты с тегом [`seo`](../tags/seo/1) · [деплой](../post/deploy) |
 | Типы списков | Сайдбар: Свежие · Популярные · Архив · Авторы · Теги |
 

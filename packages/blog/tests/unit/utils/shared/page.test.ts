@@ -8,6 +8,8 @@ import {
   isAuthorPage,
   resolveArticlePreview,
   resolveBodyMarker,
+  resolveLayoutKey,
+  isAsideEnabled,
 } from '../../../../src/utils/shared/page.ts'
 import type { ThemeConfig } from '../../../../src/types.d.ts'
 
@@ -173,5 +175,56 @@ describe('resolveBodyMarker', () => {
 
   it('returns undefined for util page with searchIncluded false', () => {
     expect(resolveBodyMarker(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
+  })
+})
+
+describe('resolveLayoutKey', () => {
+  it('falls back to post when no layout is set', () => {
+    expect(resolveLayoutKey({})).toBe('post')
+    expect(resolveLayoutKey(null)).toBe('post')
+  })
+
+  it('returns the explicit layout', () => {
+    expect(resolveLayoutKey({ layout: 'tag' })).toBe('tag')
+  })
+})
+
+describe('isAsideEnabled', () => {
+  const theme = {} as ThemeConfig
+
+  it('is enabled by default on posts and util pages', () => {
+    expect(isAsideEnabled(theme, {})).toBe(true)
+    expect(isAsideEnabled(theme, { layout: 'post' })).toBe(true)
+    expect(isAsideEnabled(theme, { layout: 'tag' })).toBe(true)
+    expect(isAsideEnabled(theme, { layout: 'archive' })).toBe(true)
+    expect(isAsideEnabled(theme, { layout: 'author' })).toBe(true)
+    expect(isAsideEnabled(theme, { layout: 'util' })).toBe(true)
+  })
+
+  it('is disabled by default on the home page and plain pages', () => {
+    expect(isAsideEnabled(theme, { layout: 'home' })).toBe(false)
+    expect(isAsideEnabled(theme, { layout: 'page' })).toBe(false)
+  })
+
+  it('never renders on the home page, even when frontmatter asks for it', () => {
+    expect(isAsideEnabled(theme, { layout: 'home', aside: true })).toBe(false)
+  })
+
+  it('lets frontmatter override the configured layouts', () => {
+    expect(isAsideEnabled(theme, { layout: 'post', aside: false })).toBe(false)
+    expect(isAsideEnabled(theme, { layout: 'page', aside: true })).toBe(true)
+  })
+
+  it('honours themeConfig.asideLayouts', () => {
+    const configured = { asideLayouts: ['page'] } as ThemeConfig
+
+    expect(isAsideEnabled(configured, { layout: 'page' })).toBe(true)
+    expect(isAsideEnabled(configured, { layout: 'post' })).toBe(false)
+  })
+
+  it('disables the aside everywhere for an empty list', () => {
+    const configured = { asideLayouts: [] } as unknown as ThemeConfig
+
+    expect(isAsideEnabled(configured, { layout: 'post' })).toBe(false)
   })
 })
