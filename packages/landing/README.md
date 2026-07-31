@@ -214,6 +214,87 @@ disabled for visitors who prefer reduced motion.
 
 Types: `src/blocks/types.ts`. Schema: `schema/landing-blocks.schema.json`.
 
+## Media asset placement
+
+The landing theme supports three approaches for organizing images and media
+files — the same as the blog theme. All three work for block `image` / `video`
+/ `poster` properties and for images in markdown content.
+
+### 1. Shared public directory
+
+Media lives in `src/public/` and is referenced with an absolute path.
+
+```text
+src/
+├─ public/
+│  └─ img/
+│     ├─ hero.svg
+│     └─ logo.png
+└─ en/
+   └─ index.md
+```
+
+```yaml
+blocks:
+  - type: hero
+    image: /img/hero.svg
+```
+
+### 2. Co-located next to the markdown file
+
+Images sit next to the `.md` file and are referenced with a relative path.
+Dimensions are read automatically at build time.
+
+```text
+src/
+└─ en/
+   ├─ index.md
+   └─ hero-bg.jpg
+```
+
+```yaml
+blocks:
+  - type: hero
+    image: ./hero-bg.jpg
+```
+
+### 3. Folder-per-page with a media subfolder
+
+Each page gets its own directory with `index.md` and a `media/` subfolder.
+
+```text
+src/
+└─ en/
+   └─ landing/
+      ├─ index.md
+      └─ media/
+         ├─ hero.svg
+         └─ team-photo.jpg
+```
+
+```yaml
+blocks:
+  - type: hero
+    image: ./media/hero.svg
+  - type: team
+    items:
+      - title: Jane Doe
+        image: ./media/team-photo.jpg
+```
+
+### Comparison
+
+| Approach | Path style | Portable | Auto dimensions | Best for |
+|---|---|---|---|---|
+| Public directory | `/img/foo.png` | No | Yes | Small sites, shared assets |
+| Co-located | `./foo.png` | Yes | Yes | Single-page landings |
+| Folder-per-page | `./media/foo.png` | Yes | Yes | Multi-page, image-heavy |
+
+All three approaches get automatic `width`/`height` injection for standalone
+body images. Block images (hero, gallery, team, etc.) are processed through
+`LnMedia`, which resolves paths via `withBase` — use absolute paths from
+`public/` for block-level media, or relative paths for markdown body images.
+
 ## Theming
 
 ```

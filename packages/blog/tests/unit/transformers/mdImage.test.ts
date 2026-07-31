@@ -22,12 +22,13 @@ function createMockToken(type: string, tag: string, nesting: number, attrs?: [st
   return token
 }
 
-function createMockState(tokens: any[]) {
+function createMockState(tokens: any[], env?: any) {
   return {
     Token: function (type: string, tag: string, nesting: number) {
       return createMockToken(type, tag, nesting)
     },
     tokens,
+    env,
   }
 }
 
@@ -112,6 +113,32 @@ describe('mdImage', () => {
 
     expect(imageToken.attrPush).toHaveBeenCalledWith(['width', '640'])
     expect(imageToken.attrPush).toHaveBeenCalledWith(['height', '480'])
+  })
+
+  it('passes relativePath from state.env to getImageDimensions', () => {
+    vi.mocked(nodeUtils.getImageDimensions).mockReturnValue({ width: 200, height: 100 })
+
+    const imageToken = createMockToken('image', 'img', 0, [['src', './photo.png']])
+    const inlineToken = createMockToken('inline', '', 0)
+    inlineToken.children = [imageToken]
+
+    const tokens = [
+      createMockToken('paragraph_open', 'p', 1),
+      inlineToken,
+      createMockToken('paragraph_close', 'p', -1),
+    ]
+
+    const md = createMd()
+    mdImage(md, { srcDir: '/src' })
+    md._rule(createMockState(tokens, { relativePath: 'en/post/my-article/index.md' }))
+
+    expect(nodeUtils.getImageDimensions).toHaveBeenCalledWith(
+      './photo.png',
+      '/src',
+      'en/post/my-article/index.md'
+    )
+    expect(imageToken.attrPush).toHaveBeenCalledWith(['width', '200'])
+    expect(imageToken.attrPush).toHaveBeenCalledWith(['height', '100'])
   })
 
   it('adds lazy loading to non-standalone paragraphs but skips figure', () => {

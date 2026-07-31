@@ -12,7 +12,8 @@ export function collectImageDimensions(
 
   const imageDimensions = getImageDimensions(
     pageData.frontmatter.cover,
-    siteConfig.srcDir
+    siteConfig.srcDir,
+    pageData.relativePath
   )
 
   pageData.frontmatter.coverHeight = imageDimensions?.height

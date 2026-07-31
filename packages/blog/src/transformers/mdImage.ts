@@ -13,9 +13,14 @@ interface MarkdownToken {
   attrPush(attr: [string, string | undefined]): void
 }
 
+interface MdImageEnv {
+  relativePath?: string
+}
+
 interface MdImageState {
   tokens: MarkdownToken[]
   Token: new (type: string, tag: string, nesting: number) => MarkdownToken
+  env?: MdImageEnv
 }
 
 interface MdImageMarkdown {
@@ -73,7 +78,11 @@ export function mdImage(md: unknown, { srcDir }: MdImageOptions = {}): void {
           const imageSrc = imageToken.attrGet('src')
 
           if (imageSrc && srcDir) {
-            const dimensions = getImageDimensions(imageSrc, srcDir)
+            const dimensions = getImageDimensions(
+              imageSrc,
+              srcDir,
+              state.env?.relativePath
+            )
 
             if (dimensions) {
               imageToken.attrPush(['width', dimensions.width.toString()])

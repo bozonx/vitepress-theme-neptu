@@ -120,6 +120,21 @@ import { LocaleSelector } from 'vitepress-theme-neptu/components'
 Configuration, frontmatter, components, and SEO are documented in full on the
 [live site](https://bozonx.github.io/vitepress-theme-neptu).
 
+## Media asset placement
+
+The theme supports three approaches for organizing images and media:
+
+1. **Shared `public/` directory** — `src/public/img/foo.png`, referenced as
+   `/img/foo.png`. Best for small blogs and shared assets.
+2. **Co-located next to the `.md` file** — `./foo.png` relative to the
+   markdown file. Best for tutorials and single-file posts.
+3. **Folder-per-article** — `article-slug/index.md` with a `media/`
+   subfolder, referenced as `./media/foo.png`. Best for image-heavy articles.
+
+All three get automatic `width`/`height` injection for both cover images and
+standalone body images. See the [full guide](https://bozonx.github.io/vitepress-theme-neptu/en/post/media-asset-placement)
+for details and examples.
+
 ## Development
 
 This repo is an npm workspace (the blog theme is in `packages/blog`, the docs

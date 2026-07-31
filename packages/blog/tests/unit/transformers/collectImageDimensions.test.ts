@@ -17,7 +17,10 @@ describe('collectImageDimensions', () => {
   it('sets dimensions when cover exists', () => {
     vi.mocked(nodeUtils.getImageDimensions).mockReturnValue({ width: 800, height: 600 })
 
-    const pageData: any = { frontmatter: { cover: '/img/hero.png' } }
+    const pageData: any = {
+      frontmatter: { cover: '/img/hero.png' },
+      relativePath: 'en/post/welcome.md',
+    }
     collectImageDimensions(pageData, { srcDir: '/src' } as any)
     expect(pageData.frontmatter.coverHeight).toBe(600)
     expect(pageData.frontmatter.coverWidth).toBe(800)
@@ -26,7 +29,10 @@ describe('collectImageDimensions', () => {
   it('handles null dimensions gracefully', () => {
     vi.mocked(nodeUtils.getImageDimensions).mockReturnValue(null)
 
-    const pageData: any = { frontmatter: { cover: '/img/hero.png' } }
+    const pageData: any = {
+      frontmatter: { cover: '/img/hero.png' },
+      relativePath: 'en/post/welcome.md',
+    }
     collectImageDimensions(pageData, { srcDir: '/src' } as any)
     expect(pageData.frontmatter.coverHeight).toBeUndefined()
     expect(pageData.frontmatter.coverWidth).toBeUndefined()
@@ -35,9 +41,16 @@ describe('collectImageDimensions', () => {
   it('passes correct arguments to getImageDimensions', () => {
     vi.mocked(nodeUtils.getImageDimensions).mockReturnValue({ width: 100, height: 200 })
 
-    const pageData: any = { frontmatter: { cover: '/img/cover.jpg' } }
+    const pageData: any = {
+      frontmatter: { cover: '/img/cover.jpg' },
+      relativePath: 'en/post/my-article/index.md',
+    }
     collectImageDimensions(pageData, { srcDir: '/project/src' } as any)
-    expect(nodeUtils.getImageDimensions).toHaveBeenCalledWith('/img/cover.jpg', '/project/src')
+    expect(nodeUtils.getImageDimensions).toHaveBeenCalledWith(
+      '/img/cover.jpg',
+      '/project/src',
+      'en/post/my-article/index.md'
+    )
   })
 
 })

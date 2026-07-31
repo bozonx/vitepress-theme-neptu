@@ -11,37 +11,54 @@ export interface ImageSizeResult extends ImageDimensions {
   type: string | undefined
 }
 
-/** Reads image dimensions from a file. */
+/**
+ * Reads image dimensions from a file.
+ *
+ * Resolution order for local paths:
+ * 1. **Relative to the markdown file** — when `mdRelativePath` is provided and
+ *    `imagePath` is a relative path (`./foo.png`, `../bar.jpg`, `media/baz.webp`),
+ *    resolves from the directory of the .md file. This supports co-located
+ *    images and folder-per-article layouts.
+ * 2. **Public directory** — `srcDir/public/<imagePath>` (absolute paths like
+ *    `/img/cover.jpg`).
+ * 3. **SrcDir root** — `srcDir/<imagePath>` (legacy fallback).
+ */
 export function getImageDimensions(
   imagePath: string | null | undefined,
-  srcDir: string
+  srcDir: string,
+  mdRelativePath?: string
 ): ImageDimensions | null {
   if (!imagePath) return null
   // External URL
   if (imagePath.startsWith('http') || imagePath.startsWith('//')) return null
 
   try {
-    // 1. Try public directory (most common for theme assets)
-    let fullPath = path.join(srcDir, 'public', imagePath)
+    const candidates: string[] = []
+    const isRelative =
+      !imagePath.startsWith('/') && !imagePath.startsWith('\\')
 
-    if (!fs.existsSync(fullPath)) {
-      // 2. Try relative to srcDir (for co-located images)
-      fullPath = path.join(srcDir, imagePath)
+    if (isRelative && mdRelativePath) {
+      // Resolve relative to the markdown file's directory
+      const mdDir = path.dirname(path.join(srcDir, mdRelativePath))
+      candidates.push(path.resolve(mdDir, imagePath))
     }
 
-    if (!fs.existsSync(fullPath)) {
-      console.warn(`Image file not found: ${imagePath} in ${srcDir}`)
-      return null
+    // Always try public dir and srcDir as fallback
+    candidates.push(path.join(srcDir, 'public', imagePath))
+    candidates.push(path.join(srcDir, imagePath))
+
+    for (const fullPath of candidates) {
+      if (fs.existsSync(fullPath)) {
+        const dimensions = imageSize(fs.readFileSync(fullPath))
+
+        if (dimensions?.width && dimensions?.height) {
+          return { width: dimensions.width, height: dimensions.height }
+        }
+      }
     }
 
-    const dimensions = imageSize(fs.readFileSync(fullPath))
-
-    if (!dimensions || !dimensions.width || !dimensions.height) {
-      console.warn(`Invalid image dimensions for ${fullPath}`)
-      return null
-    }
-
-    return { width: dimensions.width, height: dimensions.height }
+    console.warn(`Image file not found: ${imagePath} in ${srcDir}`)
+    return null
   } catch (error) {
     console.warn(
       `Failed to get image dimensions for ${imagePath}:`,

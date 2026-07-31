@@ -47,6 +47,18 @@ cover: /img/my-post-cover.jpg
 # no coverWidth/coverHeight needed — measured automatically
 ```
 
+You can also co-locate the cover next to the markdown file or in a
+folder-per-article layout — see [Where to Put Images & Media](media-asset-placement)
+for all three approaches.
+
+```yaml
+# co-located next to the .md file
+cover: ./cover.jpg
+
+# or in a media subfolder (folder-per-article layout)
+cover: ./media/cover.jpg
+```
+
 ## Body images & the lightbox
 
 Ordinary markdown images anywhere in the body are lazy-loaded and become
