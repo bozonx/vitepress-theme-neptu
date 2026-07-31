@@ -81,7 +81,7 @@ const socialLinks = computed<LinkItem[]>(() =>
       <SwitchLang :no-bg="true" />
     </div>
 
-    <div class="max-lg:hidden">
+    <div>
       <SwitchAppearance />
     </div>
 

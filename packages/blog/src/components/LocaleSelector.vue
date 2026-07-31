@@ -151,21 +151,31 @@ onMounted(async () => {
   transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
+/* The browser language is marked visually with a subtle left bar and light tint */
+.locale-selector__link--detected {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 6%, var(--vp-c-bg-soft, #f6f6f7));
+  border-color: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 45%, var(--vp-c-divider, #e2e2e3));
+  box-shadow: inset 0.25rem 0 0 var(--vp-c-brand-1, #3451b2);
+}
+
 .locale-selector__link:hover,
-.locale-selector__link:focus-visible,
-.locale-selector__link--detected {
-  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 10%, var(--vp-c-bg-soft, #f6f6f7));
+.locale-selector__link:focus-visible {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, var(--vp-c-bg-soft, #f6f6f7));
   border-color: var(--vp-c-brand-1, #3451b2);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 18%, transparent);
 }
 
-/* The browser language is marked visually only — no "recommended" wording to
-   translate, and nothing that reads as a nudge. */
-.locale-selector__link--detected {
-  box-shadow: inset 0.2rem 0 0 var(--vp-c-brand-1, #3451b2);
+.locale-selector__link--detected:hover,
+.locale-selector__link--detected:focus-visible {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 18%, var(--vp-c-bg-soft, #f6f6f7));
+  border-color: var(--vp-c-brand-1, #3451b2);
+  box-shadow: inset 0.25rem 0 0 var(--vp-c-brand-1, #3451b2), 0 4px 16px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 22%, transparent);
 }
 
-.locale-selector__link:hover .locale-selector__arrow {
-  transform: translateX(4px);
+.locale-selector__link:hover .locale-selector__arrow,
+.locale-selector__link:focus-visible .locale-selector__arrow {
+  transform: translateX(6px);
+  color: var(--vp-c-brand-1, #3451b2);
 }
 
 .locale-selector__link:focus-visible {

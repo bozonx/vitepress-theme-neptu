@@ -79,7 +79,7 @@ describe('TopBar', () => {
     expect(wrapper.emitted('openDrawer')).toHaveLength(1)
   })
 
-  it('renders switch appearance only on desktop', () => {
+  it('renders switch appearance in topbar', () => {
     const wrapper = mount(TopBar, {
       global: { stubs: { NeptuNeptuBtn: NeptuBtnStub, SwitchLang: SwitchLangStub, SwitchAppearance: SwitchAppearanceStub } },
     })
