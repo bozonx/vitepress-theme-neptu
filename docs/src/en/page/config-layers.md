@@ -34,10 +34,10 @@ This is the only developer-owned file. It is a normal `BlogUserConfig` / VitePre
 | `srcDir` | Content root; required for automatic locale discovery. |
 | `base` | Public subpath, such as `/blog/`. |
 | `siteUrl` | Absolute public URL; required for sitemap, feeds, canonical, Open Graph and JSON-LD. |
-| `head` | External assets and metadata, including Pagefind assets. |
+| `head` | External assets and metadata. |
 | `vite`, `markdown`, `sitemap` | Native VitePress/Vite build configuration. |
 | `transformPageData`, `transformHead`, `buildEnd` | Custom lifecycle hooks, executed after theme hooks. |
-| `themeConfig.search` | Pagefind provider/options and its integration assets. |
+| `themeConfig.search` | Pagefind provider, UI options and build-time indexing. |
 | `themeConfig.popularPosts.enabled` / `.dataSource` | GA4 integration; keep credentials and env-derived values here. |
 
 ```ts

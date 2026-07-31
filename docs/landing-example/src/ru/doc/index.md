@@ -133,3 +133,31 @@ src/
 полная конфигурация, переводы не требуются. `src/index.md` зарезервирован для
 выбора языка: страница может рекомендовать язык браузера, но не перенаправляет
 автоматически.
+
+## Поиск
+
+Тема лендинга не несёт собственного поиска — строка поиска в шапке приходит из
+дефолтной темы VitePress и настраивается ровно так, как описано в её
+документации: [VitePress → Search](https://vitepress.dev/reference/default-theme-search).
+
+Локальный поиск (MiniSearch) не требует внешних сервисов и подходит для лендинга
+с несколькими страницами документации:
+
+```ts
+// .vitepress/config.ts
+themeConfig: {
+  search: { provider: 'local' },
+}
+```
+
+Индекс целиком отдаётся в браузер, поэтому на небольшом сайте это дёшево. Для
+крупной документации переключитесь на `provider: 'algolia'` со своими ключами
+DocSearch.
+
+Нужно что-то другое — Pagefind, Orama, хостовый движок? Не задавайте
+`themeConfig.search` (тогда штатная строка не отрисуется) и вставьте свой
+компонент в слот `nav-bar-content-before`. Разводка описана в
+[README лендинга](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/landing/README.md#search),
+а рабочий пример интеграции Pagefind — компонент `PageFindSearch.vue` из темы
+блога. В отличие от лендинга, тема блога поставляется с уже встроенным
+Pagefind — см. [Поиск в теме блога](https://bozonx.github.io/vitepress-theme-neptu/ru/post/seo-feeds-search).

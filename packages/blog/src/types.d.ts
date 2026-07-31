@@ -127,6 +127,30 @@ export namespace NeptuBlogTheme {
         locales?: Record<string, { translations?: PagefindUITranslations }>
         [key: string]: unknown
       }
+      /**
+       * Build-time indexing, run automatically at the end of `vitepress build`.
+       * Pagefind is bundled with the theme, so no extra CLI step is needed.
+       */
+      index?: {
+        /** Set to `false` to skip indexing (e.g. to run the CLI yourself). */
+        enabled?: boolean
+        /** Custom glob for the files to index. Defaults to all HTML files. */
+        glob?: string
+        /** Element treated as the document root. Defaults to `html`. */
+        rootSelector?: string
+        /** Selectors Pagefind should ignore while indexing. */
+        excludeSelectors?: string[]
+        /** Index the whole site as one language (ISO 639-1 code). */
+        forceLanguage?: string
+        /** Extra characters to keep when indexing words, e.g. `'<>$'`. */
+        includeCharacters?: string
+        /** Keep `index.html` at the end of result paths. */
+        keepIndexUrl?: boolean
+        /** Verbose indexing logs. */
+        verbose?: boolean
+        /** Path to a logfile for the indexing run. */
+        logfile?: string
+      }
     }
 
     publisher?: { name?: string; url?: string; logo?: string }

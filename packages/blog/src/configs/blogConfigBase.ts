@@ -26,6 +26,7 @@ import { filterSitemap } from '../transformers/filterSitemap.ts'
 import type { SitemapItem } from '../transformers/filterSitemap.ts'
 import { generateRssFeed } from '../transformers/generateRssFeed.ts'
 import { generateRobotsTxt } from '../transformers/generateRobotsTxt.ts'
+import { generateSearchIndex } from '../transformers/generateSearchIndex.ts'
 import { transformPageMeta } from '../transformers/transformPageMeta.ts'
 import { transformDescription } from '../transformers/transformDescription.ts'
 import { transformTitle } from '../transformers/transformTitle.ts'
@@ -291,6 +292,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     buildEnd: async (cfg: SiteConfig) => {
       await generateRssFeed(asExtendedSiteConfig(cfg))
       generateRobotsTxt(asExtendedSiteConfig(cfg))
+      await generateSearchIndex(asExtendedSiteConfig(cfg))
 
       if (config.buildEnd) {
         await config.buildEnd(cfg)

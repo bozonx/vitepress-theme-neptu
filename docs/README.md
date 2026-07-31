@@ -14,7 +14,7 @@ This monorepo uses npm workspaces:
 ```sh
 npm install
 npm run docs:dev       # dev server
-npm run docs:build     # production build + Pagefind index
+npm run docs:build     # production build (Pagefind index included)
 npm run docs:preview   # preview the production build
 ```
 

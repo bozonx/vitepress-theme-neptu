@@ -43,7 +43,8 @@ Output paths per locale: `/en/feed.rss`, `/en/feed.atom`, `/en/feed.json`.
 ## Search (Pagefind)
 
 Search is powered by [Pagefind](https://pagefind.app), which indexes the built
-site. One config key wires it up:
+site. **Pagefind ships with the theme** — no separate install, no extra build
+step, no script tags in `head`. One config key wires it up:
 
 ```ts
 // .vitepress/config.ts
@@ -52,20 +53,48 @@ themeConfig: {
 },
 ```
 
-You do **not** need to add `pagefind-ui.css` / `pagefind-ui.js` to `head`: the
-search modal loads them on first open. That keeps ~135 KB off every page load
-and keeps dev free of 404s for the index files.
+What the theme handles for you:
 
-The index is built from the production output (the `pagefind` step after
-`vitepress build`), so search only works after `npm run build` + `npm run
-preview`, not in dev — opening it in dev logs a console warning. Exclude a
-single post from the index with `searchIncluded: false` in its frontmatter — see
-[Preview & Search](../post/preview-and-search).
+- **Indexing.** At the end of `vitepress build` (the `buildEnd` hook) the theme
+  builds the index into `<outDir>/pagefind`. Your build script stays a plain
+  `vitepress build src`.
+- **UI loading.** `pagefind-ui.css` and `pagefind-ui.js` are fetched by the
+  search modal on first open. That keeps ~135 KB off every page load and keeps
+  dev free of 404s for index files that do not exist yet.
+
+The index comes from the production output, so search works after
+`npm run build` + `npm run preview`, not in dev — opening it in dev logs a
+clear console warning.
 
 Only article text is indexed: the author, comments, share, similar-posts and
 "Popular" blocks are marked with `data-pagefind-ignore` and never show up in
 snippets. Post tags are exposed as the `tag` filter and the post date as the
-`date` sort.
+`date` sort. Exclude a single post with `searchIncluded: false` in its
+frontmatter — see [Preview & Search](../post/preview-and-search).
+
+### Tuning the index
+
+Indexing options live under `search.index` and are passed to Pagefind:
+
+```ts
+themeConfig: {
+  search: {
+    provider: 'pagefind',
+    options: { bodyMarker: 'data-pagefind-body' },
+    index: {
+      // enabled: false,             // skip indexing (e.g. to run the CLI yourself)
+      // glob: '**/*.html',          // which files to index
+      // excludeSelectors: ['.ads'], // extra ignores on top of data-pagefind-ignore
+      // forceLanguage: 'en',        // index the whole site as one language
+      // verbose: true,              // verbose indexing log
+    },
+  },
+},
+```
+
+Need a flag that `search.index` does not expose? Set `enabled: false` and run
+the [Pagefind CLI](https://pagefind.app/docs/config-options/) yourself after the
+build.
 
 ## Popular posts (Google Analytics 4)
 

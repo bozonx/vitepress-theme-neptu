@@ -90,7 +90,7 @@ feeds, archive, similar).
 {
   "scripts": {
     "prebuild": "node scripts/sync-remote-posts.mjs",
-    "build": "vitepress build src && pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'"
+    "build": "vitepress build src"
   }
 }
 ```

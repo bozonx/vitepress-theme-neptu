@@ -27,7 +27,9 @@ npm run build
 # or: pnpm build / yarn build
 ```
 
-This compiles the static site into `src/.vitepress/dist` and indexes content using [Pagefind](https://pagefind.app/).
+This compiles the static site into `src/.vitepress/dist` and indexes it with
+[Pagefind](https://pagefind.app/) — the theme runs the indexing itself, so there
+is no separate search build step.
 
 ### 4. Preview production build
 

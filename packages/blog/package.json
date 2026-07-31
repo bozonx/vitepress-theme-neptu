@@ -131,6 +131,7 @@
     "gray-matter": "^4.0.3",
     "image-size": "^2.0.2",
     "jiti": "^2.7.0",
+    "pagefind": "^1.5.2",
     "rehype-external-links": "^3.0.0",
     "rehype-stringify": "^10.0.1",
     "remark": "^15.0.1",

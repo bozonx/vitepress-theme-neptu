@@ -21,7 +21,8 @@ Pages, Netlify, Vercel, Cloudflare Pages или обычный веб-серве
 npm run build      # или: pnpm build / yarn build
 ```
 
-Команда собирает сайт в `src/.vitepress/dist` и строит поисковый индекс Pagefind.
+Команда собирает сайт в `src/.vitepress/dist` и заодно строит поисковый индекс
+Pagefind — тема делает это сама, отдельный шаг сборки не нужен.
 Посмотреть результат локально:
 
 ```bash
@@ -52,7 +53,7 @@ npm run preview    # или: pnpm preview / yarn preview
 // package.json
 {
   "scripts": {
-    "build": "vitepress build src --base /my-blog/ && pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'"
+    "build": "vitepress build src --base /my-blog/"
   }
 }
 ```

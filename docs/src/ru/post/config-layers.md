@@ -36,10 +36,10 @@ YAML — **не полный VitePress-конфиг**. В нём не бывае
 | `srcDir` | Корень контента и автообнаружения локалей. |
 | `base` | Публичный подкаталог, например `/blog/`. |
 | `siteUrl` | Абсолютный URL для sitemap, лент, canonical, Open Graph и JSON-LD. |
-| `head` | Внешние ассеты и метаданные, включая Pagefind. |
+| `head` | Внешние ассеты и метаданные. |
 | `vite`, `markdown`, `sitemap` | Обычные настройки VitePress/Vite. |
 | `transformPageData`, `transformHead`, `buildEnd` | Пользовательские хуки после хуков темы. |
-| `themeConfig.search` | Интеграция и опции Pagefind. |
+| `themeConfig.search` | Провайдер Pagefind, опции UI и индексация при сборке. |
 | `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; credentials и env остаются здесь. |
 
 ```ts

@@ -133,3 +133,32 @@ The locale folder is required even for a single-language site. One `en/`
 folder is a complete setup and does not require translations. `src/index.md`
 is reserved for the language selector; it may recommend the browser's language
 but does not redirect automatically.
+
+## Search
+
+The landing theme does not bundle a search engine of its own — the nav bar
+search box comes from the VitePress default theme, so you configure it exactly
+as the VitePress docs describe:
+[VitePress → Search](https://vitepress.dev/reference/default-theme-search).
+
+Local search (MiniSearch) needs no infrastructure and suits a landing plus a
+handful of doc pages:
+
+```ts
+// .vitepress/config.ts
+themeConfig: {
+  search: { provider: 'local' },
+}
+```
+
+The full index is shipped to the browser, so it stays cheap while the site is
+small. For a large documentation set, switch to `provider: 'algolia'` with your
+DocSearch credentials.
+
+Want something else — Pagefind, Orama, a hosted engine? Leave
+`themeConfig.search` unset (so the default box does not render) and mount your
+own component into the `nav-bar-content-before` slot. The
+[landing README](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/landing/README.md#search)
+shows the wiring, and the blog theme's `PageFindSearch.vue` is a working
+Pagefind reference. Note that the blog theme, unlike this one, ships Pagefind
+built in — see [Search in the blog theme](https://bozonx.github.io/vitepress-theme-neptu/en/page/seo-feeds-search).
