@@ -64,18 +64,6 @@ onMounted(async () => {
 <template>
   <main class="locale-selector">
     <section class="locale-selector__panel" aria-labelledby="locale-selector-title">
-      <svg
-        class="locale-selector__mark"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        aria-hidden="true"
-      >
-        <circle cx="12" cy="12" r="9" />
-        <ellipse cx="12" cy="12" rx="4" ry="9" />
-        <path d="M3.3 9h17.4M3.3 15h17.4" />
-      </svg>
       <h1 id="locale-selector-title" class="locale-selector__title">{{ title }}</h1>
 
       <nav ref="listEl" class="locale-selector__links" aria-label="Languages">
@@ -128,17 +116,8 @@ onMounted(async () => {
   backdrop-filter: blur(18px);
 }
 
-.locale-selector__mark {
-  display: block;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin: 0 auto;
-  color: var(--locale-selector-brand-text);
-  stroke-linecap: round;
-}
-
 .locale-selector__title {
-  margin: 1rem 0 2rem;
+  margin: 0.5rem 0 2rem;
   color: var(--locale-selector-text);
   font-size: clamp(1.5rem, 4vw, 2.25rem);
   font-weight: 750;
@@ -169,7 +148,7 @@ onMounted(async () => {
   background: color-mix(in srgb, var(--vp-c-bg-soft, #f6f6f7) 86%, transparent);
   border: 1px solid var(--vp-c-divider, #e2e2e3);
   border-radius: 0.9rem;
-  transition: border-color 160ms ease, transform 160ms ease, background-color 160ms ease;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
 .locale-selector__link:hover,
@@ -185,8 +164,8 @@ onMounted(async () => {
   box-shadow: inset 0.2rem 0 0 var(--vp-c-brand-1, #3451b2);
 }
 
-.locale-selector__link:hover {
-  transform: translateY(-2px);
+.locale-selector__link:hover .locale-selector__arrow {
+  transform: translateX(4px);
 }
 
 .locale-selector__link:focus-visible {
@@ -215,6 +194,7 @@ onMounted(async () => {
 .locale-selector__arrow {
   color: var(--locale-selector-brand-text);
   font-size: 1.25rem;
+  transition: transform 160ms ease;
 }
 
 @media (max-width: 32rem) {
