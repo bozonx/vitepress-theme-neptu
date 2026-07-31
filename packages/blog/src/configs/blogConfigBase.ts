@@ -123,6 +123,25 @@ export const common: BlogUserConfig = {
 const LOG_PREFIX = '[vitepress-theme-neptu]'
 
 /**
+ * Root-level identity for the language selector at `/`.
+ *
+ * The root page has no locale of its own, so it borrows the primary locale's
+ * title and description: `en` when it exists, otherwise the first discovered
+ * locale. Without this the root falls back to VitePress' own `"VitePress"`
+ * default, since locales live under `config.locales` and never on `config.en`.
+ */
+function resolvePrimaryLocale(
+  config: BlogUserConfig
+): { title?: string; description?: string } | undefined {
+  const locales = Object.entries(config.locales || {}).filter(
+    ([code]) => code !== 'root'
+  )
+  const primary = locales.find(([code]) => code === 'en') || locales[0]
+
+  return primary?.[1] as { title?: string; description?: string } | undefined
+}
+
+/**
  * Low-level config merge without validation warnings.
  *
  * Applies all built-in defaults (head, vite, markdown, sitemap, transformers,
@@ -142,12 +161,14 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
 
   const noIndexUrls = new Set<string>()
   const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
+  const primaryLocale = resolvePrimaryLocale(config)
 
   return {
     ...common,
     ...config,
-    title: config.title || config.en?.title,
-    description: config.description || config.en?.description,
+    title: config.title || config.en?.title || primaryLocale?.title,
+    description:
+      config.description || config.en?.description || primaryLocale?.description,
     head: [...(common.head || []), ...(config.head || [])],
     // Keep the locale identity fields native. VitePress already uses `title`
     // as the default suffix and avoids duplicating it on a home page; creating

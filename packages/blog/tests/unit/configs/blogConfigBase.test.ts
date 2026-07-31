@@ -243,6 +243,31 @@ describe('mergeBlogConfig', () => {
     expect(result.title).toBe('EN Title')
   })
 
+  // The root language selector at `/` has no locale of its own and would
+  // otherwise render VitePress' own "VitePress" default as its heading.
+  it('falls back to the en entry of discovered locales', () => {
+    const result = mergeBlogConfig({
+      locales: {
+        ru: { title: 'Мой блог', description: 'Описание' },
+        en: { title: 'My Blog', description: 'Description' },
+      },
+    })
+    expect(result.title).toBe('My Blog')
+    expect(result.description).toBe('Description')
+  })
+
+  it('falls back to the first discovered locale when there is no en', () => {
+    const result = mergeBlogConfig({
+      locales: {
+        root: { title: 'Ignored' },
+        ru: { title: 'Мой блог', description: 'Описание' },
+        de: { title: 'Mein Blog' },
+      },
+    })
+    expect(result.title).toBe('Мой блог')
+    expect(result.description).toBe('Описание')
+  })
+
   it('calls custom transformHead if provided', async () => {
     const customFn = vi.fn().mockReturnValue([
       ['meta', { name: 'custom-head', content: 'value' }],

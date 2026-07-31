@@ -27,7 +27,7 @@ describe('LocaleSelector', () => {
     expect(links[1]?.attributes('href')).toBe('/project/ru/')
   })
 
-  it('recommends the browser locale without navigating automatically', async () => {
+  it('marks the browser locale visually without navigating automatically', async () => {
     vi.spyOn(window.navigator, 'language', 'get').mockReturnValue('ru-RU')
     mockSite.value = {
       base: '/',
@@ -37,12 +37,29 @@ describe('LocaleSelector', () => {
       },
     }
 
-    const wrapper = mount(LocaleSelector, {
-      props: { recommendedLabel: 'Recommended' },
-    })
+    const wrapper = mount(LocaleSelector)
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.text()).toContain('Recommended')
-    expect(wrapper.find('a.locale-selector__link--recommended').attributes('href')).toBe('/ru/')
+    const detected = wrapper.find('a.locale-selector__link--detected')
+    expect(detected.attributes('href')).toBe('/ru/')
+    expect(detected.attributes('aria-current')).toBe('true')
+    // Nothing labels the detection, so the page stays language-neutral.
+    expect(wrapper.text()).not.toMatch(/recommend/i)
+  })
+
+  it('shows the site title and nothing else to translate', () => {
+    mockSite.value = {
+      base: '/',
+      title: 'Neptu blog theme',
+      locales: {
+        en: { label: 'English', lang: 'en-US' },
+        ru: { label: 'Русский', lang: 'ru-RU' },
+      },
+    }
+
+    const wrapper = mount(LocaleSelector)
+
+    expect(wrapper.get('h1').text()).toBe('Neptu blog theme')
+    expect(wrapper.find('.locale-selector__description').exists()).toBe(false)
   })
 })

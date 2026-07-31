@@ -91,8 +91,9 @@ A single-language site still has exactly one locale directory, such as
 `src/en/`; this does not require adding translations. Add another directory
 only when you actually publish another language. Root-level content pages are
 not a second supported mode: `src/index.md` is reserved for the language
-selector. It renders normal links to every locale and may recommend the
-browser's language, but must not redirect automatically.
+selector. It renders normal links to every locale and may highlight the
+browser's language, but must not redirect automatically. It stays indexable
+because `hreflang="x-default"` points at it.
 
 The standard config helpers enforce this contract at build time: a manual
 `locales.root` entry or any root Markdown file other than `src/index.md` stops
@@ -104,10 +105,6 @@ Use the starter's root selector or import it in your own `src/index.md`:
 ```md
 ---
 layout: false
-head:
-  - - meta
-    - name: robots
-      content: noindex
 ---
 
 <script setup>
@@ -116,6 +113,12 @@ import { LocaleSelector } from 'vitepress-theme-neptu/components'
 
 <LocaleSelector />
 ```
+
+The selector carries no prose — the only text is the site title (which
+`mergeBlogConfig` falls back to the primary locale's title) plus each language
+written in its own language. Override the heading with the `title` prop or a
+`localeSelector.title` frontmatter key if you need something other than the
+site title.
 
 Configuration, frontmatter, components, and SEO are documented in full on the
 [live site](https://bozonx.github.io/vitepress-theme-neptu).

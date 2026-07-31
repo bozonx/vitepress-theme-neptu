@@ -44,8 +44,11 @@ files other than `src/index.md` fail with a migration hint.
 Every locale gets its own home page, feeds, sitemap entries, and full set of
 listing layouts (recent / popular / archive / authors / tags).
 
-The root selector renders ordinary links to every locale. Browser-language
-detection may mark one link as recommended, but it does not redirect. For a
+The root selector renders ordinary links to every locale, each written in its
+own language, with no prose beyond the site title. Browser-language detection
+highlights the matching link and scrolls it into view — no badge, no label to
+translate — but it never redirects. The page stays indexable because
+`hreflang="x-default"` points at it. For a
 single-language deployment that needs an immediate `/` → `/en/` transition,
 configure a permanent HTTP 301 or 308 redirect at the hosting layer instead of
 adding a JavaScript timer.
