@@ -29,8 +29,8 @@ const props = defineProps<{ noBg?: boolean }>()
         <span v-if="currentLang.code" class="text-xs font-semibold uppercase leading-none">{{ currentLang.code }}</span>
       </span>
     </template>
-    <MenuItem :disabled="true" :title="theme.t.currentLang">
-      {{ currentLang.label || theme.t.currentLang }}
+    <MenuItem :disabled="true" :title="theme.t?.currentLang || 'Current language'">
+      {{ currentLang.label || theme.t?.currentLang || 'Current language' }}
     </MenuItem>
     <template v-for="locale in localeLinks" :key="locale.link">
       <MenuItem target="_self" :href="locale.link">

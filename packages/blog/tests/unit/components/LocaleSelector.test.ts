@@ -19,7 +19,7 @@ describe('LocaleSelector', () => {
     }
 
     const wrapper = mount(LocaleSelector)
-    const links = wrapper.findAll('a')
+    const links = wrapper.findAll('.locale-selector__links a')
 
     expect(links).toHaveLength(2)
     expect(links[0]?.attributes('href')).toBe('/project/en/')

@@ -10,6 +10,8 @@ import type { LinkItem } from '../../types.d.ts'
 const { theme } = useUiTheme()
 defineProps<{
   isMobile?: boolean
+  hideAppearance?: boolean
+  hideMenuButton?: boolean
 }>()
 const emit = defineEmits<{
   (e: 'openSearch'): void
@@ -55,6 +57,7 @@ const socialLinks = computed<LinkItem[]>(() =>
   >
     <div class="flex-1 flex gap-x-3">
       <NeptuBtn
+        v-if="!hideMenuButton"
         icon="fa6-solid:bars"
         :no-bg="true"
         class="lg:hidden px-[0.7rem]"
@@ -81,7 +84,7 @@ const socialLinks = computed<LinkItem[]>(() =>
       <SwitchLang :no-bg="true" />
     </div>
 
-    <div>
+    <div v-if="!hideAppearance">
       <SwitchAppearance />
     </div>
 

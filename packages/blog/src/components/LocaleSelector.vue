@@ -2,6 +2,7 @@
 import { computed, nextTick, onMounted, ref } from 'vue'
 import { useData } from 'vitepress'
 import { resolveNavigatorLang } from '../utils/client/browser.ts'
+import TopBar from './layout-parts/TopBar.vue'
 
 interface LocaleEntry {
   label?: string
@@ -62,30 +63,35 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="locale-selector">
-    <section class="locale-selector__panel" aria-labelledby="locale-selector-title">
-      <h1 id="locale-selector-title" class="locale-selector__title">{{ title }}</h1>
+  <div class="locale-selector-wrapper min-h-screen flex flex-col relative">
+    <header class="w-full absolute top-0 left-0 z-10">
+      <TopBar :hide-menu-button="true" />
+    </header>
+    <main class="locale-selector flex-1">
+      <section class="locale-selector__panel" aria-labelledby="locale-selector-title">
+        <h1 id="locale-selector-title" class="locale-selector__title">{{ title }}</h1>
 
-      <nav ref="listEl" class="locale-selector__links" aria-label="Languages">
-        <a
-          v-for="locale in locales"
-          :key="locale.code"
-          class="locale-selector__link"
-          :class="{ 'locale-selector__link--detected': locale.code === detectedLocale }"
-          :href="locale.link"
-          :lang="locale.lang"
-          :dir="locale.dir"
-          :aria-current="locale.code === detectedLocale ? 'true' : undefined"
-        >
-          <span class="locale-selector__label">
-            <strong>{{ locale.label }}</strong>
-            <small>{{ locale.code }}</small>
-          </span>
-          <span class="locale-selector__arrow" aria-hidden="true">→</span>
-        </a>
-      </nav>
-    </section>
-  </main>
+        <nav ref="listEl" class="locale-selector__links" aria-label="Languages">
+          <a
+            v-for="locale in locales"
+            :key="locale.code"
+            class="locale-selector__link"
+            :class="{ 'locale-selector__link--detected': locale.code === detectedLocale }"
+            :href="locale.link"
+            :lang="locale.lang"
+            :dir="locale.dir"
+            :aria-current="locale.code === detectedLocale ? 'true' : undefined"
+          >
+            <span class="locale-selector__label">
+              <strong>{{ locale.label }}</strong>
+              <small>{{ locale.code }}</small>
+            </span>
+            <span class="locale-selector__arrow" aria-hidden="true">→</span>
+          </a>
+        </nav>
+      </section>
+    </main>
+  </div>
 </template>
 
 <style scoped>
@@ -105,6 +111,13 @@ onMounted(async () => {
     var(--vp-c-bg, #fff);
 }
 
+.dark .locale-selector {
+  background:
+    radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 22%, transparent), transparent 45%),
+    radial-gradient(circle at 85% 85%, color-mix(in srgb, var(--vp-c-brand-2, #708adb) 12%, transparent), transparent 35%),
+    var(--vp-c-bg, #0f172a);
+}
+
 .locale-selector__panel {
   box-sizing: border-box;
   width: min(100%, 30rem);
@@ -114,6 +127,12 @@ onMounted(async () => {
   border-radius: 1.5rem;
   box-shadow: 0 1.5rem 5rem color-mix(in srgb, #000 16%, transparent);
   backdrop-filter: blur(18px);
+}
+
+.dark .locale-selector__panel {
+  background: color-mix(in srgb, var(--vp-c-bg-elv, #1e293b) 85%, rgba(255, 255, 255, 0.03));
+  border-color: color-mix(in srgb, var(--vp-c-divider, #3c3c43) 60%, rgba(255, 255, 255, 0.15));
+  box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .locale-selector__title {
@@ -151,11 +170,23 @@ onMounted(async () => {
   transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
+.dark .locale-selector__link {
+  background: color-mix(in srgb, var(--vp-c-bg-soft, #252529) 90%, rgba(255, 255, 255, 0.05));
+  border-color: color-mix(in srgb, var(--vp-c-divider, #3c3c43) 70%, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
 /* The browser language is marked visually with a subtle left bar and light tint */
 .locale-selector__link--detected {
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 6%, var(--vp-c-bg-soft, #f6f6f7));
   border-color: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 45%, var(--vp-c-divider, #e2e2e3));
   box-shadow: inset 0.25rem 0 0 var(--vp-c-brand-1, #3451b2);
+}
+
+.dark .locale-selector__link--detected {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 16%, var(--vp-c-bg-soft, #1e293b));
+  border-color: color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 65%, rgba(255, 255, 255, 0.15));
+  box-shadow: inset 0.25rem 0 0 var(--vp-c-brand-1, #5672cd), 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .locale-selector__link:hover,
@@ -165,11 +196,25 @@ onMounted(async () => {
   box-shadow: 0 4px 14px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 18%, transparent);
 }
 
+.dark .locale-selector__link:hover,
+.dark .locale-selector__link:focus-visible {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 22%, var(--vp-c-bg-soft, #1e293b));
+  border-color: var(--vp-c-brand-1, #5672cd);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 30%, transparent);
+}
+
 .locale-selector__link--detected:hover,
 .locale-selector__link--detected:focus-visible {
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 18%, var(--vp-c-bg-soft, #f6f6f7));
   border-color: var(--vp-c-brand-1, #3451b2);
   box-shadow: inset 0.25rem 0 0 var(--vp-c-brand-1, #3451b2), 0 4px 16px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 22%, transparent);
+}
+
+.dark .locale-selector__link--detected:hover,
+.dark .locale-selector__link--detected:focus-visible {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 28%, var(--vp-c-bg-soft, #1e293b));
+  border-color: var(--vp-c-brand-1, #5672cd);
+  box-shadow: inset 0.25rem 0 0 var(--vp-c-brand-1, #5672cd), 0 4px 22px color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 35%, transparent);
 }
 
 .locale-selector__link:hover .locale-selector__arrow,
@@ -201,10 +246,18 @@ onMounted(async () => {
   text-transform: uppercase;
 }
 
+.dark .locale-selector__link small {
+  color: var(--vp-c-text-2, #94a3b8);
+}
+
 .locale-selector__arrow {
   color: var(--locale-selector-brand-text);
   font-size: 1.25rem;
   transition: transform 160ms ease;
+}
+
+.dark .locale-selector__arrow {
+  color: var(--vp-c-brand-1, #5672cd);
 }
 
 @media (max-width: 32rem) {

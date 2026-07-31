@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useData, inBrowser } from 'vitepress'
 import { computed, ref, watchEffect } from 'vue'
+import TopBar from '../components/layout-parts/TopBar.vue'
+import { useBreakpoint } from '../composables/useBreakpoint.ts'
 
 const props = withDefaults(
   defineProps<{
@@ -9,6 +11,7 @@ const props = withDefaults(
   { scrollY: 0 }
 )
 const { theme, frontmatter } = useData()
+const { isMobile } = useBreakpoint()
 const valueY = ref(0)
 const wrapperRef = ref<HTMLElement | null>(null)
 
@@ -55,7 +58,7 @@ watchEffect(() => {
 <template>
   <div
     ref="wrapperRef"
-    class="home-layout flex flex-col justify-center items-center w-full min-h-screen transition-[background-position-y] duration-100 ease-out will-change-[background-position]"
+    class="home-layout flex flex-col justify-center items-center w-full min-h-screen relative transition-[background-position-y] duration-100 ease-out will-change-[background-position]"
     :class="[
       homeTheme,
       homeBackground === 'none' ? '' : 'bg-no-repeat bg-center bg-fixed bg-cover',
@@ -66,6 +69,13 @@ watchEffect(() => {
       homeBackgroundImage ? `background-image: url(${homeBackgroundImage});` : '',
     ].join(' ')"
   >
+    <header class="w-full absolute top-0 left-0 z-10">
+      <TopBar
+        :is-mobile="isMobile"
+        :hide-appearance="true"
+        :hide-menu-button="true"
+      />
+    </header>
     <slot name="home-before" />
     <div class="home-layout-page my-20 mx-7" :style="{ maxWidth: `${homeMaxWidth}px` }">
       <Content />

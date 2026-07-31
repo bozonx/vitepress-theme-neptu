@@ -326,8 +326,8 @@ onUnmounted(() => {
       <div class="sidebar-closebtn-wrapper absolute h-0 right-0">
         <button
           type="button"
-          :title="theme.t.closeMenu"
-          :aria-label="theme.t.closeMenu"
+          :title="theme.t?.closeMenu || 'Close menu'"
+          :aria-label="theme.t?.closeMenu || 'Close menu'"
           class="py-6 px-6 cursor-pointer text-[var(--gray-400)] hover:text-[var(--body-text-color)]"
           @click.prevent.stop="closeDrawer"
         >
