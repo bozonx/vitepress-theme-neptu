@@ -1,5 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
-import { sortPosts, sortSimilarPosts } from '../../../../src/utils/shared/sorting.ts'
+import {
+  filterFeaturedPosts,
+  findAdjacentPosts,
+  sortPosts,
+  sortSimilarPosts,
+} from '../../../../src/utils/shared/sorting.ts'
 
 describe('sortPosts', () => {
   it('returns empty array for null', () => {
@@ -69,6 +74,43 @@ describe('sortPosts', () => {
     const posts = [{ date: '2024-01-01', url: 'a' }]
     sortPosts(posts)
     expect(posts).toEqual([{ date: '2024-01-01', url: 'a' }])
+  })
+})
+
+describe('findAdjacentPosts', () => {
+  const posts = [
+    { date: '2024-01-01', url: '/en/post/old', title: 'Old' },
+    { date: '2024-03-01', url: '/en/post/new', title: 'New' },
+    { date: '2024-02-01', url: '/en/post/current', title: 'Current' },
+  ]
+
+  it('returns the older post as previous and the newer post as next', () => {
+    expect(findAdjacentPosts(posts, '/en/post/current/')).toEqual({
+      previous: posts[0],
+      next: posts[1],
+    })
+  })
+
+  it('omits a missing neighbour at the edge of the sequence', () => {
+    expect(findAdjacentPosts(posts, '/en/post/new')).toEqual({
+      previous: posts[2],
+      next: undefined,
+    })
+  })
+
+  it('returns no neighbours for an unknown URL', () => {
+    expect(findAdjacentPosts(posts, '/en/post/missing')).toEqual({})
+  })
+})
+
+describe('filterFeaturedPosts', () => {
+  it('keeps only featured posts, newest first, and respects the limit', () => {
+    const posts = [
+      { date: '2024-01-01', url: 'old', featured: true },
+      { date: '2024-03-01', url: 'regular', featured: false },
+      { date: '2024-02-01', url: 'new', featured: true },
+    ]
+    expect(filterFeaturedPosts(posts, 1).map((post) => post.url)).toEqual(['new'])
   })
 })
 

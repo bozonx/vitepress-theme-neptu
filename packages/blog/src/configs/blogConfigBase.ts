@@ -118,6 +118,7 @@ const commonThemeConfig = {
   feeds: {
     maxPosts: 50,
     formats: ['rss', 'atom', 'json'],
+    fullContent: false,
   },
 
   seo: {

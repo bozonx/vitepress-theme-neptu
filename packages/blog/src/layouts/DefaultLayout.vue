@@ -36,7 +36,7 @@ useSwipeDrawer({
 <template>
   <div class="min-h-screen lg:flex w-full">
     <!--  left col-->
-    <SideBar ref="sidebarRef" :is-mobile="isMobile">
+    <SideBar ref="sidebarRef" class="site-sidebar" :is-mobile="isMobile">
       <template v-if="$slots['sidebar-top']" #sidebar-top>
         <slot name="sidebar-top" />
       </template>
@@ -52,7 +52,7 @@ useSwipeDrawer({
     </SideBar>
     <!-- right col-->
     <div class="flex-1 flex flex-col min-h-screen">
-      <header>
+      <header class="site-topbar">
         <TopBar
           :is-mobile="isMobile"
           @open-drawer="() => sidebarRef?.openDrawer()"
@@ -92,7 +92,7 @@ useSwipeDrawer({
 
           <slot v-if="$slots.footer" name="footer" />
 
-          <div v-else-if="theme.footer" class="mt-30 pb-12">
+          <div v-else-if="theme.footer" class="site-footer mt-30 pb-12">
             <NeptuFooter />
           </div>
         </main>

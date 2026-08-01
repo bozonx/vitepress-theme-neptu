@@ -93,7 +93,7 @@ export namespace NeptuBlogTheme {
     popularPosts?: PopularPostsConfig
     /**
      * Ordered list of post-footer blocks. Supported keys: 'author', 'donate',
-     * 'comments', 'social-share', 'edit-link', 'tags', 'similar',
+     * 'comments', 'social-share', 'edit-link', 'tags', 'navigation', 'similar',
      * 'popular-link'. Omit a key to hide the block; reorder to change layout.
      * Defaults to all blocks in the order above.
      */
@@ -149,7 +149,12 @@ export namespace NeptuBlogTheme {
     sidebar?: SidebarConfig
     donate?: DonateConfig
     repo?: string
-    feeds?: { maxPosts?: number; formats?: string[] }
+    feeds?: {
+      maxPosts?: number
+      formats?: string[]
+      /** Include rendered article HTML instead of only the description. Defaults to false. */
+      fullContent?: boolean
+    }
 
     sidebarLogoSrc?: string
     sidebarLogoHeight?: number
@@ -237,7 +242,12 @@ export namespace NeptuBlogTheme {
 
   export interface I18n {
     popularPosts: string
+    /** Heading for the explicitly curated posts shown on a home page. */
+    featuredPosts?: string
     similarPosts: string
+    /** Labels for chronological navigation inside a post. */
+    previousPost?: string
+    nextPost?: string
     shareSocialMedia: string
     currentLang: string
     tagBadgeCount: string
@@ -630,6 +640,8 @@ export namespace NeptuBlogTheme {
     coverDescr?: string
     coverAlt?: string
     tags?: Array<string | Tag>
+    /** Marks the post for explicit featured-post collections. Does not change chronological lists. */
+    featured?: boolean
     previewText?: string
     descrAsPreview?: boolean
     jsonLd?: string
@@ -688,6 +700,7 @@ export namespace NeptuBlogTheme {
     cover?: string
     coverHeight?: number | string
     coverWidth?: number | string
+    featured?: boolean
     analyticsStats?: Record<string, number>
     [key: string]: unknown
   }

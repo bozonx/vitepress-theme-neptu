@@ -3,6 +3,7 @@ title: Welcome to My New Blog
 description: Getting started with your new blog created with Neptu Blog Theme.
 date: 2026-07-22
 authorId: alex
+featured: true
 tags:
   - Welcome
   - Getting Started

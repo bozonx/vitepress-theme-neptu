@@ -21,9 +21,12 @@ const position = computed(() => theme.value?.toc?.position ?? 'auto')
 </script>
 
 <template>
+  <!-- Kept out of the search index: it sits inside the indexed article body
+       and would otherwise duplicate every heading as searchable text. -->
   <details
     v-if="show"
     :open="open"
+    data-pagefind-ignore
     class="toc-collapsible"
     :class="`toc-collapsible--${position}`"
     @toggle="open = ($event.target as HTMLDetailsElement).open"

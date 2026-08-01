@@ -1,0 +1,74 @@
+@media print {
+  @page {
+    margin: 18mm;
+  }
+
+  html,
+  body {
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  .site-sidebar,
+  .site-topbar,
+  .site-footer,
+  .to-the-top-mobile,
+  .to-the-top-desk,
+  /* Ad units and the table of contents: nothing to click on paper. */
+  .aside-container,
+  .toc-collapsible,
+  .neptu-ad,
+  [data-pagefind-ignore],
+  [data-print-ignore] {
+    display: none !important;
+  }
+
+  .app-page,
+  .content-page,
+  .vp-doc {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .content-page {
+    min-height: 0 !important;
+  }
+
+  .vp-doc a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+
+  .vp-doc pre,
+  .vp-doc code {
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
+  }
+
+  .vp-doc img,
+  .vp-doc figure,
+  .vp-doc pre,
+  .vp-doc blockquote,
+  .post-image {
+    break-inside: avoid;
+  }
+
+  .vp-doc h1,
+  .vp-doc h2,
+  .vp-doc h3,
+  .vp-doc h4 {
+    break-after: avoid;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

@@ -136,6 +136,19 @@ Body content`)
     expect(item.preview).toBe('Custom preview.')
   })
 
+  it('exposes the featured flag to post collections', () => {
+    readFileSyncMock.mockReturnValue(`---
+title: Hello
+featured: true
+---
+
+Body content`)
+
+    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+
+    expect(item.featured).toBe(true)
+  })
+
   it('keeps SEO description out of a card unless descrAsPreview opts in', () => {
     readFileSyncMock.mockReturnValue(`---
 title: Hello

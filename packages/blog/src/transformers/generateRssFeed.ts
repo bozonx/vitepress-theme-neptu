@@ -4,7 +4,7 @@ import path from 'node:path'
 import { createContentLoader } from 'vitepress'
 
 import { DEFAULT_ENCODE, POSTS_DIR } from '../constants.ts'
-import { extractDescriptionFromMd } from '../utils/node/index.ts'
+import { extractDescriptionFromMd, mdToFeedHtml, parseMdFile } from '../utils/node/index.ts'
 import {
   createPostGuid,
   formatTagsForRss,
@@ -97,6 +97,10 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
           Number.isFinite(configuredMaxPosts) && configuredMaxPosts >= 0
             ? configuredMaxPosts
             : 50
+        const fullContent = Boolean(
+          locale.themeConfig?.feeds?.fullContent ??
+          config.userConfig?.themeConfig?.feeds?.fullContent
+        )
         let addedPostsCount = 0
 
         for (const { url, frontmatter, src } of sortedPosts) {
@@ -128,10 +132,17 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
                 )
             const guid = createPostGuid(siteUrl, url, fm.date)
             const categories = formatTagsForRss(fm.tags, siteUrl, localeIndex)
+            const content = fullContent
+              ? mdToFeedHtml(
+                  parseMdFile(src!, url).content,
+                  `${siteUrl}${url}`
+                )
+              : undefined
 
             feeds[localeIndex]!.addItem({
               title: fm.title || '',
               description,
+              content,
               id: guid,
               link: `${siteUrl}${url}`,
               date: fm.date ? new Date(fm.date) : new Date(),

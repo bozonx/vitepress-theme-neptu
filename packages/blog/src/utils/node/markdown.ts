@@ -35,11 +35,38 @@ function sanitizeNodeTree(node: RehypeNode): void {
         node.properties.rel = ['noopener', 'noreferrer']
       }
     }
+
+    if (node.tagName === 'img') {
+      const src = typeof node.properties.src === 'string' ? node.properties.src.trim() : ''
+      if (!isSafeUrl(src)) delete node.properties.src
+    }
   }
 
   if (Array.isArray(node.children)) {
     node.children.forEach((child) => sanitizeNodeTree(child))
   }
+}
+
+function absolutizeContentUrls(node: RehypeNode, baseUrl: string): void {
+  if (!node || typeof node !== 'object') return
+
+  if (node.type === 'element' && node.properties) {
+    for (const property of ['href', 'src'] as const) {
+      const value = node.properties[property]
+      if (typeof value !== 'string' || !isSafeUrl(value)) continue
+      try {
+        node.properties[property] = new URL(value, baseUrl).toString()
+      } catch {
+        delete node.properties[property]
+      }
+    }
+  }
+
+  node.children?.forEach((child) => absolutizeContentUrls(child, baseUrl))
+}
+
+function absolutizeContentUrlsPlugin(baseUrl: string) {
+  return (tree: RehypeNode) => absolutizeContentUrls(tree, baseUrl)
 }
 
 function sanitizeHtmlTree() {
@@ -96,6 +123,23 @@ export function mdToHtml(mdContent: string | null | undefined): string {
   }
 
   return processed
+}
+
+/** Renders safe feed HTML and makes article-relative links and images absolute. */
+export function mdToFeedHtml(
+  mdContent: string | null | undefined,
+  articleUrl: string
+): string {
+  if (!mdContent) return mdContent ?? ''
+
+  return remark()
+    .use(remarkRehype)
+    .use(rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] })
+    .use(absolutizeContentUrlsPlugin, articleUrl)
+    .use(sanitizeHtmlTree)
+    .use(html)
+    .processSync(mdContent)
+    .toString()
 }
 
 export interface ParsedMd {

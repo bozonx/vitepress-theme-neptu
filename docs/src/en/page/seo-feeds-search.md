@@ -36,9 +36,17 @@ themeConfig:
   feeds:
     maxPosts: 50
     formats: ['rss', 'atom', 'json']
+    fullContent: false
 ```
 
 Output paths per locale: `/en/feed.rss`, `/en/feed.atom`, `/en/feed.json`.
+
+By default each item contains the post description or generated excerpt. Set
+`fullContent: true` to additionally include safe rendered article HTML.
+Relative links and images in that HTML are converted to absolute URLs. Custom
+Vue components and optional Markdown plugins are not executed by the feed
+renderer; keep the default excerpt mode if a post depends on them for its main
+content.
 
 ## Search (Pagefind)
 

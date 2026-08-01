@@ -215,6 +215,7 @@ export default async () => defineBlogConfig({
       'social-share',
       'edit-link',
       'tags',
+      'navigation',
       'similar',
       'popular-link',
     ],
@@ -232,6 +233,7 @@ export default async () => defineBlogConfig({
 | `social-share` | `PostSocialShare` |
 | `edit-link` | `EditLink` |
 | `tags` | `PostTags` |
+| `navigation` | `PostNavigation` |
 | `similar` | `PostSimilarList` |
 | `popular-link` | Ссылка на страницу популярных постов (только если `popularPosts.enabled: true`) |
 

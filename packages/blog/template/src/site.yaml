@@ -184,7 +184,7 @@ themeConfig:
   # --- Post Footer Blocks ----------------------------------------------------
   # Ordered list of post-footer blocks. Supported keys:
   #   'author', 'donate', 'comments', 'social-share', 'edit-link',
-  #   'tags', 'similar', 'popular-link'.
+  #   'tags', 'navigation', 'similar', 'popular-link'.
   # Omit a key to hide the block; reorder to change layout.
   # Defaults to all blocks in the order shown below.
   postFooter:
@@ -194,6 +194,7 @@ themeConfig:
     - social-share
     - edit-link
     - tags
+    - navigation
     - similar
 
   # --- Pagination & Listing --------------------------------------------------
@@ -277,6 +278,9 @@ themeConfig:
   #     - rss
   #     - atom
   #     - json
+  #   # Include safe rendered article HTML in each feed item. Relative links
+  #   # and images become absolute. Default: false (description/preview only).
+  #   fullContent: false
 
   # --- SEO -------------------------------------------------------------------
   # All boolean flags below default to true.
@@ -332,6 +336,9 @@ themeConfig:
   #   allPostsOfYear: All posts of year
   #   pageNotFound: Page not found
   #   postsCount: posts
+  #   featuredPosts: Featured posts
+  #   previousPost: Previous post
+  #   nextPost: Next post
   #   editLink: Edit this page
   #   postsCountForms: [post, posts, posts]
   #   search: Search

@@ -4,6 +4,7 @@ layout: home
 <script setup>
 import {
   HomeHero,
+  HomeFeaturedPosts,
   HomeTags,
   UtilPageContent,
 } from 'vitepress-theme-neptu/components'
@@ -44,4 +45,5 @@ Welcome to your brand new blog site powered by **VitePress** and **Neptu Blog Th
 
 </UtilPageContent>
 
+<HomeFeaturedPosts />
 <HomeTags :header="theme.t?.tags || 'Tags'" />

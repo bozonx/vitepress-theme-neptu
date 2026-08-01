@@ -72,8 +72,11 @@ const unitKey = computed(() => `${route.path}::${props.placement}::${props.index
 </script>
 
 <template>
+  <!-- In-content slots sit inside the indexed article body; the disclosure
+       label has no business turning up in search results. -->
   <aside
     v-if="show"
+    data-pagefind-ignore
     class="neptu-ad"
     :class="`neptu-ad--${placement}`"
     :style="minHeight ? { minHeight } : undefined"

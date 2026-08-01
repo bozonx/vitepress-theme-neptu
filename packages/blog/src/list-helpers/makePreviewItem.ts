@@ -78,6 +78,7 @@ export function makePreviewItem(
     date: fm.date,
     authorId: fm.authorId,
     title: fm.title,
+    featured: fm.featured === true,
     tags: normalizeTags(fm.tags, lang) || [],
     preview,
     thumbnail: cover,

@@ -19,6 +19,7 @@ import './styles/themes/theme-presets.css'
 // over the `:root` defaults on equal specificity.
 import './styles/style-presets.css'
 import './styles/blog-styles.css'
+import './styles/print.css'
 
 import type { EnhanceAppContext } from 'vitepress'
 import { addCollection } from '@iconify/vue'

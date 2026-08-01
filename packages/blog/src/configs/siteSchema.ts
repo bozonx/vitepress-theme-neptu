@@ -111,6 +111,7 @@ const ConsentSchema = z.looseObject({
 
 const TranslationSchema = z.looseObject({
   popularPosts: z.string().optional(), similarPosts: z.string().optional(),
+  featuredPosts: z.string().optional(), previousPost: z.string().optional(), nextPost: z.string().optional(),
   shareSocialMedia: z.string().optional(), currentLang: z.string().optional(),
   tagBadgeCount: z.string().optional(), tagPageHeader: z.string().optional(),
   tags: z.string().optional(), allTags: z.string().optional(),
@@ -188,6 +189,7 @@ const ThemeConfigSchema = z
     feeds: z.looseObject({
       maxPosts: z.number().int().min(0).optional(),
       formats: z.array(z.enum(['rss', 'atom', 'json'])).optional(),
+      fullContent: z.boolean().optional(),
     }).optional(),
     seo: SeoSchema.optional(),
     toc: TocSchema.optional(),

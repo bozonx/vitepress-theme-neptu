@@ -18,6 +18,7 @@ export const mockTheme = ref<any>({
     'social-share',
     'edit-link',
     'tags',
+    'navigation',
     'similar',
     'popular-link',
   ],
@@ -41,4 +42,3 @@ export const mockFrontmatter = ref<any>({})
 export const mockIsDark = ref<any>(false)
 export const mockSite = ref<any>({ locales: {}, cleanUrls: true })
 export const mockHash = ref<any>('')
-

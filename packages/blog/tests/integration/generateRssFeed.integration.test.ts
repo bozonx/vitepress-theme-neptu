@@ -126,6 +126,57 @@ describe('generateRssFeed integration', () => {
     expect(ruJsonContent.items[1].title).toBe('Пост №4')
   })
 
+  it('includes rendered full HTML only when fullContent is enabled', async () => {
+    env.siteConfig.userConfig!.themeConfig!.feeds!.fullContent = true
+    env.createPost({
+      locale: 'en',
+      slug: 'full-feed-post',
+      frontmatter: {
+        title: 'Full feed post',
+        date: '2025-01-10T10:00:00.000Z',
+        description: 'Short description',
+      },
+      content: '## Full heading\n\nBody with a [relative link](./other) and ![cover](/img/feed.png).',
+    })
+
+    await generateRssFeed(env.siteConfig)
+
+    const json = JSON.parse(
+      fs.readFileSync(path.join(env.outDir, 'en', 'feed.json'), 'utf-8')
+    )
+    expect(json.items[0].summary).toBe('Short description')
+    expect(json.items[0].content_html).toContain('<h2>Full heading</h2>')
+    expect(json.items[0].content_html).toContain(
+      'href="https://example.com/en/post/other"'
+    )
+    expect(json.items[0].content_html).toContain(
+      'src="https://example.com/img/feed.png"'
+    )
+  })
+
+  it('keeps feeds description-only by default', async () => {
+    env.createPost({
+      locale: 'en',
+      slug: 'excerpt-feed-post',
+      frontmatter: {
+        title: 'Excerpt feed post',
+        date: '2025-01-10T10:00:00.000Z',
+        description: 'Only this summary is included',
+      },
+      content: 'Body that must not be included in the feed.',
+    })
+
+    await generateRssFeed(env.siteConfig)
+
+    const json = JSON.parse(
+      fs.readFileSync(path.join(env.outDir, 'en', 'feed.json'), 'utf-8')
+    )
+    expect(json.items[0].content_html).toBe('Only this summary is included')
+    expect(json.items[0].content_html).not.toContain(
+      'Body that must not be included in the feed.'
+    )
+  })
+
   it('skips invalid posts without breaking feed generation', async () => {
     // Valid post
     env.createPost({

@@ -203,6 +203,7 @@ themeConfig:
     - social-share
     - edit-link
     - tags
+    - navigation
     - similar
     - popular-link
 ```
@@ -215,6 +216,7 @@ themeConfig:
 | `social-share` | `PostSocialShare` |
 | `edit-link` | `EditLink` |
 | `tags` | `PostTags` |
+| `navigation` | `PostNavigation` |
 | `similar` | `PostSimilarList` |
 | `popular-link` | Ссылка на популярные посты (только если `popularPosts.enabled: true`) |
 

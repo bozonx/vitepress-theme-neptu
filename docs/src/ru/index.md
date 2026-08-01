@@ -5,6 +5,7 @@ heroImg: /img/sidebar-logo.jpg
 <script setup>
 import {
   HomeHero,
+  HomeFeaturedPosts,
   HomeTags,
   HomePopularPosts,
   UtilPageContent,
@@ -48,13 +49,17 @@ const hero = {
 
 - **[Быстрый старт](post/getting-started)** — запустить блог и написать первый пост.
 - **[Контент](post/full-featured)** — обложки, медиа, авторы, превью, футер поста.
+- **[Навигация, избранное и печать](post/navigation-featured-print)** — переходы между постами и `featured`.
+- **[Mermaid и KaTeX](post/mermaid-and-katex)** — диаграммы и математические формулы.
 - **[Настройка](post/config-layers)** — конфигурация, навигация и выбор темы.
 - **[Мультиязычность](post/locales)** — локали, переводы и hreflang.
 - **[Кастомизация](post/components)** — компоненты, стили, слоты и хуки.
-- **[Правая колонка](post/aside-and-ads)** — aside и рекламные блоки.
+- **[Оглавление и реклама](post/aside-and-ads)** — правая колонка, TOC и рекламные блоки.
+- **[Согласие на куки](post/consent-and-analytics)** — Consent Mode, CMP и аналитика.
 - **[SEO и деплой](post/seo-overview)** — ленты, микроразметка, публикация.
 
 </UtilPageContent>
 
+<HomeFeaturedPosts :max-posts="3" />
 <HomeTags :header="theme.t.tags" />
 <HomePopularPosts />
