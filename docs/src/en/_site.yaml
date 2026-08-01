@@ -8,9 +8,6 @@ themeConfig:
     text: 'Edit this page on GitHub'
   donate:
     postDonateCall: 'If you find this blog useful, consider supporting it.'
-  publisher:
-    name: '${site.title}'
-    url: '${config.siteUrl}'
   nav:
     links:
       - text: 'Some link'

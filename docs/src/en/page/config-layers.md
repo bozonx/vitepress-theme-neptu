@@ -18,7 +18,7 @@ There are **three editable layers**. Built-in theme and language defaults are an
 
 | Responsibility | File |
 | --- | --- |
-| Vite/VitePress options, `srcDir`, `base`, `siteUrl`, environment variables, plugins, hooks, search assets, GA4 credentials | `.vitepress/config.ts` |
+| Vite/VitePress options, `srcDir`, `base`, `siteUrl`, `repo`, environment variables, plugins, hooks, search assets, GA4 credentials | `.vitepress/config.ts` |
 | Static theme settings shared by all languages: branding, navigation defaults, sidebar, feeds, SEO switches, icons, publisher | `src/site.yaml` |
 | One language's `lang`, title, description, translations, labels, navigation text and any intentional theme override | `src/<locale>/_site.yaml` |
 | Author profiles for one locale | `src/<locale>/_authors.yaml` |
@@ -34,6 +34,7 @@ This is the only developer-owned file. It is a normal `BlogUserConfig` / VitePre
 | `srcDir` | Content root; required for automatic locale discovery. |
 | `base` | Public subpath, such as `/blog/`. |
 | `siteUrl` | Absolute public URL; required for sitemap, feeds, canonical, Open Graph and JSON-LD. |
+| `themeConfig.repo` | Source repository; supplies edit-link URLs and repository links. |
 | `head` | External assets and metadata. |
 | `vite`, `markdown`, `sitemap` | Native VitePress/Vite build configuration. |
 | `transformPageData`, `transformHead`, `buildEnd` | Custom lifecycle hooks, executed after theme hooks. |
@@ -46,6 +47,7 @@ export default async () => defineBlogConfig({
   base: process.env.VITEPRESS_BASE || '/',
   siteUrl: process.env.SITE_URL || 'https://example.com',
   themeConfig: {
+    repo: 'https://github.com/acme/my-blog',
     search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
     popularPosts: { enabled: Boolean(process.env.GA_PROPERTY_ID), dataSource: { provider: 'ga4' } },
   },
@@ -56,9 +58,9 @@ export default async () => defineBlogConfig({
 
 This file has one effective root key, `themeConfig`. It is the complete, self-documented reference for safe settings shared by every locale. Use it for the default value; do not duplicate a value in each locale.
 
-`themeConfig` groups are: general (`repo`, `blogTitle`, switches), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml).
+`themeConfig` groups are: general (`blogTitle`, switches, `defaultColorTheme`, `defaultStylePreset`), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml).
 
-Set `repo` here when it is shared by every locale. It automatically supplies
+Set `repo` in `.vitepress/config.ts`. It automatically supplies
 the `editLink.pattern` for GitHub, GitLab, Bitbucket, Gitea, Forgejo and
 Codeberg, using the `main` branch and `src/` directory. Usually a locale only
 needs `editLink.text`; set `editLink.pattern` yourself only when its branch or

@@ -44,10 +44,11 @@ import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { autoLoadSiteLocales } from './loadSiteLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
-import { createConsentHeadScript } from 'vitepress-theme-neptu/configs'
-import {
-  DEFAULT_ADS_IN_CONTENT,
-} from 'vitepress-theme-neptu/utils'
+// Imported from the modules rather than the barrels: the `configs` barrel
+// pulls in the whole server-side config pipeline, and both of these are
+// dependency-free.
+import { createConsentHeadScript } from 'vitepress-theme-neptu/src/configs/consentHeadScript.ts'
+import { DEFAULT_ADS_IN_CONTENT } from 'vitepress-theme-neptu/src/utils/shared/ads.ts'
 import type {
   LandingUserConfig,
   ResolvedLandingConfig,
@@ -130,6 +131,11 @@ export function mergeLandingConfig(
   const baseLocale = (
     siteBaseLocales as unknown as Record<string, { t: Record<string, unknown> }>
   )[baseLocaleKey]
+  const primaryLocaleTheme = (
+    Object.values(config.locales || {})[0] as
+      | { themeConfig?: LandingThemeConfig }
+      | undefined
+  )?.themeConfig
 
   return {
     ...common,
@@ -155,8 +161,12 @@ export function mergeLandingConfig(
         'script',
         {},
         createLandingHeadScript({
-          colorTheme: config.themeConfig?.defaultColorTheme,
-          stylePreset: config.themeConfig?.defaultStylePreset,
+          colorTheme:
+            primaryLocaleTheme?.defaultColorTheme ??
+            config.themeConfig?.defaultColorTheme,
+          stylePreset:
+            primaryLocaleTheme?.defaultStylePreset ??
+            config.themeConfig?.defaultStylePreset,
         }),
       ],
       ...(config.head || []),

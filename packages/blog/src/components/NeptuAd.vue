@@ -25,6 +25,8 @@ const props = withDefaults(
   { placement: 'in-content', index: 0 }
 )
 
+const slots = defineSlots<{ default?: () => unknown }>()
+
 const { theme, frontmatter } = useData<ThemeConfig>()
 const route = useRoute()
 const { adsAllowed } = useConsent()
@@ -45,6 +47,10 @@ const consentOk = computed(
 
 const show = computed(
   () =>
+    // Without a unit to render, the frame would be an empty labelled box.
+    // Slots are placed by config and by the markdown plugin regardless of
+    // whether a site ever wired up an ad network.
+    Boolean(unit.value || slots.default) &&
     isAdsEnabled(theme.value, frontmatter.value as PostFrontmatter) &&
     isPlacementEnabled(ads.value, props.placement) &&
     consentOk.value

@@ -232,7 +232,7 @@ export async function loadBlogLocale(
   })) as Record<string, unknown>
   const { site: sharedSiteSanitized, authors: sharedAuthors, socialShares: sharedSocialShares } =
     stripThemeArrays(sharedSite)
-  const sharedThemeConfig = extractThemeConfig(sharedSiteSanitized)
+  const { repo: _sharedYamlRepo, ...sharedThemeConfig } = extractThemeConfig(sharedSiteSanitized)
 
   const resolvedTheme = deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig)
   const templateParams = {
@@ -248,7 +248,7 @@ export async function loadBlogLocale(
     new Set()
   )
   const site = chain.site
-  const localeThemeConfig = extractThemeConfig(site)
+  const { repo: _localeYamlRepo, ...localeThemeConfig } = extractThemeConfig(site)
   const mergedAuthorsList = mergeAuthorsById(sharedAuthors, chain.authors)
 
   // Merge socialMediaShares in priority order (low→high):

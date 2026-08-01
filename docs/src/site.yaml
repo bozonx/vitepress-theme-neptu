@@ -6,11 +6,11 @@ themeConfig:
   # Demo only: production blogs normally choose one theme and omit the pickers.
   colorPicker: true
   stylePicker: true
-  # GitHub repository URL — used by edit-link auto-generation and `${theme.repo}` template references.
-  repo: 'https://github.com/bozonx/vitepress-theme-neptu'
   donate:
     url: 'page/donate'
   publisher:
+    name: 'Neptu'
+    url: '${config.siteUrl}'
     logo: '/img/sidebar-logo.jpg'
   sidebar:
     popular: true

@@ -101,7 +101,12 @@ useSwipeDrawer({
              it now carries the table of contents as well as the `aside`
              slot, so it can be non-empty without a slot being passed. -->
         <LayoutAside v-if="showAside">
-          <slot v-if="$slots.aside" name="aside" />
+          <!-- Forwarded through a conditional template rather than a bare
+               `<slot v-if>`: the latter would always hand the column a slot
+               function, so an empty one would still read as content. -->
+          <template v-if="$slots.aside" #default>
+            <slot name="aside" />
+          </template>
         </LayoutAside>
       </div>
     </div>

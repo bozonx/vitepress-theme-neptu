@@ -52,6 +52,7 @@ import { autoLoadLocales } from '../utils/node/config.ts'
 import { assertStrictLocaleStructure } from '../utils/node/localeStructure.ts'
 import type {
   BlogUserConfig,
+  LocaleDefinition,
   ThemeConfig,
   SeoConfig,
   I18n,
@@ -207,6 +208,9 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
   const noIndexUrls = new Set<string>()
   const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
   const primaryLocale = resolvePrimaryLocale(config)
+  const primaryThemeConfig = (
+    primaryLocale as (LocaleDefinition & { themeConfig?: Partial<ThemeConfig> }) | undefined
+  )?.themeConfig
 
   return {
     ...common,
@@ -234,8 +238,12 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
         'script',
         {},
         createThemeHeadScript({
-          colorTheme: config.themeConfig?.defaultColorTheme,
-          stylePreset: config.themeConfig?.defaultStylePreset,
+          colorTheme:
+            primaryThemeConfig?.defaultColorTheme ??
+            config.themeConfig?.defaultColorTheme,
+          stylePreset:
+            primaryThemeConfig?.defaultStylePreset ??
+            config.themeConfig?.defaultStylePreset,
         }),
       ],
       ...(config.head || []),
@@ -271,6 +279,11 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     markdown: {
       ...config.markdown,
       image: { lazyLoading: true, ...config.markdown?.image },
+      // Populates `page.headers`, which the table of contents is built from.
+      // VitePress leaves the extraction off unless a theme asks for it. All
+      // levels are collected here and narrowed later by `toc.level`, so
+      // switching that setting needs no rebuild of the config.
+      headers: config.markdown?.headers ?? { level: [2, 3, 4, 5, 6] },
       externalLinks: omitUndefined({
         target: '_blank',
         class: externalLinkIcon ? 'vp-external-link-icon' : undefined,

@@ -42,6 +42,7 @@ export default async () => {
     themeConfig: {
       // Core
       perPage: PER_PAGE,
+      repo: 'https://github.com/bozonx/vitepress-theme-neptu',
 
       // Integrations
       search: {

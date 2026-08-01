@@ -25,13 +25,6 @@ export default async () => {
     themeConfig: {
       repo: 'https://github.com/bozonx/vitepress-theme-neptu',
 
-      // Theme defaults for first-time visitors. The two axes are independent;
-      // the picker remembers the visitor's choice in localStorage.
-      // These must stay in config.ts — they are read before YAML merging
-      // for the inline head script and edit-link auto-generation.
-      defaultColorTheme: 'blue',
-      defaultStylePreset: 'soft',
-
       // The docs half of the template uses the built-in local search.
       search: { provider: 'local' },
     },

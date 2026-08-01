@@ -97,8 +97,11 @@ describe('DefaultLayout aside', () => {
       },
     })
 
-  it('does not reserve the aside column when no aside slot is given', () => {
-    expect(mountLayout().find('.layout-aside-stub').exists()).toBe(false)
+  it('mounts the aside column even without a slot', () => {
+    // The column also carries the table of contents, so it can have content
+    // of its own. Deciding whether it is actually empty is `LayoutAside`'s
+    // job, not the layout's.
+    expect(mountLayout().find('.layout-aside-stub').exists()).toBe(true)
   })
 
   it('renders the aside slot content on a post', () => {

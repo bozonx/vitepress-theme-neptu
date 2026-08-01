@@ -158,7 +158,7 @@ export async function loadSiteLocale(
     theme: sharedThemeBaseForTemplate,
     t: (sharedThemeBaseForTemplate.t as Record<string, unknown> | undefined) ?? {},
   })) as Record<string, unknown>
-  const sharedThemeConfig = extractThemeConfig(sharedSite)
+  const { repo: _sharedYamlRepo, ...sharedThemeConfig } = extractThemeConfig(sharedSite)
 
   const resolvedTheme = deepMerge(
     deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig),
@@ -189,7 +189,7 @@ export async function loadSiteLocale(
     titleTemplate,
     description,
   } = site
-  const localeThemeConfig = extractThemeConfig(site)
+  const { repo: _localeYamlRepo, ...localeThemeConfig } = extractThemeConfig(site)
   const title =
     (rawTitle as string | undefined) ??
     (localeThemeConfig.blogTitle as string | undefined) ??
@@ -198,13 +198,7 @@ export async function loadSiteLocale(
   // ------------------------------------------------------------------
   // Merge themeConfig layers: baseLocale → shared → locale
   // ------------------------------------------------------------------
-  const mergedThemeConfig = deepMerge(
-    deepMerge(
-      (baseLocale.themeConfig || {}) as Record<string, unknown>,
-      sharedThemeConfig
-    ),
-    localeThemeConfig
-  )
+  const mergedThemeConfig = deepMerge(resolvedTheme, localeThemeConfig)
 
   // Process sidebar: template substitution + link prefixing
   const { sidebar: rawSidebar, ...themeConfigRest } = mergedThemeConfig as {

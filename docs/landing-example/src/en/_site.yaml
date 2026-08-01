@@ -5,11 +5,6 @@ title: 'Neptu Landing'
 description: 'A modern landing page theme for VitePress — SEO-first, i18n-ready, fully typed.'
 
 themeConfig:
-  publisher:
-    name: 'Neptu'
-    url: '${config.siteUrl}/${localeIndex}'
-    logo: '${config.siteUrl}/img/home-logo.webp'
-
   # VitePress native sidebar (keyed by section name).
   # Template substitution and locale-prefixing are applied by loadSiteLocale.
   sidebar:

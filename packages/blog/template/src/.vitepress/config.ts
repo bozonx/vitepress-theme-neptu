@@ -123,6 +123,9 @@ export default async () => {
     // Keep this block focused on code-bound, environment-driven settings.
     // -------------------------------------------------------------------------
     themeConfig: {
+      /** Source repository — used to derive edit links and GitHub links. */
+      repo: 'https://github.com/your-username/my-blog',
+
       /** Pagination — must match the `PER_PAGE` constant above (used by paths.js). */
       perPage: PER_PAGE,
 

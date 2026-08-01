@@ -8,9 +8,6 @@ themeConfig:
     text: 'Редактировать эту страницу на GitHub'
   donate:
     postDonateCall: 'Если блог оказался полезным — поддержите его.'
-  publisher:
-    name: '${site.title}'
-    url: '${config.siteUrl}'
   nav:
     links:
       - text: 'Внешняя ссылка'

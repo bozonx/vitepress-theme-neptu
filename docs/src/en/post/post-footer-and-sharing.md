@@ -46,7 +46,7 @@ themeConfig:
 
 Drop any line to hide that block; change the order to rearrange the stack.
 
-Set `themeConfig.repo` once in `src/site.yaml` and the theme derives the edit
+Set `themeConfig.repo` once in `.vitepress/config.ts` and the theme derives the edit
 URL for the supported Git hosts. `editLink.text` only changes the label; use
 `editLink.pattern` solely to override the generated branch or source path.
 

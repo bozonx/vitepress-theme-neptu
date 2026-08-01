@@ -20,7 +20,6 @@
       "description": "Level 2 shared defaults or Level 3 locale overrides. Objects deep-merge; arrays replace; authors merge by id.",
       "properties": {
         "blogTitle": { "type": "string" }, "mainHeroImg": { "type": "string" },
-        "repo": { "type": "string", "description": "Repository URL; also supplies the default edit-link pattern." },
         "twitterSite": { "type": "string" }, "externalLinkIcon": { "type": "boolean" }, "defaultColorTheme": { "type": "string" }, "defaultStylePreset": { "type": "string" }, "colorPicker": { "type": "boolean" }, "stylePicker": { "type": "boolean" }, "i18nRouting": { "type": "boolean" },
         "perPage": false, "sidebarTagsCount": { "type": "integer", "minimum": 0 }, "similarPostsCount": { "type": "integer", "minimum": 0 }, "homeBgParallaxOffset": { "type": "number" }, "paginationMaxItems": { "type": "integer", "minimum": 1 },
         "sidebarLogoSrc": { "type": "string" }, "sidebarLogoHeight": { "type": "integer", "minimum": 1 }, "sidebarMenuLabel": { "type": "string" }, "colorThemeMenuLabel": { "type": "string" }, "langMenuLabel": { "type": "string" },

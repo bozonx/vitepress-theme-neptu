@@ -148,7 +148,9 @@ const ThemeConfigSchema = z
   .looseObject({
     blogTitle: z.string().optional(),
     mainHeroImg: z.string().optional(),
-    repo: z.string().optional(),
+    repo: z.never({
+      error: 'repo is a developer setting — set it in .vitepress/config.ts, not in YAML',
+    }).optional(),
     twitterSite: z.string().optional(),
     externalLinkIcon: z.boolean().optional(),
     defaultColorTheme: z.string().optional(),

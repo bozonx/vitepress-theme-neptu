@@ -61,9 +61,8 @@ themeConfig:
   # Default: true
   # i18nRouting: false
 
-  # GitHub repository URL, used by edit-link and social link placeholders
-  # (e.g. '${theme.repo}' resolves to this value).
-  repo: https://github.com/your-username/my-blog
+  # `repo` is deliberately configured in .vitepress/config.ts: it describes
+  # source-control layout and supplies edit-link URLs.
 
   # Optional visual sidebar title. The canonical browser/SEO/feed title is the
   # top-level `title` in each locale's _site.yaml. Override per-sidebar with
