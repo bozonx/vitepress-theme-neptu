@@ -47,7 +47,7 @@ const showMorePosts = localePosts.length > (theme.value.perPage || 0)
   box-shadow:
     0 8px 20px rgba(0, 0, 0, 0.7),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  border-radius: var(--neptu-radius-lg);
   backdrop-filter: blur(8px);
   transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
   will-change: transform, box-shadow, filter;

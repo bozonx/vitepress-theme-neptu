@@ -42,5 +42,10 @@ export { default as PostTopBar } from './post/PostTopBar.vue'
 export { default as PostVideoLink } from './post/PostVideoLink.vue'
 export { default as PodcastDropdown } from './post/PodcastDropdown.vue'
 export { default as PodcastIcon } from './post/PodcastIcon.vue'
-export { default as SwitchTheme } from './layout-parts/SwitchTheme.vue'
 export { default as SwitchLang } from './layout-parts/SwitchLang.vue'
+
+// Theme controls. Shared with the landing theme, which registers them
+// globally — they carry their own CSS and depend on no Tailwind utility.
+export { default as ColorThemePicker } from './theme/ColorThemePicker.vue'
+export { default as StylePresetPicker } from './theme/StylePresetPicker.vue'
+export { default as SwitchAppearance } from './layout-parts/SwitchAppearance.vue'

@@ -61,7 +61,7 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
       class="flex w-full max-md:flex-col items-center justify-center gap-x-3 gap-y-6 mt-14 home-hero-buttons"
     >
       <li v-for="(item, index) in props.buttons" :key="item.href || index">
-        <NeptuBtn v-bind="item" class="rounded-full! px-7! w-fit" />
+        <NeptuBtn v-bind="item" class="rounded-[var(--neptu-radius-pill)]! px-7! w-fit" />
       </li>
     </ul>
   </div>

@@ -10,7 +10,7 @@ The theme has **two independent axes**:
 | Axis | Attribute | Changes |
 |------|-----------|---------|
 | Color | `data-theme` | Palette: brand color, grays, surfaces |
-| Style | `data-ln-style` | Shape, density, typography, motion |
+| Style | `data-style` | Shape, density, typography, motion |
 
 They combine freely — `teal` + `brutal` is a different looking site from `teal`
 + `soft`, with the same content and the same components. Both are remembered in
@@ -22,21 +22,27 @@ Built-in color themes: `blue`, `green`, `purple`, `amber`, `teal`, `rose`,
 and a blog on the same domain stay consistent.
 
 Built-in style presets: `soft` (default), `sharp`, `brutal`, `glass`,
-`editorial`.
+`editorial`, `mono`. The presets are shared with the blog theme: one file,
+`vitepress-theme-neptu/style-presets.css`, dresses both packages, so a landing
+and a blog on the same domain read as one site.
 
 Set the defaults in your config:
 
 ```ts
 themeConfig: {
   defaultColorTheme: 'teal',
-  defaultLandingStyle: 'editorial',
+  defaultStylePreset: 'editorial',
 }
 ```
 
 Production sites normally choose one combination and keep it fixed. Theme
 pickers are disabled by default and intended for demos like this one. Enable
-them explicitly with `themePicker: true`; otherwise `<LnThemePicker>` renders
-nothing.
+each explicitly — `colorPicker: true` and `stylePicker: true`; without the flag
+`<ColorThemePicker>` and `<StylePresetPicker>` render nothing.
+
+The controls themselves live in the blog package and are used by both themes —
+import them from either `vitepress-theme-neptu-landing/components` or
+`vitepress-theme-neptu/components`.
 
 ## The token layers
 
@@ -92,7 +98,7 @@ Custom ids are not added to the built-in demo picker automatically.
 A style preset touches shape, density and motion — never colors:
 
 ```css
-[data-ln-style='compact'] {
+[data-style='compact'] {
   --ln-radius-lg: 0.5rem;
   --ln-section-py: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
   --ln-card-padding: 1rem;
@@ -100,6 +106,12 @@ A style preset touches shape, density and motion — never colors:
   --ln-card-shadow: none;
 }
 ```
+
+If the preset should work in the blog theme too, set the shared `--neptu-*`
+tokens instead of `--ln-*`. That is how the built-ins are written: they name no
+color at all, reading the bridge tokens (`--neptu-c-ink`, `--neptu-c-surface`,
+`--neptu-shadow-*`, …) that each package defines for its own palette. The
+contract is documented at the top of `vitepress-theme-neptu/style-presets.css`.
 
 Both examples live in `.vitepress/theme/styles.css` of this demo site.
 

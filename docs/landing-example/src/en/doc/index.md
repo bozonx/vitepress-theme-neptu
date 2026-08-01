@@ -44,8 +44,9 @@ export default async () => {
     themeConfig: {
       logo: '/img/logo.svg',
       defaultColorTheme: 'blue',
-      defaultLandingStyle: 'soft',
-      themePicker: false, // enable only for a demo picker
+      defaultStylePreset: 'soft',
+      colorPicker: false, // enable only for a demo picker
+      stylePicker: false,
       search: { provider: 'local' },
     },
   }

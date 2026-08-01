@@ -46,9 +46,16 @@ themeConfig:
   # Default: true
   externalLinkIcon: true
 
-  # Show a light/dark theme switcher button in the navbar.
-  # Default: false (hidden)
-  # themeSwitcher: true
+  # Color theme and shape preset applied to first-time visitors.
+  # Colors: blue | green | purple | amber | teal | rose | magenta | monochrome
+  # Styles: soft | sharp | brutal | glass | editorial | mono
+  # defaultColorTheme: 'blue'
+  # defaultStylePreset: 'soft'
+
+  # Let readers switch the theme themselves. Both default to false — a site
+  # normally ships one chosen theme and these are demo controls.
+  # colorPicker: true
+  # stylePicker: true
 
   # When true, routes users to their-language version of a page if available.
   # Default: true

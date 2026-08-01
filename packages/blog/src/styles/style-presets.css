@@ -1,0 +1,241 @@
+/**
+ * Style presets — the shape axis of the theme, shared by the blog and the
+ * landing package.
+ *
+ * A color theme (`data-theme`) swaps the palette; a style preset
+ * (`data-style`) swaps shape, density, typography and motion. The two combine
+ * freely: `data-theme="teal" data-style="brutal"` is a different looking site
+ * from `data-theme="teal" data-style="soft"`.
+ *
+ * `soft` is the built-in default and needs no attribute — the `:root` block
+ * below carries the same values.
+ *
+ * ## The bridge contract
+ *
+ * A preset must stay palette-agnostic so the same file can dress two packages
+ * with two different color systems. It therefore never names a color: it only
+ * reads the bridge tokens that each package is required to define in its own
+ * vars file (`blog-vars.css`, `landing-vars.css`):
+ *
+ *   --neptu-c-ink            strongest text color
+ *   --neptu-c-page           page background
+ *   --neptu-c-surface        elevated surface background
+ *   --neptu-c-accent         brand color
+ *   --neptu-c-border-base    default border color of the package
+ *   --neptu-c-border-strong-base
+ *   --neptu-shadow-1/2/3     elevation ramp of the package
+ *   --neptu-card-bg-base     default card background of the package
+ *   --neptu-btn-weight-base  default button font-weight of the package
+ *   --neptu-font-body-base   default body font of the package
+ *   --neptu-font-display-base
+ *   --neptu-font-mono
+ *   --neptu-body-lh-base     default body line-height of the package
+ *
+ * Every preset assigns the full output set below, including the tokens it does
+ * not change — a preset that left one out would inherit it from whichever
+ * preset was applied before, since all of them target the same `<html>`.
+ */
+
+:root,
+[data-style='soft'] {
+  --neptu-radius-xs: 0.375rem;
+  --neptu-radius-sm: 0.5rem;
+  --neptu-radius-md: 0.75rem;
+  --neptu-radius-lg: 1.25rem;
+  --neptu-radius-pill: 999px;
+  --neptu-border-width: 1px;
+  --neptu-c-border: var(--neptu-c-border-base);
+  --neptu-c-border-strong: var(--neptu-c-border-strong-base);
+
+  --neptu-card-bg: var(--neptu-card-bg-base);
+  --neptu-card-border-color: var(--neptu-c-border-base);
+  --neptu-card-shadow: var(--neptu-shadow-1);
+  --neptu-card-shadow-hover: var(--neptu-shadow-2);
+  --neptu-card-backdrop: none;
+
+  --neptu-btn-radius: var(--neptu-radius-pill);
+  --neptu-btn-weight: var(--neptu-btn-weight-base);
+  --neptu-btn-tracking: 0;
+  --neptu-btn-transform: none;
+  --neptu-btn-shadow: none;
+
+  --neptu-font-body: var(--neptu-font-body-base);
+  --neptu-font-display: var(--neptu-font-display-base);
+  --neptu-heading-weight: 700;
+  --neptu-heading-tracking: -0.02em;
+  --neptu-heading-lh: 1.12;
+  --neptu-body-lh: var(--neptu-body-lh-base);
+
+  --neptu-lift: -3px;
+}
+
+[data-style='sharp'] {
+  --neptu-radius-xs: 0;
+  --neptu-radius-sm: 0;
+  --neptu-radius-md: 0;
+  --neptu-radius-lg: 0;
+  --neptu-radius-pill: 0;
+  --neptu-border-width: 1px;
+  --neptu-c-border: var(--neptu-c-border-base);
+  --neptu-c-border-strong: var(--neptu-c-border-strong-base);
+
+  --neptu-card-bg: var(--neptu-card-bg-base);
+  --neptu-card-border-color: var(--neptu-c-border-base);
+  --neptu-card-shadow: none;
+  --neptu-card-shadow-hover: var(--neptu-shadow-1);
+  --neptu-card-backdrop: none;
+
+  --neptu-btn-radius: 0;
+  --neptu-btn-weight: 500;
+  --neptu-btn-tracking: 0;
+  --neptu-btn-transform: none;
+  --neptu-btn-shadow: none;
+
+  --neptu-font-body: var(--neptu-font-body-base);
+  --neptu-font-display: var(--neptu-font-display-base);
+  --neptu-heading-weight: 700;
+  --neptu-heading-tracking: -0.03em;
+  --neptu-heading-lh: 1.12;
+  --neptu-body-lh: var(--neptu-body-lh-base);
+
+  --neptu-lift: 0px;
+}
+
+[data-style='brutal'] {
+  --neptu-radius-xs: 0;
+  --neptu-radius-sm: 0;
+  --neptu-radius-md: 0;
+  --neptu-radius-lg: 0;
+  --neptu-radius-pill: 0;
+  --neptu-border-width: 2px;
+  --neptu-c-border: var(--neptu-c-ink);
+  --neptu-c-border-strong: var(--neptu-c-ink);
+
+  --neptu-card-bg: var(--neptu-c-page);
+  --neptu-card-border-color: var(--neptu-c-ink);
+  --neptu-card-shadow: 4px 4px 0 var(--neptu-c-ink);
+  --neptu-card-shadow-hover: 7px 7px 0 var(--neptu-c-accent);
+  --neptu-card-backdrop: none;
+
+  --neptu-btn-radius: 0;
+  --neptu-btn-weight: 800;
+  --neptu-btn-tracking: 0.04em;
+  --neptu-btn-transform: uppercase;
+  --neptu-btn-shadow: 3px 3px 0 var(--neptu-c-ink);
+
+  --neptu-font-body: var(--neptu-font-body-base);
+  --neptu-font-display: var(--neptu-font-display-base);
+  --neptu-heading-weight: 900;
+  --neptu-heading-tracking: -0.04em;
+  --neptu-heading-lh: 1.1;
+  --neptu-body-lh: var(--neptu-body-lh-base);
+
+  --neptu-lift: -2px;
+}
+
+[data-style='glass'] {
+  --neptu-radius-xs: 0.5rem;
+  --neptu-radius-sm: 0.75rem;
+  --neptu-radius-md: 1rem;
+  --neptu-radius-lg: 1.75rem;
+  --neptu-radius-pill: 999px;
+  --neptu-border-width: 1px;
+  --neptu-c-border: color-mix(in srgb, var(--neptu-c-ink) 12%, transparent);
+  --neptu-c-border-strong: color-mix(in srgb, var(--neptu-c-ink) 22%, transparent);
+
+  --neptu-card-bg: color-mix(in srgb, var(--neptu-c-surface) 62%, transparent);
+  --neptu-card-border-color: color-mix(in srgb, var(--neptu-c-ink) 12%, transparent);
+  --neptu-card-shadow: var(--neptu-shadow-2);
+  --neptu-card-shadow-hover: var(--neptu-shadow-3);
+  --neptu-card-backdrop: blur(14px) saturate(150%);
+
+  --neptu-btn-radius: var(--neptu-radius-pill);
+  --neptu-btn-weight: var(--neptu-btn-weight-base);
+  --neptu-btn-tracking: 0;
+  --neptu-btn-transform: none;
+  --neptu-btn-shadow: none;
+
+  --neptu-font-body: var(--neptu-font-body-base);
+  --neptu-font-display: var(--neptu-font-display-base);
+  --neptu-heading-weight: 600;
+  --neptu-heading-tracking: -0.03em;
+  --neptu-heading-lh: 1.14;
+  --neptu-body-lh: var(--neptu-body-lh-base);
+
+  --neptu-lift: -3px;
+}
+
+[data-style='editorial'] {
+  --neptu-radius-xs: 0.125rem;
+  --neptu-radius-sm: 0.25rem;
+  --neptu-radius-md: 0.375rem;
+  --neptu-radius-lg: 0.5rem;
+  --neptu-radius-pill: 0.25rem;
+  --neptu-border-width: 1px;
+  --neptu-c-border: var(--neptu-c-border-base);
+  --neptu-c-border-strong: var(--neptu-c-border-strong-base);
+
+  --neptu-card-bg: transparent;
+  --neptu-card-border-color: transparent;
+  --neptu-card-shadow: none;
+  --neptu-card-shadow-hover: none;
+  --neptu-card-backdrop: none;
+
+  --neptu-btn-radius: 0.25rem;
+  --neptu-btn-weight: 500;
+  --neptu-btn-tracking: 0;
+  --neptu-btn-transform: none;
+  --neptu-btn-shadow: none;
+
+  --neptu-font-body: var(--neptu-font-body-base);
+  --neptu-font-display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --neptu-heading-weight: 600;
+  --neptu-heading-tracking: -0.01em;
+  --neptu-heading-lh: 1.18;
+  --neptu-body-lh: 1.75;
+
+  --neptu-lift: 0px;
+}
+
+/**
+ * The one preset that changes the *body* font, not just the headings. Reads as
+ * a terminal: monospace throughout, hairline radii, hairline borders, no
+ * elevation at all.
+ */
+[data-style='mono'] {
+  --neptu-radius-xs: 0;
+  --neptu-radius-sm: 0.125rem;
+  --neptu-radius-md: 0.25rem;
+  --neptu-radius-lg: 0.25rem;
+  --neptu-radius-pill: 0.25rem;
+  --neptu-border-width: 1px;
+  --neptu-c-border: color-mix(in srgb, var(--neptu-c-ink) 32%, transparent);
+  --neptu-c-border-strong: color-mix(in srgb, var(--neptu-c-ink) 48%, transparent);
+
+  --neptu-card-bg: var(--neptu-card-bg-base);
+  --neptu-card-border-color: color-mix(in srgb, var(--neptu-c-ink) 24%, transparent);
+  --neptu-card-shadow: none;
+  --neptu-card-shadow-hover: none;
+  --neptu-card-backdrop: none;
+
+  --neptu-btn-radius: 0.25rem;
+  --neptu-btn-weight: 600;
+  --neptu-btn-tracking: 0.02em;
+  --neptu-btn-transform: none;
+  --neptu-btn-shadow: none;
+
+  --neptu-font-body: var(--neptu-font-mono);
+  --neptu-font-display: var(--neptu-font-mono);
+  --neptu-heading-weight: 600;
+  --neptu-heading-tracking: 0;
+  --neptu-heading-lh: 1.25;
+  --neptu-body-lh: 1.7;
+
+  --neptu-lift: 0px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --neptu-lift: 0px;
+  }
+}

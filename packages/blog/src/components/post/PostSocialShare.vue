@@ -49,7 +49,7 @@ const items = computed<ShareItem[]>(() => {
           target="_blank"
           rel="nofollow noopener"
           :class="[
-            'social-btn hover-animation-rise inline-flex items-center justify-center w-12 h-12 rounded-lg no-underline transition-transform duration-200 ease-in-out hover:-translate-y-0.5 hover:filter-none will-change-[transform]',
+            'social-btn hover-animation-rise inline-flex items-center justify-center w-12 h-12 rounded-[var(--neptu-radius-sm)] no-underline transition-transform duration-200 ease-in-out hover:-translate-y-0.5 hover:filter-none will-change-[transform]',
             item.class,
           ]"
         >

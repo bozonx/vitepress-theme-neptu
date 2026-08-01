@@ -289,7 +289,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="audio-file rounded-xl mb-[0.325rem] transition-all duration-200"
+    class="audio-file rounded-[var(--neptu-radius-md)] mb-[0.325rem] transition-all duration-200"
     :class="props.containerClass"
     role="region"
     :aria-label="`${theme.t.audioFile.audioFile}: ${downloadFilename}`"
@@ -312,7 +312,7 @@ onUnmounted(() => {
     <!-- Header row: icon + filename + buttons -->
     <div class="file-header flex items-center gap-3 px-4 py-3">
       <!-- Music icon badge -->
-      <div class="file-icon flex items-center justify-center w-9 h-9 rounded-lg shrink-0">
+      <div class="file-icon flex items-center justify-center w-9 h-9 rounded-[var(--neptu-radius-sm)] shrink-0">
         <Icon icon="mdi:music-note" class="text-xl" aria-hidden="true" />
       </div>
 
@@ -456,7 +456,7 @@ onUnmounted(() => {
     <!-- Error message -->
     <div
       v-if="hasError"
-      class="error-message flex items-center gap-2 mx-4 mb-3 px-3 py-2 rounded-lg text-sm"
+      class="error-message flex items-center gap-2 mx-4 mb-3 px-3 py-2 rounded-[var(--neptu-radius-sm)] text-sm"
       role="alert"
       aria-live="polite"
     >

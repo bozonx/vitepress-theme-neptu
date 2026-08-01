@@ -62,7 +62,7 @@ const btnProps = computed(() => {
   <BaseLink
     v-bind="btnProps"
     :custom-class="[
-      'flex cursor-pointer items-center rounded-lg leading-6',
+      'flex cursor-pointer items-center leading-6',
       hasText ? 'py-2 px-5' : 'p-3',
       'btn-base',
       btnProps.disabled && 'disabled',
@@ -99,6 +99,13 @@ const btnProps = computed(() => {
 .btn-base {
   background: var(--btn-bg);
   color: var(--btn-text);
+  /* Shape and weight come from the active style preset. The blog keeps its own
+     `sm` radius here rather than `--neptu-btn-radius`: the landing's pill is a
+     marketing look, out of place on a text-first UI. */
+  border-radius: var(--neptu-radius-sm);
+  font-weight: var(--neptu-btn-weight);
+  letter-spacing: var(--neptu-btn-tracking);
+  text-transform: var(--neptu-btn-transform);
   will-change: transform, box-shadow, filter;
   transition:
     transform 0.2s ease,
@@ -107,13 +114,12 @@ const btnProps = computed(() => {
 }
 
 .btn-base:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--neptu-lift));
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
   filter: brightness(97%);
 }
 
 .dark .btn-base:hover {
-  transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   filter: brightness(110%);
 }
@@ -123,13 +129,11 @@ const btnProps = computed(() => {
 }
 
 .btn-base.btn--nobg:hover {
-  transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   background: var(--btn-bg);
 }
 
 .dark .btn-base.btn--nobg:hover {
-  transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

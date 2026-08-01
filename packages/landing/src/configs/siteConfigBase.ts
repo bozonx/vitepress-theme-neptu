@@ -59,7 +59,10 @@ const commonThemeConfig = {
   externalLinkIcon: true,
   i18nRouting: true,
   mainHeroImg: '/img/home-logo.webp',
-  themePicker: false,
+  // Demo controls. A production site ships one theme via
+  // `defaultColorTheme` / `defaultStylePreset` instead.
+  colorPicker: false,
+  stylePicker: false,
   seo: {
     maxDescriptionLength: 300,
     autoCanonical: true,
@@ -116,7 +119,7 @@ export function mergeLandingConfig(
         {},
         createLandingHeadScript({
           colorTheme: config.themeConfig?.defaultColorTheme,
-          landingStyle: config.themeConfig?.defaultLandingStyle,
+          stylePreset: config.themeConfig?.defaultStylePreset,
         }),
       ],
       ...(config.head || []),

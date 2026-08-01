@@ -196,7 +196,7 @@ onUnmounted(() => {
       role="menu"
       :style="{ opacity, 'transition-duration': `${animationTimeMs}ms` }"
       :class="[
-        `dropdown-list list-none m-0 space-y-1 transition-opacity will-change-[opacity] absolute z-100 min-w-[100px] py-[0.4rem] rounded-lg mt-[1px] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.3)] dark:shadow-[0px_8px_16px_0px_rgba(0,0,0,0.5)] bg-[var(--dropdown-list-bg)]`,
+        `dropdown-list list-none m-0 space-y-1 transition-opacity will-change-[opacity] absolute z-100 min-w-[100px] py-[0.4rem] rounded-[var(--neptu-radius-sm)] mt-[1px] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.3)] dark:shadow-[0px_8px_16px_0px_rgba(0,0,0,0.5)] bg-[var(--dropdown-list-bg)]`,
         dropUp && 'dropdown--drop-up bottom-full',
         dropLeft && 'dropdown--drop-left right-0',
         !listOpen && 'hidden',

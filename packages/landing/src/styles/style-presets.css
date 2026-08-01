@@ -1,94 +1,21 @@
 /**
- * Style presets — the second, color-independent axis of the theme.
+ * Landing-only additions to the shared style presets.
  *
- * A color theme (`data-theme`) swaps the palette; a style preset
- * (`data-ln-style`) swaps shape, density, typography and motion. The two
- * combine freely: `data-theme="teal" data-ln-style="brutal"` is a different
- * looking site from `data-theme="teal" data-ln-style="soft"`.
+ * The shape axis itself lives in `vitepress-theme-neptu/style-presets.css` and
+ * is shared with the blog theme; `landing-vars.css` maps its `--neptu-*`
+ * output onto the `--ln-*` tokens the blocks consume. Only tokens that have no
+ * blog counterpart — page rhythm and the display type scale — belong here.
  *
- * `soft` is the built-in default and needs no attribute.
+ * Loaded after the shared file, so these rules win on equal specificity.
  */
 
-[data-ln-style='soft'] {
-  --ln-radius-xs: 0.375rem;
-  --ln-radius-sm: 0.625rem;
-  --ln-radius-md: 1rem;
-  --ln-radius-lg: 1.5rem;
-  --ln-border-width: 1px;
-  --ln-btn-radius: var(--ln-radius-pill);
-  --ln-card-shadow: var(--ln-shadow-1);
-  --ln-card-shadow-hover: var(--ln-shadow-2);
-  --ln-heading-tracking: -0.02em;
-}
-
-[data-ln-style='sharp'] {
-  --ln-radius-xs: 0;
-  --ln-radius-sm: 0;
-  --ln-radius-md: 0;
-  --ln-radius-lg: 0;
-  --ln-radius-pill: 0;
-  --ln-border-width: 1px;
-  --ln-btn-radius: 0;
-  --ln-card-shadow: none;
-  --ln-card-shadow-hover: var(--ln-shadow-1);
-  --ln-heading-tracking: -0.03em;
-  --ln-btn-weight: 500;
-  --ln-lift: 0px;
-}
-
-[data-ln-style='brutal'] {
-  --ln-radius-xs: 0;
-  --ln-radius-sm: 0;
-  --ln-radius-md: 0;
-  --ln-radius-lg: 0;
-  --ln-radius-pill: 0;
-  --ln-border-width: 2px;
-  --ln-btn-radius: 0;
-  --ln-btn-weight: 800;
-  --ln-btn-tracking: 0.04em;
-  --ln-btn-uppercase: uppercase;
-  --ln-c-border: var(--ln-c-text-1);
-  --ln-c-border-strong: var(--ln-c-text-1);
-  --ln-card-bg: var(--ln-c-bg);
-  --ln-card-shadow: 4px 4px 0 var(--ln-c-text-1);
-  --ln-card-shadow-hover: 7px 7px 0 var(--ln-c-brand);
-  --ln-btn-shadow: 3px 3px 0 var(--ln-c-text-1);
-  --ln-heading-weight: 900;
-  --ln-heading-tracking: -0.04em;
-  --ln-lift: -2px;
-}
-
-[data-ln-style='glass'] {
-  --ln-radius-md: 1rem;
-  --ln-radius-lg: 1.75rem;
-  --ln-border-width: 1px;
-  --ln-card-bg: color-mix(in srgb, var(--ln-c-bg-elevated) 62%, transparent);
-  --ln-card-border-color: color-mix(in srgb, var(--ln-c-text-1) 12%, transparent);
-  --ln-card-shadow: var(--ln-shadow-2);
-  --ln-card-shadow-hover: var(--ln-shadow-3);
-  --ln-card-backdrop: blur(14px) saturate(150%);
-  --ln-heading-weight: 600;
-  --ln-heading-tracking: -0.03em;
-}
-
-[data-ln-style='editorial'] {
-  --ln-radius-xs: 0.125rem;
-  --ln-radius-sm: 0.25rem;
-  --ln-radius-md: 0.375rem;
-  --ln-radius-lg: 0.5rem;
-  --ln-radius-pill: 0.25rem;
-  --ln-btn-radius: 0.25rem;
-  --ln-font-display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
-  --ln-heading-weight: 600;
-  --ln-heading-tracking: -0.01em;
-  --ln-heading-lh: 1.18;
+[data-style='editorial'] {
   --ln-h1-size: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
-  --ln-body-lh: 1.75;
-  --ln-card-bg: transparent;
-  --ln-card-shadow: none;
-  --ln-card-shadow-hover: none;
-  --ln-card-border-color: transparent;
   --ln-section-py: clamp(4rem, 2.5rem + 6vw, 8.5rem);
-  --ln-btn-weight: 500;
-  --ln-lift: 0px;
+}
+
+[data-style='mono'] {
+  --ln-h1-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --ln-h2-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --ln-eyebrow-size: 0.75rem;
 }

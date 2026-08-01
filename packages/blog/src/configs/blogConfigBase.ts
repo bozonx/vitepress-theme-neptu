@@ -19,6 +19,7 @@ import {
   resolveExternalLinkIcon,
 } from '../utils/shared/configHelpers.ts'
 import blogBaseLocales from './blogLocalesBase/index.ts'
+import { createThemeHeadScript } from './headScript.ts'
 import { addJsonLd } from '../transformers/addJsonLd.ts'
 import { addHreflang } from '../transformers/addHreflang.ts'
 import { addOgMetaTags } from '../transformers/addOgMetaTags.ts'
@@ -70,6 +71,11 @@ type ResolvedBlogConfig = BlogUserConfig & {
 
 const commonThemeConfig = {
   externalLinkIcon: true,
+
+  // Both theme pickers are demo controls. A production blog ships one chosen
+  // theme via `defaultColorTheme` / `defaultStylePreset` instead.
+  colorPicker: false,
+  stylePicker: false,
 
   perPage: 10,
   sidebarTagsCount: 15,
@@ -172,7 +178,20 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     title: config.title || config.en?.title || primaryLocale?.title,
     description:
       config.description || config.en?.description || primaryLocale?.description,
-    head: [...(common.head || []), ...(config.head || [])],
+    head: [
+      ...(common.head || []),
+      // Restores both theme axes before the first paint. Must run inline,
+      // before any stylesheet is applied.
+      [
+        'script',
+        {},
+        createThemeHeadScript({
+          colorTheme: config.themeConfig?.defaultColorTheme,
+          stylePreset: config.themeConfig?.defaultStylePreset,
+        }),
+      ],
+      ...(config.head || []),
+    ],
     // Keep the locale identity fields native. VitePress already uses `title`
     // as the default suffix and avoids duplicating it on a home page; creating
     // `:title | ${locale.title}` here defeats that behaviour.

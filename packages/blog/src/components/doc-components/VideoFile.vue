@@ -73,7 +73,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="video-file flex flex-col rounded-xl mb-[0.325rem]"
+    class="video-file flex flex-col rounded-[var(--neptu-radius-md)] mb-[0.325rem]"
     :class="props.containerClass"
     role="region"
     :aria-label="`${theme.t.videoFile.videoFile}: ${downloadFilename}`"
@@ -81,7 +81,7 @@ onUnmounted(() => {
     <!-- Header: filename + download button -->
     <div class="file-header flex items-center gap-3 px-4 py-3">
       <div class="file-info flex gap-3 min-w-0 flex-1">
-        <div class="video-file-icon flex items-center justify-center w-10 h-10 rounded-lg shrink-0">
+        <div class="video-file-icon flex items-center justify-center w-10 h-10 rounded-[var(--neptu-radius-sm)] shrink-0">
           <Icon icon="mdi:file-video" class="text-xl" aria-hidden="true" />
         </div>
         <div class="video-file-info flex-1 min-w-0 flex flex-col justify-center">
@@ -106,7 +106,7 @@ onUnmounted(() => {
     <div v-if="!hasError" class="video-wrapper px-4 pb-4">
       <video
         ref="videoRef"
-        class="video-element w-full rounded-lg"
+        class="video-element w-full rounded-[var(--neptu-radius-sm)]"
         :src="mediaUrl"
         controls
         preload="metadata"
@@ -116,7 +116,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Error -->
-    <div v-else class="error-message flex items-center gap-2 mx-4 mb-4 px-4 py-3 rounded-md text-sm" role="alert">
+    <div v-else class="error-message flex items-center gap-2 mx-4 mb-4 px-4 py-3 rounded-[var(--neptu-radius-xs)] text-sm" role="alert">
       <Icon icon="mdi:alert-circle" aria-hidden="true" />
       <span>{{ errorMessage || theme.t.videoFile.errorLoadingVideoFile }}</span>
       <NeptuBtn

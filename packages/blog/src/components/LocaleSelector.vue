@@ -124,7 +124,7 @@ onMounted(async () => {
   padding: clamp(1.5rem, 5vw, 3.25rem);
   background: color-mix(in srgb, var(--vp-c-bg, #fff) 82%, transparent);
   border: 1px solid color-mix(in srgb, var(--vp-c-divider, #e2e2e3) 82%, transparent);
-  border-radius: 1.5rem;
+  border-radius: var(--neptu-radius-lg);
   box-shadow: 0 1.5rem 5rem color-mix(in srgb, #000 16%, transparent);
   backdrop-filter: blur(18px);
 }
@@ -166,7 +166,7 @@ onMounted(async () => {
   text-decoration: none;
   background: color-mix(in srgb, var(--vp-c-bg-soft, #f6f6f7) 86%, transparent);
   border: 1px solid var(--vp-c-divider, #e2e2e3);
-  border-radius: 0.9rem;
+  border-radius: var(--neptu-radius-md);
   transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
@@ -263,7 +263,7 @@ onMounted(async () => {
 @media (max-width: 32rem) {
   .locale-selector__panel {
     padding: 1.35rem;
-    border-radius: 1.1rem;
+    border-radius: var(--neptu-radius-md);
   }
 }
 

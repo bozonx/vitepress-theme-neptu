@@ -22,7 +22,7 @@ interface Props {
 const props = defineProps<Props>()
 const href = `tags/${props.slug}/1`
 const className =
-  'text-center rounded-full text-lg py-1 px-4 ' +
+  'text-center rounded-[var(--neptu-radius-pill)] text-lg py-1 px-4 ' +
   'justify-center inline-flex space-x-2 items-center text-white ' +
   'transition-transform duration-200 ease-[ease] hover:-translate-y-0.5 will-change-[transform] ' +
   (props.sizeXl ? `text-xl ` : '') +

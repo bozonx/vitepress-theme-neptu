@@ -14,6 +14,9 @@ import './styles/vendor/vp-icons.css'
 import './styles/search-modal.css'
 import './styles/blog-vars.css'
 import './styles/themes/theme-presets.css'
+// Shape axis (`data-style`). After the vars so its `[data-style]` rules win
+// over the `:root` defaults on equal specificity.
+import './styles/style-presets.css'
 import './styles/blog-styles.css'
 
 import type { EnhanceAppContext } from 'vitepress'

@@ -164,8 +164,8 @@ test('color picker switches the palette and persists it', async ({ page }) => {
 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'blue')
 
-  await page.locator('.ln-picker__btn').first().click()
-  await page.locator('.ln-picker__menu .ln-picker__item', { hasText: 'Rose' }).click()
+  await page.locator('.neptu-picker__btn').first().click()
+  await page.locator('.neptu-picker__menu .neptu-picker__item', { hasText: 'Rose' }).click()
 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'rose')
 
@@ -176,10 +176,10 @@ test('color picker switches the palette and persists it', async ({ page }) => {
 test('style picker switches the style preset independently', async ({ page }) => {
   await page.goto('en/', { waitUntil: 'domcontentloaded' })
 
-  await page.locator('.ln-picker__btn').nth(1).click()
-  await page.locator('.ln-picker__menu .ln-picker__item', { hasText: 'Brutal' }).click()
+  await page.locator('.neptu-picker__btn').nth(1).click()
+  await page.locator('.neptu-picker__menu .neptu-picker__item', { hasText: 'Brutal' }).click()
 
-  await expect(page.locator('html')).toHaveAttribute('data-ln-style', 'brutal')
+  await expect(page.locator('html')).toHaveAttribute('data-style', 'brutal')
   // The color axis is untouched by a style change.
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'blue')
 })

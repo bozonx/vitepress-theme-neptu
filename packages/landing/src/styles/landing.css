@@ -19,7 +19,10 @@
 /* Layer 2 — semantic `--ln-*` tokens. */
 @import './landing-vars.css';
 
-/* Layer 3 — `[data-ln-style="..."]` shape/density presets. */
+/* Layer 3 — `[data-style="..."]` shape presets, shared with the blog theme. */
+@import 'vitepress-theme-neptu/style-presets.css';
+
+/* Layer 3b — landing-only preset overrides (page rhythm, display type scale). */
 @import './style-presets.css';
 
 /* Layer 4 — feed the tokens into the VitePress default theme. */

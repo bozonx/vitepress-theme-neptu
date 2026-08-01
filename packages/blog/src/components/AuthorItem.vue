@@ -26,7 +26,7 @@ const { theme } = useUiTheme()
           :alt="props.item.name"
           loading="lazy"
           decoding="async"
-          class="card-item-img w-full h-auto rounded-[0.3125rem]"
+          class="card-item-img w-full h-auto rounded-[var(--neptu-radius-xs)]"
         />
       </div>
 

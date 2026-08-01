@@ -3,6 +3,31 @@
   --link-hue: 232;
   --visited-hue: 287;
 
+  /**
+   * Bridge into the shared style presets (`style-presets.css`).
+   *
+   * A preset never names a color of its own — it reads these tokens. Point
+   * them at your palette and every preset follows. See the contract comment
+   * at the top of `style-presets.css`.
+   */
+  --neptu-c-ink: var(--gray-800);
+  --neptu-c-page: var(--gray-50);
+  --neptu-c-surface: var(--gray-50);
+  --neptu-c-accent: var(--primary-btn-bg);
+  --neptu-c-border-base: var(--gray-200);
+  --neptu-c-border-strong-base: var(--gray-300);
+  --neptu-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --neptu-shadow-2: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --neptu-shadow-3: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --neptu-card-bg-base: rgba(0, 0, 0, 0.005);
+  --neptu-font-body-base: var(--font-body);
+  --neptu-font-display-base: var(--font-body);
+  --neptu-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+  --neptu-body-lh-base: var(--body-line-height);
+  /* The blog's buttons inherit body weight; the landing's are 600. */
+  --neptu-btn-weight-base: inherit;
+
   /**** SimpleLink */
   --link-a-text: hsl(var(--link-hue), 74%, 44%);
   --link-a-visited: hsl(var(--visited-hue) 50%, 44%);
@@ -73,6 +98,17 @@
 
 .dark {
   /* --primary-btn-bg: hsl(var(--primary-hue), 80%, 40%); */
+
+  /**** Style-preset bridge — see the :root block above. */
+  --neptu-c-ink: var(--gray-200);
+  --neptu-c-page: var(--gray-900);
+  --neptu-c-surface: var(--gray-850);
+  --neptu-c-border-base: var(--gray-800);
+  --neptu-c-border-strong-base: var(--gray-700);
+  --neptu-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --neptu-shadow-2: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --neptu-shadow-3: 0 8px 16px rgba(0, 0, 0, 0.6);
+  --neptu-card-bg-base: rgba(255, 255, 255, 0.03);
 
   /**** SimpleLink */
   --link-a-text: hsl(var(--link-hue), 100%, 76%);

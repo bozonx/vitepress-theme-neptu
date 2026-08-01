@@ -89,6 +89,7 @@
     "./magenta-theme.css": "./src/styles/themes/magenta.css",
     "./monochrome-theme.css": "./src/styles/themes/monochrome.css",
     "./theme-presets.css": "./src/styles/themes/theme-presets.css",
+    "./style-presets.css": "./src/styles/style-presets.css",
     "./pagefind-fix.css": "./src/styles/vendor/pagefind-fix.css",
     "./search-modal.css": "./src/styles/search-modal.css",
     "./configs/sharedLocalesBase/en": {

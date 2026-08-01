@@ -14,7 +14,7 @@ and color palettes.
 ## What it adds
 
 - **Block library**: twenty-four sections and eleven primitives, one prop contract
-- **Two theme axes**: color (`data-theme`) and style (`data-ln-style`), switchable at runtime
+- **Two theme axes**: color (`data-theme`) and style (`data-style`), switchable at runtime
 - **Declarative pages**: describe a landing in YAML and render it with one component
 - **SEO-first**: Open Graph, JSON-LD, canonical links, hreflang and sitemap
 - **i18n-ready**: locale folders with YAML config layers and template substitution

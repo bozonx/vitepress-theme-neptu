@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import NeptuBtn from '../NeptuBtn.vue'
 import SwitchAppearance from './SwitchAppearance.vue'
-import SwitchTheme from './SwitchTheme.vue'
+import ColorThemePicker from '../theme/ColorThemePicker.vue'
+import StylePresetPicker from '../theme/StylePresetPicker.vue'
 import SwitchLang from './SwitchLang.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import { computed } from 'vue'
@@ -88,9 +89,9 @@ const socialLinks = computed<LinkItem[]>(() =>
       <SwitchAppearance />
     </div>
 
-    <div v-if="theme.themeSwitcher">
-      <SwitchTheme :no-bg="true" />
-    </div>
+    <!-- Both pickers gate themselves on their own themeConfig flag. -->
+    <ColorThemePicker />
+    <StylePresetPicker />
 
     <ul v-if="socialLinks.length" class="flex space-x-1">
       <li

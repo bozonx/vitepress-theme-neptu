@@ -30,7 +30,7 @@ export default async () => {
       // These must stay in config.ts — they are read before YAML merging
       // for the inline head script and edit-link auto-generation.
       defaultColorTheme: 'blue',
-      defaultLandingStyle: 'soft',
+      defaultStylePreset: 'soft',
 
       // The docs half of the template uses the built-in local search.
       search: { provider: 'local' },

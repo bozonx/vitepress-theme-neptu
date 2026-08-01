@@ -53,27 +53,18 @@ export type LandingChromeConfig = Pick<
 >
 
 /**
- * `themeConfig` of the landing theme — the blog's config, the default theme's
- * chrome options, plus the two theme-axis defaults used by the landing.
+ * `themeConfig` of the landing theme — the blog's config plus the default
+ * theme's chrome options.
+ *
+ * The two theme axes (`defaultColorTheme` / `defaultStylePreset` and the
+ * `colorPicker` / `stylePicker` flags) are inherited from `ThemeConfig`: both
+ * packages share one set of names.
  */
 export type LandingThemeConfig = Partial<
   Omit<ThemeConfig, 't' | keyof LandingChromeConfig>
 > &
   Partial<LandingChromeConfig> & {
   t?: DeepPartial<I18n>
-  /**
-   * Color theme applied when the visitor has no saved preference: `blue`,
-   * `green`, `purple`, `amber`, `teal`, `rose`, `magenta`, `monochrome`, or the
-   * id of your own preset.
-   */
-  defaultColorTheme?: string
-  /**
-   * Style preset applied when the visitor has no saved preference: `soft`,
-   * `sharp`, `brutal`, `glass`, `editorial`, or the id of your own preset.
-   */
-  defaultLandingStyle?: string
-  /** Enable the optional color/style picker UI. Intended mainly for demos. */
-  themePicker?: boolean
 }
 
 /**

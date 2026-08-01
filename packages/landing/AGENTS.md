@@ -9,10 +9,11 @@ or `layout: home` with `<LnPage>` for component mode.
 Theme axes are independent:
 
 - `data-theme`: color palette;
-- `data-ln-style`: shape, density, typography and motion.
+- `data-style`: shape, density, typography and motion.
 
 Production sites normally choose one palette and one style in `themeConfig`.
-The optional picker is intended for demos and requires `themePicker: true`.
+The two pickers are demo controls, off unless `colorPicker: true` /
+`stylePicker: true`. Style presets are shared with the blog theme.
 
 ## Page rules
 
@@ -110,7 +111,7 @@ Choose production defaults:
 ```ts
 themeConfig: {
   defaultColorTheme: 'teal',
-  defaultLandingStyle: 'sharp',
+  defaultStylePreset: 'sharp',
 }
 ```
 

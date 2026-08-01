@@ -17,8 +17,12 @@ export const COLOR_THEMES: ColorThemeOption[] = [
   { id: 'monochrome', label: 'Monochrome', color: 'hsl(0, 0%, 30%)' },
 ]
 
-const STORAGE_KEY = 'neptu-color-theme'
-const activeTheme = ref<string>('blue')
+export const COLOR_STORAGE_KEY = 'neptu-color-theme'
+export const COLOR_ATTRIBUTE = 'data-theme'
+export const DEFAULT_COLOR_THEME = 'blue'
+
+const STORAGE_KEY = COLOR_STORAGE_KEY
+const activeTheme = ref<string>(DEFAULT_COLOR_THEME)
 
 export function useColorTheme() {
   const setColorTheme = (themeId: string) => {

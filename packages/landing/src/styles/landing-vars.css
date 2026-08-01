@@ -10,11 +10,36 @@
  * directly: only `--ln-*`. That is what makes a theme replaceable by a single
  * stylesheet.
  *
- * Layer 3 — style presets (`data-ln-style`, see `style-presets.css`) override
- * shape/density/motion tokens without touching colors.
+ * Layer 3 — style presets (`data-style`) override shape/density/motion tokens
+ * without touching colors. The presets themselves are shared with the blog
+ * theme and emit `--neptu-*` tokens; the "Shape", "Typography", "Buttons" and
+ * "Cards" groups below forward those onto the `--ln-*` names, and the bridge
+ * block feeds the presets this package's colors. Landing-only preset overrides
+ * live in `./style-presets.css`.
  */
 
 :root {
+  /**
+   * Bridge into the shared style presets. A preset names no color of its own —
+   * it reads these. See the contract at the top of
+   * `vitepress-theme-neptu/style-presets.css`.
+   */
+  --neptu-c-ink: var(--ln-c-text-1);
+  --neptu-c-page: var(--ln-c-bg);
+  --neptu-c-surface: var(--ln-c-bg-elevated);
+  --neptu-c-accent: var(--ln-c-brand);
+  --neptu-c-border-base: var(--gray-200, #e4e4e7);
+  --neptu-c-border-strong-base: var(--gray-300, #d4d4d8);
+  --neptu-shadow-1: var(--ln-shadow-1);
+  --neptu-shadow-2: var(--ln-shadow-2);
+  --neptu-shadow-3: var(--ln-shadow-3);
+  --neptu-card-bg-base: var(--ln-c-bg-elevated);
+  --neptu-font-body-base: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  --neptu-font-display-base: var(--neptu-font-body-base);
+  --neptu-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --neptu-body-lh-base: 1.65;
+  --neptu-btn-weight-base: 600;
+
   /**** Brand */
   --ln-c-brand: var(--primary-btn-bg, hsl(213, 66%, 46%));
   --ln-c-brand-active: var(--primary-btn-bg-active, hsl(213, 75%, 32%));
@@ -62,17 +87,17 @@
   --ln-c-code-muted: var(--gray-400, #a1a1aa);
   --ln-c-code-border: color-mix(in srgb, var(--gray-100, #f4f4f5) 16%, transparent);
 
-  /**** Borders */
-  --ln-c-border: var(--gray-200, #e4e4e7);
-  --ln-c-border-strong: var(--gray-300, #d4d4d8);
+  /**** Borders — the active style preset decides. */
+  --ln-c-border: var(--neptu-c-border);
+  --ln-c-border-strong: var(--neptu-c-border-strong);
 
-  /**** Shape */
-  --ln-radius-xs: 0.25rem;
-  --ln-radius-sm: 0.5rem;
-  --ln-radius-md: 0.875rem;
-  --ln-radius-lg: 1.25rem;
-  --ln-radius-pill: 999px;
-  --ln-border-width: 1px;
+  /**** Shape — the active style preset decides. */
+  --ln-radius-xs: var(--neptu-radius-xs);
+  --ln-radius-sm: var(--neptu-radius-sm);
+  --ln-radius-md: var(--neptu-radius-md);
+  --ln-radius-lg: var(--neptu-radius-lg);
+  --ln-radius-pill: var(--neptu-radius-pill);
+  --ln-border-width: var(--neptu-border-width);
 
   /**** Elevation */
   --ln-shadow-1: 0 1px 2px rgb(0 0 0 / 6%);
@@ -91,41 +116,42 @@
   --ln-gap-sm: 0.75rem;
 
   /**** Typography */
-  --ln-font-body: var(--font-body, ui-sans-serif, system-ui, sans-serif);
-  --ln-font-display: var(--ln-font-body);
-  --ln-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ln-font-body: var(--neptu-font-body);
+  --ln-font-display: var(--neptu-font-display);
+  --ln-font-mono: var(--neptu-font-mono);
   --ln-h1-size: clamp(2.25rem, 1.4rem + 3.4vw, 4rem);
   --ln-h2-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
   --ln-h3-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.375rem);
   --ln-lead-size: clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
   --ln-eyebrow-size: 0.8125rem;
-  --ln-heading-weight: 700;
-  --ln-heading-tracking: -0.02em;
-  --ln-heading-lh: 1.12;
-  --ln-body-lh: 1.65;
+  --ln-heading-weight: var(--neptu-heading-weight);
+  --ln-heading-tracking: var(--neptu-heading-tracking);
+  --ln-heading-lh: var(--neptu-heading-lh);
+  --ln-body-lh: var(--neptu-body-lh);
 
   /**** Motion */
   --ln-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ln-duration: 0.28s;
   --ln-reveal-distance: 16px;
-  --ln-lift: -3px;
+  --ln-lift: var(--neptu-lift);
 
-  /**** Buttons */
-  --ln-btn-radius: var(--ln-radius-pill);
+  /**** Buttons — shape comes from the active style preset. */
+  --ln-btn-radius: var(--neptu-btn-radius);
   --ln-btn-height: 2.75rem;
   --ln-btn-px: 1.5rem;
-  --ln-btn-weight: 600;
-  --ln-btn-tracking: 0;
-  --ln-btn-shadow: none;
-  --ln-btn-uppercase: none;
+  --ln-btn-weight: var(--neptu-btn-weight);
+  --ln-btn-tracking: var(--neptu-btn-tracking);
+  --ln-btn-shadow: var(--neptu-btn-shadow);
+  --ln-btn-uppercase: var(--neptu-btn-transform);
 
-  /**** Cards */
-  --ln-card-bg: var(--ln-c-bg-elevated);
-  --ln-card-border-color: var(--ln-c-border);
+  /**** Cards — surface treatment comes from the active style preset. */
+  --ln-card-bg: var(--neptu-card-bg);
+  --ln-card-border-color: var(--neptu-card-border-color);
   --ln-card-radius: var(--ln-radius-lg);
   --ln-card-padding: clamp(1.25rem, 1rem + 1vw, 2rem);
-  --ln-card-shadow: var(--ln-shadow-1);
-  --ln-card-shadow-hover: var(--ln-shadow-2);
+  --ln-card-shadow: var(--neptu-card-shadow);
+  --ln-card-shadow-hover: var(--neptu-card-shadow-hover);
+  --ln-card-backdrop: var(--neptu-card-backdrop);
 
   /**** Accents used by decorative block parts */
   --ln-c-accent-glow: color-mix(in srgb, var(--ln-c-brand) 22%, transparent);
@@ -151,8 +177,9 @@
 
   --ln-c-danger: hsl(0, 80%, 68%);
 
-  --ln-c-border: var(--gray-790, #2f2f36);
-  --ln-c-border-strong: var(--gray-700, #3f3f46);
+  /* Fed through the preset bridge, so `brutal` and `glass` keep control. */
+  --neptu-c-border-base: var(--gray-790, #2f2f36);
+  --neptu-c-border-strong-base: var(--gray-700, #3f3f46);
 
   --ln-shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
   --ln-shadow-2: 0 4px 16px -4px rgb(0 0 0 / 55%);

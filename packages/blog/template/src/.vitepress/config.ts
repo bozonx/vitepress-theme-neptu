@@ -79,7 +79,7 @@ export default async () => {
       // Favicon & web app manifest (place assets in src/public/img/)
       // ['link', { rel: 'icon', sizes: '192x192', href: `${base}img/android-chrome-192x192.png`.replace(/\/+/g, '/') }],
       // ['link', { rel: 'apple-touch-icon', sizes: '192x192', href: `${base}img/android-chrome-192x192.png`.replace(/\/+/g, '/') }],
-      // ['link', { rel: 'manifest', href: `${base}site.webmanifest`.replace(/\/+/g, '/') }],
+      ['link', { rel: 'manifest', href: `${base}site.webmanifest`.replace(/\/+/g, '/') }],
 
       // Pagefind UI assets (pagefind-ui.css / pagefind-ui.js) are loaded lazily
       // by the search modal on first open — nothing to add here.

@@ -1,5 +1,6 @@
 themeConfig:
   logo: '/img/logo.svg'
   mainHeroImg: '/img/home-logo.svg'
-  # Demo only: production sites normally choose one preset and omit the picker.
-  themePicker: true
+  # Demo only: production sites normally choose one theme and omit the pickers.
+  colorPicker: true
+  stylePicker: true

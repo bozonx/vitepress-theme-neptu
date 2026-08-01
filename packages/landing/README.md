@@ -19,7 +19,7 @@ root with `npm run landing:dev` (monorepo uses npm workspaces).
   testimonials, pricing, faq, cta, newsletter, timeline, team, gallery, banner
 - **11 primitives** — page, section, container, grid, heading, button, button
   group, card, media, icon, reveal
-- **Two theme axes** — color (`data-theme`) and style (`data-ln-style`), both
+- **Two theme axes** — color (`data-theme`) and style (`data-style`), both
   switchable at runtime and restored before the first paint
 - **Two authoring modes** — Vue components in markdown, or a declarative
   `blocks:` array in frontmatter
@@ -60,9 +60,10 @@ export default async () => {
     themeConfig: {
       logo: '/img/logo.svg',
       defaultColorTheme: 'blue',
-      defaultLandingStyle: 'soft',
-      // Optional demo UI; production default is false.
-      themePicker: false,
+      defaultStylePreset: 'soft',
+      // Optional demo UI; both default to false.
+      colorPicker: false,
+      stylePicker: false,
       search: { provider: 'local' },
     },
   }
@@ -373,28 +374,36 @@ blocks               scoped CSS reading only --ln-*
 
 Color themes: `blue`, `green`, `purple`, `amber`, `teal`, `rose`, `magenta`,
 `monochrome` — shared with the blog theme.
-Style presets: `soft`, `sharp`, `brutal`, `glass`, `editorial`.
+Style presets: `soft`, `sharp`, `brutal`, `glass`, `editorial`, `mono` — also
+shared with the blog theme, so both halves of a site keep the same shape
+language.
 
 A new theme is a CSS file, not a component change:
 
 ```css
-[data-ln-style='compact'] {
+[data-style='compact'] {
   --ln-radius-lg: 0.5rem;
   --ln-card-padding: 1rem;
   --ln-card-shadow: none;
 }
 ```
 
-Production sites normally choose one palette and one style. The optional picker
-is disabled by default; enable it for a demo with `themePicker: true`, then add
-the pickers to your nav bar:
+A preset meant to work in the blog theme too sets the shared `--neptu-*` tokens
+instead of `--ln-*`; see the contract at the top of
+`vitepress-theme-neptu/style-presets.css`.
+
+Production sites normally choose one palette and one style. Both pickers are
+disabled by default; enable them for a demo with `colorPicker: true` /
+`stylePicker: true`, then add them to your nav bar:
 
 ```vue
 <template #nav-bar-content-after>
-  <LnThemePicker axis="color" />
-  <LnThemePicker axis="style" />
+  <ColorThemePicker />
+  <StylePresetPicker />
 </template>
 ```
+
+The controls are shared with the blog theme — one implementation dresses both.
 
 Full token list with defaults: `src/styles/landing-vars.css`.
 
@@ -408,8 +417,8 @@ built-in picker lists built-in presets only.
 | `vitepress-theme-neptu-landing` | Theme entry (default export) |
 | `…/blocks` | Blocks, `LandingRenderer`, registry, types |
 | `…/primitives` | `LnSection`, `LnGrid`, `LnCard`, … |
-| `…/components` | `LnThemePicker` |
-| `…/composables` | `useLandingStyle`, `useColorTheme` |
+| `…/components` | `ColorThemePicker`, `StylePresetPicker` (re-exported from the blog theme) |
+| `…/composables` | `useStylePreset`, `useColorTheme` |
 | `…/configs` | `defineLandingConfig` and config helpers |
 | `…/landing.css` | All style layers (imported by the theme entry) |
 | `…/landing-vars.css`, `…/style-presets.css`, `…/vitepress-bridge.css` | Individual layers |

@@ -156,7 +156,7 @@ const plans = [
 
 const faq = [
   { question: 'Do I have to use the documentation part?', answer: 'No. Drop the <code>doc/</code> folder and you have a plain landing with extra pages. Add it back whenever the project needs docs.', open: true },
-  { question: 'Can I write my own theme?', answer: 'Yes — a theme is a CSS file. A color preset defines palette primitives under <code>[data-theme="id"]</code>; a style preset defines shape and density tokens under <code>[data-ln-style="id"]</code>. Blocks need no changes.' },
+  { question: 'Can I write my own theme?', answer: 'Yes — a theme is a CSS file. A color preset defines palette primitives under <code>[data-theme="id"]</code>; a style preset defines shape and density tokens under <code>[data-style="id"]</code>. Blocks need no changes.' },
   { question: 'Can I override a single block?', answer: 'Every block exposes slots for its parts, and you can register your own component under an existing block type with <code>registerBlockTypes()</code>.' },
   { question: 'Does it work without JavaScript?', answer: 'The page renders and scrolls fine: the accordion, the carousel and all layout are pure CSS. Only the reveal animation, the pickers and the lightbox need JS.' },
 ]

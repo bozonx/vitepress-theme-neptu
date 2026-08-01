@@ -41,7 +41,7 @@ const thumbnailSrc = (src?: string): string | undefined =>
           loading="lazy"
           decoding="async"
           aria-hidden="true"
-          class="card-item-img w-full h-auto rounded-[0.3125rem]"
+          class="card-item-img w-full h-auto rounded-[var(--neptu-radius-xs)]"
           alt=""
         />
       </BaseLink>
@@ -53,7 +53,7 @@ const thumbnailSrc = (src?: string): string | undefined =>
         loading="lazy"
         decoding="async"
         aria-hidden="true"
-        class="card-item-img w-full h-auto rounded-[0.3125rem]"
+        class="card-item-img w-full h-auto rounded-[var(--neptu-radius-xs)]"
         alt=""
       />
 

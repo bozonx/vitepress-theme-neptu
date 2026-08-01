@@ -36,7 +36,7 @@ watch(
   >
     <button
       type="button"
-      class="to-the-top-mobile flex justify-center items-center w-14 h-14 rounded-full text-white mr-12 mb-12 bg-[var(--primary-btn-bg)] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.3)] border-0"
+      class="to-the-top-mobile flex justify-center items-center w-14 h-14 rounded-[var(--neptu-radius-pill)] text-white mr-12 mb-12 bg-[var(--primary-btn-bg)] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.3)] border-0"
       :title="theme.returnToTopLabel"
       :aria-label="theme.returnToTopLabel || 'Return to top'"
       @click.prevent.stop="handleClick"

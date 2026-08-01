@@ -56,7 +56,25 @@ export namespace NeptuBlogTheme {
 
   export interface Config extends DefaultTheme.Config {
     externalLinkIcon?: boolean
-    themeSwitcher?: boolean
+    /**
+     * Color theme applied when the visitor has no saved preference: `blue`,
+     * `green`, `purple`, `amber`, `teal`, `rose`, `magenta`, `monochrome`, or
+     * the id of your own preset. Written to `data-theme` before first paint.
+     */
+    defaultColorTheme?: string
+    /**
+     * Style preset applied when the visitor has no saved preference: `soft`,
+     * `sharp`, `brutal`, `glass`, `editorial`, `mono`, or the id of your own
+     * preset. Written to `data-style` before first paint.
+     */
+    defaultStylePreset?: string
+    /**
+     * Show the color-theme picker in the UI. Off by default: a site normally
+     * ships one chosen theme, and the picker exists for demos.
+     */
+    colorPicker?: boolean
+    /** Show the style-preset picker in the UI. Off by default, as above. */
+    stylePicker?: boolean
     i18nRouting?: boolean
     perPage?: number
     sidebarTagsCount?: number
@@ -120,7 +138,10 @@ export namespace NeptuBlogTheme {
      */
     blogTitle?: string
     sidebarMenuLabel?: string
+    /** Accessible label / tooltip for the color-theme picker. */
     colorThemeMenuLabel?: string
+    /** Accessible label / tooltip for the style-preset picker. */
+    stylePresetMenuLabel?: string
     /** Accessible label / tooltip for the locale switcher. */
     langMenuLabel?: string
     /** Landing-only: hero image URL shown on the home page. */

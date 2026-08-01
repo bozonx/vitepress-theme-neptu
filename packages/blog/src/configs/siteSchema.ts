@@ -98,7 +98,10 @@ const ThemeConfigSchema = z
     repo: z.string().optional(),
     twitterSite: z.string().optional(),
     externalLinkIcon: z.boolean().optional(),
-    themeSwitcher: z.boolean().optional(),
+    defaultColorTheme: z.string().optional(),
+    defaultStylePreset: z.string().optional(),
+    colorPicker: z.boolean().optional(),
+    stylePicker: z.boolean().optional(),
     i18nRouting: z.boolean().optional(),
     perPage: z.never({
       error: 'perPage is a build-time parameter — set it in .vitepress/config.ts, not in YAML',
@@ -164,6 +167,7 @@ const ThemeConfigSchema = z
     sidebarLogoHeight: z.number().int().min(1).optional(),
     sidebarMenuLabel: z.string().optional(),
     colorThemeMenuLabel: z.string().optional(),
+    stylePresetMenuLabel: z.string().optional(),
     langMenuLabel: z.string().optional(),
     nav: z.union([
       z.looseObject({

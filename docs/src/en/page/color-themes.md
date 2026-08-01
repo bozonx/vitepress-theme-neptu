@@ -36,20 +36,68 @@ import 'vitepress-theme-neptu/blue-theme.css'
 // import 'vitepress-theme-neptu/monochrome-theme.css'
 ```
 
-## Dynamic Theme Switcher (`themeSwitcher`)
+## Theme pickers (`colorPicker`, `stylePicker`)
 
-The theme supports a real-time color theme picker control in the top bar (try the palette icon in the navigation). Selected theme choices are automatically saved to `localStorage`.
-
-To enable this switcher in your blog, set `themeSwitcher: true` in `themeConfig`:
+The theme ships two runtime pickers — one per axis — and both are **off by
+default**: a blog normally ships one chosen look, and these exist for demo sites
+like this one. Turn them on independently:
 
 ```ts
 // .vitepress/config.ts
 export default {
   themeConfig: {
-    themeSwitcher: true, // Enables real-time palette selector in the top bar
-  }
+    // First-time visitors get these; a saved choice always wins.
+    defaultColorTheme: 'blue',
+    defaultStylePreset: 'soft',
+
+    colorPicker: true, // palette icon in the top bar
+    stylePicker: true, // shapes icon in the top bar
+  },
 }
 ```
+
+A visitor's choice is written to `localStorage` and restored by an inline head
+script before the first paint, so there is no flash of the wrong theme.
+
+Setting `defaultColorTheme` / `defaultStylePreset` is enough on its own — you do
+not need a picker to change the look of your site.
+
+## Style presets (`data-style`)
+
+Color is only one axis. The second one — **shape** — is a separate attribute,
+`data-style`, and the two combine freely: `blue` + `brutal` is a different
+looking blog from `blue` + `soft`, with the same posts and the same components.
+
+| Preset | Look |
+|--------|------|
+| `soft` | Default. Rounded corners, light shadows — the blog's usual look |
+| `sharp` | Square corners, flat surfaces |
+| `brutal` | Hard 2px borders, offset shadows, uppercase buttons |
+| `glass` | Translucent surfaces, blur, deep shadows |
+| `editorial` | Serif headings, no card chrome, loose leading |
+| `mono` | Monospace throughout, hairline borders, no elevation |
+
+The presets are **shared with the landing theme** — the same
+`vitepress-theme-neptu/style-presets.css` dresses both packages, so a blog and a
+landing page on one domain read as a single site.
+
+A preset never names a color. It reads the bridge tokens the theme defines for
+its palette (`--neptu-c-ink`, `--neptu-c-surface`, `--neptu-shadow-*`, …), which
+is what lets one file serve two color systems. To write your own, copy a
+built-in block and change the shape tokens:
+
+```css
+[data-style='compact'] {
+  --neptu-radius-md: 0.25rem;
+  --neptu-card-shadow: none;
+  --neptu-card-shadow-hover: none;
+  --neptu-lift: 0px;
+  /* … assign the rest of the token set; see the file's header comment */
+}
+```
+
+Custom ids work as `defaultStylePreset` or as a `data-style` attribute you set
+yourself; the built-in picker lists the built-in presets only.
 
 ## Custom hue
 
