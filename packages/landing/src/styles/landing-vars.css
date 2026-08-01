@@ -156,6 +156,12 @@
   /**** Accents used by decorative block parts */
   --ln-c-accent-glow: color-mix(in srgb, var(--ln-c-brand) 22%, transparent);
   --ln-c-overlay: rgb(0 0 0 / 45%);
+
+  /**** Ad slots — `NeptuAd` is shared with the blog theme, which declares the
+       same variables in its own token layer. */
+  --ad-block-margin: 2.5rem;
+  --ad-label-font-size: 0.6875rem;
+  --ad-label-color: var(--ln-c-text-3, var(--gray-400));
 }
 
 .dark {

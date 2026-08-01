@@ -1,4 +1,6 @@
 export default {
+  tocLabel: '本页目录',
+  adLabel: '广告',
   search: '搜索',
   searchInBlog: '搜索本博客',
   lightbox: {

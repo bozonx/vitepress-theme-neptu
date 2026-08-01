@@ -20,6 +20,17 @@ import {
 } from '../utils/shared/configHelpers.ts'
 import blogBaseLocales from './blogLocalesBase/index.ts'
 import { createThemeHeadScript } from './headScript.ts'
+import { createConsentHeadScript } from './consentHeadScript.ts'
+import {
+  DEFAULT_ADS_IN_CONTENT,
+  DEFAULT_ADS_LAYOUTS,
+} from '../utils/shared/ads.ts'
+import {
+  DEFAULT_TOC_LAYOUTS,
+  DEFAULT_TOC_LEVEL,
+  DEFAULT_TOC_MIN_HEADINGS,
+} from '../utils/shared/toc.ts'
+import { mdAdSlots } from '../transformers/mdAdSlots.ts'
 import { addJsonLd } from '../transformers/addJsonLd.ts'
 import { addHreflang } from '../transformers/addHreflang.ts'
 import { addOgMetaTags } from '../transformers/addOgMetaTags.ts'
@@ -113,6 +124,31 @@ const commonThemeConfig = {
     autoCanonical: true,
   },
 
+  toc: {
+    enabled: true,
+    layouts: DEFAULT_TOC_LAYOUTS,
+    level: DEFAULT_TOC_LEVEL,
+    minHeadings: DEFAULT_TOC_MIN_HEADINGS,
+    position: 'auto' as const,
+    collapsed: true,
+  },
+
+  // No ad network is wired up by default: `ads.component` is unset, so the
+  // slots resolve to nothing until a site provides its own unit.
+  ads: {
+    enabled: true,
+    layouts: DEFAULT_ADS_LAYOUTS,
+    aside: true,
+    afterContent: false,
+    requireConsent: false,
+    inContent: DEFAULT_ADS_IN_CONTENT,
+  },
+
+  consent: {
+    enabled: true,
+    waitForUpdate: 500,
+  },
+
   donateIcon: 'fa6-solid:hand-holding-heart',
   recentIcon: 'fa6-solid:bolt',
   popularIcon: 'fa6-solid:star',
@@ -179,6 +215,18 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     description:
       config.description || config.en?.description || primaryLocale?.description,
     head: [
+      // Consent Mode v2 defaults. Must be the very first script on the page:
+      // the signals only bind tags that load after them, so anything emitted
+      // earlier — gtag.js, AdSense, a CMP — would escape the gate.
+      ...(config.themeConfig?.consent?.enabled === false
+        ? []
+        : [
+            [
+              'script',
+              {},
+              createConsentHeadScript(config.themeConfig?.consent),
+            ] as [string, Record<string, string>, string],
+          ]),
       ...(common.head || []),
       // Restores both theme axes before the first paint. Must run inline,
       // before any stylesheet is applied.
@@ -229,6 +277,11 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       }),
       config: (md) => {
         md.use(mdImage, { srcDir: config.srcDir })
+        // Places in-content ad slots while the page is compiled, so they are
+        // part of the server-rendered HTML instead of appearing after load.
+        md.use(mdAdSlots, {
+          ads: { ...commonThemeConfig.ads, ...config.themeConfig?.ads },
+        })
 
         if (config.markdown?.config) {
           config.markdown.config(md)
@@ -262,6 +315,25 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       seo: {
         ...commonThemeConfig.seo,
         ...config.themeConfig?.seo,
+      },
+
+      toc: {
+        ...commonThemeConfig.toc,
+        ...config.themeConfig?.toc,
+      },
+
+      ads: {
+        ...commonThemeConfig.ads,
+        ...config.themeConfig?.ads,
+        inContent: {
+          ...commonThemeConfig.ads.inContent,
+          ...config.themeConfig?.ads?.inContent,
+        },
+      },
+
+      consent: {
+        ...commonThemeConfig.consent,
+        ...config.themeConfig?.consent,
       },
 
       t: deepMerge(

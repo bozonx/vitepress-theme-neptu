@@ -9,6 +9,7 @@ import FileDownload from './components/doc-components/FileDownload.vue'
 import AudioFile from './components/doc-components/AudioFile.vue'
 import YoutubeVideo from './components/doc-components/YoutubeVideo.vue'
 import VideoFile from './components/doc-components/VideoFile.vue'
+import NeptuAd from './components/NeptuAd.vue'
 import './styles/vendor/vp-common.css'
 import './styles/vendor/vp-icons.css'
 import './styles/search-modal.css'
@@ -50,5 +51,8 @@ export default {
     ctx.app.component('AudioFile', AudioFile)
     ctx.app.component('YoutubeVideo', YoutubeVideo)
     ctx.app.component('VideoFile', VideoFile)
+    // Global so the markdown plugin can emit `<NeptuAd />` into page HTML,
+    // and so authors can place a unit by hand anywhere in their markdown.
+    ctx.app.component('NeptuAd', NeptuAd)
   },
 }

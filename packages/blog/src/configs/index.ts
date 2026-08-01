@@ -24,6 +24,7 @@ export {
   STYLE_STORAGE_KEY,
   STYLE_ATTRIBUTE,
 } from './headScript.ts'
+export { createConsentHeadScript } from './consentHeadScript.ts'
 export { autoLoadLocales } from '../utils/node/index.ts'
 export { createSiteYamlHotReloadPlugin } from '../utils/node/hotReloadPlugin.ts'
 export { resolveTranslationsByFilePath } from '../utils/shared/index.ts'

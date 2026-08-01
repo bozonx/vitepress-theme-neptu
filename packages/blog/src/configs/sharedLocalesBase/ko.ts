@@ -1,4 +1,6 @@
 export default {
+  tocLabel: '이 페이지의 내용',
+  adLabel: '광고',
   search: '검색',
   searchInBlog: '블로그 검색',
   lightbox: {

@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'En esta página',
+  adLabel: 'Publicidad',
   search: 'Buscar',
   searchInBlog: 'Buscar en este blog',
   lightbox: {

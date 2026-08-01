@@ -33,6 +33,7 @@ import {
   resolveMediaPaths,
   filterSitemap,
   generateRobotsTxt,
+  mdAdSlots,
   mdImage,
   resolveDescription,
   transformPageMeta,
@@ -43,6 +44,10 @@ import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { autoLoadSiteLocales } from './loadSiteLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
+import { createConsentHeadScript } from 'vitepress-theme-neptu/configs'
+import {
+  DEFAULT_ADS_IN_CONTENT,
+} from 'vitepress-theme-neptu/utils'
 import type {
   LandingUserConfig,
   ResolvedLandingConfig,
@@ -66,6 +71,27 @@ const commonThemeConfig = {
   seo: {
     maxDescriptionLength: 300,
     autoCanonical: true,
+  },
+
+  // The right-hand column and its outline come from the VitePress default
+  // theme, so there is no `toc` config here — use `themeConfig.outline`.
+  // Ads are the theme's own: no network is wired up until a site sets
+  // `ads.component`.
+  ads: {
+    enabled: true,
+    // Docs pages only. A bare `layout` means `doc` in the default theme,
+    // which is why the fallback differs from the blog's.
+    layouts: ['doc'],
+    defaultLayout: 'doc',
+    aside: true,
+    afterContent: false,
+    requireConsent: false,
+    inContent: DEFAULT_ADS_IN_CONTENT,
+  },
+
+  consent: {
+    enabled: true,
+    waitForUpdate: 500,
   },
 } satisfies Partial<LandingThemeConfig>
 
@@ -111,6 +137,17 @@ export function mergeLandingConfig(
     title: config.title || config.en?.title,
     description: config.description || config.en?.description,
     head: [
+      // Consent Mode v2 defaults. Must be the very first script on the page:
+      // the signals only bind tags that load after them.
+      ...(config.themeConfig?.consent?.enabled === false
+        ? []
+        : [
+            [
+              'script',
+              {},
+              createConsentHeadScript(config.themeConfig?.consent),
+            ] as [string, Record<string, string>, string],
+          ]),
       ...(common.head || []),
       // Restores the saved theme before the first paint and arms the reveal
       // animations. Must run inline, before any stylesheet is applied.
@@ -176,6 +213,11 @@ export function mergeLandingConfig(
       }),
       config: (md) => {
         md.use(mdImage, { srcDir: config.srcDir })
+        // Places in-content ad slots while the page is compiled, so they are
+        // part of the server-rendered HTML instead of appearing after load.
+        md.use(mdAdSlots, {
+          ads: { ...commonThemeConfig.ads, ...config.themeConfig?.ads },
+        })
 
         if (config.markdown?.config) {
           config.markdown.config(md)
@@ -193,6 +235,20 @@ export function mergeLandingConfig(
       seo: {
         ...commonThemeConfig.seo,
         ...config.themeConfig?.seo,
+      },
+
+      ads: {
+        ...commonThemeConfig.ads,
+        ...config.themeConfig?.ads,
+        inContent: {
+          ...commonThemeConfig.ads.inContent,
+          ...config.themeConfig?.ads?.inContent,
+        },
+      },
+
+      consent: {
+        ...commonThemeConfig.consent,
+        ...config.themeConfig?.consent,
       },
 
       t: deepMerge(

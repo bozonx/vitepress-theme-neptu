@@ -42,13 +42,20 @@ export const DEFAULT_ASIDE_LAYOUTS = [
 ]
 
 /**
- * Layout key used to match a page against `themeConfig.asideLayouts`.
- * A page with no `layout` is a post.
+ * Layout key used to match a page against `themeConfig.asideLayouts` and the
+ * `toc` / `ads` layout lists.
+ *
+ * `fallback` is what an absent `layout` means, which differs per theme: in the
+ * blog a bare page is a post, while the landing theme inherits the VitePress
+ * default where it is a `doc`.
  */
-export function resolveLayoutKey(frontmatter: Frontmatter | null | undefined): string {
+export function resolveLayoutKey(
+  frontmatter: Frontmatter | null | undefined,
+  fallback = 'post'
+): string {
   const layout = frontmatter?.layout
 
-  return typeof layout === 'string' && layout ? layout : 'post'
+  return typeof layout === 'string' && layout ? layout : fallback
 }
 
 /**

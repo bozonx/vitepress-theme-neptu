@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'Na této stránce',
+  adLabel: 'Reklama',
   search: 'Hledat',
   searchInBlog: 'Hledat v tomto blogu',
   lightbox: {

@@ -6,6 +6,7 @@ import {
   LocaleSelector,
   ColorThemePicker,
   StylePresetPicker,
+  NeptuAd,
 } from 'vitepress-theme-neptu/components'
 
 /**
@@ -25,6 +26,9 @@ export function registerLandingComponents(app: App): void {
     ColorThemePicker,
     StylePresetPicker,
     LocaleSelector,
+    // Global so the markdown plugin can emit `<NeptuAd />` into page HTML,
+    // and so authors can place a unit by hand anywhere in their markdown.
+    NeptuAd,
   })) {
     app.component(name, component)
   }

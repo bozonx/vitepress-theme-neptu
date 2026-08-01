@@ -111,6 +111,28 @@ export namespace NeptuBlogTheme {
      */
     asideLayouts?: string[]
 
+    /**
+     * Table of contents built from the page headings. Rendered in the aside
+     * column on wide viewports and as a collapsible block above the article
+     * below the aside breakpoint — see {@link TocConfig}.
+     */
+    toc?: TocConfig
+
+    /**
+     * Ad slots: which pages carry them, where they land, and whether they
+     * wait for consent. The theme provides the frame only; the network
+     * snippet stays with the site — see {@link AdsConfig}.
+     */
+    ads?: AdsConfig
+
+    /**
+     * Google Consent Mode v2 defaults and the storage key backing
+     * `useConsent()`. The theme ships no banner UI: Google ads in the EEA and
+     * the UK require a certified CMP wired to IAB TCF 2.2, which this config
+     * is designed to sit underneath rather than replace.
+     */
+    consent?: ConsentConfig
+
     donateIcon?: string
     recentIcon?: string
     popularIcon?: string
@@ -244,6 +266,10 @@ export namespace NeptuBlogTheme {
     postsCountForms: string[]
     search: string
     searchInBlog: string
+    /** Heading above the table of contents. */
+    tocLabel: string
+    /** Disclosure label above an ad unit. */
+    adLabel: string
 
     links: {
       aboutBlog: string
@@ -263,6 +289,164 @@ export namespace NeptuBlogTheme {
     fileDownload: Record<string, string>
     videoFile: Record<string, string>
     lightbox: Record<string, string>
+  }
+
+  export interface TocConfig {
+    /** Master switch. Defaults to `true`. */
+    enabled?: boolean
+
+    /**
+     * Layouts that render a table of contents. Supported keys: 'post',
+     * 'page', 'util', 'tag', 'archive', 'author', plus the name of any custom
+     * `contentLayout`. Defaults to `['post']` — listing and utility pages
+     * have no prose to navigate.
+     *
+     * Per-page frontmatter `toc: true | false` overrides this list.
+     */
+    layouts?: string[]
+
+    /**
+     * Heading levels to include, in the shape the VitePress default theme
+     * uses for `outline`: a single level, a `[min, max]` tuple, or `'deep'`
+     * for h2–h6. Defaults to `[2, 3]`.
+     */
+    level?: number | [number, number] | 'deep'
+
+    /**
+     * Drop the table of contents when the page has fewer headings than this.
+     * A two-item list restates the structure without helping anyone navigate
+     * it. Defaults to `3`; `0` disables the threshold.
+     */
+    minHeadings?: number
+
+    /**
+     * Where the table of contents lives:
+     * - `'auto'` (default) — aside column above the aside breakpoint,
+     *   collapsible block above the article below it;
+     * - `'aside'` — column only, no TOC on narrow viewports;
+     * - `'top'` — collapsible block at every width, leaving the column to ads.
+     */
+    position?: 'auto' | 'aside' | 'top'
+
+    /**
+     * Whether the collapsible block starts closed. Defaults to `true`:
+     * expanded, a long list is a screenful to scroll past before the article.
+     */
+    collapsed?: boolean
+
+    /** Heading above the list. Falls back to the `tocLabel` translation. */
+    label?: string
+  }
+
+  export interface AdsConfig {
+    /** Master switch. Defaults to `true`. */
+    enabled?: boolean
+
+    /**
+     * Layouts that may carry ad slots. Defaults to `['post']`.
+     * Per-page frontmatter `ads: true | false` overrides this list.
+     */
+    layouts?: string[]
+
+    /**
+     * What an absent frontmatter `layout` counts as when matching
+     * {@link layouts}. Defaults to `'post'` in the blog theme; the landing
+     * theme sets `'doc'`, matching the VitePress default.
+     */
+    defaultLayout?: string
+
+    /**
+     * Globally registered component rendering the actual ad unit. It receives
+     * `placement` and `index` props. Without it, `NeptuAd` renders only what
+     * its default slot provides.
+     */
+    component?: string
+
+    /** Slot in the right-hand column. Defaults to `true`. */
+    aside?: boolean
+
+    /** In-content slots, placed at build time by the markdown plugin. */
+    inContent?: {
+      /** Defaults to `true`. */
+      enabled?: boolean
+      /**
+       * What to place the slot before: `'heading'` (top-level `##`, the
+       * default) sits at a section break; `'paragraph'` splits the prose.
+       */
+      anchor?: 'heading' | 'paragraph'
+      /** Ordinal of the first anchor to use, 1-based. Defaults to `2`. */
+      start?: number
+      /** Anchors between consecutive slots. Defaults to `3`. */
+      every?: number
+      /** Hard cap per page. Defaults to `2`. */
+      max?: number
+      /**
+       * Skip short articles: pages with fewer top-level blocks than this get
+       * no in-content slots. Defaults to `6`.
+       */
+      minBlocks?: number
+    }
+
+    /** Slot after the article body, before the post footer. Defaults to `false`. */
+    afterContent?: boolean
+
+    /**
+     * Render nothing until the visitor has granted ad consent. Defaults to
+     * `false`: a certified CMP already withholds personalised ads on its own,
+     * and blanking the slot would also drop the non-personalised ads such a
+     * visitor may still be served.
+     */
+    requireConsent?: boolean
+
+    /**
+     * Reserved height in pixels per placement, keeping a slot from shifting
+     * the page once the network responds.
+     */
+    minHeight?: Partial<Record<'aside' | 'in-content' | 'after-content', number>>
+
+    /**
+     * Disclosure label above the unit. Falls back to the `adLabel`
+     * translation; set to an empty string to render none.
+     */
+    label?: string
+  }
+
+  export interface ConsentConfig {
+    /**
+     * Emit the Consent Mode v2 head script. Defaults to `true`. Turn off only
+     * when a CMP sets the defaults itself — leaving both in place means the
+     * later call wins, which may not be the one you intended.
+     */
+    enabled?: boolean
+
+    /**
+     * Starting signal values. Everything defaults to denied, which is what
+     * Consent Mode requires before a visitor has chosen.
+     */
+    defaults?: Partial<ConsentState>
+
+    /**
+     * Restrict the defaults to these regions (ISO 3166-2 codes, e.g.
+     * `['ES', 'US-CA']`). Omit to apply them everywhere.
+     */
+    region?: string[]
+
+    /**
+     * Milliseconds tags wait for a CMP to update the signals before acting on
+     * the defaults. Defaults to `500`.
+     */
+    waitForUpdate?: number
+
+    /** localStorage key holding the decision. Defaults to `'neptu-consent'`. */
+    storageKey?: string
+  }
+
+  export interface ConsentState {
+    analytics: boolean
+    ads: boolean
+    adUserData: boolean
+    adPersonalization: boolean
+    functional: boolean
   }
 
   export interface AnalyticsDataSource {
@@ -455,6 +639,17 @@ export namespace NeptuBlogTheme {
      * `themeConfig.asideLayouts`. Ignored on the home page.
      */
     aside?: boolean
+    /**
+     * Force the table of contents on or off for this page, overriding
+     * `themeConfig.toc.layouts`. The heading-count threshold still applies.
+     */
+    toc?: boolean
+    /**
+     * Force ad slots on or off for this page, overriding
+     * `themeConfig.ads.layouts`. Also honoured by the markdown plugin that
+     * places in-content slots at build time.
+     */
+    ads?: boolean
     /** Podcast platform → episode URL map, rendered as the podcast dropdown. */
     podcasts?: Record<string, string>
     /** Optional language label shown next to the podcast button, e.g. `EN`. */
@@ -569,6 +764,10 @@ export type LinkItem = NeptuBlogTheme.LinkItem
 export type SocialLink = NeptuBlogTheme.SocialLink
 export type SocialMediaShare = NeptuBlogTheme.SocialMediaShare
 export type PagefindUITranslations = NeptuBlogTheme.PagefindUITranslations
+export type TocConfig = NeptuBlogTheme.TocConfig
+export type AdsConfig = NeptuBlogTheme.AdsConfig
+export type ConsentConfig = NeptuBlogTheme.ConsentConfig
+export type ConsentState = NeptuBlogTheme.ConsentState
 
 declare const theme: Theme
 export default theme

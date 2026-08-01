@@ -57,6 +57,58 @@ const SeoSchema = z.looseObject({
   maxDescriptionLength: z.number().int().min(0).optional(),
 })
 
+const TocSchema = z.looseObject({
+  enabled: z.boolean().optional(),
+  layouts: z.array(z.string()).optional(),
+  level: z.union([
+    z.number().int().min(1).max(6),
+    z.tuple([z.number().int().min(1).max(6), z.number().int().min(1).max(6)]),
+    z.literal('deep'),
+  ]).optional(),
+  minHeadings: z.number().int().min(0).optional(),
+  position: z.enum(['auto', 'aside', 'top']).optional(),
+  collapsed: z.boolean().optional(),
+  label: z.string().optional(),
+})
+
+const AdsSchema = z.looseObject({
+  enabled: z.boolean().optional(),
+  layouts: z.array(z.string()).optional(),
+  defaultLayout: z.string().optional(),
+  component: z.string().optional(),
+  aside: z.boolean().optional(),
+  afterContent: z.boolean().optional(),
+  requireConsent: z.boolean().optional(),
+  label: z.string().optional(),
+  minHeight: z.looseObject({
+    aside: z.number().int().min(0).optional(),
+    'in-content': z.number().int().min(0).optional(),
+    'after-content': z.number().int().min(0).optional(),
+  }).optional(),
+  inContent: z.looseObject({
+    enabled: z.boolean().optional(),
+    anchor: z.enum(['heading', 'paragraph']).optional(),
+    start: z.number().int().min(1).optional(),
+    every: z.number().int().min(1).optional(),
+    max: z.number().int().min(0).optional(),
+    minBlocks: z.number().int().min(0).optional(),
+  }).optional(),
+})
+
+const ConsentSchema = z.looseObject({
+  enabled: z.boolean().optional(),
+  region: z.array(z.string()).optional(),
+  waitForUpdate: z.number().int().min(0).optional(),
+  storageKey: z.string().optional(),
+  defaults: z.looseObject({
+    analytics: z.boolean().optional(),
+    ads: z.boolean().optional(),
+    adUserData: z.boolean().optional(),
+    adPersonalization: z.boolean().optional(),
+    functional: z.boolean().optional(),
+  }).optional(),
+})
+
 const TranslationSchema = z.looseObject({
   popularPosts: z.string().optional(), similarPosts: z.string().optional(),
   shareSocialMedia: z.string().optional(), currentLang: z.string().optional(),
@@ -70,6 +122,7 @@ const TranslationSchema = z.looseObject({
   allPostsOfAuthor: z.string().optional(), closeMenu: z.string().optional(), allPostsOfYear: z.string().optional(),
   pageNotFound: z.string().optional(), postsCount: z.string().optional(), editLink: z.string().optional(),
   postsCountForms: z.array(z.string()).optional(), search: z.string().optional(), searchInBlog: z.string().optional(),
+  tocLabel: z.string().optional(), adLabel: z.string().optional(),
   links: z.record(z.string(), z.string()).optional(),
   months: z.array(z.string()).optional(), podcasts: z.record(z.string(), z.string()).optional(),
   audioFile: z.record(z.string(), z.string()).optional(), fileDownload: z.record(z.string(), z.string()).optional(),
@@ -135,6 +188,9 @@ const ThemeConfigSchema = z
       formats: z.array(z.enum(['rss', 'atom', 'json'])).optional(),
     }).optional(),
     seo: SeoSchema.optional(),
+    toc: TocSchema.optional(),
+    ads: AdsSchema.optional(),
+    consent: ConsentSchema.optional(),
     search: z.looseObject({
       provider: z.string().optional(),
       options: z.looseObject({

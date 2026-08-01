@@ -7,6 +7,8 @@ import {
   isUtilPage,
 } from '../utils/shared/index.ts'
 import type { PostFrontmatter } from '../types.d.ts'
+import NeptuAd from './NeptuAd.vue'
+import TocCollapsible from './toc/TocCollapsible.vue'
 import PostFooter from './post/PostFooter.vue'
 import PostDate from './post/PostDate.vue'
 import PostTopBar from './post/PostTopBar.vue'
@@ -90,9 +92,15 @@ const customContent = computed(() => {
 
     <slot name="post-content-before" />
 
+    <!-- Narrow-viewport home of the table of contents; above the aside
+         breakpoint it hides itself and the column takes over. -->
+    <TocCollapsible />
+
     <div class="mt-10 vp-doc">
       <Content />
     </div>
+
+    <NeptuAd placement="after-content" />
 
     <slot name="post-content-after" />
 

@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'На овој страници',
+  adLabel: 'Реклама',
   search: 'Претрага',
   searchInBlog: 'Претрага блога',
   lightbox: {

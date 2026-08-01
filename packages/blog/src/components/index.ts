@@ -5,6 +5,13 @@
 //   import { HomeHero, TagPostsList } from 'vitepress-theme-neptu/components'
 
 export { default as LocaleSelector } from './LocaleSelector.vue'
+
+// Ads and table of contents. `NeptuAd` is also registered globally by the
+// theme, so markdown may reference it without importing anything.
+export { default as NeptuAd } from './NeptuAd.vue'
+export { default as TocAside } from './toc/TocAside.vue'
+export { default as TocCollapsible } from './toc/TocCollapsible.vue'
+export { default as TocLinks } from './toc/TocLinks.vue'
 export { default as HomeHero } from './utility/HomeHero.vue'
 export { default as HomeTags } from './utility/HomeTags.vue'
 export { default as HomePopularPosts } from './utility/HomePopularPosts.vue'

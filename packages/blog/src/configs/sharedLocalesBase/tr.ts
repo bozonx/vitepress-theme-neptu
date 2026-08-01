@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'Bu sayfada',
+  adLabel: 'Reklam',
   search: 'Ara',
   searchInBlog: 'Bu blogda ara',
   lightbox: {

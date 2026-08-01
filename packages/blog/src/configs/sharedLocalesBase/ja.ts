@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'このページの内容',
+  adLabel: '広告',
   search: '検索',
   searchInBlog: 'このブログを検索',
   lightbox: {

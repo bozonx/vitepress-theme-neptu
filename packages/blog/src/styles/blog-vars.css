@@ -49,6 +49,27 @@
   --aside-padding-x: 1rem;
   --aside-gap: 1.5rem;
   --aside-top: 100px;
+
+  /**** Table of contents */
+  --toc-font-size: 0.875rem;
+  --toc-line-height: 1.35rem;
+  --toc-link-padding-y: 0.3rem;
+  /* Indent per heading level below the shallowest one shown. */
+  --toc-indent: 0.85rem;
+  --toc-label-font-size: 0.8125rem;
+  --toc-label-color: var(--gray-500);
+  --toc-link-color: var(--gray-600);
+  --toc-link-hover-color: var(--link-a-text);
+  --toc-link-active-color: var(--link-a-text);
+  /* Collapsible block shown below --aside-breakpoint. */
+  --toc-box-bg: transparent;
+  --toc-box-border: var(--gray-200);
+  --toc-box-radius: 0.5rem;
+
+  /**** Ad slots */
+  --ad-block-margin: 2.5rem;
+  --ad-label-font-size: 0.6875rem;
+  --ad-label-color: var(--gray-400);
   --list-item-thumb-width: 280px;
   --body-font-size: 1.125rem;
   --body-line-height: 1.75rem;
@@ -118,6 +139,14 @@
   --body-bg: var(--gray-900);
   --body-text-color: var(--gray-200);
   --util-page-header-color: var(--gray-400);
+
+  /**** Table of contents */
+  --toc-label-color: var(--gray-400);
+  --toc-link-color: var(--gray-400);
+  --toc-box-border: var(--gray-800);
+
+  /**** Ad slots */
+  --ad-label-color: var(--gray-600);
   /**** TopBar */
   --topbar-mobile-bg: var(--gray-950);
   --topbar-mobile-border: var(--gray-900);

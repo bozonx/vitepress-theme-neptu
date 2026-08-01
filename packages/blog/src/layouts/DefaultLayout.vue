@@ -97,8 +97,11 @@ useSwipeDrawer({
           </div>
         </main>
 
-        <LayoutAside v-if="showAside && $slots.aside">
-          <slot name="aside" />
+        <!-- The column decides for itself whether it has anything to show:
+             it now carries the table of contents as well as the `aside`
+             slot, so it can be non-empty without a slot being passed. -->
+        <LayoutAside v-if="showAside">
+          <slot v-if="$slots.aside" name="aside" />
         </LayoutAside>
       </div>
     </div>

@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'Op deze pagina',
+  adLabel: 'Advertentie',
   search: 'Zoeken',
   searchInBlog: 'Zoeken in dit blog',
   lightbox: {

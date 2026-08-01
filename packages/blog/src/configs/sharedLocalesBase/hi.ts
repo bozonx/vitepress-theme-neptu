@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'इस पृष्ठ पर',
+  adLabel: 'विज्ञापन',
   search: 'खोजें',
   searchInBlog: 'इस ब्लॉग में खोजें',
   lightbox: {

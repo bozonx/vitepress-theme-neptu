@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'בעמוד זה',
+  adLabel: 'פרסומת',
   search: 'חיפוש',
   searchInBlog: 'חיפוש בבלוג זה',
   lightbox: {

@@ -1,4 +1,6 @@
 export default {
+  tocLabel: 'Содержание',
+  adLabel: 'Реклама',
   search: 'Поиск',
   searchInBlog: 'Искать в этом блоге',
   lightbox: {
