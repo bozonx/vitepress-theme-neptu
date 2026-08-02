@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { makeHumanDate } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
 import PreviewWithImage from './PreviewWithImage.vue'
+import PostReadingTime from './post/PostReadingTime.vue'
 import { useUiTheme } from '../composables/useUiTheme.ts'
 import type { PostLite } from '../types.d.ts'
 
@@ -33,23 +34,32 @@ const params = computed(() => ({
 
 <template>
   <article class="card-item preview">
-    <BaseLink
-      v-if="props.item.url"
-      :href="props.item.url"
-      class="card-item-title-link block no-underline text-inherit hover:no-underline"
-    >
+    <div class="flex items-start justify-between gap-4 mb-3">
+      <BaseLink
+        v-if="props.item.url"
+        :href="props.item.url"
+        class="card-item-title-link flex-1 block no-underline text-inherit hover:no-underline"
+      >
+        <h2
+          class="card-item-header font-bold text-2xl leading-8 tracking-tight hover:brightness-125"
+        >
+          {{ props.item.title }}
+        </h2>
+      </BaseLink>
       <h2
-        class="card-item-header font-bold mb-3 text-2xl leading-8 tracking-tight hover:brightness-125"
+        v-else
+        class="card-item-header flex-1 font-bold text-2xl leading-8 tracking-tight"
       >
         {{ props.item.title }}
       </h2>
-    </BaseLink>
-    <h2
-      v-else
-      class="card-item-header font-bold mb-3 text-2xl leading-8 tracking-tight"
-    >
-      {{ props.item.title }}
-    </h2>
+
+      <PostReadingTime
+        v-if="(theme.postList?.showReadingTime ?? false) && props.item.readingTime"
+        :minutes="props.item.readingTime"
+        force-show
+        class="text-sm! muted shrink-0 mt-1"
+      />
+    </div>
 
     <PreviewWithImage
       v-bind="params"

@@ -4,7 +4,6 @@ import { withBase } from 'vitepress'
 import BaseLink from './BaseLink.vue'
 import TagsList from './TagsList.vue'
 import PostDraftBadge from './post/PostDraftBadge.vue'
-import PostReadingTime from './post/PostReadingTime.vue'
 import type { TagInfo } from '../types.d.ts'
 
 const props = withDefaults(
@@ -70,19 +69,13 @@ const thumbnailSrc = (src?: string): string | undefined =>
       />
 
       <div
-        v-if="props.showDate || props.authorName || props.showReadingTime"
+        v-if="props.showDate || props.authorName"
         class="mt-2 space-x-2 muted card-item-author-date text-sm leading-5"
       >
         <span v-if="props.authorName">{{ props.authorName }}.</span>
         <time v-if="props.showDate && props.date" :datetime="props.date">
           {{ props.localeDate }}
         </time>
-        <PostReadingTime
-          v-if="props.showReadingTime && props.readingTime"
-          :minutes="props.readingTime"
-          force-show
-          class="text-sm!"
-        />
         <PostDraftBadge v-if="props.draft" :draft="true" />
       </div>
 
@@ -108,7 +101,7 @@ const thumbnailSrc = (src?: string): string | undefined =>
     </p>
 
     <div
-      v-if="props.showTags || props.showDate || props.authorName || props.showReadingTime"
+      v-if="props.showTags || props.showDate || props.authorName"
       class="flex max-sm:flex-col-reverse sm:items-end gap-x-1"
       :class="{ 'sm:mt-4': props.showPreview && props.preview }"
     >
@@ -121,19 +114,13 @@ const thumbnailSrc = (src?: string): string | undefined =>
       />
 
       <div
-        v-if="props.showDate || props.authorName || props.showReadingTime"
+        v-if="props.showDate || props.authorName"
         class="space-x-2 max-sm:mt-2 max-sm:mb-4 text-right muted card-item-author-date text-sm leading-5"
       >
         <span v-if="props.authorName">{{ props.authorName }}.</span>
         <time v-if="props.showDate && props.date" :datetime="props.date">
           {{ props.localeDate }}
         </time>
-        <PostReadingTime
-          v-if="props.showReadingTime && props.readingTime"
-          :minutes="props.readingTime"
-          force-show
-          class="text-sm!"
-        />
         <PostDraftBadge v-if="props.draft" :draft="true" />
       </div>
     </div>
