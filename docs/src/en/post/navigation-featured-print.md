@@ -71,6 +71,43 @@ Use the `header` prop to override the heading. Without it, the component uses
 the locale's `t.featuredPosts` translation. Featured posts are ordered newest
 first.
 
+## Recent or popular posts as the home page
+
+The default home page (`layout: home`) is a landing-style page with a hero,
+optional parallax background, and configurable sections — but **no sidebar**.
+
+If you prefer a standard blog listing (with sidebar, aside, and the usual
+chrome), replace `layout: home` with `layout: util` in your `index.md` and
+embed the same component used by the `recent/[page].md` template:
+
+```md
+---
+layout: util
+---
+
+<script setup>
+import { RecentList } from 'vitepress-theme-neptu/components'
+</script>
+
+<RecentList :curPage="1" />
+```
+
+For popular posts, swap `RecentList` for `PopularPostsList` (requires
+`popularPosts.enabled` in `.vitepress/config.ts`).
+
+### What's different from the listing template
+
+- **No `paths.js` needed.** `index.md` is a single static page, not a dynamic
+  `[page]` route, so `params.page` is undefined and defaults to `1`.
+- **Remove `robots: noindex`.** The listing templates set `noindex` because
+  paginated copies should not be indexed. Your home page *should* be indexed —
+  drop the `head` block.
+- **Pagination links.** `RecentList` and `PopularPostsList` derive the
+  pagination base URL from the current route path. On the home page
+  (`/en/`), links would point to `/en/1`, `/en/2` — which don't exist. The home
+  page therefore works as a first-page view; for full pagination, link to
+  `recent/1` or `popular/1` from your nav or sidebar.
+
 ## Printing
 
 No configuration is required. The theme's print stylesheet removes the
