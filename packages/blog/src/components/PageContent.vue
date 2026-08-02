@@ -72,12 +72,12 @@ const customContent = computed(() => {
       >
         {{ page.title }}
       </h1>
-      <div class="mt-4 flex items-start justify-between gap-4 max-sm:flex-col">
+      <div class="mt-4 flex items-start justify-between gap-4">
         <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
           <PostDate />
-          <PostReadingTime />
           <PostDraftBadge />
         </div>
+        <PostReadingTime show-label class="ml-auto shrink-0 text-right" />
       </div>
       <PostTopBar class="mt-10" />
     </header>

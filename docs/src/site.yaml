@@ -6,6 +6,8 @@ themeConfig:
   # Demo only: production blogs normally choose one theme and omit the pickers.
   colorPicker: true
   stylePicker: true
+  postList:
+    showReadingTime: true
   donate:
     url: 'page/donate'
   publisher:

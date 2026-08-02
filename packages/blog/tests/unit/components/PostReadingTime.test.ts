@@ -38,6 +38,14 @@ describe('PostReadingTime', () => {
     expect(wrapper.text()).toBe('2 минуты')
   })
 
+  it('can include a descriptive label in the post header', () => {
+    const wrapper = mount(PostReadingTime, {
+      props: { showLabel: true },
+    })
+
+    expect(wrapper.text()).toBe('Время чтения: 1 мин')
+  })
+
   it('stays hidden when globally disabled, including list-item usage', () => {
     mockTheme.value.readingTime.enabled = false
 

@@ -14,8 +14,10 @@ const props = withDefaults(
     minutes?: number
     /** Skips the layout check when the caller already decided. */
     forceShow?: boolean
+    /** Prefixes the duration with the localized "Reading time" label. */
+    showLabel?: boolean
   }>(),
-  { forceShow: false }
+  { forceShow: false, showLabel: false }
 )
 
 const { page, frontmatter } = useData()
@@ -49,6 +51,10 @@ const label = computed(() => {
 const title = computed(
   () => theme.value.t?.readingTime || translations.value.t.readingTime
 )
+
+const text = computed(() =>
+  props.showLabel ? `${title.value}: ${label.value}` : label.value
+)
 </script>
 
 <template>
@@ -62,6 +68,6 @@ const title = computed(
     :datetime="toIsoDuration(minutes)"
     :title="title"
   >
-    {{ label }}
+    {{ text }}
   </time>
 </template>

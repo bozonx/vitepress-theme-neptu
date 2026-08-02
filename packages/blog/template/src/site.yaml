@@ -170,16 +170,29 @@ themeConfig:
 
   # --- Post List Card --------------------------------------------------------
   # Controls what is shown on each post card in list/archive/tag views.
-  # All boolean flags default to true.
+  # Visual-content flags default to true; reading time defaults to false.
   postList:
     showDate: true
     showTags: true
     showThumbnail: true
     showPreview: true
     showAuthor: true
+    # Show the compact reading-time estimate next to the card metadata.
+    # Default: false
+    showReadingTime: false
     # Maximum number of characters for the post preview text.
     # Default: 300
     maxPreviewLength: 300
+
+  # --- Reading Time ---------------------------------------------------------
+  # Estimate article length from the Markdown source at build time. The post
+  # header displays it by default; list cards use `showReadingTime` above.
+  readingTime:
+    enabled: true
+    # Average reading speed in words per minute.
+    wpm: 200
+    # Layouts whose page header displays the estimate.
+    layouts: ['post']
 
   # --- Post Footer Blocks ----------------------------------------------------
   # Ordered list of post-footer blocks. Supported keys:
