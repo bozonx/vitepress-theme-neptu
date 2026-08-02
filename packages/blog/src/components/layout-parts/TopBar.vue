@@ -53,11 +53,11 @@ const socialLinks = computed<LinkItem[]>(() =>
 <template>
   <nav
     :class="[
-      'flex w-full py-2 px-2 gap-x-1 top-bar pl-[0.675rem]',
+      'flex w-full py-2 px-2 gap-x-1 top-bar pl-[0.675rem] min-w-0 items-center',
       'max-lg:fixed max-lg:z-[1] max-lg:topbar--mobile max-lg:bg-[var(--topbar-mobile-bg)] max-lg:border-b max-lg:border-[var(--topbar-mobile-border)] max-lg:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.07)] max-lg:dark:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.2)]',
     ]"
   >
-    <div class="flex-1 flex gap-x-3">
+    <div class="flex-1 flex gap-x-3 min-w-0">
       <NeptuBtn
         v-if="!hideMenuButton"
         icon="fa6-solid:bars"

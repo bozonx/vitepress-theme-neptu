@@ -51,7 +51,7 @@ useSwipeDrawer({
       </template>
     </SideBar>
     <!-- right col-->
-    <div class="flex-1 flex flex-col min-h-screen">
+    <div class="flex-1 flex flex-col min-h-screen min-w-0">
       <header class="site-topbar">
         <TopBar
           :is-mobile="isMobile"
@@ -63,9 +63,9 @@ useSwipeDrawer({
         </TopBar>
       </header>
 
-      <div class="flex flex-1">
+      <div class="flex flex-1 min-w-0">
         <main
-          class="lg:ml-4 xl:ml-24 mt-20 lg:mt-4 px-4 sm:px-8 app-page flex flex-col w-full max-w-[var(--page-max-width)]"
+          class="lg:ml-4 xl:ml-24 mt-20 lg:mt-4 px-4 sm:px-8 app-page flex flex-col w-full max-w-[min(var(--page-max-width),calc(100%-1rem))] xl:max-w-[min(var(--page-max-width),calc(100%-6rem))] min-w-0"
         >
           <div class="flex-1" v-bind="bodyMarker ? { [bodyMarker]: true } : {}">
             <PageContent>
