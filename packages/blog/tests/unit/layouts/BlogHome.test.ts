@@ -65,8 +65,8 @@ describe('BlogHome', () => {
     expect(page.attributes('style')).toContain('max-width: 1200px')
   })
 
-  it('applies custom background image from frontmatter', () => {
-    mockFrontmatter.value = { homeBackgroundImage: '/img/custom-bg.webp' }
+  it('applies custom background image and home-has-bg class from frontmatter', () => {
+    mockFrontmatter.value = { homeBackgroundImage: '/img/custom-bg.webp', homeBackground: 'parallax' }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
@@ -75,6 +75,17 @@ describe('BlogHome', () => {
 
     const root = wrapper.find('.home-layout')
     expect(root.attributes('style')).toMatch(/background-image:\s*url\(["']?\/img\/custom-bg\.webp["']?\)/)
+    expect(root.classes()).toContain('home-has-bg')
+  })
+
+  it('does not add home-has-bg class when background image is missing or background is none', () => {
+    const wrapper = mount(BlogHome, {
+      props: { scrollY: 0 },
+      global: { stubs: { Content: ContentStub } },
+    })
+
+    const root = wrapper.find('.home-layout')
+    expect(root.classes()).not.toContain('home-has-bg')
   })
 
   it('uses frontmatter homeBgParallaxOffset over theme default', () => {

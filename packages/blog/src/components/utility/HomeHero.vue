@@ -81,11 +81,6 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
   filter: drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.5));
 }
 
-.home-hero h1,
-.home-hero p {
-  text-shadow: 2px 2px 12px color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
-}
-
 .home-hero-buttons .btn-base {
   box-shadow: 8px 8px 18px 0px rgba(0, 0, 0, 0.3);
 }

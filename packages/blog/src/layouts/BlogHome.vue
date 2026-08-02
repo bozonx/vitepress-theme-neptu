@@ -37,6 +37,10 @@ const BG_HEIGHT_OFFSET = computed(
   () => (frontmatter.value?.homeBgParallaxOffset as number) ?? home.value.bgParallaxOffset ?? 0
 )
 
+const hasBgImage = computed(() =>
+  Boolean(homeBackgroundImage.value) && homeBackground.value !== 'none'
+)
+
 let previousAppearance: boolean | null = null
 onMounted(() => {
   if (appearance.value === 'auto') return
@@ -86,6 +90,7 @@ watchEffect(() => {
     :class="[
       `home-appearance-${appearance}`,
       homeBackground === 'none' ? '' : 'bg-no-repeat bg-center bg-fixed bg-cover',
+      hasBgImage ? 'home-has-bg' : '',
     ]"
     :style="[
       homeBackground !== 'none' ? `background-position-y: ${valueY}px; background-size: max(100vw, calc((100vh + ${BG_HEIGHT_OFFSET}px) * 1.78)) calc(100vh + ${BG_HEIGHT_OFFSET}px);` : '',

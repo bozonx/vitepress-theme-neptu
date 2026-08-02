@@ -125,31 +125,58 @@ body.modal-open {
   transform: none;
 }
 
-/* Glassmorphism on homepage for card items and markdown content */
+/* Homepage card & content styling */
 .home-layout .card-item,
 .home-layout .home-content {
-  background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
-  border: 1px solid color-mix(in srgb, var(--vp-c-text-1) 12%, transparent);
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 8%, transparent);
   border-radius: var(--neptu-radius-lg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease, background-color 0.3s ease;
 }
 
 .home-layout .home-content {
   padding: 1.5rem 1.75rem;
 }
 
-.home-layout .card-item:hover {
+/* 1. Mode WITHOUT background image (clean, crisp, solid layout) */
+.home-layout:not(.home-has-bg) .card-item,
+.home-layout:not(.home-has-bg) .home-content {
+  background-color: var(--vp-c-bg-soft);
+  border: 1px solid color-mix(in srgb, var(--vp-c-text-1) 8%, transparent);
+  box-shadow: var(--neptu-card-shadow, 0 4px 14px rgba(0, 0, 0, 0.05));
+}
+
+.home-layout:not(.home-has-bg) .card-item:hover {
+  background-color: color-mix(in srgb, var(--vp-c-bg-soft) 95%, var(--vp-c-text-1) 5%);
+}
+
+.home-layout:not(.home-has-bg) .home-hero h1,
+.home-layout:not(.home-has-bg) .home-hero p {
+  text-shadow: none;
+}
+
+/* 2. Mode WITH background image (.home-has-bg) - Glassmorphism & contrast text shadows */
+.home-layout.home-has-bg .card-item,
+.home-layout.home-has-bg .home-content {
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vp-c-text-1) 12%, transparent);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 8%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.home-layout.home-has-bg .card-item:hover {
   background: color-mix(in srgb, var(--vp-c-bg-soft) 92%, transparent);
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.35),
     inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 15%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+}
+
+.home-layout.home-has-bg .home-hero h1,
+.home-layout.home-has-bg .home-hero p {
+  text-shadow: 2px 2px 12px color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
 }
 
 .card-item:visited .card-item-header {
