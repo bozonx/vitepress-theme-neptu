@@ -194,7 +194,6 @@ const ThemeConfigSchema = z
     similarPostsCount: z.number().optional(),
     sidebarTagsCount: z.number().optional(),
     paginationMaxItems: z.number().optional(),
-    homeBgParallaxOffset: z.number().optional(),
     home: HomeSchema.optional(),
     postFooter: z.array(z.string()).optional(),
     postList: z.looseObject({

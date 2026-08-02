@@ -96,11 +96,11 @@ const commonThemeConfig = {
   perPage: 10,
   sidebarTagsCount: 15,
   similarPostsCount: 5,
-  homeBgParallaxOffset: 300,
   home: {
     appearance: 'auto' as const,
     maxWidth: 800,
     background: 'none' as const,
+    bgParallaxOffset: 300,
     sections: [
       { type: 'featured' as const, enabled: true },
       { type: 'latest' as const, enabled: false },

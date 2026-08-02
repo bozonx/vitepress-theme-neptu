@@ -252,10 +252,6 @@ themeConfig:
   # Default: 5
   # paginationMaxItems: 5
 
-  # Parallax background offset (in px) for the home page hero section.
-  # Default: 300
-  # homeBgParallaxOffset: 300
-
   # --- Icons -----------------------------------------------------------------
   # Override any sidebar/nav icon with an Iconify icon name.
   # donateIcon: 'fa6-solid:hand-holding-heart'

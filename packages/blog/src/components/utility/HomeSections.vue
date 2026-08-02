@@ -15,10 +15,12 @@ const limit = (section: HomeSectionConfig) => section.limit || theme.value.perPa
 </script>
 
 <template>
-  <template v-for="section in sections" :key="section.type">
-    <HomeFeaturedPosts v-if="section.type === 'featured'" :max-posts="limit(section)" />
-    <HomeLatestPosts v-else-if="section.type === 'latest'" :limit="limit(section)" />
-    <HomePopularPosts v-else-if="section.type === 'popular'" :limit="limit(section)" />
-    <HomeTags v-else-if="section.type === 'tags'" :header="theme.t.tags" :limit="limit(section)" />
-  </template>
+  <div class="home-sections flex flex-col gap-14 md:gap-20">
+    <template v-for="section in sections" :key="section.type">
+      <HomeFeaturedPosts v-if="section.type === 'featured'" :max-posts="limit(section)" />
+      <HomeLatestPosts v-else-if="section.type === 'latest'" :limit="limit(section)" />
+      <HomePopularPosts v-else-if="section.type === 'popular'" :limit="limit(section)" />
+      <HomeTags v-else-if="section.type === 'tags'" :header="theme.t.tags" :limit="limit(section)" />
+    </template>
+  </div>
 </template>

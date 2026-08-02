@@ -23,7 +23,7 @@ const tagList = props.limit ? allTags.slice(0, props.limit) : allTags
   <UtilSubPageHeader class="home-hero-tags-header">{{
     props.header
   }}</UtilSubPageHeader>
-  <TagsList :tags="tagList" class="mb-12 home-hero-tags [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]" />
+  <TagsList :tags="tagList" class="home-hero-tags [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]" />
   </section>
 </template>
 

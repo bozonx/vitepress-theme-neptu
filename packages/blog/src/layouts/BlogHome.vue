@@ -34,7 +34,7 @@ const homeBackgroundImage = computed(() =>
   (frontmatter.value?.homeBackgroundImage as string) || home.value.backgroundImage || ''
 )
 const BG_HEIGHT_OFFSET = computed(
-  () => (frontmatter.value?.homeBgParallaxOffset as number) ?? home.value.bgParallaxOffset ?? theme.value.homeBgParallaxOffset ?? 0
+  () => (frontmatter.value?.homeBgParallaxOffset as number) ?? home.value.bgParallaxOffset ?? 0
 )
 
 let previousAppearance: boolean | null = null
@@ -105,9 +105,9 @@ watchEffect(() => {
       </TopBar>
     </header>
     <slot name="home-before" />
-    <div class="home-layout-page my-20 mx-7" :style="{ maxWidth: `${homeMaxWidth}px` }">
+    <div class="home-layout-page pt-16 sm:pt-20 my-12 md:my-16 mx-7 flex flex-col gap-12 md:gap-16 w-full" :style="{ maxWidth: `${homeMaxWidth}px` }">
       <HomeHero v-if="home.hero" v-bind="home.hero" />
-      <Content />
+      <div class="home-content vp-doc"><Content /></div>
       <HomeSections />
     </div>
     <slot name="home-after" />
@@ -118,5 +118,10 @@ watchEffect(() => {
 .home-layout {
   background-color: var(--vp-c-bg);
   color: var(--vp-c-text-1);
+}
+
+.home-content:empty,
+.home-content:not(:has(*)) {
+  display: none;
 }
 </style>

@@ -79,7 +79,6 @@ export namespace NeptuBlogTheme {
     perPage?: number
     sidebarTagsCount?: number
     similarPostsCount?: number
-    homeBgParallaxOffset?: number
     paginationMaxItems?: number
     postList?: {
       showDate?: boolean

@@ -38,7 +38,7 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 </script>
 
 <template>
-  <div class="mb-14 md:mb-18 home-hero">
+  <div class="home-hero">
     <div class="flex w-full max-lg:flex-col-reverse gap-x-2 gap-y-6">
       <div class="flex-1 max-lg:text-center home-hero-captions">
         <h1
