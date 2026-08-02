@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 ไม่พบหน้าเว็บ',
     postsCount: 'โพสต์',
     postsCountForms: ['โพสต์'],
+    draftLabel: 'ฉบับร่าง',
+    draftTitle: 'โพสต์นี้เป็นฉบับร่างและถูกซ่อนจากรายการ',
+    readingTime: 'เวลาอ่าน',
+    readingTimeForms: ['นาที'],
     ...shared,
 
     links: {

@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 पृष्ठ नहीं मिला',
     postsCount: 'प्रकाशन',
     postsCountForms: ['प्रकाशन', 'प्रकाशनों'],
+    draftLabel: 'मसौदा',
+    draftTitle: 'यह पोस्ट एक मसौदा है और सूचियों से छिपी है',
+    readingTime: 'पढ़ने का समय',
+    readingTimeForms: ['मिनट', 'मिनट'],
     ...shared,
 
     links: {

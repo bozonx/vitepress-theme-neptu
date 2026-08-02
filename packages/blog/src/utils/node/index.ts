@@ -1,6 +1,7 @@
 export * from './image.ts'
 export * from './rss.ts'
 export * from './markdown.ts'
+export * from './readingTime.ts'
 export * from './i18n.ts'
 export * from './config.ts'
 export * from './autoLoadLocales.ts'

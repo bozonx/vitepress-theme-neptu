@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 ページが見つかりません',
     postsCount: '投稿数',
     postsCountForms: ['投稿'],
+    draftLabel: '下書き',
+    draftTitle: 'この記事は下書きで、一覧には表示されません',
+    readingTime: '読了時間',
+    readingTimeForms: ['分'],
     ...shared,
 
     links: {

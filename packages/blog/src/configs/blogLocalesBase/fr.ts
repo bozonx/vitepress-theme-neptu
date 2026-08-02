@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 non trouvé',
     postsCount: 'Publications',
     postsCountForms: ['Publication', 'Publications'],
+    draftLabel: 'Brouillon',
+    draftTitle: 'Cet article est un brouillon et est masqué des listes',
+    readingTime: 'Temps de lecture',
+    readingTimeForms: ['min', 'min'],
     ...shared,
 
     links: {

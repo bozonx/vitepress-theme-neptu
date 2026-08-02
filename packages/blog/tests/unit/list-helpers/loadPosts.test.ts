@@ -184,3 +184,53 @@ describe('loadPostsDataFromFiles', () => {
     mockMakePreviewItem.mockRestore()
   })
 })
+
+describe('draft filtering', () => {
+  beforeEach(() => {
+    mockReaddir.mockReset()
+    clearGlobalCache()
+    mockMakePreviewItem.mockImplementation((filePath: string) => ({
+      url: filePath.replace(/\\/g, '/').replace('.md', '.html'),
+      frontmatter: { draft: filePath.includes('draft') },
+    }))
+  })
+
+  afterEach(() => {
+    mockMakePreviewItem.mockImplementation((filePath: string) => ({
+      url: filePath.replace(/\\/g, '/').replace('.md', '.html'),
+    }))
+  })
+
+  it('drops drafts from a directory scan when asked', async () => {
+    mockReaddir.mockResolvedValue(['published.md', 'draft-one.md'])
+    const posts = await loadPostsData('/content/en', { includeDrafts: false })
+
+    expect(posts).toHaveLength(1)
+    expect(posts[0].url).toContain('published')
+  })
+
+  it('keeps drafts when they are included', async () => {
+    mockReaddir.mockResolvedValue(['published.md', 'draft-one.md'])
+    const posts = await loadPostsData('/content/en', { includeDrafts: true })
+
+    expect(posts).toHaveLength(2)
+  })
+
+  it('drops drafts from a watched file list when asked', async () => {
+    const posts = await loadPostsDataFromFiles(['/published.md', '/draft-one.md'], {
+      includeDrafts: false,
+    })
+
+    expect(posts).toHaveLength(1)
+    expect(posts[0].url).toContain('published')
+  })
+
+  it('passes the reading speed through to the preview builder', async () => {
+    await loadPostsDataFromFiles(['/published.md'], { readingWpm: 150 })
+
+    expect(mockMakePreviewItem).toHaveBeenCalledWith(
+      '/published.md',
+      expect.objectContaining({ readingWpm: 150 })
+    )
+  })
+})

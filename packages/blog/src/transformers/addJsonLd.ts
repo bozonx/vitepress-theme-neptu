@@ -1,6 +1,7 @@
 import type { HeadConfig } from 'vitepress'
 import yaml from 'yaml'
 import { omitUndefined } from '../utils/shared/index.ts'
+import { toIsoDuration } from '../utils/shared/readingTime.ts'
 import {
   isPost,
   generatePageUrlPath,
@@ -166,6 +167,9 @@ function createPostJsonLd(
       url: authorUrl,
     }) as JsonLdValue,
     dateModified: toIsoDate(pageData.lastUpdated) as JsonLdValue,
+    // Both are computed by `addReadingTime` and left off when it did not run.
+    wordCount: (pageData.wordCount || undefined) as JsonLdValue,
+    timeRequired: toIsoDuration(pageData.readingTime ?? 0) as JsonLdValue,
     keywords:
       tags && tags.length > 0
         ? (tags as Array<string | Tag>)

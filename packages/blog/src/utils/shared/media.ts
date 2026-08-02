@@ -162,3 +162,39 @@ export function getMediaErrorMessage(
       return labels.unknown
   }
 }
+
+/** Normalised sidebar logo: one source per appearance plus its alt text. */
+export interface ResolvedSidebarLogo {
+  light: string
+  dark: string
+  alt: string
+}
+
+/**
+ * Normalises `themeConfig.sidebarLogoSrc`, which accepts either a single path
+ * used for both appearances or `{ light, dark }`.
+ *
+ * A missing side falls back to the other one, so a half-filled object still
+ * renders a logo instead of a broken image.
+ */
+export function resolveSidebarLogo(
+  value: unknown
+): ResolvedSidebarLogo | undefined {
+  if (typeof value === 'string') {
+    return value ? { light: value, dark: value, alt: '' } : undefined
+  }
+
+  if (!value || typeof value !== 'object') return undefined
+
+  const { light, dark, alt } = value as Record<string, unknown>
+  const lightSrc = typeof light === 'string' ? light : ''
+  const darkSrc = typeof dark === 'string' ? dark : ''
+
+  if (!lightSrc && !darkSrc) return undefined
+
+  return {
+    light: lightSrc || darkSrc,
+    dark: darkSrc || lightSrc,
+    alt: typeof alt === 'string' ? alt : '',
+  }
+}

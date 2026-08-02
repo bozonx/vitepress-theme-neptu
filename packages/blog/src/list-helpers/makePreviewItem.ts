@@ -12,6 +12,8 @@ import {
   resolveContentMediaPath,
 } from '../utils/shared/index.ts'
 import { getImageDimensions } from '../utils/node/image.ts'
+import { measureMarkdown } from '../utils/node/readingTime.ts'
+import { isDraft } from '../utils/shared/publication.ts'
 import type { PostFrontmatter, Tag } from '../types.d.ts'
 
 export interface PreviewItem {
@@ -21,6 +23,9 @@ export interface PreviewItem {
   title: string | undefined
   tags: Tag[]
   preview: string | undefined
+  draft: boolean
+  wordCount: number
+  readingTime: number
   thumbnail: string | undefined
   cover: string | undefined
   coverHeight: number | undefined
@@ -33,13 +38,15 @@ export interface MakePreviewItemOptions {
   maxPreviewLength?: number
   /** Absolute path to srcDir. When provided, avoids the hardcoded 3-level depth assumption. */
   srcDir?: string
+  /** Words per minute for the reading-time estimate. Defaults to 200. */
+  readingWpm?: number
 }
 
 export function makePreviewItem(
   filePath: string,
   options: MakePreviewItemOptions = {}
 ): PreviewItem {
-  const { maxPreviewLength, srcDir } = options
+  const { maxPreviewLength, srcDir, readingWpm } = options
   const baseDir = srcDir ?? path.resolve(filePath, '../../../')
   const relativePath = path.relative(baseDir, filePath)
   const lang = relativePath.split('/')[0]!
@@ -58,6 +65,8 @@ export function makePreviewItem(
       content,
       maxPreviewLength ?? PREVIEW_LENGTH
     )
+
+  const { wordCount, readingTime } = measureMarkdown(content, readingWpm)
 
   // Get image dimensions if cover is provided
   let coverDimensions = null
@@ -81,6 +90,9 @@ export function makePreviewItem(
     featured: fm.featured === true,
     tags: normalizeTags(fm.tags, lang) || [],
     preview,
+    draft: isDraft(fm),
+    wordCount,
+    readingTime,
     thumbnail: cover,
     cover,
     coverHeight: coverDimensions?.height,

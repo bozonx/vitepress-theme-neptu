@@ -9,6 +9,7 @@ import SideBarItems from './SideBarItems.vue'
 import { Icon } from '@iconify/vue'
 import SideBarTags from './SideBarTags.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { resolveSidebarLogo } from '../../utils/shared/media.ts'
 import type { PostLite, SideBarItem } from '../../types.d.ts'
 
 const props = defineProps<{ isMobile: boolean; localePosts?: PostLite[] }>()
@@ -18,6 +19,26 @@ const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []
 )
+// Site-root paths need the configured `base` prefix; relative and external
+// URLs are used as-is.
+const logoSrc = (src: string): string =>
+  src.startsWith('/') ? withBase(src) : src
+const sidebarLogo = computed(() => {
+  const resolved = resolveSidebarLogo(theme.value.sidebarLogoSrc)
+
+  if (!resolved) return undefined
+
+  return {
+    light: logoSrc(resolved.light),
+    dark: logoSrc(resolved.dark),
+    alt: resolved.alt,
+    // Both variants are rendered and one is hidden with CSS keyed on the
+    // `.dark` class VitePress sets before first paint. Swapping `src`
+    // reactively instead would flash the wrong logo during hydration.
+    hasSeparateVariants: resolved.light !== resolved.dark,
+  }
+})
+
 const animationTimeMs = 400
 // Default to closed (mobile) so SSR HTML doesn't render the drawer open
 // and intercept clicks before hydration. The watch below with
@@ -251,20 +272,31 @@ onUnmounted(() => {
     >
       <div>
         <a
-          v-if="theme.sidebarLogoSrc"
+          v-if="sidebarLogo"
           :href="withBase(`/${localeIndex}/`)"
           class="sidebar-logo block"
           :title="theme.t.toHome"
           :aria-label="theme.t.toHome"
         >
           <img
-            :src="theme.sidebarLogoSrc.startsWith('/') ? withBase(theme.sidebarLogoSrc) : theme.sidebarLogoSrc"
-            loading="lazy"
+            :src="sidebarLogo.light"
+            :alt="sidebarLogo.alt"
             decoding="async"
             width="320"
             :height="theme.sidebarLogoHeight || 158"
             class="max-w-full h-auto"
-            aria-hidden="true"
+            :class="{ 'sidebar-logo-light': sidebarLogo.hasSeparateVariants }"
+            :aria-hidden="sidebarLogo.alt ? undefined : 'true'"
+          />
+          <img
+            v-if="sidebarLogo.hasSeparateVariants"
+            :src="sidebarLogo.dark"
+            :alt="sidebarLogo.alt"
+            decoding="async"
+            width="320"
+            :height="theme.sidebarLogoHeight || 158"
+            class="max-w-full h-auto sidebar-logo-dark"
+            :aria-hidden="sidebarLogo.alt ? undefined : 'true'"
           />
         </a>
         <h4

@@ -18,7 +18,7 @@ translations:
 | Раздел | С чего начать |
 | --- | --- |
 | Быстрый старт | [Запуск за 5 минут](../post/getting-started) · [Структура проекта](../post/project-structure) · [Первый пост](../post/first-post) |
-| Контент | [Все поля frontmatter](../post/full-featured), посты с тегом [`frontmatter`](../tags/frontmatter/1) |
+| Контент | [Все поля frontmatter](../post/full-featured) · [черновики и время чтения](../post/drafts-and-reading-time), посты с тегом [`frontmatter`](../tags/frontmatter/1) |
 | Настройка | [Уровни конфигурации](../post/config-layers) · [навигация и футер](../post/nav-sidebar-footer) · [темы и шрифты](../post/color-themes) · [списки и страницы](../post/lists-and-pages) |
 | Мультиязычность | [Локали](../post/locales) · [переводы и hreflang](../post/i18n-hreflang) |
 | Кастомизация | [Компоненты](../post/components) · [хуки и слоты](../post/advanced) · [оглавление и реклама](../post/aside-and-ads) · [согласие на куки](../post/consent-and-analytics) |

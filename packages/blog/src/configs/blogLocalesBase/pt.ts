@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 não encontrado',
     postsCount: 'Publicações',
     postsCountForms: ['Publicação', 'Publicações'],
+    draftLabel: 'Rascunho',
+    draftTitle: 'Esta publicação é um rascunho e está oculta das listas',
+    readingTime: 'Tempo de leitura',
+    readingTimeForms: ['min', 'min'],
     ...shared,
 
     links: {

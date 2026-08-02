@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 niet gevonden',
     postsCount: 'Publicaties',
     postsCountForms: ['Publicatie', 'Publicaties'],
+    draftLabel: 'Concept',
+    draftTitle: 'Dit bericht is een concept en is verborgen in lijsten',
+    readingTime: 'Leestijd',
+    readingTimeForms: ['min', 'min'],
     ...shared,
 
     links: {

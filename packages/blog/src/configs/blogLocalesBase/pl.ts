@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 Nie znaleziono strony',
     postsCount: 'Publikacje',
     postsCountForms: ['publikacja', 'publikacje', 'publikacji'],
+    draftLabel: 'Szkic',
+    draftTitle: 'Ten wpis jest szkicem i jest ukryty na listach',
+    readingTime: 'Czas czytania',
+    readingTimeForms: ['min', 'min', 'min'],
     ...shared,
 
     links: {

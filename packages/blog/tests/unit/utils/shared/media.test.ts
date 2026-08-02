@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   isContentRelativePath,
   resolveContentMediaPath,
+  resolveSidebarLogo,
 } from '../../../../src/utils/shared/media.ts'
 
 describe('isContentRelativePath', () => {
@@ -81,5 +82,45 @@ describe('resolveContentMediaPath', () => {
 
   it('returns the value unchanged without a markdown path', () => {
     expect(resolveContentMediaPath('./c.jpg', undefined)).toBe('./c.jpg')
+  })
+})
+
+describe('resolveSidebarLogo', () => {
+  it('uses a single string for both appearances', () => {
+    expect(resolveSidebarLogo('/img/logo.svg')).toEqual({
+      light: '/img/logo.svg',
+      dark: '/img/logo.svg',
+      alt: '',
+    })
+  })
+
+  it('keeps a separate source per appearance', () => {
+    expect(
+      resolveSidebarLogo({
+        light: '/img/light.svg',
+        dark: '/img/dark.svg',
+        alt: 'Blog',
+      })
+    ).toEqual({ light: '/img/light.svg', dark: '/img/dark.svg', alt: 'Blog' })
+  })
+
+  it('falls back to the other side when one is missing', () => {
+    expect(resolveSidebarLogo({ light: '/img/light.svg' })).toEqual({
+      light: '/img/light.svg',
+      dark: '/img/light.svg',
+      alt: '',
+    })
+    expect(resolveSidebarLogo({ dark: '/img/dark.svg' })).toEqual({
+      light: '/img/dark.svg',
+      dark: '/img/dark.svg',
+      alt: '',
+    })
+  })
+
+  it('returns undefined for empty or unusable values', () => {
+    expect(resolveSidebarLogo(undefined)).toBeUndefined()
+    expect(resolveSidebarLogo('')).toBeUndefined()
+    expect(resolveSidebarLogo({})).toBeUndefined()
+    expect(resolveSidebarLogo(42)).toBeUndefined()
   })
 })

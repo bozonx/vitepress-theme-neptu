@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 није пронађено',
     postsCount: 'Публикације',
     postsCountForms: ['публикација', 'публикације', 'публикација'],
+    draftLabel: 'Нацрт',
+    draftTitle: 'Ова објава је нацрт и сакривена је са листа',
+    readingTime: 'Време читања',
+    readingTimeForms: ['мин', 'мин', 'мин'],
     ...shared,
 
     links: {

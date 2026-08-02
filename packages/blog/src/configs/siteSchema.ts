@@ -123,6 +123,8 @@ const TranslationSchema = z.looseObject({
   allPostsOfAuthor: z.string().optional(), closeMenu: z.string().optional(), allPostsOfYear: z.string().optional(),
   pageNotFound: z.string().optional(), postsCount: z.string().optional(), editLink: z.string().optional(),
   postsCountForms: z.array(z.string()).optional(), search: z.string().optional(), searchInBlog: z.string().optional(),
+  draftLabel: z.string().optional(), draftTitle: z.string().optional(),
+  readingTime: z.string().optional(), readingTimeForms: z.array(z.string()).optional(),
   tocLabel: z.string().optional(), adLabel: z.string().optional(),
   links: z.record(z.string(), z.string()).optional(),
   months: z.array(z.string()).optional(), podcasts: z.record(z.string(), z.string()).optional(),
@@ -174,6 +176,16 @@ const ThemeConfigSchema = z
       showPreview: z.boolean().optional(),
       showAuthor: z.boolean().optional(),
       maxPreviewLength: z.number().int().min(0).optional(),
+      showReadingTime: z.boolean().optional(),
+    }).optional(),
+    readingTime: z.looseObject({
+      enabled: z.boolean().optional(),
+      wpm: z.number().int().min(1).optional(),
+      layouts: z.array(z.string()).optional(),
+    }).optional(),
+    drafts: z.looseObject({
+      includeDrafts: z.boolean().optional(),
+      showBadge: z.boolean().optional(),
     }).optional(),
     popularPosts: z.looseObject({
       enabled: z.boolean().optional(),
@@ -223,7 +235,14 @@ const ThemeConfigSchema = z
     atomIcon: z.string().optional(),
     youtubeIcon: z.string().optional(),
     tagsIcon: z.string().optional(),
-    sidebarLogoSrc: z.string().optional(),
+    sidebarLogoSrc: z.union([
+      z.string(),
+      z.looseObject({
+        light: z.string(),
+        dark: z.string(),
+        alt: z.string().optional(),
+      }),
+    ]).optional(),
     sidebarLogoHeight: z.number().int().min(1).optional(),
     sidebarMenuLabel: z.string().optional(),
     colorThemeMenuLabel: z.string().optional(),

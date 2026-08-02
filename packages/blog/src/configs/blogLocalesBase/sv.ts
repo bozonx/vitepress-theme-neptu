@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 Hittades inte',
     postsCount: 'Publiceringar',
     postsCountForms: ['Inlägg', 'Inlägg'],
+    draftLabel: 'Utkast',
+    draftTitle: 'Det här inlägget är ett utkast och är dolt i listor',
+    readingTime: 'Lästid',
+    readingTimeForms: ['min', 'min'],
     ...shared,
 
     links: {

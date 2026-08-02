@@ -18,7 +18,8 @@ import {
   validatePostForRss,
   validateRssConfig,
 } from '../utils/node/index.ts'
-import { resolveContentMediaPath } from '../utils/shared/media.ts'
+import { resolveContentMediaPath, resolveSidebarLogo } from '../utils/shared/media.ts'
+import { isPostVisible, resolveIncludeDrafts } from '../utils/shared/publication.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
 
 /**
@@ -67,11 +68,15 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
         id: localeSiteUrl,
         link: localeSiteUrl,
         favicon: defaultFavicon,
+        // A feed reader has no appearance of its own, so the light variant of
+        // a per-appearance logo is the one that ships.
         image:
           makeAbsoluteUrl(
             siteUrl,
-            locale.themeConfig?.sidebarLogoSrc ||
-              config.userConfig?.themeConfig?.sidebarLogoSrc
+            resolveSidebarLogo(
+              locale.themeConfig?.sidebarLogoSrc ??
+                config.userConfig?.themeConfig?.sidebarLogoSrc
+            )?.light
           ) || defaultFavicon,
         generator: 'VitePress Neptu Blog Theme',
         updated: new Date(),
@@ -86,9 +91,16 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
           { includeSrc: true }
         ).load()
 
-        const sortedPosts = posts.sort(
-          (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
+        const includeDrafts = resolveIncludeDrafts(
+          locale.themeConfig?.drafts ?? config.userConfig?.themeConfig?.drafts
         )
+        const sortedPosts = posts
+          .filter((post) =>
+            isPostVisible(post.frontmatter as PostFrontmatter, { includeDrafts })
+          )
+          .sort(
+            (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
+          )
         const configuredMaxPosts = Number(
           locale.themeConfig?.feeds?.maxPosts ??
           config.userConfig?.themeConfig?.feeds?.maxPosts

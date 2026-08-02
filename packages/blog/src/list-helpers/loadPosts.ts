@@ -7,6 +7,10 @@ import {
   type AnalyticsDataSource,
 } from './loadPostsStats.ts'
 import { makePreviewItem } from './makePreviewItem.ts'
+import {
+  areDraftsVisibleByDefault,
+  isPostVisible,
+} from '../utils/shared/publication.ts'
 import type { Post } from '../types.d.ts'
 
 const POSTS_CACHE_KEY = '__neptuBlogCache__'
@@ -28,6 +32,24 @@ export interface LoadPostsOptions {
   postsDir?: string
   /** Absolute path to srcDir. Passed to makePreviewItem to avoid hardcoded depth assumption. */
   srcDir?: string
+  /** Words per minute for the reading-time estimate. Defaults to 200. */
+  readingWpm?: number
+  /**
+   * Keep `draft: true` posts in the result. Defaults to
+   * {@link areDraftsVisibleByDefault} — on in `vitepress dev`, off in a
+   * production build.
+   */
+  includeDrafts?: boolean
+}
+
+/**
+ * Drafts are dropped after the previews are built, so the cache key stays
+ * independent of the flag and the frontmatter is available for the check.
+ */
+function applyVisibility(posts: Post[], includeDrafts: boolean): Post[] {
+  if (includeDrafts) return posts
+
+  return posts.filter((post) => isPostVisible(post.frontmatter))
 }
 
 /** Loads all posts from the `<localeDir>/post` directory. */
@@ -42,6 +64,7 @@ export async function loadPostsData(
     cache: cacheOpt,
     postsDir: postsDirName = POSTS_DIR,
     srcDir: srcDirOpt,
+    includeDrafts = areDraftsVisibleByDefault(),
   } = options
   const localeIndex = path.basename(localeDir)
 
@@ -62,9 +85,16 @@ export async function loadPostsData(
     const files = await fs.readdir(postsDir, { recursive: true })
     const mdFiles = files.filter((file) => file.endsWith('.md')).sort()
     const fullPaths = mdFiles.map((file) => path.join(postsDir, file))
-    const posts = fullPaths.map((filePath) =>
-      makePreviewItem(filePath, { maxPreviewLength: options.maxPreviewLength, srcDir })
-    ) as Post[]
+    const posts = applyVisibility(
+      fullPaths.map((filePath) =>
+        makePreviewItem(filePath, {
+          maxPreviewLength: options.maxPreviewLength,
+          readingWpm: options.readingWpm,
+          srcDir,
+        })
+      ) as Post[],
+      includeDrafts
+    )
 
     cache[cacheKey] = posts
 
@@ -109,6 +139,7 @@ export async function loadPostsDataFromFiles(
     cache: cacheOpt,
     postsDir: postsDirName = POSTS_DIR,
     srcDir,
+    includeDrafts = areDraftsVisibleByDefault(),
   } = options
   const fullPaths = files
     .filter((file) => file.endsWith('.md'))
@@ -124,12 +155,16 @@ export async function loadPostsDataFromFiles(
   }
 
   try {
-    const posts = fullPaths.map((filePath) =>
-      makePreviewItem(filePath, {
-        maxPreviewLength: options.maxPreviewLength,
-        srcDir: srcDir ?? inferSrcDir(filePath, postsDirName),
-      })
-    ) as Post[]
+    const posts = applyVisibility(
+      fullPaths.map((filePath) =>
+        makePreviewItem(filePath, {
+          maxPreviewLength: options.maxPreviewLength,
+          readingWpm: options.readingWpm,
+          srcDir: srcDir ?? inferSrcDir(filePath, postsDirName),
+        })
+      ) as Post[],
+      includeDrafts
+    )
 
     cache[cacheKey] = posts
 

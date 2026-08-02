@@ -12,6 +12,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # The published packages declare `engines.node: ^20.19.0 || >=22.12.0`, which
+  # is the floor Vite 7 / VitePress 2 impose. This job proves the lower bound
+  # still builds; the `test` job below stays on 22 and owns the Pages deploy.
+  compat:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build icon bundle
+        run: npm run generate:icons
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Build documentation and landing example
+        run: npm run build
+
   test:
     permissions:
       contents: read

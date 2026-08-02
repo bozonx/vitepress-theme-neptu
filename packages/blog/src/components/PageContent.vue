@@ -11,6 +11,8 @@ import NeptuAd from './NeptuAd.vue'
 import TocCollapsible from './toc/TocCollapsible.vue'
 import PostFooter from './post/PostFooter.vue'
 import PostDate from './post/PostDate.vue'
+import PostDraftBadge from './post/PostDraftBadge.vue'
+import PostReadingTime from './post/PostReadingTime.vue'
 import PostTopBar from './post/PostTopBar.vue'
 import PostImage from './post/PostImage.vue'
 
@@ -71,7 +73,11 @@ const customContent = computed(() => {
         {{ page.title }}
       </h1>
       <div class="mt-4 flex items-start justify-between gap-4 max-sm:flex-col">
-        <PostDate />
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <PostDate />
+          <PostReadingTime />
+          <PostDraftBadge />
+        </div>
       </div>
       <PostTopBar class="mt-10" />
     </header>

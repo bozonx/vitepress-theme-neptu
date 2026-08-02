@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 Lapa nav atrasta',
     postsCount: 'Publikācijas',
     postsCountForms: ['publikācija', 'publikācijas', 'publikāciju'],
+    draftLabel: 'Melnraksts',
+    draftTitle: 'Šis ieraksts ir melnraksts un ir paslēpts no sarakstiem',
+    readingTime: 'Lasīšanas laiks',
+    readingTimeForms: ['min', 'min', 'min'],
     ...shared,
 
     links: {

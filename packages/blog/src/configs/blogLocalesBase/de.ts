@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 Nicht gefunden',
     postsCount: 'Veröffentlichungen',
     postsCountForms: ['Beitrag', 'Beiträge'],
+    draftLabel: 'Entwurf',
+    draftTitle: 'Dieser Beitrag ist ein Entwurf und wird in Listen ausgeblendet',
+    readingTime: 'Lesezeit',
+    readingTimeForms: ['Min.', 'Min.'],
     ...shared,
 
     links: {

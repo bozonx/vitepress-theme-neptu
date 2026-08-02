@@ -61,6 +61,9 @@ const params = computed(() => ({
       :show-tags="theme.postList?.showTags ?? true"
       :show-thumbnail="theme.postList?.showThumbnail ?? true"
       :show-preview="theme.postList?.showPreview ?? true"
+      :reading-time="props.item.readingTime ?? 0"
+      :show-reading-time="theme.postList?.showReadingTime ?? false"
+      :draft="props.item.draft === true"
     />
   </article>
 </template>

@@ -41,6 +41,7 @@ translations:
 | Кнопка видео | `videoLink` | вверху поста |
 | Подкасты | `podcasts` | вверху поста |
 | Ссылка на обсуждение | `commentLink` | подвал поста |
+| Время чтения | `readingTime` | шапка поста |
 
 ## Как это сделано
 
@@ -70,3 +71,5 @@ podcasts:
 [обложки](cover-and-images), [медиа-компоненты](media-components),
 [автор, видео и подкасты](author-video-podcast),
 [превью и поиск](preview-and-search) и [футер поста](post-footer-and-sharing).
+Поля `draft` и `readingTime` разбираются в
+[Черновиках и времени чтения](drafts-and-reading-time).

@@ -84,6 +84,10 @@ export default {
     pageNotFound: 'Страница не найдена',
     postsCount: 'Публикаций',
     postsCountForms: ['публикация', 'публикации', 'публикаций'],
+    draftLabel: 'Черновик',
+    draftTitle: 'Это черновик, он скрыт из списков',
+    readingTime: 'Время чтения',
+    readingTimeForms: ['мин', 'мин', 'мин'],
     ...shared,
 
     links: {

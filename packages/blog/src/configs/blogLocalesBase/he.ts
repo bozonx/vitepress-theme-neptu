@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 העמוד לא נמצא',
     postsCount: 'פרסומים',
     postsCountForms: ['פרסום', 'פרסומים'],
+    draftLabel: 'טיוטה',
+    draftTitle: 'פוסט זה הוא טיוטה ומוסתר מהרשימות',
+    readingTime: 'זמן קריאה',
+    readingTimeForms: ['דק׳', 'דק׳'],
     ...shared,
 
     links: {

@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 Bulunamadı',
     postsCount: 'Yayınlar',
     postsCountForms: ['Yayın', 'Yayınlar'],
+    draftLabel: 'Taslak',
+    draftTitle: 'Bu yazı bir taslaktır ve listelerde gizlidir',
+    readingTime: 'Okuma süresi',
+    readingTimeForms: ['dk', 'dk'],
     ...shared,
 
     links: {

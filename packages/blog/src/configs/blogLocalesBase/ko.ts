@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 페이지를 찾을 수 없습니다',
     postsCount: '게시물',
     postsCountForms: ['게시물'],
+    draftLabel: '초안',
+    draftTitle: '이 글은 초안이며 목록에서 숨겨집니다',
+    readingTime: '읽는 시간',
+    readingTimeForms: ['분'],
     ...shared,
 
     links: {

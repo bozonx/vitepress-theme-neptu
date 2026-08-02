@@ -88,7 +88,15 @@ export namespace NeptuBlogTheme {
       showPreview?: boolean
       showAuthor?: boolean
       maxPreviewLength?: number
+      /** Show the reading-time badge on list items. Defaults to false. */
+      showReadingTime?: boolean
     }
+
+    /** Reading-time estimation — see {@link ReadingTimeConfig}. */
+    readingTime?: ReadingTimeConfig
+
+    /** Draft handling — see {@link DraftsConfig}. */
+    drafts?: DraftsConfig
 
     popularPosts?: PopularPostsConfig
     /**
@@ -156,7 +164,12 @@ export namespace NeptuBlogTheme {
       fullContent?: boolean
     }
 
-    sidebarLogoSrc?: string
+    /**
+     * Sidebar logo. A plain string is used for both appearances; the object
+     * form serves a different file per light/dark appearance. Both variants
+     * are rendered and switched with CSS, so there is no flash on first paint.
+     */
+    sidebarLogoSrc?: string | SidebarLogo
     sidebarLogoHeight?: number
     /**
      * Optional visual name for the blog UI. Prefer the locale-level `title`
@@ -274,6 +287,14 @@ export namespace NeptuBlogTheme {
     postsCount: string
     editLink: string
     postsCountForms: string[]
+    /** Badge shown next to a `draft: true` post. */
+    draftLabel: string
+    /** Tooltip of the draft badge. */
+    draftTitle: string
+    /** Accessible label / tooltip of the reading-time badge. */
+    readingTime: string
+    /** Plural forms of the reading-time unit, e.g. `['min', 'min']`. */
+    readingTimeForms: string[]
     search: string
     searchInBlog: string
     /** Heading above the table of contents. */
@@ -561,6 +582,37 @@ export namespace NeptuBlogTheme {
     target?: string
   }
 
+  /** Per-appearance sidebar logo. Both files are shipped; CSS picks one. */
+  export interface SidebarLogo {
+    light: string
+    dark: string
+    /** Alt text. Empty by default — the logo duplicates the adjacent link. */
+    alt?: string
+  }
+
+  export interface ReadingTimeConfig {
+    /** Defaults to true. */
+    enabled?: boolean
+    /** Words per minute used for the estimate. Defaults to 200. */
+    wpm?: number
+    /**
+     * Layouts that render the reading-time badge in the post header. Defaults
+     * to `['post']`. Per-page frontmatter `readingTime: true | false` wins.
+     */
+    layouts?: string[]
+  }
+
+  export interface DraftsConfig {
+    /**
+     * Keep `draft: true` posts in lists, feeds and the search index.
+     * Defaults to `true` in `vitepress dev` and `false` in a production build,
+     * so drafts are previewable while writing and never ship by accident.
+     */
+    includeDrafts?: boolean
+    /** Show the "draft" badge next to a draft post. Defaults to true. */
+    showBadge?: boolean
+  }
+
   export interface SidebarConfig {
     links?: NavLink[]
     recent?: boolean
@@ -642,6 +694,17 @@ export namespace NeptuBlogTheme {
     tags?: Array<string | Tag>
     /** Marks the post for explicit featured-post collections. Does not change chronological lists. */
     featured?: boolean
+    /**
+     * Keeps the post out of lists, feeds, sitemap and search index, and marks
+     * the page `noindex`. The page itself is still built, so its URL can be
+     * opened for preview.
+     */
+    draft?: boolean
+    /**
+     * Force the reading-time badge on or off for this page, overriding
+     * `themeConfig.readingTime.layouts`.
+     */
+    readingTime?: boolean
     previewText?: string
     descrAsPreview?: boolean
     jsonLd?: string
@@ -701,6 +764,12 @@ export namespace NeptuBlogTheme {
     coverHeight?: number | string
     coverWidth?: number | string
     featured?: boolean
+    /** Mirrors `frontmatter.draft`. Only ever true when drafts are included. */
+    draft?: boolean
+    /** Number of words in the post body, counted at build time. */
+    wordCount?: number
+    /** Estimated reading time in whole minutes. */
+    readingTime?: number
     analyticsStats?: Record<string, number>
     [key: string]: unknown
   }
@@ -725,6 +794,10 @@ export namespace NeptuBlogTheme {
   export interface ExtendedPageData extends PageData {
     frontmatter: PostFrontmatter
     filePath: string
+    /** Word count of the post body, added by `addReadingTime`. */
+    wordCount?: number
+    /** Estimated reading time in whole minutes, added by `addReadingTime`. */
+    readingTime?: number
   }
 
   export interface ExtendedSiteConfig {
@@ -779,6 +852,9 @@ export type SocialMediaShare = NeptuBlogTheme.SocialMediaShare
 export type PagefindUITranslations = NeptuBlogTheme.PagefindUITranslations
 export type TocConfig = NeptuBlogTheme.TocConfig
 export type AdsConfig = NeptuBlogTheme.AdsConfig
+export type ReadingTimeConfig = NeptuBlogTheme.ReadingTimeConfig
+export type DraftsConfig = NeptuBlogTheme.DraftsConfig
+export type SidebarLogo = NeptuBlogTheme.SidebarLogo
 export type ConsentConfig = NeptuBlogTheme.ConsentConfig
 export type ConsentState = NeptuBlogTheme.ConsentState
 

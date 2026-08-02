@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 Stránka nenalezena',
     postsCount: 'Publikace',
     postsCountForms: ['příspěvek', 'příspěvky', 'příspěvků'],
+    draftLabel: 'Koncept',
+    draftTitle: 'Tento příspěvek je koncept a je skrytý ze seznamů',
+    readingTime: 'Doba čtení',
+    readingTimeForms: ['min', 'min', 'min'],
     ...shared,
 
     links: {

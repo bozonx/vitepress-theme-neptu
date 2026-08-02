@@ -81,6 +81,10 @@ export default {
     pageNotFound: '404 页面未找到',
     postsCount: '文章',
     postsCountForms: ['文章', '文章'],
+    draftLabel: '草稿',
+    draftTitle: '这是草稿，已从列表中隐藏',
+    readingTime: '阅读时间',
+    readingTimeForms: ['分钟'],
     ...shared,
 
     links: {

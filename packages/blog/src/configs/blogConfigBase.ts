@@ -25,6 +25,7 @@ import {
   DEFAULT_ADS_IN_CONTENT,
   DEFAULT_ADS_LAYOUTS,
 } from '../utils/shared/ads.ts'
+import { DEFAULT_READING_WPM } from '../utils/shared/readingTime.ts'
 import {
   DEFAULT_TOC_LAYOUTS,
   DEFAULT_TOC_LEVEL,
@@ -35,6 +36,8 @@ import { addJsonLd } from '../transformers/addJsonLd.ts'
 import { addHreflang } from '../transformers/addHreflang.ts'
 import { addOgMetaTags } from '../transformers/addOgMetaTags.ts'
 import { addRssLinks } from '../transformers/addRssLinks.ts'
+import { addReadingTime } from '../transformers/addReadingTime.ts'
+import { markDraftPage } from '../transformers/markDraftPage.ts'
 import { filterSitemap } from '../transformers/filterSitemap.ts'
 import type { SitemapItem } from '../transformers/filterSitemap.ts'
 import { generateRssFeed } from '../transformers/generateRssFeed.ts'
@@ -101,6 +104,20 @@ const commonThemeConfig = {
     showPreview: true,
     showAuthor: true,
     maxPreviewLength: 300,
+    showReadingTime: false,
+  },
+
+  readingTime: {
+    enabled: true,
+    wpm: DEFAULT_READING_WPM,
+    layouts: ['post'],
+  },
+
+  drafts: {
+    // `includeDrafts` is intentionally absent: leaving it unset lets
+    // `resolveIncludeDrafts` fall back to the environment, so drafts show in
+    // `vitepress dev` and disappear from a production build.
+    showBadge: true,
   },
 
   popularPosts: {
@@ -321,6 +338,16 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
         ...config.themeConfig?.postList,
       },
 
+      readingTime: {
+        ...commonThemeConfig.readingTime,
+        ...config.themeConfig?.readingTime,
+      },
+
+      drafts: {
+        ...commonThemeConfig.drafts,
+        ...config.themeConfig?.drafts,
+      },
+
       feeds: {
         ...commonThemeConfig.feeds,
         ...config.themeConfig?.feeds,
@@ -362,6 +389,13 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
 
       collectImageDimensions(extendedPageData, extendedSiteConfig)
       resolveMediaPaths(extendedPageData)
+      // Before the noindex check below: a draft adds its own robots meta and
+      // must be picked up by the same `hasNoIndex` pass.
+      markDraftPage(extendedPageData, config.themeConfig?.drafts)
+      addReadingTime(extendedPageData, {
+        siteConfig: extendedSiteConfig,
+        readingTime: config.themeConfig?.readingTime,
+      })
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
       transformDescription(extendedPageData, { siteConfig: extendedSiteConfig })
       transformPageMeta(extendedPageData)

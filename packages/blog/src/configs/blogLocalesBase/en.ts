@@ -84,6 +84,10 @@ export default {
     pageNotFound: '404 not found',
     postsCount: 'Publications',
     postsCountForms: ['Publication', 'Publications'],
+    draftLabel: 'Draft',
+    draftTitle: 'This post is a draft and is hidden from lists',
+    readingTime: 'Reading time',
+    readingTimeForms: ['min', 'min'],
     ...shared,
 
     links: {

@@ -3,6 +3,8 @@ import { withBase } from 'vitepress'
 
 import BaseLink from './BaseLink.vue'
 import TagsList from './TagsList.vue'
+import PostDraftBadge from './post/PostDraftBadge.vue'
+import PostReadingTime from './post/PostReadingTime.vue'
 import type { TagInfo } from '../types.d.ts'
 
 const props = withDefaults(
@@ -20,8 +22,18 @@ const props = withDefaults(
     showTags?: boolean
     showThumbnail?: boolean
     showPreview?: boolean
+    /** Estimated reading time in minutes. Hidden when 0 or unset. */
+    readingTime?: number
+    showReadingTime?: boolean
+    draft?: boolean
   }>(),
-  { showDate: true, showTags: true, showThumbnail: true, showPreview: true }
+  {
+    showDate: true,
+    showTags: true,
+    showThumbnail: true,
+    showPreview: true,
+    showReadingTime: false,
+  }
 )
 
 // Site-root paths need the configured `base` prefix; relative and external
@@ -65,6 +77,13 @@ const thumbnailSrc = (src?: string): string | undefined =>
         <time v-if="props.showDate && props.date" :datetime="props.date">
           {{ props.localeDate }}
         </time>
+        <PostReadingTime
+          v-if="props.showReadingTime && props.readingTime"
+          :minutes="props.readingTime"
+          force-show
+          class="text-sm!"
+        />
+        <PostDraftBadge v-if="props.draft" :draft="true" />
       </div>
 
       <TagsList
@@ -109,6 +128,13 @@ const thumbnailSrc = (src?: string): string | undefined =>
         <time v-if="props.showDate && props.date" :datetime="props.date">
           {{ props.localeDate }}
         </time>
+        <PostReadingTime
+          v-if="props.showReadingTime && props.readingTime"
+          :minutes="props.readingTime"
+          force-show
+          class="text-sm!"
+        />
+        <PostDraftBadge v-if="props.draft" :draft="true" />
       </div>
     </div>
   </div>

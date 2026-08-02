@@ -79,6 +79,10 @@ export default {
     pageNotFound: '404 الصفحة غير موجودة',
     postsCount: 'منشورات',
     postsCountForms: ['منشور', 'منشورات'],
+    draftLabel: 'مسودة',
+    draftTitle: 'هذه التدوينة مسودة وهي مخفية من القوائم',
+    readingTime: 'وقت القراءة',
+    readingTimeForms: ['دقيقة', 'دقائق'],
     ...shared,
 
     links: {
