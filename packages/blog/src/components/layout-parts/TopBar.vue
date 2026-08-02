@@ -13,6 +13,7 @@ defineProps<{
   isMobile?: boolean
   hideAppearance?: boolean
   hideMenuButton?: boolean
+  minimal?: boolean
 }>()
 const emit = defineEmits<{
   (e: 'openSearch'): void
@@ -70,7 +71,7 @@ const socialLinks = computed<LinkItem[]>(() =>
       <slot name="nav-bar-content-before" />
     </div>
 
-    <ul v-if="links.length" class="flex space-x-1">
+    <ul v-if="!minimal && links.length" class="flex space-x-1">
       <li v-for="(item, index) in links" :key="item.href || index" :class="resolveItemShowClass(item)">
         <NeptuBtn
           v-bind="item"
@@ -93,7 +94,7 @@ const socialLinks = computed<LinkItem[]>(() =>
     <ColorThemePicker />
     <StylePresetPicker />
 
-    <ul v-if="socialLinks.length" class="flex space-x-1">
+    <ul v-if="!minimal && socialLinks.length" class="flex space-x-1">
       <li
         v-for="(item, index) in socialLinks"
         :key="item.href || index"

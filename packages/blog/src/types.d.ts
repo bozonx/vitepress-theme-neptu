@@ -99,6 +99,8 @@ export namespace NeptuBlogTheme {
     drafts?: DraftsConfig
 
     popularPosts?: PopularPostsConfig
+    /** Declarative content and appearance of every locale home page. */
+    home?: HomeConfig
     /**
      * Ordered list of post-footer blocks. Supported keys: 'author', 'donate',
      * 'comments', 'social-share', 'edit-link', 'tags', 'navigation', 'similar',
@@ -502,7 +504,43 @@ export namespace NeptuBlogTheme {
   export interface PopularPostsConfig {
     enabled?: boolean
     sortBy?: 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage'
+    /** What to show when GA4 returned no statistics. Defaults to recent posts. */
+    fallback?: 'latest' | 'hide'
     dataSource?: AnalyticsDataSource
+  }
+
+  export type HomeSectionType = 'featured' | 'latest' | 'popular' | 'tags'
+
+  export interface HomeSectionConfig {
+    type: HomeSectionType
+    /** Disabled sections keep their position and can be enabled in YAML. */
+    enabled?: boolean
+    /** Maximum items. When omitted, one `perPage` page is shown. */
+    limit?: number
+  }
+
+  export interface HomeActionConfig {
+    text: string
+    href: string
+    icon?: string
+    primary?: boolean
+  }
+
+  export interface HomeConfig {
+    /** Follow the visitor preference, or force one appearance on the home page. */
+    appearance?: 'auto' | 'light' | 'dark'
+    maxWidth?: number
+    background?: 'parallax' | 'none'
+    backgroundImage?: string
+    bgParallaxOffset?: number
+    hero?: {
+      title?: string
+      description?: string
+      image?: { src?: string; alt?: string }
+      actions?: HomeActionConfig[]
+    }
+    /** Ordered home blocks. Arrays replace across YAML config layers. */
+    sections?: HomeSectionConfig[]
   }
 
   export interface AuthorLink {
@@ -854,6 +892,8 @@ export type TocConfig = NeptuBlogTheme.TocConfig
 export type AdsConfig = NeptuBlogTheme.AdsConfig
 export type ReadingTimeConfig = NeptuBlogTheme.ReadingTimeConfig
 export type DraftsConfig = NeptuBlogTheme.DraftsConfig
+export type HomeConfig = NeptuBlogTheme.HomeConfig
+export type HomeSectionConfig = NeptuBlogTheme.HomeSectionConfig
 export type SidebarLogo = NeptuBlogTheme.SidebarLogo
 export type ConsentConfig = NeptuBlogTheme.ConsentConfig
 export type ConsentState = NeptuBlogTheme.ConsentState

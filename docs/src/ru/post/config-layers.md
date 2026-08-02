@@ -41,7 +41,7 @@ YAML — **не полный VitePress-конфиг**. В нём не бывае
 | `vite`, `markdown`, `sitemap` | Обычные настройки VitePress/Vite. |
 | `transformPageData`, `transformHead`, `buildEnd` | Пользовательские хуки после хуков темы. |
 | `themeConfig.search` | Провайдер Pagefind, опции UI и индексация при сборке. |
-| `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; credentials и env остаются здесь. |
+| `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; интеграция включена по умолчанию, credentials и env остаются здесь. |
 
 ```ts
 export default async () => defineBlogConfig({
@@ -51,7 +51,11 @@ export default async () => defineBlogConfig({
   themeConfig: {
     repo: 'https://github.com/acme/my-blog',
     search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
-    popularPosts: { enabled: Boolean(process.env.GA_PROPERTY_ID), dataSource: { provider: 'ga4' } },
+    popularPosts: {
+      enabled: true,
+      fallback: 'latest',
+      dataSource: { provider: 'ga4', propertyId: process.env.GA_PROPERTY_ID },
+    },
   },
 })
 ```
@@ -60,7 +64,7 @@ export default async () => defineBlogConfig({
 
 В этом файле один рабочий ключ верхнего уровня: `themeConfig`. Это полный самодокументирующий справочник безопасных общих настроек. Укажите здесь значение по умолчанию для всех локалей; не копируйте его в каждый язык.
 
-В `themeConfig` документированы группы: общие (`blogTitle`, переключатели, `defaultColorTheme`, `defaultStylePreset`), списки (`postList`, `postFooter`), иконки, sidebar, `nav`, donate, edit link, footer, publisher, authors, social sharing, feeds, SEO, `popularPosts.sortBy`, landing-поля и переводы `t`. Каждое поле прокомментировано прямо в `packages/blog/template/src/site.yaml`.
+В `themeConfig` документированы группы: общие (`blogTitle`, переключатели, `defaultColorTheme`, `defaultStylePreset`), главная (`home`), списки (`postList`, `postFooter`), иконки, sidebar, `nav`, donate, edit link, footer, publisher, authors, social sharing, feeds, SEO, `popularPosts.sortBy` и переводы `t`. Каждое поле прокомментировано прямо в `packages/blog/template/src/site.yaml`.
 
 Укажите `repo` в `.vitepress/config.ts`. Тема сама построит `editLink.pattern`
 для GitHub, GitLab, Bitbucket, Gitea, Forgejo и Codeberg, предполагая ветку

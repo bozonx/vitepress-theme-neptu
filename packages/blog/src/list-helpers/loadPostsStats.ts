@@ -8,10 +8,19 @@ declare global {
     | Promise<Record<string, AnalyticsStats>>
     | null
     | undefined
+  var warnedGaLatestFallback: boolean | undefined
 }
 
 if (!globalThis.loadingGaStatsPromise) {
   globalThis.loadingGaStatsPromise = null
+}
+
+function warnLatestFallback(): void {
+  if (globalThis.warnedGaLatestFallback) return
+  globalThis.warnedGaLatestFallback = true
+  console.warn(
+    '\x1b[33m⚠️ Popular posts are enabled, but GA4 returned no data. Falling back to latest posts.\x1b[0m'
+  )
 }
 
 export interface AnalyticsDataSource {
@@ -154,6 +163,7 @@ export async function mergeWithAnalytics(
   dataSource: AnalyticsDataSource | null | undefined
 ): Promise<Post[]> {
   if (dataSource?.provider !== 'ga4' || !dataSource?.propertyId) {
+    warnLatestFallback()
     return posts
   }
 
@@ -167,6 +177,7 @@ export async function mergeWithAnalytics(
     stats = await globalThis.loadingGaStatsPromise!
 
     if (!stats || Object.keys(stats).length === 0) {
+      warnLatestFallback()
       return posts
     }
 
@@ -190,6 +201,7 @@ export async function mergeWithAnalytics(
     return postsWithStats
   } catch (err) {
     console.error('\x1b[31m❌ Error merging GA stats with posts:\x1b[0m', err)
+    warnLatestFallback()
     return posts
   }
 }
@@ -304,4 +316,3 @@ export async function loadGoogleAnalytics(
     return {}
   }
 }
-

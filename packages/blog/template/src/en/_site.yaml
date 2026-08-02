@@ -28,6 +28,18 @@ description: 'Welcome to my new blog'
 # extends: en
 
 themeConfig:
+  # Localized home-page copy. Its layout and section order live in site.yaml.
+  home:
+    hero:
+      title: 'Welcome to My Blog'
+      description: 'Thoughts, stories, and ideas built with Neptu Blog Theme'
+      actions:
+        - text: 'Browse Recent Posts'
+          href: 'recent/1'
+          primary: true
+        - text: 'About Me'
+          href: 'page/about'
+
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
   # blogTitle: 'My Neptu Blog'
   # Also you can override other fields from category "Branding & layout"

@@ -63,7 +63,11 @@ provide(LightboxLocalesKey, lightboxLocales)
 
   <Content v-else-if="layoutKind === 'raw'" />
 
-  <BlogHome v-else-if="layoutKind === 'home'" :scroll-y="scrollY" />
+  <BlogHome v-else-if="layoutKind === 'home'" :scroll-y="scrollY">
+    <template v-if="$slots['nav-bar-content-before']" #nav-bar-content-before>
+      <slot name="nav-bar-content-before" />
+    </template>
+  </BlogHome>
 
   <component :is="customLayout" v-else-if="layoutKind === 'custom'" />
 

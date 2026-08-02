@@ -32,20 +32,27 @@ describe('loadPostsStats', () => {
 
   beforeEach(() => {
     delete (globalThis as any).loadingGaStatsPromise
+    delete (globalThis as any).warnedGaLatestFallback
     vi.restoreAllMocks()
   })
 
   afterEach(() => {
     delete (globalThis as any).loadingGaStatsPromise
+    delete (globalThis as any).warnedGaLatestFallback
     vi.restoreAllMocks()
   })
 
   describe('mergeWithAnalytics', () => {
     it('returns posts unchanged if dataSource is empty or provider is not ga4', async () => {
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
       expect(await mergeWithAnalytics([dummyPost], null)).toEqual([dummyPost])
       expect(
         await mergeWithAnalytics([dummyPost], { provider: 'ga4', propertyId: '' })
       ).toEqual([dummyPost])
+      expect(consoleWarnSpy).toHaveBeenCalledOnce()
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Falling back to latest posts')
+      )
     })
 
     it('merges stats into matching post URLs', async () => {

@@ -74,6 +74,7 @@ type ResolvedBlogConfig = BlogUserConfig & {
   }
   themeConfig: Partial<ThemeConfig> & {
     popularPosts: NonNullable<ThemeConfig['popularPosts']>
+    home: NonNullable<ThemeConfig['home']>
     feeds: NonNullable<ThemeConfig['feeds']>
     seo: NonNullable<ThemeConfig['seo']>
     t: I18n
@@ -96,6 +97,17 @@ const commonThemeConfig = {
   sidebarTagsCount: 15,
   similarPostsCount: 5,
   homeBgParallaxOffset: 300,
+  home: {
+    appearance: 'auto' as const,
+    maxWidth: 800,
+    background: 'none' as const,
+    sections: [
+      { type: 'featured' as const, enabled: true },
+      { type: 'latest' as const, enabled: false },
+      { type: 'popular' as const, enabled: false },
+      { type: 'tags' as const, enabled: true },
+    ],
+  },
   paginationMaxItems: 5,
   postList: {
     showDate: true,
@@ -121,8 +133,9 @@ const commonThemeConfig = {
   },
 
   popularPosts: {
-    enabled: false,
+    enabled: true,
     sortBy: 'pageviews',
+    fallback: 'latest' as const,
     dataSource: {
       provider: 'ga4' as const,
       propertyId: null,
@@ -331,6 +344,16 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
           ...commonThemeConfig.popularPosts.dataSource,
           ...config.themeConfig?.popularPosts?.dataSource,
         },
+      },
+
+      home: {
+        ...commonThemeConfig.home,
+        ...config.themeConfig?.home,
+        ...(config.themeConfig?.home?.hero
+          ? { hero: { ...config.themeConfig.home.hero } }
+          : {}),
+        sections:
+          config.themeConfig?.home?.sections ?? commonThemeConfig.home.sections,
       },
 
       postList: {

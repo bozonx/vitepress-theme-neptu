@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../packages/blog/schema/site.schema.json
 
 themeConfig:
+  home:
+    appearance: auto
+    maxWidth: 900
+    background: none
+    sections:
+      - { type: featured, enabled: true, limit: 3 }
+      - { type: latest, enabled: false }
+      - { type: popular, enabled: false }
+      - { type: tags, enabled: true, limit: 15 }
   sidebarLogoSrc: '/img/sidebar-logo.jpg'
   sidebarLogoHeight: 180
   # Demo only: production blogs normally choose one theme and omit the pickers.

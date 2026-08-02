@@ -62,6 +62,12 @@ describe('mergeBlogConfig', () => {
     expect(result.themeConfig).toBeDefined()
     expect(result.themeConfig.perPage).toBe(10)
     expect(result.themeConfig.feeds.maxPosts).toBe(50)
+    expect(result.themeConfig.popularPosts.enabled).toBe(true)
+    expect(result.themeConfig.popularPosts.fallback).toBe('latest')
+    expect(result.themeConfig.home).toMatchObject({
+      appearance: 'auto',
+      background: 'none',
+    })
   })
 
   it('does not throw when themeConfig is missing', () => {
@@ -166,6 +172,17 @@ describe('mergeBlogConfig', () => {
     })
     expect(result.themeConfig.popularPosts.enabled).toBe(true)
     expect(result.themeConfig.popularPosts.sortBy).toBe('pageviews')
+  })
+
+  it('keeps default home sections while merging home presentation', () => {
+    const result = mergeBlogConfig({
+      themeConfig: { home: { appearance: 'dark', maxWidth: 1000 } },
+    })
+    expect(result.themeConfig.home.appearance).toBe('dark')
+    expect(result.themeConfig.home.maxWidth).toBe(1000)
+    expect(result.themeConfig.home.sections?.[0]).toMatchObject({
+      type: 'featured', enabled: true,
+    })
   })
 
   it('provides complete default t from built-in EN locale when t is not specified', () => {

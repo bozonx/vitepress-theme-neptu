@@ -61,6 +61,31 @@ themeConfig:
   # Default: true
   # i18nRouting: false
 
+  # --- Locale home page -----------------------------------------------------
+  # The locale index.md only needs `layout: home`; content comes from here and
+  # from the locale's _site.yaml. Omitted section limits show one `perPage` page.
+  home:
+    # auto follows the visitor's light/dark preference and shows the switch.
+    # light or dark forces that appearance on the home page and hides the switch.
+    appearance: auto # auto | light | dark
+    maxWidth: 800
+    background: none # none | parallax
+    # backgroundImage: /img/home.jpg
+    # bgParallaxOffset: 300
+    sections:
+      - type: featured
+        enabled: true
+        # limit: 3
+      - type: latest
+        enabled: false
+        # limit: 15
+      - type: popular
+        enabled: false
+        # limit: 15
+      - type: tags
+        enabled: true
+        # limit: 15
+
   # `repo` is deliberately configured in .vitepress/config.ts: it describes
   # source-control layout and supplies edit-link URLs.
 

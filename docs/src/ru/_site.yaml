@@ -4,6 +4,19 @@ title: 'Тема Neptu для блога'
 description: 'Демонстрационный блог темы vitepress-theme-neptu'
 
 themeConfig:
+  home:
+    hero:
+      title: 'Тема Neptu для блога'
+      description: 'Блог на VitePress, который можно запустить за пять минут'
+      image:
+        src: '/img/sidebar-logo.jpg'
+        alt: 'Логотип демо-блога'
+      actions:
+        - text: 'Начать за 5 минут'
+          href: 'post/getting-started'
+          primary: true
+        - text: '${t.toBlog}'
+          href: 'recent/1'
   editLink:
     text: 'Редактировать эту страницу на GitHub'
   donate:

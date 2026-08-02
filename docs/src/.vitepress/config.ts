@@ -12,10 +12,9 @@ export const postList = {
 }
 
 export const popularPosts = {
-  enabled: Boolean(
-    process.env.GA_PROPERTY_ID && process.env.GA_CREDENTIALS_JSON
-  ),
+  enabled: true,
   sortBy: 'pageviews',
+  fallback: 'latest',
   dataSource: {
     provider: 'ga4' as const,
     propertyId: process.env.GA_PROPERTY_ID,

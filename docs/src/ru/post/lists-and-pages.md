@@ -76,29 +76,68 @@ layout: page
 
 ## Главная страница
 
-Главная локали — это `src/<локаль>/index.md` с `layout: home`. Она собирается из
-готовых блоков, которые импортируются из темы:
+Главная локали — это служебный `src/<локаль>/index.md`:
 
 ```md
 ---
 layout: home
-heroImg: /img/sidebar-logo.jpg
 ---
-<script setup>
-import { HomeHero, HomeTags, HomePopularPosts } from 'vitepress-theme-neptu/components'
-import { useData } from 'vitepress'
-const { theme, frontmatter } = useData()
-</script>
-
-<HomeHero :firstLine="'Мой блог'" :secondLine="'Слоган в одну строку'" />
-<HomeTags :header="theme.t.tags" />
-<HomePopularPosts />
 ```
 
-- **`HomeHero`** — заглавный экран с логотипом, слоганом и кнопками.
-- **`HomeTags`** — облако тегов.
-- **`HomePopularPosts`** — виджет популярных постов.
+Обычную главную рекомендуется не собирать компонентами вручную. Общая
+структура задаётся в `site.yaml`, а локализованный текст hero — в
+`<локаль>/_site.yaml`:
 
-Блоки можно убирать, переставлять и дополнять своим Markdown — посмотрите
-[исходник главной этого демо](../). Глубже про сборку своих экранов — в разделе
-[Компоненты](components).
+```yaml
+# site.yaml
+themeConfig:
+  home:
+    appearance: auto # auto | light | dark
+    maxWidth: 800
+    background: none # none | parallax
+    # backgroundImage: /img/home.webp
+    sections:
+      - { type: featured, enabled: true, limit: 3 }
+      - { type: latest, enabled: false }
+      - { type: popular, enabled: false }
+      - { type: tags, enabled: true, limit: 15 }
+```
+
+```yaml
+# ru/_site.yaml
+themeConfig:
+  home:
+    hero:
+      title: 'Мой блог'
+      description: 'Короткое описание блога'
+      image: { src: '/img/logo.webp', alt: 'Логотип' }
+      actions:
+        - { text: 'Читать статьи', href: 'recent/1', primary: true }
+```
+
+`appearance: auto` следует выбору читателя и показывает переключатель
+светлой/тёмной темы. `light` или `dark` фиксирует оформление только на главной и
+скрывает переключатель. В её топ-баре остаются поиск, доступный переключатель
+языка, appearance, цветовая тема и стиль; обычные nav/social/donate-ссылки там
+не выводятся.
+
+Порядок объектов в `sections` задаёт порядок блоков. Поддерживаются:
+
+- `featured` — статьи с `featured: true`; включён по умолчанию, пустой блок скрывается;
+- `latest` — последние статьи; выключен по умолчанию;
+- `popular` — популярные по GA4; выключен на главной по умолчанию;
+- `tags` — облако тегов; включено по умолчанию.
+
+`limit` ограничивает количество статей или тегов. Если его нет, показывается
+одна страница — значение `themeConfig.perPage` из `.vitepress/config.ts`.
+
+Интеграция популярных постов включена в теме по умолчанию. Когда GA4 не вернул
+данные, сборка предупреждает об этом, а список получает последние статьи и
+заголовок «Последние». Настройте `popularPosts.fallback: hide`, чтобы вместо
+fallback скрывать список, либо `popularPosts.enabled: false`, чтобы полностью
+отключить функции популярных постов.
+
+Markdown после frontmatter всё ещё отображается между hero и секциями. Для
+полностью нестандартной главной также можно использовать экспортируемые
+`HomeHero`, `HomeFeaturedPosts`, `HomeLatestPosts`, `HomePopularPosts` и
+`HomeTags` либо собственный layout. Подробнее — в разделе [Компоненты](components).

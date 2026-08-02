@@ -109,6 +109,33 @@ const ConsentSchema = z.looseObject({
   }).optional(),
 })
 
+const HomeSchema = z.looseObject({
+  appearance: z.enum(['auto', 'light', 'dark']).optional(),
+  maxWidth: z.number().int().min(1).optional(),
+  background: z.enum(['parallax', 'none']).optional(),
+  backgroundImage: z.string().optional(),
+  bgParallaxOffset: z.number().optional(),
+  hero: z.looseObject({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    image: z.looseObject({
+      src: z.string().optional(),
+      alt: z.string().optional(),
+    }).optional(),
+    actions: z.array(z.looseObject({
+      text: z.string(),
+      href: z.string(),
+      icon: z.string().optional(),
+      primary: z.boolean().optional(),
+    })).optional(),
+  }).optional(),
+  sections: z.array(z.looseObject({
+    type: z.enum(['featured', 'latest', 'popular', 'tags']),
+    enabled: z.boolean().optional(),
+    limit: z.number().int().min(1).optional(),
+  })).optional(),
+})
+
 const TranslationSchema = z.looseObject({
   popularPosts: z.string().optional(), similarPosts: z.string().optional(),
   featuredPosts: z.string().optional(), previousPost: z.string().optional(), nextPost: z.string().optional(),
@@ -168,6 +195,7 @@ const ThemeConfigSchema = z
     sidebarTagsCount: z.number().optional(),
     paginationMaxItems: z.number().optional(),
     homeBgParallaxOffset: z.number().optional(),
+    home: HomeSchema.optional(),
     postFooter: z.array(z.string()).optional(),
     postList: z.looseObject({
       showDate: z.boolean().optional(),
@@ -190,6 +218,7 @@ const ThemeConfigSchema = z
     popularPosts: z.looseObject({
       enabled: z.boolean().optional(),
       sortBy: z.enum(['pageviews', 'uniquePageviews', 'avgTimeOnPage']).optional(),
+      fallback: z.enum(['latest', 'hide']).optional(),
       dataSource: z.looseObject({
         provider: z.literal('ga4').optional(),
         propertyId: z.string().nullable().optional(),

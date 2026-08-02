@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { mockTheme, mockFrontmatter } from '../../mocks/vitepress'
+import { mockTheme, mockFrontmatter, mockIsDark } from '../../mocks/vitepress'
 import BlogHome from '../../../src/layouts/BlogHome.vue'
 
 const ContentStub = { name: 'Content', template: '<div class="content-stub" />' }
@@ -9,11 +9,13 @@ describe('BlogHome', () => {
   beforeEach(() => {
     mockTheme.value = {
       homeBgParallaxOffset: 300,
+      home: { appearance: 'auto', background: 'none', sections: [] },
     }
     mockFrontmatter.value = {}
+    mockIsDark.value = false
   })
 
-  it('renders with default dark theme and parallax background', () => {
+  it('follows appearance and background defaults from home config', () => {
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
       global: { stubs: { Content: ContentStub } },
@@ -21,10 +23,8 @@ describe('BlogHome', () => {
 
     const root = wrapper.find('.home-layout')
     expect(root.exists()).toBe(true)
-    expect(root.classes()).toContain('dark')
-    expect(root.classes()).toContain('bg-no-repeat')
-    expect(root.classes()).toContain('bg-center')
-    expect(root.classes()).toContain('bg-fixed')
+    expect(root.classes()).toContain('home-appearance-auto')
+    expect(root.classes()).not.toContain('bg-no-repeat')
   })
 
   it('applies light theme via frontmatter', () => {
@@ -36,8 +36,8 @@ describe('BlogHome', () => {
     })
 
     const root = wrapper.find('.home-layout')
-    expect(root.classes()).toContain('light')
-    expect(root.classes()).not.toContain('text-white!')
+    expect(root.classes()).toContain('home-appearance-light')
+    expect(mockIsDark.value).toBe(false)
   })
 
   it('disables background when homeBackground is none', () => {
@@ -79,7 +79,7 @@ describe('BlogHome', () => {
   })
 
   it('uses frontmatter homeBgParallaxOffset over theme default', () => {
-    mockFrontmatter.value = { homeBgParallaxOffset: 500 }
+    mockFrontmatter.value = { homeBgParallaxOffset: 500, homeBackground: 'parallax' }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },

@@ -20,9 +20,18 @@ interface HeroImage {
 const props = defineProps<{
   firstLine?: string
   secondLine?: string
+  title?: string
+  description?: string
   buttons?: HeroButton[]
+  actions?: HeroButton[]
   img?: HeroImage
+  image?: HeroImage
 }>()
+
+const heroTitle = props.title || props.firstLine
+const heroDescription = props.description || props.secondLine
+const heroActions = props.actions || props.buttons
+const heroImage = props.image || props.img
 
 const homeHref = `/${localeIndex.value}/recent/1`
 const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
@@ -34,22 +43,22 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
       <div class="flex-1 max-lg:text-center home-hero-captions">
         <h1
           class="max-md:text-4xl md:text-6xl font-bold mb-4 home-hero-first-line"
-          v-html="props.firstLine"
+          v-html="heroTitle"
         ></h1>
         <p
           class="max-md:text-2xl md:text-4xl home-hero-second-line"
-          v-html="props.secondLine"
+          v-html="heroDescription"
         ></p>
       </div>
       <a
-        v-if="props.img?.src"
+        v-if="heroImage?.src"
         :aria-label="theme.t.toHome"
         class="home-logo flex justify-center"
         :href="withBase(homeHref)"
       >
         <img
-          :src="imageSrc(props.img.src)"
-          :alt="props.img.alt"
+          :src="imageSrc(heroImage.src)"
+          :alt="heroImage.alt"
           width="320"
           height="320"
           class="home-hero-img"
@@ -57,10 +66,10 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
       </a>
     </div>
     <ul
-      v-if="props.buttons"
+      v-if="heroActions?.length"
       class="flex w-full max-md:flex-col items-center justify-center gap-x-3 gap-y-6 mt-14 home-hero-buttons"
     >
-      <li v-for="(item, index) in props.buttons" :key="item.href || index">
+      <li v-for="(item, index) in heroActions" :key="item.href || index">
         <NeptuBtn v-bind="item" class="rounded-[var(--neptu-radius-pill)]! px-7! w-fit" />
       </li>
     </ul>
@@ -74,7 +83,7 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 
 .home-hero h1,
 .home-hero p {
-  text-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px 12px color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
 }
 
 .home-hero-buttons .btn-base {
@@ -82,7 +91,7 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 }
 
 .home-hero-buttons .btn-base:not(.btn--primary) {
-  background-color: var(--gray-700);
+  background-color: var(--vp-c-bg-soft);
 }
 
 .home-hero-img {

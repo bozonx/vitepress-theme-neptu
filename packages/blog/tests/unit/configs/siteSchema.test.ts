@@ -59,6 +59,10 @@ describe('SiteYamlSchema', () => {
         seo: { canonical: true, maxDescriptionLength: 300 },
         nav: { links: [{ text: 'About', href: 'page/about' }] },
         popularPosts: { sortBy: 'pageviews' },
+        home: {
+          appearance: 'auto',
+          sections: [{ type: 'tags', enabled: true, limit: 12 }],
+        },
       },
     })
     expect(result.success).toBe(true)

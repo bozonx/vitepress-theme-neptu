@@ -4,6 +4,19 @@ title: 'Neptu Blog Theme'
 description: 'Example Blog Description'
 
 themeConfig:
+  home:
+    hero:
+      title: 'Neptu Blog Theme'
+      description: 'A living demo — every page documents a feature of the theme'
+      image:
+        src: '/img/sidebar-logo.jpg'
+        alt: 'Example blog logo'
+      actions:
+        - text: '${t.toBlog}'
+          href: 'recent/1'
+          primary: true
+        - text: 'Read the guide'
+          href: 'post/welcome'
   editLink:
     text: 'Edit this page on GitHub'
   donate:

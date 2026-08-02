@@ -9,22 +9,26 @@ import type { PostLite } from '../../types.d.ts'
 const props = defineProps<{
   localePosts?: PostLite[]
   header?: string
+  limit?: number
 }>()
 const { localeIndex } = useData()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = props.localePosts || allPosts[localeIndex.value] || []
-const tagList = makeTagsList(localePosts)
+const allTags = makeTagsList(localePosts)
+const tagList = props.limit ? allTags.slice(0, props.limit) : allTags
 </script>
 
 <template>
+  <section v-if="tagList.length" class="home-tags">
   <UtilSubPageHeader class="home-hero-tags-header">{{
     props.header
   }}</UtilSubPageHeader>
   <TagsList :tags="tagList" class="mb-12 home-hero-tags [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]" />
+  </section>
 </template>
 
 <style scoped>
 .home-hero-tags-header {
-  text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px 12px color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
 }
 </style>
