@@ -4,6 +4,7 @@ import { computed } from 'vue'
 
 import { pluralize } from '../../utils/shared/i18n.ts'
 import { isReadingTimeEnabled, toIsoDuration } from '../../utils/shared/readingTime.ts'
+import { useTranslations } from '../../composables/useTranslations.ts'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import type { PostFrontmatter } from '../../types.d.ts'
 
@@ -19,6 +20,7 @@ const props = withDefaults(
 
 const { page, frontmatter } = useData()
 const { theme } = useUiTheme()
+const translations = useTranslations()
 
 const minutes = computed(() =>
   props.minutes ?? (page.value as { readingTime?: number }).readingTime ?? 0
@@ -26,16 +28,27 @@ const minutes = computed(() =>
 
 const visible = computed(() => {
   if (minutes.value <= 0) return false
+  if (theme.value.readingTime?.enabled === false) return false
   if (props.forceShow) return true
 
   return isReadingTimeEnabled(theme.value, frontmatter.value as PostFrontmatter)
 })
 
 const label = computed(() => {
-  const forms = theme.value.t?.readingTimeForms || []
+  // Locale theme data can be absent while VitePress is resolving a locale
+  // during dev navigation. Keep explicit site overrides first, then fall back
+  // to the built-in translation selected from the current route.
+  const configuredForms = theme.value.t?.readingTimeForms
+  const forms = configuredForms?.length
+    ? configuredForms
+    : translations.value.t.readingTimeForms
 
   return `${minutes.value} ${pluralize(minutes.value, forms)}`.trim()
 })
+
+const title = computed(
+  () => theme.value.t?.readingTime || translations.value.t.readingTime
+)
 </script>
 
 <template>
@@ -47,7 +60,7 @@ const label = computed(() => {
     v-if="visible"
     class="post-reading-time text-base muted"
     :datetime="toIsoDuration(minutes)"
-    :title="theme.t?.readingTime"
+    :title="title"
   >
     {{ label }}
   </time>

@@ -70,7 +70,7 @@ const thumbnailSrc = (src?: string): string | undefined =>
       />
 
       <div
-        v-if="props.showDate || props.authorName"
+        v-if="props.showDate || props.authorName || props.showReadingTime"
         class="mt-2 space-x-2 muted card-item-author-date text-sm leading-5"
       >
         <span v-if="props.authorName">{{ props.authorName }}.</span>
@@ -108,7 +108,7 @@ const thumbnailSrc = (src?: string): string | undefined =>
     </p>
 
     <div
-      v-if="props.showTags || props.showDate || props.authorName"
+      v-if="props.showTags || props.showDate || props.authorName || props.showReadingTime"
       class="flex max-sm:flex-col-reverse sm:items-end gap-x-1"
       :class="{ 'sm:mt-4': props.showPreview && props.preview }"
     >
@@ -121,7 +121,7 @@ const thumbnailSrc = (src?: string): string | undefined =>
       />
 
       <div
-        v-if="props.showDate || props.authorName"
+        v-if="props.showDate || props.authorName || props.showReadingTime"
         class="space-x-2 max-sm:mt-2 max-sm:mb-4 text-right muted card-item-author-date text-sm leading-5"
       >
         <span v-if="props.authorName">{{ props.authorName }}.</span>
