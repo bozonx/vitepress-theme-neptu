@@ -57,7 +57,7 @@ describe('NeptuFooter', () => {
     }
     const wrapper = mount(NeptuFooter)
 
-    expect(wrapper.find('footer').classes()).toContain('flex-wrap')
+    expect(wrapper.find('footer').classes()).toContain('flex-col')
     expect(wrapper.find('nav[aria-label="Footer navigation"]').exists()).toBe(true)
     expect(wrapper.find('ul').classes()).toEqual(
       expect.arrayContaining(['grid', 'grid-cols-1', 'sm:grid-cols-2', 'gap-y-3'])
@@ -89,7 +89,7 @@ describe('NeptuFooter', () => {
       },
     }
     const wrapper = mount(NeptuFooter)
-    const btn = wrapper.findComponent({ name: 'NeptuBtn' })
+    const btn = wrapper.find('nav').findComponent({ name: 'NeptuBtn' })
     expect(btn.props('icon')).toBe('bi:rss-fill')
     expect(btn.props('iconClass')).toBe('text-rss')
     expect(btn.classes()).toEqual(expect.arrayContaining(['rss-link', 'underline']))
@@ -119,5 +119,36 @@ describe('NeptuFooter', () => {
     const wrapper = mount(NeptuFooter)
     const li = wrapper.find('li')
     expect(li.classes()).toContain('lg:hidden')
+  })
+
+  it('renders centered feed links (RSS, Atom, GitHub) when configured', () => {
+    mockTheme.value = {
+      repo: 'owner/my-blog',
+      footer: {
+        copyright: 'Copyright 2026',
+      },
+    }
+    const wrapper = mount(NeptuFooter)
+    const text = wrapper.text()
+    expect(text).toContain('RSS feed')
+    expect(text).toContain('Atom feed')
+    expect(text).toContain('GitHub')
+  })
+
+  it('hides feed links if explicitly disabled in footer config', () => {
+    mockTheme.value = {
+      repo: 'owner/my-blog',
+      footer: {
+        copyright: 'Copyright 2026',
+        rssFeed: false,
+        atomFeed: false,
+        github: false,
+      },
+    }
+    const wrapper = mount(NeptuFooter)
+    const text = wrapper.text()
+    expect(text).not.toContain('RSS feed')
+    expect(text).not.toContain('Atom feed')
+    expect(text).not.toContain('GitHub')
   })
 })

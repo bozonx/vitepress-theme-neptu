@@ -303,6 +303,9 @@ const ThemeConfigSchema = z
     footer: z.looseObject({
       message: z.string().optional(), copyright: z.string().optional(),
       links: z.array(NavLinkSchema).optional(),
+      rssFeed: z.boolean().optional(),
+      atomFeed: z.boolean().optional(),
+      github: z.boolean().optional(),
     }).optional(),
     socialMediaShares: z.array(z.looseObject({
       name: z.string().optional(), icon: z.string().optional(), title: z.string().optional(),

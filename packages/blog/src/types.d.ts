@@ -229,7 +229,14 @@ export namespace NeptuBlogTheme {
 
     publisher?: { name?: string; url?: string; logo?: string }
 
-    footer?: { message?: string; copyright?: string; links?: NavLink[] }
+    footer?: {
+      message?: string
+      copyright?: string
+      links?: NavLink[]
+      rssFeed?: boolean
+      atomFeed?: boolean
+      github?: boolean
+    }
   }
 
   export interface PagefindUITranslations {

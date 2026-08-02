@@ -4,6 +4,7 @@ import { computed, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import TopBar from '../components/layout-parts/TopBar.vue'
 import HomeHero from '../components/utility/HomeHero.vue'
 import HomeSections from '../components/utility/HomeSections.vue'
+import NeptuFooter from '../components/layout-parts/NeptuFooter.vue'
 import { useBreakpoint } from '../composables/useBreakpoint.ts'
 import type { ThemeConfig } from '../types.d.ts'
 
@@ -114,6 +115,9 @@ watchEffect(() => {
       <HomeHero v-if="home.hero" v-bind="home.hero" />
       <div class="home-content vp-doc"><Content /></div>
       <HomeSections />
+      <div v-if="theme.footer" class="site-footer w-full pt-8 pb-12">
+        <NeptuFooter />
+      </div>
     </div>
     <slot name="home-after" />
   </div>
