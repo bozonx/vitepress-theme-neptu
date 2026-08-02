@@ -39,11 +39,10 @@ export const postList = {
  * Reads GA_PROPERTY_ID and GA_CREDENTIALS_JSON environment variables.
  */
 export const popularPosts = {
-  // Enabled by default. Without GA4 data the theme warns during the build and
-  // shows latest posts instead; set enabled: false to remove popular features.
+  // Enabled by default. Without GA4 data, the theme emits a build warning and
+  // omits popular lists; set enabled: false to remove popular features.
   enabled: true,
   sortBy: 'pageviews', // 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage'
-  fallback: 'latest', // 'latest' (default) | 'hide'
   dataSource: {
     provider: 'ga4' as const,
     propertyId: process.env.GA_PROPERTY_ID,

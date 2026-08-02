@@ -1,7 +1,7 @@
 <template>
   <div v-if="posts.length" class="home-popular-posts relative">
     <UtilSubPageHeader class="home-popular-posts-header mb-3">
-      {{ hasAnalytics ? theme.t.popularPosts : theme.t.links.recent }}
+      {{ theme.t.popularPosts }}
     </UtilSubPageHeader>
 
     <PreviewList :locale-posts="posts" :cur-page="1" />
@@ -27,9 +27,8 @@ const sortKey = theme.value.popularPosts?.sortBy
 const hasAnalytics = localePosts.some((post) =>
   Boolean(sortKey && Number.isFinite(post.analyticsStats?.[sortKey]))
 )
-const fallback = theme.value.popularPosts?.fallback || 'latest'
 const sorted = sortPosts(localePosts, sortKey, true)
-const posts = (theme.value.popularPosts?.enabled === false || (!hasAnalytics && fallback === 'hide'))
+const posts = (theme.value.popularPosts?.enabled === false || !hasAnalytics)
   ? []
   : sorted.slice(0, props.limit || theme.value.perPage || 1)
 </script>

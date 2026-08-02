@@ -217,7 +217,6 @@ const ThemeConfigSchema = z
     popularPosts: z.looseObject({
       enabled: z.boolean().optional(),
       sortBy: z.enum(['pageviews', 'uniquePageviews', 'avgTimeOnPage']).optional(),
-      fallback: z.enum(['latest', 'hide']).optional(),
       dataSource: z.looseObject({
         provider: z.literal('ga4').optional(),
         propertyId: z.string().nullable().optional(),

@@ -63,7 +63,6 @@ describe('mergeBlogConfig', () => {
     expect(result.themeConfig.perPage).toBe(10)
     expect(result.themeConfig.feeds.maxPosts).toBe(50)
     expect(result.themeConfig.popularPosts.enabled).toBe(true)
-    expect(result.themeConfig.popularPosts.fallback).toBe('latest')
     expect(result.themeConfig.home).toMatchObject({
       appearance: 'auto',
       background: 'none',

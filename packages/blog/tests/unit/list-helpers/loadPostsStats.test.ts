@@ -38,7 +38,7 @@ describe('loadPostsStats', () => {
 
   afterEach(() => {
     delete (globalThis as any).loadingGaStatsPromise
-    delete (globalThis as any).warnedGaLatestFallback
+    delete (globalThis as any).warnedGaNoData
     vi.restoreAllMocks()
   })
 
@@ -51,7 +51,7 @@ describe('loadPostsStats', () => {
       ).toEqual([dummyPost])
       expect(consoleWarnSpy).toHaveBeenCalledOnce()
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Falling back to latest posts')
+        expect.stringContaining('Popular posts list will be empty')
       )
     })
 

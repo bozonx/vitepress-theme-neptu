@@ -510,8 +510,6 @@ export namespace NeptuBlogTheme {
   export interface PopularPostsConfig {
     enabled?: boolean
     sortBy?: 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage'
-    /** What to show when GA4 returned no statistics. Defaults to recent posts. */
-    fallback?: 'latest' | 'hide'
     dataSource?: AnalyticsDataSource
   }
 

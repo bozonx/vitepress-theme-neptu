@@ -135,7 +135,6 @@ const commonThemeConfig = {
   popularPosts: {
     enabled: true,
     sortBy: 'pageviews',
-    fallback: 'latest' as const,
     dataSource: {
       provider: 'ga4' as const,
       propertyId: null,

@@ -18,7 +18,13 @@ const { theme } = useUiTheme()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = props.localePosts || allPosts[localeIndex.value] || []
 const curPage = Number(props.curPage)
-const sorted = sortPosts(localePosts, theme.value.popularPosts?.sortBy, true)
+const sortKey = theme.value.popularPosts?.sortBy
+const hasAnalytics = localePosts.some((post) =>
+  Boolean(sortKey && Number.isFinite(post.analyticsStats?.[sortKey]))
+)
+const sorted = (theme.value.popularPosts?.enabled === false || !hasAnalytics)
+  ? []
+  : sortPosts(localePosts, sortKey, true)
 </script>
 
 <template>

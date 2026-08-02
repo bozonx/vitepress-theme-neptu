@@ -14,7 +14,6 @@ export const postList = {
 export const popularPosts = {
   enabled: true,
   sortBy: 'pageviews',
-  fallback: 'latest',
   dataSource: {
     provider: 'ga4' as const,
     propertyId: process.env.GA_PROPERTY_ID,
