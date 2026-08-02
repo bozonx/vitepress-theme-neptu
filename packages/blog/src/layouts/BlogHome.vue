@@ -97,7 +97,7 @@ watchEffect(() => {
       homeBackgroundImage ? `background-image: url(${homeBackgroundImage});` : '',
     ].join(' ')"
   >
-    <header class="w-full absolute top-0 left-0 z-10">
+    <header class="w-full absolute top-0 left-0 z-10 home-topbar">
       <TopBar
         :is-mobile="isMobile"
         :hide-appearance="appearance !== 'auto'"

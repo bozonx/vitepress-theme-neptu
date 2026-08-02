@@ -127,7 +127,8 @@ body.modal-open {
 
 /* Homepage card & content styling */
 .home-layout .card-item,
-.home-layout .home-content {
+.home-layout .home-content,
+.home-layout.home-has-bg .home-hero {
   border-radius: var(--neptu-radius-lg);
   transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease, background-color 0.3s ease;
 }
@@ -153,9 +154,19 @@ body.modal-open {
   text-shadow: none;
 }
 
-/* 2. Mode WITH background image (.home-has-bg) - Glassmorphism & contrast text shadows */
+/* 2. Mode WITH background image (.home-has-bg) - Glassmorphism & contrast protection */
+
+/* TopBar styled with glass backdrop when background wallpaper is active */
+.home-layout.home-has-bg .home-topbar {
+  background-color: color-mix(in srgb, var(--vp-c-bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--vp-c-text-1) 10%, transparent);
+}
+
 .home-layout.home-has-bg .card-item,
-.home-layout.home-has-bg .home-content {
+.home-layout.home-has-bg .home-content,
+.home-layout.home-has-bg .home-hero {
   background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
   border: 1px solid color-mix(in srgb, var(--vp-c-text-1) 12%, transparent);
   box-shadow:
@@ -163,6 +174,16 @@ body.modal-open {
     inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 8%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+.home-layout.home-has-bg .home-hero {
+  padding: 2.25rem 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .home-layout.home-has-bg .home-hero {
+    padding: 1.5rem 1.25rem;
+  }
 }
 
 .home-layout.home-has-bg .card-item:hover {
@@ -176,7 +197,7 @@ body.modal-open {
 
 .home-layout.home-has-bg .home-hero h1,
 .home-layout.home-has-bg .home-hero p {
-  text-shadow: 2px 2px 12px color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
+  text-shadow: none;
 }
 
 .card-item:visited .card-item-header {
