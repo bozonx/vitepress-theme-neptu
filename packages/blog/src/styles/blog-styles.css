@@ -125,6 +125,33 @@ body.modal-open {
   transform: none;
 }
 
+/* Glassmorphism on homepage for card items and markdown content */
+.home-layout .card-item,
+.home-layout .home-content {
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vp-c-text-1) 12%, transparent);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 8%, transparent);
+  border-radius: var(--neptu-radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.home-layout .home-content {
+  padding: 1.5rem 1.75rem;
+}
+
+.home-layout .card-item:hover {
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 92%, transparent);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 15%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 .card-item:visited .card-item-header {
   color: var(--link-a-visited);
 }

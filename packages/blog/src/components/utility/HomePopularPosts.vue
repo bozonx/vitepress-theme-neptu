@@ -35,46 +35,7 @@ const posts = (theme.value.popularPosts?.enabled === false || (!hasAnalytics && 
 </script>
 
 <style scoped>
-/* Frosted glass effect for popular posts */
-:deep(.dark .home-popular-posts .card-item),
-:deep(.home-popular-posts .card-item),
-.home-popular-posts :deep(.card-item) {
-  background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
-  border: 1px solid var(--vp-c-divider);
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 color-mix(in srgb, var(--vp-c-text-1) 8%, transparent);
-  border-radius: var(--neptu-radius-lg);
-  backdrop-filter: blur(8px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-  will-change: transform, box-shadow, filter;
-  animation: glassmorphism-fade-in 0.6s ease-out;
-}
-
-/* Hover effects */
-:deep(.dark .home-popular-posts .card-item:hover),
-:deep(.home-popular-posts .card-item:hover),
-.home-popular-posts :deep(.card-item:hover) {
-  background: color-mix(in srgb, var(--vp-c-bg-soft) 92%, transparent);
-  box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-}
-
 .home-popular-posts :deep(.more-posts-btn) {
   color: var(--vp-c-text-2);
-}
-
-@keyframes glassmorphism-fade-in {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    backdrop-filter: blur(15px);
-  }
 }
 </style>
