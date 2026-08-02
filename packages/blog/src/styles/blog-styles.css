@@ -170,7 +170,8 @@ body.modal-open {
 
 .home-layout.home-has-bg .card-item,
 .home-layout.home-has-bg .home-content,
-.home-layout.home-has-bg .home-hero {
+.home-layout.home-has-bg .home-hero,
+.home-layout.home-has-bg .site-footer {
   background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
   border: 1px solid color-mix(in srgb, var(--vp-c-text-1) 12%, transparent);
   box-shadow:
@@ -184,9 +185,19 @@ body.modal-open {
   padding: 2.25rem 2.5rem;
 }
 
+.home-layout.home-has-bg .site-footer {
+  border-radius: var(--neptu-radius-lg, 1rem);
+  padding: 1.75rem 2rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
 @media (max-width: 768px) {
   .home-layout.home-has-bg .home-hero {
     padding: 1.5rem 1.25rem;
+  }
+  .home-layout.home-has-bg .site-footer {
+    padding: 1.25rem 1.25rem;
   }
 }
 
