@@ -158,10 +158,14 @@ body.modal-open {
 
 /* TopBar styled with glass backdrop when background wallpaper is active */
 .home-layout.home-has-bg .home-topbar {
-  background-color: color-mix(in srgb, var(--vp-c-bg) 85%, transparent);
+  background-color: color-mix(in srgb, var(--vp-c-bg) 45%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid color-mix(in srgb, var(--vp-c-text-1) 10%, transparent);
+}
+
+.dark .home-layout.home-has-bg .home-topbar {
+  background-color: color-mix(in srgb, var(--vp-c-bg) 35%, transparent);
 }
 
 .home-layout.home-has-bg .card-item,
