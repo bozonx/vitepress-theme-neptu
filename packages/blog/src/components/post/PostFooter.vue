@@ -119,7 +119,7 @@ const blocks = computed(() => {
       >
         <slot name="popular-link">
           <NeptuBtnLink
-            :href="`/popular/1`"
+            :href="`popular/1`"
             :text="theme.t.popularPostsCall"
             :icon="theme.popularIcon"
           />

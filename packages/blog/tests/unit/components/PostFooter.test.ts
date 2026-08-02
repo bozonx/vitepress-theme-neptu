@@ -105,7 +105,7 @@ describe('PostFooter', () => {
     const wrapper = mount(PostFooter, { global: { stubs: defaultStubs } })
     const link = wrapper.findComponent({ name: 'NeptuBtnLink' })
     expect(link.exists()).toBe(true)
-    expect(link.props('href')).toBe('/popular/1')
+    expect(link.props('href')).toBe('popular/1')
     expect(link.props('text')).toBe('Popular posts')
   })
 
