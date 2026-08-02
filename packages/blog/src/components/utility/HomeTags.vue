@@ -20,15 +20,7 @@ const tagList = props.limit ? allTags.slice(0, props.limit) : allTags
 
 <template>
   <section v-if="tagList.length" class="home-tags">
-  <UtilSubPageHeader class="home-hero-tags-header">{{
-    props.header
-  }}</UtilSubPageHeader>
-  <TagsList :tags="tagList" class="home-hero-tags [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]" />
+    <UtilSubPageHeader>{{ props.header }}</UtilSubPageHeader>
+    <TagsList :tags="tagList" class="home-hero-tags [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]" />
   </section>
 </template>
-
-<style scoped>
-.home-hero-tags-header {
-  text-shadow: 2px 2px 12px color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
-}
-</style>
