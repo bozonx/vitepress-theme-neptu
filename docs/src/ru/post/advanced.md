@@ -1,8 +1,8 @@
 ---
-title: Расширенные возможности — хуки, слоты и внешний контент
+title: Хуки, слоты и свои макеты
 description: >
-  Расширение темы без форка — пользовательские трансформ-хуки, слоты макета поста,
-  composables, кастомизация футера и синхронизация контента из CMS или API перед сборкой.
+  Расширение темы без форка: трансформ-хуки сборки, слоты макета поста и
+  обвязки страницы, замена подвала и футера, собственный макет статьи.
 authorId: ivan-k
 date: 2026-07-07
 category: { name: 'Расширение', slug: 'advanced' }
@@ -10,9 +10,13 @@ tags: [advanced]
 descrAsPreview: true
 ---
 
-Всё, что описано выше, касается встроенного поведения. На этой странице — механизмы на случай,
-если нужно большее: **хуки жизненного цикла**, **слоты макета**, **composables** и
-**внешний контент**.
+Всё, что описано в предыдущих статьях, — встроенное поведение, настраиваемое
+через YAML. Эта страница о том, что делать, когда настроек не хватает:
+**хуки сборки**, **слоты макета** и **собственные макеты**. Форк темы для этого
+не нужен.
+
+Справочник того, что можно импортировать (компоненты, composables, утилиты), —
+в [Справочнике компонентов](components).
 
 ## Пользовательские трансформ-хуки
 
@@ -89,23 +93,11 @@ contentLayout: CustomPost
 > Используйте `layout: CustomPost` только если компонент должен заменить всю страницу целиком.
 > Для частичных изменений предпочтительнее слоты (см. ниже).
 
-### Доступные компоненты поста
-
-| Компонент | Назначение |
-|-----------|------------|
-| `PostDate` | Дата публикации |
-| `PostAuthor` | Имя автора и ссылка |
-| `PostImage` | Обложка с размерами |
-| `PostTags` | Список тегов и ссылка «все теги» |
-| `PostSocialShare` | Кнопки поделиться в соцсетях |
-| `PostSimilarList` | Похожие посты по тегам |
-| `PostFooter` | Подвал поста: пожертвование, комментарии, подкаст |
-| `PostTopBar` | Верхние действия (видео/подкаст) |
-| `PostVideoLink` | Кнопка внешнего видео |
-| `PostDonateLink` | Призыв к пожертвованию |
-| `PostComments` | Ссылка на комментарии |
-| `PodcastDropdown` | Выбор платформы подкаста |
-| `PodcastIcon` | Иконка платформы подкаста |
+Полный список экспортируемых частей поста (`PostDate`, `PostAuthor`,
+`PostImage`, `PostTags`, `PostSocialShare`, `PostSimilarList`, `PostFooter`,
+`PostTopBar`, `PostVideoLink`, `PostDonateLink`, `PostComments`,
+`PostNavigation`, `PostCategories` и другие) —
+в [Справочнике компонентов](components).
 
 ## Слоты макета поста
 
@@ -163,7 +155,7 @@ const { Layout } = Theme
 
 Правая колонка настраивается отдельно — какие страницы её показывают, как
 подключить рекламу и как поменять размеры, описано в
-[Правой колонке и рекламных блоках](aside-and-ads).
+[Оглавлении и правой колонке](toc-and-aside).
 
 ## Кастомизация футера сайта
 
@@ -199,41 +191,9 @@ export default async () => defineBlogConfig({
 
 ## Кастомизация подвала поста
 
-Подвал каждого поста управляется через `themeConfig.postFooter` — упорядоченный массив ключей блоков.
-Уберите ключ, чтобы скрыть блок; измените порядок, чтобы поменять расположение:
-
-```ts
-// .vitepress/config.ts
-export default async () => defineBlogConfig({
-  themeConfig: {
-    postFooter: [
-      'author',
-      'donate',
-      'comments',
-      'social-share',
-      'edit-link',
-      'tags',
-      'navigation',
-      'similar',
-      'popular-link',
-    ],
-  },
-})
-```
-
-Поддерживаемые ключи:
-
-| Ключ | Блок |
-|------|------|
-| `author` | `PostAuthor` |
-| `donate` | `PostDonateLink` |
-| `comments` | `PostComments` |
-| `social-share` | `PostSocialShare` |
-| `edit-link` | `EditLink` |
-| `tags` | `PostTags` |
-| `navigation` | `PostNavigation` |
-| `similar` | `PostSimilarList` |
-| `popular-link` | Ссылка на страницу популярных постов (только если `popularPosts.enabled: true`) |
+Состав и порядок блоков подвала задаются массивом `themeConfig.postFooter` —
+он разобран в [Подвале поста](post-footer-and-sharing). Здесь — что делать,
+когда перестановки блоков мало.
 
 ### Замена всего подвала
 
@@ -267,67 +227,6 @@ export default async () => defineBlogConfig({
 > Именованные слоты проксируются через `NeptuLayout` → `DefaultLayout` → `PageContent` → `PostFooter`,
 > поэтому их можно использовать прямо из вашего `Layout.vue`.
 
-## Composables
-
-Используйте логику темы в своих Vue-компонентах, импортируя из
-`vitepress-theme-neptu/composables`:
-
-```vue
-<script setup lang="ts">
-import { useLightbox, useBreakpoint } from 'vitepress-theme-neptu/composables'
-
-const { isOpen, open, close } = useLightbox()
-const { isMobile } = useBreakpoint()
-</script>
-```
-
-### Доступные composables
-
-| Composable | Описание |
-|------------|----------|
-| `useUiTheme()` | Типизированный доступ к `themeConfig` |
-| `useLightbox()` | Управление лайтбоксом изображений |
-| `useBreakpoint()` | Реактивные проверки mobile/tablet/desktop |
-| `useScrollY()` | Реактивный `window.scrollY` |
-| `useContentLangs()` | Разрешение контент/UI локали |
-| `useToTheTop()` | Логика видимости кнопки «наверх» |
-| `useSwipeDrawer()` | Свайп-жесты для мобильного сайдбара |
-
-## Утилиты разметки
-
-Импортируйте вспомогательные функции из `vitepress-theme-neptu/utils`:
-
-```ts
-import {
-  isPage,
-  isUtilPage,
-  isPost,
-  resolveArticlePreview,
-} from 'vitepress-theme-neptu/utils'
-
-function myHelper(frontmatter) {
-  if (isPage(frontmatter)) {
-    return 'page'
-  }
-  if (isPost(frontmatter)) {
-    return resolveArticlePreview(frontmatter)
-  }
-}
-```
-
-### Доступные утилиты
-
-| Утилита | Описание |
-|---------|----------|
-| `isPost(frontmatter)` | true для постов (`layout: post` или без layout) |
-| `isPage(frontmatter)` | true для `layout: page` |
-| `isUtilPage(frontmatter)` | true для `util`, `tag`, `archive`, `author` |
-| `isHomePage(frontmatter)` | true для `layout: home` |
-| `resolveArticlePreview(frontmatter)` | Получение текста превью из frontmatter |
-| `resolveBodyMarker(theme, frontmatter)` | Разрешение маркера тела Pagefind |
-| `isPopularRoute(path, theme)` | Проверка, является ли маршрут списком популярных |
-| `isAuthorPage(filePath, siteConfig)` | Проверка, является ли путь страницей автора |
-
 ## Предупреждения при сборке
 
 `defineBlogConfig` выводит предупреждения в консоль для частых ошибок конфигурации:
@@ -337,146 +236,8 @@ function myHelper(frontmatter) {
 
 Эти предупреждения появляются только при запуске сборки / dev-сервера.
 
-## Внешний контент (CMS / API)
+## Что дальше
 
-Вспомогательные функции постов в теме читают **локальные `.md` файлы**. Если ваш контент хранится в
-CMS, API или на другом сайте, синхронизируйте его в локальный markdown *перед* сборкой VitePress
-— после этого сгенерированные файлы ведут себя точно так же, как написанные вручную посты (превью,
-ленты, архив, похожие посты).
-
-```json
-// package.json
-{
-  "scripts": {
-    "prebuild": "node scripts/sync-remote-posts.mjs",
-    "build": "vitepress build src && pagefind --verbose --site ./src/.vitepress/dist --glob '**/*.html'"
-  }
-}
-```
-
-Ваш `sync-remote-posts.mjs` получает внешний контент и записывает файлы вида
-`src/ru/post/<slug>.md` с фронтматером, который ожидает тема (`title`,
-`date`, `authorId`, `tags`, …). Поскольку `prebuild` выполняется первым, только что
-записанные посты индексируются при каждой сборке.
-
-### Конвертация удалённого HTML
-
-Если источник отдаёт HTML, преобразуйте его в Markdown в том же prebuild-шаге:
-
-```js
-// scripts/sync-html-posts.mjs
-import fs from 'node:fs/promises'
-import TurndownService from 'turndown'
-
-const response = await fetch('https://example.com/article.html')
-if (!response.ok) {
-  throw new Error(`Failed to fetch remote HTML: ${response.status}`)
-}
-
-const html = await response.text()
-const markdown = new TurndownService().turndown(html)
-
-await fs.mkdir('src/ru/post', { recursive: true })
-await fs.writeFile(
-  'src/ru/post/imported-article.md',
-  `---
-title: Импортированная статья
-date: 2026-05-09
-tags: [imported]
----
-
-${markdown}
-`
-)
-```
-
-Установите конвертер в проект сайта, а не в пакет темы:
-
-```sh
-npm install -D turndown
-# или: pnpm add -D turndown / yarn add -D turndown
-```
-
-### Пользовательские data-лоадеры
-
-Можно написать собственный VitePress data-лоадер. По умолчанию тема отслеживает
-`./post/*.md` и передаёт файлы в `loadPostsDataFromFiles`:
-
-```ts
-// src/ru/loadPosts.data.ts
-import { loadPostsDataFromFiles } from 'vitepress-theme-neptu/list-helpers/node'
-
-export default {
-  watch: ['./post/*.md'],
-  async load(watchedFiles: string[]) {
-    return {
-      posts: await loadPostsDataFromFiles(watchedFiles),
-    }
-  },
-}
-```
-
-Для большинства сценариев внешнего контента всё равно генерируйте локальные `.md` файлы.
-VitePress может построить страницы постов только для файлов, которые известны во время сборки.
-Возврат дополнительных элементов из data-лоадера наполняет списки, но не создаёт
-соответствующие markdown-страницы.
-
-### Встраивание внешнего контента
-
-Если нужно лишь отобразить внешний контент внутри существующего поста, используйте
-iframe или пользовательский Vue-компонент в markdown:
-
-```md
-<iframe
-  src="https://example.com/embed"
-  width="100%"
-  height="420"
-  loading="lazy"
-  sandbox="allow-scripts allow-same-origin"
-></iframe>
-```
-
-Предпочитайте компонент-обёртку, если встраивание переиспользуется:
-
-```vue
-<!-- .vitepress/theme/ExternalEmbed.vue -->
-<script setup lang="ts">
-defineProps<{ src: string; title?: string }>()
-</script>
-
-<template>
-  <iframe
-    :src="src"
-    :title="title"
-    width="100%"
-    height="420"
-    loading="lazy"
-    sandbox="allow-scripts allow-same-origin"
-  />
-</template>
-```
-
-Зарегистрируйте его в теме сайта:
-
-```ts
-// .vitepress/theme/index.ts
-import Theme from 'vitepress-theme-neptu'
-import ExternalEmbed from './ExternalEmbed.vue'
-
-export default {
-  ...Theme,
-  enhanceApp(ctx) {
-    Theme.enhanceApp?.(ctx)
-    ctx.app.component('ExternalEmbed', ExternalEmbed)
-  },
-}
-```
-
-Затем используйте в markdown:
-
-```md
-<ExternalEmbed src="https://example.com/embed" title="Внешний контент" />
-```
-
-Встраивайте только доверенные источники. Настройте `sandbox`, разрешённые домены и
-Content Security Policy согласно требованиям провайдера контента.
+- [Справочник компонентов](components) — что можно импортировать из темы.
+- [Внешний контент](external-content) — контент из CMS или API.
+- [Рекламные блоки](ads) — свой компонент в слотах темы.

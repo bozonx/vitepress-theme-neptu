@@ -41,15 +41,21 @@ themeConfig:
 ```yaml
 themeConfig:
   sidebar:
-    popular: true   # требуется popularPosts.enabled
+    blogTitle: 'Мой блог'  # заголовок сайдбара; false — скрыть
     recent: true
-    archive: true   # по годам → месяцам
+    featured: true   # посты с featured: true
+    popular: true    # требуется popularPosts.enabled
+    archive: true    # по годам → месяцам
     authors: true
-    tags: true      # облако тегов
+    tags: true       # облако тегов
     categories: true # облако категорий (по умолчанию выключено)
     donate: true
     rssFeed: true
     atomFeed: true
+    links:           # свои ссылки над встроенными секциями
+      - text: 'Главная'
+        href: '/'
+        icon: 'fa6-solid:house'
     bottomLinks:
       - { header: '${t.links.links}' }        # заголовок секции
       - text: 'Наш YouTube-канал'
@@ -60,8 +66,10 @@ themeConfig:
         icon: 'fa6-solid:share-nodes'
 ```
 
-Каждая встроенная секция соответствует сгенерированному макету — их можно посмотреть в сайдбаре:
-**Свежие посты**, **Популярное**, **Архив**, **Авторы**, **Теги**.
+Каждый флаг включает готовую страницу-список — все они видны в сайдбаре этого
+демо. Размер облаков ограничивают `sidebarTagsCount` (по умолчанию 15) и
+`sidebarCategoriesCount` (10); за порогом появляется ссылка «Все теги» /
+«Все категории».
 
 ### Логотип сайдбара
 
@@ -121,8 +129,14 @@ themeConfig:
 themeConfig:
   donateIcon: 'fa6-solid:hand-holding-heart'
   recentIcon: 'fa6-solid:bolt'
+  featuredIcon: 'fa6-solid:certificate'
   popularIcon: 'fa6-solid:star'
+  byDateIcon: 'fa6-solid:calendar-days'
+  authorsIcon: 'mdi:users'
+  tagsIcon: 'fa6-solid:tag'
+  categoriesIcon: 'fa6-solid:folder-open'
   rssIcon: 'bi:rss-fill'
+  atomIcon: 'vscode-icons:file-type-atom'
 ```
 
 ## Внешние ссылки в контенте постов
@@ -151,111 +165,14 @@ markdown: {
 Относительный `href`, такой как `page/about`, автоматически дополняется префиксом текущей
 локали (`/en/page/about`, `/ru/page/about`). Для внешних ссылок используйте абсолютные URL (`https://…`).
 
-## Социальные кнопки поделиться
+## Что где настраивается
 
-Тема выводит блок кнопок «поделиться» под каждым постом. Набор сетей и их порядок
-задаются через `themeConfig.socialMediaShares` — массив объектов:
+| Элемент | Где | Статья |
+| --- | --- | --- |
+| Верхняя панель, сайдбар, футер сайта | `_site.yaml` | эта |
+| Секции списков в сайдбаре | `sidebar.*` | [Списки и главная](lists-and-pages) |
+| Облака тегов и категорий | `sidebar.tags`, `sidebar.categories` | [Категории и теги](categories-and-tags) |
+| Блоки под статьёй и кнопки «поделиться» | `postFooter`, `socialMediaShares` | [Подвал поста](post-footer-and-sharing) |
+| Правая колонка и оглавление | `toc`, `asideLayouts` | [Оглавление и правая колонка](toc-and-aside) |
+| Своя вёрстка вместо встроенной | слоты `Layout.vue` | [Хуки и слоты](advanced) |
 
-```ts
-interface SocialMediaShare {
-  name: string
-  icon: string
-  title: string
-  urlTemplate: string
-  class?: string
-}
-```
-
-| Поле | Описание |
-|------|----------|
-| `name` | Машинный идентификатор (для справки) |
-| `icon` | Имя иконки Iconify (например `'logos:telegram'`) |
-| `title` | Доступная подпись / tooltip |
-| `urlTemplate` | URL поделиться с плейсхолдерами `{url}` и `{title}` |
-| `class` | Опциональные CSS-классы для кнопки |
-
-### Сети по умолчанию
-
-Встроенные конфигурации локалей уже включают шесть сетей: Telegram, WhatsApp, VK,
-X (Twitter), Facebook, LinkedIn. Можно переопределить весь массив для конкретной локали
-или глобально.
-
-### Добавление своих сетей
-
-Любой сервис с URL поделиться работает. Подставьте `{url}` и `{title}` в шаблон:
-
-```yaml
-# src/ru/_site.yaml
-themeConfig:
-  socialMediaShares:
-    - name: vk
-      icon: 'cib:vk'
-      title: 'ВКонтакте'
-      urlTemplate: 'https://vk.com/share.php?url={url}&title={title}'
-      class: 'text-[#0077ff] hover:text-[#0077ff]'
-    - name: telegram
-      icon: 'logos:telegram'
-      title: 'Телеграм'
-      urlTemplate: 'https://t.me/share/url?url={url}&text={title}'
-    - name: odnoklassniki
-      icon: 'simple-icons:odnoklassniki'
-      title: 'Одноклассники'
-      urlTemplate: 'https://connect.ok.ru/offer?url={url}&title={title}'
-```
-
-> UTM-метки можно добавить прямо в `urlTemplate`:
-> `urlTemplate: 'https://x.com/intent/tweet?text={title}&url={url}%3Futm_source%3Dshare'`
-
-### Скрытие блока
-
-Уберите `socialMediaShares` целиком или задайте пустой массив:
-
-```yaml
-themeConfig:
-  socialMediaShares: []
-```
-
-В обоих случаях блок кнопок не выводится.
-
-### Переопределение для локали
-
-Локаль-специфичный список помещается в `src/<locale>/_site.yaml` — это высший уровень
-в стеке слияния, поэтому он заменяет общий `socialMediaShares` из `src/site.yaml`
-и любые встроенные значения по умолчанию.
-
-## Подвал поста (`postFooter`)
-
-Подвал каждого поста управляется через `themeConfig.postFooter` — упорядоченный массив ключей.
-Уберите ключ, чтобы скрыть блок; измените порядок, чтобы поменять расположение:
-
-```yaml
-# src/site.yaml
-themeConfig:
-  postFooter:
-    - author
-    - donate
-    - comments
-    - social-share
-    - edit-link
-    - categories
-    - tags
-    - navigation
-    - similar
-    - popular-link
-```
-
-| Ключ | Блок |
-|------|------|
-| `author` | `PostAuthor` |
-| `donate` | `PostDonateLink` |
-| `comments` | `PostComments` |
-| `social-share` | `PostSocialShare` |
-| `edit-link` | `EditLink` |
-| `categories` | `PostCategories` |
-| `tags` | `PostTags` |
-| `navigation` | `PostNavigation` |
-| `similar` | `PostSimilarList` |
-| `popular-link` | Ссылка на популярные посты (только если `popularPosts.enabled: true`) |
-
-Полная кастомизация подвала поста (слоты, замена компонента) описана на странице
-[Расширенные возможности](advanced#кастомизация-подвала-поста).

@@ -19,7 +19,7 @@ Mermaid и KaTeX подключаются как опциональные Markdo
 Установите renderer и сам Mermaid:
 
 ```bash
-pnpm add -D vitepress-plugin-mermaid mermaid
+npm install -D vitepress-plugin-mermaid mermaid
 ```
 
 В `.vitepress/config.ts` оберните уже собранный конфиг Neptu:
@@ -55,7 +55,7 @@ VitePress. Параметры и совместимость версий при�
 Установите Markdown-it plugin и KaTeX:
 
 ```bash
-pnpm add -D @mdit/plugin-katex katex
+npm install -D @mdit/plugin-katex katex
 ```
 
 Зарегистрируйте его через существующий Markdown hook VitePress:

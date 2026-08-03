@@ -1,6 +1,9 @@
 ---
-title: Компоненты
-description: Категории компонентов темы — макеты, посты, утилиты и doc-components для использования в markdown.
+title: Справочник компонентов, composables и утилит
+description: >
+  Что тема экспортирует наружу: глобальные компоненты для markdown, блоки
+  списков и постов для собственных макетов, composables и вспомогательные
+  функции.
 authorId: ivan-k
 date: 2026-07-08
 category: { name: 'Расширение', slug: 'advanced' }
@@ -8,103 +11,160 @@ tags: [advanced, components]
 descrAsPreview: true
 ---
 
-Компоненты темы организованы по назначению.
+Это справочная страница: перечень всего, что тема отдаёт наружу. Как этим
+пользоваться на практике, разбирается в [Хуках, слотах и своих
+макетах](advanced).
 
-## Категории
+## Четыре точки импорта
 
-- **`layout-parts/`** — части макета (SideBar, TopBar, Footer, LayoutAside).
-- **`post/`** — компоненты отображения поста (PostAuthor, PostDate, PostTags,
-  PostCategories, PostComments).
-- **`utility/`** — компоненты утилитарных страниц (HomeHero, Authors, AllTagsList, Years).
-- **`doc-components/`** — компоненты для использования прямо в markdown (AudioFile, FileDownload, YoutubeVideo).
+```ts
+import { RecentList } from 'vitepress-theme-neptu/components'
+import { useUiTheme } from 'vitepress-theme-neptu/composables'
+import { isPost } from 'vitepress-theme-neptu/utils'
+import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
+```
 
-## Компоненты макета
+## Глобальные компоненты
 
-| Компонент | Описание |
-|-----------|----------|
-| `HomeHero` | Hero-баннер для главной страницы |
-| `AllTagsList` | Облако тегов |
-| `AllCategoriesList` | Облако категорий |
-| `NeptuAuthors` | Страница со списком авторов |
+Пять компонентов тема регистрирует глобально — их можно писать в любом
+`.md`-файле без `<script setup>` и импорта:
+
+| Компонент | Назначение |
+| --- | --- |
+| `YoutubeVideo` | Адаптивный ролик YouTube |
+| `VideoFile` | Плеер локального видео |
+| `AudioFile` | Аудиоплеер со ссылкой на скачивание |
+| `FileDownload` | Кнопка скачивания файла |
+| `NeptuAd` | Рекламный блок в произвольном месте статьи |
+
+Живые примеры первых четырёх и их props — в
+[Медиа-компонентах](media-components); `NeptuAd` описан в [Рекламных
+блоках](ads).
+
+## Списки и страницы
+
+Компоненты, из которых собраны служебные страницы темы. Нужны, если вы делаете
+свою страницу-список или меняете главную:
+
+| Компонент | Что выводит |
+| --- | --- |
+| `RecentList` | Свежие посты с пагинацией |
+| `PopularPostsList` | Популярные посты (требует `popularPosts.enabled`) |
+| `FeaturedList` | Посты с `featured: true` |
+| `TagPostsList` | Посты одного тега |
+| `CategoryPostsList` | Посты одной категории |
+| `MonthPostsList` | Посты одного месяца |
+| `AllTagsList` | Облако всех тегов |
+| `AllCategoriesList` | Список всех категорий |
+| `NeptuAuthors` | Список авторов |
+| `AuthorDetails` | Карточка одного автора |
 | `NeptuYears` | Архив по годам |
-| `PopularPostsList` | Виджет популярных постов |
-| `RecentList` | Виджет свежих постов |
-| `TagPostsList` | Посты, отфильтрованные по тегу |
-| `CategoryPostsList` | Посты, отфильтрованные по категории |
+| `MonthsOfYear` | Месяцы внутри года |
+
+Все списки принимают `curPage` и рисуют свою пагинацию сами; страницы-шаблоны
+в `recent/`, `tags/` и `archive/` показывают, как их подключать.
+
+## Блоки главной страницы
+
+| Компонент | Что выводит |
+| --- | --- |
+| `HomeHero` | Hero-блок из `home.hero` |
+| `HomeSections` | Все секции из `home.sections` разом |
+| `HomeFeaturedPosts` | Секция избранных постов |
+| `HomeLatestPosts` | Секция последних постов |
+| `HomePopularPosts` | Секция популярных постов |
+| `HomeTags` | Облако тегов |
+| `HomeCategories` | Список категорий |
+
+Обычную главную настраивают через YAML — см. [Списки, страницы и
+главную](lists-and-pages). Эти компоненты нужны, только если вы собираете
+главную вручную.
+
+## Части поста
+
+Из них собран стандартный макет статьи; ими же собирают свой:
+
+| Компонент | Назначение |
+| --- | --- |
+| `PostDate` | Дата публикации |
+| `PostReadingTime` | Оценка времени чтения |
+| `PostDraftBadge` | Бейдж «Черновик» |
+| `PostImage` | Обложка с подписью и размерами |
+| `PostTopBar` | Верхние действия: кнопка видео и подкасты |
+| `PostVideoLink` | Кнопка внешнего видео |
+| `PodcastDropdown`, `PodcastIcon` | Выпадающий список подкастов |
+| `PostAuthor` | Карточка автора |
+| `PostCategories` | Категории поста |
+| `PostTags` | Теги поста |
+| `PostNavigation` | Предыдущий / следующий пост |
+| `PostSimilarList` | Похожие посты по тегам |
+| `PostSocialShare` | Кнопки «поделиться» |
+| `PostComments` | Ссылка на обсуждение |
+| `PostDonateLink` | Призыв поддержать блог |
+| `PostFooter` | Весь подвал поста целиком |
+
+## Навигация и оформление
+
+| Компонент | Назначение |
+| --- | --- |
 | `NeptuBreadcrumbs` | Хлебные крошки ([пример](categories-and-tags#хлебные-крошки)) |
-| `MonthPostsList` | Посты, отфильтрованные по месяцу |
-| `PageFindSearch` | Интеграция поиска Pagefind |
-| `Pagination` | Пагинация списков |
+| `PageFindSearch` | Модалка поиска |
+| `NavSearchButton` | Кнопка вызова поиска |
+| `SwitchLang`, `LocaleSelector` | Переключение локали |
+| `SwitchAppearance` | Переключатель светлой / тёмной темы |
+| `ColorThemePicker` | Выбор цветовой схемы |
+| `StylePresetPicker` | Выбор стилевого пресета |
+| `TocAside`, `TocCollapsible`, `TocLinks` | Оглавление статьи |
 
-## Doc-компоненты
+## Composables
 
-Эти компоненты зарегистрированы глобально и могут использоваться в любом `.md`-файле.
-
-### AudioFile
-
-```vue
-<AudioFile
-  url="/audio/sample.mp3"
-  filename="Sample Audio.mp3"
-  autoplay
-  :show-controls="true"
-/>
+```ts
+import { useUiTheme, useBreakpoint } from 'vitepress-theme-neptu/composables'
 ```
 
-**Props**
+| Composable | Описание |
+| --- | --- |
+| `useUiTheme()` | Типизированный доступ к объединённому `themeConfig` |
+| `useTranslations()` | Строки `t` текущей локали |
+| `useContentLangs()` | Текущая локаль и список доступных |
+| `useBreakpoint()` | Реактивные проверки mobile / tablet / desktop |
+| `useScrollY()` | Реактивный `window.scrollY` |
+| `useToTheTop()` | Логика показа кнопки «наверх» |
+| `useToc()` | Заголовки страницы для своего оглавления |
+| `useLightbox()` | Управление лайтбоксом изображений |
+| `useSwipeDrawer()` | Свайп-жесты мобильного сайдбара |
+| `useOnClickOutside()` | Клик вне элемента |
+| `useColorTheme()` | Чтение и смена цветовой схемы |
+| `useStylePreset()` | Чтение и смена стилевого пресета |
+| `useConsent()` | Согласие на куки — см. [Согласие и аналитику](consent-and-analytics) |
+| `useDownloadFile()` | Логика скачивания для своих кнопок |
 
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|----------|
-| `url` | `string` | обязателен | URL аудиофайла |
-| `filename` | `string` | `''` | Имя файла для скачивания |
-| `class` | `string` | `''` | CSS-классы |
-| `disabled` | `boolean` | `false` | Отключить плеер |
-| `autoplay` | `boolean` | `false` | Автовоспроизведение |
-| `showControls` | `boolean` | `true` | Показывать элементы управления |
+## Утилиты
 
-**Слоты**
-
-| Слот | Описание |
-|------|----------|
-| `default` | Пользовательское описание аудио |
-
-Поддерживаемые форматы: MP3, WAV, OGG, FLAC, AAC, M4A, WMA.
-
-### FileDownload
-
-```vue
-<FileDownload
-  url="/files/manual.pdf"
-  filename="manual.pdf"
-  type="PDF"
-  button-text="Скачать инструкцию"
-/>
+```ts
+import { isPost, resolveArticlePreview } from 'vitepress-theme-neptu/utils'
 ```
 
-**Props**
+| Утилита | Описание |
+| --- | --- |
+| `isPost(frontmatter)` | `true` для постов (`layout: post` или без layout) |
+| `isPage(frontmatter)` | `true` для `layout: page` |
+| `isUtilPage(frontmatter)` | `true` для `util`, `tag`, `category`, `archive`, `author` |
+| `isHomePage(frontmatter)` | `true` для `layout: home` |
+| `resolveArticlePreview(frontmatter)` | Текст превью по правилам темы |
+| `resolveBodyMarker(theme, frontmatter)` | Маркер тела для Pagefind |
+| `isPopularRoute(path, theme)` | Маршрут списка популярных |
+| `isAuthorPage(filePath, siteConfig)` | Путь страницы автора |
 
-| Prop | Тип | По умолчанию | Описание |
-|------|-----|--------------|----------|
-| `url` | `string` | обязателен | URL файла |
-| `filename` | `string` | `''` | Имя файла для скачивания |
-| `type` | `string` | `''` | Метка типа файла (например `PDF`) |
-| `buttonText` | `string` | `'Download'` | Текст кнопки |
-| `class` | `string` | `''` | CSS-классы |
-| `disabled` | `boolean` | `false` | Отключить кнопку |
+Функции, работающие с файловой системой, вынесены отдельно:
+`vitepress-theme-neptu/utils/node` доступен только в конфиге и сборочных
+скриптах, `…/utils/client` — только в браузере.
 
-**Слоты**
+## Хелперы списков
 
-| Слот | Описание |
-|------|----------|
-| `default` | Пользовательское отображение имени файла (поддерживает HTML) |
-
-Автоопределение иконок для: PDF, DOC/DOCX, XLS/XLSX, PPT/PPTX, TXT, ZIP/RAR/7Z,
-изображений, видео, аудио, JSON, JS, TS, HTML, CSS, XML.
-
-### YoutubeVideo
-
-См. отдельный пакет: [vitepress-youtube-embed](https://github.com/miletorix/vitepress-youtube-embed)
-
-```vue
-<YoutubeVideo id="dQw4w9WgXcQ" />
-```
+`vitepress-theme-neptu/list-helpers` — то, чем пользуются страницы-шаблоны:
+`makeTagsList`, `makeCategoriesList`, `makePostsOfTagList`,
+`makePostsOfCategoryList`, `makeTagsParams`, `makeCategoriesParams` и их общие
+формы `makeTaxonomy*`. Ветка `…/list-helpers/node` содержит
+`loadPostsDataFromFiles` для собственных data-лоадеров — см. [Внешний
+контент](external-content).

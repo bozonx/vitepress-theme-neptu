@@ -15,19 +15,23 @@ themeConfig:
         - text: 'Начать за 5 минут'
           href: 'post/getting-started'
           primary: true
-        - text: '${t.toBlog}'
-          href: 'recent/1'
+        - text: 'Содержание руководства'
+          href: 'page/contents'
   editLink:
     text: 'Редактировать эту страницу на GitHub'
   donate:
     postDonateCall: 'Если блог оказался полезным — поддержите его.'
   nav:
     links:
-      - text: 'Внешняя ссылка'
-        href: 'https://example.org/'
-        icon: 'solar:document-linear'
+      - text: 'Содержание'
+        href: 'page/contents'
+        icon: 'fa6-solid:list-ul'
         desktopOnly: true
   sidebar:
+    links:
+      - text: 'Содержание руководства'
+        href: 'page/contents'
+        icon: 'fa6-solid:list-ul'
     bottomLinks:
       - { header: '${t.links.links}' }
       - text: 'Наш YouTube-канал'
@@ -42,3 +46,5 @@ themeConfig:
     links:
       - text: '${t.links.aboutBlog}'
         href: 'page/about'
+      - text: 'Содержание'
+        href: 'page/contents'

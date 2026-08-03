@@ -119,20 +119,30 @@ themeConfig:
       donate: 'Поддержать'
 ```
 
-### Полный список ключей `t`
+### Ключи `t`
 
 **Строковые ключи верхнего уровня:**
 
 | Ключ | Значение по умолчанию (en) |
 | --- | --- |
 | `popularPosts` | Popular Posts |
+| `featuredPosts` | Featured Posts |
 | `similarPosts` | Similar Posts |
+| `previousPost` | Previous post |
+| `nextPost` | Next post |
 | `shareSocialMedia` | Share on Social Media |
 | `currentLang` | Current language |
-| `tagBadgeCount` | The number of posts on this tag |
-| `tagPageHeader` | All Posts by Tag |
 | `tags` | Tags |
 | `allTags` | All Tags |
+| `allTagsCall` | View All Tags |
+| `tagPageHeader` | All Posts by Tag |
+| `tagBadgeCount` | The number of posts on this tag |
+| `categories` | Categories |
+| `allCategories` | All Categories |
+| `allCategoriesCall` | View All Categories |
+| `categoryPageHeader` | All Posts in Category |
+| `categoryBadgeCount` | The number of posts in this category |
+| `breadcrumbHome` | Home |
 | `paginationToStart` | First Page |
 | `paginationToEnd` | Last Page |
 | `toHome` | Go to the home page |
@@ -142,92 +152,81 @@ themeConfig:
 | `showMorePosts` | Load More |
 | `listenPodcast` | Listen to podcast |
 | `commentLink` | Discuss this post |
-| `allTagsCall` | View All Tags |
 | `popularPostsCall` | View All Popular Posts |
 | `viewInAnotherLanguage` | View in another language |
 | `postVideoButton` | Watch Video |
 | `allPostsOfAuthor` | Posts of the author |
-| `closeMenu` | Close menu |
 | `allPostsOfYear` | All posts of the year |
+| `closeMenu` | Close menu |
 | `pageNotFound` | 404 not found |
 | `postsCount` | Publications |
 | `editLink` | Found an error? Suggest an edit |
+| `draftLabel` | Draft |
+| `draftTitle` | This post is a draft and is hidden from lists |
+| `readingTime` | Reading time |
+| `tocLabel` | On this page |
+| `adLabel` | Advertisement |
 | `search` | Search |
 | `searchInBlog` | Search in this blog |
 
-**`postsCountForms`** — массив форм множественного числа. Английский: `['Publication', 'Publications']` (2 формы). Русский: `['статья', 'статьи', 'статей']` (3 формы).
+**Формы множественного числа** — массивы, длина которых зависит от языка:
+`postsCountForms` (английский: `['Publication', 'Publications']`, русский:
+`['статья', 'статьи', 'статей']`) и `readingTimeForms`.
 
 **`months`** — массив из 12 названий месяцев, с января по декабрь.
 
-**`links`** — подписи навигации и сайдбара: `aboutBlog`, `donate`, `recent`, `popular`, `byDate`, `links`, `authors`, `aboutUs`, `rssFeed`, `atomFeed`.
+**Вложенные группы:**
 
-**`podcasts`** — подписи платформ подкастов: `site`, `rss`, `castbox`, `soundstream`, `spotify`, `youtube`, `amazonmusic`, `iheartradio`, `tunein`, `vk`, `yandexmusic`, `deezer`, `pocketcasts`, `applepodcasts`, `overcast`, `zvuk`, `podcastaddiction`.
+| Группа | Что подписывает |
+| --- | --- |
+| `links` | Навигация и сайдбар: `aboutBlog`, `donate`, `recent`, `featured`, `popular`, `byDate`, `links`, `authors`, `aboutUs`, `rssFeed`, `atomFeed` |
+| `podcasts` | Названия платформ подкастов: `site`, `rss`, `spotify`, `applepodcasts`, `youtube`, `castbox`, `deezer`, `overcast` и другие |
+| `audioFile` | Аудиоплеер: подписи управления, состояния и ошибки |
+| `videoFile` | Видеоплеер: то же для видео |
+| `fileDownload` | Кнопка скачивания файла |
+| `lightbox` | Лайтбокс изображений: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel` |
 
-**`audioFile`** — подписи аудиоплеера: `downloadFile`, `playAudio`, `pauseAudio`, `startAudioPlayback`, `pauseAudioPlayback`, `resumeAudioPlayback`, `stopAudio`, `stopAudioPlayback`, `hidePlayer`, `hidePlayerTitle`, `audioFile`, `downloadAudioFile`, `currentTime`, `audioProgress`, `volumeControl`, `volumePercent`, `retryWithValidUrl`, `retry`, `invalidUrlProvided`, `invalidAudioUrlProvided`, `errorDownloadingFile`, `errorPlayingAudioFile`, `audioPlaybackAborted`, `networkErrorLoadingAudio`, `audioDecodingError`, `audioFormatNotSupported`, `unknownAudioError`, `errorLoadingAudioFile`.
-
-**`fileDownload`** — подписи скачивания файлов: `fileDownload`, `downloadFile`, `downloadFileWithName`, `fileType`, `fileSize`, `downloadStarted`, `downloadError`, `invalidUrlProvided`, `retryDownload`, `retry`.
-
-**`videoFile`** — подписи видеоплеера: `downloadFile`, `videoFile`, `downloadVideoFile`, `retry`, `videoPlaybackAborted`, `networkErrorLoadingVideo`, `videoDecodingError`, `videoFormatNotSupported`, `unknownVideoError`, `errorLoadingVideoFile`.
-
-**`lightbox`** — подписи лайтбокса изображений: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel`.
-
-Полные значения по умолчанию для каждой локали — в `src/configs/blogLocalesBase/<locale>.ts` и `src/configs/sharedLocalesBase/<locale>.ts`. В стартовом шаблоне [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml) все ключи закомментированы как справочник.
+Значения по умолчанию для каждого языка лежат в
+`src/configs/blogLocalesBase/<locale>.ts` и
+`src/configs/sharedLocalesBase/<locale>.ts`. В стартовом шаблоне
+[`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml)
+все ключи перечислены закомментированными — это самый удобный справочник под рукой.
 
 ## Переключение языка
 
-Переключатель языка в верхней панели (`SwitchLang.vue`) переключает **контент-локаль**:
-он переводит пользователя на ту же страницу в дереве другой локали.
+Переключатель в верхней панели переводит читателя на ту же страницу в дереве
+другой локали. Как страницы связываются между собой и что из этого получают
+поисковики, разбирается в [Связывании переводов и hreflang](i18n-hreflang) —
+коротко: поле `translations` во frontmatter, а без него совпадение по
+относительному пути.
 
-### Сопоставление переведённых страниц
+Автоподстановку соответствующей страницы можно отключить — тогда переключатель
+всегда ведёт на главную нужной локали:
 
-Тема поддерживает два способа сопоставления переведённых версий одной страницы.
+```ts
+// .vitepress/config.ts
+themeConfig: { i18nRouting: false }
+```
 
-Приоритет:
+## Наследование локалей (`extends`)
 
-1. Явный `frontmatter.translations`.
-2. Fallback на тот же относительный путь в другой локали.
-
-#### 1. Явные переводы в frontmatter
-
-Когда `translations` задан, он используется как источник истины:
+Близкие локали не нужно настраивать дважды. `extends` в `_site.yaml` указывает
+имя папки родительской локали, чьи настройки берутся за основу:
 
 ```yaml
----
-title: Привет, мир
-translations:
-  en: /en/post/hello-world
-  'en-US': /en-US/post/hello-world
-  'pt-BR': /pt-BR/artigos/ola-mundo
----
+# src/en-GB/_site.yaml
+extends: en
+lang: en-GB
+title: My Blog
 ```
 
-Это позволяет:
-
-- разные локализованные slug'и
-- разную структуру папок для локалей
-- явное исключение некоторых локалей для конкретной страницы
-
-#### 2. Fallback по относительному пути
-
-Если `frontmatter.translations` не задан, тема сохраняет тот же относительный путь,
-заменяя только сегмент локали:
-
-```text
-en/post/hello-world.md
-ru/post/hello-world.md
-de/post/hello-world.md
-```
-
-Этот fallback предполагает, что переведённые страницы используют то же имя файла
-и ту же структуру папок в каждом дереве локали. Локализованные slug'и с разными
-именами файлов не поддерживаются в этом режиме.
+Значение — имя папки, а не путь к файлу. Наследуются `themeConfig` и переводы;
+объекты объединяются рекурсивно, поэтому переопределять достаточно отличия.
 
 ## Форматирование
 
-При необходимости форматирования по локали браузера тема использует тег `lang`
-страницы, а не ключ папки контента.
+Там, где формат зависит от языка, тема опирается на `lang` страницы, а не на имя
+папки локали:
 
-Примеры:
-
-- форматирование дат использует разрешённый `lang` страницы
-- SEO-теги используют значение `lang` локали, где доступно
+- даты форматируются по разрешённому `lang` страницы;
+- SEO-теги и `hreflang` используют значение `lang` локали.
