@@ -8,3 +8,12 @@
 .dark .sidebar-logo {
   border-bottom: 3px solid black;
 }
+
+.home-hero-img {
+  border: 16px solid white;
+  border-radius: 44px;
+}
+
+.dark .home-hero-img {
+  border-color: var(--gray-300);
+}
