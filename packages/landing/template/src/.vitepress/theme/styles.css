@@ -1,0 +1,208 @@
+/* ============================================================
+ * Custom CSS overrides for your landing page
+ *
+ * This file is loaded AFTER all theme styles, so every rule
+ * here wins over the defaults. The theme is built on CSS
+ * custom properties (variables) — override them instead of
+ * writing hard-coded values whenever possible.
+ *
+ * Architecture overview (low → high priority):
+ *
+ *   1. landing-vars.css    — --ln-* semantic tokens (colors, shape, motion)
+ *   2. style-presets.css   — [data-style='…'] density / shape / motion
+ *   3. landing.css         — the block layer (imported by the theme entry)
+ *   4. styles.css          — THIS FILE (your overrides)
+ *
+ * The golden rule: blocks read ONLY --ln-* tokens. A new theme is a CSS
+ * file that overrides those tokens, never a component change.
+ *
+ * Two independent theme axes:
+ *   data-theme   — color palette (blue, green, purple, amber, teal, rose,
+ *                  magenta, monochrome)
+ *   data-ln-style — shape, density, typography and motion (soft, sharp,
+ *                  brutal, glass, editorial, mono)
+ *
+ * Production sites normally choose one of each in `src/site.yaml`
+ * (`defaultColorTheme` / `defaultStylePreset`). The pickers are demo
+ * controls — enable them with `colorPicker: true` / `stylePicker: true`
+ * and add them to the nav bar in Layout.vue.
+ * ============================================================ */
+
+/* ============================================================
+ * §1. Brand color
+ *
+ * `--primary-btn-bg` (and its active shade) are the palette primitives
+ * every --ln-c-brand* token derives from. Override them globally to
+ * re-tint the whole landing without picking a preset.
+ *
+ * Keep lightness ≤ 46% so white text clears WCAG AA (4.5:1).
+ * ============================================================ */
+/* :root { */
+/*   --primary-btn-bg: hsl(213, 66%, 46%); */
+/*   --primary-btn-bg-active: hsl(213, 75%, 32%); */
+/* } */
+
+/* ============================================================
+ * §2. Layout & spacing
+ *
+ *   --ln-container        — default content width (1200px)
+ *   --ln-container-narrow — narrow variant (~720px)
+ *   --ln-container-wide   — wide variant (~1320px)
+ *   --ln-section-py       — vertical section padding
+ *   --ln-section-py-sm    — tight section padding
+ *   --ln-section-py-lg    — generous section padding
+ *   --ln-page-px          — horizontal page gutter
+ *   --ln-gap              — default grid/flex gap
+ *   --ln-gap-sm           — tight gap
+ * ============================================================ */
+/* :root { */
+/*   --ln-container: 1180px; */
+/*   --ln-section-py: 5rem; */
+/* } */
+
+/* ============================================================
+ * §3. Typography
+ *
+ *   --ln-h1-size / --ln-h2-size / --ln-h3-size
+ *   --ln-heading-lh / --ln-heading-weight / --ln-heading-tracking
+ *   --ln-lead-size       — lead/hero body text
+ *   --ln-eyebrow-size    — the small label above a title
+ *   --ln-body-lh         — body line-height
+ *   --ln-font-body       — body font stack
+ *   --ln-font-display    — heading font stack
+ *   --ln-font-mono       — code font stack
+ * ============================================================ */
+/* :root { */
+/*   --ln-h1-size: 3rem; */
+/*   --ln-font-body: 'Inter', system-ui, sans-serif; */
+/* } */
+
+/* ============================================================
+ * §4. Shape — radii and borders
+ *
+ *   --ln-radius-xs | sm | md | lg | pill
+ *   --ln-border-width
+ *   --ln-btn-radius       — button corner radius
+ *   --ln-card-radius      — card corner radius
+ * ============================================================ */
+/* :root { */
+/*   --ln-radius-lg: 1rem; */
+/*   --ln-btn-radius: 0.5rem; */
+/* } */
+
+/* ============================================================
+ * §5. Cards
+ *
+ *   --ln-card-bg / --ln-card-border-color / --ln-card-backdrop
+ *   --ln-card-padding
+ *   --ln-card-shadow / --ln-card-shadow-hover
+ * ============================================================ */
+/* :root { */
+/*   --ln-card-padding: 1.5rem; */
+/*   --ln-card-shadow: 0 2px 8px rgb(0 0 0 / 6%); */
+/* } */
+
+/* ============================================================
+ * §6. Buttons
+ *
+ *   --ln-btn-height / --ln-btn-px
+ *   --ln-btn-weight / --ln-btn-tracking / --ln-btn-uppercase
+ *   --ln-btn-radius / --ln-btn-shadow
+ * ============================================================ */
+/* :root { */
+/*   --ln-btn-height: 2.75rem; */
+/*   --ln-btn-weight: 600; */
+/* } */
+
+/* ============================================================
+ * §7. Motion
+ *
+ *   --ln-duration        — transition duration
+ *   --ln-ease            — timing function
+ *   --ln-reveal-distance — scroll-reveal travel distance
+ *   --ln-lift            — hover lift distance
+ * ============================================================ */
+/* @media (prefers-reduced-motion: no-preference) { */
+/*   :root { */
+/*     --ln-duration: 0.25s; */
+/*     --ln-reveal-distance: 14px; */
+/*   } */
+/* } */
+
+/* ============================================================
+ * §8. Surfaces & text (semantic colors)
+ *
+ *   --ln-c-bg / --ln-c-bg-soft / --ln-c-bg-mute / --ln-c-bg-inverse
+ *   --ln-c-bg-elevated
+ *   --ln-c-text-1 / --ln-c-text-2 / --ln-c-text-3
+ *   --ln-c-brand / --ln-c-brand-active / --ln-c-brand-soft / --ln-c-brand-text
+ *   --ln-c-on-brand / --ln-c-on-inverse[-2]
+ *   --ln-c-border / --ln-c-border-strong
+ *   --ln-c-danger
+ *   --ln-c-backdrop       — modal backdrop (lightbox)
+ *   --ln-c-on-media[-muted] / --ln-c-media-scrim — captions over media
+ *
+ * Override these to change the look without redefining a palette.
+ * ============================================================ */
+/* :root { */
+/*   --ln-c-bg: #fafafa; */
+/*   --ln-c-text-1: #27272a; */
+/* } */
+
+/* ============================================================
+ * §9. Custom color preset
+ *
+ * A color preset only defines palette primitives — the --ln-* layer maps
+ * them onto components for you. Activate with `data-theme="my-color"`
+ * (set `themeConfig.defaultColorTheme: 'my-color'` in src/site.yaml).
+ * ============================================================ */
+/* [data-theme='my-color'] { */
+/*   --primary-hue: 258; */
+/*   --layout-hue: 258; */
+/*   --primary-btn-bg: hsl(var(--primary-hue), 72%, 52%); */
+/*   --primary-btn-bg-active: hsl(var(--primary-hue), 76%, 40%); */
+/* } */
+
+/* ============================================================
+ * §10. Custom style preset
+ *
+ * A style preset defines shape, density and motion only, no colors.
+ * Activate with `data-ln-style="my-style"` (set
+ * `themeConfig.defaultStylePreset: 'my-style'` in src/site.yaml).
+ * To also make it available in the demo picker, register the id in the
+ * `STYLE_PRESETS` list used by `StylePresetPicker`.
+ * ============================================================ */
+/* [data-ln-style='my-style'] { */
+/*   --ln-radius-md: 0.5rem; */
+/*   --ln-radius-lg: 0.75rem; */
+/*   --ln-card-padding: 1rem; */
+/*   --ln-card-shadow: none; */
+/* } */
+
+/* ============================================================
+ * §11. Dark mode
+ *
+ * The page theme follows the visitor's light/dark preference (or the
+ * `data-theme` switcher). Scope dark-only changes to `.dark`.
+ * ============================================================ */
+/* .dark { */
+/*   --ln-c-bg: #18181b; */
+/*   --ln-c-text-1: #e4e4e7; */
+/* } */
+
+/* ============================================================
+ * §12. Utility classes
+ *
+ * Define reusable spans used inside block content. The template's hero
+ * title uses `.ln-accent` for its gradient text.
+ * ============================================================ */
+.ln-accent {
+  background: linear-gradient(
+    120deg,
+    var(--ln-c-brand),
+    color-mix(in srgb, var(--ln-c-brand) 45%, #e879f9)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

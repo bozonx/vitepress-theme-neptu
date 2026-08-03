@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=../../../node_modules/vitepress-theme-neptu/schema/site.schema.json
+# ---------------------------------------------------------------------------
+# Level 3 of 3 — per-locale admin configuration.
+# Overrides Level 1 (`.vitepress/config.ts`) and Level 2 (`src/site.yaml`)
+# for this locale only.
+#
+# String templates (${...}) are supported — see `src/site.yaml` for the
+# full reference. In _site.yaml the `theme` context additionally includes
+# values from site.yaml.
+# ---------------------------------------------------------------------------
+
+# IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
+lang: 'en-US'
+
+# Canonical site title for this locale: browser tabs, SEO and the nav bar
+# default all use it.
+title: 'My Project'
+
+# Per-page title template. Use ':title' as the placeholder for the page title.
+# titleTemplate: ':title | ${site.title}'
+
+# Site description used for SEO meta tags.
+description: 'A modern landing page built with Neptu'
+
+# Name of another locale whose _site config is inherited as the base;
+# current values override the parent.
+# extends: en
+
+themeConfig:
+  # -------------------------------------------------------------------------
+  # Fine-grained themeConfig overrides
+  #
+  # Every themeConfig key from Level 2 (`src/site.yaml`) can be overridden
+  # here for this locale only. Objects deep-merge, so you only need to
+  # specify the sub-keys that differ — the rest is inherited from Level 2.
+  # -------------------------------------------------------------------------
+
+  # -------------------------------------------------------------------------
+  # Nav bar (VitePress default theme shape)
+  #
+  # `link` values use ${localeIndex} template substitution and are prefixed
+  # with the locale automatically by loadSiteLocale.
+  # -------------------------------------------------------------------------
+  nav:
+    - text: 'Docs'
+      link: '/${localeIndex}/doc'
+    - text: 'Blocks'
+      link: '/${localeIndex}/doc/blocks'
+    - text: 'GitHub'
+      link: '${theme.repo}'
+
+  # -------------------------------------------------------------------------
+  # Docs sidebar (VitePress default theme shape, keyed by section name).
+  # Add new doc pages here so they appear in the sidebar.
+  # -------------------------------------------------------------------------
+  sidebar:
+    doc:
+      - text: 'Guide'
+        items:
+          - text: 'Introduction'
+            link: ''
+          - text: 'Blocks'
+            link: 'blocks'
+          - text: 'Search'
+            link: 'search'
+
+  # -------------------------------------------------------------------------
+  # Footer
+  # -------------------------------------------------------------------------
+  footer:
+    message: 'Built with Neptu Landing & VitePress.'
+    copyright: 'Copyright © 2026-present'
+
+  # -------------------------------------------------------------------------
+  # Locale-specific UI labels (override built-in defaults per locale):
+  # sidebarMenuLabel: 'Menu'           # mobile sidebar toggle / aria-label
+  # returnToTopLabel: 'Return to top'  # "back to top" button text
+  # langMenuLabel: 'Change language'   # language switcher tooltip
+  # darkModeSwitchLabel: 'Appearance'  # dark mode switch tooltip
+  # docFooter: { prev: 'Previous', next: 'Next' }
+  # outline: { label: 'On this page' }
+  # lastUpdated: { text: 'Updated at' }
+  # editLink: { text: 'Edit this page on GitHub' }
+
+  # -------------------------------------------------------------------------
+  # Translations — overrides built-in `t` strings for this locale only.
+  # The landing theme adds its own keys under t.landing.* (carousel, pricing,
+  # gallery, code, form, video, banner). Only the keys you list here are
+  # overridden.
+  # -------------------------------------------------------------------------
+  # t:
+  #   landing:
+  #     carousel:
+  #       region: 'Carousel'
+  #       next: 'Next slide'
+  #     form:
+  #       submit: 'Subscribe'

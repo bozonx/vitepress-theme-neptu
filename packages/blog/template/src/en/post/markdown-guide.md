@@ -2,14 +2,12 @@
 title: Markdown Feature Guide
 description: A quick reference for Markdown formatting options available in this blog.
 date: 2026-07-20
-authorId: alex
+authorId: ivan
 category: Guides
 tags:
   - Guide
   - Markdown
 ---
-
-# Markdown Feature Guide
 
 VitePress supports full GitHub Flavored Markdown (GFM) along with Vue component integration.
 

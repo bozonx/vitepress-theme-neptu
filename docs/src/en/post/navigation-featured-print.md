@@ -6,8 +6,6 @@ authorId: ivan-k
 category: Configuration
 tags: [guide, frontmatter]
 featured: true
-translations:
-  ru: /ru/post/navigation-featured-print
 ---
 
 # Post Navigation, Featured Posts, and Printing

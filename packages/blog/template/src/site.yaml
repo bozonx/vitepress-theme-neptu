@@ -132,6 +132,9 @@ themeConfig:
   sidebar:
     # Show the "Recent posts" section.
     recent: true
+    # Show the "Featured" section — posts with `featured: true` in frontmatter.
+    # They also get their own list page at /<locale>/featured/1.
+    featured: true
     # Show the "Popular posts" section (requires popularPosts.enabled).
     popular: false
     # Show the "Archive" (by year) section.
@@ -198,14 +201,14 @@ themeConfig:
 
   # --- Edit Link -------------------------------------------------------------
   # VitePress built-in: adds an "Edit this page" link on post pages.
-  editLink:
-    # The pattern is auto-generated from `repo` above (supports GitHub, GitLab,
-    # Bitbucket, Gitea, Forgejo, Codeberg). Uncomment to override.
-    # Default: auto-generated from `repo` (e.g. 'https://github.com/.../edit/main/src/:path')
-    # pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
-    # Custom link text (defaults to the i18n translation).
-    # Default: i18n translation key `editLink`
-    # text: Edit this page
+  # The pattern is auto-generated from `repo` in .vitepress/config.ts and
+  # supports GitHub, GitLab, Bitbucket, Gitea, Forgejo and Codeberg, assuming
+  # branch `main` and content in `src/`. Uncomment only to override it.
+  # editLink:
+  #   # Default: auto-generated from `repo`
+  #   pattern: 'https://github.com/your-username/my-blog/edit/main/src/:path'
+  #   # Default: the i18n translation key `editLink`
+  #   text: Edit this page
 
   # --- Post List Card --------------------------------------------------------
   # Controls what is shown on each post card in list/archive/tag views.
@@ -233,12 +236,25 @@ themeConfig:
     # Layouts whose page header displays the estimate.
     layouts: ['post']
 
+  # --- Drafts ----------------------------------------------------------------
+  # `draft: true` in a post's frontmatter hides it from lists, feeds, sitemap
+  # and search, and marks the page `noindex` — but the page still builds and
+  # stays reachable by direct link, so it can be proofread "as in production".
+  # drafts:
+  #   # Show drafts in listings. Defaults to true in `dev`, false in `build`,
+  #   # so drafts are visible while writing and cannot ship by accident.
+  #   includeDrafts: false
+  #   # Show the "Draft" badge next to an unpublished post. Default: true
+  #   showBadge: true
+
   # --- Post Footer Blocks ----------------------------------------------------
   # Ordered list of post-footer blocks. Supported keys:
   #   'author', 'donate', 'comments', 'social-share', 'edit-link',
   #   'categories', 'tags', 'navigation', 'similar', 'popular-link'.
   # Omit a key to hide the block; reorder to change layout.
-  # Defaults to all blocks in the order shown below.
+  # The default is every key in the order above; the list below drops
+  # 'popular-link'. Arrays replace (never merge) across config layers, so a
+  # locale override must list every block it wants.
   postFooter:
     - author
     - donate
@@ -276,6 +292,7 @@ themeConfig:
   # Override any sidebar/nav icon with an Iconify icon name.
   # donateIcon: 'fa6-solid:hand-holding-heart'
   # recentIcon: 'fa6-solid:bolt'
+  # featuredIcon: 'fa6-solid:certificate'
   # popularIcon: 'fa6-solid:star'
   # byDateIcon: 'fa6-solid:calendar-days'
   # authorsIcon: 'mdi:users'
@@ -373,6 +390,12 @@ themeConfig:
   #   tagPageHeader: Posts tagged
   #   tags: Tags
   #   allTags: All tags
+  #   categories: Categories
+  #   allCategories: All categories
+  #   allCategoriesCall: View all categories
+  #   categoryPageHeader: Posts in category
+  #   categoryBadgeCount: posts
+  #   breadcrumbHome: Home
   #   paginationToStart: First page
   #   paginationToEnd: Last page
   #   toHome: Home
@@ -396,12 +419,19 @@ themeConfig:
   #   nextPost: Next post
   #   editLink: Edit this page
   #   postsCountForms: [post, posts, posts]
+  #   draftLabel: Draft
+  #   draftTitle: This post is a draft and is hidden from lists
+  #   readingTime: Reading time
+  #   readingTimeForms: [min, min]
+  #   tocLabel: On this page
+  #   adLabel: Advertisement
   #   search: Search
   #   searchInBlog: Search this blog
   #   links:
   #     aboutBlog: About blog
   #     donate: Donate
   #     recent: Recent
+  #     featured: Featured
   #     popular: Popular
   #     byDate: By date
   #     links: Links

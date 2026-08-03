@@ -1,5 +1,6 @@
 ---
 title: About Me
+layout: page
 description: Information about the author and this blog.
 ---
 

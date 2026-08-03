@@ -1,5 +1,6 @@
 ---
 title: Support My Work
+layout: page
 description: Ways to support this blog.
 ---
 

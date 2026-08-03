@@ -39,9 +39,12 @@ export const postList = {
  * Reads GA_PROPERTY_ID and GA_CREDENTIALS_JSON environment variables.
  */
 export const popularPosts = {
-  // Enabled by default. Without GA4 data, the theme emits a build warning and
-  // omits popular lists; set enabled: false to remove popular features.
-  enabled: true,
+  // Off in the starter so the first build is warning-free. Turn it on once
+  // GA_PROPERTY_ID and GA_CREDENTIALS_JSON are set — the ranking is fetched at
+  // build time and baked into static pages, so no Google request is made in the
+  // browser. Then also switch on `sidebar.popular` in src/site.yaml.
+  // Without GA4 data the theme warns and falls back to the latest posts.
+  enabled: false,
   sortBy: 'pageviews', // 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage'
   dataSource: {
     provider: 'ga4' as const,
@@ -139,6 +142,56 @@ export default async () => {
 
       /** Popular posts metrics configuration (GA4). */
       popularPosts,
+
+      /**
+       * Table of contents, built from the page headings.
+       * Shown in the right-hand aside column above 1550px and as a
+       * collapsible block above the article on narrower viewports.
+       */
+      // toc: {
+      //   position: 'auto',   // 'auto' | 'aside' | 'top'
+      //   minHeadings: 3,     // hide the TOC on short articles; 0 disables the threshold
+      //   collapsed: true,    // start state of the collapsible block
+      //   level: [2, 3],      // which heading levels to include; also 2 or 'deep'
+      //   layouts: ['post'],
+      // },
+
+      /**
+       * Layouts that render the right-hand aside column.
+       * Per-page frontmatter `aside: true | false` overrides this list.
+       */
+      // asideLayouts: ['post', 'util', 'tag', 'category', 'archive', 'author'],
+
+      /**
+       * Ad slots. The theme supplies placement, reserved height, the "ad"
+       * label and the consent wiring — the network snippet stays yours and is
+       * registered as a global component (see `theme/index.ts`).
+       */
+      // ads: {
+      //   component: 'AdUnit',
+      //   layouts: ['post'],
+      //   aside: true,          // slot in the aside column
+      //   afterContent: false,  // slot below the article
+      //   requireConsent: false,
+      //   inContent: {
+      //     enabled: true,
+      //     anchor: 'heading',  // 'heading' | 'paragraph'
+      //     start: 2, every: 3, max: 2, minBlocks: 6,
+      //   },
+      //   minHeight: { aside: 600, 'in-content': 280, 'after-content': 280 },
+      // },
+
+      /**
+       * Google Consent Mode v2 defaults, emitted as the first script on the
+       * page so tags that load later obey them. The theme ships no banner:
+       * Google ads in the EEA/UK require a certified CMP (IAB TCF 2.2), which
+       * this config sits underneath rather than replaces.
+       */
+      // consent: {
+      //   enabled: true,
+      //   waitForUpdate: 500,
+      //   // region: ['ES', 'US-CA'],
+      // },
     },
   }
 

@@ -1,0 +1,28 @@
+{
+  "name": "create-neptu-blog",
+  "version": "0.20.0",
+  "description": "Scaffold a new blog powered by vitepress-theme-neptu",
+  "type": "module",
+  "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/bozonx/vitepress-theme-neptu#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bozonx/vitepress-theme-neptu.git",
+    "directory": "packages/create-blog"
+  },
+  "bugs": {
+    "url": "https://github.com/bozonx/vitepress-theme-neptu/issues"
+  },
+  "keywords": ["vitepress", "blog", "theme", "template", "create", "scaffold"],
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "bin": {
+    "create-neptu-blog": "./index.mjs"
+  },
+  "files": ["index.mjs", "README.md", "LICENSE"],
+  "dependencies": {
+    "vitepress-theme-neptu": "^0.20.0"
+  }
+}

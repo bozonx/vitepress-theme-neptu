@@ -124,20 +124,32 @@ themeConfig:
 
   # -------------------------------------------------------------------------
   # Social sharing buttons in the post footer.
-  # The English locale includes default share buttons. Uncomment to replace,
-  # or set `socialMediaShares: []` to hide the share block.
+  #
+  # Every locale ships a default set (Telegram, WhatsApp, VK, X, Facebook,
+  # LinkedIn for `en`). Entries here are MERGED with those defaults by `name`:
+  # a matching name overrides fields on the built-in button, a new name is
+  # appended, and `enabled: false` hides a built-in one.
+  #
+  # Note: `socialMediaShares: []` does NOT hide the block — an empty list means
+  # "nothing to merge". To remove the block, drop `social-share` from
+  # `postFooter` in src/site.yaml.
+  #
   # {url} and {title} are replaced with the current page URL and title.
   # -------------------------------------------------------------------------
   # socialMediaShares:
-  #   - name: twitter
+  #   # Restyle a built-in button
+  #   - name: x
   #     icon: "fa6-brands:x-twitter"
   #     title: "Share on X"
-  #     urlTemplate: "https://twitter.com/intent/tweet?url={url}&text={title}"
-  #   - name: telegram
-  #     icon: "fa6-brands:telegram"
-  #     title: "Share on Telegram"
-  #     urlTemplate: "https://t.me/share/url?url={url}&text={title}"
+  #   # Add a new one
+  #   - name: reddit
+  #     icon: "fa6-brands:reddit"
+  #     title: "Share on Reddit"
+  #     urlTemplate: "https://www.reddit.com/submit?url={url}&title={title}"
   #     class: "custom-share-button"
+  #   # Hide a built-in one
+  #   - name: vk
+  #     enabled: false
 
   # -------------------------------------------------------------------------
   # Top bar
@@ -176,6 +188,7 @@ themeConfig:
     # blogTitle: false  # Set false to hide the blog title below the logo, or a string to override it.
     # popular: true # Show popular posts section. Requires popularPosts.enabled.
     # recent: true # Show recent posts section.
+    # featured: true # Show the "Featured" section (posts with `featured: true`).
     # archive: true # Show archive (by year) section.
     # authors: true # Show authors section.
     # tags: true # Show tags cloud.

@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=../node_modules/vitepress-theme-neptu/schema/site.schema.json
+
+# ============================================================================
+# Neptu Landing — Shared Site Configuration (site.yaml)
+#
+# Level 2 of 3 — cross-locale admin configuration. Applied to every locale and
+# sits between developer `config.ts` and per-locale `_site.yaml` files:
+#
+#   built-in theme defaults  →  built-in content-locale defaults
+#     →  config.ts  →  src/site.yaml  →  src/<locale>/_site.yaml
+#
+# Use this file only for safe, presentation/content settings that are the SAME
+# for every locale. Do not put JavaScript, environment variables, VitePress
+# build options, plugins, hooks, `base`, `srcDir`, or `siteUrl` here: those
+# are Level 1 (`.vitepress/config.ts`) settings.
+# ============================================================================
+
+
+# --- Template Substitution -------------------------------------------------
+# Any string value in this file (and in _site.yaml) supports ${...}
+# substitution applied to the raw YAML text before parsing.
+#
+# Context keys available in site.yaml:
+#   config       — LandingUserConfig from config.ts
+#   theme        — merged themeConfig (built-ins + config.ts)
+#   t            — translation keys from merged theme
+#   localeIndex  — current locale key (e.g. "en", "ru")
+#
+# In _site.yaml the `theme` context additionally includes values
+# from site.yaml, so cross-references between layers work there.
+#
+# Dot-notation is supported: ${theme.publisher.url}, ${config.siteUrl}
+# Example:
+#   publisher:
+#     url: ${config.siteUrl}
+#     logo: ${config.siteUrl}/img/logo.png
+
+
+# ============================================================================
+# Theme Configuration
+# ============================================================================
+themeConfig:
+
+  # --- Branding --------------------------------------------------------------
+  # Logo shown in the nav bar and footer. Path is from src/public/.
+  # Default: the site title text is used.
+  logo: '/img/logo.svg'
+
+  # --- Color & style ---------------------------------------------------------
+  # Two independent theme axes, both restored before the first paint.
+  # Colors: blue | green | purple | amber | teal | rose | magenta | monochrome
+  # Styles: soft | sharp | brutal | glass | editorial | mono
+  # Both are shared with the blog theme, so a docs+landing site keeps one
+  # shape language across both halves.
+  defaultColorTheme: 'blue'
+  defaultStylePreset: 'soft'
+
+  # Let readers switch the theme themselves. Both default to false — a
+  # production site normally ships one chosen theme and these are demo controls.
+  # Enable them here, then add the pickers to your nav bar in
+  # `src/.vitepress/theme/Layout.vue`.
+  colorPicker: false
+  stylePicker: false
+
+  # When true, routes users to their-language version of a page if available.
+  # Default: true
+  # i18nRouting: false
+
+  # Show an external-link icon next to outbound links.
+  # Default: true
+  externalLinkIcon: true
+
+  # --- Publisher (JSON-LD / SEO) ---------------------------------------------
+  # Publisher info used in JSON-LD structured data.
+  publisher:
+    name: 'My Project'
+    # String values support ${...} template substitution.
+    url: '${config.siteUrl}'
+    # logo: '${config.siteUrl}/img/logo.svg'
+
+  # `repo` is deliberately configured in .vitepress/config.ts: it describes
+  # source-control layout and supplies edit-link URLs.
+
+  # --- Edit Link -------------------------------------------------------------
+  # VitePress built-in: adds an "Edit this page" link on doc pages.
+  # The pattern is auto-generated from `repo` in config.ts (supports GitHub,
+  # GitLab, Bitbucket, Gitea, Forgejo, Codeberg). Override here only when the
+  # repo layout differs.
+  # editLink:
+  #   pattern: 'https://github.com/your-username/my-landing/edit/main/src/:path'
+  #   text: 'Edit this page'
+
+  # --- Footer ----------------------------------------------------------------
+  # The VitePress default theme renders the footer. Override its text here or
+  # per-locale in _site.yaml.
+  footer:
+    message: 'Built with Neptu Landing & VitePress.'
+    copyright: 'Copyright © 2026-present'
+
+  # --- i18n Translations -----------------------------------------------------
+  # Partial translation overrides. Deep-merged over built-in locale defaults.
+  # Only supply the keys you want to override. The landing theme adds its own
+  # keys under `t.landing.*` (carousel, pricing, gallery, code, form, video,
+  # banner) — see node_modules/vitepress-theme-neptu-landing/src/configs/siteLocalesBase/en.ts.
+  # t:
+  #   returnToTopLabel: 'Return to top'
+  #   landing:
+  #     carousel:
+  #       region: 'Carousel'
+  #       next: 'Next slide'
+  #     form:
+  #       submit: 'Subscribe'
+
+  # --- Custom Fields ---------------------------------------------------------
+  # You can add any own fields to `themeConfig` — they are preserved through
+  # the merge pipeline and accessible at runtime via `useUiTheme()` in your
+  # Vue components. Objects are deep-merged across layers; arrays replace.
+  #
+  # Example:
+  #   myCustomField: "hello"
+  #   myCustomConfig:
+  #     featureEnabled: true
+  #     apiUrl: "https://api.example.com"
+  #
+  # Access in a component:
+  #   const { theme } = useUiTheme()
+  #   console.log(theme.value.myCustomField)        // "hello"
+  #   console.log(theme.value.myCustomConfig)       // { featureEnabled: true, ... }

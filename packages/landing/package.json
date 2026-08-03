@@ -13,6 +13,7 @@
     "src",
     "schema",
     "scripts/validate-blocks.mjs",
+    "template",
     "AGENTS.md",
     "README.md",
     "LICENSE"

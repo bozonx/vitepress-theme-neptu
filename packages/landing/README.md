@@ -468,7 +468,5 @@ import type {
 - The default export is now a full theme (default theme + blocks + styles)
   instead of a bare `Layout`. Use `export default LandingTheme`, or
   `{ ...LandingTheme, Layout }` to add nav bar slots.
-- `SiteHome` still ships from `…/layouts`, but new pages should use `LnHero` +
-  `LnFeatureGrid` inside `<LnPage>`.
 - Import `…/landing.css` only if you build your own theme entry — the default
   export already includes it.

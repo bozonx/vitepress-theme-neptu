@@ -1,0 +1,25 @@
+{
+  "name": "my-neptu-landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Starter landing page built with vitepress-theme-neptu-landing",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev src",
+    "build": "vitepress build src",
+    "preview": "vitepress preview src",
+    "validate:blocks": "neptu-landing src",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vitepress": "^2.0.0-alpha.18",
+    "vitepress-theme-neptu": "^0.20.0",
+    "vitepress-theme-neptu-landing": "^0.20.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^5.7.0",
+    "vue-tsc": "^3.0.0"
+  }
+}

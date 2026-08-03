@@ -21,7 +21,7 @@ export default defineConfig(
      * not by visitors, and routinely needs inline markup — `<br>`, `<strong>`,
      * accent spans. Same trade-off the blog theme's hero makes.
      */
-    files: ['src/layouts/SiteHome.vue', 'src/blocks/**/*.vue', 'src/primitives/**/*.vue'],
+    files: ['src/blocks/**/*.vue', 'src/primitives/**/*.vue'],
     rules: { 'vue/no-v-html': 'off' },
   },
   {
