@@ -1,2 +1,10 @@
 @import 'tailwindcss';
 @import 'vitepress-theme-neptu/tailwind-source.css';
+
+.sidebar-logo {
+  border-bottom: 3px solid var(--gray-700);
+}
+
+.dark .sidebar-logo {
+  border-bottom: 3px solid black;
+}

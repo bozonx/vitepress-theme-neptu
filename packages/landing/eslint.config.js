@@ -30,5 +30,10 @@ export default defineConfig(
     files: ['tests/**/*.ts'],
     rules: { 'vue/one-component-per-file': 'off' },
   },
+  {
+    // VitePress requires the theme entry file to be named Layout.vue.
+    files: ['**/.vitepress/theme/Layout.vue'],
+    rules: { 'vue/multi-word-component-names': 'off' },
+  },
   eslintConfigPrettier
 )
