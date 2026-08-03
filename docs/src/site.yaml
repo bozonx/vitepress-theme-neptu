@@ -27,6 +27,7 @@ themeConfig:
   sidebar:
     popular: true
     recent: true
+    featured: true
     archive: true
     authors: true
     tags: true
