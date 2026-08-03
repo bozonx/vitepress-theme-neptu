@@ -1,15 +1,29 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Navigation & Locales', () => {
-  test('language dropdown toggles locale links', async ({ page }) => {
+  test('language dropdown toggles locale links', async ({ page, isMobile }) => {
     await page.goto('en/recent/1', { waitUntil: 'domcontentloaded' })
 
-    const langBtn = page.locator('.switch-lang-btn').first()
+    if (isMobile) {
+      // On mobile the TopBar SwitchLang is max-lg:hidden. Open the sidebar
+      // drawer to access the sidebar footer's SwitchLang (lg:hidden → visible).
+      const burgerBtn = page.locator('.top-bar button').first()
+      await burgerBtn.click()
+      const sidebar = page.locator('.app-drawer').first()
+      await expect(sidebar).toBeVisible()
+    }
+
+    // On desktop: .top-bar .switch-lang-btn (max-lg:hidden → visible).
+    // On mobile:  .app-drawer .switch-lang-btn   (lg:hidden → visible).
+    const scope = isMobile ? '.app-drawer' : '.top-bar'
+    const langBtn = page.locator(`${scope} .switch-lang-btn`).first()
     await expect(langBtn).toBeVisible()
 
     await langBtn.click()
 
-    const ruLink = page.locator('.switch-lang-btn a[href*="ru"], a[href*="/ru/"]').first()
+    const ruLink = page
+      .locator(`${scope} .switch-lang-btn a[href*="ru"], ${scope} a[href*="/ru/"]`)
+      .first()
     await expect(ruLink).toBeVisible({ timeout: 5000 })
     await ruLink.click()
 

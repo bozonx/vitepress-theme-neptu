@@ -53,9 +53,11 @@ test.describe('Pagefind Search Modal', () => {
     await firstResult.click()
 
     // The modal closes and the router actually lands on the result page.
+    // cleanUrls drops the .html extension that the result link's href may carry.
     await expect(page.locator('#search-modal')).toBeHidden()
+    const pathWithoutExt = resultHref?.replace(/\.html$/, '')
     await expect(page).toHaveURL(
-      new RegExp(`${resultHref?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`)
+      new RegExp(`${pathWithoutExt?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\.html)?$`)
     )
 
     // Going back returns to the page the search started from, not to the result.

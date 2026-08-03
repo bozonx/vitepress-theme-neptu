@@ -11,10 +11,14 @@ test('home loads with correct lang and hero', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Neptu Blog Theme')
 })
 
-test('root redirects to locale', async ({ page }) => {
+test('root renders locale selector without redirecting', async ({ page }) => {
   await page.goto('', { waitUntil: 'domcontentloaded' })
-  await page.waitForURL(/\/en\//)
-  expect(page.url()).toMatch(/\/en\//)
+
+  // The root page deliberately shows a locale selector instead of redirecting,
+  // so every locale remains crawlable by search engines.
+  await expect(page.locator('.locale-selector')).toBeVisible()
+  await expect(page.locator('.locale-selector__link')).toHaveCount(2)
+  expect(page.url()).not.toMatch(/\/en\//)
 })
 
 // ---------------------------------------------------------------------------

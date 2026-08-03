@@ -11,10 +11,14 @@ test('home loads with correct lang and hero', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('blocks')
 })
 
-test('root redirects to locale', async ({ page }) => {
+test('root renders locale selector without redirecting', async ({ page }) => {
   await page.goto('', { waitUntil: 'domcontentloaded' })
-  await page.waitForURL(/\/en\//)
-  expect(page.url()).toMatch(/\/en\//)
+
+  // The root page deliberately shows a locale selector instead of redirecting,
+  // so every locale remains crawlable by search engines.
+  await expect(page.locator('.locale-selector')).toBeVisible()
+  await expect(page.locator('.locale-selector__link')).toHaveCount(2)
+  expect(page.url()).not.toMatch(/\/en\//)
 })
 
 test('russian home is rendered from the declarative blocks array', async ({ page }) => {
@@ -107,8 +111,8 @@ test('code block switches samples and keeps one panel visible', async ({ page })
   await expect(tabs.first()).toHaveAttribute('aria-selected', 'true')
   await expect(page.locator('.ln-code__panel:visible')).toHaveCount(1)
 
-  await tabs.nth(2).click()
-  await expect(tabs.nth(2)).toHaveAttribute('aria-selected', 'true')
+  await tabs.nth(3).click()
+  await expect(tabs.nth(3)).toHaveAttribute('aria-selected', 'true')
   await expect(page.locator('.ln-code__panel:visible')).toContainText('LandingTheme')
 })
 
