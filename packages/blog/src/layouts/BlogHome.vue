@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData, inBrowser } from 'vitepress'
 import { computed, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
-import TopBar from '../components/layout-parts/TopBar.vue'
+import HomeTopBar from '../components/layout-parts/HomeTopBar.vue'
 import HomeHero from '../components/utility/HomeHero.vue'
 import HomeSections from '../components/utility/HomeSections.vue'
 import NeptuFooter from '../components/layout-parts/NeptuFooter.vue'
@@ -99,16 +99,11 @@ watchEffect(() => {
     ].join(' ')"
   >
     <header class="w-full absolute top-0 left-0 z-10 home-topbar">
-      <TopBar
-        :is-mobile="isMobile"
-        :hide-appearance="appearance !== 'auto'"
-        :hide-menu-button="true"
-        :minimal="true"
-      >
+      <HomeTopBar :hide-appearance="appearance !== 'auto'">
         <template #nav-bar-content-before>
           <slot name="nav-bar-content-before" />
         </template>
-      </TopBar>
+      </HomeTopBar>
     </header>
     <slot name="home-before" />
     <div class="home-layout-page pt-16 sm:pt-20 my-12 md:my-16 px-4 sm:px-7 flex flex-col gap-12 md:gap-16 w-full" :style="{ maxWidth: `${homeMaxWidth}px` }">
