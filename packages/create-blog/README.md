@@ -35,12 +35,12 @@ Requires **Node.js 20.19+ or 22.12+**.
 npx create-neptu-blog [directory] [options]
 ```
 
-| Option | Description |
-| --- | --- |
-| `--title <text>` | Blog title |
+| Option            | Description                                                     |
+| ----------------- | --------------------------------------------------------------- |
+| `--title <text>`  | Blog title                                                      |
 | `--locale <code>` | Content locale folder, e.g. `en`, `ru`, `pt-BR` (default: `en`) |
-| `-y`, `--yes` | Accept defaults, ask nothing |
-| `-h`, `--help` | Show usage |
+| `-y`, `--yes`     | Accept defaults, ask nothing                                    |
+| `-h`, `--help`    | Show usage                                                      |
 
 The theme ships built-in UI translations for `ar`, `cs`, `de`, `en`, `es`,
 `fr`, `he`, `hi`, `it`, `ja`, `ko`, `lv`, `nl`, `pl`, `pt`, `ru`, `sr`, `sv`,

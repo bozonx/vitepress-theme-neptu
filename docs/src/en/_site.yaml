@@ -9,7 +9,7 @@ themeConfig:
       title: 'Neptu Blog Theme'
       description: 'A living demo — every page documents a feature of the theme'
       image:
-        src: '/img/sidebar-logo.webp'
+        src: '/img/home-logo.webp'
         alt: 'Example blog logo'
       actions:
         - text: '${t.toBlog}'
