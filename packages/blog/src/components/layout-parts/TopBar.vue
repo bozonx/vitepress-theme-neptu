@@ -82,17 +82,17 @@ const socialLinks = computed<LinkItem[]>(() =>
       </li>
     </ul>
 
-    <div>
+    <div class="max-lg:hidden">
       <SwitchLang :no-bg="true" />
     </div>
 
-    <div v-if="!hideAppearance">
+    <div v-if="!hideAppearance" class="max-lg:hidden">
       <SwitchAppearance />
     </div>
 
     <!-- Both pickers gate themselves on their own themeConfig flag. -->
-    <ColorThemePicker />
-    <StylePresetPicker />
+    <ColorThemePicker class="max-lg:hidden" />
+    <StylePresetPicker class="max-lg:hidden" />
 
     <ul v-if="!minimal && socialLinks.length" class="flex space-x-1">
       <li

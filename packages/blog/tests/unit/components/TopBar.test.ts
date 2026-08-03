@@ -79,11 +79,22 @@ describe('TopBar', () => {
     expect(wrapper.emitted('openDrawer')).toHaveLength(1)
   })
 
-  it('renders switch appearance in topbar', () => {
+  it('renders switch appearance in topbar with mobile hidden class', () => {
     const wrapper = mount(TopBar, {
       global: { stubs: { NeptuNeptuBtn: NeptuBtnStub, SwitchLang: SwitchLangStub, SwitchAppearance: SwitchAppearanceStub } },
     })
-    expect(wrapper.findComponent({ name: 'SwitchAppearance' }).exists()).toBe(true)
+    const switchComp = wrapper.findComponent({ name: 'SwitchAppearance' })
+    expect(switchComp.exists()).toBe(true)
+    expect(switchComp.element.parentElement?.classList.contains('max-lg:hidden')).toBe(true)
+  })
+
+  it('hides language switcher in topbar on mobile', () => {
+    const wrapper = mount(TopBar, {
+      global: { stubs: { NeptuNeptuBtn: NeptuBtnStub, SwitchLang: SwitchLangStub, SwitchAppearance: SwitchAppearanceStub } },
+    })
+    const langComp = wrapper.findComponent({ name: 'SwitchLang' })
+    expect(langComp.exists()).toBe(true)
+    expect(langComp.element.parentElement?.classList.contains('max-lg:hidden')).toBe(true)
   })
 
   it('passes iconClass for social links', () => {
