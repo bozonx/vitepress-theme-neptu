@@ -4,8 +4,6 @@ import { computed } from 'vue'
 
 import NeptuBtn from '../NeptuBtn.vue'
 import SwitchAppearance from './SwitchAppearance.vue'
-import ColorThemePicker from '../theme/ColorThemePicker.vue'
-import StylePresetPicker from '../theme/StylePresetPicker.vue'
 import SwitchLang from './SwitchLang.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import type { SocialLinkItem } from '../../types.d.ts'
@@ -79,12 +77,6 @@ const socialLinks = computed<SocialLinkItem[]>(() => {
       <!-- Both pickers gate themselves on their own themeConfig flag. -->
       <div class="lg:hidden">
         <SwitchLang :no-bg="true" @click.stop />
-      </div>
-      <div class="lg:hidden">
-        <ColorThemePicker @click.stop />
-      </div>
-      <div class="lg:hidden">
-        <StylePresetPicker @click.stop />
       </div>
       <div class="lg:hidden">
         <SwitchAppearance @click.stop />

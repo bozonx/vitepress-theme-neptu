@@ -114,8 +114,8 @@ const socialLinks = computed<LinkItem[]>(() =>
     </div>
 
     <!-- Both pickers gate themselves on their own themeConfig flag. -->
-    <ColorThemePicker :class="mobileHideClass" />
-    <StylePresetPicker :class="mobileHideClass" />
+    <ColorThemePicker />
+    <StylePresetPicker />
 
     <ul v-if="!minimal && socialLinks.length" class="flex space-x-1">
       <li
