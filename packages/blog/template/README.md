@@ -2,7 +2,7 @@
 
 A clean, production-ready starter blog template powered by [VitePress](https://vitepress.dev/) and [`vitepress-theme-neptu`](https://github.com/bozonx/vitepress-theme-neptu).
 
-Requires **Node.js 20.19+ or 22.12+** (the VitePress 2 baseline).
+Requires **Node.js 20.19+ or 22.18+** (the VitePress 2 baseline).
 
 ## 🚀 Quick Start
 

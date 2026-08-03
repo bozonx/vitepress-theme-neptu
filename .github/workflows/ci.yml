@@ -12,9 +12,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # The published packages declare `engines.node: ^20.19.0 || >=22.12.0`, which
-  # is the floor Vite 7 / VitePress 2 impose. This job proves the lower bound
-  # still builds; the `test` job below stays on 22 and owns the Pages deploy.
+  # The published packages declare `engines.node: ^20.19.0 || >=22.18.0`, which
+  # is the floor for native TypeScript type stripping. This job proves the lower
+  # bound still builds; the `test` job below stays on 22 and owns the Pages deploy.
   compat:
     permissions:
       contents: read

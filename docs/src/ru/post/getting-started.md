@@ -39,7 +39,7 @@ cd my-blog
 npm install      # или: pnpm install / yarn install
 ```
 
-Нужен Node.js **20.19+ или 22.12+** — этого требует VitePress 2.
+Нужен Node.js **20.19+ или 22.18+** — этого требует VitePress 2.
 
 ## Шаг 3. Запустите локальный сервер
 
