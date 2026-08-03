@@ -2,7 +2,7 @@
 import { computed, nextTick, onMounted, ref } from 'vue'
 import { useData } from 'vitepress'
 import { resolveNavigatorLang } from '../utils/client/browser.ts'
-import TopBar from './layout-parts/TopBar.vue'
+import HomeTopBar from './layout-parts/HomeTopBar.vue'
 
 interface LocaleEntry {
   label?: string
@@ -65,7 +65,7 @@ onMounted(async () => {
 <template>
   <div class="locale-selector-wrapper min-h-screen flex flex-col relative">
     <header class="w-full absolute top-0 left-0 z-10">
-      <TopBar :hide-menu-button="true" />
+      <HomeTopBar />
     </header>
     <main class="locale-selector flex-1">
       <section class="locale-selector__panel" aria-labelledby="locale-selector-title">
