@@ -5,6 +5,7 @@ description: >
   maxPreviewLength), и тем, включается ли пост в поиск Pagefind.
 date: 2025-06-05T08:00:00Z
 authorId: ivan-k
+category: { name: 'SEO', slug: 'seo' }
 tags:
   - frontmatter
   - preview

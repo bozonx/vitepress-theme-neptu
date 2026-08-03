@@ -17,6 +17,7 @@ import type {
   Author,
   LocaleDefinition,
   Tag,
+  I18n,
 } from '../types.d.ts'
 
 export interface AddJsonLdContext {
@@ -111,6 +112,50 @@ function withSchemaContext(
   return { '@context': 'https://schema.org', ...(jsonLdData as JsonLdObject) }
 }
 
+/**
+ * Mirrors the visible `Breadcrumbs` component: Google requires the markup to
+ * match what the reader sees, and the component only renders a trail when the
+ * post has a category.
+ */
+function createBreadcrumbJsonLd(
+  categories: Tag[],
+  siteUrl: string,
+  localeIndex: string,
+  localeIndexUrl: string,
+  pageUrl: string,
+  title: string | undefined,
+  t: I18n | undefined
+): JsonLdObject | undefined {
+  const category = categories[0]
+  if (!category?.slug) return
+
+  const crumbs: Array<{ name: string; url: string }> = [
+    { name: t?.breadcrumbHome || 'Home', url: localeIndexUrl },
+    {
+      name: t?.categories || 'Categories',
+      url: makeAbsoluteUrl(siteUrl, `${localeIndex}/categories`) || '',
+    },
+    {
+      name: category.name,
+      url:
+        makeAbsoluteUrl(siteUrl, `${localeIndex}/categories/${category.slug}/1`) ||
+        '',
+    },
+  ]
+
+  if (title) crumbs.push({ name: title, url: pageUrl })
+
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  }
+}
+
 /** Creates JSON-LD structured data for a post. */
 function createPostJsonLd(
   pageData: ExtendedPageData,
@@ -121,7 +166,7 @@ function createPostJsonLd(
   langConfig: LocaleDefinition,
   pageUrl: string,
   publisher: JsonLdObject | undefined
-): JsonLdObject {
+): JsonLdObject | JsonLdArray {
   const title =
     normalizeText(pageData.frontmatter.title) || normalizeText(pageData.title)
   const description =
@@ -145,6 +190,8 @@ function createPostJsonLd(
   const cover = pageData.frontmatter.cover
   const tags = pageData.frontmatter.tags
   const lang = langConfig.lang
+  // `transformPageMeta` already folded `category` into this normalized list.
+  const categories = (pageData.frontmatter.categories || []) as Tag[]
 
   const article: JsonLdObject = {
     '@type': 'BlogPosting',
@@ -176,6 +223,11 @@ function createPostJsonLd(
             .map((tag) => (typeof tag === 'string' ? tag : tag.name))
             .join(', ')
         : undefined,
+    // schema.org allows repeating articleSection, so an array beats a joined
+    // string — consumers get discrete values instead of one "A, B" label.
+    articleSection: categories.length
+      ? (categories.map((item) => item.name) as JsonLdValue)
+      : undefined,
     image: (cover &&
       omitUndefined({
         '@type': 'ImageObject',
@@ -199,7 +251,17 @@ function createPostJsonLd(
     }
   }
 
-  return article
+  const breadcrumb = createBreadcrumbJsonLd(
+    categories,
+    siteUrl,
+    localeIndex,
+    localeIndexUrl,
+    pageUrl,
+    title,
+    (langConfig.themeConfig as ThemeConfig).t
+  )
+
+  return breadcrumb ? [article, breadcrumb] : article
 }
 
 function createAuthorJsonLd(

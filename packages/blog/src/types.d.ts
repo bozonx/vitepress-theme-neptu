@@ -78,6 +78,8 @@ export namespace NeptuBlogTheme {
     i18nRouting?: boolean
     perPage?: number
     sidebarTagsCount?: number
+    /** Max categories shown in the sidebar cloud before the "all" link appears. */
+    sidebarCategoriesCount?: number
     similarPostsCount?: number
     paginationMaxItems?: number
     postList?: {
@@ -102,8 +104,9 @@ export namespace NeptuBlogTheme {
     home?: HomeConfig
     /**
      * Ordered list of post-footer blocks. Supported keys: 'author', 'donate',
-     * 'comments', 'social-share', 'edit-link', 'tags', 'navigation', 'similar',
-     * 'popular-link'. Omit a key to hide the block; reorder to change layout.
+     * 'comments', 'social-share', 'edit-link', 'categories', 'tags',
+     * 'navigation', 'similar', 'popular-link'. Omit a key to hide the block;
+     * reorder to change layout.
      * Defaults to all blocks in the order above.
      */
     postFooter?: string[]
@@ -111,7 +114,7 @@ export namespace NeptuBlogTheme {
     /**
      * Layouts that render the right-hand aside column (the `aside` slot of
      * `Layout.vue`, typically used for ad units). Supported keys: 'post',
-     * 'page', 'util', 'tag', 'archive', 'author', plus the name of any custom
+     * 'page', 'util', 'tag', 'category', 'archive', 'author', plus the name of any custom
      * `contentLayout`. Defaults to `['post', 'util', 'tag', 'archive',
      * 'author']` — everything except the home page and `layout: page`.
      *
@@ -152,6 +155,7 @@ export namespace NeptuBlogTheme {
     atomIcon?: string
     youtubeIcon?: string
     tagsIcon?: string
+    categoriesIcon?: string
 
     twitterSite?: string
     authors?: Author[]
@@ -276,6 +280,18 @@ export namespace NeptuBlogTheme {
     tagPageHeader: string
     tags: string
     allTags: string
+    /** Section caption above the sidebar category cloud, and the crumb label. */
+    categories: string
+    /** Title of the `categories/` index page. */
+    allCategories: string
+    /** Title prefix of a `categories/<slug>/<page>` page. */
+    categoryPageHeader: string
+    /** Tooltip of the post-count badge on a category chip. */
+    categoryBadgeCount: string
+    /** Call-to-action linking to the category index. */
+    allCategoriesCall: string
+    /** Short label for the home crumb — `toHome` is a tooltip, not a label. */
+    breadcrumbHome: string
     paginationToStart: string
     paginationToEnd: string
     toHome: string
@@ -338,7 +354,7 @@ export namespace NeptuBlogTheme {
 
     /**
      * Layouts that render a table of contents. Supported keys: 'post',
-     * 'page', 'util', 'tag', 'archive', 'author', plus the name of any custom
+     * 'page', 'util', 'tag', 'category', 'archive', 'author', plus the name of any custom
      * `contentLayout`. Defaults to `['post']` — listing and utility pages
      * have no prose to navigate.
      *
@@ -672,6 +688,8 @@ export namespace NeptuBlogTheme {
     archive?: boolean
     authors?: boolean
     tags?: boolean
+    /** Show the category cloud section. Off unless set. */
+    categories?: boolean
     bottomLinks?: NavLink[]
     donate?: boolean
     socialLinks?: SocialLink[]
@@ -722,6 +740,22 @@ export namespace NeptuBlogTheme {
     count?: number
   }
 
+  /** Categories share the tag data model; only their URLs and styling differ. */
+  export interface CategoryInfo {
+    name: string
+    slug: string
+    count?: number
+  }
+
+  export interface BreadcrumbItem {
+    text: string
+    /**
+     * Locale-relative (`categories/frontend/1`) or absolute. Omit on the last
+     * crumb — the current page is rendered as plain text.
+     */
+    href?: string
+  }
+
   export interface PostFrontmatter extends Record<string, unknown> {
     layout?:
       | 'post'
@@ -729,6 +763,7 @@ export namespace NeptuBlogTheme {
       | 'page'
       | 'util'
       | 'tag'
+      | 'category'
       | 'archive'
       | 'author'
       | string
@@ -744,6 +779,12 @@ export namespace NeptuBlogTheme {
     coverDescr?: string
     coverAlt?: string
     tags?: Array<string | Tag>
+    /**
+     * Sugar for a single-entry `categories` list. Folded into `categories`
+     * during `transformPageData`, so components only ever read `categories`.
+     */
+    category?: string
+    categories?: Array<string | CategoryInfo>
     /** Marks the post for explicit featured-post collections. Does not change chronological lists. */
     featured?: boolean
     /**
@@ -804,6 +845,12 @@ export namespace NeptuBlogTheme {
     title?: string
     date?: string | number | Date
     tags?: Array<{
+      slug?: string
+      name?: string
+      count?: number
+      [key: string]: unknown
+    }>
+    categories?: Array<{
       slug?: string
       name?: string
       count?: number
@@ -896,6 +943,8 @@ export type NavConfig = NeptuBlogTheme.NavConfig
 export type SidebarConfig = NeptuBlogTheme.SidebarConfig
 export type SideBarItem = NeptuBlogTheme.SideBarItem
 export type TagInfo = NeptuBlogTheme.TagInfo
+export type CategoryInfo = NeptuBlogTheme.CategoryInfo
+export type BreadcrumbItem = NeptuBlogTheme.BreadcrumbItem
 export type AuthorItem = NeptuBlogTheme.AuthorItem
 export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem
 export type LinkItem = NeptuBlogTheme.LinkItem

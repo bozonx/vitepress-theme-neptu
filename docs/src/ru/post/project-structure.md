@@ -5,6 +5,7 @@ description: >
   файлы — и что из этого вам предстоит редактировать.
 date: 2025-07-15T09:00:00Z
 authorId: ivan-k
+category: { name: 'Начало работы', slug: 'getting-started' }
 tags:
   - guide
   - start

@@ -3,6 +3,7 @@ title: Цветовые темы и шрифты
 description: Восемь готовых цветовых схем, собственный оттенок через CSS-переменные, светлая и тёмная темы и подключение своих шрифтов.
 date: 2025-05-10T10:00:00Z
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags:
   - guide
   - theme

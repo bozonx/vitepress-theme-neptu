@@ -8,6 +8,7 @@ import PostComments from './PostComments.vue'
 import PostDonateLink from './PostDonateLink.vue'
 import PostSocialShare from './PostSocialShare.vue'
 import PostTags from './PostTags.vue'
+import PostCategories from './PostCategories.vue'
 import EditLink from '../EditLink.vue'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
@@ -19,6 +20,7 @@ const DEFAULT_ORDER = [
   'comments',
   'social-share',
   'edit-link',
+  'categories',
   'tags',
   'navigation',
   'similar',
@@ -42,9 +44,10 @@ const blocks = computed(() => {
 
 <template>
   <!--
-    Everything here except the tag list is navigation chrome, not article text:
-    it is marked with `data-pagefind-ignore` so it never leaks into search
-    snippets. The tag list stays indexed and provides the `tag` search filter.
+    Everything here except the taxonomy lists is navigation chrome, not article
+    text: it is marked with `data-pagefind-ignore` so it never leaks into search
+    snippets. The tag and category lists stay indexed and provide the `tag` and
+    `category` search filters.
   -->
   <template v-for="name in blocks" :key="name">
     <template v-if="name === 'author'">
@@ -83,6 +86,14 @@ const blocks = computed(() => {
       <div class="flex mt-10" data-pagefind-ignore>
         <slot name="edit-link">
           <EditLink />
+        </slot>
+      </div>
+    </template>
+
+    <template v-else-if="name === 'categories'">
+      <div>
+        <slot name="categories">
+          <PostCategories class="mt-10" />
         </slot>
       </div>
     </template>

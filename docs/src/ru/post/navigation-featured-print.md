@@ -3,6 +3,7 @@ title: Навигация постов, избранные статьи и пе�
 description: Хронологические переходы между постами, редакционная подборка featured и стили печати.
 date: 2026-08-01
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags: [guide, frontmatter]
 featured: true
 translations:

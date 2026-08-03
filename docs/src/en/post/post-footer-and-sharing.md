@@ -9,6 +9,7 @@ cover: https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Hands stacked together in a team huddle
+category: Configuration
 tags:
   - frontmatter
   - guide
@@ -39,6 +40,7 @@ themeConfig:
     - comments      # commentLink button
     - social-share  # share buttons (see below)
     - edit-link     # "Edit this page" (set repo; its URL is generated automatically)
+    - categories    # this post's categories
     - tags          # this post's tags
     - navigation    # older/newer post by publication date
     - similar       # similar posts list

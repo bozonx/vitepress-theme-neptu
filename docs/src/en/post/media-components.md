@@ -9,6 +9,7 @@ cover: https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 675
 coverAlt: Audio equipment and a mixing board
+category: Media
 tags:
   - media
 descrAsPreview: true

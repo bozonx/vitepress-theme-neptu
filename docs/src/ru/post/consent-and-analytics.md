@@ -5,6 +5,7 @@ description: >
   CMP, как тема выставляет Google Consent Mode v2 и как подключить счётчик.
 date: 2025-03-13T09:00:00Z
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags:
   - guide
   - advanced

@@ -5,6 +5,7 @@ description: >
   на примере GitHub Pages с поддоменным путём.
 date: 2024-11-20T09:00:00Z
 authorId: ivan-k
+category: { name: 'Начало работы', slug: 'getting-started' }
 tags:
   - guide
   - deploy

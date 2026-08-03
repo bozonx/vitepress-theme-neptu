@@ -10,6 +10,7 @@ coverWidth: 1200
 coverHeight: 800
 coverAlt: Горный пейзаж на закате
 coverDescr: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
+category: { name: 'Медиа', slug: 'media' }
 tags:
   - frontmatter
   - cover

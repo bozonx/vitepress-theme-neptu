@@ -3,6 +3,7 @@ title: Компоненты
 description: Категории компонентов темы — макеты, посты, утилиты и doc-components для использования в markdown.
 date: 2025-03-20T10:00:00Z
 authorId: ivan-k
+category: { name: 'Контент', slug: 'writing' }
 tags:
   - guide
   - components
@@ -15,7 +16,8 @@ tags:
 ## Категории
 
 - **`layout-parts/`** — части макета (SideBar, TopBar, Footer, LayoutAside).
-- **`post/`** — компоненты отображения поста (PostAuthor, PostDate, PostTags, PostComments).
+- **`post/`** — компоненты отображения поста (PostAuthor, PostDate, PostTags,
+  PostCategories, PostComments).
 - **`utility/`** — компоненты утилитарных страниц (HomeHero, Authors, AllTagsList, Years).
 - **`doc-components/`** — компоненты для использования прямо в markdown (AudioFile, FileDownload, YoutubeVideo).
 
@@ -25,11 +27,14 @@ tags:
 |-----------|----------|
 | `HomeHero` | Hero-баннер для главной страницы |
 | `AllTagsList` | Облако тегов |
+| `AllCategoriesList` | Облако категорий |
 | `NeptuAuthors` | Страница со списком авторов |
 | `NeptuYears` | Архив по годам |
 | `PopularPostsList` | Виджет популярных постов |
 | `RecentList` | Виджет свежих постов |
 | `TagPostsList` | Посты, отфильтрованные по тегу |
+| `CategoryPostsList` | Посты, отфильтрованные по категории |
+| `NeptuBreadcrumbs` | Хлебные крошки ([пример](categories-and-tags#хлебные-крошки)) |
 | `MonthPostsList` | Посты, отфильтрованные по месяцу |
 | `PageFindSearch` | Интеграция поиска Pagefind |
 | `Pagination` | Пагинация списков |

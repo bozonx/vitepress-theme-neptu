@@ -3,6 +3,7 @@ title: Навигация, сайдбар и футер
 description: Как формируются верхняя панель, секции сайдбара и футер из конфигурации YAML.
 date: 2025-05-15T10:00:00Z
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags:
   - guide
   - config
@@ -48,6 +49,7 @@ themeConfig:
     archive: true   # по годам → месяцам
     authors: true
     tags: true      # облако тегов
+    categories: true # облако категорий (по умолчанию выключено)
     donate: true
     rssFeed: true
     atomFeed: true
@@ -238,6 +240,7 @@ themeConfig:
     - comments
     - social-share
     - edit-link
+    - categories
     - tags
     - navigation
     - similar
@@ -251,6 +254,7 @@ themeConfig:
 | `comments` | `PostComments` |
 | `social-share` | `PostSocialShare` |
 | `edit-link` | `EditLink` |
+| `categories` | `PostCategories` |
 | `tags` | `PostTags` |
 | `navigation` | `PostNavigation` |
 | `similar` | `PostSimilarList` |

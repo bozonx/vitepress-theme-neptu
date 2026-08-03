@@ -5,6 +5,7 @@ description: >
   frontmatter field lets you extend or override the generated schema.
 date: 2024-12-05T14:00:00Z
 authorId: maria-editor
+category: SEO
 tags:
   - seo
   - json-ld
@@ -23,6 +24,13 @@ from this post's frontmatter — **and** extended by the custom `jsonLd` field
 shown below.
 
 ## What you get for free
+
+Tags land in `keywords` and categories in `articleSection` — as an array rather
+than one comma-joined string, so the values stay discrete. When a post has a
+category, a `BreadcrumbList` joins the post schema in the same `@graph`, mirroring
+the four steps the reader sees in the visible trail: home → categories → category
+→ post. Google requires the two to match, so a post without a category gets
+neither. See [Categories and tags](categories-and-tags).
 
 For every post the theme builds an `Article` schema from `title`, `description`,
 `date`, `authorId`, and `cover`. You usually don't need to write any JSON-LD at

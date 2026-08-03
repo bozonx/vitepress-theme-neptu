@@ -38,27 +38,91 @@ function safeDateTime(date: string | number | Date | undefined): number {
   return Number.isFinite(time) ? time : 0
 }
 
-export function makeTagsList(allPosts: PostLite[] = []): Array<TagInfo & { count: number }> {
-  const tags: Record<string, TagInfo & { count: number }> = {}
+export type CategoryInfo = TagInfo
 
-  for (const item of allPosts) {
-    if (!item.tags?.length) continue
+/**
+ * Tags and categories are the same data model with different URLs, so every
+ * helper below works on either. The kind is the frontmatter field name, which
+ * is also the first URL segment of the corresponding list pages.
+ */
+export type TaxonomyKind = 'tags' | 'categories'
 
-    for (const tagItem of item.tags) {
-      if (!tagItem.name) continue
-      if (typeof tags[tagItem.name] === 'undefined') {
-        tags[tagItem.name] = { ...tagItem, count: 1 }
+/** Reads one taxonomy off a post. Values are already normalized by `makePreviewItem`. */
+function readTaxonomy(post: PostLite, kind: TaxonomyKind): TagInfo[] {
+  const value = post[kind]
+  return Array.isArray(value) ? (value as TagInfo[]) : []
+}
+
+/**
+ * Counts posts per taxonomy entry, most used first. Entries are keyed by slug —
+ * the slug is what URLs and filtering use, so two spellings of one slug must
+ * collapse into a single item.
+ */
+export function makeTaxonomyList(
+  allPosts: PostLite[] = [],
+  kind: TaxonomyKind
+): Array<TagInfo & { count: number }> {
+  const bySlug: Record<string, TagInfo & { count: number }> = {}
+
+  for (const post of allPosts) {
+    for (const item of readTaxonomy(post, kind)) {
+      // A nameless entry has nothing to render as a chip label — skip it
+      // rather than emit an empty pill.
+      if (!item.name) continue
+      const key = item.slug || item.name
+
+      if (typeof bySlug[key] === 'undefined') {
+        bySlug[key] = { ...item, count: 1 }
       } else {
-        tags[tagItem.name]!.count++
+        bySlug[key]!.count++
       }
     }
   }
 
-  const res = Object.keys(tags).map((name) => tags[name]!)
+  const res = Object.keys(bySlug).map((key) => bySlug[key]!)
 
   res.sort((a, b) => b.count - a.count)
 
   return res
+}
+
+/** Posts carrying the given taxonomy slug. */
+export function makePostsOfTaxonomyList(
+  allPosts: PostLite[] = [],
+  kind: TaxonomyKind,
+  slug?: string
+): PostLite[] {
+  if (!slug) return []
+
+  return allPosts.filter((post) =>
+    readTaxonomy(post, kind).some((item) => item.slug === slug)
+  )
+}
+
+export function makeTagsList(
+  allPosts: PostLite[] = []
+): Array<TagInfo & { count: number }> {
+  return makeTaxonomyList(allPosts, 'tags')
+}
+
+export function makeCategoriesList(
+  allPosts: PostLite[] = []
+): Array<CategoryInfo & { count: number }> {
+  return makeTaxonomyList(allPosts, 'categories')
+}
+
+export function makePostsOfTagList(
+  allPosts: PostLite[] = [],
+  slug?: string
+): PostLite[] {
+  return makePostsOfTaxonomyList(allPosts, 'tags', slug)
+}
+
+export function makePostsOfCategoryList(
+  allPosts: PostLite[] = [],
+  slug?: string
+): PostLite[] {
+  return makePostsOfTaxonomyList(allPosts, 'categories', slug)
 }
 
 export function makeYearsList(

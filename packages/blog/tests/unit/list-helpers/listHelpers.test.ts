@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import {
   makeTagsList,
+  makeCategoriesList,
+  makePostsOfCategoryList,
   makeYearsList,
   makeMonthsList,
   makePostOfMonthList,
@@ -64,6 +66,78 @@ describe('makeTagsList', () => {
     ]
     const result = makeTagsList(posts)
     expect(result[0]).toMatchObject({ name: 'foo', slug: 'foo-slug', custom: 123 })
+  })
+})
+
+describe('makeCategoriesList', () => {
+  it('returns empty array for empty input', () => {
+    expect(makeCategoriesList([])).toEqual([])
+  })
+
+  it('counts categories and sorts by count descending', () => {
+    const posts: PostLite[] = [
+      { url: '/a', categories: [{ name: 'Frontend', slug: 'frontend' }] },
+      { url: '/b', categories: [{ name: 'Frontend', slug: 'frontend' }] },
+      { url: '/c', categories: [{ name: 'Backend', slug: 'backend' }] },
+      { url: '/d' },
+    ]
+    const result = makeCategoriesList(posts)
+    expect(result).toHaveLength(2)
+    expect(result[0]).toMatchObject({ slug: 'frontend', count: 2 })
+    expect(result[1]).toMatchObject({ slug: 'backend', count: 1 })
+  })
+
+  // The slug is the routing key, so entries sharing one must not split in two.
+  it('collapses entries that share a slug', () => {
+    const posts: PostLite[] = [
+      { url: '/a', categories: [{ name: 'Frontend', slug: 'frontend' }] },
+      { url: '/b', categories: [{ name: 'frontend', slug: 'frontend' }] },
+    ]
+    const result = makeCategoriesList(posts)
+    expect(result).toHaveLength(1)
+    expect(result[0].count).toBe(2)
+  })
+
+  it('does not mix tags into the category list', () => {
+    const posts: PostLite[] = [
+      {
+        url: '/a',
+        tags: [{ name: 'vue', slug: 'vue' }],
+        categories: [{ name: 'Frontend', slug: 'frontend' }],
+      },
+    ]
+    expect(makeCategoriesList(posts).map((item) => item.slug)).toEqual(['frontend'])
+    expect(makeTagsList(posts).map((item) => item.slug)).toEqual(['vue'])
+  })
+})
+
+describe('makePostsOfCategoryList', () => {
+  const posts: PostLite[] = [
+    { url: '/a', categories: [{ name: 'Frontend', slug: 'frontend' }] },
+    {
+      url: '/b',
+      categories: [
+        { name: 'Frontend', slug: 'frontend' },
+        { name: 'Backend', slug: 'backend' },
+      ],
+    },
+    { url: '/c', categories: [{ name: 'Backend', slug: 'backend' }] },
+    { url: '/d' },
+  ]
+
+  it('filters by slug', () => {
+    expect(makePostsOfCategoryList(posts, 'frontend').map((p) => p.url)).toEqual([
+      '/a',
+      '/b',
+    ])
+  })
+
+  it('returns empty array without a slug', () => {
+    expect(makePostsOfCategoryList(posts)).toEqual([])
+  })
+
+  it('ignores names — only the slug is a valid key', () => {
+    expect(makePostsOfCategoryList(posts, 'Frontend')).toEqual([])
   })
 })
 

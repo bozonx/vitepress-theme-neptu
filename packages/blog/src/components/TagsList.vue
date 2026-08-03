@@ -9,13 +9,17 @@ const {
   sizeSm = false,
   class: customClass,
   activeCompareMethod,
+  kind = 'tag',
 } = defineProps<{
+  /** Taxonomy entries — tags or categories, they share the `{ name, slug }` shape. */
   tags: TagInfo[]
   sizeXl?: boolean
   sizeSm?: boolean
   class?: string | Record<string, unknown> | unknown[]
   activeCompareMethod?: 'soft' | 'pagination' | 'softPagination' | 'none' | 'strict'
-  /** Pagefind filter name to expose each tag under (e.g. `tag`). */
+  /** Which taxonomy the entries belong to. Drives item URLs and styling. */
+  kind?: 'tag' | 'category'
+  /** Pagefind filter name to expose each entry under (e.g. `tag`). */
   pagefindFilter?: string
 }>()
 const emit = defineEmits<{
@@ -44,6 +48,7 @@ const sizeClass = computed(() => {
     >
       <TagItem
         v-bind="item"
+        :kind="kind"
         :size-xl="sizeXl"
         :size-sm="sizeSm"
         :active-compare-method="activeCompareMethod"

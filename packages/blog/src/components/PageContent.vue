@@ -6,7 +6,8 @@ import {
   isPage,
   isUtilPage,
 } from '../utils/shared/index.ts'
-import type { PostFrontmatter } from '../types.d.ts'
+import { useUiTheme } from '../composables/useUiTheme.ts'
+import type { BreadcrumbItem, CategoryInfo, PostFrontmatter } from '../types.d.ts'
 import NeptuAd from './NeptuAd.vue'
 import TocCollapsible from './toc/TocCollapsible.vue'
 import PostFooter from './post/PostFooter.vue'
@@ -15,9 +16,34 @@ import PostDraftBadge from './post/PostDraftBadge.vue'
 import PostReadingTime from './post/PostReadingTime.vue'
 import PostTopBar from './post/PostTopBar.vue'
 import PostImage from './post/PostImage.vue'
+import NeptuBreadcrumbs from './utility/NeptuBreadcrumbs.vue'
 
 const { page, frontmatter } = useData()
+const { theme } = useUiTheme()
 const articlePreviewText = ref<string | null | undefined>(null)
+
+/**
+ * A post is filed under its first category, so that is the trail we show.
+ * Without a category there is no hierarchy to express and the trail is
+ * omitted — "Home / <post title>" tells the reader nothing.
+ *
+ * Hrefs stay locale-relative; `BaseLink` inside `NeptuBreadcrumbs` adds it.
+ * `addJsonLd` builds the matching `BreadcrumbList` from the same data.
+ */
+const breadcrumbs = computed<BreadcrumbItem[]>(() => {
+  const category = (frontmatter.value.categories as CategoryInfo[] | undefined)?.[0]
+  if (!category?.slug) return []
+
+  const items: BreadcrumbItem[] = [
+    { text: theme.value.t.breadcrumbHome, href: '/' },
+    { text: theme.value.t.categories, href: 'categories' },
+    { text: category.name, href: `categories/${category.slug}/1` },
+  ]
+
+  if (page.value.title) items.push({ text: page.value.title })
+
+  return items
+})
 
 watchEffect(() => {
   articlePreviewText.value = resolveArticlePreview(
@@ -30,6 +56,7 @@ const BUILTIN_CONTENT_LAYOUTS = [
   'page',
   'util',
   'tag',
+  'category',
   'archive',
   'author',
   'home',
@@ -64,6 +91,8 @@ const customContent = computed(() => {
   </div>
   <article v-else class="content-page min-h-[calc(100vh-400px)]">
     <slot name="post-header-before" />
+
+    <NeptuBreadcrumbs :items="breadcrumbs" />
 
     <header>
       <h1

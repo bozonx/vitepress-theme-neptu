@@ -31,6 +31,7 @@ themeConfig:
     archive: true
     authors: true
     tags: true
+    categories: true
     donate: true
     rssFeed: true
     atomFeed: true

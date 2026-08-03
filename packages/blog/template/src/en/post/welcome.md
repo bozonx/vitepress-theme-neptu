@@ -4,6 +4,7 @@ description: Getting started with your new blog created with Neptu Blog Theme.
 date: 2026-07-22
 authorId: alex
 featured: true
+category: Blogging
 tags:
   - Welcome
   - Getting Started

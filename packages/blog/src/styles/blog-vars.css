@@ -92,6 +92,33 @@
   /**** TagItem */
   --tag-item-bg: var(--primary-btn-bg);
   --tag-item-bg-active: var(--primary-btn-bg-active);
+  /**** CategoryItem — soft counterpart of the tag pill.
+        Text mixes the accent into near-black ink so the label keeps AA
+        contrast on the tinted background at small sizes. */
+  --category-item-bg: color-mix(in srgb, var(--primary-btn-bg) 12%, transparent);
+  --category-item-bg-hover: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 22%,
+    transparent
+  );
+  --category-item-bg-active: var(--primary-btn-bg-active);
+  --category-item-border: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 28%,
+    transparent
+  );
+  --category-item-border-hover: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 45%,
+    transparent
+  );
+  --category-item-text: color-mix(in srgb, var(--primary-btn-bg) 45%, var(--gray-900));
+  --category-item-text-active: #fff;
+  --category-item-badge-bg: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 30%,
+    transparent
+  );
 
   /**** Sidebar */
   --drawer-bg: var(--gray-50);
@@ -161,6 +188,28 @@
   /**** TagItem */
   --tag-item-bg: var(--primary-btn-bg);
   --tag-item-bg-active: var(--primary-btn-bg-active);
+  /**** CategoryItem — same recipe as light, with the ink flipped to a light
+        accent tint so the label stays readable on the dark tinted chip. */
+  --category-item-bg: color-mix(in srgb, var(--primary-btn-bg) 20%, transparent);
+  --category-item-bg-hover: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 32%,
+    transparent
+  );
+  --category-item-bg-active: var(--primary-btn-bg-active);
+  --category-item-border: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 40%,
+    transparent
+  );
+  --category-item-border-hover: color-mix(
+    in srgb,
+    var(--primary-btn-bg) 60%,
+    transparent
+  );
+  --category-item-text: color-mix(in srgb, var(--primary-btn-bg) 35%, var(--gray-50));
+  --category-item-text-active: #fff;
+  --category-item-badge-bg: rgba(0, 0, 0, 0.25);
 
   /**** Sidebar */
   --drawer-border-color: var(--gray-900);

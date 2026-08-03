@@ -95,6 +95,7 @@ const commonThemeConfig = {
 
   perPage: 10,
   sidebarTagsCount: 15,
+  sidebarCategoriesCount: 10,
   similarPostsCount: 5,
   home: {
     appearance: 'auto' as const,

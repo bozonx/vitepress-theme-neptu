@@ -5,6 +5,7 @@ description: >
   composables, кастомизация футера и синхронизация контента из CMS или API перед сборкой.
 date: 2025-03-10T09:00:00Z
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags:
   - guide
   - advanced

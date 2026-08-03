@@ -46,3 +46,35 @@ export function normalizeTags(
     .map((value) => normalizeTag(value, lang))
     .filter((value): value is Tag => !!value)
 }
+
+/**
+ * Categories share the tag data model (`{ name, slug }`), so they share the
+ * normalizer too. The only difference is the input shape: a post may declare
+ * `category: 'Frontend'` as sugar for a single-entry `categories` list.
+ *
+ * Always returns an array so downstream code has one shape to handle. Entries
+ * are de-duplicated by slug, which keeps `category` + `categories` overlap from
+ * producing a doubled chip.
+ */
+export function normalizeCategories(
+  categoryValue: unknown,
+  categoriesValue: unknown,
+  lang?: string
+): Tag[] {
+  const values = [
+    ...(categoryValue === undefined || categoryValue === null
+      ? []
+      : [categoryValue]),
+    ...(Array.isArray(categoriesValue) ? categoriesValue : []),
+  ]
+  const result: Tag[] = []
+
+  for (const value of values) {
+    const normalized = normalizeTag(value, lang)
+    if (!normalized) continue
+    if (result.some((item) => item.slug === normalized.slug)) continue
+    result.push(normalized)
+  }
+
+  return result
+}

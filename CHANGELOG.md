@@ -10,9 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Migrated monorepo from pnpm to npm: replaced `pnpm-workspace.yaml` with `workspaces` in root `package.json`, inlined all `catalog:` versions into individual `package.json` files, replaced pnpm commands in scripts with npm equivalents, updated CI workflow and documentation.
+- `packages/blog`: tag and category list pages now filter posts by slug rather than by display name, and `makeTagsList` keys entries by slug — two spellings of one slug no longer split into separate entries.
+- `packages/blog`: post JSON-LD is emitted as an `@graph` when the post has a category (article + `BreadcrumbList`); it stays a single node otherwise.
 
 ### Added
 
+- `packages/blog`: categories — a second taxonomy alongside tags. `category: 'Name'` (or a `categories` list) in post frontmatter generates `categories/`, `categories/<slug>/<page>` and `categories/<slug>/popular/<page>`, a sidebar cloud (`sidebar.categories`, off unless set; `sidebarCategoriesCount`, default 10), a `PostCategories` footer block, the `category` Pagefind facet, and `articleSection` in the post JSON-LD.
+- `packages/blog`: breadcrumbs on posts that have a category, with matching `BreadcrumbList` JSON-LD. `NeptuBreadcrumbs` is exported for custom trails and takes an `items` array.
+- `packages/blog`: `AllCategoriesList`, `CategoryPostsList`, `PostCategories` and `NeptuBreadcrumbs` components; `makeCategoriesList`, `makePostsOfCategoryList`, `makeCategoriesParams` and their `makeTaxonomy*` generic forms in `list-helpers`.
+- `packages/blog`: `--category-item-*` CSS tokens, derived from the accent so every color theme and custom preset picks them up.
 - `packages/landing`: publishable `neptu-landing` validation CLI with explicit file/directory targets, plus `hasBlockType()` and `unregisterBlockTypes()` registry helpers.
 - `packages/landing`: six new blocks — `code` (copy-ready samples with tabs, no runtime highlighter), `tabs` (WAI-ARIA feature tabs), `compare` (comparison table with sticky head and row groups), `newsletter` (native form posting to any endpoint, optional background submit), `video` (click-to-load YouTube/Vimeo facade, no third-party cookies before consent) and `banner` (dismissable announcement strip).
 - `packages/landing`: `--ln-c-brand-text` token — the brand color for text, re-derived by `LnSection` on `inverse` and `brand` surfaces so accents never disappear into their background.

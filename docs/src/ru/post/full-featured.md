@@ -10,6 +10,7 @@ coverWidth: 1200
 coverHeight: 800
 coverAlt: Аккуратный стол с клавиатурой, блокнотом и растением
 coverDescr: "coverDescr поддерживает **markdown** и [ссылки](https://unsplash.com)."
+category: { name: 'Контент', slug: 'writing' }
 tags:
   - frontmatter
   - guide

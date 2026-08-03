@@ -1,8 +1,12 @@
 import { safeGetYear, safeGetMonth } from './listHelpers.ts'
+import type { TaxonomyKind } from './listHelpers.ts'
+import { normalizeTag } from '../utils/shared/tags.ts'
 
 interface PostWithDate {
   date: string | number | Date
   tags?: Array<{ name?: string; slug?: string } | string>
+  category?: { name?: string; slug?: string } | string
+  categories?: Array<{ name?: string; slug?: string } | string>
   authorId?: string
   [key: string]: unknown
 }
@@ -91,33 +95,48 @@ export function makeMonthsParams(
   })
 }
 
-export function makeTagsParams(
+/**
+ * Builds `[slug]/[page]` route params for a taxonomy (tags or categories).
+ *
+ * Entries go through the same normalizer the frontmatter does, so a raw string
+ * (`category: Frontend`) yields the same slug the rendered links point at
+ * (`frontend`) instead of a route no link can reach.
+ */
+export function makeTaxonomyParams(
   posts: PostWithDate[],
-  perPage: number
+  kind: TaxonomyKind,
+  perPage: number,
+  lang?: string
 ): Array<{ params: { slug: string; name: string; page: number } }> {
-  const tagsCount: Record<string, { name: string; count: number }> = {}
+  const counts: Record<string, { name: string; count: number }> = {}
 
-  for (const item of posts) {
-    const tags = item.tags
+  for (const post of posts) {
+    const raw =
+      kind === 'categories'
+        ? [
+            ...(post.category === undefined || post.category === null
+              ? []
+              : [post.category]),
+            ...(post.categories || []),
+          ]
+        : post.tags || []
 
-    if (!tags?.length) continue
+    for (const value of raw) {
+      const item = normalizeTag(value, lang)
+      if (!item?.slug || !item.name) continue
 
-    for (const tag of tags) {
-      const tagName = (typeof tag === 'object' ? tag.name : tag) || (tag as string)
-      const tagSlug = (typeof tag === 'object' ? tag.slug : tag) || (tag as string)
-
-      if (typeof tagsCount[tagSlug] === 'undefined') {
-        tagsCount[tagSlug] = { name: tagName, count: 1 }
+      if (typeof counts[item.slug] === 'undefined') {
+        counts[item.slug] = { name: item.name, count: 1 }
       } else {
-        tagsCount[tagSlug]!.count++
+        counts[item.slug]!.count++
       }
     }
   }
 
   const res: Array<{ params: { slug: string; name: string; page: number } }> = []
 
-  for (const slug of Object.keys(tagsCount)) {
-    const { name, count } = tagsCount[slug]!
+  for (const slug of Object.keys(counts)) {
+    const { name, count } = counts[slug]!
 
     for (let i = 0; i < Math.ceil(count / perPage); i++) {
       res.push({ params: { slug, name, page: i + 1 } })
@@ -125,6 +144,22 @@ export function makeTagsParams(
   }
 
   return res
+}
+
+export function makeCategoriesParams(
+  posts: PostWithDate[],
+  perPage: number,
+  lang?: string
+): Array<{ params: { slug: string; name: string; page: number } }> {
+  return makeTaxonomyParams(posts, 'categories', perPage, lang)
+}
+
+export function makeTagsParams(
+  posts: PostWithDate[],
+  perPage: number,
+  lang?: string
+): Array<{ params: { slug: string; name: string; page: number } }> {
+  return makeTaxonomyParams(posts, 'tags', perPage, lang)
 }
 
 export function makeAuthorsParams(

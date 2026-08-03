@@ -8,13 +8,14 @@ import {
 } from '../utils/node/markdown.ts'
 import {
   normalizeTags,
+  normalizeCategories,
   resolvePreviewText,
   resolveContentMediaPath,
 } from '../utils/shared/index.ts'
 import { getImageDimensions } from '../utils/node/image.ts'
 import { measureMarkdown } from '../utils/node/readingTime.ts'
 import { isDraft } from '../utils/shared/publication.ts'
-import type { PostFrontmatter, Tag } from '../types.d.ts'
+import type { PostFrontmatter, Tag, CategoryInfo } from '../types.d.ts'
 
 export interface PreviewItem {
   url: string
@@ -22,6 +23,8 @@ export interface PreviewItem {
   authorId: string | undefined
   title: string | undefined
   tags: Tag[]
+  /** Normalized `{ name, slug }` list — `category` sugar is folded in here. */
+  categories: CategoryInfo[]
   preview: string | undefined
   draft: boolean
   wordCount: number
@@ -89,6 +92,7 @@ export function makePreviewItem(
     title: fm.title,
     featured: fm.featured === true,
     tags: normalizeTags(fm.tags, lang) || [],
+    categories: normalizeCategories(fm.category, fm.categories, lang),
     preview,
     draft: isDraft(fm),
     wordCount,

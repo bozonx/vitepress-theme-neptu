@@ -63,6 +63,28 @@ test('tags page loads', async ({ page }) => {
   await expect(page.locator('main').getByText('guide').first()).toBeVisible()
 })
 
+test('categories page loads', async ({ page }) => {
+  await page.goto('en/categories/', { waitUntil: 'domcontentloaded' })
+  await expect(page).toHaveTitle(/Categories/)
+  await expect(page.locator('main').getByText('Configuration').first()).toBeVisible()
+})
+
+test('a category lists its posts', async ({ page }) => {
+  await page.goto('en/categories/configuration/1', { waitUntil: 'domcontentloaded' })
+  await expect(page.locator('h1')).toContainText('Configuration')
+  await expect(page.locator('main a').first()).toBeVisible()
+})
+
+// The chip in a post footer must reach the generated route — a mismatch between
+// the frontmatter slug and the route slug would 404 here.
+test('post category chip links to a real category page', async ({ page }) => {
+  await page.goto('en/post/categories-and-tags', { waitUntil: 'domcontentloaded' })
+  const crumb = page.locator('nav[aria-label="Breadcrumb"] a').last()
+  await expect(crumb).toBeVisible()
+  await crumb.click()
+  await expect(page.locator('h1')).toContainText('Configuration')
+})
+
 test('authors page loads', async ({ page }) => {
   await page.goto('en/authors/', { waitUntil: 'domcontentloaded' })
   await expect(page).toHaveTitle(/Authors/)

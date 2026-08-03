@@ -3,6 +3,7 @@ title: Уровни конфигурации
 description: 'Три понятных уровня: код и интеграции, общие настройки, настройки одной локали.'
 date: 2025-05-20T09:00:00Z
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags: [guide, config]
 ---
 

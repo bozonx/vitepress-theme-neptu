@@ -14,6 +14,8 @@ coverAlt: A tidy desk with a keyboard, notebook and plant
 coverDescr: "coverDescr supports **markdown** and [links](https://unsplash.com)."
 
 # --- Taxonomy ------------------------------------------------------------
+# One category files the post in the hierarchy and drives the breadcrumbs.
+category: Writing
 tags:
   - frontmatter
   - guide

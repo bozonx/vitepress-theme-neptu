@@ -9,6 +9,7 @@ cover: https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Разноцветные флаги разных стран
+category: { name: 'SEO', slug: 'seo' }
 tags:
   - seo
   - i18n

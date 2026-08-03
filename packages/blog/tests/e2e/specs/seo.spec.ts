@@ -22,7 +22,22 @@ test.describe('SEO & Meta Tags & 404', () => {
 
     const parsed = JSON.parse(jsonText!)
     expect(parsed['@context']).toBe('https://schema.org')
-    expect(parsed['@type']).toBe('BlogPosting')
+
+    // A post with a category emits a graph: the article plus its breadcrumb
+    // trail. Without one, the article is the only node.
+    const nodes = parsed['@graph'] ?? [parsed]
+    const types = nodes.map((node: { '@type': string }) => node['@type'])
+    expect(types).toContain('BlogPosting')
+    expect(types).toContain('BreadcrumbList')
+
+    const breadcrumb = nodes.find(
+      (node: { '@type': string }) => node['@type'] === 'BreadcrumbList'
+    )
+    // Home → categories → category → post.
+    expect(breadcrumb.itemListElement).toHaveLength(4)
+    expect(breadcrumb.itemListElement.at(-1).item).toContain(
+      '/en/post/full-featured'
+    )
   })
 
   test('renders 404 page for non-existent routes', async ({ page }) => {

@@ -9,6 +9,7 @@ cover: https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Микрофон в домашней студии подкастов
+category: { name: 'Медиа', slug: 'media' }
 tags:
   - frontmatter
   - media

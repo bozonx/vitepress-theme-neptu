@@ -10,6 +10,7 @@ coverWidth: 1200
 coverHeight: 800
 coverAlt: A laptop and a cup of coffee on a wooden desk
 coverDescr: "Photo by [Alejandro Escamilla](https://unsplash.com/@alejandroescamilla) on Unsplash."
+category: Getting Started
 tags:
   - guide
 descrAsPreview: true

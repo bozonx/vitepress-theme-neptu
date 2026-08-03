@@ -81,7 +81,7 @@ themeConfig:
   #
   # Other commonly overridden keys: sidebar, nav, footer, donate, editLink,
   # socialMediaShares, seo, feeds, popularPosts.sortBy, sidebarTagsCount,
-  # similarPostsCount. See src/site.yaml for the full reference — do not
+  # sidebarCategoriesCount, similarPostsCount. See src/site.yaml for the full reference — do not
   # duplicate parameters that are already defined there.
   # -------------------------------------------------------------------------
   # Locale-specific theme overrides. Same keys as global `themeConfig` in
@@ -179,6 +179,7 @@ themeConfig:
     # archive: true # Show archive (by year) section.
     # authors: true # Show authors section.
     # tags: true # Show tags cloud.
+    # categories: true # Show categories cloud.
     # donate: true # Show donate button at the bottom.
     # rssFeed: true # Show RSS feed link.
     # atomFeed: true # Show Atom feed link.

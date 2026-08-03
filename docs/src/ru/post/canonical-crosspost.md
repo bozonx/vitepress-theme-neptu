@@ -10,6 +10,7 @@ authorId: maria-editor
 # другого сайта. Проверьте <head> на наличие <link rel="canonical" href="https://example.com/…">.
 canonical: "https://example.com/ru/articles/original-post"
 
+category: { name: 'SEO', slug: 'seo' }
 tags:
   - seo
   - canonical

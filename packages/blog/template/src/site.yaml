@@ -137,6 +137,9 @@ themeConfig:
     authors: true
     # Show the "Tags" cloud section.
     tags: true
+    # Show the "Categories" cloud section.
+    # Default: false
+    categories: true
     # Show a donate link/button in the sidebar.
     donate: true
     # Show an RSS feed link.
@@ -230,7 +233,7 @@ themeConfig:
   # --- Post Footer Blocks ----------------------------------------------------
   # Ordered list of post-footer blocks. Supported keys:
   #   'author', 'donate', 'comments', 'social-share', 'edit-link',
-  #   'tags', 'navigation', 'similar', 'popular-link'.
+  #   'categories', 'tags', 'navigation', 'similar', 'popular-link'.
   # Omit a key to hide the block; reorder to change layout.
   # Defaults to all blocks in the order shown below.
   postFooter:
@@ -239,6 +242,7 @@ themeConfig:
     - comments
     - social-share
     - edit-link
+    - categories
     - tags
     - navigation
     - similar
@@ -251,6 +255,11 @@ themeConfig:
   # Maximum number of tags shown in the sidebar tag cloud.
   # Default: 15
   # sidebarTagsCount: 15
+
+  # Maximum number of categories shown in the sidebar category cloud.
+  # Beyond this count a "view all categories" link is shown instead.
+  # Default: 10
+  # sidebarCategoriesCount: 10
 
   # Number of similar posts to display in the post-footer "similar" block.
   # Default: 5
@@ -271,6 +280,7 @@ themeConfig:
   # atomIcon: 'vscode-icons:file-type-atom'
   # youtubeIcon: 'fa6-brands:youtube'
   # tagsIcon: 'fa6-solid:tag'
+  # categoriesIcon: 'fa6-solid:folder-open'
 
   # --- Publisher (JSON-LD / SEO) ---------------------------------------------
   # Publisher info used in JSON-LD structured data.

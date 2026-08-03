@@ -44,6 +44,7 @@ themeConfig:
     archive: true   # by year → month
     authors: true
     tags: true      # tags cloud
+    categories: true # categories cloud (off unless set)
     donate: true
     rssFeed: true
     atomFeed: true
@@ -58,7 +59,9 @@ themeConfig:
 ```
 
 Each built-in section maps to a generated layout — see them live via the
-sidebar: **Recent**, **Popular**, **Archive**, **Authors**, **Tags**.
+sidebar: **Recent**, **Popular**, **Archive**, **Authors**, **Tags**,
+**Categories**. Categories are covered in [Categories and
+tags](../post/categories-and-tags).
 
 ## Footer
 

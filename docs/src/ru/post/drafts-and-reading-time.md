@@ -5,6 +5,7 @@ description: >
   показывать оценку времени чтения — включая её отдачу в JSON-LD.
 date: 2025-05-20T10:00:00Z
 authorId: ivan-k
+category: { name: 'Контент', slug: 'writing' }
 tags:
   - guide
   - frontmatter

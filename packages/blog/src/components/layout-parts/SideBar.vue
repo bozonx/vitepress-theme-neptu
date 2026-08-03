@@ -8,6 +8,7 @@ import SideBarGroup from './SideBarGroup.vue'
 import SideBarItems from './SideBarItems.vue'
 import { Icon } from '@iconify/vue'
 import SideBarTags from './SideBarTags.vue'
+import SideBarCategories from './SideBarCategories.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import { resolveSidebarLogo } from '../../utils/shared/media.ts'
 import type { PostLite, SideBarItem } from '../../types.d.ts'
@@ -325,6 +326,13 @@ onUnmounted(() => {
             <SideBarItems
               :items="links"
               @click="closeDrawer"
+            />
+          </SideBarGroup>
+
+          <SideBarGroup v-if="theme.sidebar?.categories">
+            <SideBarCategories
+              :locale-posts="localePosts"
+              @item-click="closeDrawer"
             />
           </SideBarGroup>
 

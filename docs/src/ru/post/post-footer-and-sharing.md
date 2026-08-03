@@ -9,6 +9,7 @@ cover: https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Руки команды, сложенные вместе
+category: { name: 'Настройка', slug: 'configuration' }
 tags:
   - frontmatter
   - guide

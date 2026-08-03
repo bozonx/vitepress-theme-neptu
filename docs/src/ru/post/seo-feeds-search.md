@@ -3,6 +3,7 @@ title: Ленты, поиск и SEO-переключатели
 description: Механизмы всего сайта — ленты RSS/Atom/JSON, поиск Pagefind, популярные посты через GA4, robots.txt, sitemap и глобальные переключатели SEO.
 date: 2025-02-15T09:00:00Z
 authorId: ivan-k
+category: { name: 'SEO', slug: 'seo' }
 tags:
   - seo
   - guide

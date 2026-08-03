@@ -156,6 +156,9 @@ const TranslationSchema = z.looseObject({
   shareSocialMedia: z.string().optional(), currentLang: z.string().optional(),
   tagBadgeCount: z.string().optional(), tagPageHeader: z.string().optional(),
   tags: z.string().optional(), allTags: z.string().optional(),
+  categories: z.string().optional(), allCategories: z.string().optional(),
+  categoryPageHeader: z.string().optional(), categoryBadgeCount: z.string().optional(),
+  allCategoriesCall: z.string().optional(), breadcrumbHome: z.string().optional(),
   paginationToStart: z.string().optional(), paginationToEnd: z.string().optional(),
   toHome: z.string().optional(), toBlog: z.string().optional(), author: z.string().optional(),
   year: z.string().optional(), showMorePosts: z.string().optional(), listenPodcast: z.string().optional(),
@@ -207,6 +210,7 @@ const ThemeConfigSchema = z
     }).optional(),
     similarPostsCount: z.number().optional(),
     sidebarTagsCount: z.number().optional(),
+    sidebarCategoriesCount: z.number().optional(),
     paginationMaxItems: z.number().optional(),
     home: HomeSchema.optional(),
     postFooter: z.array(z.string()).optional(),
@@ -277,6 +281,7 @@ const ThemeConfigSchema = z
     atomIcon: z.string().optional(),
     youtubeIcon: z.string().optional(),
     tagsIcon: z.string().optional(),
+    categoriesIcon: z.string().optional(),
     sidebarLogoSrc: z.union([
       z.string(),
       z.looseObject({
@@ -301,7 +306,8 @@ const ThemeConfigSchema = z
     sidebar: z.looseObject({
       recent: z.boolean().optional(), featured: z.boolean().optional(), popular: z.boolean().optional(),
       archive: z.boolean().optional(), authors: z.boolean().optional(),
-      tags: z.boolean().optional(), donate: z.boolean().optional(),
+      tags: z.boolean().optional(), categories: z.boolean().optional(),
+      donate: z.boolean().optional(),
       rssFeed: z.boolean().optional(), atomFeed: z.boolean().optional(),
       blogTitle: z.union([z.string(), z.literal(false)]).optional(),
       links: z.array(NavLinkSchema).optional(),

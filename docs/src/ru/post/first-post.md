@@ -5,6 +5,7 @@ description: >
   что обязательно, а что можно добавить позже.
 date: 2025-07-10T09:00:00Z
 authorId: maria-editor
+category: { name: 'Начало работы', slug: 'getting-started' }
 tags:
   - guide
   - start
@@ -57,6 +58,7 @@ description: Краткое описание для поисковиков и п
 date: 2025-07-24T10:00:00Z
 authorId: maria-editor
 descrAsPreview: true
+category: Начало работы
 tags:
   - guide
   - release
@@ -66,6 +68,8 @@ coverAlt: Описание обложки для доступности
 ```
 
 - **`description`** — мета-описание и, при `descrAsPreview: true`, текст карточки в списках.
+- **`category`** — рубрика поста: одна на пост, задаёт хлебные крошки и
+  страницу категории. Подробнее — [Категории и теги](categories-and-tags).
 - **`tags`** — теги; по ним строятся страницы тегов и блок «похожие посты».
 - **`cover`** — обложка поста (локальный путь или внешний URL).
 - **`draft`** — `true` прячет пост из списков, лент, sitemap и поиска; страница

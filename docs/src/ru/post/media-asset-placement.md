@@ -6,6 +6,7 @@ description: >
   выбрать.
 date: 2025-07-30T19:00:00Z
 authorId: ivan-k
+category: { name: 'Медиа', slug: 'media' }
 tags:
   - media
   - guide

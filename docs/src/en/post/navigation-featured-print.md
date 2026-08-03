@@ -3,6 +3,7 @@ title: Post Navigation, Featured Posts, and Printing
 description: Chronological previous/next links, curated featured collections, and the blog theme's print-friendly output.
 date: 2026-08-01
 authorId: ivan-k
+category: Configuration
 tags: [guide, frontmatter]
 featured: true
 translations:

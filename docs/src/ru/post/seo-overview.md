@@ -5,6 +5,7 @@ description: >
   настраивается и как отключить любую функцию.
 date: 2025-02-20T09:00:00Z
 authorId: ivan-k
+category: { name: 'SEO', slug: 'seo' }
 tags:
   - seo
   - guide

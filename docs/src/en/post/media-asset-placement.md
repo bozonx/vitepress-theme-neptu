@@ -6,6 +6,7 @@ description: >
   subfolder — and which one to choose.
 date: 2025-07-30T19:00:00Z
 authorId: ivan-k
+category: Media
 tags:
   - media
   - guide

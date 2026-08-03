@@ -6,6 +6,7 @@ description: >
   AdSense.
 date: 2025-03-12T09:00:00Z
 authorId: ivan-k
+category: { name: 'Настройка', slug: 'configuration' }
 tags:
   - guide
   - advanced
