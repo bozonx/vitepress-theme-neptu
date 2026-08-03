@@ -111,7 +111,7 @@ watchEffect(() => {
       </TopBar>
     </header>
     <slot name="home-before" />
-    <div class="home-layout-page pt-16 sm:pt-20 my-12 md:my-16 mx-7 flex flex-col gap-12 md:gap-16 w-full" :style="{ maxWidth: `${homeMaxWidth}px` }">
+    <div class="home-layout-page pt-16 sm:pt-20 my-12 md:my-16 px-4 sm:px-7 flex flex-col gap-12 md:gap-16 w-full" :style="{ maxWidth: `${homeMaxWidth}px` }">
       <HomeHero v-if="home.hero" v-bind="home.hero" />
       <div class="home-content vp-doc"><Content /></div>
       <HomeSections />
