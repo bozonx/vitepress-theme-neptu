@@ -6,9 +6,9 @@
   "author": "(Ivan Kozyrin <ipkozyrin@gmail.com>)",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_OPTIONS='--import tsx' vitepress dev src",
-    "build": "NODE_OPTIONS='--import tsx' VITEPRESS_BASE=/vitepress-theme-neptu/ vitepress build src --base /vitepress-theme-neptu/",
-    "preview": "NODE_OPTIONS='--import tsx' vitepress preview src --base /vitepress-theme-neptu/",
+    "dev": "vitepress dev src",
+    "build": "VITEPRESS_BASE=/vitepress-theme-neptu/ vitepress build src --base /vitepress-theme-neptu/",
+    "preview": "vitepress preview src --base /vitepress-theme-neptu/",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
