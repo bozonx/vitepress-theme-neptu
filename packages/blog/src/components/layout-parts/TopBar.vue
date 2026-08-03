@@ -9,12 +9,14 @@ import { computed } from 'vue'
 import type { LinkItem } from '../../types.d.ts'
 
 const { theme } = useUiTheme()
-defineProps<{
+
+interface Props {
   isMobile?: boolean
   hideAppearance?: boolean
   hideMenuButton?: boolean
   minimal?: boolean
-}>()
+}
+const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'openSearch'): void
   (e: 'openDrawer'): void
@@ -26,18 +28,26 @@ const resolveItemShowClass = (item: LinkItem) => {
   // both
   return ''
 }
-const links = computed<LinkItem[]>(() => {
-  const result: LinkItem[] = [...(theme.value.nav?.links || [])]
-  if (theme.value.nav?.donate && theme.value.donate) {
-    result.push({
-      text: theme.value.t.links.donate,
-      href: `${theme.value.donate.url}`,
-      icon: theme.value.donate.icon || theme.value.donateIcon,
-      iconClass: 'donate-icon',
-    })
+const links = computed<LinkItem[]>(() =>
+  [...(theme.value.nav?.links || [])]
+)
+const donateLink = computed(() => {
+  if (!theme.value.nav?.donate || !theme.value.donate) return null
+  return {
+    text: theme.value.t.links.donate,
+    href: theme.value.donate.url,
+    icon: theme.value.donate.icon || theme.value.donateIcon,
+    iconClass: 'donate-icon',
   }
-  return result
 })
+const mobileNavClasses = computed(() =>
+  props.minimal
+    ? ''
+    : 'max-lg:fixed max-lg:z-[1] max-lg:topbar--mobile max-lg:bg-[var(--topbar-mobile-bg)] max-lg:border-b max-lg:border-[var(--topbar-mobile-border)] max-lg:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.07)] max-lg:dark:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.2)]'
+)
+const mobileHideClass = computed(() =>
+  props.minimal ? '' : 'max-lg:hidden'
+)
 const socialLinks = computed<LinkItem[]>(() =>
   (theme.value.nav?.socialLinks || []).map((item) => ({
     href: item.url || item.link,
@@ -54,7 +64,7 @@ const socialLinks = computed<LinkItem[]>(() =>
   <nav
     :class="[
       'flex w-full py-2 px-2 gap-x-1 top-bar pl-[0.675rem] min-w-0 items-center',
-      'max-lg:fixed max-lg:z-[1] max-lg:topbar--mobile max-lg:bg-[var(--topbar-mobile-bg)] max-lg:border-b max-lg:border-[var(--topbar-mobile-border)] max-lg:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.07)] max-lg:dark:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.2)]',
+      mobileNavClasses,
     ]"
   >
     <div class="flex-1 flex gap-x-3 min-w-0">
@@ -76,23 +86,36 @@ const socialLinks = computed<LinkItem[]>(() =>
         <NeptuBtn
           v-bind="item"
           :no-bg="true"
+          :title="item.text"
           :class="[item.class, 'px-[0.7rem]']"
           :icon-class="item.iconClass || 'muted'"
         />
       </li>
     </ul>
 
-    <div class="max-lg:hidden">
+    <NeptuBtn
+      v-if="donateLink"
+      :no-bg="true"
+      :href="donateLink.href"
+      :icon="donateLink.icon"
+      :text="donateLink.text"
+      :title="donateLink.text"
+      :icon-class="donateLink.iconClass"
+      text-class="max-lg:hidden"
+      class="px-[0.7rem]"
+    />
+
+    <div :class="mobileHideClass">
       <SwitchLang :no-bg="true" />
     </div>
 
-    <div v-if="!hideAppearance" class="max-lg:hidden">
+    <div v-if="!hideAppearance" :class="mobileHideClass">
       <SwitchAppearance />
     </div>
 
     <!-- Both pickers gate themselves on their own themeConfig flag. -->
-    <ColorThemePicker class="max-lg:hidden" />
-    <StylePresetPicker class="max-lg:hidden" />
+    <ColorThemePicker :class="mobileHideClass" />
+    <StylePresetPicker :class="mobileHideClass" />
 
     <ul v-if="!minimal && socialLinks.length" class="flex space-x-1">
       <li

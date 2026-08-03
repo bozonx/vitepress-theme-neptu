@@ -17,6 +17,8 @@ interface Props {
   icon?: string
   text?: string
   iconClass?: ClassValue
+  textClass?: ClassValue
+  title?: string
   noBg?: boolean
   primary?: boolean
   hideExternalIcon?: boolean
@@ -34,6 +36,8 @@ const {
   icon,
   text,
   iconClass,
+  textClass,
+  title,
   noBg = false,
   primary = false,
   hideExternalIcon = false,
@@ -42,9 +46,11 @@ const {
 const isExternal = computed(() => !hideExternalIcon && isExternalUrl(href))
 const hasText = computed(() => Boolean(text || slots.default))
 const btnProps = computed(() => {
+  const common = { title, disabled }
   if (href && !disabled) {
     // means just link
     return {
+      ...common,
       tag: 'a' as const,
       href,
       target,
@@ -52,8 +58,8 @@ const btnProps = computed(() => {
   }
   // means Button
   return {
+    ...common,
     tag: 'button' as const,
-    disabled,
   }
 })
 </script>
@@ -82,12 +88,13 @@ const btnProps = computed(() => {
       </span>
       <span
         v-if="hasText"
-        :class="
+        :class="[
           theme.externalLinkIcon &&
           isExternal &&
           hasText &&
-          'vp-external-link-icon'
-        "
+          'vp-external-link-icon',
+          textClass,
+        ]"
       >
         <slot>{{ text }}</slot>
       </span>
