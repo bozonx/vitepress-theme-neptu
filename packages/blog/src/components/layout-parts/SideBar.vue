@@ -118,6 +118,13 @@ const links = computed<SideBarItem[]>(() => {
       icon: theme.value.recentIcon,
     })
   }
+  if (cfg.featured) {
+    items.push({
+      text: theme.value.t.links.featured || theme.value.t.featuredPosts || 'Featured',
+      href: `featured/1`,
+      icon: theme.value.featuredIcon,
+    })
+  }
   if (cfg.popular) {
     items.push({
       text: theme.value.t.links.popular,

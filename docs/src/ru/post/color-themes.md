@@ -24,21 +24,18 @@ CSS в `.vitepress/theme/index.ts`. В данном демо сейчас исп
   <div style="text-align:center"><div style="height:56px;border-radius:10px;background:hsl(0,0%,30%)"></div><small>monochrome</small></div>
 </div>
 
-## Переключение схемы
+## Выбор схемы
 
-Импортируйте ровно одну темы CSS в верхней части `.vitepress/theme/index.ts`:
+Цветовая схема задаётся в файле конфигурации `site.yaml` (или в `themeConfig` в `.vitepress/config.ts`):
 
-```ts
-// .vitepress/theme/index.ts
-import 'vitepress-theme-neptu/blue-theme.css'
-// import 'vitepress-theme-neptu/green-theme.css'
-// import 'vitepress-theme-neptu/purple-theme.css'
-// import 'vitepress-theme-neptu/amber-theme.css'
-// import 'vitepress-theme-neptu/teal-theme.css'
-// import 'vitepress-theme-neptu/rose-theme.css'
-// import 'vitepress-theme-neptu/magenta-theme.css'
-// import 'vitepress-theme-neptu/monochrome-theme.css'
+```yaml
+# site.yaml
+themeConfig:
+  defaultColorTheme: 'teal' # blue | green | purple | amber | teal | rose | magenta | monochrome
+  defaultStylePreset: 'editorial' # soft | sharp | brutal | glass | editorial | mono
 ```
+
+При этом импортировать дополнительные CSS-файлы тем в `.vitepress/theme/index.ts` **не требуется** — базовая тема загружает все пресеты автоматически, а выбор схемы применяется инлайн-скриптом без мигания страницы.
 
 ## Пикеры темы (`colorPicker`, `stylePicker`)
 

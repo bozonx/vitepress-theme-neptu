@@ -22,19 +22,18 @@ CSS in `.vitepress/theme/index.ts`. This demo currently uses **blue**.
 
 ## Switching the scheme
 
-Import exactly one theme CSS at the top of `.vitepress/theme/index.ts`:
+## Selecting a Scheme
 
-```ts
-// .vitepress/theme/index.ts
-import 'vitepress-theme-neptu/blue-theme.css'
-// import 'vitepress-theme-neptu/green-theme.css'
-// import 'vitepress-theme-neptu/purple-theme.css'
-// import 'vitepress-theme-neptu/amber-theme.css'
-// import 'vitepress-theme-neptu/teal-theme.css'
-// import 'vitepress-theme-neptu/rose-theme.css'
-// import 'vitepress-theme-neptu/magenta-theme.css'
-// import 'vitepress-theme-neptu/monochrome-theme.css'
+Set your color scheme and style preset in `site.yaml` (or in `themeConfig` inside `.vitepress/config.ts`):
+
+```yaml
+# site.yaml
+themeConfig:
+  defaultColorTheme: 'teal' # blue | green | purple | amber | teal | rose | magenta | monochrome
+  defaultStylePreset: 'editorial' # soft | sharp | brutal | glass | editorial | mono
 ```
+
+You do **not** need to manually import any theme CSS files in `.vitepress/theme/index.ts` — the theme bundle includes all presets automatically, and your chosen theme is applied by an inline head script without any flash of unstyled content.
 
 ## Theme pickers (`colorPicker`, `stylePicker`)
 

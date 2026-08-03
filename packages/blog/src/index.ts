@@ -13,6 +13,7 @@ import NeptuAd from './components/NeptuAd.vue'
 import './styles/vendor/vp-common.css'
 import './styles/vendor/vp-icons.css'
 import './styles/search-modal.css'
+import './styles/themes/blue.css'
 import './styles/blog-vars.css'
 import './styles/themes/theme-presets.css'
 // Shape axis (`data-style`). After the vars so its `[data-style]` rules win

@@ -1,7 +1,3 @@
-// Color theme — pick one, or comment out all and set CSS variables manually.
-// Available: blue-theme, green-theme, purple-theme, amber-theme,
-//            teal-theme, rose-theme, magenta-theme, monochrome-theme.
-import 'vitepress-theme-neptu/blue-theme.css'
 // Pagefind search UI style overrides (fixes z-index and modal backdrop).
 import 'vitepress-theme-neptu/pagefind-fix.css'
 

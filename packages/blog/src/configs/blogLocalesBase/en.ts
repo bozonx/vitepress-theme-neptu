@@ -94,6 +94,7 @@ export default {
       aboutBlog: 'About This Blog',
       donate: 'Donate',
       recent: 'Recent',
+      featured: 'Featured',
       popular: 'Popular',
       byDate: 'By Date',
       links: 'Links',

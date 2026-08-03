@@ -182,6 +182,7 @@ const commonThemeConfig = {
 
   donateIcon: 'fa6-solid:hand-holding-heart',
   recentIcon: 'fa6-solid:bolt',
+  featuredIcon: 'fa6-solid:bookmark',
   popularIcon: 'fa6-solid:star',
   byDateIcon: 'fa6-solid:calendar-days',
   authorsIcon: 'mdi:users',

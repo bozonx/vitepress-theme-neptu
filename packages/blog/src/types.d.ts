@@ -145,6 +145,7 @@ export namespace NeptuBlogTheme {
     donateIcon?: string
     recentIcon?: string
     popularIcon?: string
+    featuredIcon?: string
     byDateIcon?: string
     authorsIcon?: string
     rssIcon?: string
@@ -314,6 +315,7 @@ export namespace NeptuBlogTheme {
       aboutBlog: string
       donate: string
       recent: string
+      featured?: string
       popular: string
       byDate: string
       links: string
@@ -658,6 +660,7 @@ export namespace NeptuBlogTheme {
   export interface SidebarConfig {
     links?: NavLink[]
     recent?: boolean
+    featured?: boolean
     popular?: boolean
     archive?: boolean
     authors?: boolean

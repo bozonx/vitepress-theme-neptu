@@ -1,4 +1,3 @@
-import 'vitepress-theme-neptu/blue-theme.css'
 import 'vitepress-theme-neptu/pagefind-fix.css'
 
 import Layout from './Layout.vue'

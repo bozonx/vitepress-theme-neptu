@@ -255,6 +255,7 @@ const ThemeConfigSchema = z
     }).optional(),
     donateIcon: z.string().optional(),
     recentIcon: z.string().optional(),
+    featuredIcon: z.string().optional(),
     popularIcon: z.string().optional(),
     byDateIcon: z.string().optional(),
     authorsIcon: z.string().optional(),
@@ -284,7 +285,7 @@ const ThemeConfigSchema = z
       z.array(VitePressNavItemSchema),
     ]).optional(),
     sidebar: z.looseObject({
-      recent: z.boolean().optional(), popular: z.boolean().optional(),
+      recent: z.boolean().optional(), featured: z.boolean().optional(), popular: z.boolean().optional(),
       archive: z.boolean().optional(), authors: z.boolean().optional(),
       tags: z.boolean().optional(), donate: z.boolean().optional(),
       rssFeed: z.boolean().optional(), atomFeed: z.boolean().optional(),

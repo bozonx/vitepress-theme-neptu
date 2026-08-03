@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   makeAllPostsParams,
+  makeFeaturedPostsParams,
   makeYearPostsParams,
   makeMonthsParams,
   makeTagsParams,
@@ -170,5 +171,21 @@ describe('makeAuthorsParams', () => {
       { date: '2023-01-02' },
     ]
     expect(makeAuthorsParams(posts, 10)).toHaveLength(1)
+  })
+})
+
+describe('makeFeaturedPostsParams', () => {
+  it('returns empty array when no posts are featured', () => {
+    const posts = [{ date: '2023-01-01' }, { date: '2023-01-02', featured: false }]
+    expect(makeFeaturedPostsParams(posts, 10)).toEqual([])
+  })
+
+  it('filters featured posts and generates page parameters', () => {
+    const posts = [
+      { date: '2023-01-01', featured: true },
+      { date: '2023-01-02', featured: false },
+      { date: '2023-01-03', featured: true },
+    ]
+    expect(makeFeaturedPostsParams(posts, 10)).toEqual([{ params: { page: 1 } }])
   })
 })

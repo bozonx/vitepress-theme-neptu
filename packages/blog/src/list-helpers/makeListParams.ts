@@ -23,6 +23,14 @@ export function makeAllPostsParams(
   return res
 }
 
+export function makeFeaturedPostsParams(
+  posts: PostWithDate[],
+  perPage: number
+): Array<{ params: { page: number } }> {
+  const featured = posts.filter((item) => item.featured === true)
+  return makeAllPostsParams(featured, perPage)
+}
+
 export function makeYearPostsParams(
   posts: PostWithDate[],
   perPage: number

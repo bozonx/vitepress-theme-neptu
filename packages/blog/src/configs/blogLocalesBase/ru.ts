@@ -53,7 +53,7 @@ export default {
   },
   t: {
     popularPosts: 'Популярные посты',
-    featuredPosts: 'Избранные посты',
+    featuredPosts: 'Рекомендуемые посты',
     similarPosts: 'Похожие посты',
     previousPost: 'Предыдущий пост',
     nextPost: 'Следующий пост',
@@ -94,6 +94,7 @@ export default {
       aboutBlog: 'Об этом блоге',
       donate: 'Донат',
       recent: 'Недавние',
+      featured: 'Рекомендуем',
       popular: 'Популярные',
       byDate: 'По датам',
       links: 'Ссылки',
