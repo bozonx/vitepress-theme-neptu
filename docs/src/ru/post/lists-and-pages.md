@@ -107,6 +107,7 @@ themeConfig:
       - { type: latest, enabled: false }
       - { type: popular, enabled: false }
       - { type: tags, enabled: true, limit: 15 }
+      - { type: categories, enabled: true, limit: 10 }
 ```
 
 ```yaml
@@ -141,7 +142,8 @@ themeConfig:
 - `featured` — статьи с `featured: true`; включён по умолчанию, пустой блок скрывается;
 - `latest` — последние статьи; выключен по умолчанию;
 - `popular` — популярные по GA4; выключен на главной по умолчанию;
-- `tags` — облако тегов; включено по умолчанию.
+- `tags` — облако тегов; включено по умолчанию;
+- `categories` — список категорий; включён по умолчанию.
 
 `limit` ограничивает количество статей или тегов. Если его нет, показывается
 одна страница — значение `themeConfig.perPage` из `.vitepress/config.ts`.

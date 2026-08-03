@@ -11,6 +11,7 @@ import SideBarTags from './SideBarTags.vue'
 import SideBarCategories from './SideBarCategories.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import { resolveSidebarLogo } from '../../utils/shared/media.ts'
+import { makeCategoriesList, makeTagsList } from '../../list-helpers/listHelpers.ts'
 import type { PostLite, SideBarItem } from '../../types.d.ts'
 
 const props = defineProps<{ isMobile: boolean; localePosts?: PostLite[] }>()
@@ -19,6 +20,20 @@ const { theme } = useUiTheme()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []
+)
+
+const hasCategories = computed(() => {
+  if (theme.value.sidebar?.categories === false) return false
+  return makeCategoriesList(localePosts.value).length > 0
+})
+
+const hasTags = computed(() => {
+  if (theme.value.sidebar?.tags === false) return false
+  return makeTagsList(localePosts.value).length > 0
+})
+
+const showTaxonomyHeaders = computed(
+  () => hasCategories.value && hasTags.value
 )
 // Site-root paths need the configured `base` prefix; relative and external
 // URLs are used as-is.
@@ -329,16 +344,18 @@ onUnmounted(() => {
             />
           </SideBarGroup>
 
-          <SideBarGroup v-if="theme.sidebar?.categories">
+          <SideBarGroup v-if="theme.sidebar?.categories && hasCategories">
             <SideBarCategories
               :locale-posts="localePosts"
+              :show-header="showTaxonomyHeaders"
               @item-click="closeDrawer"
             />
           </SideBarGroup>
 
-          <SideBarGroup v-if="theme.sidebar?.tags">
+          <SideBarGroup v-if="theme.sidebar?.tags && hasTags">
             <SideBarTags
               :locale-posts="localePosts"
+              :show-header="showTaxonomyHeaders"
               @item-click="closeDrawer"
             />
           </SideBarGroup>

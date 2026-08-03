@@ -93,6 +93,9 @@ themeConfig:
       - type: tags
         enabled: true
         # limit: 15
+      - type: categories
+        enabled: true
+        # limit: 10
 
   # `repo` is deliberately configured in .vitepress/config.ts: it describes
   # source-control layout and supplies edit-link URLs.

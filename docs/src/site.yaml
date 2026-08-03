@@ -11,6 +11,7 @@ themeConfig:
       - { type: latest, enabled: false }
       - { type: popular, enabled: false }
       - { type: tags, enabled: true, limit: 15 }
+      - { type: categories, enabled: true, limit: 10 }
   sidebarLogoSrc: '/img/sidebar-logo.jpg'
   sidebarLogoHeight: 180
   # Demo only: production blogs normally choose one theme and omit the pickers.

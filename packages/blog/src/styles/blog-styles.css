@@ -168,6 +168,15 @@ body.modal-open {
   background-color: color-mix(in srgb, var(--vp-c-bg) 35%, transparent);
 }
 
+@media (max-width: 1023px) {
+  .home-topbar .top-bar {
+    position: static;
+    background-color: transparent;
+    border-bottom: none;
+    box-shadow: none;
+  }
+}
+
 .home-layout.home-has-bg .card-item,
 .home-layout.home-has-bg .home-content,
 .home-layout.home-has-bg .home-hero,

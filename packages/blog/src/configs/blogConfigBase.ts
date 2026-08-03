@@ -107,6 +107,7 @@ const commonThemeConfig = {
       { type: 'latest' as const, enabled: false },
       { type: 'popular' as const, enabled: false },
       { type: 'tags' as const, enabled: true },
+      { type: 'categories' as const, enabled: true },
     ],
   },
   paginationMaxItems: 5,

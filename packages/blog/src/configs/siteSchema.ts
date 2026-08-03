@@ -144,7 +144,7 @@ const HomeSchema = z.looseObject({
     })).optional(),
   }).optional(),
   sections: z.array(z.looseObject({
-    type: z.enum(['featured', 'latest', 'popular', 'tags']),
+    type: z.enum(['featured', 'latest', 'popular', 'tags', 'categories']),
     enabled: z.boolean().optional(),
     limit: z.number().int().min(1).optional(),
   })).optional(),

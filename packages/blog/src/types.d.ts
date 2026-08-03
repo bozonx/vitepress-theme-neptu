@@ -531,7 +531,12 @@ export namespace NeptuBlogTheme {
     dataSource?: AnalyticsDataSource
   }
 
-  export type HomeSectionType = 'featured' | 'latest' | 'popular' | 'tags'
+  export type HomeSectionType =
+    | 'featured'
+    | 'latest'
+    | 'popular'
+    | 'tags'
+    | 'categories'
 
   export interface HomeSectionConfig {
     type: HomeSectionType

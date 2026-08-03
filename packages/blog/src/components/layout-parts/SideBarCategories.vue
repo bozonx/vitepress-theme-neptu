@@ -2,7 +2,7 @@
   <SideBarTaxonomy
     kind="category"
     :locale-posts="localePosts"
-    :header="theme.t.categories"
+    :header="resolvedShowHeader ? (header ?? theme.t.categories) : undefined"
     :limit="theme.sidebarCategoriesCount"
     :all-label="theme.t.allCategoriesCall"
     :all-icon="theme.categoriesIcon || theme.tagsIcon"
@@ -11,13 +11,38 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import SideBarTaxonomy from './SideBarTaxonomy.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { makeCategoriesList, makeTagsList } from '../../list-helpers/listHelpers.ts'
 import type { PostLite } from '../../types.d.ts'
 
-defineProps<{ localePosts?: PostLite[] }>()
+const props = withDefaults(
+  defineProps<{
+    localePosts?: PostLite[]
+    header?: string
+    showHeader?: boolean
+  }>(),
+  {
+    showHeader: undefined,
+  }
+)
+
 const { theme } = useUiTheme()
 const emit = defineEmits<{
   (e: 'itemClick'): void
 }>()
+
+const hasCategories = computed(
+  () => makeCategoriesList(props.localePosts).length > 0
+)
+const hasTags = computed(() => makeTagsList(props.localePosts).length > 0)
+
+const resolvedShowHeader = computed(() => {
+  if (typeof props.showHeader === 'boolean') {
+    return props.showHeader
+  }
+  return hasCategories.value && hasTags.value
+})
 </script>
+
