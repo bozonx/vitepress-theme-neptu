@@ -71,7 +71,7 @@ const currentImageAlt = computed(() => {
 
 <template>
   <div class="home-hero">
-    <div class="flex w-full max-lg:flex-col-reverse items-center gap-x-8 md:gap-x-12 lg:gap-x-16 gap-y-6">
+    <div class="flex w-full max-lg:flex-col-reverse items-center gap-x-4 md:gap-x-6 lg:gap-x-8 gap-y-6">
       <div class="flex-1 max-lg:text-center home-hero-captions">
         <h1
           v-if="heroTitle"
