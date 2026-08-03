@@ -78,19 +78,21 @@ themeConfig:
 ```yaml
 # src/site.yaml
 themeConfig:
-  sidebarLogoSrc: '/img/sidebar-logo.webp'
-  sidebarLogoHeight: 180
+  sidebar:
+    logoSrc: '/img/sidebar-logo.webp'
+    logoHeight: 180
 ```
 
 Если для светлой и тёмной темы нужны разные файлы, вместо строки задайте объект:
 
 ```yaml
 themeConfig:
-  sidebarLogoSrc:
-    light: '/img/logo-light.svg'
-    dark: '/img/logo-dark.svg'
-    alt: 'Название блога'   # необязательно; по умолчанию пустой alt
-  sidebarLogoHeight: 180
+  sidebar:
+    logoSrc:
+      light: '/img/logo-light.svg'
+      dark: '/img/logo-dark.svg'
+      alt: 'Название блога'   # необязательно; по умолчанию пустой alt
+    logoHeight: 180
 ```
 
 В HTML попадают оба изображения, а лишнее скрывается стилями по классу `.dark`,
@@ -98,6 +100,9 @@ themeConfig:
 страницы не мелькает логотип не от той темы. Классы `.sidebar-logo-light` и
 `.sidebar-logo-dark` появляются только в объектной форме — обычная строка
 по-прежнему даёт одну картинку без классов.
+
+`logoSrc` и `logoHeight` живут внутри секции `sidebar` — рядом с флагами
+видимости секций и навигационными ссылками.
 
 Пути, начинающиеся с `/`, автоматически дополняются значением `base`.
 В RSS-ленту попадает светлый вариант: у читалки нет своей темы оформления.

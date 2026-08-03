@@ -12,10 +12,6 @@ themeConfig:
       - { type: popular, enabled: false }
       - { type: categories, enabled: true, limit: 10 }
       - { type: tags, enabled: true, limit: 15 }
-  sidebarLogoSrc:
-    light: '/img/sidebar-logo-light.webp'
-    dark: '/img/sidebar-logo-dark.webp'
-  sidebarLogoHeight: 187
   # Demo only: production blogs normally choose one theme and omit the pickers.
   colorPicker: true
   stylePicker: true
@@ -28,6 +24,10 @@ themeConfig:
     url: '${config.siteUrl}'
     logo: '/img/sidebar-logo.webp'
   sidebar:
+    logoSrc:
+      light: '/img/sidebar-logo-light.webp'
+      dark: '/img/sidebar-logo-dark.webp'
+    logoHeight: 187
     popular: true
     recent: true
     featured: true

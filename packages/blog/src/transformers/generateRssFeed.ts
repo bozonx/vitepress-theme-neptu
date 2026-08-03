@@ -74,8 +74,8 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
           makeAbsoluteUrl(
             siteUrl,
             resolveSidebarLogo(
-              locale.themeConfig?.sidebarLogoSrc ??
-                config.userConfig?.themeConfig?.sidebarLogoSrc
+              locale.themeConfig?.sidebar?.logoSrc ??
+                config.userConfig?.themeConfig?.sidebar?.logoSrc
             )?.light
           ) || defaultFavicon,
         generator: 'VitePress Neptu Blog Theme',

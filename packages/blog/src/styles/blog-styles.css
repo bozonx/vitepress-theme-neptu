@@ -53,7 +53,7 @@ body.modal-open {
  * Per-appearance sidebar logo. Both <img> tags are in the HTML and one is
  * hidden here, keyed on the `.dark` class VitePress sets before first paint —
  * so the correct logo is painted immediately, with no hydration flash.
- * The classes are only emitted when `sidebarLogoSrc` is the { light, dark }
+ * The classes are only emitted when `sidebar.logoSrc` is the { light, dark }
  * object form; a single string renders one unclassed image.
  */
 .sidebar-logo-dark {

@@ -282,15 +282,6 @@ const ThemeConfigSchema = z
     youtubeIcon: z.string().optional(),
     tagsIcon: z.string().optional(),
     categoriesIcon: z.string().optional(),
-    sidebarLogoSrc: z.union([
-      z.string(),
-      z.looseObject({
-        light: z.string(),
-        dark: z.string(),
-        alt: z.string().optional(),
-      }),
-    ]).optional(),
-    sidebarLogoHeight: z.number().int().min(1).optional(),
     sidebarMenuLabel: z.string().optional(),
     colorThemeMenuLabel: z.string().optional(),
     stylePresetMenuLabel: z.string().optional(),
@@ -313,6 +304,15 @@ const ThemeConfigSchema = z
       links: z.array(NavLinkSchema).optional(),
       bottomLinks: z.array(NavLinkSchema).optional(),
       socialLinks: z.array(SocialLinkSchema).optional(),
+      logoSrc: z.union([
+        z.string(),
+        z.looseObject({
+          light: z.string(),
+          dark: z.string(),
+          alt: z.string().optional(),
+        }),
+      ]).optional(),
+      logoHeight: z.number().int().min(1).optional(),
     }).optional(),
     donate: z.looseObject({
       url: z.string().optional(), icon: z.string().optional(),

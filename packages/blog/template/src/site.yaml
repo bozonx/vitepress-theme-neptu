@@ -111,25 +111,25 @@ themeConfig:
   # twitterSite: myblog
 
   # --- Sidebar ---------------------------------------------------------------
-  # Logo image URL shown at the top of the sidebar.
-  # Use a raster image (PNG/WebP) with a fixed resolution; the <img> element
-  # renders at width=320 × sidebarLogoHeight px, so a 2× source (640×360) is
-  # recommended for retina displays.
-  # Add an image to `src/public/` first, then point to it from the public root.
-  # Default: none (no logo)
-  # sidebarLogoSrc: /img/sidebar-logo.webp
-
-  # Logo height in pixels — used only as a placeholder so the browser can
-  # reserve vertical space before the image loads (prevents layout shift / CLS).
-  # The image is NOT compressed to this height: CSS `h-auto` keeps the natural
-  # aspect ratio. Set this to the image's height at 320px render width
-  # (e.g. for a 640×360 source, use 180).
-  # Default: 158
-  # sidebarLogoHeight: 180
-
   # Sidebar sections and links configuration.
   # All boolean flags below default to false (hidden) when not specified.
   sidebar:
+    # Logo image URL shown at the top of the sidebar.
+    # Use a raster image (PNG/WebP) with a fixed resolution; the <img> element
+    # renders at width=320 × logoHeight px, so a 2× source (640×360) is
+    # recommended for retina displays.
+    # Add an image to `src/public/` first, then point to it from the public root.
+    # Default: none (no logo)
+    # logoSrc: /img/sidebar-logo.webp
+
+    # Logo height in pixels — used only as a placeholder so the browser can
+    # reserve vertical space before the image loads (prevents layout shift / CLS).
+    # The image is NOT compressed to this height: CSS `h-auto` keeps the natural
+    # aspect ratio. Set this to the image's height at 320px render width
+    # (e.g. for a 640×360 source, use 180).
+    # Default: 158
+    # logoHeight: 180
+
     # Show the "Recent posts" section.
     recent: true
     # Show the "Featured" section — posts with `featured: true` in frontmatter.

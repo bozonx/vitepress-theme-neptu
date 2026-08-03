@@ -171,13 +171,6 @@ export namespace NeptuBlogTheme {
     }
 
     /**
-     * Sidebar logo. A plain string is used for both appearances; the object
-     * form serves a different file per light/dark appearance. Both variants
-     * are rendered and switched with CSS, so there is no flash on first paint.
-     */
-    sidebarLogoSrc?: string | SidebarLogo
-    sidebarLogoHeight?: number
-    /**
      * Optional visual name for the blog UI. Prefer the locale-level `title`
      * for the site identity and browser title; this value remains a backwards-
      * compatible fallback and can override the sidebar label.
@@ -702,6 +695,18 @@ export namespace NeptuBlogTheme {
     atomFeed?: boolean
     /** Override the sidebar title. Defaults to `blogTitle`. Set `false` to hide. */
     blogTitle?: string | false
+    /**
+     * Sidebar logo. A plain string is used for both appearances; the object
+     * form serves a different file per light/dark appearance. Both variants
+     * are rendered and switched with CSS, so there is no flash on first paint.
+     */
+    logoSrc?: string | SidebarLogo
+    /**
+     * Logo height in pixels — used as a placeholder so the browser can reserve
+     * vertical space before the image loads (prevents layout shift / CLS).
+     * Defaults to 158.
+     */
+    logoHeight?: number
   }
 
   export interface NavLink {

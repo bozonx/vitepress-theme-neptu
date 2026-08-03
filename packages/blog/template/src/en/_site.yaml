@@ -53,7 +53,7 @@ themeConfig:
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
   # blogTitle: 'My Neptu Blog'
   # Also you can override other fields from category "Branding & layout"
-  # like sidebarLogoSrc, sidebarMenuLabel etc.
+  # like sidebar.logoSrc, sidebarMenuLabel etc.
   # Also you can override all other themeConfig fields from src/site.yaml
   # Custom fields are also supported — see the "Custom Fields" section in
   # src/site.yaml for details.

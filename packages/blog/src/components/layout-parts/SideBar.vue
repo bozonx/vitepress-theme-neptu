@@ -40,7 +40,7 @@ const showTaxonomyHeaders = computed(
 const logoSrc = (src: string): string =>
   src.startsWith('/') ? withBase(src) : src
 const sidebarLogo = computed(() => {
-  const resolved = resolveSidebarLogo(theme.value.sidebarLogoSrc)
+  const resolved = resolveSidebarLogo(theme.value.sidebar?.logoSrc)
 
   if (!resolved) return undefined
 
@@ -306,7 +306,7 @@ onUnmounted(() => {
             :alt="sidebarLogo.alt"
             decoding="async"
             width="320"
-            :height="theme.sidebarLogoHeight || 158"
+            :height="theme.sidebar?.logoHeight || 158"
             class="max-w-full h-auto"
             :class="{ 'sidebar-logo-light': sidebarLogo.hasSeparateVariants }"
             :aria-hidden="sidebarLogo.alt ? undefined : 'true'"
@@ -317,7 +317,7 @@ onUnmounted(() => {
             :alt="sidebarLogo.alt"
             decoding="async"
             width="320"
-            :height="theme.sidebarLogoHeight || 158"
+            :height="theme.sidebar?.logoHeight || 158"
             class="max-w-full h-auto sidebar-logo-dark"
             :aria-hidden="sidebarLogo.alt ? undefined : 'true'"
           />

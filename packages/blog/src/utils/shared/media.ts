@@ -171,7 +171,7 @@ export interface ResolvedSidebarLogo {
 }
 
 /**
- * Normalises `themeConfig.sidebarLogoSrc`, which accepts either a single path
+ * Normalises `themeConfig.sidebar.logoSrc`, which accepts either a single path
  * used for both appearances or `{ light, dark }`.
  *
  * A missing side falls back to the other one, so a half-filled object still

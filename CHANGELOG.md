@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Migrated monorepo from pnpm to npm: replaced `pnpm-workspace.yaml` with `workspaces` in root `package.json`, inlined all `catalog:` versions into individual `package.json` files, replaced pnpm commands in scripts with npm equivalents, updated CI workflow and documentation.
 - `packages/blog`: tag and category list pages now filter posts by slug rather than by display name, and `makeTagsList` keys entries by slug — two spellings of one slug no longer split into separate entries.
 - `packages/blog`: post JSON-LD is emitted as an `@graph` when the post has a category (article + `BreadcrumbList`); it stays a single node otherwise.
+- `packages/blog` **breaking**: `sidebarLogoSrc` and `sidebarLogoHeight` moved from the top level of `themeConfig` into the `sidebar` object as `sidebar.logoSrc` and `sidebar.logoHeight`. Update `site.yaml` / `_site.yaml` accordingly.
 
 ### Added
 
