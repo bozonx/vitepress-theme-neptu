@@ -7,15 +7,14 @@ import { computed, useId } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { ActionItem, FaqItem, SectionProps } from './types.ts'
+import type { ActionItem, FaqItem, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: FaqItem[]
+    SectionProps &
+      HeadingProps & {
+        items?: FaqItem[]
       cols?: 1 | 2
       /** Only one answer open at a time (native `name` grouping). */
       exclusive?: boolean
@@ -57,16 +56,12 @@ const jsonLd = computed(() => {
 })
 const generatedId = useId()
 const exclusiveName = computed(() => `ln-faq-${props.id ?? generatedId}`)
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-faq"
   >
     <LnHeading

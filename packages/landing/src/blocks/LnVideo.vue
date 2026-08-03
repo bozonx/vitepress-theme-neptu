@@ -17,15 +17,13 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { ActionItem, SectionProps } from './types.ts'
+import type { ActionItem, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 import { resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       /** YouTube id or URL. */
       youtube?: string
       /** Vimeo id or URL. */
@@ -36,13 +34,16 @@ const props = withDefaults(
       poster?: string
       /** Accessible name of the player. */
       caption?: string
+      /** CSS aspect-ratio of the player frame, e.g. `16/9`. */
+      mediaRatio?: string
+      /** @deprecated Use `mediaRatio`. */
       ratio?: string
       actions?: ActionItem[]
       /** Start muted and play immediately — self-hosted `src` only. */
       autoplay?: boolean
     }
   >(),
-  { ratio: '16/9', autoplay: false, align: 'center', width: 'default' }
+  { mediaRatio: '16/9', autoplay: false, align: 'center', width: 'default' }
 )
 
 const { theme } = useData()
@@ -85,16 +86,12 @@ const posterSrc = computed(() => {
 
 const fileSrc = computed(() => resolveUrl(props.src))
 const playerLabel = computed(() => props.caption ?? props.title ?? label('player', 'Video'))
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-video"
   >
     <LnHeading
@@ -105,7 +102,7 @@ const playerLabel = computed(() => props.caption ?? props.title ?? label('player
     />
 
     <figure class="ln-video__figure">
-      <div class="ln-video__frame" :style="{ aspectRatio: props.ratio }">
+      <div class="ln-video__frame" :style="{ aspectRatio: props.mediaRatio ?? props.ratio }">
         <!-- Self-hosted: no facade needed, the browser player is already cheap. -->
         <video
           v-if="fileSrc"

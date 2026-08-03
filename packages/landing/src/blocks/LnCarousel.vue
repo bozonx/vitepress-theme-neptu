@@ -14,15 +14,14 @@ import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { CarouselSlide, SectionProps } from './types.ts'
+import type { CarouselSlide, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: CarouselSlide[]
+    SectionProps &
+      HeadingProps & {
+        items?: CarouselSlide[]
       /** Slides visible at once on desktop. */
       perView?: 1 | 2 | 3 | 4
       arrows?: boolean
@@ -172,16 +171,12 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', syncState)
   document.removeEventListener('visibilitychange', onVisibility)
 })
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-carousel"
     :class="{ 'ln-carousel--peek': props.peek }"
     :style="{ '--ln-carousel-per-view': props.perView }"

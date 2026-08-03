@@ -3,44 +3,44 @@
  * Alternating rows of copy and media. Use it to explain two to four key
  * capabilities in depth, after the compact `LnFeatureGrid`.
  */
+import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnReveal from '../primitives/LnReveal.vue'
-import type { SectionProps, SplitItem } from './types.ts'
+import type { HeadingProps, SectionProps, SplitItem } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: SplitItem[]
+    SectionProps &
+      HeadingProps & {
+        items?: SplitItem[]
       /** Start with the media on the left instead of the right. */
       reverse?: boolean
-      /** Keep every row in the same order instead of alternating. */
+      /** Alternate the media side per row (default `true`). */
+      alternate?: boolean
+      /** @deprecated Use `alternate: false` instead. */
       noAlternate?: boolean
       mediaRatio?: string
     }
   >(),
-  { reverse: false, noAlternate: false, align: 'start' }
+  { reverse: false, alternate: true, noAlternate: false, align: 'start' }
 )
 
+/** `alternate` is the canonical switch; `noAlternate: true` opts out for back-compat. */
+const shouldAlternate = computed(() => props.alternate && !props.noAlternate)
+const sectionProps = useSectionProps(props)
 const isReversed = (index: number): boolean =>
-  props.noAlternate ? props.reverse : props.reverse !== (index % 2 === 1)
+  shouldAlternate.value ? props.reverse !== (index % 2 === 1) : props.reverse
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    no-reveal
+    v-bind="sectionProps"
     class="ln-split"
   >
     <LnHeading

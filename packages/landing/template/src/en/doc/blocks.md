@@ -23,13 +23,25 @@ Every block accepts these, on top of its own:
 | `padding` | `none \| sm \| md \| lg` | `md` | Vertical rhythm. |
 | `align` | `start \| center` | varies | Alignment of the section header. |
 | `divider` | `boolean` | `false` | Hairline above the section. |
-| `noReveal` | `boolean` | `false` | Disable the scroll-reveal animation. |
+| `noReveal` | `boolean` | `false` | **Deprecated** — use `reveal: false` instead. |
 
 Most blocks also take the header trio — `eyebrow`, `title`, `text` — and a list
 of items. `title` and `text` accept inline HTML.
 
 Alternate surfaces (`soft`, `inverse`, `brand`) re-map the text and card tokens
 inside themselves, so the content stays readable without extra props.
+
+### Deprecated props
+
+| Old prop | Replacement | Blocks |
+|---------|-------------|-------|
+| `noReveal` | `reveal: false` | All |
+| `noAlternate` | `alternate: false` | `feature-split` |
+| `ratio` | `mediaRatio` | `gallery`, `video`, `embed`, `tabs` |
+| `imageRatio` | `mediaRatio` | `collection` |
+| `monthlyLabel` | `toggle.monthlyLabel` | `pricing` |
+| `yearlyLabel` | `toggle.yearlyLabel` | `pricing` |
+| `discountLabel` | `toggle.discountLabel` | `pricing` |
 
 ## The catalog
 

@@ -13,14 +13,12 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { SectionProps, TabItem } from './types.ts'
+import type { HeadingProps, SectionProps, TabItem } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: TabItem[]
       /** Tab strip position. `side` becomes a column on desktop. */
       variant?: 'top' | 'side'
@@ -52,16 +50,12 @@ const onKeydown = (event: KeyboardEvent, index: number): void => {
   const strip = (event.currentTarget as HTMLElement).parentElement
   ;(strip?.children[next] as HTMLElement | undefined)?.focus()
 }
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-tabs"
     :class="`ln-tabs--${props.variant}`"
   >

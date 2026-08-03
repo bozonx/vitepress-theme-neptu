@@ -3,14 +3,12 @@
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import type { SectionProps, TimelineItem } from './types.ts'
+import type { HeadingProps, SectionProps, TimelineItem } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: TimelineItem[]
       /** `side` puts the labels in a dedicated left column. */
       variant?: 'stacked' | 'side'
@@ -18,16 +16,12 @@ const props = withDefaults(
   >(),
   { variant: 'stacked', width: 'narrow', align: 'start' }
 )
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-timeline"
     :class="`ln-timeline--${props.variant}`"
   >

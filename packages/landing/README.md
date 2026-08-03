@@ -204,8 +204,9 @@ For an event-handling button without a URL, compose a custom section with the
 
 Every block accepts `id`, `bg` (`base` `soft` `mute` `inverse` `brand`
 `transparent`), `width` (`narrow` `default` `wide` `full`), `padding` (`none`
-`sm` `md` `lg`), `align` (`start` `center`), `divider` and `noReveal`, plus the
+`sm` `md` `lg`), `align` (`start` `center`), `divider`, `reveal` and the
 header trio `eyebrow` / `title` / `text` and its own `items`.
+`noReveal` is a deprecated alias for `reveal: false`.
 
 Interactive blocks generate stable internal ids automatically. Set `id` when
 you need a section anchor or a predictable DOM id. For meaningful images, use
@@ -415,7 +416,7 @@ built-in picker lists built-in presets only.
 | Import | Contents |
 |--------|----------|
 | `vitepress-theme-neptu-landing` | Theme entry (default export) |
-| `…/blocks` | Blocks, `LandingRenderer`, registry, types |
+| `…/blocks` | Blocks, `LandingRenderer`, registry, `useSectionProps`, types |
 | `…/primitives` | `LnSection`, `LnGrid`, `LnCard`, … |
 | `…/components` | `ColorThemePicker`, `StylePresetPicker` (re-exported from the blog theme) |
 | `…/composables` | `useStylePreset`, `useColorTheme` |

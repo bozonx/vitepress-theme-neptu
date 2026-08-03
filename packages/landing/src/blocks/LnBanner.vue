@@ -13,6 +13,7 @@ import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import type { IconLike, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
@@ -61,17 +62,14 @@ const dismiss = (): void => {
     // Nothing to do: the banner is hidden for this page view either way.
   }
 }
+
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
     v-if="!hidden"
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-banner"
     :class="[`ln-banner--${props.placement}`, { 'ln-banner--sticky': props.sticky }]"
   >

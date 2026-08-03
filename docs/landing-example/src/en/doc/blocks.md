@@ -24,13 +24,29 @@ Every block accepts these, on top of its own:
 | `padding` | `none \| sm \| md \| lg` | `md` | Vertical rhythm. |
 | `align` | `start \| center` | varies | Alignment of the section header. |
 | `divider` | `boolean` | `false` | Hairline above the section. |
-| `noReveal` | `boolean` | `false` | Disable the scroll-reveal animation. |
+| `reveal` | `boolean` | `true` | Enable the scroll-reveal animation. `reveal: false` disables it. |
+| `noReveal` | `boolean` | `false` | **Deprecated** — use `reveal: false` instead. |
 
 Most blocks also take the header trio — `eyebrow`, `title`, `text` — and a list
 of items. `title` and `text` accept inline HTML.
 
 Alternate surfaces (`soft`, `inverse`, `brand`) re-map the text and card tokens
 inside themselves, so the content stays readable without extra props.
+
+### Deprecated props
+
+| Old prop | Replacement | Blocks |
+|---------|-------------|-------|
+| `noReveal` | `reveal: false` | All |
+| `noAlternate` | `alternate: false` | `feature-split` |
+| `ratio` | `mediaRatio` | `gallery`, `video`, `embed`, `tabs` |
+| `imageRatio` | `mediaRatio` | `collection` |
+| `monthlyLabel` | `toggle.monthlyLabel` | `pricing` |
+| `yearlyLabel` | `toggle.yearlyLabel` | `pricing` |
+| `discountLabel` | `toggle.discountLabel` | `pricing` |
+
+Old props still work but emit no console warnings — the aliases are resolved
+silently for backward compatibility.
 
 ## The catalog
 
@@ -158,8 +174,11 @@ Rows of copy and media, alternating sides.
 |------|------|---------|
 | `items` | feature + `bullets?: string[]`, `actions?: action[]` | — |
 | `reverse` | `boolean` | `false` |
-| `noAlternate` | `boolean` | `false` |
+| `alternate` | `boolean` | `true` | Alternate the media side per row. |
+| `noAlternate` | `boolean` | `false` | **Deprecated** — use `alternate: false`. |
 | `mediaRatio` | CSS aspect-ratio | — |
+
+`variant` is not applicable — the layout is always alternating rows.
 
 ## bento — `LnBento`
 
@@ -226,9 +245,11 @@ The marker shows the item's `label`, its `icon`, or the 1-based index.
 |------|------|---------|
 | `items` | plan (below) | — |
 | `cols` | `2 \| 3 \| 4` | `3` |
-| `monthlyLabel`, `yearlyLabel` | `string` | `Monthly` / `Yearly` |
+| `monthlyLabel` | `string` | `Monthly` | **Deprecated** — use `toggle.monthlyLabel`. |
+| `yearlyLabel` | `string` | `Yearly` | **Deprecated** — use `toggle.yearlyLabel`. |
+| `discountLabel` | `string` | — | **Deprecated** — use `toggle.discountLabel`. |
 | `note` | `string` | — |
-| `currency`, `billingSuffix`, `discountLabel` | `string` | — |
+| `currency`, `billingSuffix` | `string` | — |
 | `toggle` | `{ monthlyLabel?, yearlyLabel?, discountLabel? }` | — |
 
 ```ts
@@ -268,16 +289,28 @@ Use `groups: { id, title?, text? }[]` with `item.group`; members also accept
 ## gallery — `LnGallery`
 
 `items: { src, alt?, caption?, link?, ratio? }[]`, `cols` 2–4,
-`variant: grid | masonry`, `lightbox: boolean`, `ratio`.
+`variant: grid | masonry`, `lightbox: boolean`, `mediaRatio`.
 Items also accept `title`, `text`, `tags` and `actions`, so the same block can
 serve as a portfolio or case-study grid. The lightbox is a native `<dialog>`.
+
+### Events
+
+| Event | Payload | Fired |
+|-------|---------|-------|
+| `lightboxOpen` | `index: number` | When the lightbox dialog opens. |
+| `lightboxClose` | — | When the lightbox dialog closes. |
+
+```md
+<LnGallery :items="items" @lightbox-open="onOpen" @lightbox-close="onClose" />
+```
 
 ## collection — `LnCollection`
 
 Generic resource cards for posts, projects, products and events. Items use
 `CardItem`: `title`, `text`, `image`, `icon`, `badge`, `tags`, `meta`, `date`,
 `link`, `linkText`, `actions`. Props: `cols` 1–4, `layout: grid | list`,
-`variant: card | plain | bordered`, `imageRatio`, and section-level `actions`.
+`variant: card | plain | bordered`, `mediaRatio` (deprecated alias: `imageRatio`),
+and section-level `actions`.
 
 ## content — `LnContent`
 
@@ -288,17 +321,25 @@ from external CMS users before it reaches the page.
 ## embed — `LnEmbed`
 
 Lazy iframe for maps, calendars, demos and booking widgets. Props: `src`,
-`embedTitle`, `caption`, `ratio`, `loading`, `allow`, `sandbox`, `actions`.
+`embedTitle`, `caption`, `mediaRatio`, `loading`, `allow`, `sandbox`, `actions`.
+
+`embedTitle` sets the accessible name of the iframe. It falls back to `title`
+if omitted, then to `'Embedded content'`. Always set it when the block has no
+visible heading — screen readers announce it as the frame label.
 
 ## code, tabs, compare, newsletter, video, banner
 
 - `code`: samples `{ label?, lang?, code, html?, caption? }`, copy and chrome controls.
+  `variant: single | split` — `split` puts the code beside the copy.
 - `tabs`: `CardItem`-like tabs, `variant: top | side`, `initial`, `mediaRatio`.
 - `compare`: `columns`, positional `rows[].values`, `rowsLabel`, `stickyHead`.
 - `newsletter`: native or AJAX form with extra fields and consent text.
+  `variant: card | banner` controls the visual style. Emits `submit`, `success`
+  and `error` events when `ajax` is enabled.
 - `video`: click-to-load YouTube/Vimeo or native `src` player.
+  `mediaRatio` controls the aspect ratio (deprecated alias: `ratio`).
 - `banner`: `placement: inline | top | bottom`, `sticky`, dismiss state, and
-  explicit shared `width`, `padding`, `noReveal` support.
+  explicit shared `width`, `padding`, `reveal` support.
 
 ---
 

@@ -11,21 +11,22 @@ import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnButton from '../primitives/LnButton.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import type { PricingFeature, PricingPlan, PricingToggleOptions, SectionProps } from './types.ts'
+import type { HeadingProps, PricingFeature, PricingPlan, PricingToggleOptions, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: PricingPlan[]
       cols?: 2 | 3 | 4
-      /** Labels of the period switch. */
+      /** @deprecated Use `toggle.monthlyLabel`. */
       monthlyLabel?: string
+      /** @deprecated Use `toggle.yearlyLabel`. */
       yearlyLabel?: string
+      /** Period-switch labels. Preferred over the flat `monthlyLabel`/`yearlyLabel`/`discountLabel`. */
       toggle?: PricingToggleOptions
       currency?: string
+      /** @deprecated Use `toggle.discountLabel`. */
       discountLabel?: string
       billingSuffix?: string
       /** Small print under the plans. */
@@ -61,16 +62,12 @@ const discountOf = (plan: PricingPlan): string | undefined => plan.discountLabel
 
 const normalize = (feature: string | PricingFeature): PricingFeature =>
   typeof feature === 'string' ? { text: feature, included: true } : { included: true, ...feature }
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-pricing"
   >
     <LnHeading

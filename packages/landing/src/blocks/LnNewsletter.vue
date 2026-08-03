@@ -17,14 +17,21 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import { resolveUrl } from '../utils/url.ts'
-import type { FormField, SectionProps } from './types.ts'
+import type { FormField, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
+
+const emit = defineEmits<{
+  /** Fired before the ajax request starts. `email` is not included (PII). */
+  submit: [payload: { action: string; method: string }]
+  /** Fired when the ajax request succeeds. */
+  success: [response: Response | undefined]
+  /** Fired when the ajax request fails or returns a non-ok status. */
+  error: [error: unknown]
+}>()
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       /** Form endpoint. Without it the block renders as a preview only. */
       action?: string
       method?: 'post' | 'get'
@@ -57,6 +64,8 @@ const props = withDefaults(
   }
 )
 
+const sectionProps = useSectionProps(props)
+
 const { theme } = useData()
 const formText = computed(() => {
   const t = theme.value.t as { landing?: { form?: Record<string, string> } } | undefined
@@ -77,6 +86,7 @@ const onSubmit = async (event: Event): Promise<void> => {
   event.preventDefault()
   const form = event.target as HTMLFormElement
   state.value = 'sending'
+  emit('submit', { action: props.action, method: props.method })
   try {
     const url = resolvedAction.value
     if (!url) throw new Error('No action URL')
@@ -97,21 +107,22 @@ const onSubmit = async (event: Event): Promise<void> => {
             headers: { Accept: 'application/json' },
           })
     state.value = response.ok ? 'done' : 'error'
-    if (response.ok) form.reset()
-  } catch {
+    if (response.ok) {
+      form.reset()
+      emit('success', response)
+    } else {
+      emit('error', new Error(`HTTP ${response.status}`))
+    }
+  } catch (err) {
     state.value = 'error'
+    emit('error', err)
   }
 }
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-form"
     :class="`ln-form--${props.variant}`"
   >

@@ -26,8 +26,9 @@ The two pickers are demo controls, off unless `colorPicker: true` /
 
 ## Shared block props
 
-`id`, `bg`, `width`, `padding`, `align`, `divider`, `noReveal`.
+`id`, `bg`, `width`, `padding`, `align`, `divider`, `reveal`.
 Most blocks also accept `eyebrow`, `title`, `text`.
+`noReveal` is a deprecated alias for `reveal: false`.
 
 Every item in `actions` requires both `text` and `link`. Use the `LnButton`
 primitive in component mode for event-handling buttons without a destination.

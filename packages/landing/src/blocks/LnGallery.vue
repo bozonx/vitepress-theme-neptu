@@ -10,24 +10,34 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
-import type { GalleryItem, SectionProps } from './types.ts'
+import type { GalleryItem, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
+
+const emit = defineEmits<{
+  /** Fired when the lightbox dialog opens. */
+  lightboxOpen: [index: number]
+  /** Fired when the lightbox dialog closes. */
+  lightboxClose: []
+}>()
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: GalleryItem[]
       cols?: 2 | 3 | 4
       variant?: 'grid' | 'masonry'
       /** Open images in a modal viewer. */
       lightbox?: boolean
+      /** CSS aspect-ratio of each tile, e.g. `4/3`. */
+      mediaRatio?: string
+      /** @deprecated Use `mediaRatio`. */
       ratio?: string
     }
   >(),
-  { cols: 3, variant: 'grid', lightbox: true, ratio: '4/3', align: 'start' }
+  { cols: 3, variant: 'grid', lightbox: true, mediaRatio: '4/3', align: 'start' }
 )
+
+const sectionProps = useSectionProps(props)
 
 const dialog = ref<HTMLDialogElement | null>(null)
 const current = ref(0)
@@ -45,9 +55,13 @@ const open = (index: number): void => {
   if (!props.lightbox) return
   current.value = index
   dialog.value?.showModal?.()
+  emit('lightboxOpen', index)
 }
 
-const close = (): void => dialog.value?.close?.()
+const close = (): void => {
+  dialog.value?.close?.()
+  emit('lightboxClose')
+}
 
 const move = (delta: number): void => {
   const total = props.items?.length ?? 0
@@ -66,12 +80,7 @@ const onKeydown = (event: KeyboardEvent): void => {
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-gallery"
   >
     <LnHeading
@@ -100,7 +109,7 @@ const onKeydown = (event: KeyboardEvent): void => {
           :type="!item.link && props.lightbox ? 'button' : undefined"
           @click="!item.link && open(i)"
         >
-          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.ratio ?? props.ratio } : undefined" />
+          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.ratio ?? props.mediaRatio ?? props.ratio } : undefined" />
           <span v-if="item.caption" class="ln-gallery__caption">{{ item.caption }}</span>
         </component>
         <div v-if="item.title || item.text || item.tags?.length || item.actions?.length" class="ln-gallery__body">

@@ -39,8 +39,11 @@ describe('landing blocks schema', () => {
     ] })).toBe(true)
   })
 
+  it('accepts a bare hero (title is optional, the component renders a placeholder)', () => {
+    expect(validate({ blocks: [{ type: 'hero' }] })).toBe(true)
+  })
+
   it('rejects incomplete data-mode blocks and inert actions', () => {
-    expect(validate({ blocks: [{ type: 'hero' }] })).toBe(false)
     expect(validate({ blocks: [{ type: 'video', title: 'Demo' }] })).toBe(false)
     expect(validate({ blocks: [{ type: 'features', items: [] }] })).toBe(false)
     expect(validate({ blocks: [{ type: 'cta', title: 'Go', actions: [{ text: 'Start' }] }] })).toBe(false)

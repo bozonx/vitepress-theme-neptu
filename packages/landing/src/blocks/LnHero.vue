@@ -12,25 +12,25 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnMedia from '../primitives/LnMedia.vue'
-import type { ActionItem, MediaLike, SectionProps } from './types.ts'
+import type { ActionItem, HeadingProps, MediaLike, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 import { resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      actions?: ActionItem[]
-      image?: MediaLike
-      /** Small print under the actions — pricing note, license, "no card needed". */
-      note?: string
-      variant?: 'split' | 'centered' | 'cover' | 'plain'
-      /** `cover` only: darken the background so the copy stays readable. */
-      overlay?: boolean
-      /** Decorative brand glow behind the copy. */
-      glow?: boolean
-    }
+    SectionProps &
+      HeadingProps & {
+        actions?: ActionItem[]
+        image?: MediaLike
+        /** Small print under the actions — pricing note, license, "no card needed". */
+        note?: string
+        /** Hero composition: copy + media layout. */
+        variant?: 'split' | 'centered' | 'cover' | 'plain'
+        /** `cover` only: darken the background so the copy stays readable. */
+        overlay?: boolean
+        /** Decorative brand glow behind the copy. */
+        glow?: boolean
+      }
   >(),
   {
     variant: 'split',
@@ -62,6 +62,14 @@ const toggleBackgroundVideo = (): void => {
 }
 const isCentered = computed(() => props.variant === 'centered' || isCover.value)
 const align = computed(() => props.align ?? (isCentered.value ? 'center' : 'start'))
+/**
+ * Hero is the first screen / LCP element: by default it does not run the
+ * scroll-reveal animation (it is already in view on load). An author can opt in
+ * with `reveal: true` — or, for back-compat, by setting `noReveal: false`
+ * explicitly. When neither is set, reveal stays off.
+ */
+const revealDisabled = computed(() => !(props.reveal === true || props.noReveal === false))
+const sectionProps = useSectionProps(props)
 const coverSpec = computed(() => {
   const spec = typeof props.image === 'string' ? { src: props.image } : (props.image ?? {})
   return {
@@ -98,12 +106,9 @@ const coverSpec = computed(() => {
     </div>
 
     <LnSection
-      :id="props.id"
+      v-bind="sectionProps"
       :bg="isCover ? 'transparent' : props.bg"
-      :width="props.width"
-      :padding="props.padding"
-      :divider="props.divider"
-      no-reveal
+      :no-reveal="revealDisabled"
       class="ln-hero"
       :class="[`ln-hero--${props.variant}`, { 'ln-hero--on-media': isCover }]"
     >

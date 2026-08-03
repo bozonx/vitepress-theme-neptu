@@ -36,4 +36,6 @@ export {
 
 export type { RegisterBlockTypesOptions } from './registry.ts'
 
+export { useSectionProps } from './sectionProps.ts'
+
 export type * from './types.ts'

@@ -7,14 +7,12 @@ import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
-import type { LogoItem, SectionProps } from './types.ts'
+import type { HeadingProps, LogoItem, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: LogoItem[]
       variant?: 'row' | 'grid' | 'marquee'
       /** Render logos in a single flat color that follows the theme. */
@@ -40,16 +38,13 @@ const props = withDefaults(
  * list by -50% lands half a gap off and the loop visibly jumps.
  */
 const marqueeGroups = computed(() => [false, true])
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
+    v-bind="sectionProps"
     :width="props.variant === 'marquee' ? 'full' : props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
     class="ln-logos"
     :class="[`ln-logos--${props.variant}`, { 'ln-logos--mono': props.monochrome }]"
     :style="{ '--ln-logo-h': props.logoHeight, '--ln-marquee-speed': `${props.speed}s` }"

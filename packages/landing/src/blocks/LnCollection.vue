@@ -7,30 +7,32 @@ import LnCard from '../primitives/LnCard.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { ActionItem, CollectionItem, SectionProps } from './types.ts'
+import type { ActionItem, CollectionItem, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: CollectionItem[]
+    SectionProps &
+      HeadingProps & {
+        items?: CollectionItem[]
       actions?: ActionItem[]
       cols?: 1 | 2 | 3 | 4
       variant?: 'card' | 'plain' | 'bordered'
       layout?: 'grid' | 'list'
+      /** CSS aspect-ratio of the card media, e.g. `16/9`. */
+      mediaRatio?: string
+      /** @deprecated Use `mediaRatio`. */
       imageRatio?: string
     }
   >(),
-  { cols: 3, variant: 'card', layout: 'grid', imageRatio: '16/9', align: 'start' }
+  { cols: 3, variant: 'card', layout: 'grid', mediaRatio: '16/9', align: 'start' }
 )
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id" :bg="props.bg" :width="props.width" :padding="props.padding"
-    :divider="props.divider" :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-collection" :class="`ln-collection--${props.layout}`"
   >
     <LnHeading :eyebrow="props.eyebrow" :title="props.title" :text="props.text" :align="props.align" />
@@ -41,7 +43,7 @@ const props = withDefaults(
         :plain="props.variant === 'plain'" :hoverable="props.variant === 'card'"
         class="ln-collection__item" :class="`ln-collection__item--${props.variant}`"
       >
-        <LnMedia v-if="item.image" :media="item.image" :ratio="props.imageRatio" rounded="md" class="ln-collection__media" />
+        <LnMedia v-if="item.image" :media="item.image" :ratio="props.mediaRatio ?? props.imageRatio" rounded="md" class="ln-collection__media" />
         <div class="ln-collection__body">
           <div v-if="item.date || item.meta?.length" class="ln-collection__meta">
             <time v-if="item.date">{{ item.date }}</time><span v-for="meta in item.meta" :key="meta">{{ meta }}</span>

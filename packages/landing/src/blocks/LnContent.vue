@@ -4,16 +4,15 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { ActionItem, MediaLike, SectionProps } from './types.ts'
+import type { ActionItem, HeadingProps, MediaLike, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      /** Trusted HTML produced by Markdown or a trusted CMS pipeline. */
-      content?: string
+    SectionProps &
+      HeadingProps & {
+        /** Trusted HTML produced by Markdown or a trusted CMS pipeline. */
+        content?: string
       image?: MediaLike
       actions?: ActionItem[]
       variant?: 'prose' | 'split' | 'card'
@@ -22,16 +21,13 @@ const props = withDefaults(
   >(),
   { variant: 'prose', width: 'narrow', align: 'start', reverse: false }
 )
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
+    v-bind="sectionProps"
     :width="props.variant === 'split' && props.width === 'narrow' ? 'default' : props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
     class="ln-content"
     :class="[`ln-content--${props.variant}`, { 'ln-content--reverse': props.reverse }]"
   >

@@ -2,7 +2,12 @@
 /**
  * Outer wrapper of every block: paints the surface, owns the vertical rhythm
  * and constrains the content width. Blocks never set their own page padding.
+ *
+ * `align` is intentionally not applied here: a section does not know how its
+ * content should be aligned. Blocks forward `align` to `LnHeading` /
+ * `LnButtonGroup` where it has meaning.
  */
+import { computed } from 'vue'
 import type { SectionProps } from '../blocks/types.ts'
 import LnReveal from './LnReveal.vue'
 
@@ -12,9 +17,14 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
   padding: 'md',
   align: 'start',
   divider: false,
+  reveal: true,
   noReveal: false,
   tag: 'section',
 })
+
+// `reveal` is the canonical switch (default true); `noReveal: true` opts out.
+// An explicit `reveal: false` wins over a stale `noReveal: false`.
+const revealDisabled = computed(() => props.reveal === false || props.noReveal === true)
 </script>
 
 <template>
@@ -28,7 +38,7 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
       { 'ln-section--divider': props.divider },
     ]"
   >
-    <LnReveal :disabled="props.noReveal" class="ln-section__inner" :class="`ln-section__inner--${props.width}`">
+    <LnReveal :disabled="revealDisabled" class="ln-section__inner" :class="`ln-section__inner--${props.width}`">
       <slot />
     </LnReveal>
   </component>

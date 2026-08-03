@@ -9,14 +9,12 @@ import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import { resolveUrl } from '../utils/url.ts'
-import type { SectionProps, TestimonialItem } from './types.ts'
+import type { HeadingProps, SectionProps, TestimonialItem } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: TestimonialItem[]
       cols?: 1 | 2 | 3
       variant?: 'grid' | 'masonry' | 'single'
@@ -24,17 +22,13 @@ const props = withDefaults(
   >(),
   { cols: 3, variant: 'grid', align: 'center' }
 )
+const sectionProps = useSectionProps(props)
 
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-quotes"
     :class="`ln-quotes--${props.variant}`"
   >

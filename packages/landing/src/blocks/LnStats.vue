@@ -5,14 +5,12 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import type { SectionProps, StatItem } from './types.ts'
+import type { HeadingProps, SectionProps, StatItem } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: StatItem[]
       cols?: 2 | 3 | 4
       variant?: 'plain' | 'card' | 'divided'
@@ -20,16 +18,12 @@ const props = withDefaults(
   >(),
   { cols: 4, variant: 'plain', align: 'center', padding: 'sm' }
 )
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-stats"
     :class="`ln-stats--${props.variant}`"
   >

@@ -40,7 +40,13 @@ export interface SectionProps {
   align?: Align
   /** Draw a hairline on top of the section. */
   divider?: boolean
-  /** Disable the scroll-reveal animation for this section. */
+  /** Enable the scroll-reveal animation for this section (default `true`). */
+  reveal?: boolean
+  /**
+   * Disable the scroll-reveal animation.
+   * @deprecated Use `reveal: false` instead. Kept for backward compatibility;
+   *   `reveal` takes precedence when both are set.
+   */
   noReveal?: boolean
 }
 
@@ -305,30 +311,30 @@ type SourcedVideo =
 
 /** Strict built-in entries of the declarative `blocks:` array. */
 export type BuiltInBlockSpec =
-  | BlockBase<'hero', { title: string; variant?: 'split' | 'centered' | 'cover' | 'plain'; actions?: ActionItem[]; image?: MediaLike; note?: string; glow?: boolean; overlay?: boolean }>
+  | BlockBase<'hero', { title?: string; variant?: 'split' | 'centered' | 'cover' | 'plain'; actions?: ActionItem[]; image?: MediaLike; note?: string; glow?: boolean; overlay?: boolean }>
   | BlockBase<'features', { items: NonEmptyArray<FeatureItem>; cols?: 1 | 2 | 3 | 4; variant?: 'card' | 'plain' | 'bordered'; iconPosition?: 'top' | 'inline'; iconSize?: string }>
-  | BlockBase<'feature-split', { items: NonEmptyArray<SplitItem>; reverse?: boolean; noAlternate?: boolean; mediaRatio?: string }>
+  | BlockBase<'feature-split', { items: NonEmptyArray<SplitItem>; reverse?: boolean; alternate?: boolean; noAlternate?: boolean; mediaRatio?: string }>
   | BlockBase<'bento', { items: NonEmptyArray<FeatureItem>; cols?: 2 | 3 | 4 }>
   | BlockBase<'carousel', { items: NonEmptyArray<CarouselSlide>; perView?: 1 | 2 | 3 | 4; arrows?: boolean; dots?: boolean; autoplay?: number; peek?: boolean; ariaLabel?: string; cardVariant?: 'card' | 'plain' | 'bordered' }>
-  | BlockBase<'collection', { items: NonEmptyArray<CollectionItem>; actions?: ActionItem[]; cols?: 1 | 2 | 3 | 4; variant?: 'card' | 'plain' | 'bordered'; layout?: 'grid' | 'list'; imageRatio?: string }>
+  | BlockBase<'collection', { items: NonEmptyArray<CollectionItem>; actions?: ActionItem[]; cols?: 1 | 2 | 3 | 4; variant?: 'card' | 'plain' | 'bordered'; layout?: 'grid' | 'list'; mediaRatio?: string; /** @deprecated Use `mediaRatio`. */ imageRatio?: string }>
   | BlockBase<'content', { content?: string; image?: MediaLike; actions?: ActionItem[]; variant?: 'prose' | 'split' | 'card'; reverse?: boolean }>
   | BlockBase<'logos', { items: NonEmptyArray<LogoItem>; variant?: 'row' | 'grid' | 'marquee'; monochrome?: boolean; speed?: number; logoHeight?: string }>
   | BlockBase<'stats', { items: NonEmptyArray<StatItem>; cols?: 2 | 3 | 4; variant?: 'plain' | 'card' | 'divided' }>
   | BlockBase<'steps', { items: NonEmptyArray<StepItem>; variant?: 'row' | 'column'; connector?: boolean }>
   | BlockBase<'testimonials', { items: NonEmptyArray<TestimonialItem>; cols?: 1 | 2 | 3; variant?: 'grid' | 'masonry' | 'single' }>
-  | BlockBase<'pricing', { items: NonEmptyArray<PricingPlan>; cols?: 2 | 3 | 4; monthlyLabel?: string; yearlyLabel?: string; toggle?: PricingToggleOptions; currency?: string; discountLabel?: string; billingSuffix?: string; note?: string }>
+  | BlockBase<'pricing', { items: NonEmptyArray<PricingPlan>; cols?: 2 | 3 | 4; /** @deprecated Use `toggle.monthlyLabel`. */ monthlyLabel?: string; /** @deprecated Use `toggle.yearlyLabel`. */ yearlyLabel?: string; toggle?: PricingToggleOptions; currency?: string; /** @deprecated Use `toggle.discountLabel`. */ discountLabel?: string; billingSuffix?: string; note?: string }>
   | BlockBase<'faq', { items: NonEmptyArray<FaqItem>; cols?: 1 | 2; exclusive?: boolean; actions?: ActionItem[]; schema?: boolean }>
-  | BlockBase<'cta', { title: string; actions: NonEmptyArray<ActionItem>; image?: MediaLike; note?: string; variant?: 'banner' | 'card' | 'split'; surface?: SectionBg }>
+  | BlockBase<'cta', { title?: string; actions?: NonEmptyArray<ActionItem>; image?: MediaLike; note?: string; variant?: 'banner' | 'card' | 'split'; surface?: SectionBg }>
   | BlockBase<'timeline', { items: NonEmptyArray<TimelineItem>; variant?: 'stacked' | 'side' }>
   | BlockBase<'team', { items: NonEmptyArray<TeamMember>; groups?: TeamGroup[]; cols?: 2 | 3 | 4; variant?: 'card' | 'plain'; avatarShape?: 'circle' | 'rounded' }>
-  | BlockBase<'gallery', { items: NonEmptyArray<GalleryItem>; cols?: 2 | 3 | 4; variant?: 'grid' | 'masonry'; lightbox?: boolean; ratio?: string }>
+  | BlockBase<'gallery', { items: NonEmptyArray<GalleryItem>; cols?: 2 | 3 | 4; variant?: 'grid' | 'masonry'; lightbox?: boolean; mediaRatio?: string; /** @deprecated Use `mediaRatio`. */ ratio?: string }>
   | BlockBase<'code', { items: NonEmptyArray<CodeSample>; copy?: boolean; chrome?: boolean; variant?: 'stacked' | 'split'; actions?: ActionItem[] }>
   | BlockBase<'tabs', { items: NonEmptyArray<TabItem>; variant?: 'top' | 'side'; initial?: number; mediaRatio?: string }>
   | BlockBase<'compare', { columns: NonEmptyArray<CompareColumn>; rows: NonEmptyArray<CompareRow>; rowsLabel?: string; note?: string; stickyHead?: boolean }>
-  | BlockBase<'newsletter', { action: string; method?: 'post' | 'get'; emailName?: string; emailLabel?: string; placeholder?: string; submitText?: string; fields?: FormField[]; consent?: string; note?: string; ajax?: boolean; successText?: string; errorText?: string; variant?: 'card' | 'banner' }>
-  | (BlockBase<'video', { poster?: string; caption?: string; ratio?: string; autoplay?: boolean; actions?: ActionItem[] }> & SourcedVideo)
-  | BlockBase<'embed', { src: string; embedTitle?: string; caption?: string; ratio?: string; loading?: 'lazy' | 'eager'; allow?: string; sandbox?: string; actions?: ActionItem[] }>
-  | BlockBase<'banner', { text: string; badge?: string; icon?: IconLike; link?: string; linkText?: string; dismissible?: boolean; storageKey?: string; placement?: 'inline' | 'top' | 'bottom'; sticky?: boolean }>
+  | BlockBase<'newsletter', { action?: string; method?: 'post' | 'get'; emailName?: string; emailLabel?: string; placeholder?: string; submitText?: string; fields?: FormField[]; consent?: string; note?: string; ajax?: boolean; successText?: string; errorText?: string; variant?: 'card' | 'banner' }>
+  | (BlockBase<'video', { poster?: string; caption?: string; mediaRatio?: string; /** @deprecated Use `mediaRatio`. */ ratio?: string; autoplay?: boolean; actions?: ActionItem[] }> & SourcedVideo)
+  | BlockBase<'embed', { src?: string; embedTitle?: string; caption?: string; mediaRatio?: string; /** @deprecated Use `mediaRatio`. */ ratio?: string; loading?: 'lazy' | 'eager'; allow?: string; sandbox?: string; actions?: ActionItem[] }>
+  | BlockBase<'banner', { text?: string; badge?: string; icon?: IconLike; link?: string; linkText?: string; dismissible?: boolean; storageKey?: string; placement?: 'inline' | 'top' | 'bottom'; sticky?: boolean }>
 
 export type CustomBlockSpec<T extends string> = SectionProps & { type: T; [prop: string]: unknown }
 

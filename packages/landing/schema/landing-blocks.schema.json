@@ -69,8 +69,13 @@
         "divider": {
           "type": "boolean"
         },
+        "reveal": {
+          "type": "boolean",
+          "description": "Enable the scroll-reveal animation (default `true`)."
+        },
         "noReveal": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Deprecated alias for `reveal: false`."
         },
         "eyebrow": {
           "type": "string"
@@ -423,8 +428,13 @@
                 "reverse": {
                   "type": "boolean"
                 },
+                "alternate": {
+                  "type": "boolean",
+                  "description": "Alternate the media side per row (default `true`)."
+                },
                 "noAlternate": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Deprecated alias for `alternate: false`."
                 },
                 "mediaRatio": {
                   "type": "string"
@@ -1058,8 +1068,13 @@
                 "lightbox": {
                   "type": "boolean"
                 },
+                "mediaRatio": {
+                  "type": "string",
+                  "description": "CSS aspect-ratio of each tile, e.g. `4/3`."
+                },
                 "ratio": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Deprecated alias for `mediaRatio`."
                 }
               }
             },
@@ -1228,8 +1243,13 @@
                 "caption": {
                   "type": "string"
                 },
+                "mediaRatio": {
+                  "type": "string",
+                  "description": "CSS aspect-ratio of the player frame, e.g. `16/9`."
+                },
                 "ratio": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Deprecated alias for `mediaRatio`."
                 },
                 "autoplay": {
                   "type": "boolean"
@@ -1288,7 +1308,8 @@
                 "cols": { "enum": [1, 2, 3, 4] },
                 "variant": { "enum": ["card", "plain", "bordered"] },
                 "layout": { "enum": ["grid", "list"] },
-                "imageRatio": { "type": "string" }
+                "mediaRatio": { "type": "string", "description": "CSS aspect-ratio of the card media, e.g. `16/9`." },
+                "imageRatio": { "type": "string", "description": "Deprecated alias for `mediaRatio`." }
               }
             },
             {
@@ -1297,7 +1318,8 @@
                 "src": { "type": "string" },
                 "embedTitle": { "type": "string" },
                 "caption": { "type": "string" },
-                "ratio": { "type": "string" },
+                "mediaRatio": { "type": "string", "description": "CSS aspect-ratio of the iframe, e.g. `16/9`." },
+                "ratio": { "type": "string", "description": "Deprecated alias for `mediaRatio`." },
                 "loading": { "enum": ["lazy", "eager"] },
                 "allow": { "type": "string" },
                 "sandbox": { "type": "string" },
@@ -1346,14 +1368,10 @@
         },
         {
           "allOf": [
-            { "if": { "properties": { "type": { "const": "hero" } }, "required": ["type"] }, "then": { "required": ["title"] } },
             { "if": { "properties": { "type": { "enum": ["features", "feature-split", "bento", "carousel", "collection", "logos", "stats", "steps", "testimonials", "pricing", "faq", "timeline", "team", "gallery", "code", "tabs"] } }, "required": ["type"] }, "then": { "required": ["items"], "properties": { "items": { "type": "array", "minItems": 1 } } } },
             { "if": { "properties": { "type": { "const": "compare" } }, "required": ["type"] }, "then": { "required": ["columns", "rows"], "properties": { "columns": { "type": "array", "minItems": 1 }, "rows": { "type": "array", "minItems": 1 } } } },
-            { "if": { "properties": { "type": { "const": "cta" } }, "required": ["type"] }, "then": { "required": ["title", "actions"], "properties": { "actions": { "type": "array", "minItems": 1 } } } },
-            { "if": { "properties": { "type": { "const": "newsletter" } }, "required": ["type"] }, "then": { "required": ["action"] } },
-            { "if": { "properties": { "type": { "const": "video" } }, "required": ["type"] }, "then": { "anyOf": [{ "required": ["youtube"] }, { "required": ["vimeo"] }, { "required": ["src"] }] } },
-            { "if": { "properties": { "type": { "const": "embed" } }, "required": ["type"] }, "then": { "required": ["src"] } },
-            { "if": { "properties": { "type": { "const": "banner" } }, "required": ["type"] }, "then": { "required": ["text"] } }
+            { "if": { "properties": { "type": { "const": "cta" } }, "required": ["type"] }, "then": { "properties": { "actions": { "type": "array", "minItems": 1 } } } },
+            { "if": { "properties": { "type": { "const": "video" } }, "required": ["type"] }, "then": { "anyOf": [{ "required": ["youtube"] }, { "required": ["vimeo"] }, { "required": ["src"] }] } }
           ]
         }
       ],

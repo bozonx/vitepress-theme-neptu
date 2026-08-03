@@ -7,16 +7,15 @@ import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { FeatureItem, SectionProps } from './types.ts'
+import type { FeatureItem, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: FeatureItem[]
-      cols?: 1 | 2 | 3 | 4
+    SectionProps &
+      HeadingProps & {
+        items?: FeatureItem[]
+        cols?: 1 | 2 | 3 | 4
       /** `card` draws a surface, `plain` drops it, `bordered` keeps only lines. */
       variant?: 'card' | 'plain' | 'bordered'
       /** Icon placement inside a card. */
@@ -32,16 +31,12 @@ const props = withDefaults(
     align: 'start',
   }
 )
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-features"
     :class="`ln-features--${props.variant}`"
   >

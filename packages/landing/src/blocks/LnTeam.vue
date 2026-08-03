@@ -7,14 +7,12 @@ import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import { externalTarget, resolveUrl } from '../utils/url.ts'
-import type { SectionProps, TeamGroup, TeamMember } from './types.ts'
+import type { HeadingProps, SectionProps, TeamGroup, TeamMember } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
+    SectionProps & HeadingProps & {
       items?: TeamMember[]
       groups?: TeamGroup[]
       cols?: 2 | 3 | 4
@@ -37,17 +35,13 @@ const grouped = computed(() => {
   const ungrouped = members.filter((member) => !member.group || !groupIds.has(member.group))
   return ungrouped.length ? [...declared, { id: '__ungrouped', items: ungrouped }] : declared
 })
+const sectionProps = useSectionProps(props)
 
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-team"
   >
     <LnHeading

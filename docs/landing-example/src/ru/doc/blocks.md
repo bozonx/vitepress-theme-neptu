@@ -25,11 +25,26 @@ description: 'Справочник по всем блокам лендинга: 
 | `padding` | `none \| sm \| md \| lg` | `md` | Вертикальные отступы. |
 | `align` | `start \| center` | зависит от блока | Выравнивание заголовка и действий. |
 | `divider` | `boolean` | `false` | Тонкая линия перед секцией. |
-| `noReveal` | `boolean` | `false` | Отключает анимацию появления, кроме hero: у него она всегда выключена. |
+| `noReveal` | `boolean` | `false` | **Устарел** — используйте `reveal: false`. |
 
 Большинство блоков также принимают `eyebrow`, `title` и `text`. В `title`,
 `text`, FAQ и HTML-контенте допускается инлайновый HTML. Передавайте только
 доверенный HTML: блоки не очищают его от небезопасной разметки.
+
+### Устаревшие пропсы
+
+| Старый проп | Замена | Блоки |
+|-------------|--------|-------|
+| `noReveal` | `reveal: false` | Все |
+| `noAlternate` | `alternate: false` | `feature-split` |
+| `ratio` | `mediaRatio` | `gallery`, `video`, `embed`, `tabs` |
+| `imageRatio` | `mediaRatio` | `collection` |
+| `monthlyLabel` | `toggle.monthlyLabel` | `pricing` |
+| `yearlyLabel` | `toggle.yearlyLabel` | `pricing` |
+| `discountLabel` | `toggle.discountLabel` | `pricing` |
+
+Старые пропсы работают без предупреждений в консоли — алиасы обрабатываются
+молча для обратной совместимости.
 
 ### Повторяющиеся структуры
 
@@ -382,6 +397,7 @@ description: 'Справочник по всем блокам лендинга: 
 | `variant` | `grid \| masonry` | `grid` |
 | `lightbox` | `boolean` | `true` |
 | `ratio` | CSS aspect-ratio | `4/3` |
+| `mediaRatio` | CSS aspect-ratio | `4/3` | Заменяет `ratio`. |
 
 ```yaml
 - type: gallery
@@ -389,6 +405,13 @@ description: 'Справочник по всем блокам лендинга: 
 ```
 
 Esc закрывает лайтбокс; управление фокусом обеспечивает браузер.
+
+### События
+
+| Событие | Параметр | Когда |
+|---------|----------|-------|
+| `lightboxOpen` | `index: number` | При открытии лайтбокса. |
+| `lightboxClose` | — | При закрытии лайтбокса. |
 
 ## `code` — `LnCode`
 
@@ -470,6 +493,14 @@ Esc закрывает лайтбокс; управление фокусом о�
 
 При `ajax: false` форма отправляется нативно и работает без JavaScript. При
 `ajax: true` endpoint должен корректно отвечать на `fetch` и CORS-запросы.
+
+### События
+
+| Событие | Параметр | Когда |
+|---------|----------|-------|
+| `submit` | `{ action, method }` | Перед отправкой ajax-запроса. |
+| `success` | `Response \| undefined` | При успешном ответе. |
+| `error` | `unknown` | При ошибке или не-OK статусе. |
 
 ## `video` — `LnVideo`
 

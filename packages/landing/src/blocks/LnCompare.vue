@@ -13,16 +13,15 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButton from '../primitives/LnButton.vue'
-import type { CompareColumn, CompareRow, SectionProps } from './types.ts'
+import type { CompareColumn, CompareRow, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      /** Column headers — one per entry of every row's `values`. */
-      columns?: CompareColumn[]
+    SectionProps &
+      HeadingProps & {
+        /** Column headers — one per entry of every row's `values`. */
+        columns?: CompareColumn[]
       rows?: CompareRow[]
       /** Header of the first (label) column. */
       rowsLabel?: string
@@ -50,16 +49,12 @@ const body = computed(() =>
 )
 
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean'
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-compare"
   >
     <LnHeading

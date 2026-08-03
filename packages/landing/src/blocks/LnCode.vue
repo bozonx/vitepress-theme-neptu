@@ -15,15 +15,14 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { ActionItem, CodeSample, SectionProps } from './types.ts'
+import type { ActionItem, CodeSample, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: CodeSample[]
+    SectionProps &
+      HeadingProps & {
+        items?: CodeSample[]
       /** Copy-to-clipboard button on the sample. */
       copy?: boolean
       /** Fake window chrome above the sample. */
@@ -87,16 +86,12 @@ const copySample = async (): Promise<void> => {
     // A denied clipboard permission is not worth breaking the page over.
   }
 }
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-code"
     :class="`ln-code--${props.variant}`"
   >

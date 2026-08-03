@@ -10,15 +10,14 @@ import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnMedia from '../primitives/LnMedia.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import type { FeatureItem, SectionProps } from './types.ts'
+import type { FeatureItem, HeadingProps, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      items?: FeatureItem[]
+    SectionProps &
+      HeadingProps & {
+        items?: FeatureItem[]
       /** Desktop column count of the base grid. */
       cols?: 2 | 3 | 4
     }
@@ -38,16 +37,12 @@ const tiles = computed(() =>
     rowSpan: item.rowSpan ?? 1,
   }))
 )
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
-    :bg="props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
+    v-bind="sectionProps"
     class="ln-bento"
   >
     <LnHeading

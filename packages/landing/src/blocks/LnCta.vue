@@ -5,15 +5,14 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnMedia from '../primitives/LnMedia.vue'
-import type { ActionItem, MediaLike, SectionBg, SectionProps } from './types.ts'
+import type { ActionItem, HeadingProps, MediaLike, SectionBg, SectionProps } from './types.ts'
+import { useSectionProps } from './sectionProps.ts'
 
 const props = withDefaults(
   defineProps<
-    SectionProps & {
-      eyebrow?: string
-      title?: string
-      text?: string
-      actions?: ActionItem[]
+    SectionProps &
+      HeadingProps & {
+        actions?: ActionItem[]
       image?: MediaLike
       note?: string
       /**
@@ -33,16 +32,13 @@ const props = withDefaults(
 
 /** On a brand surface the default brand button would be invisible. */
 const onBrand = computed(() => props.bg === 'brand')
+const sectionProps = useSectionProps(props)
 </script>
 
 <template>
   <LnSection
-    :id="props.id"
+    v-bind="sectionProps"
     :bg="props.variant === 'card' ? props.surface : props.bg"
-    :width="props.width"
-    :padding="props.padding"
-    :divider="props.divider"
-    :no-reveal="props.noReveal"
     class="ln-cta"
     :class="`ln-cta--${props.variant}`"
   >
