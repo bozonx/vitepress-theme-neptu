@@ -1,16 +1,12 @@
 ---
 title: Ленты, поиск и SEO-переключатели
 description: Механизмы всего сайта — ленты RSS/Atom/JSON, поиск Pagefind, популярные посты через GA4, robots.txt, sitemap и глобальные переключатели SEO.
-date: 2025-02-15T09:00:00Z
 authorId: ivan-k
+date: 2026-07-11
 category: { name: 'SEO', slug: 'seo' }
-tags:
-  - seo
-  - guide
+tags: [seo, config]
 descrAsPreview: true
 ---
-
-# Ленты, поиск и SEO-переключатели
 
 Помимо отдельных постов, тема настраивает механизмы уровня всего сайта. Здесь —
 ленты, поиск, популярные посты, robots и sitemap. Общая карта SEO — в

@@ -3,20 +3,16 @@ title: Канонические ссылки и кросспостинг
 description: >
   Укажите поисковым системам на авторитетную версию страницы — по умолчанию
   ссылающуюся на себя же, либо на внешний URL при перепубликации контента из других источников.
-date: 2024-12-15T08:00:00Z
 authorId: maria-editor
-
 # Этот демо-пост объявляет внешнюю каноническую ссылку, как если бы он был переопубликован с
 # другого сайта. Проверьте <head> на наличие <link rel="canonical" href="https://example.com/…">.
 canonical: "https://example.com/ru/articles/original-post"
-
-category: { name: 'SEO', slug: 'seo' }
-tags:
-  - seo
-  - canonical
-descrAsPreview: true
 translations:
   en: /en/post/canonical-crosspost
+date: 2026-07-09
+category: { name: 'SEO', slug: 'seo' }
+tags: [seo]
+descrAsPreview: true
 ---
 
 **Каноническая ссылка (canonical)** указывает поисковым системам, какой URL является

@@ -3,12 +3,10 @@ title: Категории и теги
 description: >
   Категория — одна рубрика поста и хлебные крошки, теги — свободные метки.
   Как их задавать, где они появляются и что настраивается.
-date: 2025-05-06T10:00:00Z
 authorId: ivan-k
-category: { name: 'Настройка', slug: 'configuration' }
-tags:
-  - guide
-  - config
+date: 2026-07-27
+category: { name: 'Контент', slug: 'writing' }
+tags: [frontmatter, config]
 descrAsPreview: true
 ---
 

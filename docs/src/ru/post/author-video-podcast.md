@@ -3,17 +3,11 @@ title: Блок автора, кнопка видео и выпадающий с
 description: >
   Как authorId отображает карточку автора и мета-тег twitter:creator, а videoLink
   и podcasts добавляют кнопки с призывом к действию в верхней части поста.
-date: 2025-06-10T11:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Микрофон в домашней студии подкастов
-category: { name: 'Медиа', slug: 'media' }
-tags:
-  - frontmatter
-  - media
-descrAsPreview: true
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
@@ -24,6 +18,10 @@ podcasts:
   youtube: https://www.youtube.com/
 translations:
   en: /en/post/author-video-podcast
+date: 2026-07-21
+category: { name: 'Медиа', slug: 'media' }
+tags: [media, frontmatter]
+descrAsPreview: true
 ---
 
 Три связанных поля превращают обычную статью в мультиформатный пост. Все они

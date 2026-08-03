@@ -3,20 +3,18 @@ title: Локализация и hreflang
 description: >
   Блог поставляется на английском и русском. Как связаны папки локалей,
   переключатель языка, поле translations и автоматические теги hreflang.
-date: 2025-04-15T08:00:00Z
 authorId: maria-editor
 cover: https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Разноцветные флаги разных стран
-category: { name: 'SEO', slug: 'seo' }
-tags:
-  - seo
-  - i18n
-descrAsPreview: true
 # Связываем этот пост с английской версией — для переключателя языка и hreflang.
 translations:
   en: "/en/post/i18n-hreflang"
+date: 2026-07-13
+category: { name: 'Мультиязычность', slug: 'i18n' }
+tags: [i18n, seo]
+descrAsPreview: true
 ---
 
 Этот пост есть и на **английском**. Нажмите **переключатель языка** в верхней

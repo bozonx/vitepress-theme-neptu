@@ -3,12 +3,10 @@ title: Как работает SEO — обзор
 description: >
   Карта SEO-механизмов темы: что генерируется автоматически при сборке, где это
   настраивается и как отключить любую функцию.
-date: 2025-02-20T09:00:00Z
 authorId: ivan-k
+date: 2026-07-12
 category: { name: 'SEO', slug: 'seo' }
-tags:
-  - seo
-  - guide
+tags: [seo]
 descrAsPreview: true
 ---
 

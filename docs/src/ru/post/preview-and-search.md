@@ -3,15 +3,13 @@ title: Превью в списках и поисковый индекс
 description: >
   Управляйте тем, что отображается в карточках постов (previewText / descrAsPreview /
   maxPreviewLength), и тем, включается ли пост в поиск Pagefind.
-date: 2025-06-05T08:00:00Z
 authorId: ivan-k
-category: { name: 'SEO', slug: 'seo' }
-tags:
-  - frontmatter
-  - preview
 previewText: "Текст этой карточки задан явно через previewText — обратите внимание, что он отличается от первого абзаца статьи."
 translations:
   en: /en/post/preview-and-search
+date: 2026-07-28
+category: { name: 'Контент', slug: 'writing' }
+tags: [frontmatter]
 ---
 
 Карточки постов в списках (например, на страницах **Свежие посты**, **Теги** и **Авторы**)

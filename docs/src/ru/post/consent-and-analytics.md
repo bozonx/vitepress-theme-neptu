@@ -3,16 +3,12 @@ title: Согласие на куки и аналитика
 description: >
   Зачем нужен баннер о куки, почему для AdSense в ЕС требуется сертифицированная
   CMP, как тема выставляет Google Consent Mode v2 и как подключить счётчик.
-date: 2025-03-13T09:00:00Z
 authorId: ivan-k
-category: { name: 'Настройка', slug: 'configuration' }
-tags:
-  - guide
-  - advanced
-  - config
+date: 2026-07-04
+category: { name: 'Расширение', slug: 'advanced' }
+tags: [advanced, config]
+descrAsPreview: true
 ---
-
-# Согласие на куки и аналитика
 
 Как только на сайте появляется реклама или счётчик посещений, появляется и
 вопрос согласия. Тема закрывает ту часть, которую сторонний сервис за вас

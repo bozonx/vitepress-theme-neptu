@@ -4,15 +4,13 @@ description: >
   Три поддерживаемых способа размещения медиафайлов — общая папка public,
   рядом с markdown-файлом или папка на статью с подпапкой media — и какой
   выбрать.
-date: 2025-07-30T19:00:00Z
 authorId: ivan-k
-category: { name: 'Медиа', slug: 'media' }
-tags:
-  - media
-  - guide
-descrAsPreview: true
 translations:
   en: /en/post/media-asset-placement
+date: 2026-07-24
+category: { name: 'Медиа', slug: 'media' }
+tags: [media]
+descrAsPreview: true
 ---
 
 Тема поддерживает три способа организации изображений и других медиафайлов.

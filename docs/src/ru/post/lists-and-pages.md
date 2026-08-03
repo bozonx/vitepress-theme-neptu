@@ -3,12 +3,10 @@ title: Списки, страницы и главная
 description: >
   Тема сама собирает свежие, популярные, архив, авторов и теги из ваших постов.
   Плюс — отдельные страницы и настройка главной.
-date: 2025-05-05T10:00:00Z
 authorId: ivan-k
+date: 2026-07-19
 category: { name: 'Настройка', slug: 'configuration' }
-tags:
-  - guide
-  - config
+tags: [config]
 descrAsPreview: true
 ---
 

@@ -3,13 +3,11 @@ title: Ваш первый пост
 description: >
   Минимальный пост — это Markdown-файл с заголовком, датой и автором. Разберём,
   что обязательно, а что можно добавить позже.
-date: 2025-07-10T09:00:00Z
 authorId: maria-editor
+date: 2026-07-31
 category: { name: 'Начало работы', slug: 'getting-started' }
-tags:
-  - guide
-  - start
-  - frontmatter
+tags: [start, frontmatter]
+featured: true
 descrAsPreview: true
 ---
 

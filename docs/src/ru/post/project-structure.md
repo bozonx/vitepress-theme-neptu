@@ -3,12 +3,11 @@ title: Структура проекта
 description: >
   Карта папок блога: где лежит контент, где конфигурация, а где статические
   файлы — и что из этого вам предстоит редактировать.
-date: 2025-07-15T09:00:00Z
 authorId: ivan-k
+date: 2026-08-01
 category: { name: 'Начало работы', slug: 'getting-started' }
-tags:
-  - guide
-  - start
+tags: [start]
+featured: true
 descrAsPreview: true
 ---
 

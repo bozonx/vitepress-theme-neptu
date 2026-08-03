@@ -3,19 +3,14 @@ title: Черновики и время чтения
 description: >
   Как прятать неготовые посты от списков, лент, sitemap и поиска, и как
   показывать оценку времени чтения — включая её отдачу в JSON-LD.
-date: 2025-05-20T10:00:00Z
 authorId: ivan-k
-category: { name: 'Контент', slug: 'writing' }
-tags:
-  - guide
-  - frontmatter
-  - config
-descrAsPreview: true
 translations:
   en: /en/post/drafts-and-reading-time
+date: 2026-07-26
+category: { name: 'Контент', slug: 'writing' }
+tags: [frontmatter, config]
+descrAsPreview: true
 ---
-
-# Черновики и время чтения
 
 Две небольшие возможности, которые нужны почти каждому блогу: возможность
 писать пост «в стол» и оценка времени чтения в шапке статьи.

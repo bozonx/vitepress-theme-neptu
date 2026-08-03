@@ -1,15 +1,12 @@
 ---
 title: Компоненты
 description: Категории компонентов темы — макеты, посты, утилиты и doc-components для использования в markdown.
-date: 2025-03-20T10:00:00Z
 authorId: ivan-k
-category: { name: 'Контент', slug: 'writing' }
-tags:
-  - guide
-  - components
+date: 2026-07-08
+category: { name: 'Расширение', slug: 'advanced' }
+tags: [advanced, components]
+descrAsPreview: true
 ---
-
-# Компоненты
 
 Компоненты темы организованы по назначению.
 

@@ -3,12 +3,10 @@ title: Публикация и деплой
 description: >
   Как собрать статический сайт и выложить его на любой статический хостинг —
   на примере GitHub Pages с поддоменным путём.
-date: 2024-11-20T09:00:00Z
 authorId: ivan-k
+date: 2026-07-30
 category: { name: 'Начало работы', slug: 'getting-started' }
-tags:
-  - guide
-  - deploy
+tags: [start, deploy]
 descrAsPreview: true
 ---
 

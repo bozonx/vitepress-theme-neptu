@@ -3,21 +3,18 @@ title: Обложки и лайтбокс для изображений
 description: >
   Локальные и внешние изображения обложек, coverAlt / coverDescr / coverWidth / coverHeight,
   и просмотр изображений в статье через лайтбокс с зумом.
-date: 2025-06-20T09:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Горный пейзаж на закате
 coverDescr: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
-category: { name: 'Медиа', slug: 'media' }
-tags:
-  - frontmatter
-  - cover
-  - media
-descrAsPreview: true
 translations:
   en: /en/post/cover-and-images
+date: 2026-07-23
+category: { name: 'Медиа', slug: 'media' }
+tags: [media, frontmatter]
+descrAsPreview: true
 ---
 
 Изображение выше — это **обложка** поста, полностью заданная из фронтматера. Ниже

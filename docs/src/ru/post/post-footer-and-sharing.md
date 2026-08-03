@@ -3,20 +3,18 @@ title: Футер поста, шеринг и похожие посты
 description: >
   Что отображается под постом — кнопки шеринга в соцсетях, настраиваемые блоки
   postFooter и автоматический список «похожие посты» — и как всё это настроить.
-date: 2025-05-30T10:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Руки команды, сложенные вместе
-category: { name: 'Настройка', slug: 'configuration' }
-tags:
-  - frontmatter
-  - guide
-descrAsPreview: true
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 translations:
   en: /en/post/post-footer-and-sharing
+date: 2026-07-17
+category: { name: 'Настройка', slug: 'configuration' }
+tags: [config]
+descrAsPreview: true
 ---
 
 Прокрутите к нижней части этого поста, и вы увидите весь набор блоков футера в действии:

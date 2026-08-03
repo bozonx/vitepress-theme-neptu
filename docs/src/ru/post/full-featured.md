@@ -3,18 +3,12 @@ title: Пост со всеми полями frontmatter
 description: >
   Пост-«максимум»: обложка, автор, теги, превью, кнопка видео, выпадающий список
   подкастов и ссылка на обсуждение — всё включено сразу.
-date: 2025-06-25T12:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Аккуратный стол с клавиатурой, блокнотом и растением
 coverDescr: "coverDescr поддерживает **markdown** и [ссылки](https://unsplash.com)."
-category: { name: 'Контент', slug: 'writing' }
-tags:
-  - frontmatter
-  - guide
-descrAsPreview: true
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
@@ -25,6 +19,10 @@ podcasts:
   youtube: https://www.youtube.com/
 translations:
   en: /en/post/full-featured
+date: 2026-07-29
+category: { name: 'Контент', slug: 'writing' }
+tags: [frontmatter]
+descrAsPreview: true
 ---
 
 Это пост-**«максимум»**: включены все необязательные поля frontmatter, чтобы в
