@@ -14,15 +14,30 @@
   "bugs": {
     "url": "https://github.com/bozonx/vitepress-theme-neptu/issues"
   },
-  "keywords": ["vitepress", "blog", "theme", "template", "create", "scaffold"],
+  "keywords": [
+    "vitepress",
+    "blog",
+    "theme",
+    "template",
+    "create",
+    "scaffold"
+  ],
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
   "bin": {
     "create-neptu-blog": "./index.mjs"
   },
-  "files": ["index.mjs", "README.md", "LICENSE"],
+  "files": [
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "vitepress-theme-neptu": "^0.20.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   }
 }

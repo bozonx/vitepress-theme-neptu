@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-/**
- * Scaffolds a new blog from the `vitepress-theme-neptu` starter template.
- *
- *   npm create neptu-blog@latest my-blog
- *   npx create-neptu-blog my-blog
- *
- * The template lives inside the theme package, so it is always in sync with
- * the theme version this scaffolder depends on — there is no second copy to
- * keep updated.
- */
+//
+// Scaffolds a new blog from the `vitepress-theme-neptu` starter template.
+//
+//   npm create neptu-blog@latest my-blog
+//   npx create-neptu-blog my-blog
+//
+// The template lives inside the theme package, so it is always in sync with
+// the theme version this scaffolder depends on — there is no second copy to
+// keep updated.
+//
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
@@ -23,10 +23,27 @@ const SKIP_ENTRIES = new Set(['node_modules', 'dist', 'cache', '.git'])
 
 /** IETF tags for the locales the theme ships translations for. */
 const LOCALE_LANGS = {
-  ar: 'ar', cs: 'cs-CZ', de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR',
-  he: 'he-IL', hi: 'hi-IN', it: 'it-IT', ja: 'ja-JP', ko: 'ko-KR', lv: 'lv-LV',
-  nl: 'nl-NL', pl: 'pl-PL', pt: 'pt-PT', ru: 'ru-RU', sr: 'sr-RS', sv: 'sv-SE',
-  th: 'th-TH', tr: 'tr-TR', zh: 'zh-CN',
+  ar: 'ar',
+  cs: 'cs-CZ',
+  de: 'de-DE',
+  en: 'en-US',
+  es: 'es-ES',
+  fr: 'fr-FR',
+  he: 'he-IL',
+  hi: 'hi-IN',
+  it: 'it-IT',
+  ja: 'ja-JP',
+  ko: 'ko-KR',
+  lv: 'lv-LV',
+  nl: 'nl-NL',
+  pl: 'pl-PL',
+  pt: 'pt-PT',
+  ru: 'ru-RU',
+  sr: 'sr-RS',
+  sv: 'sv-SE',
+  th: 'th-TH',
+  tr: 'tr-TR',
+  zh: 'zh-CN',
 }
 
 const c = {
@@ -118,14 +135,20 @@ Options:
   const positional = argv.find((a) => !a.startsWith('-'))
 
   const rl =
-    yes || !stdin.isTTY ? null : readline.createInterface({ input: stdin, output: stdout })
+    yes || !stdin.isTTY
+      ? null
+      : readline.createInterface({ input: stdin, output: stdout })
   const ask = async (question, fallback) => {
     if (!rl) return fallback
-    const answer = (await rl.question(`${question} ${c.dim(`(${fallback})`)} `)).trim()
+    const answer = (
+      await rl.question(`${question} ${c.dim(`(${fallback})`)} `)
+    ).trim()
     return answer || fallback
   }
 
-  console.log(`\n${c.bold('Neptu blog')} — a VitePress blog, ready to write in.\n`)
+  console.log(
+    `\n${c.bold('Neptu blog')} — a VitePress blog, ready to write in.\n`
+  )
 
   const dirName = positional || (await ask('Directory name:', 'my-blog'))
   const target = path.resolve(process.cwd(), dirName)
@@ -135,8 +158,7 @@ Options:
     fail(`Directory ${c.bold(dirName)} already exists and is not empty.`)
   }
 
-  const title =
-    flag('title') || (await ask('Blog title:', 'My Neptu Blog'))
+  const title = flag('title') || (await ask('Blog title:', 'My Neptu Blog'))
   const locale = (flag('locale') || (await ask('Content locale:', 'en'))).trim()
 
   rl?.close()
@@ -159,19 +181,29 @@ Options:
   // to be rewritten alongside the folder — VitePress data loaders cannot be
   // imported dynamically.
   if (locale !== 'en') {
-    await fs.rename(path.join(target, 'src', 'en'), path.join(target, 'src', locale))
+    await fs.rename(
+      path.join(target, 'src', 'en'),
+      path.join(target, 'src', locale)
+    )
 
     const varName = `${locale.replace(/[^a-zA-Z0-9]/g, '')}Data`
-    await edit(path.join(target, 'src', '.vitepress', 'theme', 'Layout.vue'), (s) =>
-      s
-        .replace("import { data as enData } from '../../en/loadPosts.data'",
-          `import { data as ${varName} } from '../../${locale}/loadPosts.data'`)
-        .replace('const posts = { en: enData.posts }',
-          `const posts = { '${locale}': ${varName}.posts }`)
+    await edit(
+      path.join(target, 'src', '.vitepress', 'theme', 'Layout.vue'),
+      (s) =>
+        s
+          .replace(
+            "import { data as enData } from '../../en/loadPosts.data'",
+            `import { data as ${varName} } from '../../${locale}/loadPosts.data'`
+          )
+          .replace(
+            'const posts = { en: enData.posts }',
+            `const posts = { '${locale}': ${varName}.posts }`
+          )
     )
   }
 
-  const lang = LOCALE_LANGS[locale] || LOCALE_LANGS[locale.split('-')[0]] || locale
+  const lang =
+    LOCALE_LANGS[locale] || LOCALE_LANGS[locale.split('-')[0]] || locale
 
   await edit(path.join(target, 'package.json'), (s) =>
     s.replace('"name": "my-neptu-blog"', `"name": "${toPackageName(dirName)}"`)
