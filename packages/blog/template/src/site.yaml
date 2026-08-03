@@ -72,6 +72,14 @@ themeConfig:
     background: none # none | parallax
     # backgroundImage: /img/home.jpg
     # bgParallaxOffset: 300
+    # Global hero defaults (can also be configured per-locale in _site.yaml).
+    # Recommended image size: 320x320 px (transparent WebP/PNG/SVG).
+    # Supports string ('/img/hero.png'), object ({ src, alt }), or light/dark theme object:
+    # hero:
+    #   image:
+    #     light: '/img/hero-light.png'
+    #     dark: '/img/hero-dark.png'
+    #     alt: 'Blog Hero'
     sections:
       - type: featured
         enabled: true

@@ -33,6 +33,16 @@ themeConfig:
     hero:
       title: 'Welcome to My Blog'
       description: 'Thoughts, stories, and ideas built with Neptu Blog Theme'
+      # Optional Hero image (recommended size: 320x320 px, transparent WebP/PNG/SVG).
+      # Simple string:
+      # image: '/img/hero.png'
+      # Object with alt text:
+      # image: { src: '/img/hero.png', alt: 'Blog Hero Image' }
+      # Light & dark theme variants:
+      # image:
+      #   light: '/img/hero-light.png'
+      #   dark: '/img/hero-dark.png'
+      #   alt: 'Blog Hero Image'
       actions:
         - text: 'Browse Recent Posts'
           href: 'recent/1'
