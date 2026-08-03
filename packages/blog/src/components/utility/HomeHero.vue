@@ -3,7 +3,7 @@ import NeptuBtn from '../NeptuBtn.vue'
 import { useData, withBase } from 'vitepress'
 import { computed } from 'vue'
 
-const { localeIndex, isDark, theme } = useData()
+const { isDark } = useData()
 
 interface HeroButton {
   text?: string

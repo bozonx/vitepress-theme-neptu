@@ -22,6 +22,7 @@ describe('SideBar Taxonomy Headers logic', () => {
   const postsWithCategoriesOnly: PostLite[] = [
     {
       id: '1',
+      url: '/post-1',
       title: 'Post 1',
       date: '2026-01-01',
       categories: [{ name: 'Tech', slug: 'tech' }],
@@ -31,6 +32,7 @@ describe('SideBar Taxonomy Headers logic', () => {
   const postsWithTagsOnly: PostLite[] = [
     {
       id: '2',
+      url: '/post-2',
       title: 'Post 2',
       date: '2026-01-01',
       tags: [{ name: 'Vue', slug: 'vue' }],
@@ -40,6 +42,7 @@ describe('SideBar Taxonomy Headers logic', () => {
   const postsWithBoth: PostLite[] = [
     {
       id: '3',
+      url: '/post-3',
       title: 'Post 3',
       date: '2026-01-01',
       categories: [{ name: 'Tech', slug: 'tech' }],
