@@ -78,7 +78,7 @@ themeConfig:
 ```yaml
 # src/site.yaml
 themeConfig:
-  sidebarLogoSrc: '/img/sidebar-logo.jpg'
+  sidebarLogoSrc: '/img/sidebar-logo.webp'
   sidebarLogoHeight: 180
 ```
 

@@ -117,7 +117,7 @@ themeConfig:
   # recommended for retina displays.
   # Add an image to `src/public/` first, then point to it from the public root.
   # Default: none (no logo)
-  # sidebarLogoSrc: /img/sidebar-logo.png
+  # sidebarLogoSrc: /img/sidebar-logo.webp
 
   # Logo height in pixels — used only as a placeholder so the browser can
   # reserve vertical space before the image loads (prevents layout shift / CLS).

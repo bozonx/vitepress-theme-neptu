@@ -24,7 +24,7 @@ themeConfig:
   publisher:
     name: 'Neptu'
     url: '${config.siteUrl}'
-    logo: '/img/sidebar-logo.jpg'
+    logo: '/img/sidebar-logo.webp'
   sidebar:
     popular: true
     recent: true
