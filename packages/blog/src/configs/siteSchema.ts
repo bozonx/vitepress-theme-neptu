@@ -109,6 +109,22 @@ const ConsentSchema = z.looseObject({
   }).optional(),
 })
 
+const HeroImageSchema = z.union([
+  z.string(),
+  z.looseObject({
+    src: z.union([
+      z.string(),
+      z.looseObject({
+        light: z.string(),
+        dark: z.string(),
+      }),
+    ]).optional(),
+    light: z.string().optional(),
+    dark: z.string().optional(),
+    alt: z.string().optional(),
+  }),
+])
+
 const HomeSchema = z.looseObject({
   appearance: z.enum(['auto', 'light', 'dark']).optional(),
   maxWidth: z.number().int().min(1).optional(),
@@ -118,10 +134,8 @@ const HomeSchema = z.looseObject({
   hero: z.looseObject({
     title: z.string().optional(),
     description: z.string().optional(),
-    image: z.looseObject({
-      src: z.string().optional(),
-      alt: z.string().optional(),
-    }).optional(),
+    image: HeroImageSchema.optional(),
+    img: HeroImageSchema.optional(),
     actions: z.array(z.looseObject({
       text: z.string(),
       href: z.string(),

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import HomeHero from '../../../src/components/utility/HomeHero.vue'
-import { mockTheme, mockLocaleIndex } from '../../mocks/vitepress'
+import { mockTheme, mockLocaleIndex, mockIsDark } from '../../mocks/vitepress'
 
 const IconStub = { name: 'Icon', template: '<span class="icon-stub" />' }
 
@@ -83,6 +83,38 @@ describe('HomeHero', () => {
     })
 
     expect(wrapper.find('.home-hero-buttons').exists()).toBe(false)
+  })
+
+  it('renders image when image is a string', () => {
+    const wrapper = mount(HomeHero, {
+      props: {
+        image: '/logo-string.png',
+      },
+    })
+
+    const link = wrapper.find('a.home-logo')
+    expect(link.exists()).toBe(true)
+    expect(link.find('img').attributes('src')).toBe('/logo-string.png')
+  })
+
+  it('renders light vs dark image based on isDark', async () => {
+    mockIsDark.value = false
+    const wrapper = mount(HomeHero, {
+      props: {
+        image: {
+          light: '/logo-light.png',
+          dark: '/logo-dark.png',
+          alt: 'Theme logo',
+        },
+      },
+    })
+
+    expect(wrapper.find('img').attributes('src')).toBe('/logo-light.png')
+    expect(wrapper.find('img').attributes('alt')).toBe('Theme logo')
+
+    mockIsDark.value = true
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('img').attributes('src')).toBe('/logo-dark.png')
   })
 
   it('links to locale recent base url', () => {

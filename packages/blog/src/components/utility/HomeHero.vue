@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import NeptuBtn from '../NeptuBtn.vue'
 import { useData, withBase } from 'vitepress'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { computed } from 'vue'
 
-const { localeIndex } = useData()
-const { theme } = useUiTheme()
+const { localeIndex, isDark, theme } = useData()
+
 interface HeroButton {
   text?: string
   href?: string
@@ -12,10 +12,14 @@ interface HeroButton {
   primary?: boolean
 }
 
-interface HeroImage {
-  src?: string
-  alt?: string
-}
+type HeroImageProp =
+  | string
+  | {
+      src?: string | { light: string; dark: string }
+      light?: string
+      dark?: string
+      alt?: string
+    }
 
 const props = defineProps<{
   firstLine?: string
@@ -24,17 +28,47 @@ const props = defineProps<{
   description?: string
   buttons?: HeroButton[]
   actions?: HeroButton[]
-  img?: HeroImage
-  image?: HeroImage
+  img?: HeroImageProp
+  image?: HeroImageProp
 }>()
 
-const heroTitle = props.title || props.firstLine
-const heroDescription = props.description || props.secondLine
-const heroActions = props.actions || props.buttons
-const heroImage = props.image || props.img
+const heroTitle = computed(() => props.title || props.firstLine)
+const heroDescription = computed(() => props.description || props.secondLine)
+const heroActions = computed(() => props.actions || props.buttons)
+const rawImage = computed(() => props.image || props.img)
+
+const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
+
+const currentImageSrc = computed(() => {
+  const img = rawImage.value
+  if (!img) return undefined
+
+  let srcVal: string | undefined
+
+  if (typeof img === 'string') {
+    srcVal = img
+  } else if (typeof img === 'object' && img !== null) {
+    if (typeof img.src === 'string') {
+      srcVal = img.src
+    } else if (typeof img.src === 'object' && img.src !== null) {
+      srcVal = isDark.value ? img.src.dark : img.src.light
+    } else if ('light' in img || 'dark' in img) {
+      srcVal = isDark.value ? img.dark : img.light
+    }
+  }
+
+  return srcVal ? imageSrc(srcVal) : undefined
+})
+
+const currentImageAlt = computed(() => {
+  const img = rawImage.value
+  if (typeof img === 'object' && img !== null) {
+    return img.alt
+  }
+  return undefined
+})
 
 const homeHref = `/${localeIndex.value}/recent/1`
-const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 </script>
 
 <template>
@@ -42,23 +76,25 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
     <div class="flex w-full max-lg:flex-col-reverse gap-x-2 gap-y-6">
       <div class="flex-1 max-lg:text-center home-hero-captions">
         <h1
+          v-if="heroTitle"
           class="max-md:text-4xl md:text-6xl font-bold mb-4 home-hero-first-line"
           v-html="heroTitle"
         ></h1>
         <p
+          v-if="heroDescription"
           class="max-md:text-2xl md:text-4xl home-hero-second-line"
           v-html="heroDescription"
         ></p>
       </div>
       <a
-        v-if="heroImage?.src"
-        :aria-label="theme.t.toHome"
-        class="home-logo flex justify-center"
+        v-if="currentImageSrc"
+        :aria-label="theme.t?.toHome"
+        class="home-logo flex justify-center items-center"
         :href="withBase(homeHref)"
       >
         <img
-          :src="imageSrc(heroImage.src)"
-          :alt="heroImage.alt"
+          :src="currentImageSrc"
+          :alt="currentImageAlt"
           width="320"
           height="320"
           class="home-hero-img"
@@ -78,7 +114,18 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 
 <style scoped>
 .home-logo img {
-  filter: drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.15));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.home-logo:hover img {
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.22));
+  transform: translateY(-2px);
+}
+
+:deep(.dark) .home-logo img,
+.dark .home-logo img {
+  filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.45));
 }
 
 .home-hero-buttons .btn-base {
@@ -92,6 +139,7 @@ const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 .home-hero-img {
   width: 320px;
   height: 320px;
+  object-fit: contain;
 }
 
 @media (max-width: 519px) {

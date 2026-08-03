@@ -542,7 +542,14 @@ export namespace NeptuBlogTheme {
     hero?: {
       title?: string
       description?: string
-      image?: { src?: string; alt?: string }
+      image?:
+        | string
+        | {
+            src?: string | { light: string; dark: string }
+            light?: string
+            dark?: string
+            alt?: string
+          }
       actions?: HomeActionConfig[]
     }
     /** Ordered home blocks. Arrays replace across YAML config layers. */
