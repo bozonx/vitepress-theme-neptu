@@ -67,8 +67,6 @@ const currentImageAlt = computed(() => {
   }
   return undefined
 })
-
-const homeHref = `/${localeIndex.value}/recent/1`
 </script>
 
 <template>
@@ -86,11 +84,9 @@ const homeHref = `/${localeIndex.value}/recent/1`
           v-html="heroDescription"
         ></p>
       </div>
-      <a
+      <div
         v-if="currentImageSrc"
-        :aria-label="theme.t?.toHome"
         class="home-logo flex justify-center items-center"
-        :href="withBase(homeHref)"
       >
         <img
           :src="currentImageSrc"
@@ -99,7 +95,7 @@ const homeHref = `/${localeIndex.value}/recent/1`
           height="320"
           class="home-hero-img"
         />
-      </a>
+      </div>
     </div>
     <ul
       v-if="heroActions?.length"
@@ -115,12 +111,7 @@ const homeHref = `/${localeIndex.value}/recent/1`
 <style scoped>
 .home-logo img {
   filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.15));
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.home-logo:hover img {
-  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.22));
-  transform: translateY(-2px);
+  transition: filter 0.3s ease;
 }
 
 :deep(.dark) .home-logo img,

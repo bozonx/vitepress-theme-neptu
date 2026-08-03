@@ -25,21 +25,21 @@ describe('HomeHero', () => {
     expect(wrapper.text()).toContain('World')
   })
 
-  it('renders image with i18n aria-label', () => {
+  it('renders non-interactive image element', () => {
     const wrapper = mount(HomeHero, {
       props: {
         img: { src: '/logo.webp', alt: 'Logo' },
       },
     })
 
-    const link = wrapper.find('a.home-logo')
-    expect(link.exists()).toBe(true)
-    expect(link.attributes('aria-label')).toBe('Go to home page')
-    expect(link.find('img').attributes('src')).toBe('/logo.webp')
-    expect(link.find('img').attributes('alt')).toBe('Logo')
+    const logo = wrapper.find('.home-logo')
+    expect(logo.exists()).toBe(true)
+    expect(logo.find('a').exists()).toBe(false)
+    expect(logo.find('img').attributes('src')).toBe('/logo.webp')
+    expect(logo.find('img').attributes('alt')).toBe('Logo')
   })
 
-  it('does not render image link when img.src is undefined', () => {
+  it('does not render image when img.src is undefined', () => {
     const wrapper = mount(HomeHero, {
       props: {
         firstLine: 'Hello',
@@ -47,17 +47,17 @@ describe('HomeHero', () => {
       },
     })
 
-    expect(wrapper.find('a.home-logo').exists()).toBe(false)
+    expect(wrapper.find('.home-logo').exists()).toBe(false)
   })
 
-  it('does not render image link when img is absent', () => {
+  it('does not render image when img is absent', () => {
     const wrapper = mount(HomeHero, {
       props: {
         firstLine: 'Hello',
       },
     })
 
-    expect(wrapper.find('a.home-logo').exists()).toBe(false)
+    expect(wrapper.find('.home-logo').exists()).toBe(false)
   })
 
   it('renders buttons from props', () => {
@@ -92,9 +92,9 @@ describe('HomeHero', () => {
       },
     })
 
-    const link = wrapper.find('a.home-logo')
-    expect(link.exists()).toBe(true)
-    expect(link.find('img').attributes('src')).toBe('/logo-string.png')
+    const logo = wrapper.find('.home-logo')
+    expect(logo.exists()).toBe(true)
+    expect(logo.find('img').attributes('src')).toBe('/logo-string.png')
   })
 
   it('renders light vs dark image based on isDark', async () => {
@@ -115,18 +115,5 @@ describe('HomeHero', () => {
     mockIsDark.value = true
     await wrapper.vm.$nextTick()
     expect(wrapper.find('img').attributes('src')).toBe('/logo-dark.png')
-  })
-
-  it('links to locale recent base url', () => {
-    mockLocaleIndex.value = 'ru'
-
-    const wrapper = mount(HomeHero, {
-      props: {
-        img: { src: '/logo.webp', alt: 'Logo' },
-      },
-    })
-
-    const link = wrapper.find('a.home-logo')
-    expect(link.attributes('href')).toBe('/ru/recent/1')
   })
 })

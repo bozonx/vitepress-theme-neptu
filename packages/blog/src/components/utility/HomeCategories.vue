@@ -24,7 +24,7 @@ const categoryList = props.limit ? allCategories.slice(0, props.limit) : allCate
     <TagsList
       :tags="categoryList"
       kind="category"
-      class="home-hero-categories [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]"
+      class="home-hero-categories [&_.category-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)] [&_.tag-item]:shadow-[8px_8px_20px_0px_rgba(0,0,0,0.3)]"
     />
   </section>
 </template>

@@ -95,22 +95,26 @@
   /**** CategoryItem — soft counterpart of the tag pill.
         Text mixes the accent into near-black ink so the label keeps AA
         contrast on the tinted background at small sizes. */
-  --category-item-bg: color-mix(in srgb, var(--primary-btn-bg) 12%, transparent);
+  --category-item-bg: color-mix(
+    in srgb,
+    var(--vp-c-bg, #ffffff) 82%,
+    var(--primary-btn-bg) 18%
+  );
   --category-item-bg-hover: color-mix(
     in srgb,
-    var(--primary-btn-bg) 22%,
-    transparent
+    var(--vp-c-bg, #ffffff) 70%,
+    var(--primary-btn-bg) 30%
   );
   --category-item-bg-active: var(--primary-btn-bg-active);
   --category-item-border: color-mix(
     in srgb,
-    var(--primary-btn-bg) 28%,
-    transparent
+    var(--primary-btn-bg) 30%,
+    var(--vp-c-bg, #ffffff)
   );
   --category-item-border-hover: color-mix(
     in srgb,
-    var(--primary-btn-bg) 45%,
-    transparent
+    var(--primary-btn-bg) 50%,
+    var(--vp-c-bg, #ffffff)
   );
   --category-item-text: color-mix(in srgb, var(--primary-btn-bg) 45%, var(--gray-900));
   --category-item-text-active: #fff;
@@ -190,22 +194,26 @@
   --tag-item-bg-active: var(--primary-btn-bg-active);
   /**** CategoryItem — same recipe as light, with the ink flipped to a light
         accent tint so the label stays readable on the dark tinted chip. */
-  --category-item-bg: color-mix(in srgb, var(--primary-btn-bg) 20%, transparent);
+  --category-item-bg: color-mix(
+    in srgb,
+    var(--vp-c-bg, #1b1b1f) 78%,
+    var(--primary-btn-bg) 22%
+  );
   --category-item-bg-hover: color-mix(
     in srgb,
-    var(--primary-btn-bg) 32%,
-    transparent
+    var(--vp-c-bg, #1b1b1f) 64%,
+    var(--primary-btn-bg) 36%
   );
   --category-item-bg-active: var(--primary-btn-bg-active);
   --category-item-border: color-mix(
     in srgb,
     var(--primary-btn-bg) 40%,
-    transparent
+    var(--vp-c-bg, #1b1b1f)
   );
   --category-item-border-hover: color-mix(
     in srgb,
     var(--primary-btn-bg) 60%,
-    transparent
+    var(--vp-c-bg, #1b1b1f)
   );
   --category-item-text: color-mix(in srgb, var(--primary-btn-bg) 35%, var(--gray-50));
   --category-item-text-active: #fff;

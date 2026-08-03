@@ -88,6 +88,8 @@ const className = computed(
   color: var(--category-item-text);
   border: 1px solid var(--category-item-border);
   font-weight: 500;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* Hover only deepens the tint while `.active` fills the chip, so the current
