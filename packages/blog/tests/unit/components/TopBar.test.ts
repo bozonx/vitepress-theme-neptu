@@ -93,7 +93,7 @@ describe('TopBar', () => {
     expect(donateBtn!.props('textClass')).toBe('max-lg:hidden')
   })
 
-  it('donate button renders even in minimal (home) mode', () => {
+  it('hides donate button in minimal (home) mode', () => {
     mockTheme.value = {
       nav: {
         links: [],
@@ -109,7 +109,7 @@ describe('TopBar', () => {
       props: { minimal: true, hideMenuButton: true },
     })
     const donateBtn = wrapper.findAllComponents({ name: 'NeptuBtn' }).find((b) => b.props('text') === 'Donate')
-    expect(donateBtn).toBeDefined()
+    expect(donateBtn).toBeUndefined()
   })
 
   it('emits openDrawer when menu button clicked', () => {

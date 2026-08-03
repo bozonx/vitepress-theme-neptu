@@ -94,7 +94,7 @@ const socialLinks = computed<LinkItem[]>(() =>
     </ul>
 
     <NeptuBtn
-      v-if="donateLink"
+      v-if="donateLink && !minimal"
       :no-bg="true"
       :href="donateLink.href"
       :icon="donateLink.icon"
