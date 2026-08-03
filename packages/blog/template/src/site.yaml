@@ -119,8 +119,15 @@ themeConfig:
     # renders at width=320 × logoHeight px, so a 2× source (640×360) is
     # recommended for retina displays.
     # Add an image to `src/public/` first, then point to it from the public root.
-    # Default: none (no logo)
+    # A single string is used for both light and dark appearances:
     # logoSrc: /img/sidebar-logo.webp
+    # For separate light/dark logos, use an object with `light` and `dark` keys
+    # (an optional `alt` adds accessible alt text):
+    # logoSrc:
+    #   light: /img/sidebar-logo-light.webp
+    #   dark: /img/sidebar-logo-dark.webp
+    #   alt: My Blog
+    # Default: none (no logo)
 
     # Logo height in pixels — used only as a placeholder so the browser can
     # reserve vertical space before the image loads (prevents layout shift / CLS).
