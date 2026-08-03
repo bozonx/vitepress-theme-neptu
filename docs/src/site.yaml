@@ -12,7 +12,7 @@ themeConfig:
       - { type: popular, enabled: false }
       - { type: categories, enabled: true, limit: 10 }
       - { type: tags, enabled: true, limit: 15 }
-  sidebarLogoSrc: '/img/sidebar-logo.jpg'
+  sidebarLogoSrc: '/img/sidebar-logo.webp'
   sidebarLogoHeight: 180
   # Demo only: production blogs normally choose one theme and omit the pickers.
   colorPicker: true
