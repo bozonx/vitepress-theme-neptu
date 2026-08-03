@@ -290,7 +290,7 @@ onUnmounted(() => {
           : 'none',
         width: `${SIDEBAR_WIDTH}px`,
       }"
-      class="max-lg:overflow-y-auto max-lg:overflow-x-clip max-lg:fixed lg:h-fit app-drawer z-10 top-0 bottom-0 left-0 transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform"
+      class="max-lg:overflow-y-auto max-lg:overflow-x-clip max-lg:fixed lg:h-fit app-drawer z-50 top-0 bottom-0 left-0 transition-transform duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform"
       @keydown="handleKeydown"
     >
       <div>
@@ -384,7 +384,7 @@ onUnmounted(() => {
     </div>
     <div
       :style="{ opacity: backdropOpacity }"
-      class="lg:hidden app-drawer-backdrop fixed inset-0 z-[9] cursor-pointer transition-opacity duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity]"
+      class="lg:hidden app-drawer-backdrop fixed inset-0 z-40 cursor-pointer transition-opacity duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity]"
       @click="closeDrawer"
     >
       <div class="sidebar-closebtn-wrapper absolute h-0 right-0">
