@@ -28,3 +28,10 @@ const categoryList = props.limit ? allCategories.slice(0, props.limit) : allCate
     />
   </section>
 </template>
+
+<style scoped>
+:global(.home-has-bg) :deep(.category-item),
+:global(.home-has-bg) :deep(.category-item:hover) {
+  border-color: transparent !important;
+}
+</style>

@@ -181,6 +181,11 @@ body.modal-open {
   -webkit-backdrop-filter: blur(12px);
 }
 
+.home-layout.home-has-bg .category-item,
+.home-layout.home-has-bg .category-item:hover {
+  border-color: transparent !important;
+}
+
 .home-layout.home-has-bg .home-hero {
   padding: 2.25rem 2.5rem;
 }
