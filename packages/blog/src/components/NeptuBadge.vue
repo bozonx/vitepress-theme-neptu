@@ -18,7 +18,7 @@ const props = defineProps<Props>()
 
 <style scoped>
 .badge-item {
-  color: #ffffff !important;
-  background-color: rgba(0, 0, 0, 0.22) !important;
+  color: #ffffff;
+  background-color: var(--primary-btn-bg);
 }
 </style>

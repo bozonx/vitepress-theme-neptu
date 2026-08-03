@@ -64,4 +64,8 @@ const className =
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   filter: brightness(110%);
 }
+
+.tag-item :deep(.badge-item) {
+  background-color: rgba(0, 0, 0, 0.22);
+}
 </style>
