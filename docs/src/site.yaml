@@ -42,6 +42,6 @@ themeConfig:
   nav:
     donate: true
     socialLinks:
-      - icon: 'fa6-brands:github-alt'
+      - icon: 'fa6-brands:github'
         link: '${theme.repo}'
         desktopOnly: true
