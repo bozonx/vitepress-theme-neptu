@@ -39,3 +39,9 @@ const props = defineProps<{ noBg?: boolean }>()
     </template>
   </DropdownButton>
 </template>
+
+<style scoped>
+.switch-lang-btn :deep(.btn-base:hover) {
+  transform: none;
+}
+</style>
