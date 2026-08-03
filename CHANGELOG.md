@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `create-neptu-blog`: new package behind `npm create neptu-blog@latest my-blog`. It copies the starter out of the theme package (no second copy to maintain), asks for a title and content locale, renames the locale folder, and rewrites `lang`/`title` plus the locale's data-loader import in `Layout.vue`.
+- `packages/blog/template`: `drafts`, `toc`, `ads`, `consent` and `asideLayouts` are now documented inline in `site.yaml` / `config.ts`; the `t` reference gained the category, breadcrumb, draft, reading-time, TOC and ad keys; `sidebar.featured` and `featuredIcon` documented.
+- `docs`: `page/contents` — a full table of contents for the guide, linked from the home page, nav, sidebar and footer.
+- `docs`: new posts split out of overloaded ones — `toc-and-aside`, `ads`, `external-content`; `components` rewritten as a full export reference (components, composables, utilities, list helpers).
+
 - `packages/blog`: categories — a second taxonomy alongside tags. `category: 'Name'` (or a `categories` list) in post frontmatter generates `categories/`, `categories/<slug>/<page>` and `categories/<slug>/popular/<page>`, a sidebar cloud (`sidebar.categories`, off unless set; `sidebarCategoriesCount`, default 10), a `PostCategories` footer block, the `category` Pagefind facet, and `articleSection` in the post JSON-LD.
 - `packages/blog`: breadcrumbs on posts that have a category, with matching `BreadcrumbList` JSON-LD. `NeptuBreadcrumbs` is exported for custom trails and takes an `items` array.
 - `packages/blog`: `AllCategoriesList`, `CategoryPostsList`, `PostCategories` and `NeptuBreadcrumbs` components; `makeCategoriesList`, `makePostsOfCategoryList`, `makeCategoriesParams` and their `makeTaxonomy*` generic forms in `list-helpers`.
@@ -53,6 +58,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `packages/blog/template/package.json`: blog dependency bumped from `^0.19.0` to `^0.20.0`.
 
 ### Fixed
+
+- `packages/blog/template`: posts referenced `authorId: alex` while `_authors.yaml` defined `ivan`, so the author block, author page and JSON-LD author resolved to nothing in a freshly created blog.
+- `packages/blog/template`: `page/about.md` and `page/donate.md` were missing `layout: page`, so standalone pages rendered as posts with a duplicated title.
+- `packages/blog/template`: demo posts carried an `# H1` that duplicated the title the post layout already renders.
+- `packages/blog/template`: `themeConfig.editLink` in `site.yaml` had every child commented out and parsed as `null`, so a first build warned `expected object, received null`.
+- `packages/blog/template`: popular posts were enabled without GA4 credentials, so a first build always warned. Off by default now, with instructions for turning it on.
+- `packages/blog/template`: `Layout.vue` hardcoded the `en` data loader with nothing explaining it, so renaming or adding a locale broke the build with an unresolved import. Documented in the file, in the README and in the locales guide.
+- `docs`: the Russian guide is re-ordered so the recent-posts list reads as the guide itself — beginner topics first, advanced last — across seven categories; twelve posts carried an `# H1` duplicating the rendered title.
+- `docs`: `socialMediaShares` was documented as replacing the built-in list and `[]` as hiding the share block; it merges by `name`, and an empty array leaves the defaults in place. Documented the actual behaviour, including `enabled: false`.
+- `docs`: the component reference listed props that do not exist (`autoplay`, `showControls`, `buttonText`, `type`) and a `Pagination` export that is not exported.
+- `docs`: `hreflang` was described as emitting a short language code and an `x-default` on single-locale sites; it emits the locale's full `lang` tag and nothing at all when there is only one locale.
+- `docs`: dead `_tags.yaml` files removed — nothing reads them, though two pages claimed they drove the tag cloud.
+- `docs`: Node.js baseline corrected from 18 to 20.19+/22.12+; `pnpm add` samples aligned with the npm-based instructions elsewhere; a stale `pagefind` CLI call removed from the external-content build example.
+- Stale `npm run docs:dev` / `docs:build` / `docs:preview` commands in four READMEs — the root scripts are `blog:*`.
 
 - `packages/landing`: `layout: landing` is accepted by `schema/landing-blocks.schema.json` — the schema demanded `layout: home`, so the declarative example page failed `validate:blocks`.
 - `packages/landing`: `LnCarousel` measured slide positions against the section instead of the scroll container, so the active dot and the arrow steps drifted by the track offset on wide viewports. The active slide is now the first visible one, and the last dot is reachable at the end of the track.

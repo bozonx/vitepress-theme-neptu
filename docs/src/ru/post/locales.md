@@ -208,6 +208,38 @@ themeConfig:
 themeConfig: { i18nRouting: false }
 ```
 
+## Как добавить язык
+
+Создать папку недостаточно — нужны три шага:
+
+1. **Скопируйте папку локали.** `src/en/` → `src/ru/`. Вместе с контентом
+   переносятся служебные папки списков (`recent/`, `archive/`, `tags/`,
+   `categories/`, `featured/`, `authors/`, `popular/`) и файлы
+   `getAllPosts.ts` и `loadPosts.data.ts` — они локале-независимы и правок не
+   требуют.
+2. **Задайте `lang`, `title` и `description`** в её `_site.yaml`.
+3. **Зарегистрируйте данные локали** в `src/.vitepress/theme/Layout.vue`:
+
+```vue
+<script setup lang="ts">
+// @ts-expect-error VitePress отдаёт сгенерированные данные именованным экспортом.
+import { data as enData } from '../../en/loadPosts.data'
+// @ts-expect-error
+import { data as ruData } from '../../ru/loadPosts.data'
+
+const posts = { en: enData.posts, ru: ruData.posts }
+provide('posts', posts)
+</script>
+```
+
+Третий шаг легко забыть, а без него сборка падает с `Could not resolve`. Причина
+техническая: data-лоадеры VitePress — статические импорты, вычислить их список
+во время сборки нельзя, поэтому каждая локаль добавляется строкой вручную.
+Ключи объекта `posts` должны совпадать с именами папок в `src/`.
+
+Переводы интерфейса подхватятся сами, если язык есть во встроенном наборе;
+иначе задайте нужные ключи `t` (см. выше).
+
 ## Наследование локалей (`extends`)
 
 Близкие локали не нужно настраивать дважды. `extends` в `_site.yaml` указывает

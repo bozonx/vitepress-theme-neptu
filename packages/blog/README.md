@@ -29,16 +29,22 @@ Start there. This README only covers the essentials.
 
 ## Quick start
 
-The fastest way to a working blog is to copy the starter template in
-[`template/`](./template):
-
 ```sh
-git clone https://github.com/bozonx/vitepress-theme-neptu
-cp -r vitepress-theme-neptu/packages/blog/template my-blog
+npm create neptu-blog@latest my-blog
 cd my-blog
 npm install      # or: pnpm install / yarn install
 npm run dev      # or: pnpm dev / yarn dev
 ```
+
+The scaffolder asks for a title and a content language, then writes out the
+starter in [`template/`](./template). To copy that folder by hand instead:
+
+```sh
+git clone https://github.com/bozonx/vitepress-theme-neptu
+cp -r vitepress-theme-neptu/packages/blog/template my-blog
+```
+
+Requires Node.js 20.19+ or 22.12+.
 
 Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu/ru/post/getting-started).
 
@@ -145,7 +151,7 @@ site is in `docs/`). The monorepo uses npm for workspace management:
 
 ```sh
 npm install
-npm run docs:dev       # run the documentation/demo site
+npm run blog:dev       # run the documentation/demo site
 npm run test           # unit tests
 npm run e2e            # end-to-end tests
 npm run lint           # eslint

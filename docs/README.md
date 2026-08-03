@@ -13,15 +13,17 @@ This monorepo uses npm workspaces:
 
 ```sh
 npm install
-npm run docs:dev       # dev server
-npm run docs:build     # production build (Pagefind index included)
-npm run docs:preview   # preview the production build
+npm run blog:dev       # dev server
+npm run blog:build     # production build (Pagefind index included)
+npm run blog:preview   # preview the production build
 ```
 
 Content lives under `src/<locale>/` — see the
 [Getting started](https://bozonx.github.io/vitepress-theme-neptu/ru/post/getting-started)
-guide for the structure. To scaffold a new blog, copy the
-[`packages/blog/template/`](../packages/blog/template) directory instead of this site.
+guide for the structure. To start a blog of your own, run
+`npm create neptu-blog@latest my-blog` (or copy
+[`packages/blog/template/`](../packages/blog/template)) rather than this site —
+the docs carry demo content the starter deliberately leaves out.
 
 ## GitHub Pages base path
 

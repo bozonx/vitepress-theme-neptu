@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import {
   isExternalUrl,
+  isAnchorUrl,
+  isSafeExternalUrl,
+  sanitizeUrl,
+  externalTarget,
   resolveI18Href,
   generatePageUrlPath,
   normalizeSiteUrl,
@@ -26,8 +30,16 @@ describe('isExternalUrl', () => {
     expect(isExternalUrl('HTTPS://example.com')).toBe(true)
   })
 
-  it('returns false for protocol-relative URL', () => {
-    expect(isExternalUrl('//example.com')).toBe(false)
+  it('returns true for protocol-relative URL', () => {
+    expect(isExternalUrl('//example.com')).toBe(true)
+  })
+
+  it('returns true for mailto:', () => {
+    expect(isExternalUrl('mailto:foo@example.com')).toBe(true)
+  })
+
+  it('returns true for tel:', () => {
+    expect(isExternalUrl('tel:+1234567890')).toBe(true)
   })
 
   it('returns false for relative path', () => {
@@ -144,5 +156,88 @@ describe('replaceRelativePathLocale', () => {
 
   it('returns undefined for invalid paths', () => {
     expect(replaceRelativePathLocale('hello.md', 'ru')).toBeUndefined()
+  })
+})
+
+describe('isAnchorUrl', () => {
+  it('returns true for anchor links', () => {
+    expect(isAnchorUrl('#section')).toBe(true)
+    expect(isAnchorUrl('#')).toBe(true)
+  })
+
+  it('returns false for non-anchor links', () => {
+    expect(isAnchorUrl('/path')).toBe(false)
+    expect(isAnchorUrl('https://example.com')).toBe(false)
+    expect(isAnchorUrl('')).toBe(false)
+    expect(isAnchorUrl(undefined)).toBe(false)
+  })
+})
+
+describe('isSafeExternalUrl', () => {
+  it('returns true for http and https', () => {
+    expect(isSafeExternalUrl('http://example.com')).toBe(true)
+    expect(isSafeExternalUrl('https://example.com')).toBe(true)
+  })
+
+  it('returns true for protocol-relative URLs', () => {
+    expect(isSafeExternalUrl('//example.com')).toBe(true)
+  })
+
+  it('returns true for mailto and tel', () => {
+    expect(isSafeExternalUrl('mailto:foo@example.com')).toBe(true)
+    expect(isSafeExternalUrl('tel:+1234567890')).toBe(true)
+  })
+
+  it('returns false for javascript scheme', () => {
+    expect(isSafeExternalUrl('javascript:alert(1)')).toBe(false)
+  })
+
+  it('returns false for data scheme', () => {
+    expect(isSafeExternalUrl('data:text/html,<script>alert(1)</script>')).toBe(false)
+  })
+
+  it('returns false for non-external URLs', () => {
+    expect(isSafeExternalUrl('/path')).toBe(false)
+    expect(isSafeExternalUrl('#anchor')).toBe(false)
+  })
+})
+
+describe('sanitizeUrl', () => {
+  it('returns safe external URLs unchanged', () => {
+    expect(sanitizeUrl('https://example.com')).toBe('https://example.com')
+    expect(sanitizeUrl('mailto:foo@example.com')).toBe('mailto:foo@example.com')
+  })
+
+  it('returns anchors unchanged', () => {
+    expect(sanitizeUrl('#section')).toBe('#section')
+  })
+
+  it('returns relative paths unchanged', () => {
+    expect(sanitizeUrl('/path/to/page')).toBe('/path/to/page')
+  })
+
+  it('strips dangerous schemes to undefined', () => {
+    expect(sanitizeUrl('javascript:alert(1)')).toBeUndefined()
+    expect(sanitizeUrl('data:text/html,<script>alert(1)</script>')).toBeUndefined()
+  })
+
+  it('returns undefined for undefined input', () => {
+    expect(sanitizeUrl(undefined)).toBeUndefined()
+  })
+})
+
+describe('externalTarget', () => {
+  it('returns _blank for http(s) URLs', () => {
+    expect(externalTarget('https://example.com')).toBe('_blank')
+    expect(externalTarget('http://example.com')).toBe('_blank')
+  })
+
+  it('returns _blank for protocol-relative URLs', () => {
+    expect(externalTarget('//example.com')).toBe('_blank')
+  })
+
+  it('returns undefined for local paths', () => {
+    expect(externalTarget('/path')).toBeUndefined()
+    expect(externalTarget('mailto:foo@example.com')).toBeUndefined()
   })
 })

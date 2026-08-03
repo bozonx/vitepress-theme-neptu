@@ -1,8 +1,45 @@
 import { pathTrimExt } from './string.ts'
 
+/** `https://…`, `//…` or any other scheme (`mailto:`, `tel:`). */
 export function isExternalUrl(url: string | null | undefined): boolean {
-  return Boolean(url && url.match(/^[a-z\d]+:\/\//i))
+  return /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(url ?? '')
 }
+
+/** In-page anchor — never prefixed. */
+export const isAnchorUrl = (url?: string): boolean =>
+  (url ?? '').startsWith('#')
+
+/**
+ * URL schemes that are safe to render in `href`.
+ *
+ * Any other scheme (`javascript:`, `data:`, `vbscript:`, …) is stripped to
+ * prevent XSS when the link source is a CMS or a semi-trusted author.
+ */
+const SAFE_SCHEMES = new Set(['http:', 'https:', 'mailto:', 'tel:'])
+
+/** Returns `true` when the URL is external **and** uses a safe scheme. */
+export const isSafeExternalUrl = (url?: string): boolean => {
+  if (!isExternalUrl(url)) return false
+  // Protocol-relative URLs (`//example.com`) are always safe.
+  if (/^\/\//.test(url!)) return true
+  try {
+    return SAFE_SCHEMES.has(new URL(url!).protocol.toLowerCase())
+  } catch {
+    return false
+  }
+}
+
+/** Returns the URL unchanged if it is safe, `undefined` if it is dangerous. */
+export const sanitizeUrl = (url?: string): string | undefined => {
+  if (!url) return url
+  if (isAnchorUrl(url)) return url
+  if (isExternalUrl(url)) return isSafeExternalUrl(url) ? url : undefined
+  return url
+}
+
+/** `_blank` for external links, `undefined` for local ones. */
+export const externalTarget = (url?: string): '_blank' | undefined =>
+  /^(?:https?:)?\/\//i.test(url ?? '') ? '_blank' : undefined
 
 export function normalizeSiteUrl(siteUrl: string | null | undefined): string | undefined {
   if (typeof siteUrl !== 'string') return
@@ -23,8 +60,10 @@ export function makeAbsoluteUrl(
   const normalizedSiteUrl = normalizeSiteUrl(siteUrl)
 
   if (!trimmed || !normalizedSiteUrl) return
-  if (isExternalUrl(trimmed)) return trimmed
+  // Protocol-relative URLs must be normalized before the isExternalUrl check,
+  // since isExternalUrl now matches `//` as well.
   if (trimmed.startsWith('//')) return `https:${trimmed}`
+  if (isExternalUrl(trimmed)) return trimmed
 
   const baseUrl = `${normalizedSiteUrl}/`
   const relativeUrl = trimmed.startsWith('/') ? trimmed.slice(1) : trimmed

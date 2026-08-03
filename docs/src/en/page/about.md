@@ -34,7 +34,7 @@ It plays three roles at once:
 git clone https://github.com/bozonx/vitepress-theme-neptu
 cd vitepress-theme-neptu
 npm install
-npm run docs:dev
+npm run blog:dev
 ```
 
 Then open the printed URL. Edit any file under `example/blog/src` and the page

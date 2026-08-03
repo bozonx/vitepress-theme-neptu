@@ -12,6 +12,7 @@ import {
 import {
   resolveEditLinkPattern,
   autoLoadLocalesFactory,
+  loadLocaleYamlChain,
   type LocaleEntry,
 } from 'vitepress-theme-neptu/utils/node'
 import type {
@@ -26,55 +27,6 @@ type SiteLocaleEntry = LocaleEntry
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
 
 const localeMap = siteBaseLocales as unknown as Record<string, SiteLocaleEntry>
-
-interface LocaleYamlChain {
-  /** Merged `_site.yaml` payload with `extends` resolved. */
-  site: Record<string, unknown>
-}
-
-/**
- * Recursively loads `<locale>/_site.yaml` following any `extends:` reference,
- * with cycle detection.
- */
-async function loadLocaleYamlChain(
-  localeIndex: string,
-  config: LandingUserConfig,
-  templateParams: Record<string, unknown>,
-  visited: Set<string>
-): Promise<LocaleYamlChain> {
-  if (visited.has(localeIndex)) {
-    const chain = [...visited, localeIndex].join(' -> ')
-    console.warn(
-      `[vitepress-theme-neptu-landing] Cycle detected in _site.yaml \`extends\` chain: ${chain}`
-    )
-    return { site: {} }
-  }
-  const nextVisited = new Set(visited).add(localeIndex)
-
-  const localeParams = { ...templateParams, localeIndex }
-  const rawSite = (await parseLocaleSite(
-    config.srcDir || '',
-    localeParams
-  )) as Record<string, unknown>
-
-  const extendsKey =
-    typeof rawSite.extends === 'string' ? (rawSite.extends as string) : null
-  const { extends: _extends, ...siteRest } = rawSite
-
-  if (extendsKey) {
-    const parent = await loadLocaleYamlChain(
-      extendsKey,
-      config,
-      templateParams,
-      nextVisited
-    )
-    return {
-      site: deepMerge(parent.site, siteRest),
-    }
-  }
-
-  return { site: siteRest }
-}
 
 /**
  * Processes a VitePress sidebar config (keyed by section name) by applying
@@ -176,12 +128,19 @@ export async function loadSiteLocale(
   // ------------------------------------------------------------------
   // Per-locale <srcDir>/<localeIndex>/_site.yaml (with extends chain)
   // ------------------------------------------------------------------
-  const chain = await loadLocaleYamlChain(
-    localeIndex,
-    config,
+  const chain = await loadLocaleYamlChain<undefined>(localeIndex, {
+    srcDir: config.srcDir || '',
     templateParams,
-    new Set()
-  )
+    visited: new Set(),
+    parseLocale: parseLocaleSite as (
+      srcDir: string,
+      params: Record<string, unknown>
+    ) => Promise<Record<string, unknown>>,
+    logPrefix: '[vitepress-theme-neptu-landing]',
+    prepareSite: (rawSite) => ({ site: rawSite, extra: undefined }),
+    mergeExtra: () => undefined,
+    defaultExtra: undefined,
+  })
   const site = chain.site
   const {
     lang,

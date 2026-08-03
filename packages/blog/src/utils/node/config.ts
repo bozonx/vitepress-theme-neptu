@@ -8,6 +8,7 @@ import {
   parseLocaleAuthors,
   resolveConfigTemplates,
 } from './i18n.ts'
+import { loadLocaleYamlChain } from './localeYamlChain.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
 import { resolveBaseLocaleKey } from '../shared/i18n.ts'
@@ -105,60 +106,60 @@ interface LocaleYamlChain {
 }
 
 /**
- * Recursively loads `<locale>/_site.yaml` following any `extends:` reference,
- * with cycle detection. Authors from `_site.yaml themeConfig.authors` and
- * `_authors.yaml` are combined at each step (local `_authors.yaml` wins over
- * local `_site.yaml themeConfig.authors`), then merged across the chain with
- * the by-id strategy.
+ * Blog-specific adapter for the shared `loadLocaleYamlChain` factory.
+ *
+ * Authors from `_site.yaml themeConfig.authors` and `_authors.yaml` are
+ * combined at each step (local `_authors.yaml` wins over local `_site.yaml
+ * themeConfig.authors`), then merged across the chain with the by-id strategy.
  */
-async function loadLocaleYamlChain(
+async function loadBlogLocaleYamlChain(
   localeIndex: string,
   config: BlogUserConfig,
   templateParams: Record<string, unknown>,
   visited: Set<string>
 ): Promise<LocaleYamlChain> {
-  if (visited.has(localeIndex)) {
-    const chain = [...visited, localeIndex].join(' -> ')
-    console.warn(
-      `[vitepress-theme-neptu] Cycle detected in _site.yaml \`extends\` chain: ${chain}`
-    )
-    return { site: {}, authors: [], socialShares: [] }
-  }
-  const nextVisited = new Set(visited).add(localeIndex)
-
   const srcDir = config.srcDir || ''
-  const localeParams = { ...templateParams, localeIndex }
 
-  const rawSite = (await parseLocaleSite(srcDir, localeParams)) as Record<
-    string,
-    unknown
-  >
-  const { site: siteWithoutArrays, authors: siteAuthors, socialShares: siteSocialShares } =
-    stripThemeArrays(rawSite)
-  const authorsFile = (await parseLocaleAuthors(srcDir, localeParams)) as Author[]
-  const currentAuthors = mergeAuthorsById(siteAuthors, authorsFile)
+  const result = await loadLocaleYamlChain<{
+    authors: Author[]
+    socialShares: SocialMediaShare[]
+  }>(localeIndex, {
+    srcDir,
+    templateParams,
+    visited,
+    parseLocale: parseLocaleSite as (
+      srcDir: string,
+      params: Record<string, unknown>
+    ) => Promise<Record<string, unknown>>,
+    logPrefix: '[vitepress-theme-neptu]',
+    prepareSite: async (rawSite) => {
+      const { site: siteWithoutArrays, authors: siteAuthors, socialShares } =
+        stripThemeArrays(rawSite)
+      const localeParams = { ...templateParams, localeIndex }
+      const authorsFile = (await parseLocaleAuthors(srcDir, localeParams)) as Author[]
+      return {
+        site: siteWithoutArrays,
+        extra: {
+          authors: mergeAuthorsById(siteAuthors, authorsFile),
+          socialShares,
+        },
+      }
+    },
+    mergeExtra: (parent, current) => ({
+      authors: mergeAuthorsById(parent.authors, current.authors),
+      socialShares: mergeSocialMediaSharesByName(
+        parent.socialShares,
+        current.socialShares
+      ),
+    }),
+    defaultExtra: { authors: [], socialShares: [] },
+  })
 
-  const extendsKey =
-    typeof siteWithoutArrays.extends === 'string'
-      ? (siteWithoutArrays.extends as string)
-      : null
-  const { extends: _extends, ...siteRest } = siteWithoutArrays
-
-  if (extendsKey) {
-    const parent = await loadLocaleYamlChain(
-      extendsKey,
-      config,
-      templateParams,
-      nextVisited
-    )
-    return {
-      site: deepMerge(parent.site, siteRest),
-      authors: mergeAuthorsById(parent.authors, currentAuthors),
-      socialShares: mergeSocialMediaSharesByName(parent.socialShares, siteSocialShares),
-    }
+  return {
+    site: result.site,
+    authors: result.extra.authors,
+    socialShares: result.extra.socialShares,
   }
-
-  return { site: siteRest, authors: currentAuthors, socialShares: siteSocialShares }
 }
 
 /**
@@ -241,7 +242,7 @@ export async function loadBlogLocale(
     t: (resolvedTheme as Record<string, unknown>).t as Record<string, unknown>,
   }
 
-  const chain = await loadLocaleYamlChain(
+  const chain = await loadBlogLocaleYamlChain(
     localeIndex,
     config,
     templateParams,

@@ -38,7 +38,7 @@ npm run build
 npm run e2e
 
 # Dev servers
-npm run docs:dev
+npm run blog:dev
 npm run landing:dev
 ```
 

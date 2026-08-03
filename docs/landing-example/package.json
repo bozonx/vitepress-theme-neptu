@@ -7,9 +7,9 @@
   "author": "(Ivan Kozyrin <ipkozyrin@gmail.com>)",
   "license": "MIT",
   "scripts": {
-    "dev": "vitepress dev src",
-    "build": "VITEPRESS_BASE=/vitepress-theme-neptu/landing/ vitepress build src --base /vitepress-theme-neptu/landing/",
-    "preview": "vitepress preview src --base /vitepress-theme-neptu/landing/",
+    "dev": "NODE_OPTIONS='--experimental-strip-types' vitepress dev src",
+    "build": "NODE_OPTIONS='--experimental-strip-types' VITEPRESS_BASE=/vitepress-theme-neptu/landing/ vitepress build src --base /vitepress-theme-neptu/landing/",
+    "preview": "NODE_OPTIONS='--experimental-strip-types' vitepress preview src --base /vitepress-theme-neptu/landing/",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
