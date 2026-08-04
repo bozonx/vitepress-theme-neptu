@@ -69,7 +69,7 @@ authorId: ivan-k
 # автоматически разрешается в site-root путь (/ru/post/.../media/cover.jpg).
 cover: https://images.unsplash.com/photo-...
 # Если не указать — автоматически вычисляются из локального файла.
-# Для внешних URL (https://...) нужно указывать вручную чтобы избежать прыгания контента при загрузке картинок.
+# Для внешних URL (https://...) нужно указывать вручную чтобы избежать CLS (Cumulative Layout Shift - прыгание контента при загрузке картинок).
 coverWidth: 1200
 coverHeight: 800
 # alt-текст для <img> и og:image:alt. Обычный текст, без markdown.
@@ -77,7 +77,7 @@ coverAlt: Аккуратный стол с клавиатурой, блокно�
 # Подпись под обложкой. В отличие от coverAlt — поддерживает markdown,
 # который преобразуется в HTML на этапе сборки.
 coverDescr: "coverDescr поддерживает **markdown** и [ссылки](https://unsplash.com)."
-# URL обсуждения (GitHub Discussions, Disqus и т.п.) — кнопка в подвале поста.
+# URL обсуждения (GitHub Discussions, Disqus, Telegram и т.п.) — кнопка в подвале поста.
 commentLink: https://github.com/.../discussions
 # Кнопка «Смотреть видео» вверху поста. Внешний URL (YouTube, Vimeo и т.п.).
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
