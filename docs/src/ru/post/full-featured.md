@@ -59,71 +59,114 @@ title: Пост со всеми полями frontmatter
 description: >
   Пост-«максимум»: обложка, автор, теги, превью, кнопка видео, выпадающий список
   подкастов и ссылка на обсуждение — всё включено сразу.
+# layout: post — обязательно для постов. Без него рендерится как обычная страница.
+# Доступные встроенные: post, home, page, util, tag, category, archive, author.
+# Произвольная строка = имя глобально зарегистрированного компонента (полная замена layout).
 layout: post
-# Блок автора — подвал поста
+# ID автора из themeConfig.authors. Если ID не найден — блок автора не рендерится.
 authorId: ivan-k
-# Обложка и подпись — вверху поста
+# URL обложки. Поддерживает co-located пути: ./media/cover.jpg —
+# автоматически разрешается в site-root путь (/ru/post/.../media/cover.jpg),
+# чтобы корректно работать в списках, RSS, og:image и JSON-LD.
 cover: https://images.unsplash.com/photo-...
+# Если не указать — автоматически вычисляются из локального файла.
+# Для внешних URL (https://...) нужно указывать вручную.
 coverWidth: 1200
 coverHeight: 800
+# alt-текст для <img> и og:image:alt. Обычный текст, без markdown.
 coverAlt: Аккуратный стол с клавиатурой, блокнотом и растением
+# Подпись под обложкой. В отличие от coverAlt — поддерживает markdown,
+# который преобразуется в HTML на этапе сборки.
 coverDescr: "coverDescr поддерживает **markdown** и [ссылки](https://unsplash.com)."
-# Ссылка на обсуждение — подвал поста
+# URL обсуждения (GitHub Discussions, Disqus и т.п.) — кнопка в подвале поста.
 commentLink: https://github.com/.../discussions
-# Кнопка видео — вверху поста
+# Кнопка «Смотреть видео» вверху поста. Внешний URL (YouTube, Vimeo и т.п.).
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+# Язык видео — короткая подпись рядом с кнопкой (например: RU, EN).
 videoLinkLang: RU
-# Подкасты — вверху поста
+# Язык подкаста — короткая подпись рядом с кнопкой.
 podcastLang: RU
+# Платформа → URL эпизода. Ключи — произвольные имена платформ.
+# Рендерится как выпадающий список вверху поста.
 podcasts:
   spotify: https://open.spotify.com/
   applepodcasts: https://podcasts.apple.com/
   youtube: https://www.youtube.com/
-# Переводы — переключатель языков в шапке
+# Карта переводов: код локали → относительный путь.
+# Используется переключателем языков в шапке И hreflang-тегами для SEO.
+# Если не указать — переключатель пытается найти тот же путь в другой локали.
 translations:
   en: /en/post/full-featured
+# Дата публикации. Строка или Date. Используется для сортировки постов,
+# article:published_time в OG и datePublished в JSON-LD.
 date: 2026-07-29
-# Теги и категории — шапка и подвал поста
+# category — синтаксический сахар для одной категории.
+# На этапе сборки объединяется с categories и удаляется.
+# Дубликаты по slug отбрасываются, так что category + categories с одним slug
+# не дадут двойной чип.
 category: { name: 'Контент', slug: 'writing' }
+# Список категорий. Каждая — строка или { name, slug }.
+# Если slug не указан — генерируется из name транслитерацией с учётом локали.
 categories:
   - { name: 'Контент', slug: 'writing' }
+# Теги. Аналогично категориям: строка или { name, slug }.
+# slug генерируется транслитерацией, если не указан явно.
 tags: [frontmatter]
-# Превью в карточках списков постов
+# Использовать description как текст превью в карточках списков постов.
+# Приоритет: previewText > descrAsPreview > авто-экстракт из контента.
 descrAsPreview: true
+# Явный текст превью. Имеет высший приоритет — перекрывает descrAsPreview.
+# Пустая строка ('') отключает превью, а не игнорируется.
 previewText: 'Кастомный текст превью для карточки списка постов.'
-# Избранный пост — попадает в коллекции избранных
+# Помечает пост для коллекций избранных (FeaturedList, HomeFeaturedPosts).
+# НЕ влияет на хронологические списки — пост остаётся на своём месте по дате.
 featured: true
-# Время чтения — шапка поста
+# Включить/выключить бейдж времени чтения для этой страницы.
+# Перекрывает themeConfig.readingTime.layouts.
 readingTime: true
-# Правая колонка и оглавление — боковая панель
+# Показать/скрыть правую боковую колонку для этой страницы.
+# Перекрывает themeConfig.asideLayouts. Игнорируется на главной странице.
 aside: true
+# Показать/скрыть оглавление для этой страницы.
+# Перекрывает themeConfig.toc.layouts, но порог по количеству заголовков
+# (themeConfig.toc.minHeadings) всё равно применяется.
 toc: true
-# Рекламные слоты — в контенте и aside
+# Включить/выключить рекламные слоты для этой страницы.
+# Перекрывает themeConfig.ads.layouts. Влияет и на in-content слоты,
+# которые вставляются markdown-плагином на этапе сборки.
 ads: false
-# Поиск — пост включён в индекс поиска
+# Включить страницу в индекс поиска (Pagefind).
+# Для постов по умолчанию true, для util-страниц — false (нужно явно true).
+# draft: true принудительно сбрасывает это в false.
 searchIncluded: true
-# Канонический URL — SEO-метатеги
+# Канонический URL. Принимает полный URL или 'self' для авто-каноникала.
+# Если не указан и seo.autoCanonical !== false — генерируется self-каноникал.
 canonical: https://example.com/canonical-url
-# SEO-настройки — og, jsonLd, hreflang, rss
+# Покомандное управление SEO. Каждый ключ отключает соответствующую фичу,
+# если установлен в false. По умолчанию всё включено.
+# Перекрывает глобальные themeConfig.seo.
 seo:
-  og: true
-  jsonLd: true
-  hreflang: true
-  canonical: true
-  autoCanonical: true
-  rss: true
-  maxDescriptionLength: 160
-# Черновик — скрыт в продакшене
+  og: true              # Open Graph + Twitter Card мета-теги
+  jsonLd: true          # JSON-LD структурированные данные
+  hreflang: true        # hreflang link-теги (только если >1 локали)
+  canonical: true       # canonical link-тег
+  autoCanonical: true   # авто-каноникал, если поле canonical не задано
+  rss: true             # RSS/Atom/JSON feed link-теги на главной
+  maxDescriptionLength: 160  # лимит символов для авто-экстракта description
+# Черновик. Страница собирается (URL работает для превью),
+# но исключается из списков, RSS, sitemap, поиска и помечается noindex.
+# В vitepress dev черновики видны по умолчанию, в production — скрыты.
 # draft: true
-# Кастомный layout центральной области
+# Имя компонента для замены центральной области контента.
+# В отличие от layout — заменяет только Content, а не весь layout.
+# Если не указан — fallback на frontmatter.layout.
+# Компонент должен быть глобально зарегистрирован.
 # contentLayout: MyCustomContent
-# Кастомный JSON-LD — структурированные данные
+# Кастомный JSON-LD в виде JSON-строки. Мерджится с авто-генерируемым
+# JSON-LD (не заменяет!) — поля кастомного объекта перезаписывают стандартные.
 # jsonLd: '{"@context":"https://schema.org","@type":"BlogPosting"}'
 ---
 ```
-
-Поля `draft`, `contentLayout` и `jsonLd` закомментированы, чтобы не мешать
-отображению страницы. Раскомментируйте их, когда они нужны.
 
 Каждое поле разбирается отдельно в тематических постах раздела «Контент»:
 [обложки](cover-and-images), [медиа-компоненты](media-components),
