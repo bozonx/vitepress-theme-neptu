@@ -8,7 +8,7 @@ const ContentStub = { name: 'Content', template: '<div class="content-stub" />' 
 describe('BlogHome', () => {
   beforeEach(() => {
     mockTheme.value = {
-      home: { appearance: 'auto', background: 'none', bgParallaxOffset: 300, sections: [] },
+      home: { appearance: 'auto', background: { type: 'none', parallaxOffset: 300 }, sections: [] },
     }
     mockFrontmatter.value = {}
     mockIsDark.value = false

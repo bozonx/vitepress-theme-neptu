@@ -70,9 +70,10 @@ themeConfig:
     # light or dark forces that appearance on the home page and hides the switch.
     appearance: auto # auto | light | dark
     maxWidth: 800
-    background: none # none | parallax
-    # backgroundImage: /img/home.jpg
-    # bgParallaxOffset: 300
+    background:
+      type: none # none | parallax
+      # image: /img/home.jpg
+      # parallaxOffset: 300
     # Global hero defaults. The wording is per-locale, so `hero.title` and
     # `hero.description` normally live in `<locale>/_site.yaml`.
     # Recommended image size: 320x320 px (transparent WebP/PNG/SVG).

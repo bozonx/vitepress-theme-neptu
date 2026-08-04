@@ -29,13 +29,13 @@ const homeMaxWidth = computed(() =>
 )
 const homeBackground = computed(() =>
   (frontmatter.value?.homeBackground as 'parallax' | 'none' | undefined) ||
-  home.value.background || 'none'
+  home.value.background?.type || 'none'
 )
 const homeBackgroundImage = computed(() =>
-  (frontmatter.value?.homeBackgroundImage as string) || home.value.backgroundImage || ''
+  (frontmatter.value?.homeBackgroundImage as string) || home.value.background?.image || ''
 )
 const BG_HEIGHT_OFFSET = computed(
-  () => (frontmatter.value?.homeBgParallaxOffset as number) ?? home.value.bgParallaxOffset ?? 0
+  () => (frontmatter.value?.homeBgParallaxOffset as number) ?? home.value.background?.parallaxOffset ?? 0
 )
 
 const hasBgImage = computed(() =>

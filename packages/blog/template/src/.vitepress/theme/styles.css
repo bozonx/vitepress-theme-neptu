@@ -213,6 +213,12 @@
  *   homeTheme: dark | light
  *   homeMaxWidth: 800
  *   homeBgParallaxOffset: 200
+ *
+ * Config (site.yaml) uses a nested object:
+ *   background:
+ *     type: parallax | none
+ *     image: /img/home.webp
+ *     parallaxOffset: 300
  * ============================================================ */
 /* .home-layout { */
 /*   background-image: url('https://images.unsplash.com/…'); */

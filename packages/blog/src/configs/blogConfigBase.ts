@@ -100,8 +100,10 @@ const commonThemeConfig = {
   home: {
     appearance: 'auto' as const,
     maxWidth: 800,
-    background: 'none' as const,
-    bgParallaxOffset: 300,
+    background: {
+      type: 'none' as const,
+      parallaxOffset: 300,
+    },
     sections: [
       { type: 'featured' as const, enabled: true },
       { type: 'latest' as const, enabled: false },

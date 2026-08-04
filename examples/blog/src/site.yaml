@@ -4,8 +4,9 @@ themeConfig:
   home:
     appearance: auto
     maxWidth: 900
-    background: parallax
-    backgroundImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80'
+    background:
+      type: parallax
+      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80'
     sections:
       - { type: featured, enabled: true, limit: 3 }
       - { type: latest, enabled: false }

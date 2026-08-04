@@ -167,8 +167,9 @@ head: [
 # src/site.yaml
 themeConfig:
   home:
-    background: parallax   # none | parallax
-    backgroundImage: 'https://images.unsplash.com/photo-...'
+    background:
+      type: parallax   # none | parallax
+      image: 'https://images.unsplash.com/photo-...'
 ```
 
 Подробнее о блоках главной — в [Домашней странице](home-page).

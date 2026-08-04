@@ -550,9 +550,11 @@ export namespace NeptuBlogTheme {
     /** Follow the visitor preference, or force one appearance on the home page. */
     appearance?: 'auto' | 'light' | 'dark'
     maxWidth?: number
-    background?: 'parallax' | 'none'
-    backgroundImage?: string
-    bgParallaxOffset?: number
+    background?: {
+      type?: 'parallax' | 'none'
+      image?: string
+      parallaxOffset?: number
+    }
     hero?: {
       title?: string
       description?: string

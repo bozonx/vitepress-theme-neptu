@@ -128,9 +128,11 @@ const HeroImageSchema = z.union([
 const HomeSchema = z.looseObject({
   appearance: z.enum(['auto', 'light', 'dark']).optional(),
   maxWidth: z.number().int().min(1).optional(),
-  background: z.enum(['parallax', 'none']).optional(),
-  backgroundImage: z.string().optional(),
-  bgParallaxOffset: z.number().optional(),
+  background: z.looseObject({
+    type: z.enum(['parallax', 'none']).optional(),
+    image: z.string().optional(),
+    parallaxOffset: z.number().optional(),
+  }).optional(),
   hero: z.looseObject({
     title: z.string().optional(),
     description: z.string().optional(),

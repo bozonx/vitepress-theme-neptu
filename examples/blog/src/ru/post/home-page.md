@@ -36,11 +36,12 @@ themeConfig:
     # максимальная ширина контента в пикселях
     maxWidth: 800
     # none | parallax — параллакс-фон при скролле
-    background: none
-    # путь к фоновому изображению (только с background: parallax)
-    # backgroundImage: /img/home.webp
-    # смещение параллакс-фона в пикселях при скролле
-    # bgParallaxOffset: 300
+    background:
+      type: none
+      # путь к фоновому изображению (только с type: parallax)
+      # image: /img/home.webp
+      # смещение параллакс-фона в пикселях при скролле
+      # parallaxOffset: 300
 ```
 
 ```yaml
