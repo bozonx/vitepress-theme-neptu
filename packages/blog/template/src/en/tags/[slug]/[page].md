@@ -16,7 +16,6 @@ const { params } = useData()
 
 <TagPostsList
   :curPage="params?.page"
-  :tagName="params?.name"
   :tagSlug="params?.slug"
   :showPopularPostsSwitch="true"
 />

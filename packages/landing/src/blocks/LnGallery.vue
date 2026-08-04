@@ -30,8 +30,6 @@ const props = withDefaults(
       lightbox?: boolean
       /** CSS aspect-ratio of each tile, e.g. `4/3`. */
       mediaRatio?: string
-      /** @deprecated Use `mediaRatio`. */
-      ratio?: string
       /** Accessible name for the lightbox dialog. Defaults to the section title. */
       ariaLabel?: string
     }
@@ -111,7 +109,7 @@ const onKeydown = (event: KeyboardEvent): void => {
           :type="!item.link && props.lightbox ? 'button' : undefined"
           @click="!item.link && open(i)"
         >
-          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.mediaRatio ?? item.ratio ?? props.mediaRatio ?? props.ratio } : undefined" />
+          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.mediaRatio ?? props.mediaRatio } : undefined" />
           <span v-if="item.caption" class="ln-gallery__caption">{{ item.caption }}</span>
         </component>
         <div v-if="item.title || item.text || item.tags?.length || item.actions?.length" class="ln-gallery__body">

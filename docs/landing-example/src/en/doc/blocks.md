@@ -25,7 +25,6 @@ Every block accepts these, on top of its own:
 | `align` | `start \| center` | varies | Alignment of the section header. |
 | `divider` | `boolean` | `false` | Hairline above the section. |
 | `reveal` | `boolean` | `true` | Enable the scroll-reveal animation. `reveal: false` disables it. |
-| `noReveal` | `boolean` | `false` | **Deprecated** — use `reveal: false` instead. |
 
 Most blocks also take the header trio — `eyebrow`, `title`, `text` — and a list
 of items. `title` and `text` accept inline HTML.
@@ -37,10 +36,6 @@ inside themselves, so the content stays readable without extra props.
 
 | Old prop | Replacement | Blocks |
 |---------|-------------|-------|
-| `noReveal` | `reveal: false` | All |
-| `noAlternate` | `alternate: false` | `feature-split` |
-| `ratio` | `mediaRatio` | `gallery`, `video`, `embed`, `tabs` |
-| `imageRatio` | `mediaRatio` | `collection` |
 | `monthlyLabel` | `toggle.monthlyLabel` | `pricing` |
 | `yearlyLabel` | `toggle.yearlyLabel` | `pricing` |
 | `discountLabel` | `toggle.discountLabel` | `pricing` |
@@ -175,7 +170,6 @@ Rows of copy and media, alternating sides.
 | `items` | feature + `bullets?: string[]`, `actions?: action[]` | — |
 | `reverse` | `boolean` | `false` |
 | `alternate` | `boolean` | `true` | Alternate the media side per row. |
-| `noAlternate` | `boolean` | `false` | **Deprecated** — use `alternate: false`. |
 | `mediaRatio` | CSS aspect-ratio | — |
 
 `variant` is not applicable — the layout is always alternating rows.
@@ -192,9 +186,9 @@ take two columns or two rows.
 | `items` | `{ image?, icon?, badge?, eyebrow?, title?, text?, link?, linkText? }[]` | — |
 | `perView` | `1 \| 2 \| 3 \| 4` | `3` |
 | `arrows`, `dots` | `boolean` | `true` |
-| `autoplay` | ms, `0` = off | `0` |
+| `autoplayInterval` | ms, `0` = off | `0` |
 | `peek` | `boolean` | `false` |
-| `cardVariant` | `card \| plain \| bordered` | `card` |
+| `variant` | `card \| plain \| bordered` | `card` |
 
 Carousel items use the shared `CardItem` contract and support `tags`, `meta`,
 `actions`, `target` and `rel` in addition to the fields below.
@@ -309,7 +303,7 @@ serve as a portfolio or case-study grid. The lightbox is a native `<dialog>`.
 Generic resource cards for posts, projects, products and events. Items use
 `CardItem`: `title`, `text`, `image`, `icon`, `badge`, `tags`, `meta`, `date`,
 `link`, `linkText`, `actions`. Props: `cols` 1–4, `layout: grid | list`,
-`variant: card | plain | bordered`, `mediaRatio` (deprecated alias: `imageRatio`),
+`variant: card | plain | bordered`, `mediaRatio`,
 and section-level `actions`.
 
 ## content — `LnContent`

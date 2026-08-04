@@ -65,10 +65,9 @@ const align = computed(() => props.align ?? (isCentered.value ? 'center' : 'star
 /**
  * Hero is the first screen / LCP element: by default it does not run the
  * scroll-reveal animation (it is already in view on load). An author can opt in
- * with `reveal: true` — or, for back-compat, by setting `noReveal: false`
- * explicitly. When neither is set, reveal stays off.
+ * with `reveal: true`. When not set, reveal stays off.
  */
-const revealDisabled = computed(() => !(props.reveal === true || props.noReveal === false))
+const revealDisabled = computed(() => props.reveal !== true)
 const sectionProps = useSectionProps(props)
 const coverSpec = computed(() => {
   const spec = typeof props.image === 'string' ? { src: props.image } : (props.image ?? {})
@@ -108,7 +107,7 @@ const coverSpec = computed(() => {
     <LnSection
       v-bind="sectionProps"
       :bg="isCover ? 'transparent' : props.bg"
-      :no-reveal="revealDisabled"
+      :reveal="!revealDisabled"
       class="ln-hero"
       :class="[`ln-hero--${props.variant}`, { 'ln-hero--on-media': isCover }]"
     >

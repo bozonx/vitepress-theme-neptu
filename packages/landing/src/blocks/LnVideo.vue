@@ -36,8 +36,6 @@ const props = withDefaults(
       caption?: string
       /** CSS aspect-ratio of the player frame, e.g. `16/9`. */
       mediaRatio?: string
-      /** @deprecated Use `mediaRatio`. */
-      ratio?: string
       actions?: ActionItem[]
       /** Start muted and play immediately — self-hosted `src` only. */
       autoplay?: boolean
@@ -102,7 +100,7 @@ const sectionProps = useSectionProps(props)
     />
 
     <figure class="ln-video__figure">
-      <div class="ln-video__frame" :style="{ aspectRatio: props.mediaRatio ?? props.ratio }">
+      <div class="ln-video__frame" :style="{ aspectRatio: props.mediaRatio }">
         <!-- Self-hosted: no facade needed, the browser player is already cheap. -->
         <video
           v-if="fileSrc"

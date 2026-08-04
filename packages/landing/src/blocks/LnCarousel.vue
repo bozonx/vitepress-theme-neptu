@@ -28,15 +28,11 @@ const props = withDefaults(
       dots?: boolean
       /** Autoplay interval in ms. `0` disables it. */
       autoplayInterval?: number
-      /** @deprecated Use `autoplayInterval`. */
-      autoplay?: number
       /** Let slides bleed past the container edge. */
       peek?: boolean
       ariaLabel?: string
       /** Card display style. */
       variant?: 'card' | 'plain' | 'bordered'
-      /** @deprecated Use `variant`. */
-      cardVariant?: 'card' | 'plain' | 'bordered'
     }
   >(),
   {
@@ -68,8 +64,8 @@ let timer: ReturnType<typeof setInterval> | null = null
 
 const slideCount = computed(() => props.items?.length ?? 0)
 
-const autoplayInterval = computed(() => props.autoplayInterval ?? props.autoplay ?? 0)
-const cardVariant = computed(() => props.variant ?? props.cardVariant ?? 'card')
+const autoplayInterval = computed(() => props.autoplayInterval ?? 0)
+const cardVariant = computed(() => props.variant ?? 'card')
 
 const prefersReducedMotion = (): boolean =>
   typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches

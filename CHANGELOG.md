@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `packages/landing` **breaking**: removed deprecated block props — `noReveal` (use `reveal: false`), `noAlternate` (use `alternate: false`), `ratio` (use `mediaRatio`), `imageRatio` (use `mediaRatio`), `autoplay` (use `autoplayInterval`), `cardVariant` (use `variant`). Update your `blocks:` YAML and component props accordingly.
+- `packages/blog` **breaking**: removed backwards-compatibility `categoryName` and `tagName` props from `CategoryPostsList` and `TagPostsList`. Filtering is by slug only — remove `:categoryName` / `:tagName` from your category and tag page templates.
+- `packages/blog`: `getImageDimensions` no longer falls back to the `srcDir` root for image path resolution — use the public directory or co-located paths relative to the markdown file.
 - Migrated monorepo from pnpm to npm: replaced `pnpm-workspace.yaml` with `workspaces` in root `package.json`, inlined all `catalog:` versions into individual `package.json` files, replaced pnpm commands in scripts with npm equivalents, updated CI workflow and documentation.
 - `packages/blog`: tag and category list pages now filter posts by slug rather than by display name, and `makeTagsList` keys entries by slug — two spellings of one slug no longer split into separate entries.
 - `packages/blog`: post JSON-LD is emitted as an `@graph` when the post has a category (article + `BreadcrumbList`); it stays a single node otherwise.

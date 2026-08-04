@@ -21,8 +21,6 @@ const props = withDefaults(
       layout?: 'grid' | 'list'
       /** CSS aspect-ratio of the card media, e.g. `16/9`. */
       mediaRatio?: string
-      /** @deprecated Use `mediaRatio`. */
-      imageRatio?: string
     }
   >(),
   { cols: 3, variant: 'card', layout: 'grid', mediaRatio: '16/9', align: 'start' }
@@ -43,7 +41,7 @@ const sectionProps = useSectionProps(props)
         :plain="props.variant === 'plain'" :hoverable="props.variant === 'card'"
         class="ln-collection__item" :class="`ln-collection__item--${props.variant}`"
       >
-        <LnMedia v-if="item.image" :media="item.image" :ratio="props.mediaRatio ?? props.imageRatio" rounded="md" class="ln-collection__media" />
+        <LnMedia v-if="item.image" :media="item.image" :ratio="props.mediaRatio" rounded="md" class="ln-collection__media" />
         <div class="ln-collection__body">
           <div v-if="item.date || item.meta?.length" class="ln-collection__meta">
             <time v-if="item.date">{{ item.date }}</time><span v-for="meta in item.meta" :key="meta">{{ meta }}</span>

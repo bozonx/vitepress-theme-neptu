@@ -18,13 +18,10 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
   align: 'start',
   divider: false,
   reveal: true,
-  noReveal: false,
   tag: 'section',
 })
 
-// `reveal` is the canonical switch (default true); `noReveal: true` opts out.
-// An explicit `reveal: false` wins over a stale `noReveal: false`.
-const revealDisabled = computed(() => props.reveal === false || props.noReveal === true)
+const revealDisabled = computed(() => props.reveal === false)
 </script>
 
 <template>

@@ -23,18 +23,14 @@ const props = withDefaults(
       reverse?: boolean
       /** Alternate the media side per row (default `true`). */
       alternate?: boolean
-      /** @deprecated Use `alternate: false` instead. */
-      noAlternate?: boolean
       mediaRatio?: string
     }
   >(),
-  { reverse: false, alternate: true, noAlternate: false, align: 'start' }
+  { reverse: false, alternate: true, align: 'start' }
 )
 
-/** `alternate` is the canonical switch; `noAlternate: true` opts out for back-compat. */
-const shouldAlternate = computed(() => props.alternate && !props.noAlternate)
-/** Resolve deprecated `noReveal` alias into the canonical `reveal` flag. */
-const revealDisabled = computed(() => props.reveal === false || props.noReveal === true)
+const shouldAlternate = computed(() => props.alternate)
+const revealDisabled = computed(() => props.reveal === false)
 const sectionProps = useSectionProps(props)
 const isReversed = (index: number): boolean =>
   shouldAlternate.value ? props.reverse !== (index % 2 === 1) : props.reverse

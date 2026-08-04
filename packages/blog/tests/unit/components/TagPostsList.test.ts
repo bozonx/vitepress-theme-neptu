@@ -48,7 +48,6 @@ describe('TagPostsList', () => {
       props: {
         localePosts: posts,
         curPage: 1,
-        tagName: 'Vue',
         tagSlug: 'vue',
       },
       global: {
@@ -99,7 +98,6 @@ describe('TagPostsList', () => {
       props: {
         localePosts: [{ url: '/a', tags: [{ name: 'Vue', slug: 'vue' }] }],
         curPage: 1,
-        tagName: 'Vue',
         tagSlug: 'vue',
       },
       global: {

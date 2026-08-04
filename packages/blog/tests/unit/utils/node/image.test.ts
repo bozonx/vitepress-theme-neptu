@@ -52,18 +52,6 @@ describe('getImageDimensions', () => {
     expect(result).toEqual({ width: 100, height: 200 })
   })
 
-  it('falls back to srcDir when not in public', () => {
-    vi.mocked(fs.existsSync).mockImplementation((p: any) =>
-      String(p) === '/src/img.png'
-    )
-    vi.mocked(fs.readFileSync).mockReturnValue(Buffer.from([]))
-    vi.mocked(imageSize).mockReturnValue({ width: 50, height: 60 } as any)
-
-    const result = getImageDimensions('img.png', '/src')
-    expect(fs.existsSync).toHaveBeenCalledWith('/src/img.png')
-    expect(result).toEqual({ width: 50, height: 60 })
-  })
-
   it('returns null when file not found anywhere', () => {
     vi.mocked(fs.existsSync).mockReturnValue(false)
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})

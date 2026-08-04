@@ -16,7 +16,6 @@ const { params } = useData()
 
 <CategoryPostsList
   :curPage="params?.page"
-  :categoryName="params?.name"
   :categorySlug="params?.slug"
   :showPopularPostsSwitch="true"
 />

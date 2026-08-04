@@ -9,12 +9,6 @@ const props = defineProps<{
   perPage?: number
   paginationMaxItems?: number
   categorySlug?: string
-  /**
-   * Accepted for backwards compatibility with generated route params.
-   * Filtering goes by slug — the name is only a display label, and the page
-   * title already carries it.
-   */
-  categoryName?: string
   showPopularPostsSwitch?: boolean
 }>()
 const { theme } = useUiTheme()

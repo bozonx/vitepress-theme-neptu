@@ -21,7 +21,6 @@ export interface ImageSizeResult extends ImageDimensions {
  *    images and folder-per-article layouts.
  * 2. **Public directory** — `srcDir/public/<imagePath>` (absolute paths like
  *    `/img/cover.jpg`).
- * 3. **SrcDir root** — `srcDir/<imagePath>` (legacy fallback).
  */
 export function getImageDimensions(
   imagePath: string | null | undefined,
@@ -43,9 +42,8 @@ export function getImageDimensions(
       candidates.push(path.resolve(mdDir, imagePath))
     }
 
-    // Always try public dir and srcDir as fallback
+    // Always try public dir as fallback
     candidates.push(path.join(srcDir, 'public', imagePath))
-    candidates.push(path.join(srcDir, imagePath))
 
     for (const fullPath of candidates) {
       if (fs.existsSync(fullPath)) {

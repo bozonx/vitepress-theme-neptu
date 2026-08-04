@@ -17,8 +17,6 @@ export function useSectionProps(props: SectionProps) {
     width: props.width,
     padding: props.padding,
     divider: props.divider,
-    // Resolve the deprecated `noReveal` alias here so LnSection only receives
-    // the canonical `reveal` flag from block-level usage.
-    reveal: props.reveal === false || props.noReveal === true ? false : props.reveal,
+    reveal: props.reveal,
   }
 }

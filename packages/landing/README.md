@@ -206,7 +206,6 @@ Every block accepts `id`, `bg` (`base` `soft` `mute` `inverse` `brand`
 `transparent`), `width` (`narrow` `default` `wide` `full`), `padding` (`none`
 `sm` `md` `lg`), `align` (`start` `center`), `divider`, `reveal` and the
 header trio `eyebrow` / `title` / `text` and its own `items`.
-`noReveal` is a deprecated alias for `reveal: false`.
 
 Interactive blocks generate stable internal ids automatically. Set `id` when
 you need a section anchor or a predictable DOM id. For meaningful images, use

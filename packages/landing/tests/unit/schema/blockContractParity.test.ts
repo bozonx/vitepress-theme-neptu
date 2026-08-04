@@ -20,7 +20,7 @@ import { describe, expect, it } from 'vitest'
 const packageRoot = resolve(import.meta.dirname, '../../..')
 
 /** Keys every block inherits via `SectionProps & HeadingProps` (BlockBase). */
-const BASE_KEYS = [
+const BASE_KEYS: string[] = [
   // SectionProps
   'id',
   'bg',
@@ -29,12 +29,11 @@ const BASE_KEYS = [
   'align',
   'divider',
   'reveal',
-  'noReveal',
   // HeadingProps
   'eyebrow',
   'title',
   'text',
-] as const
+]
 
 type PropContract = {
   /** Literal value of the discriminating `type` field. */
@@ -259,7 +258,7 @@ function readSchemaBlocks(): Map<string, SchemaContract> {
       // video → anyOf [youtube | vimeo | src]
       if (typeName === 'video' && Array.isArray(rule.then?.anyOf)) {
         for (const branch of rule.then.anyOf) {
-          if (Array.isArray(branch.required)) branch.required.forEach((k) => videoSources.add(k))
+          if (Array.isArray(branch.required)) branch.required.forEach((k: string) => videoSources.add(k))
         }
       }
     }

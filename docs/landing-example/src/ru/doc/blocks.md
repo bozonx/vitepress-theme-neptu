@@ -25,7 +25,7 @@ description: 'Справочник по всем блокам лендинга: 
 | `padding` | `none \| sm \| md \| lg` | `md` | Вертикальные отступы. |
 | `align` | `start \| center` | зависит от блока | Выравнивание заголовка и действий. |
 | `divider` | `boolean` | `false` | Тонкая линия перед секцией. |
-| `noReveal` | `boolean` | `false` | **Устарел** — используйте `reveal: false`. |
+| `reveal` | `boolean` | `true` | Включить анимацию появления при скролле. |
 
 Большинство блоков также принимают `eyebrow`, `title` и `text`. В `title`,
 `text`, FAQ и HTML-контенте допускается инлайновый HTML. Передавайте только
@@ -35,10 +35,6 @@ description: 'Справочник по всем блокам лендинга: 
 
 | Старый проп | Замена | Блоки |
 |-------------|--------|-------|
-| `noReveal` | `reveal: false` | Все |
-| `noAlternate` | `alternate: false` | `feature-split` |
-| `ratio` | `mediaRatio` | `gallery`, `video`, `embed`, `tabs` |
-| `imageRatio` | `mediaRatio` | `collection` |
 | `monthlyLabel` | `toggle.monthlyLabel` | `pricing` |
 | `yearlyLabel` | `toggle.yearlyLabel` | `pricing` |
 | `discountLabel` | `toggle.discountLabel` | `pricing` |
@@ -132,7 +128,7 @@ description: 'Справочник по всем блокам лендинга: 
 |------|-----|--------------|
 | `items` | `SplitItem[]` | обязательно |
 | `reverse` | `boolean` | `false` |
-| `noAlternate` | `boolean` | `false` |
+| `alternate` | `boolean` | `true` |
 | `mediaRatio` | CSS aspect-ratio | — |
 
 ```yaml
@@ -165,9 +161,9 @@ description: 'Справочник по всем блокам лендинга: 
 | `items` | `CardItem[]` | обязательно |
 | `perView` | `1 \| 2 \| 3 \| 4` | `3` |
 | `arrows`, `dots` | `boolean` | `true` |
-| `autoplay` | миллисекунды, `0` — выкл. | `0` |
+| `autoplayInterval` | миллисекунды, `0` — выкл. | `0` |
 | `peek` | `boolean` | `false` |
-| `cardVariant` | `card \| plain \| bordered` | `card` |
+| `variant` | `card \| plain \| bordered` | `card` |
 | `ariaLabel` | `string` | заголовок или «Carousel» |
 
 ```yaml
@@ -191,7 +187,7 @@ description: 'Справочник по всем блокам лендинга: 
 | `layout` | `grid \| list` | `grid` |
 | `cols` | `1 \| 2 \| 3 \| 4` | `3` |
 | `variant` | `card \| plain \| bordered` | `card` |
-| `imageRatio` | CSS aspect-ratio | `16/9` |
+| `mediaRatio` | CSS aspect-ratio | `16/9` |
 
 ```yaml
 - type: collection
