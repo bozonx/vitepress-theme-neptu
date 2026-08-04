@@ -2,7 +2,7 @@
 @import 'vitepress-theme-neptu/tailwind-source.css';
 
 .sidebar-logo {
-  border-bottom: 3px solid var(--gray-700);
+  border-bottom: 3px solid #103b71;
 }
 
 .dark .sidebar-logo {
