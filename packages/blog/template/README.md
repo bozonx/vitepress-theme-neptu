@@ -14,7 +14,7 @@ npm run preview
 ```
 
 Full documentation (config reference, frontmatter, components, deployment):
-**[bozonx.github.io/vitepress-theme-neptu](https://bozonx.github.io/vitepress-theme-neptu)**
+**[bozonx.github.io/vitepress-theme-neptu/blog](https://bozonx.github.io/vitepress-theme-neptu/blog)**
 
 ---
 

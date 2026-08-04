@@ -162,4 +162,4 @@ own component into the `nav-bar-content-before` slot. The
 [landing README](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/landing/README.md#search)
 shows the wiring, and the blog theme's `PageFindSearch.vue` is a working
 Pagefind reference. Note that the blog theme, unlike this one, ships Pagefind
-built in — see [Search in the blog theme](https://bozonx.github.io/vitepress-theme-neptu/en/page/seo-feeds-search).
+built in — see [Search in the blog theme](https://bozonx.github.io/vitepress-theme-neptu/blog/en/page/seo-feeds-search).

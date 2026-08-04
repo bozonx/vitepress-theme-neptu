@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "vitepress dev src",
-    "build": "VITEPRESS_BASE=/vitepress-theme-neptu/ vitepress build src --base /vitepress-theme-neptu/",
-    "preview": "vitepress preview src --base /vitepress-theme-neptu/",
+    "build": "VITEPRESS_BASE=/vitepress-theme-neptu/blog/ vitepress build src --base /vitepress-theme-neptu/blog/",
+    "preview": "vitepress preview src --base /vitepress-theme-neptu/blog/",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

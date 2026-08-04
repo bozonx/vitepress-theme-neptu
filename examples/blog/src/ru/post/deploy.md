@@ -12,7 +12,7 @@ descrAsPreview: true
 
 Блог собирается в набор статических файлов — их можно выложить куда угодно: GitHub
 Pages, Netlify, Vercel, Cloudflare Pages или обычный веб-сервер. Разберём процесс
-на примере GitHub Pages: именно так опубликован [этот сайт](https://bozonx.github.io/vitepress-theme-neptu).
+на примере GitHub Pages: именно так опубликован [этот сайт](https://bozonx.github.io/vitepress-theme-neptu/blog).
 
 ## Сборка
 

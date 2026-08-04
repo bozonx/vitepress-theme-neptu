@@ -9,7 +9,7 @@ It is a companion to `vitepress-theme-neptu` and reuses its utilities,
 transformers, SEO pipeline and color palettes. The chrome (nav bar, docs
 sidebar, outline, search) comes from the VitePress default theme.
 
-The runnable example lives in `docs/landing-example` and starts from the repo
+The runnable example lives in `examples/landing` and starts from the repo
 root with `npm run landing:dev` (monorepo uses npm workspaces).
 
 ## What is in the box

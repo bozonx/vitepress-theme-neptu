@@ -11,7 +11,7 @@ The documentation is itself a blog built with this theme — every page is a liv
 example with the code that produces it, arranged as a guide from first launch to
 advanced customization:
 
-### → [bozonx.github.io/vitepress-theme-neptu](https://bozonx.github.io/vitepress-theme-neptu)
+### → [bozonx.github.io/vitepress-theme-neptu/blog](https://bozonx.github.io/vitepress-theme-neptu/blog)
 
 Start there. This README only covers the essentials.
 
@@ -46,7 +46,7 @@ cp -r vitepress-theme-neptu/packages/blog/template my-blog
 
 Requires Node.js 22.18+.
 
-Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu/ru/post/getting-started).
+Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/post/getting-started).
 
 ### Adding to an existing VitePress project
 
@@ -127,7 +127,7 @@ written in its own language. Override the heading with the `title` prop or a
 site title.
 
 Configuration, frontmatter, components, and SEO are documented in full on the
-[live site](https://bozonx.github.io/vitepress-theme-neptu).
+[live site](https://bozonx.github.io/vitepress-theme-neptu/blog).
 
 ## Media asset placement
 
@@ -141,17 +141,17 @@ The theme supports three approaches for organizing images and media:
    subfolder, referenced as `./media/foo.png`. Best for image-heavy articles.
 
 All three get automatic `width`/`height` injection for both cover images and
-standalone body images. See the [full guide](https://bozonx.github.io/vitepress-theme-neptu/en/post/media-asset-placement)
+standalone body images. See the [full guide](https://bozonx.github.io/vitepress-theme-neptu/blog/en/post/media-asset-placement)
 for details and examples.
 
 ## Development
 
-This repo is an npm workspace (the blog theme is in `packages/blog`, the docs
-site is in `docs/`). The monorepo uses npm for workspace management:
+This repo is an npm workspace (the blog theme is in `packages/blog`, the demo
+site is in `examples/blog`). The monorepo uses npm for workspace management:
 
 ```sh
 npm install
-npm run blog:dev       # run the documentation/demo site
+npm run blog:dev       # run the blog demo site
 npm run test           # unit tests
 npm run e2e            # end-to-end tests
 npm run lint           # eslint

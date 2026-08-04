@@ -28,7 +28,7 @@ export default async () => {
   const config: BlogUserConfig = {
     srcDir: path.resolve(__dirname, '../'),
     base,
-    siteUrl: process.env.SITE_URL || 'https://bozonx.github.io/vitepress-theme-neptu',
+    siteUrl: process.env.SITE_URL || 'https://bozonx.github.io/vitepress-theme-neptu/blog',
 
     head: [
       ['meta', { name: 'format-detection', content: 'telephone=no' }],

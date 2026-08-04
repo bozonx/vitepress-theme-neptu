@@ -3,9 +3,6 @@ import { createBaseEslintConfig } from '../../eslint.config.base.js'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default defineConfig(
-  {
-    ignores: ['landing-example/**'],
-  },
   ...createBaseEslintConfig(),
   {
     languageOptions: {

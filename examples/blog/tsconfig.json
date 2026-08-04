@@ -1,13 +1,13 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "types": ["node"],
     "noImplicitOverride": true,
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "paths": {
-      "vitepress-theme-neptu": ["../packages/blog/src/index.ts"],
-      "vitepress-theme-neptu/*": ["../packages/blog/src/*"]
+      "vitepress-theme-neptu": ["../../packages/blog/src/index.ts"],
+      "vitepress-theme-neptu/*": ["../../packages/blog/src/*"]
     }
   },
   "include": [

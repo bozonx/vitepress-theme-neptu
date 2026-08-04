@@ -41,7 +41,7 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-      - name: Build documentation and landing example
+      - name: Build blog and landing examples
         run: npm run build
 
       - name: Install Playwright browsers
@@ -52,21 +52,19 @@ jobs:
       - name: Run E2E tests
         run: npm run e2e
 
-      - name: Build landing example for Pages
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-        run: npm run landing:build
-
-      - name: Merge landing into docs dist
+      - name: Assemble GitHub Pages artifact
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         run: |
-          mkdir -p docs/src/.vitepress/dist/landing
-          cp -r docs/landing-example/src/.vitepress/dist/* docs/src/.vitepress/dist/landing/
+          mkdir -p dist/blog dist/landing
+          cp examples/index.html dist/index.html
+          cp -r examples/blog/src/.vitepress/dist/* dist/blog/
+          cp -r examples/landing/src/.vitepress/dist/* dist/landing/
 
       - name: Upload Pages artifact
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/src/.vitepress/dist
+          path: dist
 
   deploy:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')

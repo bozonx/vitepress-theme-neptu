@@ -232,7 +232,7 @@ ${c.green('✔')} Created ${c.bold(rel)}
     • edit src/site.yaml and src/${locale}/_site.yaml
     • replace the demo posts in src/${locale}/post/
 
-  ${c.dim('Guide:')} https://bozonx.github.io/vitepress-theme-neptu
+  ${c.dim('Guide:')} https://bozonx.github.io/vitepress-theme-neptu/blog
 `)
 }
 

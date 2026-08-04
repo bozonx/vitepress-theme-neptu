@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test'
 
 const previewCmd =
   'npm run preview -w vitepress-theme-neptu-landing-example -- --port 4174 --host 127.0.0.1'
-// On CI the landing example is already built by a separate workflow step;
+// On CI the landing example is already built by the main build step;
 // locally we build first to ensure the preview server has content to serve.
 const webServerCommand = `npm run build -w vitepress-theme-neptu-landing-example && ${previewCmd}`
 

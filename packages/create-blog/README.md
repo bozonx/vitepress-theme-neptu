@@ -50,7 +50,7 @@ labels until you override them under `themeConfig.t`.
 ## Documentation
 
 The guide is itself a blog built with the theme:
-[bozonx.github.io/vitepress-theme-neptu](https://bozonx.github.io/vitepress-theme-neptu)
+[bozonx.github.io/vitepress-theme-neptu/blog](https://bozonx.github.io/vitepress-theme-neptu/blog)
 
 ## License
 

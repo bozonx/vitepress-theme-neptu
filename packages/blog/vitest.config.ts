@@ -11,7 +11,7 @@ export default defineConfig({
     testTimeout: 10_000,
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.test.ts'],
-    exclude: ['node_modules/**', 'dist/**', 'docs/**', '.vitepress/**', 'tests/e2e/**'],
+    exclude: ['node_modules/**', 'dist/**', 'examples/**', '.vitepress/**', 'tests/e2e/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
