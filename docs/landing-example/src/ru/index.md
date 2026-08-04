@@ -79,7 +79,7 @@ blocks:
     text: iframe загружается лениво и получает доступное название.
     src: /ru/doc/about
     embedTitle: Встроенный пример документации
-    ratio: 21/9
+    mediaRatio: '21/9'
 
   - type: logos
     bg: soft

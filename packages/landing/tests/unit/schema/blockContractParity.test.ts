@@ -163,7 +163,7 @@ function extractMember(
   member: ts.TypeNode,
   out: { props: Set<string>; required: Set<string> }
 ): string | undefined {
-  let node = ts.isParenthesizedTypeNode(member) ? member.type : member
+  const node = ts.isParenthesizedTypeNode(member) ? member.type : member
 
   // `(BlockBase<...> & SourcedVideo)` — walk the intersection, the `BlockBase`
   // arm yields the type literal and its own props; the other arms contribute
