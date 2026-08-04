@@ -49,6 +49,7 @@ themeConfig:
   # Color theme and shape preset applied to first-time visitors.
   # Colors: blue | green | purple | amber | teal | rose | magenta | monochrome
   # Styles: soft | sharp | brutal | glass | editorial | mono
+  # Both also accept the id of a preset you define in .vitepress/theme/styles.css.
   # defaultColorTheme: 'blue'
   # defaultStylePreset: 'soft'
 
@@ -72,14 +73,19 @@ themeConfig:
     background: none # none | parallax
     # backgroundImage: /img/home.jpg
     # bgParallaxOffset: 300
-    # Global hero defaults (can also be configured per-locale in _site.yaml).
+    # Global hero defaults. The wording is per-locale, so `hero.title` and
+    # `hero.description` normally live in `<locale>/_site.yaml`.
     # Recommended image size: 320x320 px (transparent WebP/PNG/SVG).
-    # Supports string ('/img/hero.png'), object ({ src, alt }), or light/dark theme object:
+    # `image` accepts a string, `{ src, alt }`, `{ light, dark, alt }`, or
+    # `{ src: { light, dark }, alt }`:
     # hero:
     #   image:
     #     light: '/img/hero-light.png'
     #     dark: '/img/hero-dark.png'
     #     alt: 'Blog Hero'
+    # Sections listed below are rendered in this order. A section whose page
+    # folder you deleted must be disabled here too (see README, "Trim what you
+    # don't need").
     sections:
       - type: featured
         enabled: true
@@ -295,6 +301,15 @@ themeConfig:
   # Default: 5
   # paginationMaxItems: 5
 
+  # --- Footer ----------------------------------------------------------------
+  # `message`, `copyright` and `links` are wording, so they live per-locale in
+  # `<locale>/_site.yaml`. Put only the shared icon toggles here.
+  # footer:
+  #   # All three default to false.
+  #   rssFeed: true
+  #   atomFeed: true
+  #   github: true   # uses `repo` from .vitepress/config.ts
+
   # --- Icons -----------------------------------------------------------------
   # Override any sidebar/nav icon with an Iconify icon name.
   # donateIcon: 'fa6-solid:hand-holding-heart'
@@ -380,150 +395,22 @@ themeConfig:
   #   # Default: 300
   #   maxDescriptionLength: 300
 
-  # --- Home page ------------------------------------------------------------
-  # Hero image URL shown on the home page (landing starter only).
-  # Default: none
-  # mainHeroImg: /hero.jpg
-
   # --- i18n Translations ----------------------------------------------------
-  # Partial translation overrides. Deep-merged over built-in locale defaults.
-  # Only supply the keys you want to override.
+  # Partial overrides of the built-in UI strings, deep-merged over the locale
+  # defaults — supply only the keys you change. Wording that differs per
+  # language belongs in `<locale>/_site.yaml`; keep this file for keys that are
+  # identical everywhere (e.g. a single-language blog).
+  #
+  # The schema hint at the top of this file gives editor autocomplete for every
+  # key. Nested groups: `links`, `months`, `podcasts`, `audioFile`, `videoFile`,
+  # `fileDownload`, `lightbox`.
   # t:
   #   popularPosts: Popular
-  #   similarPosts: Similar posts
-  #   shareSocialMedia: Share
-  #   currentLang: Current language
-  #   tagBadgeCount: posts
-  #   tagPageHeader: Posts tagged
-  #   tags: Tags
-  #   allTags: All tags
-  #   categories: Categories
-  #   allCategories: All categories
-  #   allCategoriesCall: View all categories
-  #   categoryPageHeader: Posts in category
-  #   categoryBadgeCount: posts
-  #   breadcrumbHome: Home
-  #   paginationToStart: First page
-  #   paginationToEnd: Last page
-  #   toHome: Home
-  #   toBlog: Blog
-  #   author: Author
-  #   year: Year
-  #   showMorePosts: More posts
-  #   listenPodcast: Listen
-  #   commentLink: Comments
-  #   allTagsCall: All tags
-  #   popularPostsCall: Popular posts
-  #   viewInAnotherLanguage: Read in another language
-  #   postVideoButton: Watch video
-  #   allPostsOfAuthor: All posts by author
-  #   closeMenu: Close menu
-  #   allPostsOfYear: All posts of year
-  #   pageNotFound: Page not found
-  #   postsCount: posts
-  #   featuredPosts: Featured posts
-  #   previousPost: Previous post
-  #   nextPost: Next post
-  #   editLink: Edit this page
-  #   postsCountForms: [post, posts, posts]
-  #   draftLabel: Draft
-  #   draftTitle: This post is a draft and is hidden from lists
-  #   readingTime: Reading time
-  #   readingTimeForms: [min, min]
-  #   tocLabel: On this page
-  #   adLabel: Advertisement
-  #   search: Search
-  #   searchInBlog: Search this blog
+  #   similarPosts: You may also like
+  #   # Plural forms: 2 for English-like, 3 for Russian-like languages.
+  #   postsCountForms: [post, posts]
   #   links:
-  #     aboutBlog: About blog
-  #     donate: Donate
-  #     recent: Recent
-  #     featured: Featured
-  #     popular: Popular
-  #     byDate: By date
-  #     links: Links
-  #     authors: Authors
-  #     aboutUs: About us
-  #     rssFeed: RSS feed
-  #     atomFeed: Atom feed
-  #   # Arrays or objects keyed by number/platform are accepted here.
-  #   months: [January, February, March, April, May, June, July, August, September, October, November, December]
-  #   podcasts:
-  #     site: "Release's page"
-  #     rss: RSS Feed
-  #     castbox: Castbox
-  #     soundstream: Sound stream
-  #     spotify: Spotify
-  #     youtube: YouTube
-  #     amazonmusic: Amazon Music
-  #     iheartradio: iHeart Radio
-  #     tunein: TuneIn
-  #     vk: VK
-  #     yandexmusic: Yandex Music
-  #     deezer: Deezer
-  #     pocketcasts: Pocket casts
-  #     applepodcasts: Apple podcasts
-  #     overcast: Overcast
-  #     zvuk: Zvuk
-  #     podcastaddiction: Podcast addiction
-  #   audioFile:
-  #     downloadFile: Download
-  #     playAudio: Play audio
-  #     pauseAudio: Pause audio
-  #     startAudioPlayback: Start audio playback
-  #     pauseAudioPlayback: Pause audio playback
-  #     resumeAudioPlayback: Resume audio playback
-  #     stopAudio: Stop audio
-  #     stopAudioPlayback: Stop audio playback and reset to beginning
-  #     hidePlayer: Hide audio player controls
-  #     hidePlayerTitle: Hide player
-  #     audioFile: Audio file
-  #     downloadAudioFile: Download
-  #     currentTime: Current time
-  #     audioProgress: Audio progress
-  #     volumeControl: Volume control
-  #     volumePercent: volume
-  #     retryWithValidUrl: Retry with valid URL
-  #     retry: Retry
-  #     invalidUrlProvided: Invalid URL provided
-  #     invalidAudioUrlProvided: Invalid audio URL provided
-  #     errorDownloadingFile: Error downloading file
-  #     errorPlayingAudioFile: Error playing audio file
-  #     audioPlaybackAborted: Audio playback was aborted
-  #     networkErrorLoadingAudio: Network error occurred while loading audio
-  #     audioDecodingError: Audio decoding error
-  #     audioFormatNotSupported: Audio format not supported
-  #     unknownAudioError: Unknown audio error occurred
-  #     errorLoadingAudioFile: Error loading audio file
-  #   fileDownload:
-  #     fileDownload: File download
-  #     downloadFile: Download file
-  #     downloadFileWithName: Download file
-  #     fileType: File type
-  #     fileSize: File size
-  #     downloadStarted: File download started
-  #     downloadError: Error downloading file
-  #     invalidUrlProvided: Invalid URL provided
-  #     retryDownload: Retry download
-  #     retry: Retry
-  #   videoFile:
-  #     downloadFile: Download
-  #     videoFile: Video file
-  #     downloadVideoFile: Download
-  #     retry: Retry
-  #     videoPlaybackAborted: Video playback was aborted
-  #     networkErrorLoadingVideo: Network error occurred while loading video
-  #     videoDecodingError: Video decoding error
-  #     videoFormatNotSupported: Video format not supported
-  #     unknownVideoError: Unknown video error occurred
-  #     errorLoadingVideoFile: Error loading video file
-  #   lightbox:
-  #     prev: Previous
-  #     next: Next
-  #     close: Close
-  #     resetZoom: Reset zoom
-  #     dialogTitle: Image
-  #     loadingIndicatorLabel: Loading...
+  #     aboutBlog: About this blog
 
   # --- Custom Fields ---------------------------------------------------------
   # You can add any own fields to `themeConfig` — they are preserved through

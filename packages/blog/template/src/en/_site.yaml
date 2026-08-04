@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../../node_modules/vitepress-theme-neptu/schema/site.schema.json
+# yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu/schema/site.schema.json
 # ---------------------------------------------------------------------------
 # Level 3 of 3 — per-locale admin configuration.
 # Overrides Level 1 (`.vitepress/config.ts`) and Level 2 (`src/site.yaml`)
@@ -12,20 +12,27 @@
 # IETF language tag for this locale, e.g. 'en-US', 'ru-RU', 'pt-BR'.
 lang: 'en-US'
 
+# Human-readable language name for the language switcher and the root language
+# selector. Built-in languages already have one, so set it only for a language
+# the theme does not ship, or to change the wording. Use the endonym.
+# label: 'English'
+
 # Canonical site title for this locale: browser tabs, SEO, feeds and the
 # sidebar default all use it. Set themeConfig.blogTitle only to override the
 # visual sidebar label.
 title: 'My Neptu Blog'
 
 # Per-page title template. Use ':title' as the placeholder for the page title.
+# Set to `false` to disable the suffix entirely.
 # titleTemplate: ':title | ${site.title}'
 
 # Site description used for SEO meta tags and RSS/Atom feeds.
 description: 'Welcome to my new blog'
 
-# Name of another locale whose _site config is inherited as the base;
-# current values override the parent.
-# extends: en
+# Folder name of another locale whose _site config is inherited as the base;
+# current values override the parent. Useful for language variants, e.g.
+# `src/en-GB/_site.yaml` with `extends: en-US`.
+# extends: en-US
 
 themeConfig:
   # Localized home-page copy. Its layout and section order live in site.yaml.
@@ -46,52 +53,37 @@ themeConfig:
       actions:
         - text: 'Browse Recent Posts'
           href: 'recent/1'
+          # `primary: true` renders the filled accent button.
           primary: true
         - text: 'About Me'
           href: 'page/about'
+          # icon: 'fa6-solid:circle-info'
 
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
   # blogTitle: 'My Neptu Blog'
-  # Also you can override other fields from category "Branding & layout"
-  # like sidebar.logoSrc, sidebarMenuLabel etc.
-  # Also you can override all other themeConfig fields from src/site.yaml
-  # Custom fields are also supported — see the "Custom Fields" section in
-  # src/site.yaml for details.
 
   # -------------------------------------------------------------------------
-  # Fine-grained themeConfig overrides
+  # Fine-grained overrides
   #
-  # Every themeConfig key from Level 2 (`src/site.yaml`) can be overridden
-  # here for this locale only. Objects deep-merge, so you only need to
-  # specify the sub-keys that differ — the rest is inherited from Level 2.
-  #
-  # For example, to show post thumbnails but hide the preview text in this
-  # locale while keeping all other postList defaults from site.yaml:
+  # Every themeConfig key from `src/site.yaml` can be overridden here for this
+  # locale only, including your own custom fields. Objects deep-merge, so list
+  # just the sub-keys that differ; arrays replace, so an array override must be
+  # complete. Prefer the shared layer for site-wide behavior and override here
+  # only when this locale intentionally differs.
   #
   #   postList:
-  #     showPreview: false
-  #
-  # To reorder post-footer blocks for this locale without re-listing every
-  # block from site.yaml:
-  #
-  #   postFooter:
+  #     showPreview: false      # only this sub-key changes
+  #   postFooter:               # arrays replace — list every wanted block
   #     - author
   #     - tags
   #     - social-share
-  #
-  # Other commonly overridden keys: sidebar, nav, footer, donate, editLink,
-  # socialMediaShares, seo, feeds, popularPosts.sortBy, sidebarTagsCount,
-  # sidebarCategoriesCount, similarPostsCount. See src/site.yaml for the full reference — do not
-  # duplicate parameters that are already defined there.
   # -------------------------------------------------------------------------
-  # Locale-specific theme overrides. Same keys as global `themeConfig` in
-  # `.vitepress/config.ts` and `src/site.yaml`. Prefer global config for
-  # site-wide behavior; override here only when this locale intentionally differs.
-  # -------------------------------------------------------------------------
+
   # Locale-specific UI labels (override built-in defaults per locale):
   # sidebarMenuLabel: 'Menu'           # mobile sidebar toggle / aria-label
   # colorThemeMenuLabel: 'Theme'       # color theme switcher tooltip
   # langMenuLabel: 'Interface language'  # language switcher tooltip
+  # stylePresetMenuLabel: 'Style'      # style preset switcher tooltip
   # returnToTopLabel: 'Back to top'    # "back to top" button text
   # lightModeSwitchTitle: 'Switch to light theme'
   # darkModeSwitchTitle: 'Switch to dark theme'
@@ -101,7 +93,8 @@ themeConfig:
 
   # --- Edit Link -------------------------------------------------------------
   editLink:
-    # pattern: "https://github.com/user/repo/edit/main/example/blog/src/:path"
+    # Auto-derived from `themeConfig.repo`; set it only for a custom layout.
+    # pattern: "https://github.com/your-username/my-blog/edit/main/src/:path"
     text: 'Edit this page on GitHub'
 
   # -------------------------------------------------------------------------
@@ -115,8 +108,11 @@ themeConfig:
 
   # -------------------------------------------------------------------------
   # Publisher info — used in the auto-generated JSON-LD for every page.
+  # Defined in src/site.yaml; override here for a localized name or logo.
   # -------------------------------------------------------------------------
-  #  logo: 'https://myblog.org/img/logo.png'
+  # publisher:
+  #   name: 'My Blog'
+  #   logo: '/img/logo.png'
 
   # Authors live in the sibling `_authors.yaml` file (merged by `id`).
   # You can also declare them inline here under `authors:` — both sources are
@@ -227,6 +223,10 @@ themeConfig:
   footer:
     message: 'Built with Neptu Blog Theme & VitePress.'
     copyright: 'Copyright © 2026'
+    # Icon links in the footer. All three default to false.
+    # rssFeed: true
+    # atomFeed: true
+    # github: true   # uses `themeConfig.repo` from .vitepress/config.ts
     links:
       - text: '${t.links.aboutBlog}'
         href: 'page/about'

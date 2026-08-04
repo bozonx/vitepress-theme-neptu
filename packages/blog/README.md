@@ -44,7 +44,7 @@ git clone https://github.com/bozonx/vitepress-theme-neptu
 cp -r vitepress-theme-neptu/packages/blog/template my-blog
 ```
 
-Requires Node.js 20.19+ or 22.18+.
+Requires Node.js 22.18+.
 
 Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu/ru/post/getting-started).
 

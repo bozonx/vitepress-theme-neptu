@@ -85,7 +85,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - run: npm ci
       - run: npm run build
@@ -115,7 +115,7 @@ Actions** и пробросьте их в шаг `npm run build` через `env
 | --- | --- |
 | Команда сборки | `npm run build` |
 | Каталог публикации | `src/.vitepress/dist` |
-| Версия Node.js | 20.19+ или 22.18+ |
+| Версия Node.js | 22.18+ |
 
 На этих платформах сайт обычно лежит в корне домена, поэтому `base` менять не нужно —
 достаточно задать правильный `siteUrl`.

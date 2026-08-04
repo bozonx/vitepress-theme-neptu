@@ -1,12 +1,15 @@
+# yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu/schema/authors.schema.json
 # ─────────────────────────────────────────────────────────────────────
 # Author profiles for this locale.
 # Referenced from a post via the `authorId` frontmatter field.
 #
 # This file is an array of Author objects — each entry must have at least
 # an `id`. Entries with the same `id` across layers are shallow-merged
-# (child overrides parent field-by-field).
+# (child overrides parent field-by-field), so you can also declare authors
+# inline under `themeConfig.authors` in `_site.yaml`.
 #
-# yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu/schema/authors.schema.json
+# Not using authors? Delete this file and the `authors/` folder, then switch
+# off `sidebar.authors` / `postList.showAuthor` in src/site.yaml.
 # ─────────────────────────────────────────────────────────────────────
 
 - # Unique stable identifier. Referenced from post frontmatter (`authorId`)
@@ -37,21 +40,21 @@
 
   # Twitter/X username without the leading '@'.
   # Used for Twitter Card meta tags and social integrations.
-  # twitterHandle: 'alexdev'
+  # twitterHandle: 'ivandev'
 
   # Social media / external links displayed below the author description.
   # Each link renders as an icon button; the icon is resolved by `type`.
-  # Supported types: site, youtube, x, facebook, instagram, tiktok, vk,
-  #   mastodon, diaspora.
-  # Unrecognized types fall back to the generic "site" (globe) icon.
+  # Types with a dedicated icon: site, youtube, x, facebook, instagram,
+  #   tiktok, vk, mastodon, diaspora.
+  # Any other type (e.g. 'github') falls back to the generic globe icon.
   links:
       # Link type — controls which icon is displayed.
-    - type: 'github'
+    - type: 'site'
       # Full URL to the external resource.
-      url: 'https://github.com/'
+      url: 'https://example.com'
       # Accessible label / tooltip text shown on hover.
-      title: 'GitHub'
+      title: 'Personal site'
 
-    - type: 'website'
+    - type: 'x'
       url: 'https://x.com/'
       title: 'X'

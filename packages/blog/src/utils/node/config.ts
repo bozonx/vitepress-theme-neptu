@@ -298,6 +298,7 @@ export async function loadBlogLocale(
 
   const {
     lang,
+    label,
     title: rawTitle,
     titleTemplate,
     description,
@@ -308,7 +309,7 @@ export async function loadBlogLocale(
 
   return {
     lang: typeof lang === 'string' ? lang : undefined,
-    label: baseLocale.label,
+    label: typeof label === 'string' ? label : baseLocale.label,
     title: typeof title === 'string' ? title : undefined,
     titleTemplate:
       typeof titleTemplate === 'string' || typeof titleTemplate === 'boolean'

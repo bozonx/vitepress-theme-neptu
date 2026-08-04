@@ -17,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Requires **Node.js 20.19+ or 22.18+**.
+Requires **Node.js 22.18+**.
 
 ## What it does
 

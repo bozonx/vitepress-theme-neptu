@@ -183,6 +183,18 @@ describe('loadSiteLocale', () => {
     expect(result.lang).toBeUndefined()
   })
 
+  it('lets _site.yaml override the built-in label', async () => {
+    vi.mocked(parseLocaleSite).mockResolvedValueOnce({
+      label: 'British English',
+    })
+
+    const result = await loadSiteLocale('en', {
+      siteUrl: 'https://example.com',
+      srcDir: '/src',
+    })
+    expect(result.label).toBe('British English')
+  })
+
   it('extracts lang, title, description from _site.yaml', async () => {
     vi.mocked(parseLocaleSite).mockResolvedValueOnce({
       lang: 'en-US',

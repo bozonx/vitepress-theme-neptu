@@ -23,7 +23,7 @@
     "scaffold"
   ],
   "engines": {
-    "node": "^20.19.0 || >=22.18.0"
+    "node": ">=22.18.0"
   },
   "bin": {
     "create-neptu-blog": "./index.mjs"

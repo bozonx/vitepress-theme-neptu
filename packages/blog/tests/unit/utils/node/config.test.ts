@@ -92,6 +92,14 @@ describe('loadBlogLocale', () => {
     expect(result.themeConfig!.t!.toBlog).toBeDefined()
   })
 
+  it('lets _site.yaml override the built-in locale label', async () => {
+    siteMocks['en'] = { label: 'British English' }
+
+    const result = await loadBlogLocale('en', { srcDir: '/src' })
+
+    expect(result.label).toBe('British English')
+  })
+
   it('exposes built-in content-locale defaults to YAML template params', async () => {
     const result = await loadBlogLocale('en', {
       srcDir: '/src',

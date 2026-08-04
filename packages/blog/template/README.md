@@ -1,117 +1,143 @@
-# Neptu Blog Starter Template
+# Neptu Blog Starter
 
-A clean, production-ready starter blog template powered by [VitePress](https://vitepress.dev/) and [`vitepress-theme-neptu`](https://github.com/bozonx/vitepress-theme-neptu).
+A working blog built with [VitePress](https://vitepress.dev/) and
+[`vitepress-theme-neptu`](https://github.com/bozonx/vitepress-theme-neptu).
+Everything here is meant to be edited, renamed or deleted — it is your blog now.
 
-Requires **Node.js 20.19+ or 22.18+** (the VitePress 2 baseline).
-
-## 🚀 Quick Start
-
-If you have not copied this folder yet, the scaffolder does it for you and asks
-for the blog title and content language:
-
-```bash
-npm create neptu-blog@latest my-blog
-```
-
-Already have the folder? Continue from step 1.
-
-### 1. Install dependencies
+Requires **Node.js 22.18+** (the VitePress 2 baseline).
 
 ```bash
 npm install
-# or: pnpm install / yarn install
-```
-
-### 2. Start local development server
-
-```bash
-npm run dev
-# or: pnpm dev / yarn dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### 3. Build for production
-
-```bash
-npm run build
-# or: pnpm build / yarn build
-```
-
-This compiles the static site into `src/.vitepress/dist` and indexes it with
-[Pagefind](https://pagefind.app/) — the theme runs the indexing itself, so there
-is no separate search build step.
-
-### 4. Preview production build
-
-```bash
+npm run dev      # http://localhost:5173
+npm run build    # static site + Pagefind search index → src/.vitepress/dist
 npm run preview
-# or: pnpm preview / yarn preview
 ```
+
+Full documentation (config reference, frontmatter, components, deployment):
+**[bozonx.github.io/vitepress-theme-neptu](https://bozonx.github.io/vitepress-theme-neptu)**
 
 ---
 
-## 📁 Project Structure
+## What is where
 
 ```text
-.
-├── src/
-│   ├── .vitepress/
-│   │   ├── config.ts       # Main VitePress & theme config
-│   │   └── theme/          # Theme customization & components
-│   ├── site.yaml           # Global cross-locale site config
-│   ├── index.md            # Language selector (never locale content)
-│   ├── en/                 # English content locale
-│   │   ├── _authors.yaml   # Author profiles
-│   │   ├── _site.yaml      # Locale site config
-│   │   ├── post/           # Blog posts (Markdown)
-│   │   └── page/           # Standalone pages (About, Donate, etc.)
-│   └── public/             # Static public assets
-├── package.json
-└── README.md
+src/
+├── .vitepress/
+│   ├── config.ts        # developer layer: siteUrl, repo, env-driven integrations
+│   └── theme/           # Layout.vue (locale data + slots), styles.css, index.ts
+├── site.yaml            # admin layer shared by every locale
+├── index.md             # language selector — the only file allowed at content root
+├── en/                  # a content locale (rename it, see below)
+│   ├── _site.yaml       # this locale: lang, title, description, overrides
+│   ├── _authors.yaml    # author profiles referenced by `authorId` in posts
+│   ├── post/            # your posts
+│   ├── page/            # standalone pages (about, donate, …)
+│   └── recent/ archive/ tags/ categories/ authors/ featured/ popular/
+│                        # generated list pages — see "Trim what you don't need"
+└── public/              # static assets served from the site root
 ```
 
-This structure is required for both single-language and multilingual Neptu
-sites. Keeping only `src/en/` is a complete single-language setup; it does not
-mean that you must create translations. Do not move locale content directly
-under `src/`.
+Config is layered, lowest priority first:
+`config.ts` → `src/site.yaml` → `src/<locale>/_site.yaml`.
+Each file documents its own options in comments; do not duplicate a value in two
+layers unless you intend to override it.
 
-### Adding a language
+## Step 1 — name your locale folder
 
-1. Copy `src/en/` to a sibling folder named after the locale, e.g. `src/ru/`.
-2. Set `lang`, `title` and `description` in its `_site.yaml`.
-3. Register the locale's post data in `src/.vitepress/theme/Layout.vue` — data
-   loaders are static imports, so each locale needs one line there. The file
-   carries an example in a comment.
+Content **must** live in a locale folder; `src/index.md` is the language
+selector and the only file allowed directly under `src/`.
 
-UI strings come from the theme's built-in translations for that language;
-override individual keys under `themeConfig.t` when you want different wording.
+- Keep `src/en/` if you write in English, or **rename it** to your language
+  (`src/ru/`, `src/de/`, …).
+- Renaming a locale means: rename the folder, then update the static import and
+  the `posts` map in `src/.vitepress/theme/Layout.vue`, and set `lang`/`title` in
+  its `_site.yaml`.
 
-The root `src/index.md` is a neutral language selector. It contains crawlable
-links and only highlights the browser's likely language; it deliberately does
-not perform an automatic browser-language redirect.
+**Folder naming.** The folder name is the locale key and the URL prefix
+(`/ru/post/hello`). Use a bare ISO 639-1 code — `en`, `ru`, `de`, `pt` — unless
+you ship several variants of one language; then use BCP 47
+`<language>-<REGION>` with a lowercase language and an uppercase region:
 
----
+| Case | Folder | `lang:` in `_site.yaml` |
+| --- | --- | --- |
+| One English version | `en` | `en-US` or `en-GB` — pick your variety |
+| American + British side by side | `en-US`, `en-GB` | `en-US`, `en-GB` |
+| Brazilian + European Portuguese | `pt-BR`, `pt-PT` | `pt-BR`, `pt-PT` |
+| Simplified Chinese | `zh-CN` (or `zh`) | `zh-CN` |
+| Latin-American Spanish | `es-419` | `es-419` |
 
-## ⚙️ Customization
+Built-in UI strings are resolved by exact folder name first, then by the bare
+language part, then fall back to `en`. So `en-GB` reuses the `en` strings and
+`pt-BR` reuses `pt` — override individual words under `themeConfig.t` in that
+locale's `_site.yaml`. Translations ship for: `ar`, `cs`, `de`, `en`, `es`,
+`fr`, `he`, `hi`, `it`, `ja`, `ko`, `lv`, `nl`, `pl`, `pt`, `ru`, `sr`, `sv`,
+`th`, `tr`, `zh`. Any other folder name works too — it just starts from the
+English strings until you translate `themeConfig.t`.
 
-- **Site Info & Navigation**: Edit `src/site.yaml` and `src/en/_site.yaml` to set your blog title, navigation links, social icons, and footer text.
-- **VitePress & integrations**: Edit `src/.vitepress/config.ts` to set your site URL (`siteUrl`), search provider, build-time pagination, and environment-backed integrations.
-- **Repository & edit links**: Set `themeConfig.repo` in `src/.vitepress/config.ts`. The edit-link URL is generated from this repository URL automatically; use `editLink.pattern` only for a custom repository layout.
-- **Authors**: Add your author profile in `src/en/_authors.yaml`.
-- **New Posts**: Add new `.md` files in `src/en/post/`. Two demo posts are
-  there to be deleted once you have your own.
-- **Popular posts**: off by default so the first build is quiet. Set
-  `popularPosts.enabled` in `src/.vitepress/config.ts` and `sidebar.popular` in
-  `src/site.yaml` once GA4 credentials are available.
+`lang` in `_site.yaml` is the IETF tag written into `<html lang>`, feeds and
+hreflang. Keep it region-qualified (`en-US`, not `en`) even when the folder is
+bare.
 
-Every option in `src/site.yaml`, `src/en/_site.yaml`, `src/en/_authors.yaml`
-and `src/.vitepress/config.ts` is documented in comments right next to it —
-those four files are the reference you will use most.
+## Step 2 — make it yours
 
-## 📚 Full guide
+1. `src/.vitepress/config.ts` — `siteUrl` and `themeConfig.repo` (edit links are
+   derived from `repo`), plus `base` if you deploy to a subfolder.
+2. `src/<locale>/_site.yaml` — `lang`, `title`, `description`, hero copy, nav,
+   sidebar and footer links.
+3. `src/site.yaml` — cross-locale presentation: home sections, sidebar sections,
+   post-card and post-footer layout, `publisher` (used in JSON-LD).
+4. `src/<locale>/_authors.yaml` — replace the demo author; the `id` is what
+   posts reference via `authorId`.
+5. `src/<locale>/page/` — rewrite `about.md`, `donate.md` (or delete them and
+   their links).
+6. `src/<locale>/post/` — delete `welcome.md` and `markdown-guide.md` and write
+   your own. `markdown-guide.md` doubles as a cheatsheet for the theme's
+   Markdown extensions, so read it before deleting.
+7. `src/public/` — favicons, `site.webmanifest`, images. Paths in config are
+   relative to this folder's root (`/img/logo.png`).
 
-The documentation site is itself a blog built with this theme, arranged as a
-guide from first launch to advanced customization:
+## Step 3 — trim what you don't need
 
-### → [bozonx.github.io/vitepress-theme-neptu](https://bozonx.github.io/vitepress-theme-neptu)
+Each generated section is a folder of route files plus the flags that link to
+it. Delete the folder **and** turn the flags off, otherwise the sidebar or home
+page will point at pages that no longer exist.
+
+| Don't want | Delete | Also turn off |
+| --- | --- | --- |
+| Author pages & bylines | `src/<locale>/authors/`, `src/<locale>/_authors.yaml` | `sidebar.authors`, `postList.showAuthor` in `src/site.yaml`, `author` in `postFooter`, `authorId` in post frontmatter |
+| Categories | `src/<locale>/categories/` | `sidebar.categories`, the `categories` home section, `categories` in `postFooter`, `category` in post frontmatter |
+| Featured list | `src/<locale>/featured/` | `sidebar.featured`, the `featured` home section, `featured: true` in post frontmatter |
+| Popular posts | `src/<locale>/popular/` and the `popular/` subfolders under `archive/[year]/`, `authors/[id]/`, `categories/[slug]/`, `tags/[slug]/` | `sidebar.popular`, the `popular` home section, `popular-link` in `postFooter`, `popularPosts.enabled` in `config.ts` |
+| Tags | `src/<locale>/tags/` | `sidebar.tags`, the `tags` home section, `tags` in `postFooter`, `tags` in post frontmatter |
+| Archive by year | `src/<locale>/archive/` | `sidebar.archive` |
+| Recent list page | `src/<locale>/recent/` | `sidebar.recent`, the `Browse Recent Posts` hero action in `_site.yaml` |
+| Donations | `src/<locale>/page/donate.md` | `nav.donate`, `sidebar.donate`, `donate` in `postFooter`, the `donate` block |
+| Search | the `#nav-bar-content-before` slot in `src/.vitepress/theme/Layout.vue` | — |
+
+Sidebar and home flags live in `src/site.yaml`; `postFooter` too. Note that
+arrays replace instead of merging across layers, so a `postFooter` override in
+`_site.yaml` must list every block you want.
+
+## Step 4 — add more languages (optional)
+
+1. Copy `src/<locale>/` to a new folder, e.g. `src/ru/`.
+   - Copy **everything** if you want the same URLs in both languages, then
+     translate the texts in place.
+   - Or copy everything except `post/` and `page/` if the new language gets its
+     own articles and page slugs.
+2. Edit the new `_site.yaml`: `lang`, `title`, `description`, hero and link
+   texts. Use `extends: <locale>` to inherit another locale's settings instead of
+   repeating them.
+3. Add the locale to `src/.vitepress/theme/Layout.vue` — data loaders are static
+   imports, so every locale needs one line there (an example is in the file).
+4. Translate `_authors.yaml` descriptions if you keep authors.
+
+`src/index.md` renders the language selector automatically from the locales it
+finds; nothing to register there.
+
+## Deploying
+
+`npm run build` produces `src/.vitepress/dist`. Set `SITE_URL` (absolute URL, no
+trailing slash) and, for a subfolder deployment, `VITEPRESS_BASE` — both are
+read by `config.ts`. Popular posts additionally read `GA_PROPERTY_ID` and
+`GA_CREDENTIALS_JSON` at build time.

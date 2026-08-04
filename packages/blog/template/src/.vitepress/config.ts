@@ -132,12 +132,28 @@ export default async () => {
       /** Pagination — must match the `PER_PAGE` constant above (used by paths.js). */
       perPage: PER_PAGE,
 
-      /** Search provider integration (Pagefind). */
+      /**
+       * Search (Pagefind). The index is built automatically at the end of
+       * `vitepress build`; the UI assets are loaded lazily by the search modal.
+       */
       search: {
         provider: 'pagefind',
         options: {
           bodyMarker: 'data-pagefind-body',
+          // Pagefind UI wording; per-locale under `locales: { en: { translations } }`.
+          // translations: { modal: { noResultsText: 'No results for' } },
         },
+        // index: {
+        //   enabled: true,        // false to run the Pagefind CLI yourself
+        //   glob: '**/*.html',
+        //   rootSelector: 'html',
+        //   excludeSelectors: ['.vp-nav'],
+        //   forceLanguage: 'en',  // index the whole site as one language
+        //   includeCharacters: '<>$',
+        //   keepIndexUrl: false,
+        //   verbose: false,
+        //   logfile: 'pagefind.log',
+        // },
       },
 
       /** Popular posts metrics configuration (GA4). */
@@ -149,15 +165,19 @@ export default async () => {
        * collapsible block above the article on narrower viewports.
        */
       // toc: {
+      //   enabled: true,
       //   position: 'auto',   // 'auto' | 'aside' | 'top'
       //   minHeadings: 3,     // hide the TOC on short articles; 0 disables the threshold
       //   collapsed: true,    // start state of the collapsible block
-      //   level: [2, 3],      // which heading levels to include; also 2 or 'deep'
+      //   level: [2, 3],      // range, a single number, or 'deep'
       //   layouts: ['post'],
+      //   label: 'On this page',  // defaults to the `tocLabel` translation
       // },
 
       /**
-       * Layouts that render the right-hand aside column.
+       * Layouts that render the right-hand aside column, visible from 1550px.
+       * Supported keys: 'post', 'page', 'util', 'tag', 'category', 'archive',
+       * 'author', plus any custom `contentLayout` name.
        * Per-page frontmatter `aside: true | false` overrides this list.
        */
       // asideLayouts: ['post', 'util', 'tag', 'category', 'archive', 'author'],
@@ -168,11 +188,13 @@ export default async () => {
        * registered as a global component (see `theme/index.ts`).
        */
       // ads: {
+      //   enabled: true,
       //   component: 'AdUnit',
       //   layouts: ['post'],
       //   aside: true,          // slot in the aside column
       //   afterContent: false,  // slot below the article
       //   requireConsent: false,
+      //   label: 'Advertisement',  // defaults to the `adLabel` translation
       //   inContent: {
       //     enabled: true,
       //     anchor: 'heading',  // 'heading' | 'paragraph'
@@ -191,6 +213,12 @@ export default async () => {
       //   enabled: true,
       //   waitForUpdate: 500,
       //   // region: ['ES', 'US-CA'],
+      //   // storageKey: 'neptu-consent',
+      //   // Initial granted/denied state before the CMP answers.
+      //   // defaults: {
+      //   //   analytics: false, ads: false, adUserData: false,
+      //   //   adPersonalization: false, functional: true,
+      //   // },
       // },
     },
   }

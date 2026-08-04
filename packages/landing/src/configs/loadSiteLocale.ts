@@ -144,6 +144,7 @@ export async function loadSiteLocale(
   const site = chain.site
   const {
     lang,
+    label,
     title: rawTitle,
     titleTemplate,
     description,
@@ -171,7 +172,7 @@ export async function loadSiteLocale(
 
   return {
     lang: typeof lang === 'string' ? lang : undefined,
-    label: baseLocale.label,
+    label: typeof label === 'string' ? label : baseLocale.label,
     title: typeof title === 'string' ? title : undefined,
     titleTemplate:
       typeof titleTemplate === 'string' ? titleTemplate : undefined,
