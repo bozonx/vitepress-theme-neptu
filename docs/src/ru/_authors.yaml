@@ -7,7 +7,6 @@
   imageWidth: 400
   imageHeight: 400
   twitterHandle: 'neptu_blog'
-  aboutUrl: 'https://github.com/bozonx/vitepress-theme-neptu'
   links:
     - type: 'github'
       url: 'https://github.com/bozonx/vitepress-theme-neptu'

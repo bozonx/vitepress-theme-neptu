@@ -46,17 +46,4 @@ describe('PostAuthor', () => {
     const link = wrapper.findComponent({ name: 'SimpleLink' })
     expect(link.props('href')).toBe('/authors/john/1')
   })
-
-  it('uses aboutUrl when provided', () => {
-    mockFrontmatter.value = { authorId: 'john' }
-    mockTheme.value = {
-      authors: [{ id: 'john', name: 'John Doe', aboutUrl: '/about/john' }],
-      t: { author: 'Author' },
-    }
-    const wrapper = mount(PostAuthor, {
-      global: { stubs: { SimpleLink: SimpleLinkStub } },
-    })
-    const link = wrapper.findComponent({ name: 'SimpleLink' })
-    expect(link.props('href')).toBe('/about/john')
-  })
 })

@@ -583,7 +583,6 @@ export namespace NeptuBlogTheme {
     image?: string
     description?: string
     links?: AuthorLink[]
-    aboutUrl?: string
     imageHeight?: number
     imageWidth?: number
     twitterHandle?: string

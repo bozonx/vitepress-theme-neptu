@@ -26,10 +26,6 @@
       },
       "imageWidth": { "type": "integer", "minimum": 1 },
       "imageHeight": { "type": "integer", "minimum": 1 },
-      "aboutUrl": {
-        "type": "string",
-        "description": "Overrides the auto-generated author page link."
-      },
       "twitterHandle": {
         "type": "string",
         "description": "Twitter username without the leading '@'."

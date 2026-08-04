@@ -247,7 +247,6 @@ themeConfig:
   #     imageWidth: 400
   #     imageHeight: 200
   #     description: Tech writer and open-source enthusiast.
-  #     aboutUrl: /page/about-jane
   #     twitterHandle: janedoe
   #     links:
   #       - type: twitter

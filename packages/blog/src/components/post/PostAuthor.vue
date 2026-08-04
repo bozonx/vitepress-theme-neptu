@@ -14,11 +14,7 @@ const themeAuthor = computed(() =>
     ? theme.value.authors?.find((item: Author) => item.id === frontmatter.value.authorId)
     : undefined
 )
-const authorUrl = computed(() =>
-  themeAuthor.value?.aboutUrl
-    ? themeAuthor.value.aboutUrl
-    : `/authors/${frontmatter.value.authorId}/1`
-)
+const authorUrl = computed(() => `/authors/${frontmatter.value.authorId}/1`)
 </script>
 
 <template>
