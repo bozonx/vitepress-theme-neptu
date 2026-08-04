@@ -134,15 +134,15 @@ aside: true
 # Показать/скрыть оглавление для этой страницы.
 # Перекрывает themeConfig.toc.layouts, но порог по количеству заголовков
 # (themeConfig.toc.minHeadings) всё равно применяется.
-# По умолчанию: следует themeConfig.toc.layouts (встроенный дефолт — ['post']).
+# По умолчанию: следует themeConfig.toc.layouts.
 toc: true
 # Включить/выключить рекламные слоты для этой страницы.
 # Перекрывает themeConfig.ads.layouts. Влияет и на in-content слоты,
 # которые вставляются markdown-плагином на этапе сборки.
-# По умолчанию: следует themeConfig.ads.layouts (встроенный дефолт — ['post']).
+# По умолчанию: следует themeConfig.ads.layouts.
 ads: false
 # Включить страницу в индекс поиска (Pagefind).
-# По умолчанию: true для постов, false для util-страниц (нужно явно true).
+# По умолчанию: true для постов.
 # draft: true принудительно сбрасывает это в false.
 searchIncluded: true
 # Канонический URL. Принимает полный URL или 'self' для авто-каноникала.
@@ -152,26 +152,27 @@ canonical: https://example.com/canonical-url
 # если установлен в false. По умолчанию всё включено.
 # Перекрывает глобальные themeConfig.seo.
 seo:
-  og: true              # Open Graph + Twitter Card мета-теги. По умолчанию: true
-  jsonLd: true          # JSON-LD структурированные данные. По умолчанию: true
-  hreflang: true        # hreflang link-теги (только если >1 локали). По умолчанию: true
-  canonical: true       # canonical link-тег. По умолчанию: true
-  autoCanonical: true   # авто-каноникал, если поле canonical не задано. По умолчанию: true
-  rss: true             # RSS/Atom/JSON feed link-теги на главной. По умолчанию: true
+  og: true              # Open Graph + Twitter Card мета-теги.
+  jsonLd: true          # JSON-LD структурированные данные.
+  hreflang: true        # hreflang link-теги (только если >1 локали).
+  canonical: true       # canonical link-тег.
+  autoCanonical: true   # авто-каноникал, если поле canonical не задано.
+  rss: true             # RSS/Atom/JSON feed link-теги на главной.
   maxDescriptionLength: 160  # лимит символов для авто-экстракта description. По умолчанию: 300
+
 # Черновик. Страница собирается (URL работает для превью),
 # но исключается из списков, RSS, sitemap, поиска и помечается noindex.
 # В vitepress dev черновики видны по умолчанию, в production — скрыты.
 # По умолчанию: false.
-# draft: true
+draft: false
 # Имя компонента для замены центральной области контента.
 # В отличие от layout — заменяет только Content, а не весь layout.
 # Если не указан — fallback на frontmatter.layout.
 # Компонент должен быть глобально зарегистрирован.
-# contentLayout: MyCustomContent
+contentLayout: MyCustomContent
 # Кастомный JSON-LD в виде JSON-строки. Мерджится с авто-генерируемым
 # JSON-LD (не заменяет!) — поля кастомного объекта перезаписывают стандартные.
-# jsonLd: '{"@context":"https://schema.org","@type":"BlogPosting"}'
+jsonLd: '{"@context":"https://schema.org","@type":"BlogPosting"}'
 ---
 ```
 
