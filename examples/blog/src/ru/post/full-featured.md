@@ -64,7 +64,7 @@ description: >
 # layout — необязателен для постов: если не указан, страница рендерится как пост.
 # Доступные встроенные: post, home, page, util, tag, category, archive, author.
 # По умолчанию: 'post'.
-# layout: post
+layout: post
 # ID автора из themeConfig.authors. Если ID не найден — блок автора не рендерится.
 # Важнно точно и без ошибок указывать ID автора чтобы правльно сформировались списки постов по авторам.
 authorId: ivan-k
