@@ -40,6 +40,7 @@
     "build": "npm run build --workspaces --if-present",
     "validate:blocks": "npm run validate:blocks -w vitepress-theme-neptu-landing",
     "check": "npm run generate:icons && npm run validate:blocks && npm run typecheck && npm run lint && npm run test && npm run build && npm run e2e",
+    "dev": "vite & VITEPRESS_BASE=/blog/ npm run blog:dev -- --port 5174 & VITEPRESS_BASE=/landing/ npm run landing:dev -- --port 5175 & wait",
     "blog:dev": "npm run dev -w vitepress-theme-neptu-docs",
     "blog:build": "npm run build -w vitepress-theme-neptu-docs",
     "blog:preview": "npm run preview -w vitepress-theme-neptu-docs",
