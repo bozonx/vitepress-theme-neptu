@@ -204,4 +204,3 @@ markdown: {
 | Блоки под статьёй и кнопки «поделиться» | `postFooter`, `socialMediaShares` | [Подвал поста и шеринг](post-footer-and-sharing) |
 | Правая колонка и оглавление | `toc`, `asideLayouts` | [Оглавление и правая колонка](toc-and-aside) |
 | Своя вёрстка вместо встроенной | слоты `Layout.vue` | [Хуки, слоты и свои макеты](advanced) |
-
