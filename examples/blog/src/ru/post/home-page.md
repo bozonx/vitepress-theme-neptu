@@ -35,8 +35,8 @@ themeConfig:
     appearance: auto
     # максимальная ширина контента в пикселях
     maxWidth: 800
-    # none | parallax — параллакс-фон при скролле
     background:
+      # none | parallax — параллакс-фон при скролле
       type: none
       # путь к фоновому изображению (только с type: parallax)
       # image: /img/home.webp
@@ -53,7 +53,7 @@ themeConfig:
       title: 'Мой блог'
       # подзаголовок под заголовком
       description: 'Короткое описание блога'
-      # Простой вариант одной картинки (рекомендуется 320×320px, WebP/PNG/SVG):
+      # Простой вариант одной картинки (рекомендуется 320×320px (или 640×640px для Retina), WebP/PNG/SVG):
       image: '/img/logo.webp'
       # Или с alt-текстом:
       # image: { src: '/img/logo.webp', alt: 'Логотип' }
