@@ -44,6 +44,6 @@ describe('PostAuthor', () => {
     expect(wrapper.find('address').exists()).toBe(true)
     expect(wrapper.text()).toContain('John Doe')
     const link = wrapper.findComponent({ name: 'SimpleLink' })
-    expect(link.props('href')).toBe('/authors/john/1')
+    expect(link.props('href')).toBe('/en/authors/john/1')
   })
 })

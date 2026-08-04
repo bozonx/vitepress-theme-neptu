@@ -6,7 +6,7 @@ import SimpleLink from '../SimpleLink.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import type { Author } from '../../types.d.ts'
 
-const { frontmatter } = useData()
+const { frontmatter, localeIndex } = useData()
 const { theme } = useUiTheme()
 
 const themeAuthor = computed(() =>
@@ -14,7 +14,11 @@ const themeAuthor = computed(() =>
     ? theme.value.authors?.find((item: Author) => item.id === frontmatter.value.authorId)
     : undefined
 )
-const authorUrl = computed(() => `/authors/${frontmatter.value.authorId}/1`)
+const authorUrl = computed(() =>
+  localeIndex.value && localeIndex.value !== 'root'
+    ? `/${localeIndex.value}/authors/${frontmatter.value.authorId}/1`
+    : `/authors/${frontmatter.value.authorId}/1`
+)
 </script>
 
 <template>
