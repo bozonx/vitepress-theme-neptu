@@ -174,6 +174,122 @@ themeConfig:
 
 Подробнее о блоках главной — в [Домашней странице](home-page).
 
+## Кастомизация главной страницы
+
+YAML-настроек из `themeConfig.home` хватает для большинства сценариев: hero,
+секции, фон, внешний вид. Когда нужно больше контроля — тема отдаёт все
+строительные блоки главной как отдельные компоненты, а сам макет `BlogHome`
+поддерживает слоты.
+
+### Слоты макета `home`
+
+Макет `layout: home` (компонент `BlogHome`) предоставляет два слота для
+дополнительного контента:
+
+| Слот | Расположение |
+|------|--------------|
+| `home-before` | Перед контентной областью (между шапкой и hero/секциями) |
+| `home-after` | После контентной области (перед закрытием страницы) |
+| `nav-bar-content-before` | В верхней панели, перед её содержимым |
+
+Чтобы воспользоваться ими, оберните `BlogHome` в собственный компонент макета:
+
+```vue
+<!-- .vitepress/theme/CustomHome.vue -->
+<script setup>
+import BlogHome from 'vitepress-theme-neptu/layouts/BlogHome.vue'
+import { useScrollY } from 'vitepress-theme-neptu/composables'
+
+const { scrollY } = useScrollY()
+</script>
+
+<template>
+  <BlogHome :scroll-y="scrollY">
+    <template #home-before>
+      <MyBanner />
+    </template>
+    <template #home-after>
+      <MyCTA />
+    </template>
+  </BlogHome>
+</template>
+```
+
+Зарегистрируйте компонент глобально в `.vitepress/theme/index.ts` и укажите его
+в frontmatter:
+
+```yaml
+---
+layout: CustomHome
+---
+```
+
+### Сборка из отдельных компонентов
+
+Если нужно полностью контролировать структуру главной, соберите её из отдельных
+блоков. Все они экспортируются из `vitepress-theme-neptu/components`:
+
+| Компонент | Что выводит |
+|-----------|-------------|
+| `HomeHero` | Hero-блок из `home.hero` |
+| `HomeSections` | Все секции из `home.sections` разом |
+| `HomeFeaturedPosts` | Секция избранных постов |
+| `HomeLatestPosts` | Секция последних постов |
+| `HomePopularPosts` | Секция популярных постов |
+| `HomeTags` | Облако тегов |
+| `HomeCategories` | Список категорий |
+
+Пример собственного макета главной:
+
+```vue
+<!-- .vitepress/theme/CustomHome.vue -->
+<script setup lang="ts">
+import { useData } from 'vitepress'
+import {
+  HomeHero,
+  HomeFeaturedPosts,
+  HomeLatestPosts,
+  HomeTags,
+} from 'vitepress-theme-neptu/components'
+
+const { theme } = useData()
+</script>
+
+<template>
+  <div class="min-h-screen flex flex-col">
+    <!-- Своя шапка или навигация -->
+    <header class="w-full sticky top-0 z-10 bg-white/80 dark:bg-black/80 backdrop-blur">
+      <nav class="max-w-3xl mx-auto px-4 sm:px-7 py-3">
+        <a href="/">Мой блог</a>
+      </nav>
+    </header>
+    <main class="max-w-3xl mx-auto px-4 sm:px-7 w-full py-12">
+      <HomeHero v-if="theme.home?.hero" v-bind="theme.home.hero" />
+      <div class="vp-doc"><Content /></div>
+      <HomeFeaturedPosts :max-posts="3" />
+      <HomeLatestPosts :limit="10" />
+      <HomeTags :header="theme.t.tags" :limit="20" />
+    </main>
+  </div>
+</template>
+```
+
+Компоненты читают конфигурацию из `themeConfig` через `useUiTheme()`, поэтому
+YAML-настройки (`home.hero`, `home.sections`, `perPage` и т. д.) продолжают
+работать — вам не нужно передавать пропсы вручную, если они уже заданы в
+конфиге. Пропсы вроде `:max-posts` или `:limit` позволяют переопределить
+значения для конкретного макета.
+
+### Полностью свой layout
+
+Если ни `BlogHome`, ни отдельные компоненты не подходят, создайте макет с нуля
+и подключите его через `layout` в frontmatter. Тема не накладывает ограничений
+на содержимое `index.md` — подойдёт любой Vue-компонент, зарегистрированный
+глобально.
+
+Полный справочник экспортируемых компонентов — на странице
+[Компонентов](components), раздел «Блоки главной страницы».
+
 ## Печать
 
 Настраивать нечего: при печати страницы тема сама скрывает сайдбар, верхнюю

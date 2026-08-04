@@ -144,6 +144,6 @@ import { RecentList } from 'vitepress-theme-neptu/components'
   Главная в этом режиме работает как первая страница ленты; полную пагинацию
   оставьте на `recent/1` и дайте на неё ссылку в навигации или сайдбаре.
 
-Если и этого мало, соберите главную из [компонентов](components) —
-`HomeHero`, `HomeFeaturedPosts`, `HomeLatestPosts`, `HomePopularPosts`,
-`HomeCategories`, `HomeTags` — или подключите свой layout.
+Если и этого мало — соберите главную из отдельных компонентов или подключите
+свой layout. Как это сделать — в [Кастомизации главной
+страницы](customization#кастомизация-главной-страницы).
