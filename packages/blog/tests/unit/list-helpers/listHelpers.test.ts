@@ -322,8 +322,8 @@ describe('makeAuthorsList', () => {
   })
 
   it('preserves author properties', () => {
-    const authors = [{ id: 'alice', name: 'Alice', avatar: 'a.jpg' }]
+    const authors = [{ id: 'alice', name: 'Alice', image: 'a.jpg' }]
     const result = makeAuthorsList([], authors)
-    expect(result[0]).toMatchObject({ id: 'alice', name: 'Alice', avatar: 'a.jpg' })
+    expect(result[0]).toMatchObject({ id: 'alice', name: 'Alice', image: 'a.jpg' })
   })
 })

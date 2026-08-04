@@ -16,10 +16,6 @@
       },
       "name": { "type": "string" },
       "description": { "type": "string" },
-      "avatar": {
-        "type": "string",
-        "description": "Optional compact avatar image for list previews."
-      },
       "image": {
         "type": "string",
         "description": "Author headshot used on the author page."

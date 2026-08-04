@@ -581,7 +581,6 @@ export namespace NeptuBlogTheme {
   export interface Author {
     id: string
     name: string
-    avatar?: string
     image?: string
     description?: string
     links?: AuthorLink[]

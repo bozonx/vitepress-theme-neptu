@@ -40,8 +40,8 @@ export function createTestBlogEnv(options?: {
       description: 'Описание блога',
       themeConfig: {
         authors: [
-          { id: 'alice', name: 'Алиса', avatar: '/img/alice.jpg' },
-          { id: 'bob', name: 'Боб', avatar: '/img/bob.jpg' },
+          { id: 'alice', name: 'Алиса', image: '/img/alice.jpg' },
+          { id: 'bob', name: 'Боб', image: '/img/bob.jpg' },
         ],
       },
     },
@@ -51,7 +51,7 @@ export function createTestBlogEnv(options?: {
       description: 'Blog description',
       themeConfig: {
         authors: [
-          { id: 'alice', name: 'Alice', avatar: '/img/alice.jpg' },
+          { id: 'alice', name: 'Alice', image: '/img/alice.jpg' },
         ],
       },
     },

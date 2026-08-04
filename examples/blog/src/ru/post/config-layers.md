@@ -126,7 +126,7 @@ themeConfig:
 
 ## Авторы — `_authors.yaml`
 
-Файл — массив профилей. Обязателен только `id`; остальные поля: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `twitterHandle`, `links[]` (`type`, `url`, `title`). Пример и комментарии находятся рядом в шаблоне. Записи сливаются с `themeConfig.authors` по `id`; отдельный `_authors.yaml` имеет приоритет для совпадающего поля.
+Файл — массив профилей. Обязателен только `id`; остальные поля: `name`, `description`, `image`, `imageWidth`, `imageHeight`, `twitterHandle`, `links[]` (`type`, `url`, `title`). Пример и комментарии находятся рядом в шаблоне. Записи сливаются с `themeConfig.authors` по `id`; отдельный `_authors.yaml` имеет приоритет для совпадающего поля.
 
 ## Шаблоны и валидация YAML
 

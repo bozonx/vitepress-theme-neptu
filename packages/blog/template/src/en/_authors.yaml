@@ -22,10 +22,6 @@
   # Short bio / description. Supports inline HTML (rendered via v-html).
   description: 'Software engineer, open-source enthusiast, and writer.'
 
-  # Compact avatar image URL for list previews (e.g. post cards).
-  # Optional; if omitted, list views fall back to `image` or no avatar.
-  # avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
-
   # Full-size author headshot shown on the author page.
   # Optional; when present, the image is displayed in a <figure> with lightbox.
   image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'

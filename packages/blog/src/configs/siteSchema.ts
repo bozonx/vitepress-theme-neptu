@@ -174,7 +174,6 @@ const TranslationSchema = z.looseObject({
 export const AuthorSchema = z.looseObject({
   id: z.string().min(1, 'author `id` must be a non-empty string'),
   name: z.string().optional(),
-  avatar: z.string().optional(),
   image: z.string().optional(),
   description: z.string().optional(),
   twitterHandle: z.string().optional(),
