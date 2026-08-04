@@ -7,8 +7,8 @@ export function transformPageMeta(pageData: ExtendedPageData): void {
   if (!isPost(pageData.frontmatter)) return
   const localeIndex = pageData.filePath?.split('/')[0]
 
-  if (pageData.frontmatter.coverDescr) {
-    pageData.frontmatter.coverDescr = mdToHtml(pageData.frontmatter.coverDescr)
+  if (pageData.frontmatter.coverDescription) {
+    pageData.frontmatter.coverDescription = mdToHtml(pageData.frontmatter.coverDescription)
   }
 
   pageData.frontmatter.tags = normalizeTags(pageData.frontmatter.tags, localeIndex)

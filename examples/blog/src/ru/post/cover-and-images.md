@@ -8,7 +8,7 @@ cover: https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Горный пейзаж на закате
-coverDescr: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
+coverDescription: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
 date: 2026-07-23
 category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
 tags: [media, components]

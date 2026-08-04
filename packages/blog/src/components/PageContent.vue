@@ -119,7 +119,7 @@ const customContent = computed(() => {
 
     <PostImage
       :src="frontmatter.cover"
-      :description="frontmatter.coverDescr"
+      :description="frontmatter.coverDescription"
       :alt="frontmatter.coverAlt"
       :height="frontmatter.coverHeight"
       :width="frontmatter.coverWidth"

@@ -9,7 +9,7 @@ cover: https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Аккуратный стол с клавиатурой, блокнотом и растением
-coverDescr: "coverDescr поддерживает **markdown** и [ссылки](https://unsplash.com)."
+coverDescription: "coverDescription поддерживает **markdown** и [ссылки](https://unsplash.com)."
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
@@ -79,7 +79,7 @@ coverHeight: 800
 coverAlt: Аккуратный стол с клавиатурой, блокнотом и растением
 # Подпись под обложкой. В отличие от coverAlt — поддерживает markdown,
 # который преобразуется в HTML на этапе сборки.
-coverDescr: "coverDescr поддерживает **markdown** и [ссылки](https://unsplash.com)."
+coverDescription: "coverDescription поддерживает **markdown** и [ссылки](https://unsplash.com)."
 # URL обсуждения (GitHub Discussions, Disqus, Telegram и т.п.) — кнопка в подвале поста.
 commentLink: https://github.com/.../discussions
 # Кнопка «Смотреть видео» вверху поста. Внешний URL (YouTube, Vimeo и т.п.).

@@ -69,21 +69,21 @@ describe('transformPageMeta', () => {
     expect(pageData.frontmatter.tags).toEqual([{ name: 'Foo Bar', slug: 'foo-bar' }])
   })
 
-  it('transforms coverDescr markdown to HTML', () => {
+  it('transforms coverDescription markdown to HTML', () => {
     const pageData = createPageData({
       frontmatter: {
         layout: 'post',
-        coverDescr: 'Some **bold** text',
+        coverDescription: 'Some **bold** text',
       },
     })
     transformPageMeta(pageData)
-    expect(pageData.frontmatter.coverDescr).toBe('<p>Some **bold** text</p>')
+    expect(pageData.frontmatter.coverDescription).toBe('<p>Some **bold** text</p>')
   })
 
-  it('does nothing when coverDescr is absent', () => {
+  it('does nothing when coverDescription is absent', () => {
     const pageData = createPageData()
     transformPageMeta(pageData)
-    expect(pageData.frontmatter.coverDescr).toBeUndefined()
+    expect(pageData.frontmatter.coverDescription).toBeUndefined()
   })
 
   it('handles empty tags array', () => {

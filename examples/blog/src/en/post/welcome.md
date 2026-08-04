@@ -9,7 +9,7 @@ cover: https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: A laptop and a cup of coffee on a wooden desk
-coverDescr: "Photo by [Alejandro Escamilla](https://unsplash.com/@alejandroescamilla) on Unsplash."
+coverDescription: "Photo by [Alejandro Escamilla](https://unsplash.com/@alejandroescamilla) on Unsplash."
 category: Getting Started
 tags:
   - guide
@@ -39,7 +39,7 @@ cover: https://images.unsplash.com/photo-1499750310107-...
 coverWidth: 1200
 coverHeight: 800
 coverAlt: A laptop and a cup of coffee on a wooden desk
-coverDescr: "Photo by [Alejandro Escamilla](https://unsplash.com/@...) on Unsplash."
+coverDescription: "Photo by [Alejandro Escamilla](https://unsplash.com/@...) on Unsplash."
 ```
 
 ## The tour

@@ -1,14 +1,14 @@
 ---
 title: Обложки, картинки и медиа
 description: >
-  Обложки постов — локальные и внешние, coverAlt / coverDescr / coverWidth /
+  Обложки постов — локальные и внешние, coverAlt / coverDescription / coverWidth /
   coverHeight, и медиа-компоненты: YouTube, видео, аудио, скачивание.
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Горный пейзаж на закате
-coverDescr: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
+coverDescription: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
 date: 2026-08-04
 category: { name: 'Контент', slug: 'writing' }
 tags: [media, frontmatter, components]
@@ -18,14 +18,14 @@ descrAsPreview: true
 Изображение выше — это **обложка** поста, полностью заданная во frontmatter.
 Тема также глобально регистрирует четыре компонента для вставки медиа прямо в тело статьи, доступных в любом markdown файле без импорта.
 
-## Внешняя обложка
+## Обложка
 
 ```yaml
 cover: https://images.unsplash.com/photo-1501785888041-...
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Горный пейзаж на закате
-coverDescr: "Подпись с **markdown** и [ссылками](https://example.com)."
+coverDescription: "Подпись с **markdown** и [ссылками](https://example.com)."
 ```
 
 Для локальной картинки размеры указывать не обязаетльно, но для внешних URL рекомендуется указать `coverWidth` / `coverHeight` во избежание сдвига вёрстки.

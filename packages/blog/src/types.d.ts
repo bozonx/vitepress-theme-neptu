@@ -784,7 +784,7 @@ export namespace NeptuBlogTheme {
     cover?: string
     coverHeight?: number
     coverWidth?: number
-    coverDescr?: string
+    coverDescription?: string
     coverAlt?: string
     tags?: Array<string | Tag>
     /**

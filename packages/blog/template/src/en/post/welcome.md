@@ -17,7 +17,7 @@ cover: https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&auto=
 coverAlt: Notebook on table
 # coverWidth: 1200
 # coverHeight: 800
-# coverDescr: Caption rendered under the cover
+# coverDescription: Caption rendered under the cover
 #
 # Optional extras — uncomment what you need:
 # draft: true            # hidden from lists/feeds/search, still reachable by URL

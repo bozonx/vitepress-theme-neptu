@@ -11,7 +11,7 @@ cover: https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: A tidy desk with a keyboard, notebook and plant
-coverDescr: "coverDescr supports **markdown** and [links](https://unsplash.com)."
+coverDescription: "coverDescription supports **markdown** and [links](https://unsplash.com)."
 
 # --- Taxonomy ------------------------------------------------------------
 # One category files the post in the hierarchy and drives the breadcrumbs.
@@ -51,7 +51,7 @@ button and podcast dropdown are all wired from the frontmatter.
 
 | Feature | Field(s) | Where it shows |
 | --- | --- | --- |
-| Cover image + caption | `cover`, `coverWidth/Height`, `coverAlt`, `coverDescr` | top of post |
+| Cover image + caption | `cover`, `coverWidth/Height`, `coverAlt`, `coverDescription` | top of post |
 | Author block | `authorId` | post footer |
 | Tags | `tags` | header + footer |
 | List preview | `descrAsPreview` | post-list cards |
@@ -73,7 +73,7 @@ cover: https://images.unsplash.com/photo-...
 coverWidth: 1200
 coverHeight: 800
 coverAlt: A tidy desk with a keyboard, notebook and plant
-coverDescr: "coverDescr supports **markdown** and [links](...)."
+coverDescription: "coverDescription supports **markdown** and [links](...)."
 
 tags: [frontmatter, guide]
 descrAsPreview: true

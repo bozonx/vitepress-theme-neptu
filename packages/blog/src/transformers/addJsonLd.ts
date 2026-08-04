@@ -273,7 +273,7 @@ function createPostJsonLd(
         height: pageData.frontmatter.coverHeight,
         width: pageData.frontmatter.coverWidth,
         caption:
-          pageData.frontmatter.coverDescr ||
+          pageData.frontmatter.coverDescription ||
           pageData.frontmatter.coverAlt ||
           undefined,
       })) as JsonLdValue,

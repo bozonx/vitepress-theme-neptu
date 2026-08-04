@@ -118,7 +118,7 @@ collections:
         required: false
         i18n: duplicate
       - label: "Description of cover image"
-        name: "coverDescr"
+        name: "coverDescription"
         widget: "string"
         required: false
         i18n: true
