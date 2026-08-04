@@ -31,7 +31,7 @@ layout: home
 # site.yaml
 themeConfig:
   home:
-    # auto | light | dark — режим темы на главной
+    # auto | light | dark — режим темы на главной. Если установить light | dark то тему нельзя будет переключать на главной странице
     appearance: auto
     # максимальная ширина контента в пикселях
     maxWidth: 800
