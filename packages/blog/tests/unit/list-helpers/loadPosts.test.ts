@@ -203,7 +203,7 @@ describe('draft filtering', () => {
 
   it('drops drafts from a directory scan when asked', async () => {
     mockReaddir.mockResolvedValue(['published.md', 'draft-one.md'])
-    const posts = await loadPostsData('/content/en', { includeDrafts: false })
+    const posts = await loadPostsData('/content/en', { showDrafts: false })
 
     expect(posts).toHaveLength(1)
     expect(posts[0].url).toContain('published')
@@ -211,14 +211,14 @@ describe('draft filtering', () => {
 
   it('keeps drafts when they are included', async () => {
     mockReaddir.mockResolvedValue(['published.md', 'draft-one.md'])
-    const posts = await loadPostsData('/content/en', { includeDrafts: true })
+    const posts = await loadPostsData('/content/en', { showDrafts: true })
 
     expect(posts).toHaveLength(2)
   })
 
   it('drops drafts from a watched file list when asked', async () => {
     const posts = await loadPostsDataFromFiles(['/published.md', '/draft-one.md'], {
-      includeDrafts: false,
+      showDrafts: false,
     })
 
     expect(posts).toHaveLength(1)

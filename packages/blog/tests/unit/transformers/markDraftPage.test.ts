@@ -17,7 +17,7 @@ describe('markDraftPage', () => {
   it('leaves a published post untouched', () => {
     const pageData = makePageData({ title: 'Published' })
 
-    markDraftPage(pageData, { includeDrafts: false })
+    markDraftPage(pageData, { showDrafts: false })
 
     expect(pageData.frontmatter.head).toBeUndefined()
     expect(pageData.frontmatter.searchIncluded).toBeUndefined()
@@ -26,7 +26,7 @@ describe('markDraftPage', () => {
   it('marks a hidden draft noindex and drops it from search', () => {
     const pageData = makePageData({ draft: true })
 
-    markDraftPage(pageData, { includeDrafts: false })
+    markDraftPage(pageData, { showDrafts: false })
 
     expect(pageData.frontmatter.searchIncluded).toBe(false)
     expect(hasNoIndex(pageData.frontmatter.head)).toBe(true)
@@ -38,7 +38,7 @@ describe('markDraftPage', () => {
       head: [['meta', { name: 'author', content: 'Someone' }]],
     })
 
-    markDraftPage(pageData, { includeDrafts: false })
+    markDraftPage(pageData, { showDrafts: false })
 
     expect(pageData.frontmatter.head).toHaveLength(2)
     expect(hasNoIndex(pageData.frontmatter.head)).toBe(true)
@@ -50,7 +50,7 @@ describe('markDraftPage', () => {
       head: [['meta', { name: 'robots', content: 'noindex' }]],
     })
 
-    markDraftPage(pageData, { includeDrafts: false })
+    markDraftPage(pageData, { showDrafts: false })
 
     expect(pageData.frontmatter.head).toHaveLength(1)
   })
@@ -58,7 +58,7 @@ describe('markDraftPage', () => {
   it('is a no-op while drafts are visible', () => {
     const pageData = makePageData({ draft: true })
 
-    markDraftPage(pageData, { includeDrafts: true })
+    markDraftPage(pageData, { showDrafts: true })
 
     expect(pageData.frontmatter.head).toBeUndefined()
     expect(pageData.frontmatter.searchIncluded).toBeUndefined()

@@ -1,5 +1,5 @@
 import { hasNoIndex } from '../utils/shared/head.ts'
-import { isDraft, resolveIncludeDrafts } from '../utils/shared/publication.ts'
+import { isDraft, resolveShowDrafts } from '../utils/shared/publication.ts'
 import type { DraftsConfig, ExtendedPageData } from '../types.d.ts'
 
 /**
@@ -23,7 +23,7 @@ export function markDraftPage(
   draftsConfig?: DraftsConfig | null
 ): void {
   if (!isDraft(pageData.frontmatter)) return
-  if (resolveIncludeDrafts(draftsConfig)) return
+  if (resolveShowDrafts(draftsConfig)) return
 
   pageData.frontmatter.searchIncluded = false
 

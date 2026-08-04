@@ -13,7 +13,7 @@ export interface PostVisibilityOptions {
    * Keep drafts in the result. Defaults to `false` — callers that want the
    * dev-server behaviour pass {@link areDraftsVisibleByDefault}.
    */
-  includeDrafts?: boolean
+  showDrafts?: boolean
 }
 
 /** Frontmatter shape this module needs. Kept structural to avoid a cycle. */
@@ -40,10 +40,10 @@ export function areDraftsVisibleByDefault(): boolean {
  * Resolves the effective flag from `themeConfig.drafts`, falling back to the
  * environment default when the user has not set it.
  */
-export function resolveIncludeDrafts(
-  draftsConfig?: { includeDrafts?: boolean } | null
+export function resolveShowDrafts(
+  draftsConfig?: { showDrafts?: boolean } | null
 ): boolean {
-  return draftsConfig?.includeDrafts ?? areDraftsVisibleByDefault()
+  return draftsConfig?.showDrafts ?? areDraftsVisibleByDefault()
 }
 
 /** True when the post belongs in public listings. */
@@ -51,7 +51,7 @@ export function isPostVisible(
   frontmatter: PublicationFrontmatter | undefined,
   options: PostVisibilityOptions = {}
 ): boolean {
-  if (options.includeDrafts) return true
+  if (options.showDrafts) return true
 
   return !isDraft(frontmatter)
 }

@@ -256,9 +256,7 @@ themeConfig:
   # drafts:
   #   # Show drafts in listings. Defaults to true in `dev`, false in `build`,
   #   # so drafts are visible while writing and cannot ship by accident.
-  #   includeDrafts: false
-  #   # Show the "Draft" badge next to an unpublished post. Default: true
-  #   showBadge: true
+  #   showDrafts: false
 
   # --- Post Footer Blocks ----------------------------------------------------
   # Ordered list of post-footer blocks. Supported keys:

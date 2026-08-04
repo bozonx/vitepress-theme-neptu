@@ -72,11 +72,10 @@ The switch follows `NODE_ENV`. Override it explicitly if you need to:
 # src/site.yaml
 themeConfig:
   drafts:
-    includeDrafts: false  # hide drafts even in dev
-    showBadge: true       # "Draft" badge next to the post (default: true)
+    showDrafts: false  # hide drafts even in dev
 ```
 
-`includeDrafts: true` brings drafts back into every list and feed, production
+`showDrafts: true` brings drafts back into every list and feed, production
 builds included. Use it only for an internal preview deployment.
 
 ### The badge

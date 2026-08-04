@@ -128,10 +128,9 @@ const commonThemeConfig = {
   },
 
   drafts: {
-    // `includeDrafts` is intentionally absent: leaving it unset lets
-    // `resolveIncludeDrafts` fall back to the environment, so drafts show in
+    // `showDrafts` is intentionally absent: leaving it unset lets
+    // `resolveShowDrafts` fall back to the environment, so drafts show in
     // `vitepress dev` and disappear from a production build.
-    showBadge: true,
   },
 
   popularPosts: {

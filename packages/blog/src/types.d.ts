@@ -672,9 +672,7 @@ export namespace NeptuBlogTheme {
      * Defaults to `true` in `vitepress dev` and `false` in a production build,
      * so drafts are previewable while writing and never ship by accident.
      */
-    includeDrafts?: boolean
-    /** Show the "draft" badge next to a draft post. Defaults to true. */
-    showBadge?: boolean
+    showDrafts?: boolean
   }
 
   export interface SidebarConfig {

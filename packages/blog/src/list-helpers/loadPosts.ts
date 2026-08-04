@@ -39,15 +39,15 @@ export interface LoadPostsOptions {
    * {@link areDraftsVisibleByDefault} — on in `vitepress dev`, off in a
    * production build.
    */
-  includeDrafts?: boolean
+  showDrafts?: boolean
 }
 
 /**
  * Drafts are dropped after the previews are built, so the cache key stays
  * independent of the flag and the frontmatter is available for the check.
  */
-function applyVisibility(posts: Post[], includeDrafts: boolean): Post[] {
-  if (includeDrafts) return posts
+function applyVisibility(posts: Post[], showDrafts: boolean): Post[] {
+  if (showDrafts) return posts
 
   return posts.filter((post) => isPostVisible(post.frontmatter))
 }
@@ -64,7 +64,7 @@ export async function loadPostsData(
     cache: cacheOpt,
     postsDir: postsDirName = POSTS_DIR,
     srcDir: srcDirOpt,
-    includeDrafts = areDraftsVisibleByDefault(),
+    showDrafts = areDraftsVisibleByDefault(),
   } = options
   const localeIndex = path.basename(localeDir)
 
@@ -93,7 +93,7 @@ export async function loadPostsData(
           srcDir,
         })
       ) as Post[],
-      includeDrafts
+      showDrafts
     )
 
     cache[cacheKey] = posts
@@ -139,7 +139,7 @@ export async function loadPostsDataFromFiles(
     cache: cacheOpt,
     postsDir: postsDirName = POSTS_DIR,
     srcDir,
-    includeDrafts = areDraftsVisibleByDefault(),
+    showDrafts = areDraftsVisibleByDefault(),
   } = options
   const fullPaths = files
     .filter((file) => file.endsWith('.md'))
@@ -163,7 +163,7 @@ export async function loadPostsDataFromFiles(
           srcDir: srcDir ?? inferSrcDir(filePath, postsDirName),
         })
       ) as Post[],
-      includeDrafts
+      showDrafts
     )
 
     cache[cacheKey] = posts

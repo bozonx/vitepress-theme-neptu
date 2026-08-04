@@ -228,8 +228,7 @@ const ThemeConfigSchema = z
       layouts: z.array(z.string()).optional(),
     }).optional(),
     drafts: z.looseObject({
-      includeDrafts: z.boolean().optional(),
-      showBadge: z.boolean().optional(),
+      showDrafts: z.boolean().optional(),
     }).optional(),
     popularPosts: z.looseObject({
       enabled: z.boolean().optional(),

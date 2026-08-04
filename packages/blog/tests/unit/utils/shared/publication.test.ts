@@ -3,7 +3,7 @@ import {
   areDraftsVisibleByDefault,
   isDraft,
   isPostVisible,
-  resolveIncludeDrafts,
+  resolveShowDrafts,
 } from '../../../../src/utils/shared/publication.ts'
 
 const originalNodeEnv = process.env.NODE_ENV
@@ -33,7 +33,7 @@ describe('isPostVisible', () => {
   })
 
   it('keeps drafts when asked to', () => {
-    expect(isPostVisible({ draft: true }, { includeDrafts: true })).toBe(true)
+    expect(isPostVisible({ draft: true }, { showDrafts: true })).toBe(true)
   })
 })
 
@@ -47,18 +47,18 @@ describe('areDraftsVisibleByDefault', () => {
   })
 })
 
-describe('resolveIncludeDrafts', () => {
+describe('resolveShowDrafts', () => {
   it('prefers the explicit config over the environment', () => {
     process.env.NODE_ENV = 'production'
-    expect(resolveIncludeDrafts({ includeDrafts: true })).toBe(true)
+    expect(resolveShowDrafts({ showDrafts: true })).toBe(true)
 
     process.env.NODE_ENV = 'development'
-    expect(resolveIncludeDrafts({ includeDrafts: false })).toBe(false)
+    expect(resolveShowDrafts({ showDrafts: false })).toBe(false)
   })
 
   it('falls back to the environment when unset', () => {
     process.env.NODE_ENV = 'production'
-    expect(resolveIncludeDrafts(undefined)).toBe(false)
-    expect(resolveIncludeDrafts({})).toBe(false)
+    expect(resolveShowDrafts(undefined)).toBe(false)
+    expect(resolveShowDrafts({})).toBe(false)
   })
 })

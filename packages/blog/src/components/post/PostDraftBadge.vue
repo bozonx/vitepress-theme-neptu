@@ -17,8 +17,6 @@ const { frontmatter } = useData()
 const { theme } = useUiTheme()
 
 const visible = computed(() => {
-  if (theme.value.drafts?.showBadge === false) return false
-
   return props.draft ?? isDraft(frontmatter.value)
 })
 </script>
@@ -26,7 +24,7 @@ const visible = computed(() => {
 <template>
   <!--
     Only ever rendered while drafts are visible (the dev server, or an explicit
-    `drafts.includeDrafts: true`), since a hidden draft never reaches a list.
+    `drafts.showDrafts: true`), since a hidden draft never reaches a list.
     On the post page itself the badge is the one signal that the article is
     unlisted and marked noindex.
   -->

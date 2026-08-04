@@ -19,7 +19,7 @@ import {
   validateRssConfig,
 } from '../utils/node/index.ts'
 import { resolveContentMediaPath, resolveSidebarLogo } from '../utils/shared/media.ts'
-import { isPostVisible, resolveIncludeDrafts } from '../utils/shared/publication.ts'
+import { isPostVisible, resolveShowDrafts } from '../utils/shared/publication.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
 
 /**
@@ -91,12 +91,12 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
           { includeSrc: true }
         ).load()
 
-        const includeDrafts = resolveIncludeDrafts(
+        const showDrafts = resolveShowDrafts(
           locale.themeConfig?.drafts ?? config.userConfig?.themeConfig?.drafts
         )
         const sortedPosts = posts
           .filter((post) =>
-            isPostVisible(post.frontmatter as PostFrontmatter, { includeDrafts })
+            isPostVisible(post.frontmatter as PostFrontmatter, { showDrafts })
           )
           .sort(
             (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
