@@ -33,6 +33,8 @@ const props = withDefaults(
 
 /** `alternate` is the canonical switch; `noAlternate: true` opts out for back-compat. */
 const shouldAlternate = computed(() => props.alternate && !props.noAlternate)
+/** Resolve deprecated `noReveal` alias into the canonical `reveal` flag. */
+const revealDisabled = computed(() => props.reveal === false || props.noReveal === true)
 const sectionProps = useSectionProps(props)
 const isReversed = (index: number): boolean =>
   shouldAlternate.value ? props.reverse !== (index % 2 === 1) : props.reverse
@@ -54,7 +56,7 @@ const isReversed = (index: number): boolean =>
       <LnReveal
         v-for="(item, i) in props.items"
         :key="`${item.title}-${i}`"
-        :disabled="props.noReveal"
+        :disabled="revealDisabled"
         class="ln-split__row"
         :class="{ 'ln-split__row--reversed': isReversed(i) }"
       >

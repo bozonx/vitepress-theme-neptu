@@ -29,8 +29,8 @@ const sectionProps = useSectionProps(props)
 <template>
   <LnSection
     v-bind="sectionProps"
-    class="ln-quotes"
-    :class="`ln-quotes--${props.variant}`"
+    class="ln-testimonials"
+    :class="`ln-testimonials--${props.variant}`"
   >
     <LnHeading
       :eyebrow="props.eyebrow"
@@ -42,18 +42,18 @@ const sectionProps = useSectionProps(props)
     <component
       :is="props.variant === 'masonry' ? 'div' : LnGrid"
       v-bind="props.variant === 'masonry' ? {} : { cols: props.variant === 'single' ? 1 : props.cols }"
-      :class="props.variant === 'masonry' ? 'ln-quotes__masonry' : undefined"
+      :class="props.variant === 'masonry' ? 'ln-testimonials__masonry' : undefined"
     >
       <LnCard
         v-for="(item, i) in props.items"
         :key="`${item.author}-${i}`"
         :link="item.link"
-        class="ln-quote"
+        class="ln-testimonial"
       >
         <!-- `role="img"` — without it the label on a plain div is dropped by AT. -->
         <div
           v-if="item.rating"
-          class="ln-quote__rating"
+          class="ln-testimonial__rating"
           role="img"
           :aria-label="`${item.rating} / 5`"
         >
@@ -65,23 +65,23 @@ const sectionProps = useSectionProps(props)
           />
         </div>
 
-        <blockquote class="ln-quote__text">{{ item.text }}</blockquote>
+        <blockquote class="ln-testimonial__text">{{ item.text }}</blockquote>
 
-        <footer class="ln-quote__footer">
+        <footer class="ln-testimonial__footer">
           <img
             v-if="item.avatar"
-            class="ln-quote__avatar"
+            class="ln-testimonial__avatar"
             :src="resolveUrl(item.avatar)"
             :alt="item.author ?? ''"
             loading="lazy"
           />
-          <span class="ln-quote__meta">
-            <span v-if="item.author" class="ln-quote__author">{{ item.author }}</span>
-            <span v-if="item.role" class="ln-quote__role">{{ item.role }}</span>
+          <span class="ln-testimonial__meta">
+            <span v-if="item.author" class="ln-testimonial__author">{{ item.author }}</span>
+            <span v-if="item.role" class="ln-testimonial__role">{{ item.role }}</span>
           </span>
           <img
             v-if="item.logo"
-            class="ln-quote__logo"
+            class="ln-testimonial__logo"
             :src="resolveUrl(item.logo)"
             alt=""
             loading="lazy"
@@ -94,22 +94,22 @@ const sectionProps = useSectionProps(props)
 </template>
 
 <style scoped>
-.ln-quote {
+.ln-testimonial {
   gap: 1rem;
 }
 
-.ln-quotes--single .ln-quote {
+.ln-testimonials--single .ln-testimonial {
   text-align: center;
   align-items: center;
 }
 
-.ln-quote__rating {
+.ln-testimonial__rating {
   display: flex;
   gap: 0.125rem;
   color: var(--ln-c-brand-text);
 }
 
-.ln-quote__text {
+.ln-testimonial__text {
   margin: 0;
   border: 0;
   padding: 0;
@@ -119,14 +119,14 @@ const sectionProps = useSectionProps(props)
   text-wrap: pretty;
 }
 
-.ln-quotes--single .ln-quote__text {
+.ln-testimonials--single .ln-testimonial__text {
   font-family: var(--ln-font-display);
   font-size: clamp(1.25rem, 1rem + 1.5vw, 1.875rem);
   line-height: 1.4;
   letter-spacing: var(--ln-heading-tracking);
 }
 
-.ln-quote__footer {
+.ln-testimonial__footer {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -134,11 +134,11 @@ const sectionProps = useSectionProps(props)
   padding-top: 0.25rem;
 }
 
-.ln-quotes--single .ln-quote__footer {
+.ln-testimonials--single .ln-testimonial__footer {
   justify-content: center;
 }
 
-.ln-quote__avatar {
+.ln-testimonial__avatar {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--ln-radius-pill);
@@ -146,23 +146,23 @@ const sectionProps = useSectionProps(props)
   flex: none;
 }
 
-.ln-quote__meta {
+.ln-testimonial__meta {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.ln-quote__author {
+.ln-testimonial__author {
   font-weight: 600;
   color: var(--ln-c-text-1);
 }
 
-.ln-quote__role {
+.ln-testimonial__role {
   color: var(--ln-c-text-2);
   font-size: 0.8125rem;
 }
 
-.ln-quote__logo {
+.ln-testimonial__logo {
   margin-left: auto;
   height: 1.5rem;
   width: auto;
@@ -170,24 +170,24 @@ const sectionProps = useSectionProps(props)
 }
 
 /**** Masonry */
-.ln-quotes__masonry {
+.ln-testimonials__masonry {
   columns: 1;
   column-gap: var(--ln-gap);
 }
 
 @media (min-width: 640px) {
-  .ln-quotes__masonry {
+  .ln-testimonials__masonry {
     columns: 2;
   }
 }
 
 @media (min-width: 960px) {
-  .ln-quotes__masonry {
+  .ln-testimonials__masonry {
     columns: 3;
   }
 }
 
-.ln-quotes__masonry .ln-quote {
+.ln-testimonials__masonry .ln-testimonial {
   break-inside: avoid;
   margin-bottom: var(--ln-gap);
 }

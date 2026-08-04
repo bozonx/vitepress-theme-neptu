@@ -32,6 +32,8 @@ const props = withDefaults(
       mediaRatio?: string
       /** @deprecated Use `mediaRatio`. */
       ratio?: string
+      /** Accessible name for the lightbox dialog. Defaults to the section title. */
+      ariaLabel?: string
     }
   >(),
   { cols: 3, variant: 'grid', lightbox: true, mediaRatio: '4/3', align: 'start' }
@@ -109,7 +111,7 @@ const onKeydown = (event: KeyboardEvent): void => {
           :type="!item.link && props.lightbox ? 'button' : undefined"
           @click="!item.link && open(i)"
         >
-          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.ratio ?? props.mediaRatio ?? props.ratio } : undefined" />
+          <img :src="resolveUrl(item.src)" :alt="item.alt ?? ''" loading="lazy" :style="props.variant === 'grid' ? { aspectRatio: item.mediaRatio ?? item.ratio ?? props.mediaRatio ?? props.ratio } : undefined" />
           <span v-if="item.caption" class="ln-gallery__caption">{{ item.caption }}</span>
         </component>
         <div v-if="item.title || item.text || item.tags?.length || item.actions?.length" class="ln-gallery__body">
@@ -126,7 +128,7 @@ const onKeydown = (event: KeyboardEvent): void => {
       v-if="props.lightbox"
       ref="dialog"
       class="ln-gallery__dialog"
-      :aria-label="props.title ?? label('region', 'Image viewer')"
+      :aria-label="props.ariaLabel ?? props.title ?? label('region', 'Image viewer')"
       @click="close"
       @keydown="onKeydown"
     >

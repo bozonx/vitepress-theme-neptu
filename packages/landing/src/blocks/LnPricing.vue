@@ -19,14 +19,14 @@ const props = withDefaults(
     SectionProps & HeadingProps & {
       items?: PricingPlan[]
       cols?: 2 | 3 | 4
-      /** @deprecated Use `toggle.monthlyLabel`. */
+      /** Flat alias for `toggle.monthlyLabel`. */
       monthlyLabel?: string
-      /** @deprecated Use `toggle.yearlyLabel`. */
+      /** Flat alias for `toggle.yearlyLabel`. */
       yearlyLabel?: string
       /** Period-switch labels. Preferred over the flat `monthlyLabel`/`yearlyLabel`/`discountLabel`. */
       toggle?: PricingToggleOptions
       currency?: string
-      /** @deprecated Use `toggle.discountLabel`. */
+      /** Flat alias for `toggle.discountLabel`. */
       discountLabel?: string
       billingSuffix?: string
       /** Small print under the plans. */

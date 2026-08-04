@@ -27,10 +27,15 @@ const props = withDefaults(
       arrows?: boolean
       dots?: boolean
       /** Autoplay interval in ms. `0` disables it. */
+      autoplayInterval?: number
+      /** @deprecated Use `autoplayInterval`. */
       autoplay?: number
       /** Let slides bleed past the container edge. */
       peek?: boolean
       ariaLabel?: string
+      /** Card display style. */
+      variant?: 'card' | 'plain' | 'bordered'
+      /** @deprecated Use `variant`. */
       cardVariant?: 'card' | 'plain' | 'bordered'
     }
   >(),
@@ -38,10 +43,10 @@ const props = withDefaults(
     perView: 3,
     arrows: true,
     dots: true,
-    autoplay: 0,
+    autoplayInterval: 0,
     peek: false,
     align: 'start',
-    cardVariant: 'card',
+    variant: 'card',
   }
 )
 
@@ -62,6 +67,9 @@ const canNext = ref(true)
 let timer: ReturnType<typeof setInterval> | null = null
 
 const slideCount = computed(() => props.items?.length ?? 0)
+
+const autoplayInterval = computed(() => props.autoplayInterval ?? props.autoplay ?? 0)
+const cardVariant = computed(() => props.variant ?? props.cardVariant ?? 'card')
 
 const prefersReducedMotion = (): boolean =>
   typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -136,9 +144,9 @@ const clearTimer = (): void => {
 
 const runTimer = (): void => {
   clearTimer()
-  if (!props.autoplay || paused.value || slideCount.value < 2) return
+  if (!autoplayInterval.value || paused.value || slideCount.value < 2) return
   if (typeof document !== 'undefined' && document.hidden) return
-  timer = setInterval(() => step(1), props.autoplay)
+  timer = setInterval(() => step(1), autoplayInterval.value)
 }
 
 /** Visitor interaction wins over autoplay, permanently. */
@@ -190,10 +198,10 @@ const sectionProps = useSectionProps(props)
         :spacing="false"
       />
 
-      <div v-if="(props.arrows || props.autoplay) && slideCount > 1" class="ln-carousel__arrows">
+      <div v-if="(props.arrows || autoplayInterval) && slideCount > 1" class="ln-carousel__arrows">
         <!-- WCAG 2.2.2: moving content needs a visible pause control. -->
         <button
-          v-if="props.autoplay"
+          v-if="autoplayInterval"
           type="button"
           class="ln-carousel__arrow"
           :aria-label="paused ? message('play', 'Start the slideshow') : message('pause', 'Pause the slideshow')"
@@ -205,7 +213,7 @@ const sectionProps = useSectionProps(props)
           <button
             type="button"
             class="ln-carousel__arrow"
-            :disabled="!canPrev && !props.autoplay"
+            :disabled="!canPrev && !autoplayInterval"
             :aria-label="message('previous', 'Previous slide')"
             @click="stopAutoplay(); step(-1)"
           >
@@ -214,7 +222,7 @@ const sectionProps = useSectionProps(props)
           <button
             type="button"
             class="ln-carousel__arrow"
-            :disabled="!canNext && !props.autoplay"
+            :disabled="!canNext && !autoplayInterval"
             :aria-label="message('next', 'Next slide')"
             @click="stopAutoplay(); step(1)"
           >
@@ -246,9 +254,9 @@ const sectionProps = useSectionProps(props)
           <LnCard
             :link="item.actions?.length ? undefined : item.link"
             :target="item.target" :rel="item.rel"
-            :plain="props.cardVariant !== 'card'" :hoverable="props.cardVariant === 'card'"
+            :plain="cardVariant !== 'card'" :hoverable="cardVariant === 'card'"
             padding="none" class="ln-carousel__card"
-            :class="`ln-carousel__card--${props.cardVariant}`"
+            :class="`ln-carousel__card--${cardVariant}`"
           >
             <LnMedia
               v-if="item.image"

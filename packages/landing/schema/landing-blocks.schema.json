@@ -488,6 +488,10 @@
                 },
                 "autoplay": {
                   "type": "number",
+                  "description": "Deprecated alias for `autoplayInterval`. ms; 0 disables."
+                },
+                "autoplayInterval": {
+                  "type": "number",
                   "description": "ms; 0 disables."
                 },
                 "peek": {
@@ -497,6 +501,10 @@
                   "type": "string"
                 },
                 "cardVariant": {
+                  "enum": ["card", "plain", "bordered"],
+                  "description": "Deprecated alias for `variant`."
+                },
+                "variant": {
                   "enum": ["card", "plain", "bordered"]
                 }
               }
@@ -1045,8 +1053,13 @@
                       "link": {
                         "type": "string"
                       },
+                      "mediaRatio": {
+                        "type": "string",
+                        "description": "CSS aspect-ratio for this tile, e.g. `4/3`."
+                      },
                       "ratio": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Deprecated alias for `mediaRatio`."
                       }
                     },
                     "additionalProperties": false
@@ -1075,6 +1088,9 @@
                 "ratio": {
                   "type": "string",
                   "description": "Deprecated alias for `mediaRatio`."
+                },
+                "ariaLabel": {
+                  "type": "string"
                 }
               }
             },
@@ -1160,6 +1176,9 @@
                 "stickyHead": {
                   "type": "boolean",
                   "default": true
+                },
+                "ariaLabel": {
+                  "type": "string"
                 }
               }
             },

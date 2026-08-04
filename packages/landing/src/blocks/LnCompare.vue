@@ -29,6 +29,8 @@ const props = withDefaults(
       note?: string
       /** Keep the header visible while the page scrolls. */
       stickyHead?: boolean
+      /** Accessible name for the table region. Defaults to the section title. */
+      ariaLabel?: string
     }
   >(),
   { stickyHead: true, align: 'center', width: 'wide' }
@@ -50,6 +52,18 @@ const body = computed(() =>
 
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean'
 const sectionProps = useSectionProps(props)
+
+/* Dev-mode validation: each row's values must match the column count. */
+if (import.meta.env.DEV) {
+  for (const [i, row] of (props.rows ?? []).entries()) {
+    if (row.values && columns.value.length && row.values.length !== columns.value.length) {
+      console.warn(
+        `[LnCompare] Row ${i} ("${row.label ?? ''}") has ${row.values.length} values, ` +
+        `but there are ${columns.value.length} columns.`
+      )
+    }
+  }
+}
 </script>
 
 <template>
@@ -64,7 +78,7 @@ const sectionProps = useSectionProps(props)
       :align="props.align"
     />
 
-    <div class="ln-compare__scroll" tabindex="0" role="region" :aria-label="props.title ?? 'Comparison'">
+    <div class="ln-compare__scroll" tabindex="0" role="region" :aria-label="props.ariaLabel ?? props.title ?? 'Comparison'">
       <table class="ln-compare__table" :class="{ 'ln-compare__table--sticky': props.stickyHead }">
         <thead>
           <tr>
