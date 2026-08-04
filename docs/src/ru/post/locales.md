@@ -210,6 +210,57 @@ themeConfig:
 themeConfig: { i18nRouting: false }
 ```
 
+## Как назвать локаль
+
+У локали три имени, и все три берутся из одного источника — языкового тега
+[BCP 47](https://www.rfc-editor.org/info/bcp47):
+
+| Где | Что писать | Пример |
+| --- | --- | --- |
+| Имя папки в `src/` | тег локали, он же префикс URL | `pt-BR` |
+| `lang` в `_site.yaml` | тот же тег — идёт в `<html lang>`, `hreflang`, форматирование дат | `pt-BR` |
+| `label` в `_site.yaml` | полное название языка для переключателя и страницы выбора языка | `Português` |
+
+Сам тег — это код языка, при необходимости с кодом региона или письменности:
+`язык` (`ru`), `язык-РЕГИОН` (`pt-BR`), `язык-Письменность` (`zh-Hans`).
+Где брать составные части:
+
+- **Подобрать и проверить тег** — [BCP 47 Language Subtag Lookup](https://r12a.github.io/app-subtags/)
+  W3C: ищет по названию языка и региона в официальном
+  [IANA Language Subtag Registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
+- **Как устроены теги** — статья W3C [Language tags in HTML and XML](https://www.w3.org/International/articles/language-tags/).
+- **Коды языков** — [список ISO 639](https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BA%D0%BE%D0%B4%D0%BE%D0%B2_ISO_639)
+  на Википедии; в [англоязычной версии](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
+  есть колонка с самоназванием языка — она и нужна для `label`.
+- **Коды регионов** — [ISO 3166-1 alpha-2](https://ru.wikipedia.org/wiki/ISO_3166-1) (двухбуквенные, заглавными).
+
+Пишите тег в каноническом виде: язык строчными, письменность с заглавной,
+регион заглавными (`zh-Hant-TW`). Регион добавляйте только тогда, когда он
+действительно различает контент: для одного варианта языка достаточно `ru`
+или `en`.
+
+Для `label` принято использовать самоназвание языка (`Deutsch`, а не `German`):
+страницу выбора языка читает тот, кто ещё не выбрал язык интерфейса.
+Для встроенных языков (список выше) название уже задано в теме, и `label`
+можно не указывать. Свой вариант или язык не из списка — задайте явно:
+
+```yaml
+# src/pt-BR/_site.yaml
+lang: pt-BR
+label: Português
+```
+
+Подсказать самоназвание может и сам движок JS:
+
+```sh
+node -e "console.log(new Intl.DisplayNames(['pt-BR'], { type: 'language' }).of('pt-BR'))"
+# português (Brasil)
+```
+
+Результат стоит поправить руками: `Intl` возвращает название со строчной буквы
+и с регионом в скобках, а в переключателе обычно уместнее короткое
+`Português`.
+
 ## Как добавить язык
 
 Создать папку недостаточно — нужны три шага:
@@ -219,7 +270,9 @@ themeConfig: { i18nRouting: false }
    `categories/`, `featured/`, `authors/`, `popular/`) и файлы
    `getAllPosts.ts` и `loadPosts.data.ts` — они локале-независимы и правок не
    требуют.
-2. **Задайте `lang`, `title` и `description`** в её `_site.yaml`.
+2. **Задайте `lang`, `title` и `description`** в её `_site.yaml` — как их
+   выбирать, см. [Как назвать локаль](#как-назвать-локаль). Для языка,
+   которого нет во встроенном наборе, добавьте ещё и `label`.
 3. **Зарегистрируйте данные локали** в `src/.vitepress/theme/Layout.vue`:
 
 ```vue
