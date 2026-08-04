@@ -31,10 +31,12 @@ layout: home
 # site.yaml
 themeConfig:
   home:
+    
     appearance: auto # auto | light | dark
     maxWidth: 800
     background: none # none | parallax
     # backgroundImage: /img/home.webp
+    # bgParallaxOffset: 300 # смещение параллакс-фона в пикселях при скролле
 ```
 
 ```yaml
@@ -50,8 +52,13 @@ themeConfig:
       # image: { src: '/img/logo.webp', alt: 'Логотип' }
       # Или разные картинки для светлой и тёмной темы:
       # image: { light: '/img/logo-light.webp', dark: '/img/logo-dark.webp', alt: 'Логотип' }
+      # Или раздельные картинки через вложенный src:
+      # image: { src: { light: '/img/logo-light.webp', dark: '/img/logo-dark.webp' }, alt: 'Логотип' }
+      # img — алиас для image, принимает те же форматы
       actions:
         - { text: 'Читать статьи', href: 'recent/1', primary: true }
+        # icon — необязательная иконка для кнопки:
+        # - { text: 'Читать статьи', href: 'recent/1', primary: true, icon: 'fa6-solid:bookmark' }
 ```
 
 > **Требования к картинке в Hero:**
