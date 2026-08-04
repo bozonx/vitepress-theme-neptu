@@ -170,9 +170,11 @@ draft: false
 # Если не указан — fallback на frontmatter.layout.
 # Компонент должен быть глобально зарегистрирован.
 contentLayout: MyCustomContent
-# Кастомный JSON-LD в виде JSON-строки. Мерджится с авто-генерируемым
-# JSON-LD (не заменяет!) — поля кастомного объекта перезаписывают стандартные.
-jsonLd: '{"@context":"https://schema.org","@type":"BlogPosting"}'
+# Кастомный JSON-LD. Объект YAML — deep-merge с авто-генерируемой схемой
+# (вложенные объекты мержатся рекурсивно). JSON-строка — полная замена.
+jsonLd:
+  "@type": TechArticle
+  proficiencyLevel: Beginner
 ---
 ```
 

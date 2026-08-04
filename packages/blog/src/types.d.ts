@@ -809,7 +809,7 @@ export namespace NeptuBlogTheme {
     readingTime?: boolean
     previewText?: string
     descrAsPreview?: boolean
-    jsonLd?: string
+    jsonLd?: string | Record<string, unknown> | unknown[]
     searchIncluded?: boolean
     /**
      * Force the right-hand aside column on or off for this page, overriding

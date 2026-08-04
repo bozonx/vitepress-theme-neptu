@@ -1,6 +1,6 @@
 import type { HeadConfig } from 'vitepress'
 import yaml from 'yaml'
-import { omitUndefined } from '../utils/shared/index.ts'
+import { omitUndefined, deepMerge } from '../utils/shared/index.ts'
 import { toIsoDuration } from '../utils/shared/readingTime.ts'
 import {
   isPost,
@@ -66,24 +66,64 @@ function warnInvalidJsonLd(pagePath: string, error: unknown): void {
   )
 }
 
+interface ParsedCustomJsonLd {
+  data: JsonLdObject | JsonLdArray
+  mode: 'replace' | 'merge'
+}
+
+function filterObjectArray(arr: unknown[]): JsonLdObject[] {
+  return arr.filter(
+    (item): item is JsonLdObject =>
+      !!item && typeof item === 'object' && !Array.isArray(item)
+  )
+}
+
 function parseCustomJsonLd(
   rawJsonLd: unknown,
   pagePath: string
-): JsonLdObject | JsonLdArray | undefined {
+): ParsedCustomJsonLd | undefined {
+  // Direct object from YAML frontmatter → merge mode
+  if (
+    rawJsonLd !== null &&
+    typeof rawJsonLd === 'object' &&
+    !Array.isArray(rawJsonLd)
+  ) {
+    if (Object.keys(rawJsonLd as JsonLdObject).length === 0) return
+    return { data: rawJsonLd as JsonLdObject, mode: 'merge' }
+  }
+
+  // Direct array from YAML frontmatter → merge mode
+  if (Array.isArray(rawJsonLd)) {
+    const filtered = filterObjectArray(rawJsonLd)
+    if (filtered.length === 0) return
+    return { data: filtered, mode: 'merge' }
+  }
+
   if (typeof rawJsonLd !== 'string' || rawJsonLd.trim() === '') return
+
+  // JSON string → replace mode; YAML string → merge mode
+  let isJson = false
+  try {
+    JSON.parse(rawJsonLd)
+    isJson = true
+  } catch {
+    // Not JSON — will be parsed as YAML below
+  }
 
   try {
     const parsed = parseYamlToJsonLd(rawJsonLd)
 
     if (Array.isArray(parsed)) {
-      return parsed.filter(
-        (item): item is JsonLdObject =>
-          !!item && typeof item === 'object' && !Array.isArray(item)
-      )
+      const filtered = filterObjectArray(parsed)
+      if (filtered.length === 0) return
+      return { data: filtered, mode: isJson ? 'replace' : 'merge' }
     }
 
     if (parsed && typeof parsed === 'object') {
-      return parsed as JsonLdObject
+      return {
+        data: parsed as JsonLdObject,
+        mode: isJson ? 'replace' : 'merge',
+      }
     }
   } catch (error) {
     warnInvalidJsonLd(pagePath, error)
@@ -191,7 +231,7 @@ function createPostJsonLd(
   // `transformPageMeta` already folded `category` into this normalized list.
   const categories = (pageData.frontmatter.categories || []) as Tag[]
 
-  const article: JsonLdObject = {
+  let article: JsonLdObject = {
     '@type': 'BlogPosting',
     headline: title || '',
     description: description || '',
@@ -240,12 +280,18 @@ function createPostJsonLd(
   }
 
   if (pageData.frontmatter.jsonLd) {
-    const customJsonLd = parseCustomJsonLd(
+    const parsed = parseCustomJsonLd(
       pageData.frontmatter.jsonLd,
       pageData.relativePath
     )
-    if (customJsonLd && !Array.isArray(customJsonLd)) {
-      Object.assign(article, customJsonLd)
+    if (parsed) {
+      if (parsed.mode === 'replace') {
+        // Full replacement — skip auto-generated article and breadcrumb
+        return parsed.data
+      }
+      if (!Array.isArray(parsed.data)) {
+        article = deepMerge(article, parsed.data)
+      }
     }
   }
 
@@ -316,8 +362,8 @@ function createPageJsonLd(
   localeIndexUrl: string,
   publisher: JsonLdObject | undefined,
   siteName: string
-): JsonLdObject {
-  const page: JsonLdObject = {
+): JsonLdObject | JsonLdArray {
+  let page: JsonLdObject = {
     '@type': 'WebPage',
     name:
       normalizeText(pageData.frontmatter.title) ||
@@ -338,12 +384,17 @@ function createPageJsonLd(
   }
 
   if (pageData.frontmatter.jsonLd) {
-    const customJsonLd = parseCustomJsonLd(
+    const parsed = parseCustomJsonLd(
       pageData.frontmatter.jsonLd,
       pageData.relativePath
     )
-    if (customJsonLd && !Array.isArray(customJsonLd)) {
-      Object.assign(page, customJsonLd)
+    if (parsed) {
+      if (parsed.mode === 'replace') {
+        return parsed.data
+      }
+      if (!Array.isArray(parsed.data)) {
+        page = deepMerge(page, parsed.data)
+      }
     }
   }
 
@@ -424,10 +475,13 @@ export function addJsonLd({
       siteName
     )
   } else if (pageData.frontmatter.jsonLd) {
-    jsonLdData = parseCustomJsonLd(
+    const parsed = parseCustomJsonLd(
       pageData.frontmatter.jsonLd,
       pageData.relativePath
     )
+    if (parsed) {
+      jsonLdData = parsed.data
+    }
   } else {
     return
   }

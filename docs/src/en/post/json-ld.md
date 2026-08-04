@@ -36,11 +36,18 @@ For every post the theme builds an `Article` schema from `title`, `description`,
 `date`, `authorId`, and `cover`. You usually don't need to write any JSON-LD at
 all.
 
-## Extending the schema
+## Extending or replacing the schema
 
-The `jsonLd` frontmatter field is YAML that gets **merged** into the generated
-schema — so you only specify what differs or what the theme can't infer. This
-post upgrades its type to `TechArticle` and adds two fields:
+The `jsonLd` frontmatter field supports two modes depending on how you write it:
+
+- **YAML object** (inline or block scalar) → **deep-merged** into the generated
+  schema. You only specify what differs or what the theme can't infer. Nested
+  objects are merged recursively, arrays are replaced.
+- **JSON string** → **full replacement**. The auto-generated schema is discarded
+  entirely; you take full control.
+
+This post uses a YAML block scalar to upgrade its type to `TechArticle` and add
+two fields:
 
 ### How it's done
 
@@ -50,6 +57,12 @@ jsonLd: |
   "@type": TechArticle
   proficiencyLevel: Beginner
   dependencies: VitePress, vitepress-theme-neptu
+```
+
+For a full override, use a JSON string:
+
+```yaml
+jsonLd: '{"@context":"https://schema.org","@type":"FAQPage","name":"FAQ"}'
 ```
 
 ## Nested objects and arrays

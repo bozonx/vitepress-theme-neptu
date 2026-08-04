@@ -24,8 +24,11 @@ afterEach(() => {
 vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
   const actual =
     await importOriginal<typeof import('../../../src/utils/shared/index.ts')>()
+  const mergeActual =
+    await import('../../../src/utils/shared/merge.ts')
   return {
     ...actual,
+    ...mergeActual,
     isPost: vi.fn(),
     isAuthorPage: vi.fn(),
     isPage: vi.fn(),
@@ -531,7 +534,8 @@ describe('addJsonLd', () => {
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',
-          jsonLd: '[{"@type":"Thing","name":"Ignored"}]',
+          // Direct array from YAML frontmatter → merge mode → arrays ignored
+          jsonLd: [{ '@type': 'Thing', name: 'Ignored' }],
         },
       } as any,
     })
@@ -542,6 +546,168 @@ describe('addJsonLd', () => {
     const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
     expect(json['@type']).toBe('BlogPosting')
     expect(json['@graph']).toBeUndefined()
+  })
+
+  it('JSON string jsonLd replaces auto-generated post JSON-LD entirely', () => {
+    vi.mocked(sharedUtils.isPost).mockReturnValue(true)
+    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isPage).mockReturnValue(false)
+
+    const ctx = createContext({
+      pageData: {
+        title: 'Hello',
+        description: 'World',
+        relativePath: 'en/post/hello.md',
+        frontmatter: {
+          layout: 'post',
+          date: '2023-01-01',
+          jsonLd: '{"@type":"TechArticle","headline":"Custom"}',
+        },
+      } as any,
+    })
+
+    addJsonLd(ctx)
+
+    expect(ctx.head).toHaveLength(1)
+    const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
+    expect(json['@type']).toBe('TechArticle')
+    expect(json.headline).toBe('Custom')
+    // Auto-generated fields are gone — full replacement
+    expect(json.datePublished).toBeUndefined()
+    expect(json.author).toBeUndefined()
+    expect(json.publisher).toBeUndefined()
+  })
+
+  it('YAML object jsonLd deep-merges with auto-generated post JSON-LD', () => {
+    vi.mocked(sharedUtils.isPost).mockReturnValue(true)
+    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isPage).mockReturnValue(false)
+
+    const ctx = createContext({
+      pageData: {
+        title: 'Hello',
+        description: 'World',
+        relativePath: 'en/post/hello.md',
+        frontmatter: {
+          layout: 'post',
+          date: '2023-01-01',
+          authorId: 'alice',
+          cover: '/img/cover.png',
+          // Direct object from YAML frontmatter → merge mode → deepMerge
+          jsonLd: {
+            '@type': 'TechArticle',
+            author: { name: 'Bob' },
+            proficiencyLevel: 'Beginner',
+          },
+        },
+      } as any,
+    })
+
+    addJsonLd(ctx)
+
+    expect(ctx.head).toHaveLength(1)
+    const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
+    // Overridden fields
+    expect(json['@type']).toBe('TechArticle')
+    expect(json.proficiencyLevel).toBe('Beginner')
+    // deepMerge preserves nested fields from auto-generated author object
+    expect(json.author).toEqual({
+      '@type': 'Person',
+      name: 'Bob',
+      url: 'https://example.com/en/authors/alice/1',
+    })
+    // Auto-generated fields preserved
+    expect(json.datePublished).toBe('2023-01-01T00:00:00.000Z')
+    expect(json.publisher).toBeDefined()
+  })
+
+  it('JSON string jsonLd replaces auto-generated page JSON-LD entirely', () => {
+    vi.mocked(sharedUtils.isPost).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isPage).mockReturnValue(true)
+
+    const ctx = createContext({
+      page: 'en/about.md',
+      pageData: {
+        title: 'About',
+        description: 'About us',
+        relativePath: 'en/about.md',
+        frontmatter: {
+          layout: 'page',
+          jsonLd: '{"@type":"FAQPage","name":"FAQ"}',
+        },
+      } as any,
+    })
+
+    addJsonLd(ctx)
+
+    expect(ctx.head).toHaveLength(1)
+    const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
+    expect(json['@type']).toBe('FAQPage')
+    expect(json.name).toBe('FAQ')
+    // Auto-generated fields are gone
+    expect(json.isPartOf).toBeUndefined()
+    expect(json.publisher).toBeUndefined()
+  })
+
+  it('YAML object jsonLd deep-merges with auto-generated page JSON-LD', () => {
+    vi.mocked(sharedUtils.isPost).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isPage).mockReturnValue(true)
+
+    const ctx = createContext({
+      page: 'en/about.md',
+      pageData: {
+        title: 'About',
+        description: 'About us',
+        relativePath: 'en/about.md',
+        frontmatter: {
+          layout: 'page',
+          jsonLd: {
+            '@type': 'FAQPage',
+            isPartOf: { name: 'Custom Site' },
+          },
+        },
+      } as any,
+    })
+
+    addJsonLd(ctx)
+
+    expect(ctx.head).toHaveLength(1)
+    const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
+    expect(json['@type']).toBe('FAQPage')
+    // deepMerge preserves nested fields from auto-generated isPartOf
+    expect(json.isPartOf).toEqual({
+      '@type': 'WebSite',
+      '@id': 'https://example.com/en/#website',
+      name: 'Custom Site',
+      url: 'https://example.com/en',
+    })
+    // Auto-generated fields preserved
+    expect(json.publisher).toBeDefined()
+  })
+
+  it('YAML object jsonLd on non-post/page layout uses data directly', () => {
+    vi.mocked(sharedUtils.isPost).mockReturnValue(false)
+    vi.mocked(sharedUtils.isPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+
+    const ctx = createContext({
+      page: 'en/custom.md',
+      pageData: {
+        title: 'Custom',
+        relativePath: 'en/custom.md',
+        frontmatter: {
+          layout: 'util',
+          jsonLd: { '@type': 'CustomType', custom: true },
+        },
+      } as any,
+    })
+    addJsonLd(ctx)
+    expect(ctx.head).toHaveLength(1)
+    const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
+    expect(json['@type']).toBe('CustomType')
+    expect(json.custom).toBe(true)
   })
 
   it('does nothing when frontmatter.seo.jsonLd is false', () => {
