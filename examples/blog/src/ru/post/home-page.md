@@ -31,12 +31,16 @@ layout: home
 # site.yaml
 themeConfig:
   home:
-    
-    appearance: auto # auto | light | dark
+    # auto | light | dark — режим темы на главной
+    appearance: auto
+    # максимальная ширина контента в пикселях
     maxWidth: 800
-    background: none # none | parallax
+    # none | parallax — параллакс-фон при скролле
+    background: none
+    # путь к фоновому изображению (только с background: parallax)
     # backgroundImage: /img/home.webp
-    # bgParallaxOffset: 300 # смещение параллакс-фона в пикселях при скролле
+    # смещение параллакс-фона в пикселях при скролле
+    # bgParallaxOffset: 300
 ```
 
 ```yaml
@@ -44,9 +48,11 @@ themeConfig:
 themeConfig:
   home:
     hero:
+      # заголовок hero-блока
       title: 'Мой блог'
+      # подзаголовок под заголовком
       description: 'Короткое описание блога'
-      # Простой вариант одной картинки:
+      # Простой вариант одной картинки (рекомендуется 320×320px, WebP/PNG/SVG):
       image: '/img/logo.webp'
       # Или с alt-текстом:
       # image: { src: '/img/logo.webp', alt: 'Логотип' }
@@ -55,7 +61,9 @@ themeConfig:
       # Или раздельные картинки через вложенный src:
       # image: { src: { light: '/img/logo-light.webp', dark: '/img/logo-dark.webp' }, alt: 'Логотип' }
       # img — алиас для image, принимает те же форматы
+      # массив кнопок под hero-блоком
       actions:
+        # primary — выделенная кнопка
         - { text: 'Читать статьи', href: 'recent/1', primary: true }
         # icon — необязательная иконка для кнопки:
         # - { text: 'Читать статьи', href: 'recent/1', primary: true, icon: 'fa6-solid:bookmark' }
