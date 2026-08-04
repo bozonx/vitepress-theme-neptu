@@ -15,7 +15,7 @@ interface HeroButton {
 type HeroImageProp =
   | string
   | {
-      src?: string | { light: string; dark: string }
+      src?: string
       light?: string
       dark?: string
       alt?: string
@@ -28,14 +28,13 @@ const props = defineProps<{
   description?: string
   buttons?: HeroButton[]
   actions?: HeroButton[]
-  img?: HeroImageProp
   image?: HeroImageProp
 }>()
 
 const heroTitle = computed(() => props.title || props.firstLine)
 const heroDescription = computed(() => props.description || props.secondLine)
 const heroActions = computed(() => props.actions || props.buttons)
-const rawImage = computed(() => props.image || props.img)
+const rawImage = computed(() => props.image)
 
 const imageSrc = (src?: string) => (src?.startsWith('/') ? withBase(src) : src)
 
@@ -50,8 +49,6 @@ const currentImageSrc = computed(() => {
   } else if (typeof img === 'object' && img !== null) {
     if (typeof img.src === 'string') {
       srcVal = img.src
-    } else if (typeof img.src === 'object' && img.src !== null) {
-      srcVal = isDark.value ? img.src.dark : img.src.light
     } else if ('light' in img || 'dark' in img) {
       srcVal = isDark.value ? img.dark : img.light
     }

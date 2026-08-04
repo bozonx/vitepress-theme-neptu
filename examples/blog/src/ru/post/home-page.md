@@ -59,15 +59,17 @@ themeConfig:
       # image: { src: '/img/logo.webp', alt: 'Логотип' }
       # Или разные картинки для светлой и тёмной темы:
       # image: { light: '/img/logo-light.webp', dark: '/img/logo-dark.webp', alt: 'Логотип' }
-      # Или раздельные картинки через вложенный src:
-      # image: { src: { light: '/img/logo-light.webp', dark: '/img/logo-dark.webp' }, alt: 'Логотип' }
-      # img — алиас для image, принимает те же форматы
       # массив кнопок под hero-блоком
       actions:
         # primary — выделенная кнопка
         - { text: 'Читать статьи', href: 'recent/1', primary: true }
         # icon — необязательная иконка для кнопки:
         # - { text: 'Читать статьи', href: 'recent/1', primary: true, icon: 'fa6-solid:bookmark' }
+      sections:
+        # массив секций под hero-блоком (см подродности ниже)
+        - title: 'Последние статьи'
+          description: 'Свежие материалы о разработке и технологиях'
+          articles: 5
 ```
 
 > **Требования к картинке в Hero:**

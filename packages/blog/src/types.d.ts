@@ -561,7 +561,7 @@ export namespace NeptuBlogTheme {
       image?:
         | string
         | {
-            src?: string | { light: string; dark: string }
+            src?: string
             light?: string
             dark?: string
             alt?: string

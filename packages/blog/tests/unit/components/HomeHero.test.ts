@@ -28,7 +28,7 @@ describe('HomeHero', () => {
   it('renders non-interactive image element', () => {
     const wrapper = mount(HomeHero, {
       props: {
-        img: { src: '/logo.webp', alt: 'Logo' },
+        image: { src: '/logo.webp', alt: 'Logo' },
       },
     })
 
@@ -39,18 +39,18 @@ describe('HomeHero', () => {
     expect(logo.find('img').attributes('alt')).toBe('Logo')
   })
 
-  it('does not render image when img.src is undefined', () => {
+  it('does not render image when image.src is undefined', () => {
     const wrapper = mount(HomeHero, {
       props: {
         firstLine: 'Hello',
-        img: { alt: 'Logo' },
+        image: { alt: 'Logo' },
       },
     })
 
     expect(wrapper.find('.home-logo').exists()).toBe(false)
   })
 
-  it('does not render image when img is absent', () => {
+  it('does not render image when image is absent', () => {
     const wrapper = mount(HomeHero, {
       props: {
         firstLine: 'Hello',
