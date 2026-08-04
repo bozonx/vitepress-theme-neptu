@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Main Planet Radial Gradient (Deep space blue to cyan glow) -->
+    <radialGradient id="planetGrad" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="15%" stop-color="#90e0ef"/>
+      <stop offset="45%" stop-color="#0077b6"/>
+      <stop offset="75%" stop-color="#03045e"/>
+      <stop offset="100%" stop-color="#020122"/>
+    </radialGradient>
+
+    <!-- Planet Edge / Atmosphere Glow -->
+    <radialGradient id="atmoGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#48cae4" stop-opacity="0"/>
+      <stop offset="95%" stop-color="#48cae4" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#caf0f8" stop-opacity="0.9"/>
+    </radialGradient>
+
+    <!-- Ring Gradient Back -->
+    <linearGradient id="ringGradBack" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#48cae4" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#90e0ef" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#48cae4" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Ring Gradient Front -->
+    <linearGradient id="ringGradFront" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00b4d8" stop-opacity="0.8"/>
+      <stop offset="30%" stop-color="#caf0f8" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#90e0ef" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0077b6" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Ring Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Clip Path for Planet Surface Swirls -->
+    <clipPath id="planetClip">
+      <circle cx="256" cy="256" r="145"/>
+    </clipPath>
+  </defs>
+
+  <!-- Rotated Group for Ring + Planet alignment (-22 degrees) -->
+  <g transform="rotate(-22 256 256)">
+
+    <!-- 1. BACK RINGS (Behind Planet) -->
+    <!-- Outer faint glow ring back -->
+    <path d="M 26 256 A 230 62 0 0 1 486 256" fill="none" stroke="#48cae4" stroke-width="26" opacity="0.3" filter="url(#glow)" />
+    <!-- Secondary thin ring back -->
+    <path d="M 40 256 A 216 56 0 0 1 472 256" fill="none" stroke="#caf0f8" stroke-width="4" opacity="0.5" />
+    <!-- Main ring back -->
+    <path d="M 26 256 A 230 62 0 0 1 486 256" fill="none" stroke="url(#ringGradBack)" stroke-width="18" stroke-linecap="round" />
+
+    <!-- 2. MAIN PLANET BODY -->
+    <circle cx="256" cy="256" r="145" fill="url(#planetGrad)" />
+
+    <!-- 3. PLANET ATMOSPHERE / SWIRLS (Clipped to sphere) -->
+    <g clip-path="url(#planetClip)">
+      <!-- Swirl / Cloud Band 1 (Top) -->
+      <path d="M 90 180 Q 200 150 350 190 Q 420 210 430 190 Q 340 160 180 165 Z" fill="#ffffff" opacity="0.35" />
+      <!-- Swirl / Cloud Band 2 (Middle) -->
+      <path d="M 100 240 Q 240 210 380 250 Q 420 260 360 235 Q 230 195 120 230 Z" fill="#90e0ef" opacity="0.45" />
+      <!-- Swirl / Cloud Band 3 (Bottom) -->
+      <path d="M 130 310 Q 250 280 390 320 Q 340 300 240 270 Q 150 290 120 315 Z" fill="#ffffff" opacity="0.25" />
+      <!-- Shadow on bottom right edge -->
+      <path d="M 111 111 A 145 145 0 0 0 401 401 A 145 145 0 0 1 111 111 Z" fill="#010719" opacity="0.6" />
+    </g>
+
+    <!-- Planet Atmosphere Light Rim -->
+    <circle cx="256" cy="256" r="145" fill="url(#atmoGlow)" />
+
+    <!-- 4. FRONT RINGS (In Front of Planet) -->
+    <!-- Outer faint glow ring front -->
+    <path d="M 486 256 A 230 62 0 0 1 26 256" fill="none" stroke="#48cae4" stroke-width="26" opacity="0.4" filter="url(#glow)" />
+    <!-- Secondary thin ring front -->
+    <path d="M 472 256 A 216 56 0 0 1 40 256" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.8" />
+    <!-- Main ring front -->
+    <path d="M 486 256 A 230 62 0 0 1 26 256" fill="none" stroke="url(#ringGradFront)" stroke-width="18" stroke-linecap="round" />
+    <!-- Inner bright accent line on front ring -->
+    <path d="M 460 256 A 204 52 0 0 1 52 256" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6" />
+
+  </g>
+
+  <!-- Sparkle / Star accent top right -->
+  <path d="M 420 100 Q 420 120 440 120 Q 420 120 420 140 Q 420 120 400 120 Q 420 120 420 100 Z" fill="#ffffff" opacity="0.9" />
+  <path d="M 90 380 Q 90 395 105 395 Q 90 395 90 410 Q 90 395 75 395 Q 90 395 90 380 Z" fill="#90e0ef" opacity="0.7" />
+</svg>
