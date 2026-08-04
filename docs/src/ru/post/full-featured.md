@@ -126,21 +126,20 @@ previewText: 'Кастомный текст превью для карточки
 featured: false
 # Включить/выключить бейдж времени чтения для этой страницы.
 # Перекрывает themeConfig.readingTime.layouts.
-# По умолчанию: следует themeConfig.readingTime.layouts (встроенный дефолт — ['post']).
+# По умолчанию: следует themeConfig.readingTime.layouts.
 readingTime: true
 # Показать/скрыть правую боковую колонку для этой страницы.
-# Перекрывает themeConfig.asideLayouts. Игнорируется на главной странице.
-# По умолчанию: включено для layout 'post', 'util', 'tag', 'archive', 'author'.
+# По умолчанию: следует themeConfig.asideLayouts.
 aside: true
 # Показать/скрыть оглавление для этой страницы.
 # Перекрывает themeConfig.toc.layouts, но порог по количеству заголовков
 # (themeConfig.toc.minHeadings) всё равно применяется.
-# По умолчанию: включено для layout 'post' (DEFAULT_TOC_LAYOUTS = ['post']).
+# По умолчанию: следует themeConfig.toc.layouts (встроенный дефолт — ['post']).
 toc: true
 # Включить/выключить рекламные слоты для этой страницы.
 # Перекрывает themeConfig.ads.layouts. Влияет и на in-content слоты,
 # которые вставляются markdown-плагином на этапе сборки.
-# По умолчанию: включено для layout 'post' (DEFAULT_ADS_LAYOUTS = ['post']).
+# По умолчанию: следует themeConfig.ads.layouts (встроенный дефолт — ['post']).
 ads: false
 # Включить страницу в индекс поиска (Pagefind).
 # По умолчанию: true для постов, false для util-страниц (нужно явно true).
