@@ -20,8 +20,8 @@ npm install
 ```
 packages/blog     — blog theme (vitepress-theme-neptu)
 packages/landing  — landing theme (vitepress-theme-neptu-landing)
-docs              — documentation site
-docs/landing-example — landing example site
+examples/blog     — blog demo & docs site
+examples/landing  — landing example site
 ```
 
 ## Development Workflow
