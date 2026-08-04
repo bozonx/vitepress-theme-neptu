@@ -179,14 +179,12 @@ function createPostJsonLd(
     : undefined
 
   const authorName = author?.name || author?.id
-  const authorUrl = author?.aboutUrl
-    ? makeAbsoluteUrl(siteUrl, author.aboutUrl)
-    : pageData.frontmatter.authorId
-      ? makeAbsoluteUrl(
-          siteUrl,
-          `${localeIndex}/authors/${pageData.frontmatter.authorId}/1`
-        )
-      : undefined
+  const authorUrl = pageData.frontmatter.authorId
+    ? makeAbsoluteUrl(
+        siteUrl,
+        `${localeIndex}/authors/${pageData.frontmatter.authorId}/1`
+      )
+    : undefined
   const cover = pageData.frontmatter.cover
   const tags = pageData.frontmatter.tags
   const lang = langConfig.lang
@@ -284,16 +282,13 @@ function createAuthorJsonLd(
     name,
     description,
     image,
-    aboutUrl,
     links,
     imageHeight,
     imageWidth,
     ...rest
   } = author
   const authorName = name || id
-  const authorUrl = aboutUrl
-    ? makeAbsoluteUrl(siteUrl, aboutUrl)
-    : makeAbsoluteUrl(siteUrl, `${localeIndex}/authors/${id}/1`)
+  const authorUrl = makeAbsoluteUrl(siteUrl, `${localeIndex}/authors/${id}/1`)
   let imgUrl = image
 
   imgUrl = makeAbsoluteUrl(siteUrl, imgUrl)

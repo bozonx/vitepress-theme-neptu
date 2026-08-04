@@ -182,7 +182,6 @@ export const AuthorSchema = z.looseObject({
   avatar: z.string().optional(),
   image: z.string().optional(),
   description: z.string().optional(),
-  aboutUrl: z.string().optional(),
   twitterHandle: z.string().optional(),
   imageWidth: z.number().optional(),
   imageHeight: z.number().optional(),

@@ -53,7 +53,6 @@ describe('addOgMetaTags', () => {
                   {
                     id: 'alice',
                     name: 'Alice Author',
-                    aboutUrl: 'https://alice.example.com',
                   },
                 ],
               },
@@ -249,7 +248,7 @@ describe('addOgMetaTags', () => {
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
       'meta',
-      { property: 'article:author', content: 'https://alice.example.com' },
+      { property: 'article:author', content: 'https://example.com/en/authors/alice/1' },
     ])
   })
 
@@ -460,7 +459,7 @@ describe('addOgMetaTags', () => {
   it('adds twitter:creator when author has twitterHandle', () => {
     const ctx = createContext()
     ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
-      { id: 'alice', name: 'Alice Author', aboutUrl: 'https://alice.example.com', twitterHandle: 'alice_dev' },
+      { id: 'alice', name: 'Alice Author', twitterHandle: 'alice_dev' },
     ]
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
@@ -472,7 +471,7 @@ describe('addOgMetaTags', () => {
   it('normalizes twitter:creator handle with leading @', () => {
     const ctx = createContext()
     ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
-      { id: 'alice', name: 'Alice Author', aboutUrl: 'https://alice.example.com', twitterHandle: '@alice_dev' },
+      { id: 'alice', name: 'Alice Author', twitterHandle: '@alice_dev' },
     ]
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([

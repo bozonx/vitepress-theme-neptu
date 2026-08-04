@@ -71,7 +71,7 @@ describe('addJsonLd', () => {
           siteUrl: 'https://example.com',
           themeConfig: {
             authors: [
-              { id: 'alice', name: 'Alice', aboutUrl: 'https://alice.com' },
+              { id: 'alice', name: 'Alice' },
             ],
             publisher: {
               name: 'Pub',
@@ -87,7 +87,7 @@ describe('addJsonLd', () => {
               title: 'Blog',
               themeConfig: {
                 authors: [
-                  { id: 'alice', name: 'Alice', aboutUrl: 'https://alice.com' },
+                  { id: 'alice', name: 'Alice' },
                 ],
                 publisher: {
                   name: 'Pub',
@@ -144,7 +144,7 @@ describe('addJsonLd', () => {
     expect(json.author).toEqual({
       '@type': 'Person',
       name: 'Alice',
-      url: 'https://alice.com',
+      url: 'https://example.com/en/authors/alice/1',
     })
     expect(json.publisher).toEqual({
       '@type': 'Organization',
@@ -411,7 +411,7 @@ describe('addJsonLd', () => {
     expect(json.author.name).toBe('alice')
   })
 
-  it('constructs author URL when aboutUrl is absent', () => {
+  it('constructs author URL for post', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
     vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)

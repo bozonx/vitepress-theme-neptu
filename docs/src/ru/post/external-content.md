@@ -29,7 +29,7 @@ CMS, API или на другом сайте, синхронизируйте е�
 ```
 
 Ваш `sync-remote-posts.mjs` получает внешний контент и записывает файлы вида
-`src/ru/post/<slug>.md` с фронтматером, который ожидает тема (`title`,
+`src/ru/post/<slug>.md` с frontmatter, который ожидает тема (`title`,
 `date`, `authorId`, `tags`, …). Поскольку `prebuild` выполняется первым, только что
 записанные посты индексируются при каждой сборке.
 
@@ -73,15 +73,18 @@ npm install -D turndown
 
 ## Пользовательские data-лоадеры
 
-Можно написать собственный VitePress data-лоадер. По умолчанию тема отслеживает
-`./post/*.md` и передаёт файлы в `loadPostsDataFromFiles`:
+Можно написать собственный VitePress data-лоадер. Стартовый шаблон отслеживает
+все посты локали, включая вложенные папки, и передаёт файлы в
+`loadPostsDataFromFiles`:
 
 ```ts
 // src/ru/loadPosts.data.ts
+import { POSTS_DIR } from 'vitepress-theme-neptu/constants'
 import { loadPostsDataFromFiles } from 'vitepress-theme-neptu/list-helpers/node'
 
 export default {
-  watch: ['./post/*.md'],
+  // важно именно `**/*.md`: с `*.md` посты из подпапок в списки не попадут
+  watch: [`./${POSTS_DIR}/**/*.md`],
   async load(watchedFiles: string[]) {
     return {
       posts: await loadPostsDataFromFiles(watchedFiles),

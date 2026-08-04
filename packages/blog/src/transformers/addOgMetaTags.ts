@@ -85,14 +85,12 @@ export function addOgMetaTags({
       )
     : undefined
 
-  const authorUrl = author?.aboutUrl
-    ? makeAbsoluteUrl(siteUrl, author.aboutUrl)
-    : pageData.frontmatter.authorId
-      ? makeAbsoluteUrl(
-          siteUrl,
-          `${localeIndex}/authors/${pageData.frontmatter.authorId}/1`
-        )
-      : undefined
+  const authorUrl = pageData.frontmatter.authorId
+    ? makeAbsoluteUrl(
+        siteUrl,
+        `${localeIndex}/authors/${pageData.frontmatter.authorId}/1`
+      )
+    : undefined
 
   const tags = [
     ['property', 'og:site_name', langConfig.title || ''],

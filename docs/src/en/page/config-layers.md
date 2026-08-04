@@ -191,7 +191,7 @@ This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate
 
 ## Authors — `_authors.yaml`
 
-`_authors.yaml` is an array of profiles. Required: `id`; supported optional fields: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `aboutUrl`, `twitterHandle`, and `links[]` (`type`, `url`, `title`). It has its own self-documenting example and schema. It merges with inline `themeConfig.authors` by `id`; the dedicated file wins for a conflicting field.
+`_authors.yaml` is an array of profiles. Required: `id`; supported optional fields: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `twitterHandle`, and `links[]` (`type`, `url`, `title`). It has its own self-documenting example and schema. It merges with inline `themeConfig.authors` by `id`; the dedicated file wins for a conflicting field.
 
 ## YAML templates and validation
 

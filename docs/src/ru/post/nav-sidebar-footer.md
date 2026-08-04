@@ -13,14 +13,14 @@ descrAsPreview: true
 
 ## Верхняя панель (`nav`)
 
-Панель в самом верху. Содержит произвольные ссылки, иконки соцсетей, опциональную кнопку
-пожертвования, кнопку поиска, переключатель языка и переключатель темы оформления.
+Панель в самом верху. Содержит произвольные ссылки, иконки соцсетей, кнопку
+«Поддержать», кнопку поиска, переключатель языка и переключатель темы оформления.
 
 ```yaml
 # src/<locale>/_site.yaml
 themeConfig:
   nav:
-    donate: true            # показывать кнопку пожертвования в панели
+    donate: true            # показывать кнопку «Поддержать» в панели (нужен donate.url)
     links:
       - text: 'Внешняя ссылка'
         href: 'https://example.org/'
@@ -44,7 +44,7 @@ themeConfig:
     blogTitle: 'Мой блог'  # заголовок сайдбара; false — скрыть
     recent: true
     featured: true   # посты с featured: true
-    popular: true    # требуется popularPosts.enabled
+    popular: true    # требуется popularPosts.enabled (по умолчанию выключен)
     archive: true    # по годам → месяцам
     authors: true
     tags: true       # облако тегов
@@ -124,10 +124,34 @@ themeConfig:
 [Кастомизацию футера сайта](advanced#кастомизация-футера-сайта)
 в разделе расширенных возможностей.
 
+## Кнопка «Поддержать»
+
+Флаги `nav.donate` и `sidebar.donate` только показывают кнопку — куда она ведёт,
+задаёт отдельная секция `donate`:
+
+```yaml
+# src/site.yaml — общий адрес для всех локалей
+themeConfig:
+  donate:
+    url: 'page/donate'   # относительный путь дополняется локалью, либо внешний https://…
+    icon: 'fa6-solid:hand-holding-heart'   # необязательно, по умолчанию donateIcon
+```
+
+```yaml
+# src/<locale>/_site.yaml — текст призыва под статьёй
+themeConfig:
+  donate:
+    postDonateCall: 'Если статья оказалась полезной — поддержите блог.'
+```
+
+Без `donate.url` кнопки не будет, даже если флаги включены. Блок под статьёй
+управляется ключом `donate` в `postFooter` — см. [Подвал поста и
+кнопки «поделиться»](post-footer-and-sharing).
+
 ## Иконки
 
 Каждое поле `icon:` принимает строку [Iconify](https://icones.es) вида `prefix:name`,
-например `fa6-solid:hand-holding-heart`. Иконки по умолчанию (пожертвование, свежие,
+например `fa6-solid:hand-holding-heart`. Иконки по умолчанию («Поддержать», свежие,
 популярное, RSS и т.д.) можно переопределить глобально в `src/site.yaml`:
 
 ```yaml
@@ -175,9 +199,9 @@ markdown: {
 | Элемент | Где | Статья |
 | --- | --- | --- |
 | Верхняя панель, сайдбар, футер сайта | `_site.yaml` | эта |
-| Секции списков в сайдбаре | `sidebar.*` | [Списки и главная](lists-and-pages) |
+| Секции списков в сайдбаре | `sidebar.*` | [Списки, страницы и главная](lists-and-pages) |
 | Облака тегов и категорий | `sidebar.tags`, `sidebar.categories` | [Категории и теги](categories-and-tags) |
-| Блоки под статьёй и кнопки «поделиться» | `postFooter`, `socialMediaShares` | [Подвал поста](post-footer-and-sharing) |
+| Блоки под статьёй и кнопки «поделиться» | `postFooter`, `socialMediaShares` | [Подвал поста и шеринг](post-footer-and-sharing) |
 | Правая колонка и оглавление | `toc`, `asideLayouts` | [Оглавление и правая колонка](toc-and-aside) |
-| Своя вёрстка вместо встроенной | слоты `Layout.vue` | [Хуки и слоты](advanced) |
+| Своя вёрстка вместо встроенной | слоты `Layout.vue` | [Хуки, слоты и свои макеты](advanced) |
 

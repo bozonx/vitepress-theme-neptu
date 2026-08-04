@@ -41,7 +41,7 @@ YAML — **не полный VitePress-конфиг**. В нём не бывае
 | `vite`, `markdown`, `sitemap` | Обычные настройки VitePress/Vite. |
 | `transformPageData`, `transformHead`, `buildEnd` | Пользовательские хуки после хуков темы. |
 | `themeConfig.search` | Провайдер Pagefind, опции UI и индексация при сборке. |
-| `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; интеграция включена по умолчанию, credentials и env остаются здесь. |
+| `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; интеграция выключена по умолчанию, credentials и env остаются здесь. |
 
 ```ts
 export default async () => defineBlogConfig({
@@ -53,7 +53,6 @@ export default async () => defineBlogConfig({
     search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
     popularPosts: {
       enabled: true,
-      fallback: 'latest',
       dataSource: { provider: 'ga4', propertyId: process.env.GA_PROPERTY_ID },
     },
   },
@@ -127,7 +126,7 @@ themeConfig:
 
 ## Авторы — `_authors.yaml`
 
-Файл — массив профилей. Обязателен только `id`; остальные поля: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `aboutUrl`, `twitterHandle`, `links[]` (`type`, `url`, `title`). Пример и комментарии находятся рядом в шаблоне. Записи сливаются с `themeConfig.authors` по `id`; отдельный `_authors.yaml` имеет приоритет для совпадающего поля.
+Файл — массив профилей. Обязателен только `id`; остальные поля: `name`, `description`, `avatar`, `image`, `imageWidth`, `imageHeight`, `twitterHandle`, `links[]` (`type`, `url`, `title`). Пример и комментарии находятся рядом в шаблоне. Записи сливаются с `themeConfig.authors` по `id`; отдельный `_authors.yaml` имеет приоритет для совпадающего поля.
 
 ## Шаблоны и валидация YAML
 

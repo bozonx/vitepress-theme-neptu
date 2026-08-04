@@ -135,7 +135,10 @@ const commonThemeConfig = {
   },
 
   popularPosts: {
-    enabled: true,
+    // Off by default: the ranking needs GA4 credentials, so enabling it
+    // implicitly would warn on every first build. Opt in once
+    // GA_PROPERTY_ID / GA_CREDENTIALS_JSON are set.
+    enabled: false,
     sortBy: 'pageviews',
     dataSource: {
       provider: 'ga4' as const,
