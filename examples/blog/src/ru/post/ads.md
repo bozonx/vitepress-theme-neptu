@@ -6,7 +6,7 @@ description: >
   на этапе сборки.
 authorId: ivan-k
 date: 2026-07-05
-category: { name: 'Расширение', slug: 'advanced' }
+category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [advanced, config]
 descrAsPreview: true
 ---
@@ -16,7 +16,7 @@ descrAsPreview: true
 блока вы пишете сами и подключаете через `ads.component`.
 
 Место, куда попадает блок в правой колонке, описано в
-[Оглавлении и правой колонке](toc-and-aside).
+[Настройках themeConfig](themeconfig-settings#оглавление-и-правая-колонка).
 
 ## Подключение
 
@@ -215,4 +215,4 @@ Frontmatter учитывается и плагином сборки, так чт
 ## Что дальше
 
 - [Согласие на куки и аналитика](consent-and-analytics) — Consent Mode v2, CMP и что требует Google.
-- [Оглавление и правая колонка](toc-and-aside) — геометрия колонки и её слот.
+- [Настройки themeConfig](themeconfig-settings#оглавление-и-правая-колонка) — геометрия колонки и её слот.

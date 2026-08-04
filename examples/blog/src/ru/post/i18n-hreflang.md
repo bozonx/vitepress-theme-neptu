@@ -119,7 +119,7 @@ seo:
 
 Черновики (`draft: true`) исключаются из hreflang автоматически вместе с
 canonical и JSON-LD — см. [Черновики и время
-чтения](drafts-and-reading-time).
+чтения](drafts-video-podcasts).
 
 ## Что дальше
 

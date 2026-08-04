@@ -8,7 +8,7 @@ previewText: "Текст этой карточки задан явно чере�
 translations:
   en: /en/post/preview-and-search
 date: 2026-07-28
-category: { name: 'Контент', slug: 'writing' }
+category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [frontmatter]
 ---
 

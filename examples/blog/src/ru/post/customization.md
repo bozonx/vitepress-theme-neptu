@@ -1,11 +1,11 @@
 ---
-title: Оформление — цветовые схемы, стили, шрифты и печать
+title: Кастомизация — цветовые схемы, стили, шрифты и печать
 description: >
   Восемь цветовых схем и шесть стилевых пресетов, собственный оттенок через
   CSS-переменные, светлая и тёмная темы, свои шрифты и печатная версия статьи.
 authorId: ivan-k
-date: 2026-07-15
-category: { name: 'Настройка', slug: 'configuration' }
+date: 2026-08-04
+category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [theme, config]
 descrAsPreview: true
 ---
@@ -171,7 +171,7 @@ themeConfig:
     backgroundImage: 'https://images.unsplash.com/photo-...'
 ```
 
-Подробнее о блоках главной — в [Списках, страницах и главной](lists-and-pages).
+Подробнее о блоках главной — в [Домашней странице](home-page).
 
 ## Печать
 

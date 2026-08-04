@@ -5,7 +5,7 @@ description: >
   обвязки страницы, замена подвала и футера, собственный макет статьи.
 authorId: ivan-k
 date: 2026-07-07
-category: { name: 'Расширение', slug: 'advanced' }
+category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [advanced]
 descrAsPreview: true
 ---
@@ -162,7 +162,7 @@ const { Layout } = Theme
 
 Правая колонка настраивается отдельно — какие страницы её показывают, как
 подключить рекламу и как поменять размеры, описано в
-[Оглавлении и правой колонке](toc-and-aside).
+[Настройках themeConfig](themeconfig-settings#оглавление-и-правая-колонка).
 
 ## Кастомизация футера сайта
 
@@ -199,7 +199,7 @@ export default async () => defineBlogConfig({
 ## Кастомизация подвала поста
 
 Состав и порядок блоков подвала задаются массивом `themeConfig.postFooter` —
-он разобран в [Подвале поста](post-footer-and-sharing). Здесь — что делать,
+он разобран в [Настройках themeConfig](themeconfig-settings#подвал-поста). Здесь — что делать,
 когда перестановки блоков мало.
 
 ### Замена всего подвала

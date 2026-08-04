@@ -6,7 +6,7 @@ description: >
   страниц.
 authorId: ivan-k
 date: 2026-07-06
-category: { name: 'Расширение', slug: 'advanced' }
+category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [advanced]
 descrAsPreview: true
 ---

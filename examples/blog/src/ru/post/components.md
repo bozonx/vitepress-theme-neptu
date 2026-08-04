@@ -6,7 +6,7 @@ description: >
   функции.
 authorId: ivan-k
 date: 2026-07-08
-category: { name: 'Расширение', slug: 'advanced' }
+category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
 tags: [advanced, components]
 descrAsPreview: true
 ---
@@ -38,7 +38,7 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 | `NeptuAd` | Рекламный блок в произвольном месте статьи |
 
 Живые примеры первых четырёх и их props — в
-[Медиа-компонентах](media-components); `NeptuAd` описан в [Рекламных
+[Обложках, картинках и медиа](covers-images-media#медиа-компоненты); `NeptuAd` описан в [Рекламных
 блоках](ads).
 
 ## Списки и страницы
