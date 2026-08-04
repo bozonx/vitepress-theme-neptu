@@ -63,6 +63,7 @@ description: >
   подкастов и ссылка на обсуждение — всё включено сразу.
 # layout — необязателен для постов: если не указан, страница рендерится как пост.
 # Доступные встроенные: post, home, page, util, tag, category, archive, author.
+# По умолчанию: 'post'.
 # layout: post
 # ID автора из themeConfig.authors. Если ID не найден — блок автора не рендерится.
 # Важнно точно и без ошибок указывать ID автора чтобы правльно сформировались списки постов по авторам.
@@ -115,29 +116,34 @@ categories:
 tags: [frontmatter]
 # Использовать description как текст превью в карточках списков постов.
 # Приоритет: previewText > descrAsPreview > авто-экстракт из контента.
+# По умолчанию: false.
 descrAsPreview: true
 # Явный текст превью. Имеет высший приоритет — перекрывает descrAsPreview.
 # Пустая строка ('') отключает превью, а не игнорируется.
 previewText: 'Кастомный текст превью для карточки списка постов.'
-# Помечает пост для коллекций избранных (FeaturedList, HomeFeaturedPosts).
-# НЕ влияет на хронологические списки — пост остаётся на своём месте по дате.
+# Помечает пост для коллекций избранных которые видны на главной странице и на отдельной странице избранных постов ссылка на которую ведет из левого сайдбара.
+# По умолчанию: false.
 featured: true
 # Включить/выключить бейдж времени чтения для этой страницы.
 # Перекрывает themeConfig.readingTime.layouts.
+# По умолчанию: включено для layout 'post' (DEFAULT_READING_TIME_LAYOUTS = ['post']).
 readingTime: true
 # Показать/скрыть правую боковую колонку для этой страницы.
 # Перекрывает themeConfig.asideLayouts. Игнорируется на главной странице.
+# По умолчанию: включено для layout 'post', 'util', 'tag', 'archive', 'author'.
 aside: true
 # Показать/скрыть оглавление для этой страницы.
 # Перекрывает themeConfig.toc.layouts, но порог по количеству заголовков
 # (themeConfig.toc.minHeadings) всё равно применяется.
+# По умолчанию: включено для layout 'post' (DEFAULT_TOC_LAYOUTS = ['post']).
 toc: true
 # Включить/выключить рекламные слоты для этой страницы.
 # Перекрывает themeConfig.ads.layouts. Влияет и на in-content слоты,
 # которые вставляются markdown-плагином на этапе сборки.
+# По умолчанию: включено для layout 'post' (DEFAULT_ADS_LAYOUTS = ['post']).
 ads: false
 # Включить страницу в индекс поиска (Pagefind).
-# Для постов по умолчанию true, для util-страниц — false (нужно явно true).
+# По умолчанию: true для постов, false для util-страниц (нужно явно true).
 # draft: true принудительно сбрасывает это в false.
 searchIncluded: true
 # Канонический URL. Принимает полный URL или 'self' для авто-каноникала.
@@ -147,16 +153,17 @@ canonical: https://example.com/canonical-url
 # если установлен в false. По умолчанию всё включено.
 # Перекрывает глобальные themeConfig.seo.
 seo:
-  og: true              # Open Graph + Twitter Card мета-теги
-  jsonLd: true          # JSON-LD структурированные данные
-  hreflang: true        # hreflang link-теги (только если >1 локали)
-  canonical: true       # canonical link-тег
-  autoCanonical: true   # авто-каноникал, если поле canonical не задано
-  rss: true             # RSS/Atom/JSON feed link-теги на главной
-  maxDescriptionLength: 160  # лимит символов для авто-экстракта description
+  og: true              # Open Graph + Twitter Card мета-теги. По умолчанию: true
+  jsonLd: true          # JSON-LD структурированные данные. По умолчанию: true
+  hreflang: true        # hreflang link-теги (только если >1 локали). По умолчанию: true
+  canonical: true       # canonical link-тег. По умолчанию: true
+  autoCanonical: true   # авто-каноникал, если поле canonical не задано. По умолчанию: true
+  rss: true             # RSS/Atom/JSON feed link-теги на главной. По умолчанию: true
+  maxDescriptionLength: 160  # лимит символов для авто-экстракта description. По умолчанию: 300
 # Черновик. Страница собирается (URL работает для превью),
 # но исключается из списков, RSS, sitemap, поиска и помечается noindex.
 # В vitepress dev черновики видны по умолчанию, в production — скрыты.
+# По умолчанию: false.
 # draft: true
 # Имя компонента для замены центральной области контента.
 # В отличие от layout — заменяет только Content, а не весь layout.
