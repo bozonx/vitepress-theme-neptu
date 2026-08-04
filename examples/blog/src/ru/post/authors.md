@@ -38,6 +38,30 @@ authorId: ivan-k
       title: 'GitHub'
 ```
 
+## Авторы для всех локалей (`site.yaml`)
+
+Файл `src/site.yaml` — общий слой для всех локалей. Авторов можно объявить
+прямо в нём под `themeConfig.authors`:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  authors:
+    - id: 'ivan-k'
+      name: 'Иван К'
+      description: 'Мейнтейнер темы.'
+      image: 'https://…/avatar.jpg'
+      twitterHandle: 'neptu_blog'
+      links:
+        - type: 'github'
+          url: 'https://github.com/…'
+          title: 'GitHub'
+```
+
+Эти записи применяются ко всем локалям. Локальный `_authors.yaml` и
+`_site.yaml themeConfig.authors` имеют приоритет для совпадающего `id` —
+значения полей локального автора переопределяют общие поле-за-полем.
+
 ## Файл `_authors.yaml`
 
 Файл — массив профилей. Обязателен только `id`; остальные поля: `name`,
