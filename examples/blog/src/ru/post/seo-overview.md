@@ -29,7 +29,7 @@ siteUrl: 'https://myblog.org'
 | **robots.txt** | со ссылкой на sitemap | [SEO-механизмы](seo-features) |
 | **RSS / Atom / JSON** | ленты для каждой локали | [SEO-механизмы](seo-features) |
 | **Open Graph + Twitter card** | превью для соцсетей на каждой странице | см. ниже |
-| **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](json-ld) |
+| **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](seo-json-ld) |
 | **canonical** | ссылка на первоисточник страницы | [SEO-механизмы](seo-features) |
 | **hreflang** | связь переведённых версий | [Связывание переводов и hreflang](i18n-hreflang) |
 
@@ -62,5 +62,5 @@ seo:
 
 - [SEO-механизмы](seo-features) — ленты, robots, sitemap, canonical, кросспостинг.
 - [Поиск Pagefind](search-pagefind) — индексация, фильтры, исключение из поиска.
-- [Микроразметка JSON-LD](json-ld) — расширение схемы под свои нужды.
+- [Микроразметка JSON-LD](seo-json-ld) — расширение схемы под свои нужды.
 - [Публикация и деплой](deploy) — как выложить готовый сайт в интернет.

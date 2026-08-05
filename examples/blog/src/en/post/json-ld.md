@@ -15,7 +15,7 @@ jsonLd: |
   proficiencyLevel: Beginner
   dependencies: VitePress, vitepress-theme-neptu
 translations:
-  ru: /ru/post/json-ld
+  ru: /ru/post/seo-json-ld
 ---
 
 Open your browser's dev tools on this page and look in `<head>` for a

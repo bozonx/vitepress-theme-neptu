@@ -20,7 +20,7 @@ descrAsPreview: true
 | Параметр | Где описан |
 | --- | --- |
 | `home` | [Домашняя страница](home-page) |
-| `publisher` | [Микроразметка JSON-LD](json-ld) |
+| `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
 | `postList` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
 | `socialMediaShares` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |

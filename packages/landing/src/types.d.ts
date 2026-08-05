@@ -48,6 +48,7 @@ export type LandingChromeConfig = Pick<
   | 'returnToTopLabel'
   | 'langMenuLabel'
   | 'notFound'
+  | 'search'
 >
 
 /**
