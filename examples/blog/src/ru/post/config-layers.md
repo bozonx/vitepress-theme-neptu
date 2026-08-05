@@ -211,13 +211,29 @@ export default async () => {
 
 В `themeConfig` можно добавлять **любые собственные поля** — они проходят через весь конвейер слияния и доступны в рантайме через `useUiTheme()`. Объекты рекурсивно объединяются между уровнями, массивы заменяются целиком.
 
+Уровень 1 — `config.ts`, переменная окружения:
+
+```ts
+// .vitepress/config.ts
+export default async () => {
+  const config: BlogUserConfig = {
+    themeConfig: {
+      apiUrl: process.env.API_URL,
+    },
+  }
+  return defineBlogConfig(config)
+}
+```
+
+Уровень 2 — `src/site.yaml`, подстановка из `${config.*}` и новое поле:
+
 ```yaml
 # src/site.yaml
 themeConfig:
-  myCustomField: "hello"
-  myCustomConfig:
-    featureEnabled: true
-    apiUrl: "https://api.example.com"
+  # подстановка из config.ts (уровень 1)
+  endpoint: "${config.themeConfig.apiUrl}/v2/posts"
+  # новое поле, заданное на уровне 2
+  featureEnabled: true
 ```
 
 Доступ в Vue-компоненте:
@@ -227,12 +243,13 @@ themeConfig:
 import { useUiTheme } from 'vitepress-theme-neptu/composables'
 
 const { theme } = useUiTheme()
-console.log(theme.value.myCustomField)   // "hello"
-console.log(theme.value.myCustomConfig)  // { featureEnabled: true, apiUrl: "..." }
+console.log(theme.value.apiUrl)        // "https://api.example.com"
+console.log(theme.value.endpoint)      // "https://api.example.com/v2/posts"
+console.log(theme.value.featureEnabled) // true
 </script>
 ```
 
-Поля можно задавать на любом уровне: `config.ts`, `site.yaml` или `_site.yaml`. Значения сливаются по приоритету — от низкого к высокому.
+> Поля можно задавать на любом уровне: `config.ts`, `site.yaml` или `_site.yaml`. Значения сливаются по приоритету — от низкого к высокому.
 
 ## Уровень 2 и уровнь 3
 
