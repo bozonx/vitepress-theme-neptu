@@ -276,4 +276,37 @@ describe('useContentLangs', () => {
       },
     ])
   })
+
+  it('shows locale root link when i18nRouting is false even without translation file', () => {
+    mockedUseData.mockReturnValue({
+      site: ref({
+        locales: {
+          en: { label: 'English' },
+          ru: { label: 'Русский' },
+        },
+        pages: [{ relativePath: 'en/post/hello.md' }],
+        cleanUrls: true,
+      }),
+      localeIndex: ref('en'),
+      page: ref({
+        relativePath: 'en/post/hello.md',
+        frontmatter: {},
+      }),
+      theme: ref({
+        i18nRouting: false,
+      }),
+      hash: ref('#section'),
+    })
+
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([
+      {
+        text: 'Русский',
+        link: '/ru/#section',
+        lang: undefined,
+        dir: undefined,
+      },
+    ])
+  })
 })

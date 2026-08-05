@@ -79,6 +79,18 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
         }
 
         const localeBaseLink = `/${key}/`
+
+        // When i18nRouting is disabled, always link to the locale root
+        // without checking for translation file existence
+        if (theme.value.i18nRouting === false) {
+          return {
+            text: value.label,
+            link: localeBaseLink + hash.value,
+            lang: value.lang,
+            dir: value.dir,
+          }
+        }
+
         const localeRelativePath = pickExistingTranslationRelativePath(
           resolveTranslationRelativePathCandidates(page.value.relativePath, key, translations),
           { knownRelativePaths }
@@ -92,7 +104,7 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
           link:
             normalizeLink(
               localeBaseLink,
-              theme.value.i18nRouting !== false && correspondingLink,
+              correspondingLink,
               relativePath,
               !site.value.cleanUrls
             ) + hash.value,
