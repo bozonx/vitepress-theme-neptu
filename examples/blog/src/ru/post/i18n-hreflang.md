@@ -90,6 +90,7 @@ en/post/article/hello-world.md  ←→  ru/post/article/hello-world.md  ←→  
 - **Версия должна существовать на диске.** Тема проверяет файл перед тем, как
   выводить ссылку, поэтому битых hreflang не бывает.
 - Если у вас всего один язык в блоге, то hreflang не появялется в `head` так как в этом просто нет необходимости
+- Черновики (`draft: true`) исключаются из hreflang автоматически вместе с canonical и JSON-LD — см. [Черновики и время чтения](drafts-video-podcasts).
 
 ::: tip
 Абсолютные адреса строятся из `siteUrl` — без него теги не появятся, поэтому
@@ -110,10 +111,6 @@ themeConfig:
 seo:
   hreflang: false
 ```
-
-Черновики (`draft: true`) исключаются из hreflang автоматически вместе с
-canonical и JSON-LD — см. [Черновики и время
-чтения](drafts-video-podcasts).
 
 ## Что дальше
 
