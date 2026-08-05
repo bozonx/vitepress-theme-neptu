@@ -62,7 +62,7 @@ layout: page
 | 16 | [Как работает SEO — обзор](../post/seo-overview) | Карта механизмов и переключателей |
 | 17 | [Ленты, robots и sitemap](../post/feeds-and-indexing) | RSS, Atom, JSON, robots.txt, sitemap.xml |
 | 18 | [Микроразметка JSON-LD](../post/json-ld) | Расширение схемы под свои нужды |
-| 19 | [SEO-переключатели и canonical](../post/seo-toggles-canonical) | Глобальные переключатели, кросспостинг |
+| 19 | [Канонические ссылки](../post/seo-canonical) | Кросспостинг, отключение |
 
 ## 6. Продвинутое
 

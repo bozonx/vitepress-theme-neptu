@@ -116,5 +116,4 @@ themeConfig:
     jsonLd: false
 ```
 
-О других SEO-возможностях (OG, canonical, hreflang, RSS) и их переключателях см. в разделе
-[SEO-переключатели и canonical](seo-toggles-canonical).
+О других SEO-возможностях (OG, canonical, hreflang, RSS) и их переключателях см. в [обзоре SEO](seo-overview).

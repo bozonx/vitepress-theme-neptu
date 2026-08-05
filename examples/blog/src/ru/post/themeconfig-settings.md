@@ -25,7 +25,7 @@ descrAsPreview: true
 | `postList` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
 | `socialMediaShares` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
 | `feeds` | [Ленты, robots и sitemap](feeds-and-indexing) |
-| `seo`, `twitterSite` | [SEO-переключатели и canonical](seo-toggles-canonical) / [SEO — обзор](seo-overview) |
+| `seo`, `twitterSite` | [Канонические ссылки](seo-canonical) / [SEO — обзор](seo-overview) |
 | `search` | [Поиск Pagefind](search-pagefind) |
 | `popularPosts` | [Популярные посты через GA4](popular-posts) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |

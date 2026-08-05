@@ -28,9 +28,9 @@ siteUrl: 'https://myblog.org'
 | **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [Ленты, robots и sitemap](feeds-and-indexing) |
 | **robots.txt** | со ссылкой на sitemap | [Ленты, robots и sitemap](feeds-and-indexing) |
 | **RSS / Atom / JSON** | ленты для каждой локали | [Ленты, robots и sitemap](feeds-and-indexing) |
-| **Open Graph + Twitter card** | превью для соцсетей на каждой странице | [SEO-переключатели и canonical](seo-toggles-canonical) |
+| **Open Graph + Twitter card** | превью для соцсетей на каждой странице | см. ниже |
 | **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](json-ld) |
-| **canonical** | ссылка на первоисточник страницы | [SEO-переключатели и canonical](seo-toggles-canonical) |
+| **canonical** | ссылка на первоисточник страницы | [Канонические ссылки](seo-canonical) |
 | **hreflang** | связь переведённых версий | [Связывание переводов и hreflang](i18n-hreflang) |
 
 ## Как отключить любую функцию
@@ -45,19 +45,23 @@ themeConfig:
     jsonLd: true
     hreflang: true
     canonical: true
+    autoCanonical: true       # авто-canonical по умолчанию
     rss: true
+    maxDescriptionLength: 300
+  twitterSite: '@your_handle' # twitter:site на каждой странице
 ```
 
 ```yaml
 # Для одной страницы — во frontmatter поста (переопределяет глобальное)
 seo:
   jsonLd: false
+  og: false
 ```
 
 ## Дальше
 
 - [Ленты, robots и sitemap](feeds-and-indexing) — RSS, Atom, JSON, robots.txt, sitemap.xml.
-- [SEO-переключатели и canonical](seo-toggles-canonical) — глобальные переключатели, кросспостинг.
+- [Канонические ссылки](seo-canonical) — кросспостинг, отключение.
 - [Поиск Pagefind](search-pagefind) — индексация, фильтры, исключение из поиска.
 - [Микроразметка JSON-LD](json-ld) — расширение схемы под свои нужды.
 - [Публикация и деплой](deploy) — как выложить готовый сайт в интернет.
