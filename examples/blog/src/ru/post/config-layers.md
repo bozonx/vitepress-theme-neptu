@@ -163,10 +163,14 @@ export default async () => {
         // Сортировка популярных постов по просмотрам страниц из GA4
         sortBy: 'pageviews',
         dataSource: {
-          provider: 'ga4',
+          // Единственный поддерживаемый провайдер аналитики.
+          // 'ga4' означает Google Analytics 4 Data API — версия
+          // определяется самим провайдером, отдельно указывать её не нужно.
+          // Тема сама выполняет запросы к GA4 через сервисный аккаунт.
+          // provider: 'ga4',
           // ID ресурса GA4 (формат: properties/123456789)
           propertyId: process.env.GA_PROPERTY_ID,
-          // JSON-ключ сервисного аккаунта GA4 (содержимое файла целиком)
+          // JSON-ключ сервисного аккаунта GA4 (содержимое файла целиком в виде строки)
           credentialsJson: process.env.GA_CREDENTIALS_JSON,
           // Период сбора данных в днях (по умолчанию: 30)
           dataPeriodDays: 30,
