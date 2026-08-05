@@ -65,7 +65,10 @@ describe('mergeBlogConfig', () => {
     expect(result.themeConfig.popularPosts.enabled).toBe(false)
     expect(result.themeConfig.home).toMatchObject({
       appearance: 'auto',
-      background: 'none',
+      background: {
+        type: 'none',
+        parallaxOffset: 300,
+      },
     })
   })
 
