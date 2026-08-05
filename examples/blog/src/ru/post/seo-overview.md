@@ -25,12 +25,12 @@ siteUrl: 'https://myblog.org'
 
 | Механизм | Что делает | Подробнее |
 | --- | --- | --- |
-| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [Ленты и поиск](seo-feeds-search) |
-| **robots.txt** | со ссылкой на sitemap | [Ленты и поиск](seo-feeds-search) |
-| **RSS / Atom / JSON** | ленты для каждой локали | [Ленты и поиск](seo-feeds-search) |
-| **Open Graph + Twitter card** | превью для соцсетей на каждой странице | [Ленты и поиск](seo-feeds-search) |
+| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [Ленты, robots и sitemap](feeds-and-indexing) |
+| **robots.txt** | со ссылкой на sitemap | [Ленты, robots и sitemap](feeds-and-indexing) |
+| **RSS / Atom / JSON** | ленты для каждой локали | [Ленты, robots и sitemap](feeds-and-indexing) |
+| **Open Graph + Twitter card** | превью для соцсетей на каждой странице | [SEO-переключатели и canonical](seo-toggles-canonical) |
 | **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](json-ld) |
-| **canonical** | ссылка на первоисточник страницы | [Канонические ссылки и кросспостинг](canonical-crosspost) |
+| **canonical** | ссылка на первоисточник страницы | [SEO-переключатели и canonical](seo-toggles-canonical) |
 | **hreflang** | связь переведённых версий | [Связывание переводов и hreflang](i18n-hreflang) |
 
 ## Как отключить любую функцию
@@ -56,7 +56,8 @@ seo:
 
 ## Дальше
 
-- [Ленты, поиск и SEO-переключатели](seo-feeds-search) — RSS, Pagefind, популярные посты, robots, sitemap.
+- [Ленты, robots и sitemap](feeds-and-indexing) — RSS, Atom, JSON, robots.txt, sitemap.xml.
+- [SEO-переключатели и canonical](seo-toggles-canonical) — глобальные переключатели, кросспостинг.
+- [Поиск Pagefind](search-pagefind) — индексация, фильтры, исключение из поиска.
 - [Микроразметка JSON-LD](json-ld) — расширение схемы под свои нужды.
-- [Канонические ссылки и кросспостинг](canonical-crosspost) — перепубликация без потери позиций.
 - [Публикация и деплой](deploy) — как выложить готовый сайт в интернет.

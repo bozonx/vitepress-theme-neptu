@@ -117,4 +117,4 @@ themeConfig:
 ```
 
 О других SEO-возможностях (OG, canonical, hreflang, RSS) и их переключателях см. в разделе
-[Ленты, поиск и SEO-переключатели](seo-feeds-search).
+[SEO-переключатели и canonical](seo-toggles-canonical).

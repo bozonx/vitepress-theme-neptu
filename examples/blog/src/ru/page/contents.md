@@ -60,9 +60,9 @@ layout: page
 | | Статья | О чём |
 | --- | --- | --- |
 | 16 | [Как работает SEO — обзор](../post/seo-overview) | Карта механизмов и переключателей |
-| 17 | [Ленты, поиск и SEO-переключатели](../post/seo-feeds-search) | RSS, Pagefind, GA4, robots, sitemap |
+| 17 | [Ленты, robots и sitemap](../post/feeds-and-indexing) | RSS, Atom, JSON, robots.txt, sitemap.xml |
 | 18 | [Микроразметка JSON-LD](../post/json-ld) | Расширение схемы под свои нужды |
-| 19 | [Канонические ссылки](../post/canonical-crosspost) | Кросспостинг без потери позиций |
+| 19 | [SEO-переключатели и canonical](../post/seo-toggles-canonical) | Глобальные переключатели, кросспостинг |
 
 ## 6. Продвинутое
 
@@ -70,7 +70,7 @@ layout: page
 
 | | Статья | О чём |
 | --- | --- | --- |
-| 20 | [Превью в списках и поисковый индекс](../post/preview-and-search) | Текст карточки, исключение из поиска |
+| 20 | [Карточки постов и кнопки «поделиться»](../post/post-cards-and-share) | Превью, socialMediaShares |
 | 21 | [Диаграммы Mermaid и формулы KaTeX](../post/mermaid-and-katex) | Опциональные markdown-плагины |
 | 22 | [Рекламные блоки](../post/ads) | Свой рекламный код в слотах темы |
 | 23 | [Согласие на куки и аналитика](../post/consent-and-analytics) | Consent Mode v2, CMP, счётчики |
@@ -86,4 +86,5 @@ layout: page
 | --- | --- | --- |
 | 27 | [Обложки и лайтбокс](../post/cover-and-images) | Техническая информация о лайтбоксе |
 | 28 | [Списки, страницы](../post/lists-and-pages) | Автосписки, избранное, отдельные страницы |
-| 29 | [Справочник компонентов](../post/components) | Что можно импортировать из темы |
+| 29 | [Поиск Pagefind](../post/search-pagefind) | Индексация, фильтры, исключение из поиска |
+| 30 | [Справочник компонентов](../post/components) | Что можно импортировать из темы |

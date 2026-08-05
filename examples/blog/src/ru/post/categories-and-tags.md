@@ -134,4 +134,4 @@ import { NeptuBreadcrumbs } from 'vitepress-theme-neptu/components'
 
 Категории индексируются как фасет `category`, теги — как `tag`. В интерфейсе
 поиска ими можно фильтровать выдачу наравне друг с другом; подробности — в
-[Превью и поиск](preview-and-search).
+[Поиск Pagefind](search-pagefind).

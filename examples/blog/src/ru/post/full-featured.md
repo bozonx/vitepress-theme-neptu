@@ -181,6 +181,6 @@ jsonLd:
 Каждое поле разбирается отдельно в тематических постах раздела «Контент»:
 [обложки и медиа](covers-images-media),
 [авторы](authors),
-[превью и поиск](preview-and-search) и [настройки themeConfig](themeconfig-settings).
+[карточки постов и шеринг](post-cards-and-share) и [настройки themeConfig](themeconfig-settings).
 Поля `draft` и `readingTime` разбираются в
 [Черновиках, времени чтения, видео и подкастах](drafts-video-podcasts).

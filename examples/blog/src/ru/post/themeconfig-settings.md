@@ -22,11 +22,12 @@ descrAsPreview: true
 | `home` | [Домашняя страница](home-page) |
 | `publisher` | [Микроразметка JSON-LD](json-ld) |
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
-| `postList` | [Превью в списках и поисковый индекс](preview-and-search) |
-| `socialMediaShares` | [Ленты, поиск и SEO-переключатели](seo-feeds-search) |
-| `feeds` | [Ленты, поиск и SEO-переключатели](seo-feeds-search) |
-| `seo`, `twitterSite` | [Ленты, поиск и SEO-переключатели](seo-feeds-search) / [SEO — обзор](seo-overview) |
-| `search`, `popularPosts` | [Ленты, поиск и SEO-переключатели](seo-feeds-search) |
+| `postList` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
+| `socialMediaShares` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
+| `feeds` | [Ленты, robots и sitemap](feeds-and-indexing) |
+| `seo`, `twitterSite` | [SEO-переключатели и canonical](seo-toggles-canonical) / [SEO — обзор](seo-overview) |
+| `search` | [Поиск Pagefind](search-pagefind) |
+| `popularPosts` | [Популярные посты через GA4](popular-posts) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
 | `i18nRouting` | [Локали и мультиязычность](locales) |
 | `perPage`, `repo` | [Уровни конфигурации](config-layers) |
@@ -210,7 +211,7 @@ themeConfig:
   #   url: 'https://example.com'
   #   logo: '/img/logo.png'
 
-  # → см. Превью в списках и поисковый индекс (preview-and-search)
+  # → см. Карточки постов и кнопки «поделиться» (post-cards-and-share)
   # postList:
   #   showDate: true
   #   showTags: true
@@ -228,7 +229,7 @@ themeConfig:
   # drafts:
   #   showDrafts: false       # true в dev, false в build
 
-  # → см. Ленты, поиск и SEO-переключатели (seo-feeds-search)
+  # → см. Карточки постов и кнопки «поделиться» (post-cards-and-share)
   # socialMediaShares:
   #   - name: x
   #     icon: 'fa6-brands:x-twitter'
@@ -605,8 +606,8 @@ Codeberg. `editLink.text` меняет только подпись, `editLink.pa
 
 ### Кнопки «поделиться»
 
-Настройка кнопок шеринга (`socialMediaShares`) вынесена в [Ленты, поиск и
-SEO-переключатели](seo-feeds-search#кнопки-поделиться).
+Настройка кнопок шеринга (`socialMediaShares`) вынесена в [Карточки постов и
+кнопки «поделиться»](post-cards-and-share#кнопки-поделиться).
 
 ### Предыдущий и следующий пост
 

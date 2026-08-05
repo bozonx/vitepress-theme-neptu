@@ -108,7 +108,7 @@ jobs:
 
 В настройках репозитория включите **Settings → Pages → Source: GitHub Actions**.
 
-Если вы используете [популярные посты через GA4](seo-feeds-search), добавьте секреты
+Если вы используете [популярные посты через GA4](popular-posts), добавьте секреты
 `GA_PROPERTY_ID` и `GA_CREDENTIALS_JSON` в **Settings → Secrets and variables →
 Actions** и пробросьте их в шаг `npm run build` через `env:`.
 
