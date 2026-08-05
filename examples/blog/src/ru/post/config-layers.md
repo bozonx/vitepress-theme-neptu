@@ -1,6 +1,6 @@
 ---
-title: Уровни конфигурации и системные настройки
-description: 'Три уровня конфигурации и системные поля: srcDir, base, siteUrl, repo, head, vite, markdown, sitemap, хуки, Pagefind, GA4 и perPage.'
+title: Уровни конфигурации, конфиг первого уровня и шаблоны строк
+description: 'Три уровня конфигурации и системные поля: srcDir, base, siteUrl, repo, head, vite, markdown, sitemap, хуки, Pagefind, GA4 и perPage. А так же шаблоны строк'
 authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Настройка', slug: 'configuration' }
