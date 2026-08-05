@@ -170,12 +170,6 @@ export namespace NeptuBlogTheme {
       fullContent?: boolean
     }
 
-    /**
-     * Optional visual name for the blog UI. Prefer the locale-level `title`
-     * for the site identity and browser title; this value remains a backwards-
-     * compatible fallback and can override the sidebar label.
-     */
-    blogTitle?: string
     sidebarMenuLabel?: string
     /** Accessible label / tooltip for the color-theme picker. */
     colorThemeMenuLabel?: string
@@ -674,7 +668,7 @@ export namespace NeptuBlogTheme {
     socialLinks?: SocialLink[]
     rssFeed?: boolean
     atomFeed?: boolean
-    /** Override the sidebar title. Defaults to `blogTitle`. Set `false` to hide. */
+    /** Override the sidebar title. Defaults to the locale `title`. Set `false` to hide. */
     blogTitle?: string | false
     /**
      * Sidebar logo. A plain string is used for both appearances; the object

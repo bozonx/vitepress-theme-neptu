@@ -144,7 +144,6 @@ describe('loadBlogLocale', () => {
       title: 'Parent title',
       description: 'Parent desc',
       themeConfig: {
-        blogTitle: 'Parent Blog',
         donate: { url: 'page/donate-parent', postDonateCall: 'Parent call' },
       },
     }
@@ -164,12 +163,11 @@ describe('loadBlogLocale', () => {
     expect((result.themeConfig!.donate as any).postDonateCall).toBe('Parent call')
     // Overridden by child
     expect((result.themeConfig!.donate as any).url).toBe('page/donate-gb')
-    expect((result.themeConfig as any).blogTitle).toBe('Parent Blog')
   })
 
   it('detects cycles in _site.yaml extends chain without crashing', async () => {
-    siteMocks['a'] = { extends: 'b', themeConfig: { blogTitle: 'A' } }
-    siteMocks['b'] = { extends: 'a', themeConfig: { blogTitle: 'B' } }
+    siteMocks['a'] = { extends: 'b', themeConfig: { twitterSite: 'A' } }
+    siteMocks['b'] = { extends: 'a', themeConfig: { twitterSite: 'B' } }
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     const result = await loadBlogLocale('a', { srcDir: '/src' })
@@ -356,8 +354,8 @@ describe('loadBlogLocale', () => {
 
 describe('autoLoadLocales', () => {
   it('discovers folders that contain _site.yaml', async () => {
-    siteMocks['en'] = { themeConfig: { blogTitle: 'EN' } }
-    siteMocks['ru'] = { themeConfig: { blogTitle: 'RU' } }
+    siteMocks['en'] = { themeConfig: { twitterSite: 'EN' } }
+    siteMocks['ru'] = { themeConfig: { twitterSite: 'RU' } }
 
     fsExistsMock = (p: string) => {
       if (p === '/src') return true
@@ -374,8 +372,8 @@ describe('autoLoadLocales', () => {
 
     const result = await autoLoadLocales({ srcDir: '/src' })
     expect(Object.keys(result).sort()).toEqual(['en', 'ru'])
-    expect((result.en!.themeConfig as any).blogTitle).toBe('EN')
-    expect((result.ru!.themeConfig as any).blogTitle).toBe('RU')
+    expect((result.en!.themeConfig as any).twitterSite).toBe('EN')
+    expect((result.ru!.themeConfig as any).twitterSite).toBe('RU')
   })
 
   it('warns and returns empty when no locales found', async () => {

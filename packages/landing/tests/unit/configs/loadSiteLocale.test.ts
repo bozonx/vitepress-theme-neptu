@@ -223,16 +223,16 @@ describe('loadSiteLocale', () => {
     expect(result.titleTemplate).toBe(':title | My Site')
   })
 
-  it('falls back to blogTitle from themeConfig if title is missing', async () => {
+  it('uses title from locale site when title is set', async () => {
     vi.mocked(parseLocaleSite).mockResolvedValueOnce({
-      themeConfig: { blogTitle: 'Blog Title Fallback' },
+      title: 'Locale Title',
     })
 
     const result = await loadSiteLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
-    expect(result.title).toBe('Blog Title Fallback')
+    expect(result.title).toBe('Locale Title')
   })
 
   it('merges themeConfig from shared and locale layers', async () => {

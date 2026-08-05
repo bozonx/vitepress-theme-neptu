@@ -18,8 +18,8 @@ lang: 'en-US'
 # label: 'English'
 
 # Canonical site title for this locale: browser tabs, SEO, feeds and the
-# sidebar default all use it. Set themeConfig.blogTitle only to override the
-# visual sidebar label.
+# sidebar default all use it. Override the sidebar label with
+# `themeConfig.sidebar.blogTitle`.
 title: 'My Neptu Blog'
 
 # Per-page title template. Use ':title' as the placeholder for the page title.
@@ -60,7 +60,8 @@ themeConfig:
           # icon: 'fa6-solid:circle-info'
 
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
-  # blogTitle: 'My Neptu Blog'
+  # sidebar:
+  #   blogTitle: 'My Neptu Blog'
 
   # -------------------------------------------------------------------------
   # Fine-grained overrides

@@ -106,12 +106,6 @@ themeConfig:
   # `repo` is deliberately configured in .vitepress/config.ts: it describes
   # source-control layout and supplies edit-link URLs.
 
-  # Optional visual sidebar title. The canonical browser/SEO/feed title is the
-  # top-level `title` in each locale's _site.yaml. Override per-sidebar with
-  # `sidebar.blogTitle`, or set it to `false` to hide.
-  # Default: falls back to locale `title`
-  # blogTitle: My Blog
-
   # Twitter/X @handle (without @) for SEO meta tags.
   # Default: none
   # twitterSite: myblog
@@ -165,9 +159,9 @@ themeConfig:
     rssFeed: true
     # Show an Atom feed link.
     atomFeed: true
-    # Override the sidebar title. Defaults to `blogTitle`, then locale `title`.
+    # Override the sidebar title. Defaults to the locale `title`.
     # Set `false` to hide.
-    # Default: falls back to `blogTitle`, then locale `title`
+    # Default: falls back to locale `title`
     # blogTitle: My Blog
     # Custom navigation links shown at the top of the sidebar.
     # links:

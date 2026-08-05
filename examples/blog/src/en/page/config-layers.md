@@ -58,7 +58,7 @@ export default async () => defineBlogConfig({
 
 This file has one effective root key, `themeConfig`. It is the complete, self-documented reference for safe settings shared by every locale. Use it for the default value; do not duplicate a value in each locale.
 
-`themeConfig` groups are: general (`blogTitle`, switches, `defaultColorTheme`, `defaultStylePreset`), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml).
+`themeConfig` groups are: general (switches, `defaultColorTheme`, `defaultStylePreset`), listing (`postList`, `postFooter`), icons, sidebar, `nav`, `donate`, `editLink`, `footer`, `publisher`, `authors`, `socialMediaShares`, `feeds`, `seo`, `popularPosts.sortBy`, landing-only fields and `t` translations. Every field is commented in the starter's [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml).
 
 Set `repo` in `.vitepress/config.ts`. It automatically supplies
 the `editLink.pattern` for GitHub, GitLab, Bitbucket, Gitea, Forgejo and
@@ -159,7 +159,6 @@ lang: en-GB
 title: Example blog
 description: Notes for UK readers.
 themeConfig:
-  blogTitle: Example blog
   langMenuLabel: Change language
   nav:
     links:
@@ -195,11 +194,11 @@ This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate
 
 ## YAML templates and validation
 
-Only YAML supports templates. Substitutions use the form `${variable.path}`, where `path` is **any dot-path** within the corresponding object — e.g. `${theme.blogTitle}`, `${config.siteUrl}`, `${t.links.aboutBlog}`.
+Only YAML supports templates. Substitutions use the form `${variable.path}`, where `path` is **any dot-path** within the corresponding object — e.g. `${theme.sidebar.blogTitle}`, `${config.siteUrl}`, `${t.links.aboutBlog}`.
 
 | Variable | Contents | Example |
 | --- | --- | --- |
-| `${theme.*}` | merged `themeConfig` (built-in defaults + `config.ts` + `site.yaml`) | `${theme.blogTitle}` |
+| `${theme.*}` | merged `themeConfig` (built-in defaults + `config.ts` + `site.yaml`) | `${theme.sidebar.blogTitle}` |
 | `${site.*}` | resolved locale site object (`title`, `description`, `lang`, etc.) | `${site.title}` |
 | `${t.*}` | translation object (`theme.t`) — built-in or overridden keys | `${t.editLink}` |
 | `${config.*}` | the full `BlogUserConfig` from `config.ts` | `${config.siteUrl}` |

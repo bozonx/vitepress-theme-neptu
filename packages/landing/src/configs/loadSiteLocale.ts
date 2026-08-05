@@ -150,10 +150,7 @@ export async function loadSiteLocale(
     description,
   } = site
   const { repo: _localeYamlRepo, ...localeThemeConfig } = extractThemeConfig(site)
-  const title =
-    (rawTitle as string | undefined) ??
-    (localeThemeConfig.blogTitle as string | undefined) ??
-    (sharedThemeConfig.blogTitle as string | undefined)
+  const title = rawTitle as string | undefined
 
   // ------------------------------------------------------------------
   // Merge themeConfig layers: baseLocale → shared → locale

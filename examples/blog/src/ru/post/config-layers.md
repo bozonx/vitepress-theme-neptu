@@ -194,7 +194,7 @@ export default async () => {
 
 | Переменная | Содержимое | Пример |
 | --- | --- | --- |
-| `${theme.*}` | объединённый `themeConfig` | `${theme.blogTitle}` |
+| `${theme.*}` | объединённый `themeConfig` | `${theme.sidebar.blogTitle}` |
 | `${site.*}` | итоговый site-объект локали (`title`, `description`, `lang` и т.д.) | `${site.title}` |
 | `${t.*}` | объект переводов (`theme.t`) — встроенные или переопределённые ключи | `${t.editLink}` |
 | `${config.*}` | весь `BlogUserConfig` из `config.ts` | `${config.siteUrl}` |

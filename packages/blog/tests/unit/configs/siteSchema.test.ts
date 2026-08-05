@@ -18,7 +18,6 @@ describe('SiteYamlSchema', () => {
       description: 'Desc',
       extends: 'en',
       themeConfig: {
-        blogTitle: 'Blog',
         authors: [{ id: 'a', name: 'A' }],
       },
     })

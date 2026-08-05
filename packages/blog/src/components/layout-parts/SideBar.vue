@@ -325,12 +325,12 @@ onUnmounted(() => {
         <h4
           v-if="
             theme.sidebar?.blogTitle !== false &&
-            (theme.sidebar?.blogTitle || theme.blogTitle || site.title)
+            (theme.sidebar?.blogTitle || site.title)
           "
           class="sidebar-site-title text-sm muted font-bold px-1 pt-[0.35rem] pb-3 pl-[0.65rem]"
         >
           <a :href="withBase(`/${localeIndex}/`)" :title="theme.t.toHome">
-            {{ theme.sidebar?.blogTitle || theme.blogTitle || site.title }}
+            {{ theme.sidebar?.blogTitle || site.title }}
           </a>
         </h4>
 

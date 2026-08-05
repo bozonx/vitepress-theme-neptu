@@ -82,14 +82,12 @@ From this the theme does two things automatically:
 
 ## Per-locale identity
 
-Each `_site.yaml` sets its own `lang`, `blogTitle`, labels, and can override any
+Each `_site.yaml` sets its own `lang`, labels, and can override any
 theme string via the `t` translation map:
 
 ```yaml
 # src/ru/_site.yaml
 lang: 'ru-RU'
-themeConfig:
-  blogTitle: 'Тема Neptu для блога'
 ```
 
 ## Toggles

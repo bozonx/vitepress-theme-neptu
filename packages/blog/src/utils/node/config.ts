@@ -303,8 +303,7 @@ export async function loadBlogLocale(
     titleTemplate,
     description,
   } = templatedSite
-  const title =
-    rawTitle ?? (mergedThemeConfig.blogTitle as string | undefined)
+  const title = rawTitle
   const resolvedRepo = mergedThemeConfig.repo as string | undefined
 
   return {

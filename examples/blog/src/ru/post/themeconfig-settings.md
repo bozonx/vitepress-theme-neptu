@@ -534,7 +534,7 @@ themeConfig: {
 - `donate.postDonateCall` — локализованный текст призыва
 - `socialMediaShares` — другой набор сетей для локали (например, VK только для ru)
 - `t.*` — переводы подписей (`previousPost`, `nextPost`, `draftLabel` и т.д.)
-- `blogTitle` — локализованное название блога в сайдбаре
+- `sidebar.blogTitle` — локализованный заголовок сайдбара
 - `sidebar.links`, `sidebar.bottomLinks` — локализованные ссылки сайдбара
 - `toc.label` — локализованный заголовок оглавления
 
