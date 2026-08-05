@@ -1,14 +1,63 @@
 ---
-title: 'SEO-механизмы: ленты, robots, sitemap и canonical'
+title: 'Как работает SEO — обзор и механизмы'
 description: >
-  Ленты RSS/Atom/JSON, автоматические robots.txt и
-  sitemap.xml, канонические ссылки и кросспостинг. Настройка в site.yaml и frontmatter.
+  Карта SEO-механизмов темы: что генерируется автоматически при сборке, где это
+  настраивается и как отключить любую функцию. Ленты RSS/Atom/JSON, автоматические
+  robots.txt и sitemap.xml, канонические ссылки и кросспостинг.
 authorId: ivan-k
-date: 2026-07-11
+date: 2026-07-12
 category: { name: 'SEO', slug: 'seo' }
 tags: [seo, config]
 descrAsPreview: true
 ---
+
+Тема Neptu закрывает все технические аспекты SEO за вас: достаточно задать `siteUrl` — и при сборке появляется полный набор SEO механизмов позволяющий полностью закрыть тему SEO для вашего блога.
+
+Задайте `siteUrl` в конфиге 1го уровня без завершающего слэша:
+
+```ts
+// .vitepress/config.ts
+siteUrl: 'https://myblog.org'
+```
+
+## Что генерируется автоматически
+
+При сборке для всего сайта создаётся:
+
+| Механизм | Что делает | Подробнее |
+| --- | --- | --- |
+| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [sitemap.xml](#sitemap-xml) |
+| **robots.txt** | со ссылкой на sitemap | [robots.txt](#robots-txt) |
+| **RSS / Atom / JSON** | ленты для каждой локали | [Ленты](#ленты-rss-atom-json) |
+| **Open Graph + Twitter card** | превью для соцсетей на каждой странице | см. ниже |
+| **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](seo-json-ld) |
+| **canonical** | ссылка на первоисточник страницы | [Канонические ссылки](#канонические-ссылки-canonical) |
+| **hreflang** | связь переведённых версий | [Связывание переводов и hreflang](i18n-hreflang) |
+
+## Как отключить любую функцию
+
+Все SEO-функции включены по умолчанию. Выключаются они в двух местах:
+
+```yaml
+# Глобально — src/site.yaml
+themeConfig:
+  seo:
+    og: true
+    jsonLd: true
+    hreflang: true
+    canonical: true
+    autoCanonical: true       # авто-canonical по умолчанию
+    rss: true
+    maxDescriptionLength: 300
+  twitterSite: '@your_handle' # twitter:site на каждой странице
+```
+
+```yaml
+# Для одной страницы — во frontmatter поста (переопределяет глобальное)
+seo:
+  jsonLd: false
+  og: false
+```
 
 ## Ленты (RSS / Atom / JSON)
 
@@ -112,8 +161,9 @@ themeConfig:
     autoCanonical: true
 ```
 
-## Остальные SEO-механизмы
+## Дальше
 
-- **Микроразметка JSON-LD** — [расширение схемы под свои нужды](seo-json-ld).
-- **Связывание переводов и hreflang** — [связь локалей между собой](i18n-hreflang).
-- **Обзор SEO** — [карта всех механизмов](seo-overview).
+- [Микроразметка JSON-LD](seo-json-ld) — расширение схемы под свои нужды.
+- [Связывание переводов и hreflang](i18n-hreflang) — связь локалей между собой.
+- [Поиск Pagefind](search-pagefind) — индексация, фильтры, исключение из поиска.
+- [Публикация и деплой](deploy) — как выложить готовый сайт в интернет.
