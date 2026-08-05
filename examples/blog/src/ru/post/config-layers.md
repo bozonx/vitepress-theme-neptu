@@ -150,16 +150,27 @@ export default async () => {
         // enabled: true,               // false — отключить поиск и индексацию
       },
 
-      // GA4; интеграция выключена по умолчанию,
-      // credentials и env остаются здесь
+      // Популярные посты на основе данных Google Analytics 4.
+      // Интеграция выключена по умолчанию — включите `enabled: true`,
+      // когда сервисный аккаунт и property настроены.
+      // Credentials и propertyId берутся из переменных окружения, чтобы
+      // не хранить секреты в репозитории.
+      // Требуется GA4 Data API и сервисный аккаунт с доступом к чтению
+      // аналитики. Документация:
+      // https://developers.google.com/analytics/devguides/reporting/data/v1
       popularPosts: {
         enabled: true,
+        // Сортировка популярных постов по просмотрам страниц из GA4
         sortBy: 'pageviews',
         dataSource: {
           provider: 'ga4',
+          // ID ресурса GA4 (формат: properties/123456789)
           propertyId: process.env.GA_PROPERTY_ID,
+          // JSON-ключ сервисного аккаунта GA4 (содержимое файла целиком)
           credentialsJson: process.env.GA_CREDENTIALS_JSON,
+          // Период сбора данных в днях (по умолчанию: 30)
           dataPeriodDays: 30,
+          // Максимальное количество строк в отчёте GA4 (по умолчанию: 1000)
           dataLimit: 1000,
         },
       },
@@ -175,17 +186,6 @@ export default async () => {
 > Полный список стандартных полей VitePress остаётся в [справочнике VitePress](https://vitepress.dev/reference/site-config)
 
 ## Уровень 2 — `src/site.yaml`
-
-В этом файле один рабочий ключ верхнего уровня: `themeConfig`. Это полный самодокументирующий справочник безопасных общих настроек. Укажите здесь значение по умолчанию для всех локалей; не копируйте его в каждый язык.
-
-В `themeConfig` документированы группы: общие (`blogTitle`, переключатели, `defaultColorTheme`, `defaultStylePreset`), главная (`home`), списки (`postList`, `postFooter`), иконки, sidebar, `nav`, donate, edit link, footer, publisher, authors, social sharing, feeds, SEO, `popularPosts.sortBy` и переводы `t`. Каждое поле прокомментировано прямо в `packages/blog/template/src/site.yaml`.
-
-Укажите `repo` в `.vitepress/config.ts`. Тема сама построит `editLink.pattern`
-для GitHub, GitLab, Bitbucket, Gitea, Forgejo и Codeberg, предполагая ветку
-`main` и каталог `src/`. Обычно в локали достаточно задать `editLink.text`;
-`editLink.pattern` нужен только для нестандартной ветки или пути к исходникам.
-
-Объекты объединяются рекурсивно, массивы заменяются целиком. Исключение — `authors`: записи объединяются по стабильному `id`.
 
 ## Уровень 3 — `src/<locale>/_site.yaml`
 
