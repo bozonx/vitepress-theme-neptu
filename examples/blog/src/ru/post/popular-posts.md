@@ -1,0 +1,311 @@
+---
+title: Популярные посты через GA4
+description: >
+  Как включить список популярных постов на основе реальных просмотров из
+  Google Analytics 4: настройка Service Account, переменные окружения,
+  параметры выборки, сортировка и отображение в сайдбаре, на главной и в
+  подвале поста.
+authorId: ivan-k
+date: 2026-08-04
+category: { name: 'Продвинутое', slug: 'advanced' }
+tags: [advanced, config, analytics]
+descrAsPreview: true
+---
+
+«Популярные посты» — это список статей, отсортированный по реальным
+просмотрам из **Google Analytics 4**. В отличие от «свежих» (по дате) и
+«избранных» (вручную), популярность определяется автоматически — на основе
+данных, которые GA4 уже собирает.
+
+Интеграция **выключена по умолчанию**: без ключа GA4 считать нечего, а
+предупреждение на каждой сборке никому не нужно. Включается осознанно —
+один раз, когда есть и property, и credentials.
+
+## Как это работает
+
+Статистика запрашивается у GA4 **на этапе сборки** — один раз. Результат
+«запекается» в статические страницы: никаких клиентских запросов к Google
+API, приватный ключ используется только на сервере сборки и не попадает в
+браузер читателя.
+
+Поток данных:
+
+1. На сборке тема запрашивает GA4 Data API (`runReport`).
+2. Получает просмотры, уникальные посетители и среднее время для каждого
+   пути.
+3. Нормализует пути и сопоставляет их с URL постов.
+4. Сохраняет статистику в `analyticsStats` каждого поста.
+5. Компоненты сортируют посты по выбранной метрике и выводят список.
+
+Если данных нет, сеть недоступна или ключ неверен — тема выводит
+предупреждение и **сборка продолжается**. Список популярных просто остаётся
+пустым.
+
+## Настройка GA4
+
+### 1. Создание Service Account
+
+1. Откройте [Google Cloud Console](https://console.cloud.google.com/).
+2. Создайте проект (или выберите существующий).
+3. Перейдите в **IAM & Admin → Service Accounts** и создайте новый
+   Service Account.
+4. Нажмите на созданный аккаунт → **Keys** → **Add Key** → **Create new
+   key** → выберите **JSON**.
+5. Скачайте файл — это и есть ваши credentials.
+
+### 2. Добавление в Google Analytics
+
+1. Откройте [Google Analytics](https://analytics.google.com/).
+2. Выберите ваш ресурс (property) GA4.
+3. Перейдите в **Admin → Property access management**.
+4. Нажмите **Add users** и вставьте `client_email` из скачанного JSON-ключа
+   с ролью **Viewer** (Читатель).
+
+### 3. Получение Property ID
+
+Property ID — это числовой идентификатор ресурса GA4. Найти его можно в
+**Admin → Property settings** — поле **Property ID**. Он выглядит как
+`123456789`.
+
+### 4. Передача credentials
+
+Никогда не коммитьте JSON-ключ в репозиторий. Передавайте данные через
+переменные окружения:
+
+```bash
+GA_PROPERTY_ID=123456789
+GA_CREDENTIALS_JSON='{"type": "service_account", "client_email": "...", "private_key": "...", ...}'
+```
+
+Тема ищет credentials в следующем порядке:
+
+1. `dataSource.credentialsJson` — строка с JSON или путь к файлу.
+2. `process.env.GA_CREDENTIALS_JSON` — строка с JSON.
+3. `process.env.GOOGLE_APPLICATION_CREDENTIALS` — путь к JSON-файлу
+   (стандартная переменная Google).
+
+Если `credentialsJson` — путь к существующему файлу, тема прочитает его.
+Если строка начинается с `{` — попытается распарсить как JSON напрямую.
+
+::: tip Хранение ключа в CI
+В CI/CD положите ключ в секретную переменную. Пример для GitHub Actions:
+
+```yaml
+env:
+  GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
+  GA_CREDENTIALS_JSON: ${{ secrets.GA_CREDENTIALS_JSON }}
+```
+
+Как настроить секреты — в статье [Публикация и деплой](deploy).
+:::
+
+## Включение в конфиге
+
+Настройка популярных постов — это **уровень 1** (`.vitepress/config.ts`):
+здесь живут credentials, env-переменные и интеграции. Подробнее об уровнях —
+в [Уровнях конфигурации](config-layers).
+
+```ts
+// .vitepress/config.ts
+export const popularPosts = {
+  enabled: true,
+  sortBy: 'pageviews', // 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage'
+  dataSource: {
+    provider: 'ga4',
+    propertyId: process.env.GA_PROPERTY_ID,
+    credentialsJson: process.env.GA_CREDENTIALS_JSON,
+    // dataPeriodDays: 30,  // глубина выборки в днях (по умолчанию 30)
+    // dataLimit: 1000,     // сколько строк запрашивать у GA (по умолчанию 1000)
+  },
+} satisfies NonNullable<ThemeConfig['popularPosts']>
+
+export default async () => defineBlogConfig({
+  // ... остальные настройки
+  themeConfig: {
+    popularPosts,
+  },
+})
+```
+
+Значение `popularPosts` используется дважды: его импортирует data-лоадер
+локали (`loadPosts.data.ts`) и оно же попадает в `themeConfig.popularPosts`.
+
+### Параметры
+
+| Параметр | Тип | По умолчанию | Описание |
+| --- | --- | --- | --- |
+| `enabled` | `boolean` | `false` | Включить интеграцию с GA4 |
+| `sortBy` | `'pageviews' \| 'uniquePageviews' \| 'avgTimeOnPage'` | `'pageviews'` | Метрика сортировки |
+| `dataSource.provider` | `'ga4'` | `'ga4'` | Провайдер данных (пока только GA4) |
+| `dataSource.propertyId` | `string` | `null` | Property ID ресурса GA4 |
+| `dataSource.credentialsJson` | `string` | `null` | JSON-ключ или путь к файлу |
+| `dataSource.dataPeriodDays` | `number` | `30` | Глубина выборки в днях |
+| `dataSource.dataLimit` | `number` | `1000` | Максимум строк от GA |
+
+### Метрики сортировки
+
+| Значение | Метрика GA4 | Что измеряет |
+| --- | --- | --- |
+| `pageviews` | `screenPageViews` | Всего просмотров страницы |
+| `uniquePageviews` | `totalUsers` | Уникальные посетители |
+| `avgTimeOnPage` | `averageSessionDuration` | Среднее время сессии |
+
+Посты без статистики (например, новые статьи, ещё не попавшие в выборку)
+сортируются по дате — новые выше.
+
+## Включение отображения
+
+После включения интеграции в `config.ts` нужно включить блоки отображения
+в `site.yaml` (уровень 2) или `_site.yaml` (уровень 3).
+
+### Сайдбар
+
+```yaml
+# src/site.yaml
+themeConfig:
+  sidebar:
+    popular: true    # секция «Популярное» в сайдбаре
+```
+
+### Главная страница
+
+```yaml
+# src/site.yaml
+themeConfig:
+  home:
+    sections:
+      - { type: popular, enabled: true, limit: 5 }
+```
+
+`limit` ограничивает количество статей. Без него показывается одна страница
+— значение `perPage`. Пустая секция не рисуется: пока данных нет, блок
+просто не появится. Подробнее — в [Домашней странице](home-page).
+
+### Подвал поста
+
+Ссылка на список популярных постов в подвале управляется ключом
+`popular-link` в массиве `postFooter`:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  postFooter:
+    - author
+    - donate
+    - comments
+    - social-share
+    - edit-link
+    - categories
+    - tags
+    - navigation
+    - similar
+    - popular-link    # ссылка «Все популярные посты»
+```
+
+Блок `popular-link` показывается только когда `popularPosts.enabled: true`.
+Массив `postFooter` заменяется целиком между уровнями — в `_site.yaml`
+перечисляйте все блоки, а не дописывайте. Подробнее — в [Настройках
+themeConfig](themeconfig-settings#подвал-поста).
+
+### Страница списка
+
+Шаблон `popular/[page].md` уже входит в тему — создавать его вручную не
+нужно. Страница доступна по адресу `/<locale>/popular/1` и использует
+компонент `PopularPostsList`:
+
+```vue
+<script setup>
+import { PopularPostsList } from 'vitepress-theme-neptu/components'
+import { useData } from 'vitepress'
+
+const { params } = useData()
+</script>
+
+<PopularPostsList :curPage="params?.page" />
+```
+
+## Популярное в категориях, тегах и у авторов
+
+Списки категорий, тегов и авторов поддерживают переключатель «популярное».
+На страницах `categories/<slug>/popular/1`, `tags/<slug>/popular/1` и
+`authors/<id>/popular/1` посты сортируются по просмотрам, а не по дате.
+
+Это работает автоматически, когда `popularPosts.enabled: true` —
+дополнительная настройка не нужна.
+
+## Иконка секции
+
+Иконку для секции «Популярное» в сайдбаре можно переопределить:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  popularIcon: 'fa6-solid:star'  # по умолчанию
+```
+
+Значение — имя иконки [Iconify](https://icones.es) в формате `prefix:name`.
+
+## Перевод заголовка
+
+Заголовок секции берётся из переводов темы — ключ `t.popularPosts`. Для
+русской локали значение по умолчанию — «Популярные посты». Переопределить
+можно в `_site.yaml`:
+
+```yaml
+# src/ru/_site.yaml
+themeConfig:
+  t:
+    popularPosts: 'Популярное'
+    popularPostsCall: 'Смотреть все популярные посты'
+```
+
+`popularPostsCall` — текст ссылки «Все популярные посты» в подвале.
+
+## Поведение при сбоях
+
+Тема устойчива к проблемам с GA4 — сборка не падает:
+
+| Ситуация | Поведение |
+| --- | --- |
+| Нет `propertyId` или `credentialsJson` | Предупреждение, список пуст |
+| Неверный ключ / нет доступа | Предупреждение, список пуст |
+| Сеть недоступна | Предупреждение, список пуст |
+| GA4 вернул 0 строк | Предупреждение, список пуст |
+| `enabled: false` | Запрос к GA4 не делается, блоки скрыты |
+
+Чтобы убрать предупреждения и сами блоки, верните `enabled: false` или
+удалите `popular` из `sidebar` и `home.sections`.
+
+## Консольные сообщения при сборке
+
+При успешной загрузке данных в консоли появятся:
+
+```text
+🔍 Fetching GA stats for property 123456789...
+✅ Loaded GA stats for 42 paths.
+📈 Merged GA stats for 38 posts.
+```
+
+При ошибке — предупреждения с префиксом `⚠️` или `❌`. Они не прерывают
+сборку.
+
+## Чек-лист
+
+1. Создать Service Account в Google Cloud Console и скачать JSON-ключ.
+2. Добавить `client_email` в GA4 как Viewer.
+3. Передать `GA_PROPERTY_ID` и `GA_CREDENTIALS_JSON` в переменные окружения.
+4. В `config.ts` поставить `popularPosts.enabled: true` и указать
+   `dataSource`.
+5. В `site.yaml` включить `sidebar.popular: true` и/или секцию `popular` на
+   главной.
+6. Добавить `popular-link` в `postFooter`, если нужна ссылка в подвале.
+7. Запустить сборку и проверить консоль — должны появиться сообщения о
+   загрузке статистики.
+
+## Что дальше
+
+- [Согласие на куки и аналитика](consent-and-analytics) — баннер и
+  Consent Mode для счётчика GA4.
+- [Списки и страницы](lists-and-pages) — все типы автоматических списков.
+- [Уровни конфигурации](config-layers) — почему credentials живут в
+  `config.ts`, а не в YAML.
