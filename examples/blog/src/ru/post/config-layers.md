@@ -132,21 +132,14 @@ export default async () => {
       // Вызывается в конце сборки, после генерации лент, robots.txt и индекса
     },
 
-    // Локали: если опустить — автообнаружение из srcDir
-    // Явное указание для продвинутых/ручных сценариев:
-    // locales: {
-    //   en: { lang: 'en-US', title: 'My Blog', description: '...' },
-    //   ru: { lang: 'ru-RU', title: 'Мой блог', description: '...' },
-    // },
-
-    // ── Системные поля внутри themeConfig ─────────────────────────────
-
     themeConfig: {
       // Build-time параметр пагинации (нельзя в YAML)
       perPage: PER_PAGE,
 
       // Репозиторий исходников; задаёт edit-link и ссылки на репозиторий
       repo: 'https://github.com/acme/my-blog',
+
+      /////// Параметры Neptu
 
       // Провайдер Pagefind, опции UI и индексация при сборке
       search: {
@@ -189,23 +182,19 @@ export default async () => {
 }
 ```
 
+
+    // Локали определяются автоматически: каждая папка внутри srcDir,
+    // содержащая `_site.yaml` или `_site.ts`, становится отдельной локалью.
+    // Язык, заголовок, описание и остальные настройки локали задаются в
+    // `src/<locale>/_site.yaml` (уровень 3), а не здесь.
+    // Не указывайте `locales` вручную — это обойдёт загрузку YAML-цепочки
+    // (site.yaml → _site.yaml → _authors.yaml) и сломает слияние уровней.
+
+
+
+
+
 > Полный список стандартных полей VitePress остаётся в [справочнике VitePress](https://vitepress.dev/reference/site-config)
-
-## `perPage` — только в `config.ts`
-
-В отличие от остальных полей `themeConfig`, `perPage` **нельзя** задавать в `site.yaml` или `_site.yaml`. Это build-time параметр: генераторы путей (`*.paths.js`) импортируют его на этапе сборки для расчёта маршрутов пагинации. Значение в YAML рассинхронизирует сгенерированные маршруты и рантайм. Настраивайте `perPage` только в `.vitepress/config.ts`:
-
-```ts
-export const PER_PAGE = 10
-
-export default async () => defineBlogConfig({
-  themeConfig: {
-    perPage: PER_PAGE,
-  },
-})
-```
-
-Схема отклоняет `perPage` в YAML и выводит предупреждение при сборке.
 
 ## Уровень 2 — `src/site.yaml`
 
