@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, nextTick } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import { useData, withBase } from 'vitepress'
 import { GLOBAL_MODALS_CONTAINER_ID } from '../../constants.ts'
 import type { ThemeConfig } from '../../types.ts'
@@ -74,7 +74,7 @@ const MOBILE_CLOSE_BUTTON_CLASS = 'search-modal-mobile-close-button'
 const UI_SCRIPT = 'pagefind-ui.js'
 const UI_STYLES = 'pagefind-ui.css'
 
-const { theme, localeIndex } = useData<ThemeConfig>()
+const { theme } = useData<ThemeConfig>()
 
 const pageFind = ref<InstanceType<typeof window.PagefindUI> | null>(null)
 const isModalOpen = ref(false)
@@ -89,11 +89,6 @@ let closeTimeout: ReturnType<typeof setTimeout> | null = null
 let focusTimeout: ReturnType<typeof setTimeout> | null = null
 // Skipped when the modal closes because the user navigated to a result.
 let restoreFocus = true
-
-/** Pagefind is the only supported provider for this modal. */
-const isPagefindProvider = computed(
-  () => (theme.value?.search?.provider ?? 'pagefind') === 'pagefind'
-)
 
 let assetsPromise: Promise<void> | null = null
 
@@ -159,38 +154,19 @@ const destroyPagefind = () => {
 const createPagefindUI = () => {
   if (pageFind.value) return
 
-  const customOptions = theme.value?.search?.options || {}
-  const {
-    bodyMarker: _bodyMarker,
-    locales,
-    ...runtimeOptions
-  } = customOptions as Record<string, unknown>
-
-  const localeTranslations = (
-    locales as
-      Record<string, { translations?: Record<string, unknown> }> | undefined
-  )?.[localeIndex.value]?.translations
+  const searchUI = theme.value?.t?.searchUI
 
   pageFind.value = new window.PagefindUI({
     element: '#pagefind-search',
     bundlePath: withBase('/pagefind/'),
     showSubResults: true,
     showImages: true,
-    ...runtimeOptions,
-    ...(localeTranslations ? { translations: localeTranslations } : {}),
+    ...(searchUI ? { translations: searchUI } : {}),
   })
 }
 
 const showSearchModal = async () => {
   if (isModalOpen.value) return
-
-  if (!isPagefindProvider.value) {
-    console.warn(
-      `[PageFindSearch] themeConfig.search.provider is "${theme.value?.search?.provider}", ` +
-        'but this component only supports "pagefind".'
-    )
-    return
-  }
 
   isModalVisible.value = true
   isModalOpen.value = true

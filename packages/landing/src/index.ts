@@ -19,7 +19,6 @@ export type {
   LocaleDefinition,
   ExtendedPageData,
   ExtendedSiteConfig,
-  PagefindUITranslations,
 } from './types.d.ts'
 
 export { registerLandingComponents } from './install.ts'

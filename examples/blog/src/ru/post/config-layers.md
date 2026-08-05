@@ -141,25 +141,13 @@ export default async () => {
       // Репозиторий исходников; задаёт edit-link и ссылки на репозиторий. Указывать не обязательно
       repo: 'https://github.com/acme/my-blog',
 
-      // Провайдер Pagefind, опции UI и индексация при сборке
+      // Поиск на базе Pagefind — единственный провайдер темы.
+      // Индекс строится автоматически в конце `vitepress build`, UI-бандл
+      // подгружается лениво из `/pagefind/`. Дополнительных шагов не нужно.
+      // Переводы модалки настраиваются через `t.searchUI` в i18n системы темы.
+      // Документация Pagefind: https://pagefind.app
       search: {
-        provider: 'pagefind',
-        options: {
-          bodyMarker: 'data-pagefind-body',
-          // translations: { ... },       // UI-переводы поиска
-          // locales: { ... },            // переводы по локали
-        },
-        index: {
-          // enabled: true,               // false — пропустить индексацию
-          // glob: '**/*.html',           // кастомный glob
-          // rootSelector: 'html',
-          // excludeSelectors: ['nav'],
-          // forceLanguage: 'en',
-          // includeCharacters: '<>$',
-          // keepIndexUrl: false,
-          // verbose: false,
-          // logfile: undefined,
-        },
+        // enabled: true,               // false — отключить поиск и индексацию
       },
 
       // GA4; интеграция выключена по умолчанию,

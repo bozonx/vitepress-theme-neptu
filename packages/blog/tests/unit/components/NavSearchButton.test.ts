@@ -26,21 +26,11 @@ describe('NavSearchButton', () => {
     expect(button.text()).toContain('Search...')
   })
 
-  it('uses search.options.translations.button when provided', () => {
+  it('uses t values for search text and aria label', () => {
     mockTheme.value = {
-      search: {
-        options: {
-          translations: {
-            button: {
-              buttonText: 'Find',
-              buttonAriaLabel: 'Find in blog',
-            },
-          },
-        },
-      },
       t: {
-        search: 'Search',
-        searchInBlog: 'Search in blog',
+        search: 'Find',
+        searchInBlog: 'Find in blog',
       },
     }
     wrapper = mount(NavSearchButton)
@@ -50,17 +40,13 @@ describe('NavSearchButton', () => {
     expect(button.text()).not.toContain('Search...')
   })
 
-  it('falls back to t values when search translations are missing', () => {
+  it('falls back to hardcoded defaults when t values are missing', () => {
     mockTheme.value = {
-      search: { provider: 'local' },
-      t: {
-        search: 'Fallback Search',
-        searchInBlog: 'Fallback Search in blog',
-      },
+      t: {},
     }
     wrapper = mount(NavSearchButton)
     const button = wrapper.find('button')
-    expect(button.attributes('title')).toBe('Fallback Search in blog')
-    expect(button.text()).toContain('Fallback Search...')
+    expect(button.attributes('title')).toBe('Search in blog')
+    expect(button.text()).toContain('Search...')
   })
 })

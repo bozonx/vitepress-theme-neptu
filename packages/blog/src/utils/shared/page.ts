@@ -106,7 +106,10 @@ export function resolveArticlePreview(frontmatter: Frontmatter): string | undefi
 }
 
 export function resolveBodyMarker(theme: ThemeConfig, frontmatter: Frontmatter): string | undefined {
-  const bodyMarker = theme.search?.options?.bodyMarker
+  // Pagefind is the only search provider; the body marker is fixed.
+  if (theme.search?.enabled === false) return undefined
+
+  const bodyMarker = 'data-pagefind-body'
 
   if (!bodyMarker) return undefined
 

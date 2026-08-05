@@ -7,14 +7,12 @@ const { theme } = useUiTheme()
 
 const searchText = computed(
   () =>
-    theme.value.search?.options?.translations?.button?.buttonText ||
     theme.value.t?.search ||
     'Search'
 )
 
 const searchAriaLabel = computed(
   () =>
-    theme.value.search?.options?.translations?.button?.buttonAriaLabel ||
     theme.value.t?.searchInBlog ||
     'Search in blog'
 )

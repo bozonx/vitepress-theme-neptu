@@ -186,6 +186,10 @@ const commonThemeConfig = {
     waitForUpdate: 500,
   },
 
+  search: {
+    enabled: true,
+  },
+
   donateIcon: 'fa6-solid:hand-holding-heart',
   recentIcon: 'fa6-solid:bolt',
   featuredIcon: 'fa6-solid:bookmark',

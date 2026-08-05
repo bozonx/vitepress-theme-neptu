@@ -10,7 +10,7 @@ const LOG_PREFIX = '[neptu-blog]'
  * written to `<outDir>/pagefind`, which is exactly where the search modal
  * loads its bundle from.
  *
- * Disable with `themeConfig.search.index.enabled: false` (e.g. when you prefer
+ * Disable with `themeConfig.search.enabled: false` (e.g. when you prefer
  * to run the `pagefind` CLI yourself with custom flags).
  */
 export async function generateSearchIndex(
@@ -19,15 +19,12 @@ export async function generateSearchIndex(
   const search = config.userConfig?.themeConfig?.search
   const outDir = config.outDir
 
-  if (!search || (search.provider ?? 'pagefind') !== 'pagefind') return
-  if (search.index?.enabled === false) return
+  if (search?.enabled === false) return
 
   if (!outDir) {
     console.warn(`${LOG_PREFIX} Cannot build the search index: outDir is unknown.`)
     return
   }
-
-  const { enabled: _enabled, glob, ...serviceConfig } = search.index || {}
 
   let pagefind: typeof import('pagefind')
 
@@ -42,7 +39,7 @@ export async function generateSearchIndex(
   }
 
   try {
-    const { index, errors } = await pagefind.createIndex(serviceConfig)
+    const { index, errors } = await pagefind.createIndex()
 
     if (!index) {
       console.warn(
@@ -55,7 +52,6 @@ export async function generateSearchIndex(
     // only keeps the pages carrying the body marker.
     const { page_count: scannedFiles } = await index.addDirectory({
       path: outDir,
-      ...(glob ? { glob } : {}),
     })
     const { outputPath } = await index.writeFiles({
       outputPath: `${outDir}/pagefind`,

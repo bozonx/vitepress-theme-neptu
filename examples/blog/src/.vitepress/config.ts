@@ -47,8 +47,7 @@ export default async () => {
 
       // Integrations
       search: {
-        provider: 'pagefind',
-        options: { bodyMarker: 'data-pagefind-body' },
+        enabled: true,
       },
       popularPosts,
     },

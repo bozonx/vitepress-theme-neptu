@@ -154,15 +154,15 @@ describe('resolveArticlePreview', () => {
 
 describe('resolveBodyMarker', () => {
   const theme: ThemeConfig = {
-    search: { provider: 'pagefind', options: { bodyMarker: 'marker' } },
+    search: { enabled: true },
   } as any
 
   it('returns bodyMarker for regular post', () => {
-    expect(resolveBodyMarker(theme, { layout: 'post' })).toBe('marker')
+    expect(resolveBodyMarker(theme, { layout: 'post' })).toBe('data-pagefind-body')
   })
 
-  it('returns undefined when bodyMarker is missing', () => {
-    expect(resolveBodyMarker({} as ThemeConfig, { layout: 'post' })).toBeUndefined()
+  it('returns undefined when search is disabled', () => {
+    expect(resolveBodyMarker({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
   })
 
   it('returns undefined for util page without searchIncluded', () => {
@@ -170,7 +170,7 @@ describe('resolveBodyMarker', () => {
   })
 
   it('returns bodyMarker for util page with searchIncluded true', () => {
-    expect(resolveBodyMarker(theme, { layout: 'tag', searchIncluded: true })).toBe('marker')
+    expect(resolveBodyMarker(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
   })
 
   it('returns undefined for util page with searchIncluded false', () => {

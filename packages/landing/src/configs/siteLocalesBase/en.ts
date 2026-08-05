@@ -46,31 +46,4 @@ export default {
     },
     ...shared,
   },
-  search: {
-    options: {
-      locales: {
-        // don't forget to select while translate
-        en: {
-          translations: {
-            button: { buttonText: 'Search', buttonAriaLabel: 'Search' },
-            modal: {
-              noResultsText: 'No results for',
-              resetButtonTitle: 'Reset search',
-              displayDetails: 'Display detailed list',
-              backButtonTitle: 'Close search',
-              footer: {
-                selectText: 'to select',
-                selectKeyAriaLabel: 'enter',
-                navigateText: 'to navigate',
-                navigateUpKeyAriaLabel: 'up arrow',
-                navigateDownKeyAriaLabel: 'down arrow',
-                closeText: 'to close',
-                closeKeyAriaLabel: 'escape',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
 }

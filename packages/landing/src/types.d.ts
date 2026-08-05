@@ -10,7 +10,6 @@ import type {
   LocaleDefinition,
   ExtendedPageData,
   ExtendedSiteConfig,
-  PagefindUITranslations,
 } from 'vitepress-theme-neptu'
 
 export type {
@@ -21,7 +20,6 @@ export type {
   ExtendedSiteConfig,
   I18n,
   LocaleDefinition,
-  PagefindUITranslations,
   SeoConfig,
   ThemeConfig,
 }

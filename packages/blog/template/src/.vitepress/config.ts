@@ -135,25 +135,12 @@ export default async () => {
       /**
        * Search (Pagefind). The index is built automatically at the end of
        * `vitepress build`; the UI assets are loaded lazily by the search modal.
+       * UI translations are localised via `t.searchUI` in site.yaml / _site.yaml.
+       * Set `enabled: false` to disable search entirely, e.g. to run the
+       * Pagefind CLI yourself. Docs: https://pagefind.app
        */
       search: {
-        provider: 'pagefind',
-        options: {
-          bodyMarker: 'data-pagefind-body',
-          // Pagefind UI wording; per-locale under `locales: { en: { translations } }`.
-          // translations: { modal: { noResultsText: 'No results for' } },
-        },
-        // index: {
-        //   enabled: true,        // false to run the Pagefind CLI yourself
-        //   glob: '**/*.html',
-        //   rootSelector: 'html',
-        //   excludeSelectors: ['.vp-nav'],
-        //   forceLanguage: 'en',  // index the whole site as one language
-        //   includeCharacters: '<>$',
-        //   keepIndexUrl: false,
-        //   verbose: false,
-        //   logfile: 'pagefind.log',
-        // },
+        enabled: true,
       },
 
       /** Popular posts metrics configuration (GA4). */

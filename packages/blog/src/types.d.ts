@@ -191,38 +191,23 @@ export namespace NeptuBlogTheme {
 
     t: I18n
 
+    /**
+     * Search powered by Pagefind — the only provider the theme supports.
+     *
+     * Pagefind is bundled with the theme: the index is built automatically at
+     * the end of `vitepress build`, and the UI bundle is loaded on demand from
+     * `/pagefind/`. No extra CLI step or devDependency is needed.
+     *
+     * Set `enabled: false` to skip both the index build and the search button.
+     * This is useful when you prefer to run the `pagefind` CLI yourself with
+     * custom flags, or when search is not needed.
+     *
+     * UI translations (modal labels, keyboard hints, etc.) are localised
+     * through the standard `t.searchUI` key — see `I18n.searchUI`.
+     * Pagefind documentation: https://pagefind.app
+     */
     search?: {
-      provider?: string
-      options?: {
-        bodyMarker?: string
-        translations?: PagefindUITranslations
-        locales?: Record<string, { translations?: PagefindUITranslations }>
-        [key: string]: unknown
-      }
-      /**
-       * Build-time indexing, run automatically at the end of `vitepress build`.
-       * Pagefind is bundled with the theme, so no extra CLI step is needed.
-       */
-      index?: {
-        /** Set to `false` to skip indexing (e.g. to run the CLI yourself). */
-        enabled?: boolean
-        /** Custom glob for the files to index. Defaults to all HTML files. */
-        glob?: string
-        /** Element treated as the document root. Defaults to `html`. */
-        rootSelector?: string
-        /** Selectors Pagefind should ignore while indexing. */
-        excludeSelectors?: string[]
-        /** Index the whole site as one language (ISO 639-1 code). */
-        forceLanguage?: string
-        /** Extra characters to keep when indexing words, e.g. `'<>$'`. */
-        includeCharacters?: string
-        /** Keep `index.html` at the end of result paths. */
-        keepIndexUrl?: boolean
-        /** Verbose indexing logs. */
-        verbose?: boolean
-        /** Path to a logfile for the indexing run. */
-        logfile?: string
-      }
+      enabled?: boolean
     }
 
     publisher?: { name?: string; url?: string; logo?: string }
@@ -234,28 +219,6 @@ export namespace NeptuBlogTheme {
       rssFeed?: boolean
       atomFeed?: boolean
       github?: boolean
-    }
-  }
-
-  export interface PagefindUITranslations {
-    button?: {
-      buttonText?: string
-      buttonAriaLabel?: string
-    }
-    modal?: {
-      noResultsText?: string
-      resetButtonTitle?: string
-      displayDetails?: string
-      backButtonTitle?: string
-      footer?: {
-        selectText?: string
-        selectKeyAriaLabel?: string
-        navigateText?: string
-        navigateUpKeyAriaLabel?: string
-        navigateDownKeyAriaLabel?: string
-        closeText?: string
-        closeKeyAriaLabel?: string
-      }
     }
   }
 
@@ -315,6 +278,26 @@ export namespace NeptuBlogTheme {
     readingTimeForms: string[]
     search: string
     searchInBlog: string
+    /**
+     * Translations for the Pagefind search modal UI. Override these per-locale
+     * via `themeConfig.t.searchUI` in `site.yaml` or `_site.yaml`.
+     * See https://pagefind.app/docs/ui/ for the full reference.
+     */
+    searchUI?: {
+      noResultsText?: string
+      resetButtonTitle?: string
+      displayDetails?: string
+      backButtonTitle?: string
+      footer?: {
+        selectText?: string
+        selectKeyAriaLabel?: string
+        navigateText?: string
+        navigateUpKeyAriaLabel?: string
+        navigateDownKeyAriaLabel?: string
+        closeText?: string
+        closeKeyAriaLabel?: string
+      }
+    }
     /** Heading above the table of contents. */
     tocLabel: string
     /** Disclosure label above an ad unit. */
@@ -958,7 +941,6 @@ export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem
 export type LinkItem = NeptuBlogTheme.LinkItem
 export type SocialLink = NeptuBlogTheme.SocialLink
 export type SocialMediaShare = NeptuBlogTheme.SocialMediaShare
-export type PagefindUITranslations = NeptuBlogTheme.PagefindUITranslations
 export type TocConfig = NeptuBlogTheme.TocConfig
 export type AdsConfig = NeptuBlogTheme.AdsConfig
 export type ReadingTimeConfig = NeptuBlogTheme.ReadingTimeConfig

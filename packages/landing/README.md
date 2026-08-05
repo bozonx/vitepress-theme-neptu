@@ -359,8 +359,8 @@ Anything beyond those two is a custom integration, and there are two routes:
   }
   ```
 
-Whichever route you take, keep `themeConfig.search.provider` unset (or set to
-your own value) so the default theme does not render a second search box.
+Whichever route you take, keep `themeConfig.search` unset so the default
+theme does not render a second search box.
 
 ## Theming
 

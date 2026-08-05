@@ -37,13 +37,13 @@ themeConfig:
 
 Поиск работает на [Pagefind](https://pagefind.app): он индексирует уже собранный
 сайт. **Pagefind входит в состав темы** — ставить его отдельно, добавлять шаг
-сборки или подключать скрипты в `head` не нужно. Достаточно одного элемента
-конфигурации:
+сборки или подключать скрипты в `head` не нужно. Поиск включён по умолчанию;
+чтобы отключить и индексацию, и кнопку поиска, поставьте `enabled: false`:
 
 ```ts
 // .vitepress/config.ts
 themeConfig: {
-  search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
+  search: { enabled: true },
 },
 ```
 
@@ -69,27 +69,14 @@ themeConfig: {
 
 ### Настройка индексации
 
-Параметры индексации задаются в `search.index` и передаются в Pagefind:
+Тема настраивает Pagefind с разумными значениями по умолчанию — для типичного
+блога ничего настраивать не нужно. Переводы модалки (метки, подсказки клавиш)
+локализуются через стандартный ключ `t.searchUI` в `site.yaml` или
+`_site.yaml`. Полный справочник — в [документации Pagefind UI](https://pagefind.app/docs/ui/).
 
-```ts
-themeConfig: {
-  search: {
-    provider: 'pagefind',
-    options: { bodyMarker: 'data-pagefind-body' },
-    index: {
-      // enabled: false,             // не индексировать (например, чтобы запускать CLI вручную)
-      // glob: '**/*.html',          // какие файлы индексировать
-      // excludeSelectors: ['.ads'], // что игнорировать помимо data-pagefind-ignore
-      // forceLanguage: 'ru',        // индексировать весь сайт как один язык
-      // verbose: true,              // подробный лог индексации
-    },
-  },
-},
-```
-
-Если нужны флаги, которых нет в `search.index`, поставьте `enabled: false` и
-вызывайте [Pagefind CLI](https://pagefind.app/docs/config-options/) сами после
-сборки.
+Нужны флаги, которых тема не предоставляет? Поставьте `search.enabled: false`
+и вызывайте [Pagefind CLI](https://pagefind.app/docs/config-options/) сами
+после сборки.
 
 ## Популярные посты (Google Analytics 4)
 

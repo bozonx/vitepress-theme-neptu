@@ -52,12 +52,13 @@ content.
 
 Search is powered by [Pagefind](https://pagefind.app), which indexes the built
 site. **Pagefind ships with the theme** — no separate install, no extra build
-step, no script tags in `head`. One config key wires it up:
+step, no script tags in `head`. Search is on by default; set `enabled: false`
+to disable both the index build and the search button:
 
 ```ts
 // .vitepress/config.ts
 themeConfig: {
-  search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
+  search: { enabled: true },
 },
 ```
 
@@ -82,25 +83,12 @@ frontmatter — see [Preview & Search](../post/preview-and-search).
 
 ### Tuning the index
 
-Indexing options live under `search.index` and are passed to Pagefind:
+The theme configures Pagefind with sensible defaults — no tuning is needed for
+a typical blog. UI translations (modal labels, keyboard hints) are localised
+through the standard `t.searchUI` key in `site.yaml` or `_site.yaml`.
+See [Pagefind UI docs](https://pagefind.app/docs/ui/) for the full reference.
 
-```ts
-themeConfig: {
-  search: {
-    provider: 'pagefind',
-    options: { bodyMarker: 'data-pagefind-body' },
-    index: {
-      // enabled: false,             // skip indexing (e.g. to run the CLI yourself)
-      // glob: '**/*.html',          // which files to index
-      // excludeSelectors: ['.ads'], // extra ignores on top of data-pagefind-ignore
-      // forceLanguage: 'en',        // index the whole site as one language
-      // verbose: true,              // verbose indexing log
-    },
-  },
-},
-```
-
-Need a flag that `search.index` does not expose? Set `enabled: false` and run
+Need a flag the theme does not expose? Set `search.enabled: false` and run
 the [Pagefind CLI](https://pagefind.app/docs/config-options/) yourself after the
 build.
 
