@@ -55,8 +55,6 @@ export default {
     popularPosts: 'Популярные посты',
     featuredPosts: 'Рекомендуемые посты',
     similarPosts: 'Похожие посты',
-    previousPost: 'Предыдущий пост',
-    nextPost: 'Следующий пост',
     shareSocialMedia: 'Поделиться в соц сетях',
     currentLang: 'Текущий язык',
     tagBadgeCount: 'Количество постов по этому тэгу',

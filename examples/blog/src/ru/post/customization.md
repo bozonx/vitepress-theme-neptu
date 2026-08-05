@@ -451,7 +451,7 @@ contentLayout: CustomPost
 Полный список экспортируемых частей поста (`PostDate`, `PostAuthor`,
 `PostImage`, `PostTags`, `PostSocialShare`, `PostSimilarList`, `PostFooter`,
 `PostTopBar`, `PostVideoLink`, `PostDonateLink`, `PostComments`,
-`PostNavigation`, `PostCategories` и другие) —
+`PostCategories` и другие) —
 в [Справочнике компонентов](components).
 
 ## Слоты макета поста

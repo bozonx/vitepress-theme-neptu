@@ -147,7 +147,7 @@ const HomeSchema = z.looseObject({
 
 const TranslationSchema = z.looseObject({
   popularPosts: z.string().optional(), similarPosts: z.string().optional(),
-  featuredPosts: z.string().optional(), previousPost: z.string().optional(), nextPost: z.string().optional(),
+  featuredPosts: z.string().optional(),
   shareSocialMedia: z.string().optional(), currentLang: z.string().optional(),
   tagBadgeCount: z.string().optional(), tagPageHeader: z.string().optional(),
   tags: z.string().optional(), allTags: z.string().optional(),

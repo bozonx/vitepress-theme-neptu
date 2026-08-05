@@ -55,8 +55,6 @@ export default {
     popularPosts: 'Popular Posts',
     featuredPosts: 'Featured Posts',
     similarPosts: 'Similar Posts',
-    previousPost: 'Previous post',
-    nextPost: 'Next post',
     shareSocialMedia: 'Share on Social Media',
     currentLang: 'Current language',
     tagBadgeCount: 'The number of posts on this tag',

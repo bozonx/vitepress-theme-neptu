@@ -32,11 +32,6 @@ const PostSimilarListStub = {
   template: '<div class="post-similar-stub" />',
   props: ['localePosts'],
 }
-const PostNavigationStub = {
-  name: 'PostNavigation',
-  template: '<div class="post-navigation-stub" />',
-  props: ['localePosts'],
-}
 const defaultStubs = {
   PostAuthor: PostAuthorStub,
   PostDonateLink: PostDonateLinkStub,
@@ -45,7 +40,6 @@ const defaultStubs = {
   PostTags: PostTagsStub,
   EditLink: EditLinkStub,
   PostSimilarList: PostSimilarListStub,
-  PostNavigation: PostNavigationStub,
 }
 
 describe('PostFooter', () => {
@@ -60,7 +54,6 @@ describe('PostFooter', () => {
         'social-share',
         'edit-link',
         'tags',
-        'navigation',
         'similar',
       ],
     }
@@ -74,7 +67,6 @@ describe('PostFooter', () => {
     expect(wrapper.find('.post-share-stub').exists()).toBe(true)
     expect(wrapper.find('.edit-link-stub').exists()).toBe(true)
     expect(wrapper.find('.post-tags-stub').exists()).toBe(true)
-    expect(wrapper.find('.post-navigation-stub').exists()).toBe(true)
     expect(wrapper.find('.post-similar-stub').exists()).toBe(true)
   })
 
@@ -125,7 +117,6 @@ describe('PostFooter', () => {
     const wrapper = mount(PostFooter, { global: { stubs: defaultStubs } })
     expect(wrapper.find('.post-author-stub').exists()).toBe(true)
     expect(wrapper.find('.post-tags-stub').exists()).toBe(true)
-    expect(wrapper.find('.post-navigation-stub').exists()).toBe(false)
     expect(wrapper.find('.post-donate-stub').exists()).toBe(false)
     expect(wrapper.find('.post-comments-stub').exists()).toBe(false)
     expect(wrapper.find('.post-share-stub').exists()).toBe(false)

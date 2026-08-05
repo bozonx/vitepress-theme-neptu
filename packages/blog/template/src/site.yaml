@@ -255,7 +255,7 @@ themeConfig:
   # --- Post Footer Blocks ----------------------------------------------------
   # Ordered list of post-footer blocks. Supported keys:
   #   'author', 'donate', 'comments', 'social-share', 'edit-link',
-  #   'categories', 'tags', 'navigation', 'similar'.
+  #   'categories', 'tags', 'similar'.
   # Omit a key to hide the block; reorder to change layout.
   # The default is every key in the order above. Arrays replace (never merge)
   # across config layers, so a locale override must list every block it wants.
@@ -267,7 +267,6 @@ themeConfig:
     - edit-link
     - categories
     - tags
-    - navigation
     - similar
 
   # --- Pagination & Listing --------------------------------------------------

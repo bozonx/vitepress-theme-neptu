@@ -113,7 +113,7 @@ export namespace NeptuBlogTheme {
     /**
      * Ordered list of post-footer blocks. Supported keys: 'author', 'donate',
      * 'comments', 'social-share', 'edit-link', 'categories', 'tags',
-     * 'navigation', 'similar'. Omit a key to hide the block;
+     * 'similar'. Omit a key to hide the block;
      * reorder to change layout.
      * Defaults to all blocks in the order above.
      */
@@ -229,9 +229,6 @@ export namespace NeptuBlogTheme {
     /** Heading for the explicitly curated posts shown on a home page. */
     featuredPosts?: string
     similarPosts: string
-    /** Labels for chronological navigation inside a post. */
-    previousPost?: string
-    nextPost?: string
     shareSocialMedia: string
     currentLang: string
     tagBadgeCount: string

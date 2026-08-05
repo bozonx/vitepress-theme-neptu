@@ -95,7 +95,6 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 | `PostAuthor` | Карточка автора |
 | `PostCategories` | Категории поста |
 | `PostTags` | Теги поста |
-| `PostNavigation` | Предыдущий / следующий пост |
 | `PostSimilarList` | Похожие посты по тегам |
 | `PostSocialShare` | Кнопки «поделиться» |
 | `PostComments` | Ссылка на обсуждение |

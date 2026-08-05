@@ -1,6 +1,6 @@
 ---
-title: Post Navigation, Featured Posts, and Printing
-description: Chronological previous/next links, curated featured collections, and the blog theme's print-friendly output.
+title: Featured Posts and Printing
+description: Curated featured collections and the blog theme's print-friendly output.
 date: 2026-08-01
 authorId: ivan-k
 category: Configuration
@@ -8,39 +8,7 @@ tags: [guide, frontmatter]
 featured: true
 ---
 
-# Post Navigation, Featured Posts, and Printing
-
-## Previous and next post
-
-Every post gets chronological navigation in its footer. **Previous post** means
-the older publication and **Next post** means the newer one. The first and last
-post therefore show only one link. Navigation never crosses a locale boundary.
-
-The block is enabled by default. Reorder or remove it through `postFooter`:
-
-```yaml
-themeConfig:
-  postFooter:
-    - author
-    - tags
-    - navigation
-    - similar
-```
-
-`navigation` and `similar` solve different problems: navigation follows the
-publication timeline, while similar posts are selected by shared tags.
-
-Custom labels can be set per locale in `_site.yaml`:
-
-```yaml
-themeConfig:
-  t:
-    previousPost: Earlier article
-    nextPost: Later article
-```
-
-For a custom post layout, import `PostNavigation` from
-`vitepress-theme-neptu/components` and pass it the locale's post data.
+# Featured Posts and Printing
 
 ## Featured posts
 

@@ -21,7 +21,7 @@ translations:
 
 Scroll to the bottom of this post and you'll see the whole footer stack in
 action: the **author card**, a **discussion link**, **share buttons**, an
-**edit link**, **tags**, chronological **navigation**, and a **similar posts** list. Every one of those blocks
+**edit link**, **tags**, and a **similar posts** list. Every one of those blocks
 is configurable — here's how.
 
 ## The postFooter blocks
@@ -42,7 +42,6 @@ themeConfig:
     - edit-link     # "Edit this page" (set repo; its URL is generated automatically)
     - categories    # this post's categories
     - tags          # this post's tags
-    - navigation    # older/newer post by publication date
     - similar       # similar posts list
 ```
 

@@ -159,8 +159,6 @@ themeConfig:
 | `popularPosts` | Popular Posts |
 | `featuredPosts` | Featured Posts |
 | `similarPosts` | Similar Posts |
-| `previousPost` | Previous post |
-| `nextPost` | Next post |
 | `shareSocialMedia` | Share on Social Media |
 | `currentLang` | Current language |
 | `tags` | Tags |

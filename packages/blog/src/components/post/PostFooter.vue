@@ -2,7 +2,6 @@
 import { computed, inject } from 'vue'
 import { useData } from 'vitepress'
 import PostSimilarList from './PostSimilarList.vue'
-import PostNavigation from './PostNavigation.vue'
 import PostAuthor from './PostAuthor.vue'
 import PostComments from './PostComments.vue'
 import PostDonateLink from './PostDonateLink.vue'
@@ -21,7 +20,6 @@ const DEFAULT_ORDER = [
   'edit-link',
   'categories',
   'tags',
-  'navigation',
   'similar',
 ]
 
@@ -108,14 +106,6 @@ const blocks = computed(() => {
       <div data-pagefind-ignore>
         <slot name="similar">
           <PostSimilarList class="mt-14" :locale-posts="localePosts" />
-        </slot>
-      </div>
-    </template>
-
-    <template v-else-if="name === 'navigation'">
-      <div data-pagefind-ignore>
-        <slot name="navigation">
-          <PostNavigation class="mt-10" :locale-posts="localePosts" />
         </slot>
       </div>
     </template>

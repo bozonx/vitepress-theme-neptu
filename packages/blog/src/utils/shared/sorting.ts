@@ -16,31 +16,6 @@ interface SortablePost {
   tags?: Array<{ slug?: string }>
 }
 
-export interface AdjacentPosts<T> {
-  /** The older post in the locale's chronological sequence. */
-  previous?: T
-  /** The newer post in the locale's chronological sequence. */
-  next?: T
-}
-
-/** Finds the older/newer neighbours of a post without mutating the source list. */
-export function findAdjacentPosts<T extends SortablePost>(
-  posts: T[] | null | undefined,
-  currentPostUrl: string
-): AdjacentPosts<T> {
-  const sorted = sortPosts(posts)
-  const normalizedCurrentUrl = normalizeUrlPath(currentPostUrl)
-  const currentIndex = sorted.findIndex(
-    (post) => normalizeUrlPath(post.url) === normalizedCurrentUrl
-  )
-
-  if (currentIndex < 0) return {}
-
-  return {
-    previous: sorted[currentIndex + 1],
-    next: sorted[currentIndex - 1],
-  }
-}
 
 /** Returns explicitly featured posts, newest first. */
 export function filterFeaturedPosts<T extends SortablePost & { featured?: boolean }>(
