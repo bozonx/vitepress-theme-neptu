@@ -108,10 +108,14 @@ export default async () => {
       // config: (md) => { /* дополнительные markdown-it плагины */ },
     },
 
-    // Настройки sitemap
+    // Настройки sitemap — используется стандартный генератор VitePress,
+    // но тема автоматически задаёт `hostname` из `siteUrl` и оборачивает
+    // `transformItems` для фильтрации утилитных маршрутов (tags, archive,
+    // authors, popular, recent, featured) и префиксации URL базовым путём.
+    // Документация: https://vitepress.dev/reference/site-config#sitemap
+    // Внимание: переопределение `transformItems` отключит фильтрацию темы.
     sitemap: {
-      // hostname и transformItems задаются темой автоматически из siteUrl
-      // transformItems: (items) => items,
+      // transformItems: (items) => items,  // заменит фильтрацию темы
     },
 
     // Пользовательские хуки — выполняются после хуков темы
