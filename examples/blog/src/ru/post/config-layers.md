@@ -45,15 +45,16 @@ import type { BlogUserConfig } from 'vitepress-theme-neptu'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Build-time параметр пагинации — импортируется генераторами путей
-export const PER_PAGE = 10
+export const PER_PAGE = 15
 
 export default async () => {
   const base = process.env.VITEPRESS_BASE || '/'
 
   const config: BlogUserConfig = {
-    // ── Поля вне themeConfig ──────────────────────────────────────────
+    /////// Стандартные поля Vitepress
 
     // Корень контента и автообнаружения локалей
+    // Меняйте только в том случае если вы по какой-то причине переименовали или перенести директорию src/
     srcDir: path.resolve(__dirname, '../'),
 
     // Публичный подкаталог, например `/blog/`
