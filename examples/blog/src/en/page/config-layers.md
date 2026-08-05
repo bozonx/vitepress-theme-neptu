@@ -195,15 +195,22 @@ This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate
 
 ## YAML templates and validation
 
-Only YAML supports templates, resolved before parsing:
+Only YAML supports templates. Substitutions use the form `${variable.path}`, where `path` is **any dot-path** within the corresponding object — e.g. `${theme.blogTitle}`, `${config.siteUrl}`, `${t.links.aboutBlog}`.
 
-| Template | Value |
-| --- | --- |
-| `${theme.key}` | Merged theme value. |
-| `${site.title}` | Resolved locale site title. |
-| `${t.key}` | Built-in or overridden translation. |
-| `${config.siteUrl}` | Level-1 public site URL. |
-| `${localeIndex}` | Current locale directory name. |
+| Variable | Contents | Example |
+| --- | --- | --- |
+| `${theme.*}` | merged `themeConfig` (built-in defaults + `config.ts` + `site.yaml`) | `${theme.blogTitle}` |
+| `${site.*}` | resolved locale site object (`title`, `description`, `lang`, etc.) | `${site.title}` |
+| `${t.*}` | translation object (`theme.t`) — built-in or overridden keys | `${t.editLink}` |
+| `${config.*}` | the full `BlogUserConfig` from `config.ts` | `${config.siteUrl}` |
+| `${localeIndex}` | current locale directory name (e.g. `en`, `ru`) | `${localeIndex}` |
+
+Substitution runs in **two passes**:
+
+1. **During YAML parsing** — context is `{ config, theme, t, localeIndex }`. The `site` variable is not available at this stage. Unresolved placeholders are left in place.
+2. **After merging all layers** — context is extended with `site`, and remaining placeholders (including `${site.*}`) are resolved from the final merged config.
+
+> Thus `${theme.*}`, `${config.*}`, `${t.*}` and `${localeIndex}` resolve in the first pass, while `${site.*}` resolves in the second. Circular references are safe: the iterative pass is bounded to 8 steps; unresolved templates remain in the text.
 
 YAML files link to `site.schema.json` / `authors.schema.json` for editor completion and validation. The schemas describe all public Neptu fields; unknown keys remain warnings-compatible for future VitePress extensions. TypeScript variants (`site.ts`, `_site.ts`, `_authors.ts`) take precedence over YAML and use `defineSiteConfig`, `defineLocaleConfig`, and `defineAuthorsList` respectively.
 
