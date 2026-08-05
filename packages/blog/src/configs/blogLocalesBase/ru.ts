@@ -81,7 +81,6 @@ export default {
     listenPodcast: 'Слушать подкаст',
     commentLink: 'Обсудить пост',
     allTagsCall: 'Смотреть все тэги',
-    popularPostsCall: 'Смотреть все популярные посты',
     viewInAnotherLanguage: 'Смотреть на другом языке',
     postVideoButton: 'Смотреть видео',
     allPostsOfAuthor: 'Посты автора',

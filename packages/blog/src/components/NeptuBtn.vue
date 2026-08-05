@@ -144,12 +144,16 @@ const btnProps = computed(() => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-base.active {
-  color: var(--gray-900);
+.btn-base.active,
+.btn-base[aria-current='page'] {
+  background: var(--btn-bg-active);
+  color: var(--btn-text-active, #ffffff);
 }
 
-.dark .btn-base.active {
-  color: var(--gray-100);
+.dark .btn-base.active,
+.dark .btn-base[aria-current='page'] {
+  background: var(--btn-bg-active);
+  color: var(--btn-text-active, #ffffff);
 }
 
 .btn-base.btn--primary {
@@ -157,7 +161,8 @@ const btnProps = computed(() => {
   color: var(--gray-100);
 }
 
-.btn-base.btn--primary.active {
+.btn-base.btn--primary.active,
+.btn-base.btn--primary[aria-current='page'] {
   background: var(--primary-btn-bg-active);
 }
 

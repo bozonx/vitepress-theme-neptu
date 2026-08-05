@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Podcast beluisteren',
     commentLink: 'Bespreek dit artikel',
     allTagsCall: 'Bekijk alle tags',
-    popularPostsCall: 'Bekijk alle populaire artikelen',
     viewInAnotherLanguage: 'Bekijk in een andere taal',
     postVideoButton: 'Bekijk video',
     allPostsOfAuthor: 'Artikelen van de auteur',

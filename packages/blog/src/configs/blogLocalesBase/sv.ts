@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Lyssna på podcast',
     commentLink: 'Diskutera detta inlägg',
     allTagsCall: 'Visa alla taggar',
-    popularPostsCall: 'Visa alla populära inlägg',
     viewInAnotherLanguage: 'Visa på ett annat språk',
     postVideoButton: 'Titta på video',
     allPostsOfAuthor: 'Författarens inlägg',

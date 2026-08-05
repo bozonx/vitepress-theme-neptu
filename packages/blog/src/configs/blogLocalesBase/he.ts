@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'האזן לפודקאסט',
     commentLink: 'דון בפוסט זה',
     allTagsCall: 'הצג את כל התגיות',
-    popularPostsCall: 'הצג את כל הפוסטים הפופולריים',
     viewInAnotherLanguage: 'צפה בשפה אחרת',
     postVideoButton: 'צפה בווידאו',
     allPostsOfAuthor: 'פוסטים של המחבר',

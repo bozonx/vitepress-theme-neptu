@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'ポッドキャストを聴く',
     commentLink: 'この記事について議論する',
     allTagsCall: 'すべてのタグを見る',
-    popularPostsCall: 'すべての人気記事を見る',
     viewInAnotherLanguage: '他の言語で見る',
     postVideoButton: '動画を見る',
     allPostsOfAuthor: '著者の記事一覧',

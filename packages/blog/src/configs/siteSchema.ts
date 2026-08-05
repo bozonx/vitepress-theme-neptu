@@ -157,7 +157,7 @@ const TranslationSchema = z.looseObject({
   paginationToStart: z.string().optional(), paginationToEnd: z.string().optional(),
   toHome: z.string().optional(), toBlog: z.string().optional(), author: z.string().optional(),
   year: z.string().optional(), showMorePosts: z.string().optional(), listenPodcast: z.string().optional(),
-  commentLink: z.string().optional(), allTagsCall: z.string().optional(), popularPostsCall: z.string().optional(),
+  commentLink: z.string().optional(), allTagsCall: z.string().optional(),
   viewInAnotherLanguage: z.string().optional(), postVideoButton: z.string().optional(),
   allPostsOfAuthor: z.string().optional(), closeMenu: z.string().optional(), allPostsOfYear: z.string().optional(),
   pageNotFound: z.string().optional(), postsCount: z.string().optional(), editLink: z.string().optional(),

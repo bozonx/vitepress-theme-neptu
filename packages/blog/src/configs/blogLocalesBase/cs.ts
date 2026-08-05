@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Poslechnout podcast',
     commentLink: 'Diskutovat o tomto příspěvku',
     allTagsCall: 'Zobrazit všechny štítky',
-    popularPostsCall: 'Zobrazit všechny populární příspěvky',
     viewInAnotherLanguage: 'Zobrazit v jiném jazyce',
     postVideoButton: 'Sledovat video',
     allPostsOfAuthor: 'Příspěvky autora',

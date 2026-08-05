@@ -20,7 +20,6 @@ export const mockTheme = ref<any>({
     'tags',
     'navigation',
     'similar',
-    'popular-link',
   ],
   externalLinkIcon: true,
   postList: {

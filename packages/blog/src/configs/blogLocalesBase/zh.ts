@@ -78,7 +78,6 @@ export default {
     listenPodcast: '收听播客',
     commentLink: '参与讨论',
     allTagsCall: '查看所有标签',
-    popularPostsCall: '查看所有热门文章',
     viewInAnotherLanguage: '查看其他语言版本',
     postVideoButton: '观看视频',
     allPostsOfAuthor: '作者的文章',

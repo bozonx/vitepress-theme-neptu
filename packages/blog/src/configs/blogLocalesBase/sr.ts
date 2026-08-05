@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Слушај подкаст',
     commentLink: 'Дискутуј о овој објави',
     allTagsCall: 'Погледај све ознаке',
-    popularPostsCall: 'Погледај све популарне објаве',
     viewInAnotherLanguage: 'Погледај на другом језику',
     postVideoButton: 'Погледај видео',
     allPostsOfAuthor: 'Објаве аутора',

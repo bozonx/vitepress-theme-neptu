@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'पॉडकास्ट सुनें',
     commentLink: 'इस पोस्ट पर चर्चा करें',
     allTagsCall: 'सभी टैग देखें',
-    popularPostsCall: 'सभी लोकप्रिय पोस्ट देखें',
     viewInAnotherLanguage: 'दूसरी भाषा में देखें',
     postVideoButton: 'वीडियो देखें',
     allPostsOfAuthor: 'लेखक के पोस्ट',

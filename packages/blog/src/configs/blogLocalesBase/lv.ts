@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Klausīties podkāstu',
     commentLink: 'Apspriest šo rakstu',
     allTagsCall: 'Skatīt visas birkas',
-    popularPostsCall: 'Skatīt visus populāros rakstus',
     viewInAnotherLanguage: 'Skatīt citā valodā',
     postVideoButton: 'Skatīties video',
     allPostsOfAuthor: 'Autora raksti',

@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Écouter le podcast',
     commentLink: 'Discuter de cet article',
     allTagsCall: 'Voir tous les tags',
-    popularPostsCall: 'Voir tous les articles populaires',
     viewInAnotherLanguage: 'Voir dans une autre langue',
     postVideoButton: 'Regarder la vidéo',
     allPostsOfAuthor: 'Articles de l\'auteur',

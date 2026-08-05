@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Podcast dinle',
     commentLink: 'Bu yazıyı tartış',
     allTagsCall: 'Tüm Etiketleri Gör',
-    popularPostsCall: 'Tüm Popüler Yazıları Gör',
     viewInAnotherLanguage: 'Başka bir dilde gör',
     postVideoButton: 'Videoyu izle',
     allPostsOfAuthor: 'Yazarın yazıları',

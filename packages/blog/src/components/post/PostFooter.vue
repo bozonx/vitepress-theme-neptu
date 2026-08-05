@@ -10,7 +10,6 @@ import PostSocialShare from './PostSocialShare.vue'
 import PostTags from './PostTags.vue'
 import PostCategories from './PostCategories.vue'
 import EditLink from '../EditLink.vue'
-import NeptuBtnLink from '../NeptuBtnLink.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import type { PostLite } from '../../types.d.ts'
 
@@ -24,7 +23,6 @@ const DEFAULT_ORDER = [
   'tags',
   'navigation',
   'similar',
-  'popular-link',
 ]
 
 const props = defineProps<{ localePosts?: PostLite[] }>()
@@ -122,20 +120,5 @@ const blocks = computed(() => {
       </div>
     </template>
 
-    <template v-else-if="name === 'popular-link'">
-      <div
-        v-if="theme.popularPosts?.enabled"
-        class="mt-10"
-        data-pagefind-ignore
-      >
-        <slot name="popular-link">
-          <NeptuBtnLink
-            :href="`popular/1`"
-            :text="theme.t.popularPostsCall"
-            :icon="theme.popularIcon"
-          />
-        </slot>
-      </div>
-    </template>
   </template>
 </template>

@@ -181,32 +181,6 @@ themeConfig:
 — значение `perPage`. Пустая секция не рисуется: пока данных нет, блок
 просто не появится. Подробнее — в [Домашней странице](home-page).
 
-### Подвал поста
-
-Ссылка на список популярных постов в подвале управляется ключом
-`popular-link` в массиве `postFooter`:
-
-```yaml
-# src/site.yaml
-themeConfig:
-  postFooter:
-    - author
-    - donate
-    - comments
-    - social-share
-    - edit-link
-    - categories
-    - tags
-    - navigation
-    - similar
-    - popular-link    # ссылка «Все популярные посты»
-```
-
-Блок `popular-link` показывается только когда `popularPosts.enabled: true`.
-Массив `postFooter` заменяется целиком между уровнями — в `_site.yaml`
-перечисляйте все блоки, а не дописывайте. Подробнее — в [Настройках
-themeConfig](themeconfig-settings#подвал-поста).
-
 ### Страница списка
 
 Шаблон `popular/[page].md` уже входит в тему — создавать его вручную не
@@ -256,10 +230,7 @@ themeConfig:
 themeConfig:
   t:
     popularPosts: 'Популярное'
-    popularPostsCall: 'Смотреть все популярные посты'
 ```
-
-`popularPostsCall` — текст ссылки «Все популярные посты» в подвале.
 
 ## Поведение при сбоях
 
@@ -298,8 +269,7 @@ themeConfig:
    `dataSource`.
 5. В `site.yaml` включить `sidebar.popular: true` и/или секцию `popular` на
    главной.
-6. Добавить `popular-link` в `postFooter`, если нужна ссылка в подвале.
-7. Запустить сборку и проверить консоль — должны появиться сообщения о
+6. Запустить сборку и проверить консоль — должны появиться сообщения о
    загрузке статистики.
 
 ## Что дальше

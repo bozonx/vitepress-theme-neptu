@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'ฟังพอดแคสต์',
     commentLink: 'อภิปรายโพสต์นี้',
     allTagsCall: 'ดูแท็กทั้งหมด',
-    popularPostsCall: 'ดูโพสต์ยอดนิยมทั้งหมด',
     viewInAnotherLanguage: 'ดูในภาษาอื่น',
     postVideoButton: 'ชมวิดีโอ',
     allPostsOfAuthor: 'โพสต์ของผู้เขียน',

@@ -113,7 +113,7 @@ export namespace NeptuBlogTheme {
     /**
      * Ordered list of post-footer blocks. Supported keys: 'author', 'donate',
      * 'comments', 'social-share', 'edit-link', 'categories', 'tags',
-     * 'navigation', 'similar', 'popular-link'. Omit a key to hide the block;
+     * 'navigation', 'similar'. Omit a key to hide the block;
      * reorder to change layout.
      * Defaults to all blocks in the order above.
      */
@@ -260,7 +260,6 @@ export namespace NeptuBlogTheme {
     listenPodcast: string
     commentLink: string
     allTagsCall: string
-    popularPostsCall: string
     viewInAnotherLanguage: string
     postVideoButton: string
     allPostsOfAuthor: string

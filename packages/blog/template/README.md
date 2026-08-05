@@ -107,7 +107,7 @@ page will point at pages that no longer exist.
 | Author pages & bylines | `src/<locale>/authors/`, `src/<locale>/_authors.yaml` | `sidebar.authors`, `postList.showAuthor` in `src/site.yaml`, `author` in `postFooter`, `authorId` in post frontmatter |
 | Categories | `src/<locale>/categories/` | `sidebar.categories`, the `categories` home section, `categories` in `postFooter`, `category` in post frontmatter |
 | Featured list | `src/<locale>/featured/` | `sidebar.featured`, the `featured` home section, `featured: true` in post frontmatter |
-| Popular posts | `src/<locale>/popular/` and the `popular/` subfolders under `archive/[year]/`, `authors/[id]/`, `categories/[slug]/`, `tags/[slug]/` | `sidebar.popular`, the `popular` home section, `popular-link` in `postFooter`, `popularPosts.enabled` in `config.ts` |
+| Popular posts | `src/<locale>/popular/` and the `popular/` subfolders under `archive/[year]/`, `authors/[id]/`, `categories/[slug]/`, `tags/[slug]/` | `sidebar.popular`, the `popular` home section, `popularPosts.enabled` in `config.ts` |
 | Tags | `src/<locale>/tags/` | `sidebar.tags`, the `tags` home section, `tags` in `postFooter`, `tags` in post frontmatter |
 | Archive by year | `src/<locale>/archive/` | `sidebar.archive` |
 | Recent list page | `src/<locale>/recent/` | `sidebar.recent`, the `Browse Recent Posts` hero action in `_site.yaml` |

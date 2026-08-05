@@ -44,7 +44,6 @@ themeConfig:
     - tags          # this post's tags
     - navigation    # older/newer post by publication date
     - similar       # similar posts list
-    - popular-link  # link to the Popular listing
 ```
 
 Drop any line to hide that block; change the order to rearrange the stack.

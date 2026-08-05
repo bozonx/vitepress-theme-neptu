@@ -37,12 +37,6 @@ const PostNavigationStub = {
   template: '<div class="post-navigation-stub" />',
   props: ['localePosts'],
 }
-const NeptuBtnLinkStub = {
-  name: 'NeptuBtnLink',
-  template: '<a class="btn-link-stub"><slot /></a>',
-  props: ['href', 'text', 'icon'],
-}
-
 const defaultStubs = {
   PostAuthor: PostAuthorStub,
   PostDonateLink: PostDonateLinkStub,
@@ -52,7 +46,6 @@ const defaultStubs = {
   EditLink: EditLinkStub,
   PostSimilarList: PostSimilarListStub,
   PostNavigation: PostNavigationStub,
-  NeptuBtnLink: NeptuBtnLinkStub,
 }
 
 describe('PostFooter', () => {
@@ -69,7 +62,6 @@ describe('PostFooter', () => {
         'tags',
         'navigation',
         'similar',
-        'popular-link',
       ],
     }
   })
@@ -84,29 +76,6 @@ describe('PostFooter', () => {
     expect(wrapper.find('.post-tags-stub').exists()).toBe(true)
     expect(wrapper.find('.post-navigation-stub').exists()).toBe(true)
     expect(wrapper.find('.post-similar-stub').exists()).toBe(true)
-  })
-
-  it('does not render popular posts link when disabled', () => {
-    mockTheme.value = {
-      popularPosts: { enabled: false },
-      postFooter: ['author', 'popular-link'],
-    }
-    const wrapper = mount(PostFooter, { global: { stubs: defaultStubs } })
-    expect(wrapper.find('.btn-link-stub').exists()).toBe(false)
-  })
-
-  it('renders popular posts link when enabled', () => {
-    mockTheme.value = {
-      popularPosts: { enabled: true },
-      popularIcon: 'mdi:fire',
-      t: { popularPostsCall: 'Popular posts' },
-      postFooter: ['author', 'popular-link'],
-    }
-    const wrapper = mount(PostFooter, { global: { stubs: defaultStubs } })
-    const link = wrapper.findComponent({ name: 'NeptuBtnLink' })
-    expect(link.exists()).toBe(true)
-    expect(link.props('href')).toBe('popular/1')
-    expect(link.props('text')).toBe('Popular posts')
   })
 
   it('updates similar posts source when locale changes', async () => {

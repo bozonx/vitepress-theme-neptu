@@ -76,7 +76,6 @@ export default {
     listenPodcast: '팟캐스트 듣기',
     commentLink: '이 게시물에 대한 의견 남기기',
     allTagsCall: '모든 태그 보기',
-    popularPostsCall: '모든 인기 게시물 보기',
     viewInAnotherLanguage: '다른 언어로 보기',
     postVideoButton: '동영상 보기',
     allPostsOfAuthor: '작성자의 게시물',

@@ -183,7 +183,6 @@ themeConfig:
 | `showMorePosts` | Load More |
 | `listenPodcast` | Listen to podcast |
 | `commentLink` | Discuss this post |
-| `popularPostsCall` | View All Popular Posts |
 | `viewInAnotherLanguage` | View in another language |
 | `postVideoButton` | Watch Video |
 | `allPostsOfAuthor` | Posts of the author |

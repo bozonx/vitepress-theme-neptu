@@ -81,7 +81,6 @@ export default {
     listenPodcast: 'Listen to podcast',
     commentLink: 'Discuss this post',
     allTagsCall: 'View All Tags',
-    popularPostsCall: 'View All Popular Posts',
     viewInAnotherLanguage: 'View in another language',
     postVideoButton: 'Watch Video',
     allPostsOfAuthor: 'Posts of the author',

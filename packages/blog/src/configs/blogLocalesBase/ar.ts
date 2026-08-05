@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'الاستماع إلى البودكاست',
     commentLink: 'مناقشة هذا المنشور',
     allTagsCall: 'عرض جميع الوسوم',
-    popularPostsCall: 'عرض جميع المنشورات الشائعة',
     viewInAnotherLanguage: 'العرض بلغة أخرى',
     postVideoButton: 'مشاهدة الفيديو',
     allPostsOfAuthor: 'منشورات الكاتب',

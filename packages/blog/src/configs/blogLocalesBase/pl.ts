@@ -76,7 +76,6 @@ export default {
     listenPodcast: 'Słuchaj podcastu',
     commentLink: 'Omów ten wpis',
     allTagsCall: 'Zobacz wszystkie tagi',
-    popularPostsCall: 'Zobacz wszystkie popularne wpisy',
     viewInAnotherLanguage: 'Zobacz w innym języku',
     postVideoButton: 'Obejrzyj wideo',
     allPostsOfAuthor: 'Wpisy autora',
