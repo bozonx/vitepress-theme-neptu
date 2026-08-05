@@ -24,8 +24,8 @@ descrAsPreview: true
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
 | `postList` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
 | `socialMediaShares` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
-| `feeds` | [Ленты, robots и sitemap](feeds-and-indexing) |
-| `seo`, `twitterSite` | [Канонические ссылки](seo-canonical) / [SEO — обзор](seo-overview) |
+| `feeds` | [SEO-механизмы](seo-features) |
+| `seo`, `twitterSite` | [SEO-механизмы](seo-features) / [SEO — обзор](seo-overview) |
 | `search` | [Поиск Pagefind](search-pagefind) |
 | `popularPosts` | [Популярные посты через GA4](popular-posts) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |

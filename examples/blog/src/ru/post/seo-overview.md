@@ -25,12 +25,12 @@ siteUrl: 'https://myblog.org'
 
 | Механизм | Что делает | Подробнее |
 | --- | --- | --- |
-| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [Ленты, robots и sitemap](feeds-and-indexing) |
-| **robots.txt** | со ссылкой на sitemap | [Ленты, robots и sitemap](feeds-and-indexing) |
-| **RSS / Atom / JSON** | ленты для каждой локали | [Ленты, robots и sitemap](feeds-and-indexing) |
+| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [SEO-механизмы](seo-features) |
+| **robots.txt** | со ссылкой на sitemap | [SEO-механизмы](seo-features) |
+| **RSS / Atom / JSON** | ленты для каждой локали | [SEO-механизмы](seo-features) |
 | **Open Graph + Twitter card** | превью для соцсетей на каждой странице | см. ниже |
 | **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](json-ld) |
-| **canonical** | ссылка на первоисточник страницы | [Канонические ссылки](seo-canonical) |
+| **canonical** | ссылка на первоисточник страницы | [SEO-механизмы](seo-features) |
 | **hreflang** | связь переведённых версий | [Связывание переводов и hreflang](i18n-hreflang) |
 
 ## Как отключить любую функцию
@@ -60,8 +60,7 @@ seo:
 
 ## Дальше
 
-- [Ленты, robots и sitemap](feeds-and-indexing) — RSS, Atom, JSON, robots.txt, sitemap.xml.
-- [Канонические ссылки](seo-canonical) — кросспостинг, отключение.
+- [SEO-механизмы](seo-features) — ленты, robots, sitemap, canonical, кросспостинг.
 - [Поиск Pagefind](search-pagefind) — индексация, фильтры, исключение из поиска.
 - [Микроразметка JSON-LD](json-ld) — расширение схемы под свои нужды.
 - [Публикация и деплой](deploy) — как выложить готовый сайт в интернет.
