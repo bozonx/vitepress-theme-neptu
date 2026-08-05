@@ -40,6 +40,14 @@ export default async () => {
      */
     siteUrl: process.env.SITE_URL || 'https://example.com',
 
+    /**
+     * Primary locale key (folder name) — used as the `x-default` target in
+     * hreflang tags and as the source of title/description for the root
+     * language selector page at `/`. Defaults to `en` if it exists, otherwise
+     * the first locale alphabetically. Only relevant for multi-language sites.
+     */
+    // primaryLocale: 'en',
+
     /** Head meta tags and external asset links injected into HTML `<head>`. */
     head: [
       ['meta', { name: 'format-detection', content: 'telephone=no' }],

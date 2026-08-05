@@ -98,9 +98,12 @@ controls:
 - the `x-default` target in hreflang tags;
 - the `title` and `description` of the root language selector page at `/`.
 
-```yaml
-# src/site.yaml
-primaryLocale: en
+```ts
+// .vitepress/config.ts
+const config: BlogUserConfig = {
+  // ...
+  primaryLocale: 'en',
+}
 ```
 
 The value is the locale folder name (`en`, `ru`, `pt-BR`). When omitted, `en`

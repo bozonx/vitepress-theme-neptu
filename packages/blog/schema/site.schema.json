@@ -7,6 +7,7 @@
   "additionalProperties": true,
   "properties": {
     "siteUrl": false,
+    "primaryLocale": false,
     "base": false,
     "srcDir": false,
     "lang": { "type": "string", "description": "Level 3: IETF language tag." },
