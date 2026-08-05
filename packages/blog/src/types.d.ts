@@ -51,6 +51,14 @@ export namespace NeptuBlogTheme {
      * canonical links, Open Graph metadata, JSON-LD, hreflang, and robots.txt.
      */
     siteUrl?: string
+    /**
+     * The locale key (folder name) that serves as the site's primary language.
+     *
+     * Used as the `x-default` target in hreflang tags and as the source of
+     * title/description for the root language selector page at `/`.
+     * When omitted, the first locale by key order is used as a fallback.
+     */
+    primaryLocale?: string
     en?: { title?: string; description?: string }
   }
 

@@ -243,4 +243,40 @@ describe('addHreflang', () => {
     addHreflang(ctx)
     expect(ctx.head).toEqual([])
   })
+
+  it('uses primaryLocale for x-default when set', () => {
+    const ctx = createContext({
+      pageData: { relativePath: 'en/post/hello.md' } as any,
+      siteConfig: {
+        userConfig: {
+          siteUrl: 'https://example.com',
+          primaryLocale: 'ru',
+        },
+        site: { locales: { en: { lang: 'en' }, ru: { lang: 'ru' } } },
+      } as any,
+    })
+    addHreflang(ctx)
+    const defaultLink = ctx.head.find((h) => h[1]?.hreflang === 'x-default')
+    expect(defaultLink?.[1]?.href).toBe('https://example.com/ru/post/hello')
+  })
+
+  it('falls back to first locale for x-default when primaryLocale is not set', () => {
+    const ctx = createContext({
+      pageData: { relativePath: 'de/post/hello.md' } as any,
+      siteConfig: {
+        userConfig: { siteUrl: 'https://example.com' },
+        site: {
+          locales: {
+            de: { lang: 'de' },
+            en: { lang: 'en' },
+            ru: { lang: 'ru' },
+          },
+        },
+      } as any,
+    })
+    addHreflang(ctx)
+    const defaultLink = ctx.head.find((h) => h[1]?.hreflang === 'x-default')
+    // 'de' is first alphabetically
+    expect(defaultLink?.[1]?.href).toBe('https://example.com/de/post/hello')
+  })
 })

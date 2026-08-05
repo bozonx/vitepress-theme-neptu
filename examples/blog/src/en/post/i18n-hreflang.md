@@ -90,6 +90,22 @@ theme string via the `t` translation map:
 lang: 'ru-RU'
 ```
 
+## Primary locale
+
+The `primaryLocale` field sets which locale is the site's primary language. It
+controls:
+
+- the `x-default` target in hreflang tags;
+- the `title` and `description` of the root language selector page at `/`.
+
+```yaml
+# src/site.yaml
+primaryLocale: en
+```
+
+The value is the locale folder name (`en`, `ru`, `pt-BR`). When omitted, `en`
+is used if it exists, otherwise the first locale alphabetically.
+
 ## Toggles
 
 hreflang is on by default; disable per page with `seo.hreflang: false`, or

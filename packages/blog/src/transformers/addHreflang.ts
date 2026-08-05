@@ -79,9 +79,11 @@ export function addHreflang({
   // Inner pages keep the primary locale's corresponding page as x-default so
   // a search result does not discard the reader's requested destination.
   const isLocaleHomePage = /^[^/]+\/index\.md$/.test(relativePath)
+  const primaryLocaleCode =
+    siteConfig.userConfig.primaryLocale || Object.keys(locales)[0]
   const primaryAlternate =
     alternates.find(
-      (alternate) => alternate.code === Object.keys(locales)[0]
+      (alternate) => alternate.code === primaryLocaleCode
     ) || alternates[0]
   const defaultHref = isLocaleHomePage
     ? `${siteUrl}/`

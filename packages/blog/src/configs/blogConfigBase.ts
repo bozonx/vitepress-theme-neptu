@@ -214,9 +214,11 @@ const LOG_PREFIX = '[vitepress-theme-neptu]'
  * Root-level identity for the language selector at `/`.
  *
  * The root page has no locale of its own, so it borrows the primary locale's
- * title and description: `en` when it exists, otherwise the first discovered
- * locale. Without this the root falls back to VitePress' own `"VitePress"`
- * default, since locales live under `config.locales` and never on `config.en`.
+ * title and description. The primary locale is resolved in this order:
+ * `config.primaryLocale` (explicit), then `en` (conventional default), then
+ * the first discovered locale. Without this the root falls back to
+ * VitePress' own `"VitePress"` default, since locales live under
+ * `config.locales` and never on `config.en`.
  */
 function resolvePrimaryLocale(
   config: BlogUserConfig
@@ -224,7 +226,11 @@ function resolvePrimaryLocale(
   const locales = Object.entries(config.locales || {}).filter(
     ([code]) => code !== 'root'
   )
-  const primary = locales.find(([code]) => code === 'en') || locales[0]
+  const primary =
+    (config.primaryLocale &&
+      locales.find(([code]) => code === config.primaryLocale)) ||
+    locales.find(([code]) => code === 'en') ||
+    locales[0]
 
   return primary?.[1] as { title?: string; description?: string } | undefined
 }

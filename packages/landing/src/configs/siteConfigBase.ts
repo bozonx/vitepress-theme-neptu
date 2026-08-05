@@ -124,15 +124,17 @@ export function mergeLandingConfig(
   const noIndexUrls = new Set<string>()
   const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
 
+  const primaryLocaleKey =
+    config.primaryLocale || Object.keys(config.locales || {})[0]
   const baseLocaleKey = resolveBaseLocaleKey(
-    Object.keys(config.locales || {})[0],
+    primaryLocaleKey,
     siteBaseLocales as unknown as Record<string, unknown>
   )
   const baseLocale = (
     siteBaseLocales as unknown as Record<string, { t: Record<string, unknown> }>
   )[baseLocaleKey]
   const primaryLocaleTheme = (
-    Object.values(config.locales || {})[0] as
+    (config.locales || {})[primaryLocaleKey] as
       | { themeConfig?: LandingThemeConfig }
       | undefined
   )?.themeConfig
