@@ -38,7 +38,7 @@ This is the only developer-owned file. It is a normal `BlogUserConfig` / VitePre
 | `head` | External assets and metadata. |
 | `vite`, `markdown`, `sitemap` | Native VitePress/Vite build configuration. |
 | `transformPageData`, `transformHead`, `buildEnd` | Custom lifecycle hooks, executed after theme hooks. |
-| `themeConfig.search` | Pagefind provider, UI options and build-time indexing. |
+| `themeConfig.search` | Pagefind search; `enabled: false` to disable. |
 | `themeConfig.popularPosts.enabled` / `.dataSource` | GA4 integration; keep credentials and env-derived values here. |
 
 ```ts
@@ -48,7 +48,7 @@ export default async () => defineBlogConfig({
   siteUrl: process.env.SITE_URL || 'https://example.com',
   themeConfig: {
     repo: 'https://github.com/acme/my-blog',
-    search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
+    search: { enabled: true },
     popularPosts: { enabled: Boolean(process.env.GA_PROPERTY_ID), dataSource: { provider: 'ga4' } },
   },
 })

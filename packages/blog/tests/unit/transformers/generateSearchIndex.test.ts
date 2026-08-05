@@ -41,7 +41,7 @@ describe('generateSearchIndex', () => {
 
   it('indexes outDir and writes the bundle next to it', async () => {
     await generateSearchIndex(
-      makeConfig({ provider: 'pagefind', options: { bodyMarker: 'data-x' } })
+      makeConfig({ enabled: true })
     )
 
     expect(addDirectory).toHaveBeenCalledWith({ path: '/site/dist' })
@@ -51,44 +51,15 @@ describe('generateSearchIndex', () => {
     expect(close).toHaveBeenCalled()
   })
 
-  it('passes indexing options through and keeps `enabled`/`glob` out of them', async () => {
-    await generateSearchIndex(
-      makeConfig({
-        provider: 'pagefind',
-        index: {
-          enabled: true,
-          glob: '**/*.htm',
-          excludeSelectors: ['.no-index'],
-          forceLanguage: 'en',
-        },
-      })
-    )
-
-    expect(createIndex).toHaveBeenCalledWith({
-      excludeSelectors: ['.no-index'],
-      forceLanguage: 'en',
-    })
-    expect(addDirectory).toHaveBeenCalledWith({
-      path: '/site/dist',
-      glob: '**/*.htm',
-    })
-  })
-
-  it('skips indexing when search is not configured', async () => {
+  it('indexes by default when search is not configured', async () => {
     await generateSearchIndex(makeConfig(undefined))
 
-    expect(createIndex).not.toHaveBeenCalled()
-  })
-
-  it('skips indexing for a non-pagefind provider', async () => {
-    await generateSearchIndex(makeConfig({ provider: 'algolia' }))
-
-    expect(createIndex).not.toHaveBeenCalled()
+    expect(createIndex).toHaveBeenCalled()
   })
 
   it('skips indexing when disabled explicitly', async () => {
     await generateSearchIndex(
-      makeConfig({ provider: 'pagefind', index: { enabled: false } })
+      makeConfig({ enabled: false })
     )
 
     expect(createIndex).not.toHaveBeenCalled()
@@ -98,7 +69,7 @@ describe('generateSearchIndex', () => {
     addDirectory.mockRejectedValueOnce(new Error('boom'))
 
     await expect(
-      generateSearchIndex(makeConfig({ provider: 'pagefind' }))
+      generateSearchIndex(makeConfig({ enabled: true }))
     ).resolves.toBeUndefined()
 
     expect(console.warn).toHaveBeenCalledWith(expect.stringContaining('boom'))
