@@ -9,9 +9,8 @@ themeConfig:
       title: 'Тема Neptu для блога'
       description: 'Блог на VitePress, который можно запустить за пять минут'
       image:
-        src:
-          light: '/img/home-logo-light.webp'
-          dark: '/img/home-logo-dark.webp'
+        light: '/img/home-logo-light.webp'
+        dark: '/img/home-logo-dark.webp'
         alt: 'Логотип демо-блога'
       actions:
         - text: 'Начать за 5 минут'

@@ -77,8 +77,7 @@ themeConfig:
     # Global hero defaults. The wording is per-locale, so `hero.title` and
     # `hero.description` normally live in `<locale>/_site.yaml`.
     # Recommended image size: 320x320 px (transparent WebP/PNG/SVG).
-    # `image` accepts a string, `{ src, alt }`, `{ light, dark, alt }`, or
-    # `{ src: { light, dark }, alt }`:
+    # `image` accepts a string, `{ src, alt }`, or `{ light, dark, alt }`:
     # hero:
     #   image:
     #     light: '/img/hero-light.png'

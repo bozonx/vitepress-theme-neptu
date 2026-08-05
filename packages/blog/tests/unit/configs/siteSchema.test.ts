@@ -67,6 +67,39 @@ describe('SiteYamlSchema', () => {
     })
     expect(result.success).toBe(true)
   })
+
+  it('accepts hero image as a string', () => {
+    const result = SiteYamlSchema.safeParse({
+      themeConfig: { home: { hero: { image: '/img/hero.webp' } } },
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('accepts hero image as { src, alt }', () => {
+    const result = SiteYamlSchema.safeParse({
+      themeConfig: {
+        home: { hero: { image: { src: '/img/hero.webp', alt: 'Hero' } } },
+      },
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('accepts hero image as { light, dark, alt }', () => {
+    const result = SiteYamlSchema.safeParse({
+      themeConfig: {
+        home: {
+          hero: {
+            image: {
+              light: '/img/hero-light.webp',
+              dark: '/img/hero-dark.webp',
+              alt: 'Hero',
+            },
+          },
+        },
+      },
+    })
+    expect(result.success).toBe(true)
+  })
 })
 
 describe('AuthorsListSchema', () => {
