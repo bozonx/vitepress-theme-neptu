@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { externalTarget } from '../../utils/shared/index.ts'
 
 const { theme } = useUiTheme()
+
+const donateTarget = computed(() => externalTarget(theme.value.donate?.url))
 </script>
 
 <template>
@@ -11,7 +15,7 @@ const { theme } = useUiTheme()
     <NeptuBtnLink
       :href="theme.donate.url"
       :text="theme.t.links.donate"
-      target="_blank"
+      :target="donateTarget"
       :icon="theme.donate.icon || theme.donateIcon"
       class="ml-2 inline-flex"
     />

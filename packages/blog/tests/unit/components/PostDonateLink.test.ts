@@ -6,7 +6,7 @@ import { mockTheme } from '../../mocks/vitepress'
 const NeptuBtnLinkStub = {
   name: 'NeptuBtnLink',
   template: '<a class="btn-link-stub"><slot /></a>',
-  props: ['href', 'text', 'icon'],
+  props: ['href', 'text', 'icon', 'target'],
 }
 
 describe('PostDonateLink', () => {
@@ -47,5 +47,29 @@ describe('PostDonateLink', () => {
     })
     const link = wrapper.findComponent({ name: 'NeptuBtnLink' })
     expect(link.props('icon')).toBe('mdi:coffee')
+  })
+
+  it('does not set target=_blank for internal URL', () => {
+    mockTheme.value = {
+      donate: { postDonateCall: 'Support us', url: '/donate' },
+      t: { links: { donate: 'Donate' } },
+    }
+    const wrapper = mount(PostDonateLink, {
+      global: { stubs: { NeptuBtnLink: NeptuBtnLinkStub } },
+    })
+    const link = wrapper.findComponent({ name: 'NeptuBtnLink' })
+    expect(link.props('target')).toBeUndefined()
+  })
+
+  it('sets target=_blank for external URL', () => {
+    mockTheme.value = {
+      donate: { postDonateCall: 'Support us', url: 'https://example.com/donate' },
+      t: { links: { donate: 'Donate' } },
+    }
+    const wrapper = mount(PostDonateLink, {
+      global: { stubs: { NeptuBtnLink: NeptuBtnLinkStub } },
+    })
+    const link = wrapper.findComponent({ name: 'NeptuBtnLink' })
+    expect(link.props('target')).toBe('_blank')
   })
 })
