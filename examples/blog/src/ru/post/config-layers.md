@@ -190,11 +190,11 @@ export default async () => {
 
 ## Шаблоны строк
 
-Все YAML конфиги поддерживают подстановки строк вида `${variable.path}`. Вместо `path` подставляется **любой путь** внутри соответствующего объекта — например, `${theme.blogTitle}`, `${config.siteUrl}`, `${t.links.aboutBlog}`.
+Все YAML конфиги поддерживают подстановки строк.
 
 | Переменная | Содержимое | Пример |
 | --- | --- | --- |
-| `${theme.*}` | объединённый `themeConfig` (встроенные значения + `config.ts` + `site.yaml`) | `${theme.blogTitle}` |
+| `${theme.*}` | объединённый `themeConfig` | `${theme.blogTitle}` |
 | `${site.*}` | итоговый site-объект локали (`title`, `description`, `lang` и т.д.) | `${site.title}` |
 | `${t.*}` | объект переводов (`theme.t`) — встроенные или переопределённые ключи | `${t.editLink}` |
 | `${config.*}` | весь `BlogUserConfig` из `config.ts` | `${config.siteUrl}` |
