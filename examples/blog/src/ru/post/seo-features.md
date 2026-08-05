@@ -1,20 +1,14 @@
 ---
-title: SEO-механизмы: ленты, robots, sitemap и canonical
+title: 'SEO-механизмы: ленты, robots, sitemap и canonical'
 description: >
-  Индексация всего сайта — ленты RSS/Atom/JSON, автоматические robots.txt и
-  sitemap.xml, канонические ссылки и кросспостинг. Настройка в site.yaml и
-  frontmatter.
+  Ленты RSS/Atom/JSON, автоматические robots.txt и
+  sitemap.xml, канонические ссылки и кросспостинг. Настройка в site.yaml и frontmatter.
 authorId: ivan-k
 date: 2026-07-11
 category: { name: 'SEO', slug: 'seo' }
 tags: [seo, config]
 descrAsPreview: true
 ---
-
-Помимо отдельных постов, тема генерирует файлы для поисковых систем и
-ридеров-подписок. Здесь — ленты, robots, sitemap и канонические ссылки. Общая
-карта SEO — в [обзоре](seo-overview); поиск вынесен в
-[отдельную статью](search-pagefind).
 
 ## Ленты (RSS / Atom / JSON)
 
@@ -31,25 +25,30 @@ themeConfig:
 
 Пути к файлам для каждой локали: `/ru/feed.rss`, `/ru/feed.atom`, `/ru/feed.json`.
 
-По умолчанию каждый элемент содержит описание или автоматически созданное
-превью. `fullContent: true` дополнительно включает безопасный HTML всей статьи.
+`fullContent: true` дополнительно включает безопасный HTML всей статьи.
 Относительные ссылки и изображения становятся абсолютными. Feed renderer не
 исполняет пользовательские Vue-компоненты и опциональные Markdown-плагины; если
 на них построена основная часть статьи, лучше оставить режим превью.
 
 ## robots.txt
 
-Если в `public/` нет своего `robots.txt`, тема генерирует его при сборке:
+Поведение зависит от того, есть ли свой `robots.txt` в `public/`:
 
-```text
-User-agent: *
-Allow: /
+- **Нет файла** — тема генерирует `robots.txt` при сборке:
 
-Sitemap: https://<siteUrl>/sitemap.xml
-```
+  ```text
+  User-agent: *
+  Allow: /
 
-URL sitemap берётся из `siteUrl`. Свой файл положите в `public/robots.txt` — тема
-его не тронет (но предупредит, если в нём нет директивы `Sitemap:`).
+  Sitemap: https://<siteUrl>/sitemap.xml
+  ```
+
+  URL sitemap берётся из `siteUrl`.
+
+- **Есть файл** — тема не генерирует и не изменяет его. VitePress копирует
+  `public/robots.txt` в выходной каталог как есть. Если в файле нет директивы
+  `Sitemap:`, тема выведет предупреждение с подсказкой добавить
+  `Sitemap: https://<siteUrl>/sitemap.xml`.
 
 ## sitemap.xml
 
@@ -113,11 +112,8 @@ themeConfig:
     autoCanonical: true
 ```
 
-## Что вынесено в отдельные посты
+## Остальные SEO-механизмы
 
-Остальные SEO-механизмы разобраны детально в своих постах:
-
-- **Поиск Pagefind** — [индексация и настройка](search-pagefind).
 - **Микроразметка JSON-LD** — [расширение схемы под свои нужды](seo-json-ld).
 - **Связывание переводов и hreflang** — [связь локалей между собой](i18n-hreflang).
 - **Обзор SEO** — [карта всех механизмов](seo-overview).
