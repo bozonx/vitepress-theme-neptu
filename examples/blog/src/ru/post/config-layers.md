@@ -36,26 +36,39 @@ descrAsPreview: true
 
 Это файл разработчика представляющий из себя расширенный VitePress config.
 
-| Поле | Назначение |
-| --- | --- |
-| `srcDir` | Корень контента и автообнаружения локалей. |
-| `base` | Публичный подкаталог, например `/blog/`. |
-| `siteUrl` | Абсолютный URL для sitemap, лент, canonical, Open Graph и JSON-LD. |
-| `themeConfig.repo` | Репозиторий исходников; задаёт edit-link и ссылки на репозиторий. |
-| `head` | Внешние ассеты и метаданные. |
-| `vite`, `markdown`, `sitemap` | Обычные настройки VitePress/Vite. |
-| `transformPageData`, `transformHead`, `buildEnd` | Пользовательские хуки после хуков темы. |
-| `themeConfig.search` | Провайдер Pagefind, опции UI и индексация при сборке. |
-| `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; интеграция выключена по умолчанию, credentials и env остаются здесь. |
-
 ```ts
 export default async () => defineBlogConfig({
+  // Корень контента и автообнаружения локалей
   srcDir: path.resolve(__dirname, '../'),
+
+  // Публичный подкаталог, например `/blog/`
   base: process.env.VITEPRESS_BASE || '/',
+
+  // Абсолютный URL для sitemap, лент, canonical, Open Graph и JSON-LD
   siteUrl: process.env.SITE_URL || 'https://example.com',
+
+  // Внешние ассеты и метаданные
+  // head: [...],
+
+  // Обычные настройки VitePress/Vite
+  // vite: { ... },
+  // markdown: { ... },
+  // sitemap: { ... },
+
+  // Пользовательские хуки после хуков темы
+  // transformPageData: async (pageData) => { /* ... */ },
+  // transformHead: async (context) => { /* ... */ },
+  // buildEnd: async (siteConfig) => { /* ... */ },
+
   themeConfig: {
+    // Репозиторий исходников; задаёт edit-link и ссылки на репозиторий
     repo: 'https://github.com/acme/my-blog',
+
+    // Провайдер Pagefind, опции UI и индексация при сборке
     search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
+
+    // GA4; интеграция выключена по умолчанию,
+    // credentials и env остаются здесь
     popularPosts: {
       enabled: true,
       dataSource: { provider: 'ga4', propertyId: process.env.GA_PROPERTY_ID },
