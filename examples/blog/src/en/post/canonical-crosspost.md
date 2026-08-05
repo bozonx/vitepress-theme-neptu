@@ -49,7 +49,7 @@ If you've disabled `autoCanonical` globally but want *this* page to self-
 reference:
 
 ```yaml
-canonical: "self"   # or the shorthand: "s"
+canonical: "self"
 ```
 
 ## Disabling canonical for one page

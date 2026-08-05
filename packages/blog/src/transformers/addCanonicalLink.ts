@@ -23,7 +23,7 @@ function resolveCanonicalUrl(
   page: string,
   siteConfig: ExtendedSiteConfig
 ): string | null {
-  if (canonicalValue === 'self' || canonicalValue === 's') {
+  if (canonicalValue === 'self') {
     const siteUrl = normalizeSiteUrl(siteConfig.userConfig.siteUrl)
     if (!siteUrl) {
       console.warn(

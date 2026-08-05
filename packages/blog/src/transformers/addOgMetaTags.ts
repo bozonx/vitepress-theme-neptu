@@ -51,8 +51,7 @@ export function addOgMetaTags({
   const pageUrl = (() => {
     if (
       typeof explicitCanonical === 'string' &&
-      explicitCanonical !== 'self' &&
-      explicitCanonical !== 's'
+      explicitCanonical !== 'self'
     ) {
       try {
         const trimmed = explicitCanonical.trim()

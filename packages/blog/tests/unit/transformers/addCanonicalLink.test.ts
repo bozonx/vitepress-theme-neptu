@@ -94,18 +94,6 @@ describe('addCanonicalLink', () => {
     ])
   })
 
-  it('supports the short self alias', () => {
-    const ctx = createContext({
-      page: 'en/post/hello.md',
-      pageData: { frontmatter: { canonical: 's' } } as any,
-    })
-
-    addCanonicalLink(ctx)
-    expect(ctx.head).toEqual([
-      ['link', { rel: 'canonical', href: 'https://example.com/en/post/hello' }],
-    ])
-  })
-
   it('warns and skips if siteUrl is missing for self-canonical', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     const ctx = createContext({
