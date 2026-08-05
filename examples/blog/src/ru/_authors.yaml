@@ -3,7 +3,7 @@
 - id: 'ivan-k'
   name: 'Иван К'
   description: 'Мейнтейнер темы. Автор большей части демо-контента.'
-  image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
+  image: 'https://api.dicebear.com/10.x/avataaars/svg?accessoriesVariant=&clothesVariant=hoodie&clothesGraphicVariant=&eyebrowsVariant=defaultNatural&eyesVariant=default,surprised&facialHairVariant=beardLight&facialHairProbability=100&mouthVariant=default&topVariant=dreads01&backgroundColor=3665b0&accessoriesColor=262e33,65c9ff,5199e4,25557c,3c4f5c,b1e2ff,a7ffc4,ffffb1&facialHairColor=a55728,2c1b18,724133,4a312c&clothesColor=262e33,65c9ff&seed=Ivan'
   imageWidth: 400
   imageHeight: 400
   twitterHandle: 'neptu_blog'
@@ -18,7 +18,7 @@
 - id: 'maria-editor'
   name: 'Мария Фернандес'
   description: 'Вымышленный редактор. Автор постов про SEO.'
-  image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop'
+  image: 'https://api.dicebear.com/10.x/toon-head/svg?seed=pk8g05f3'
   imageWidth: 400
   imageHeight: 400
   links:
