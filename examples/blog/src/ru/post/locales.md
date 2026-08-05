@@ -49,6 +49,7 @@ URL — источник истины.
 Переключатель в верхней панели переводит читателя на ту же страницу в дереве
 другой локали. Определение перевода страницы идет по  `translations` во frontmatter, либо если оно не указанно то система пытается обнаружить старницу в других локалях с тем же полным путем. Подробней в [Связывании переводов и hreflang](i18n-hreflang).
 
+::: tip
 Автоподстановку соответствующей страницы можно отключить — тогда переключатель
 всегда ведёт на главную нужной локали:
 
@@ -56,6 +57,7 @@ URL — источник истины.
 // .vitepress/config.ts
 themeConfig: { i18nRouting: false }
 ```
+:::
 
 ## Как добавить язык
 
@@ -129,7 +131,6 @@ node -e "console.log(new Intl.DisplayNames(['pt-BR'], { type: 'language' }).of('
 - **Подобрать и проверить тег** — [BCP 47 Language Subtag Lookup](https://r12a.github.io/app-subtags/)
   W3C: ищет по названию языка и региона в официальном
   [IANA Language Subtag Registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
-- **Как устроены теги** — статья W3C [Language tags in HTML and XML](https://www.w3.org/International/articles/language-tags/).
 - **Коды языков** — [список ISO 639](https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BA%D0%BE%D0%B4%D0%BE%D0%B2_ISO_639)
   на Википедии; в [англоязычной версии](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
   есть колонка с самоназванием языка — она и нужна для `label`.
