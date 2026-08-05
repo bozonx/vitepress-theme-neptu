@@ -22,8 +22,8 @@ descrAsPreview: true
 | `home` | [Домашняя страница](home-page) |
 | `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
-| `postList` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
-| `socialMediaShares` | [Карточки постов и кнопки «поделиться»](post-cards-and-share) |
+| `postList` | [Списки, страницы](lists-and-pages#карточки-постов-в-списках) |
+| `socialMediaShares` | см. раздел [Кнопки «поделиться»](#кнопки-поделиться) ниже |
 | `feeds` | [SEO-механизмы](seo-features) |
 | `seo`, `twitterSite` | [SEO-механизмы](seo-features) / [SEO — обзор](seo-overview) |
 | `search` | [Поиск Pagefind](search-pagefind) |
@@ -211,7 +211,7 @@ themeConfig:
   #   url: 'https://example.com'
   #   logo: '/img/logo.png'
 
-  # → см. Карточки постов и кнопки «поделиться» (post-cards-and-share)
+  # → см. Списки, страницы (lists-and-pages#карточки-постов-в-списках)
   # postList:
   #   showDate: true
   #   showTags: true
@@ -229,7 +229,7 @@ themeConfig:
   # drafts:
   #   showDrafts: false       # true в dev, false в build
 
-  # → см. Карточки постов и кнопки «поделиться» (post-cards-and-share)
+  # → см. раздел «Кнопки поделиться» ниже
   # socialMediaShares:
   #   - name: x
   #     icon: 'fa6-brands:x-twitter'
@@ -606,8 +606,59 @@ Codeberg. `editLink.text` меняет только подпись, `editLink.pa
 
 ### Кнопки «поделиться»
 
-Настройка кнопок шеринга (`socialMediaShares`) вынесена в [Карточки постов и
-кнопки «поделиться»](post-cards-and-share#кнопки-поделиться).
+Блок `social-share` в подвале поста выводит кнопки шерингa соцсетей. Каждая
+локаль приносит свой готовый набор — для русской это Telegram, WhatsApp, VK, X,
+Facebook и LinkedIn. Они работают без настройки.
+
+Список из `site.yaml` и `_site.yaml` **объединяется со встроенным по ключу
+`name`**, а не заменяет его. Из этого следуют три приёма:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  socialMediaShares:
+    # 1. Поменять оформление встроенной кнопки — совпало имя, поля перекрылись
+    - name: telegram
+      icon: 'logos:telegram'
+      title: 'Телеграм'
+
+    # 2. Добавить свою сеть — новое имя дописывается в конец
+    - name: bluesky
+      icon: 'simple-icons:bluesky'
+      title: 'Bluesky'
+      urlTemplate: 'https://bsky.app/intent/compose?text={title}%20{url}'
+
+    # 3. Убрать встроенную кнопку
+    - name: vk
+      enabled: false
+```
+
+Поля записи:
+
+| Поле | Описание |
+| --- | --- |
+| `name` | Ключ объединения — по нему запись находит встроенную |
+| `icon` | Имя иконки [Iconify](https://icones.es), например `logos:telegram` |
+| `title` | Подпись и tooltip |
+| `urlTemplate` | Ссылка шеринга с плейсхолдерами `{url}` и `{title}` |
+| `class` | Необязательные CSS-классы кнопки |
+| `enabled` | `false` скрывает кнопку, не удаляя её из конфигурации |
+
+`{url}` и `{title}` подставляются из текущей страницы. UTM-метки пишутся прямо в
+шаблон:
+
+```yaml
+urlTemplate: 'https://x.com/intent/tweet?text={title}&url={url}%3Futm_source%3Dshare'
+```
+
+::: warning Пустой массив не скрывает блок
+`socialMediaShares: []` не выключает шеринг: пустой список означает «нечего
+объединять», и остаётся встроенный набор. Чтобы убрать блок, уберите
+`social-share` из `postFooter` — либо пометьте каждую кнопку `enabled: false`.
+:::
+
+Порядок блоков подвала поста (включая `social-share`) задаётся массивом
+`postFooter` — см. [выше](#состав-и-порядок-блоков).
 
 ### Предыдущий и следующий пост
 
