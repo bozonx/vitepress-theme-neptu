@@ -84,6 +84,8 @@ export default async () => {
     ],
 
     // Настройки Vite, полезны для добавления каких-либо плагинов Vite
+    // Документация: https://vitepress.dev/reference/site-config#vite
+    // Полный список опций: https://vite.dev/config/
     vite: {
       // Дополнительные Vite-плагины поверх тех, что тема добавляет сама
       // plugins: [...],
@@ -97,6 +99,8 @@ export default async () => {
     },
 
     // Настройки Markdown
+    // Документация: https://vitepress.dev/reference/site-config#markdown
+    // Подключение markdown-it плагинов: https://vitepress.dev/reference/site-config#markdown-config
     markdown: {
       // image: { lazyLoading: true } — уже включено темой
       // headers: { level: [2, 3, 4, 5, 6] } — уже включено темой
@@ -111,6 +115,7 @@ export default async () => {
     },
 
     // Пользовательские хуки — выполняются после хуков темы
+    // Документация: https://vitepress.dev/reference/site-config#build-hooks
     transformPageData: async (pageData) => {
       // Дополнить или изменить pageData после обработки темой
       // return { ...pageData }
