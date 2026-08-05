@@ -25,8 +25,9 @@ Requires **Node.js 22.18+**.
   always matching the theme version this scaffolder ships with.
 - Asks for a directory, a blog title and a content locale (or takes them as
   flags).
-- Renames the locale folder, sets `lang` and `title` in its `_site.yaml`, and
-  registers the locale's post data loader in `Layout.vue`.
+- Renames the locale folder and sets `lang` and `title` in its `_site.yaml`.
+  Post data loaders are auto-discovered by the theme's Vite plugin — no manual
+  edits to `Layout.vue` are needed.
 - Names the generated `package.json` after the target directory.
 
 ## Options

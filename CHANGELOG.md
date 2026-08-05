@@ -21,7 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `create-neptu-blog`: new package behind `npm create neptu-blog@latest my-blog`. It copies the starter out of the theme package (no second copy to maintain), asks for a title and content locale, renames the locale folder, and rewrites `lang`/`title` plus the locale's data-loader import in `Layout.vue`.
+- `create-neptu-blog`: new package behind `npm create neptu-blog@latest my-blog`. It copies the starter out of the theme package (no second copy to maintain), asks for a title and content locale, renames the locale folder, and sets `lang`/`title` in `_site.yaml`.
+- `packages/blog`: `virtual:neptu-posts-data` Vite plugin — auto-discovers every locale folder with a `loadPosts.data.ts` and generates a virtual module with static imports, eliminating the manual `Layout.vue` edit when adding a locale. `Layout.vue` in the template and example now imports `posts` from this module instead of hand-coding each locale.
 - `packages/blog/template`: `drafts`, `toc`, `ads`, `consent` and `asideLayouts` are now documented inline in `site.yaml` / `config.ts`; the `t` reference gained the category, breadcrumb, draft, reading-time, TOC and ad keys; `sidebar.featured` and `featuredIcon` documented.
 - `docs`: `page/contents` — a full table of contents for the guide, linked from the home page, nav, sidebar and footer.
 - `docs`: new posts split out of overloaded ones — `toc-and-aside`, `ads`, `external-content`; `components` rewritten as a full export reference (components, composables, utilities, list helpers).
