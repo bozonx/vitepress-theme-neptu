@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NeptuPagination from '../../../src/components/NeptuPagination.vue'
-import { mockTheme, mockRoute } from '../../mocks/vitepress'
+import { mockTheme, mockRoute, mockSite } from '../../mocks/vitepress'
 
 describe('NeptuPagination', () => {
   beforeEach(() => {
@@ -13,6 +13,7 @@ describe('NeptuPagination', () => {
       },
     }
     mockRoute.value = { path: '/en/blog/1' }
+    mockSite.value = { locales: {}, cleanUrls: true }
   })
 
   it('renders nothing when totalPages is 1', () => {
@@ -81,6 +82,16 @@ describe('NeptuPagination', () => {
     })
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
     expect(btns[0].props('href')).toBe('/en/tags/vue/1')
+  })
+
+  it('strips VitePress base from route.path to avoid doubled base in URLs', () => {
+    mockSite.value = { base: '/vitepress-theme-neptu/blog/', locales: {}, cleanUrls: true }
+    mockRoute.value = { path: '/vitepress-theme-neptu/blog/ru/recent/1' }
+    const wrapper = mount(NeptuPagination, {
+      props: { curPage: 1, totalPages: 3 },
+    })
+    const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
+    expect(btns[0].props('href')).toBe('/ru/recent/1')
   })
 
   it('falls back to theme paginationMaxItems', () => {

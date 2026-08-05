@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useRoute } from 'vitepress'
+import { useRoute, useData } from 'vitepress'
 import { computed } from 'vue'
 import NeptuBtn from './NeptuBtn.vue'
 import { useUiTheme } from '../composables/useUiTheme.ts'
 
 const route = useRoute()
+const { site } = useData()
 const { theme } = useUiTheme()
 const props = defineProps<{
   paginationMaxItems?: number
@@ -24,8 +25,15 @@ const items = computed(() => {
   const curPage = props.curPage
   const maxItems = props.paginationMaxItems || theme.value.paginationMaxItems || 7
   const totalPages = props.totalPages
+  // route.path includes the VitePress base, but BaseLink applies withBase()
+  // again — strip it to avoid doubling the base in pagination URLs.
+  const basePath = (site.value.base || '/').replace(/\/+$/, '')
+  const pathWithoutBase =
+    basePath && basePath !== '/' && route.path.startsWith(basePath)
+      ? route.path.slice(basePath.length)
+      : route.path
   const baseUrl =
-    props.paginationBaseUrl || route.path.split('/').slice(0, -1).join('/')
+    props.paginationBaseUrl || pathWithoutBase.split('/').slice(0, -1).join('/')
 
   if (curPage >= 1 && totalPages > 1 && curPage <= totalPages && maxItems > 0) {
     const halfPages = (maxItems - 1) / 2
