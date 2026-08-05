@@ -1,6 +1,6 @@
 ---
 title: Уровни конфигурации, конфиг первого уровня и шаблоны строк
-description: 'Три уровня конфигурации и системные поля: srcDir, base, siteUrl, repo, head, vite, markdown, sitemap, хуки, Pagefind, GA4 и perPage. А так же шаблоны строк'
+description: 'Три уровня конфигурации и системные поля: srcDir, base, siteUrl, primaryLocale, repo, head, vite, markdown, sitemap, хуки, Pagefind, GA4 и perPage. А так же шаблоны строк'
 authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Настройка', slug: 'configuration' }
@@ -27,7 +27,7 @@ descrAsPreview: true
 
 | Что меняется | Файл |
 | --- | --- |
-| `srcDir`, `base`, `siteUrl`, `repo`, env, Vite/VitePress, плагины, хуки, Pagefind, GA4 и секреты | `.vitepress/config.ts` |
+| `srcDir`, `base`, `siteUrl`, `primaryLocale`, `repo`, env, Vite/VitePress, плагины, хуки, Pagefind, GA4 и секреты | `.vitepress/config.ts` |
 | Оформление и поведение, одинаковые для языков: бренд, sidebar, nav, footer, ленты, SEO, иконки, publisher | `src/site.yaml` |
 | Язык, заголовок, описание, переводы, подписи и намеренные отличия одного языка | `src/<locale>/_site.yaml` |
 | Профили авторов одной локали | `src/<locale>/_authors.yaml` |
@@ -71,6 +71,12 @@ export default async () => {
     // знали канонический адрес страниц.
     // В отличие от `base`, это всегда полный URL: `https://example.com`.
     siteUrl: process.env.SITE_URL || 'https://example.com',
+
+    // Основная локаль сайта (имя папки, например 'en', 'ru').
+    // Определяет x-default в hreflang и title/description корневой
+    // страницы выбора языка. По умолчанию — 'en' если она есть, иначе
+    // первая локаль по алфавиту. Имеет смысл только для мультиязычных сайтов.
+    // primaryLocale: 'en',
 
     // Внешние ассеты и метаданные, будет вбилжено в тэг <head> итогового HTML документа
     head: [

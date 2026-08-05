@@ -34,6 +34,7 @@ This is the only developer-owned file. It is a normal `BlogUserConfig` / VitePre
 | `srcDir` | Content root; required for automatic locale discovery. |
 | `base` | Public subpath, such as `/blog/`. |
 | `siteUrl` | Absolute public URL; required for sitemap, feeds, canonical, Open Graph and JSON-LD. |
+| `primaryLocale` | Primary locale key (folder name); used as `x-default` in hreflang and for root page title/description. Defaults to `en` if it exists, otherwise the first locale alphabetically. |
 | `themeConfig.repo` | Source repository; supplies edit-link URLs and repository links. |
 | `head` | External assets and metadata. |
 | `vite`, `markdown`, `sitemap` | Native VitePress/Vite build configuration. |
@@ -46,6 +47,7 @@ export default async () => defineBlogConfig({
   srcDir: path.resolve(__dirname, '../'),
   base: process.env.VITEPRESS_BASE || '/',
   siteUrl: process.env.SITE_URL || 'https://example.com',
+  // primaryLocale: 'en', // x-default target; defaults to 'en' or first locale
   themeConfig: {
     repo: 'https://github.com/acme/my-blog',
     search: { enabled: true },
