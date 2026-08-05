@@ -15,7 +15,7 @@
           :width="author?.imageWidth"
           loading="lazy"
           decoding="async"
-          class="w-full max-w-full h-auto rounded-[var(--neptu-radius-xs)] transition-[transform,box-shadow] duration-200 ease-in-out will-change-[transform]"
+          class="w-full max-w-full h-auto rounded-[var(--neptu-radius-xs)] transition-[filter,box-shadow] duration-200 ease-in-out"
         />
       </a>
     </figure>

@@ -25,7 +25,7 @@ const imageSrc = (src?: string): string | undefined =>
         :width="props.width"
         fetchpriority="high"
         decoding="async"
-        class="max-w-full h-auto rounded-[var(--neptu-radius-xs)] transition-[transform,box-shadow] duration-200 ease-in-out will-change-[transform]"
+        class="max-w-full h-auto rounded-[var(--neptu-radius-xs)] transition-[filter,box-shadow] duration-200 ease-in-out"
       />
     </a>
     <figcaption

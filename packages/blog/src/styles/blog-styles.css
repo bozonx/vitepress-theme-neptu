@@ -261,23 +261,28 @@ body.modal-open {
 /**** Content page */
 
 /**** Lightbox */
+.vp-doc img,
+.lightbox img {
+  transition:
+    filter 0.25s ease-in-out,
+    box-shadow 0.25s ease-in-out;
+  border-radius: var(--neptu-radius-xs);
+}
+
 .lightbox img:hover,
 .vp-doc img:hover {
-  transform: scale(1.02);
+  transform: none;
+  filter: brightness(1.04);
   cursor: pointer;
-  box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vp-c-brand-1, #3eaf7c) 30%, transparent),
+              0 6px 20px color-mix(in srgb, var(--vp-c-brand-1, #3eaf7c) 18%, transparent);
 }
 
 .dark .lightbox img:hover,
 .dark .vp-doc img:hover {
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
-}
-
-.vp-doc img {
-  transition:
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-  border-radius: var(--neptu-radius-xs);
+  filter: brightness(1.06);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 40%, transparent),
+              0 6px 24px color-mix(in srgb, var(--vp-c-brand-1, #5672cd) 28%, transparent);
 }
 
 /* Стили для figure элементов, созданных плагином mdImage */
