@@ -23,3 +23,9 @@ declare module '*/loadPosts.data.ts' {
 
   export const data: { posts: PostLite[] }
 }
+
+declare module 'virtual:neptu-posts-data' {
+  import type { PostLite } from 'vitepress-theme-neptu'
+
+  export const posts: Record<string, PostLite[]>
+}

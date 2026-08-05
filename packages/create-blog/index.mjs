@@ -177,28 +177,12 @@ Options:
   await copyDir(templateDir, target)
 
   // The starter ships an `en` locale folder; rename it when another was asked
-  // for. `Layout.vue` statically imports each locale's data loader, so it has
-  // to be rewritten alongside the folder — VitePress data loaders cannot be
-  // imported dynamically.
+  // for. The `virtual:neptu-posts-data` module auto-discovers locale data
+  // loaders, so no manual edits to `Layout.vue` are needed.
   if (locale !== 'en') {
     await fs.rename(
       path.join(target, 'src', 'en'),
       path.join(target, 'src', locale)
-    )
-
-    const varName = `${locale.replace(/[^a-zA-Z0-9]/g, '')}Data`
-    await edit(
-      path.join(target, 'src', '.vitepress', 'theme', 'Layout.vue'),
-      (s) =>
-        s
-          .replace(
-            "import { data as enData } from '../../en/loadPosts.data'",
-            `import { data as ${varName} } from '../../${locale}/loadPosts.data'`
-          )
-          .replace(
-            'const posts = { en: enData.posts }',
-            `const posts = { '${locale}': ${varName}.posts }`
-          )
     )
   }
 

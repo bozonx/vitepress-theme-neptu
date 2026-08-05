@@ -19,3 +19,8 @@ declare module '*.css' {
   export default content;
 }
 
+declare module 'virtual:neptu-posts-data' {
+  import type { PostLite } from './types.d.ts'
+  export const posts: Record<string, PostLite[]>
+}
+

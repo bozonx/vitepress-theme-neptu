@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 import { createSiteYamlHotReloadPlugin } from '../utils/node/hotReloadPlugin.ts'
 import { createColocatedMediaPlugin } from '../utils/node/colocatedMedia.ts'
+import { createPostsDataPlugin } from '../utils/node/postsDataPlugin.ts'
 import type { UserConfig, SiteConfig } from 'vitepress'
 import { omitUndefined, hasNoIndex } from '../utils/shared/index.ts'
 import { deepMerge } from '../utils/shared/merge.ts'
@@ -301,6 +302,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
           ? [
               createSiteYamlHotReloadPlugin(config.srcDir),
               createColocatedMediaPlugin(config.srcDir),
+              createPostsDataPlugin({ srcDir: config.srcDir }),
             ]
           : []),
         ...(config.vite?.plugins || []),
