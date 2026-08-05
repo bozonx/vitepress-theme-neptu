@@ -174,6 +174,62 @@ seo:
   og: false
 ```
 
+## Кнопки «поделиться»
+
+Блок `social-share` в подвале поста выводит кнопки шерингa соцсетей. Каждая
+локаль приносит свой готовый набор — для русской это Telegram, WhatsApp, VK, X,
+Facebook и LinkedIn. Они работают без настройки.
+
+Список из `site.yaml` и `_site.yaml` **объединяется со встроенным по ключу
+`name`**, а не заменяет его. Из этого следуют три приёма:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  socialMediaShares:
+    # 1. Поменять оформление встроенной кнопки — совпало имя, поля перекрылись
+    - name: telegram
+      icon: 'logos:telegram'
+      title: 'Телеграм'
+
+    # 2. Добавить свою сеть — новое имя дописывается в конец
+    - name: bluesky
+      icon: 'simple-icons:bluesky'
+      title: 'Bluesky'
+      urlTemplate: 'https://bsky.app/intent/compose?text={title}%20{url}'
+
+    # 3. Убрать встроенную кнопку
+    - name: vk
+      enabled: false
+```
+
+Поля записи:
+
+| Поле | Описание |
+| --- | --- |
+| `name` | Ключ объединения — по нему запись находит встроенную |
+| `icon` | Имя иконки [Iconify](https://icones.es), например `logos:telegram` |
+| `title` | Подпись и tooltip |
+| `urlTemplate` | Ссылка шеринга с плейсхолдерами `{url}` и `{title}` |
+| `class` | Необязательные CSS-классы кнопки |
+| `enabled` | `false` скрывает кнопку, не удаляя её из конфигурации |
+
+`{url}` и `{title}` подставляются из текущей страницы. UTM-метки пишутся прямо в
+шаблон:
+
+```yaml
+urlTemplate: 'https://x.com/intent/tweet?text={title}&url={url}%3Futm_source%3Dshare'
+```
+
+::: warning Пустой массив не скрывает блок
+`socialMediaShares: []` не выключает шеринг: пустой список означает «нечего
+объединять», и остаётся встроенный набор. Чтобы убрать блок, уберите
+`social-share` из `postFooter` — либо пометьте каждую кнопку `enabled: false`.
+:::
+
+Порядок блоков подвала поста (включая `social-share`) задаётся массивом
+`postFooter` — см. [Настройки themeConfig](themeconfig-settings#подвал-поста).
+
 ## Что вынесено в отдельные посты
 
 Три SEO-механизма разобраны детально в своих постах — здесь только упоминаем:
