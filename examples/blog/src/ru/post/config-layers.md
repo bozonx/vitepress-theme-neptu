@@ -36,69 +36,133 @@ descrAsPreview: true
 
 Это файл разработчика, который представляет из себя расширенние стандартного конфига VitePress.
 
-### Поля вне `themeConfig`
-
-| Поле | Назначение |
-| --- | --- |
-| `srcDir` | Корень контента и автообнаружения локалей. |
-| `base` | Публичный подкаталог, например `/blog/`. |
-| `siteUrl` | Абсолютный URL для sitemap, лент, canonical, Open Graph и JSON-LD. |
-| `head` | Внешние ассеты и метаданные. |
-| `vite`, `markdown`, `sitemap` | Обычные настройки VitePress/Vite. |
-| `transformPageData`, `transformHead`, `buildEnd` | Пользовательские хуки после хуков темы. |
-
-### Системные поля внутри `themeConfig`
-
-Некоторые поля живут внутри `themeConfig`, но относятся к системным — их нельзя задавать в YAML, они требуют кода или секретов.
-
-| Поле | Назначение |
-| --- | --- |
-| `themeConfig.repo` | Репозиторий исходников; задаёт edit-link и ссылки на репозиторий. |
-| `themeConfig.search` | Провайдер Pagefind, опции UI и индексация при сборке. |
-| `themeConfig.popularPosts.enabled`, `.dataSource` | GA4; интеграция выключена по умолчанию, credentials и env остаются здесь. |
-| `themeConfig.perPage` | Build-time параметр пагинации (см. ниже). |
-
-### Пример
-
 ```ts
-export default async () => defineBlogConfig({
-  // Корень контента и автообнаружения локалей
-  srcDir: path.resolve(__dirname, '../'),
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { defineBlogConfig } from 'vitepress-theme-neptu/configs'
+import type { BlogUserConfig } from 'vitepress-theme-neptu'
 
-  // Публичный подкаталог, например `/blog/`
-  base: process.env.VITEPRESS_BASE || '/',
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-  // Абсолютный URL для sitemap, лент, canonical, Open Graph и JSON-LD
-  siteUrl: process.env.SITE_URL || 'https://example.com',
+// Build-time параметр пагинации — импортируется генераторами путей
+export const PER_PAGE = 10
 
-  // Внешние ассеты и метаданные
-  // head: [...],
+export default async () => {
+  const base = process.env.VITEPRESS_BASE || '/'
 
-  // Обычные настройки VitePress/Vite
-  // vite: { ... },
-  // markdown: { ... },
-  // sitemap: { ... },
+  const config: BlogUserConfig = {
+    // ── Поля вне themeConfig ──────────────────────────────────────────
 
-  // Пользовательские хуки после хуков темы
-  // transformPageData: async (pageData) => { /* ... */ },
-  // transformHead: async (context) => { /* ... */ },
-  // buildEnd: async (siteConfig) => { /* ... */ },
+    // Корень контента и автообнаружения локалей
+    srcDir: path.resolve(__dirname, '../'),
 
-  themeConfig: {
-    // Репозиторий исходников; задаёт edit-link и ссылки на репозиторий
-    repo: 'https://github.com/acme/my-blog',
+    // Публичный подкаталог, например `/blog/`
+    base,
 
-    // Провайдер Pagefind, опции UI и индексация при сборке
-    search: { provider: 'pagefind', options: { bodyMarker: 'data-pagefind-body' } },
+    // Абсолютный URL для sitemap, лент, canonical, Open Graph и JSON-LD
+    siteUrl: process.env.SITE_URL || 'https://example.com',
 
-    // GA4; интеграция выключена по умолчанию,
-    // credentials и env остаются здесь
-    popularPosts: {
-      enabled: true,
-      dataSource: { provider: 'ga4', propertyId: process.env.GA_PROPERTY_ID },
+    // Внешние ассеты и метаданные
+    head: [
+      ['meta', { name: 'format-detection', content: 'telephone=no' }],
+      ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}favicon.svg` }],
+    ],
+
+    // Обычные настройки VitePress/Vite
+    vite: {
+      // Дополнительные Vite-плагины поверх тех, что тема добавляет сама
+      // plugins: [...],
+      ssr: {
+        // noExternal уже включает 'vitepress-theme-neptu'
+        // noExternal: [...],
+      },
+      build: {
+        // chunkSizeWarningLimit: 1500,
+      },
     },
-  },
-})
+
+    // Настройки Markdown
+    markdown: {
+      // image: { lazyLoading: true } — уже включено темой
+      // headers: { level: [2, 3, 4, 5, 6] } — уже включено темой
+      // externalLinks: { target: '_blank' } — уже включено темой
+      // config: (md) => { /* дополнительные markdown-it плагины */ },
+    },
+
+    // Настройки sitemap
+    sitemap: {
+      // hostname и transformItems задаются темой автоматически из siteUrl
+      // transformItems: (items) => items,
+    },
+
+    // Пользовательские хуки — выполняются после хуков темы
+    transformPageData: async (pageData) => {
+      // Дополнить или изменить pageData после обработки темой
+      // return { ...pageData }
+    },
+    transformHead: async (context) => {
+      // Добавить теги в <head> после обработки темой
+      // return [['meta', { name: 'foo', content: 'bar' }]]
+    },
+    buildEnd: async (siteConfig) => {
+      // Вызывается в конце сборки, после генерации лент, robots.txt и индекса
+    },
+
+    // Локали: если опустить — автообнаружение из srcDir
+    // Явное указание для продвинутых/ручных сценариев:
+    // locales: {
+    //   en: { lang: 'en-US', title: 'My Blog', description: '...' },
+    //   ru: { lang: 'ru-RU', title: 'Мой блог', description: '...' },
+    // },
+
+    // ── Системные поля внутри themeConfig ─────────────────────────────
+
+    themeConfig: {
+      // Build-time параметр пагинации (нельзя в YAML)
+      perPage: PER_PAGE,
+
+      // Репозиторий исходников; задаёт edit-link и ссылки на репозиторий
+      repo: 'https://github.com/acme/my-blog',
+
+      // Провайдер Pagefind, опции UI и индексация при сборке
+      search: {
+        provider: 'pagefind',
+        options: {
+          bodyMarker: 'data-pagefind-body',
+          // translations: { ... },       // UI-переводы поиска
+          // locales: { ... },            // переводы по локали
+        },
+        index: {
+          // enabled: true,               // false — пропустить индексацию
+          // glob: '**/*.html',           // кастомный glob
+          // rootSelector: 'html',
+          // excludeSelectors: ['nav'],
+          // forceLanguage: 'en',
+          // includeCharacters: '<>$',
+          // keepIndexUrl: false,
+          // verbose: false,
+          // logfile: undefined,
+        },
+      },
+
+      // GA4; интеграция выключена по умолчанию,
+      // credentials и env остаются здесь
+      popularPosts: {
+        enabled: true,
+        sortBy: 'pageviews',
+        dataSource: {
+          provider: 'ga4',
+          propertyId: process.env.GA_PROPERTY_ID,
+          credentialsJson: process.env.GA_CREDENTIALS_JSON,
+          dataPeriodDays: 30,
+          dataLimit: 1000,
+        },
+      },
+    },
+  }
+
+  return defineBlogConfig(config)
+}
 ```
 
 > Полный список стандартных полей VitePress остаётся в [справочнике VitePress](https://vitepress.dev/reference/site-config)
