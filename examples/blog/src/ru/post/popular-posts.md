@@ -7,7 +7,7 @@ description: >
   подвале поста.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Продвинутое', slug: 'advanced' }
+category: { name: 'Интеграция', slug: 'integration' }
 tags: [advanced, config, analytics]
 descrAsPreview: true
 ---

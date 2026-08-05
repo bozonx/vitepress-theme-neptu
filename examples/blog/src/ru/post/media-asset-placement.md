@@ -8,7 +8,7 @@ authorId: ivan-k
 translations:
   en: /en/post/media-asset-placement
 date: 2026-07-24
-category: { name: 'Контент', slug: 'writing' }
+category: { name: 'Медиа', slug: 'media' }
 tags: [media]
 descrAsPreview: true
 ---
