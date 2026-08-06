@@ -26,3 +26,10 @@ const text = computed(
     :hide-external-icon="true"
   />
 </template>
+
+<style scoped>
+.video-link:hover {
+  transform: none;
+}
+</style>
+
