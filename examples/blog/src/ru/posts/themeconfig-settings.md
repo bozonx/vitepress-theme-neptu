@@ -34,359 +34,23 @@ descrAsPreview: true
 | `paginationMaxItems` | [Списки, страницы](lists-and-pages) |
 | Стили (CSS-переменные) и слоты | [Кастомизация](customization) |
 
-## Параметры 2го и 3го уровня
+## Что в этой статье
 
-Ниже — полный пример конфигурации обоих уровней. Поля, разобранные в отдельных
-статьях, закомментированы со ссылкой. Расширенные пояснения к каждой секции —
-в разделах ниже.
-
-### Уровень 2 — `src/site.yaml`
-
-```yaml
-# yaml-language-server: $schema=../node_modules/vitepress-theme-neptu/schema/site.schema.json
-
-themeConfig:
-  # --- Общие ---
-  externalLinkIcon: true  # иконка ↗ на внешних ссылках в markdown (по умолчанию true)
-
-  # → см. Кастомизация (customization)
-  # defaultColorTheme: 'blue'     # blue | green | purple | amber | teal | rose | magenta | monochrome
-  # defaultStylePreset: 'soft'    # soft | sharp | brutal | glass | editorial | mono
-  # colorPicker: false            # переключатель тем в UI (по умолчанию выключен)
-  # stylePicker: false            # переключатель стилей в UI (по умолчанию выключен)
-
-  # → см. Локали и мультиязычность (locales)
-  # i18nRouting: true             # редирект на язык посетителя при наличии перевода
-
-  # → см. Уровни конфигурации (config-layers) — задаются в config.ts
-  # perPage: 15
-  # repo: 'https://github.com/user/repo'
-
-  # --- Главная страница ---
-  # → см. Домашняя страница (home-page)
-  # home:
-  #   appearance: auto            # auto | light | dark
-  #   maxWidth: 800
-  #   background:
-  #     type: none                # none | parallax
-  #     # image: /img/home.jpg
-  #     # parallaxOffset: 300
-  #   # hero: ...                 # тексты hero — в _site.yaml (локализованные)
-  #   sections:
-  #     - type: featured
-  #       enabled: true
-  #       # limit: 3
-  #     - type: latest
-  #       enabled: false
-  #     - type: popular
-  #       enabled: false
-  #     - type: tags
-  #       enabled: true
-  #     - type: categories
-  #       enabled: true
-
-  # --- Сайдбар ---
-  sidebar:
-    # Логотип над навигацией
-    # logoSrc: '/img/sidebar-logo.webp'   # строка — одна картинка для обеих тем
-    # logoSrc:                            # объект — разные файлы для light/dark
-    #   light: '/img/logo-light.svg'
-    #   dark: '/img/logo-dark.svg'
-    #   alt: 'Название блога'
-    # logoHeight: 180                     # высота в px для резервирования места (по умолчанию 158)
-
-    # Флаги секций (все по умолчанию false)
-    recent: true
-    featured: true          # посты с featured: true в frontmatter
-    popular: false          # требует popularPosts.enabled
-    archive: true           # по годам → месяцам
-    authors: true
-    tags: true              # облако тегов
-    categories: true        # облако категорий (по умолчанию false)
-    donate: true
-    rssFeed: true
-    atomFeed: true
-
-    # blogTitle: 'Мой блог'  # заголовок сайдбара; false — скрыть (обычно в _site.yaml)
-    # links:                 # свои ссылки над секциями (обычно в _site.yaml — локализованные)
-    #   - text: 'Главная'
-    #     href: '/'
-    #     icon: 'fa6-solid:house'
-    # bottomLinks:           # ссылки внизу сайдбара (обычно в _site.yaml)
-    #   - { header: '${t.links.links}' }
-    #   - text: 'YouTube'
-    #     href: 'https://youtube.com/'
-    #     icon: '${theme.youtubeIcon}'
-    socialLinks:            # иконки соцсетей
-      - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
-
-  # --- Верхняя панель (nav) ---
-  nav:
-    donate: true            # кнопка «Поддержать» (нужен donate.url)
-    # links:                # ссылки навигации (обычно в _site.yaml — локализованные)
-    #   - text: 'О блоге'
-    #     href: 'pages/about'
-    #     icon: 'solar:document-linear'
-    #     desktopOnly: true  # скрывать на мобильных
-    #     mobileOnly: false  # только на мобильных
-    socialLinks:
-      - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
-        desktopOnly: true
-
-  # --- Кнопка «Поддержать» (donate) ---
-  donate:
-    url: 'pages/donate'      # обязательный — без него кнопок не будет
-    # icon: 'fa6-solid:hand-holding-heart'  # по умолчанию donateIcon
-    # postDonateCall: 'Поддержите блог'     # текст призыва под статьёй (обычно в _site.yaml)
-
-  # --- Ссылка «Редактировать» (editLink) ---
-  # pattern авто-генерируется из repo; переопределяйте только для нестандартной ветки/пути
-  editLink:
-    # pattern: 'https://github.com/user/repo/edit/main/src/:path'
-    # text: 'Редактировать на GitHub'  # обычно в _site.yaml
-
-  # --- Подвал поста (postFooter) ---
-  # Массив заменяется целиком между уровнями — в _site.yaml нужно перечислять полностью
-  postFooter:
-    - author        # карточка автора (нужен authorId)
-    - donate        # призыв поддержать (нужен donate.url)
-    - comments      # ссылка на обсуждение (нужен commentLink)
-    - social-share  # кнопки «поделиться»
-    - edit-link     # «Редактировать» (нужен repo)
-    - categories    # категории поста
-    - tags          # теги поста
-    - similar       # похожие посты
-
-  # --- Числовые параметры списков и сайдбара ---
-  # sidebarTagsCount: 15       # максимум тегов в облаке сайдбара
-  # sidebarCategoriesCount: 10 # максимум категорий до ссылки «Все категории»
-  # similarPostsCount: 5       # количество похожих постов в подвале
-  # → см. Списки, страницы (lists-and-pages)
-  # paginationMaxItems: 5      # максимум кнопок пагинации
-
-  # --- Футер сайта (footer) ---
-  # message, copyright, links — локализованные, обычно в _site.yaml
-  # Общие для всех локалей — только иконки:
-  # footer:
-  #   rssFeed: true
-  #   atomFeed: true
-  #   github: true             # использует repo из config.ts
-
-  # --- Иконки (переопределение умолчаний, Iconify) ---
-  # donateIcon: 'fa6-solid:hand-holding-heart'
-  # recentIcon: 'fa6-solid:bolt'
-  # featuredIcon: 'fa6-solid:certificate'
-  # popularIcon: 'fa6-solid:star'
-  # byDateIcon: 'fa6-solid:calendar-days'
-  # authorsIcon: 'mdi:users'
-  # rssIcon: 'bi:rss-fill'
-  # atomIcon: 'vscode-icons:file-type-atom'
-  # youtubeIcon: 'fa6-brands:youtube'
-  # tagsIcon: 'fa6-solid:tag'
-  # categoriesIcon: 'fa6-solid:folder-open'
-
-  # --- Оглавление (toc) ---
-  toc:
-    # enabled: true
-    minHeadings: 3          # не показывать при меньшем числе заголовков; 0 — отключить порог
-    position: auto          # auto | aside | top
-    collapsed: true         # стартовое состояние сворачиваемого блока на узких экранах
-    level: [2, 3]           # уровни заголовков: число, [min, max] или 'deep'
-    layouts: ['post']       # на каких макетах показывать
-    # label: 'Содержание'   # заголовок оглавления (обычно в _site.yaml)
-
-  # --- Правая колонка (asideLayouts) ---
-  # Макеты, у которых есть правая колонка. Заменяет умолчание целиком.
-  # Колонка видна только от 1550px ширины окна.
-  # asideLayouts: ['post', 'util', 'tag', 'archive', 'author']
-
-  # --- Параметры из других статей ---
-  # → см. Микроразметка JSON-LD (json-ld)
-  # publisher:
-  #   name: 'My Blog'
-  #   url: 'https://example.com'
-  #   logo: '/img/logo.png'
-
-  # → см. Списки, страницы (lists-and-pages#карточки-постов-в-списках)
-  # postList:
-  #   showDate: true
-  #   showTags: true
-  #   showThumbnail: true
-  #   showPreview: true
-  #   showAuthor: true
-  #   showReadingTime: false
-  #   maxPreviewLength: 300
-
-  # → см. Черновики, время чтения, видео и подкасты (drafts-video-podcasts)
-  # readingTime:
-  #   enabled: true
-  #   wpm: 200
-  #   layouts: ['post']
-  # drafts:
-  #   showDrafts: false       # true в dev, false в build
-
-  # → см. раздел «Кнопки поделиться» ниже
-  # socialMediaShares:
-  #   - name: x
-  #     icon: 'fa6-brands:x-twitter'
-  #     title: 'Share on X'
-  #     urlTemplate: 'https://twitter.com/intent/tweet?url={url}&text={title}'
-  #   - name: vk
-  #     enabled: false         # скрыть встроенную кнопку
-  # feeds:
-  #   maxPosts: 50
-  #   formats: ['rss', 'atom', 'json']
-  #   fullContent: false       # полный HTML в элементах ленты
-  # seo:
-  #   og: true
-  #   jsonLd: true
-  #   hreflang: true
-  #   canonical: true
-  #   autoCanonical: true
-  #   rss: true
-  #   maxDescriptionLength: 300
-  # twitterSite: 'myblog'     # @handle для SEO-мета
-  # search:
-  #   enabled: true            # Pagefind, бандлится с темой
-  # popularPosts:
-  #   enabled: false           # по умолчанию выключен; без данных GA4 списки пустые
-  #   sortBy: 'pageviews'      # pageviews | uniquePageviews | avgTimeOnPage
-  #   dataSource:
-  #     provider: 'ga4'
-  #     propertyId: null
-  #     credentialsJson: null
-  #     dataPeriodDays: 30
-  #     dataLimit: 100
-
-  # → см. Реклама (ads)
-  # ads:
-  #   enabled: true
-
-  # → см. Consent и аналитика (consent-and-analytics)
-  # consent:
-  #   ...
-
-  # → см. Переводы интерфейса и страница выбора языка (i18n-translations) — полный справочник ключей t
-  # t:
-  #   popularPosts: 'Популярное'
-  #   similarPosts: 'Похожие посты'
-  #   postsCountForms: [пост, поста, постов]  # формы множественного числа
-  #   links:
-  #     donate: 'Поддержать'
-  #     aboutBlog: 'О блоге'
-```
-
-### Уровень 3 — `src/<locale>/_site.yaml`
-
-```yaml
-# yaml-language-server: $schema=../../node_modules/vitepress-theme-neptu/schema/site.schema.json
-
-# --- Поля локали (не themeConfig) ---
-lang: 'ru-RU'
-# label: 'Русский'             # только для языков без встроенного перевода
-title: 'Мой блог'              # заголовок вкладки, SEO, сайдбар
-# titleTemplate: ':title | ${site.title}'
-description: 'Описание блога для SEO и лент'
-# extends: 'ru'                # наследовать конфиг от другой локали
-
-themeConfig:
-  # --- Локализованные тексты главной страницы ---
-  # → см. Домашняя страница (home-page)
-  # home:
-  #   hero:
-  #     title: 'Добро пожаловать'
-  #     description: 'Описание блога'
-  #     image: '/img/hero.png'           # строка, { src, alt } или { light, dark, alt }
-  #     actions:
-  #       - text: 'Все посты'
-  #         href: 'recent/1'
-  #         primary: true                # заполненная кнопка акцентного цвета
-
-  # --- Локализованные надписи сайдбара ---
-  sidebar:
-    # blogTitle: 'Мой блог'    # false — скрыть
-    # links:                   # ссылки над секциями
-    #   - text: '${t.links.recent}'
-    #     href: 'recent/1'
-    #     icon: '${theme.recentIcon}'
-    # bottomLinks:             # ссылки внизу
-    #   - { header: '${t.links.links}' }
-    #   - text: 'О блоге'
-    #     href: 'pages/about'
-    #     icon: 'mdi:information-outline'
-
-  # --- Локализованная навигация ---
-  nav:
-    # links:
-    #   - text: 'О блоге'
-    #     href: 'pages/about'
-    #     icon: 'solar:document-linear'
-
-  # --- Локализованный футер сайта ---
-  footer:
-    message: 'Копирование со ссылкой на источник.'
-    copyright: '© 2026 Ваше Имя'
-    # rssFeed: true            # иконки в футере
-    # atomFeed: true
-    # github: true
-    links:
-      - text: '${t.links.aboutBlog}'
-        href: 'pages/about'
-
-  # --- Локализованный призыв к донату ---
-  donate:
-    # postDonateCall: 'Если статья полезной оказалась — поддержите блог.'
-
-  # --- Локализованная подпись ссылки на правку ---
-  editLink:
-    text: 'Редактировать на GitHub'
-
-  # --- Локализованный заголовок оглавления ---
-  # toc:
-  #   label: 'Содержание'
-
-  # --- Локализованные переводы UI ---
-  # → см. Переводы интерфейса и страница выбора языка (i18n-translations) — полный справочник ключей
-  # t:
-  #   search: 'Поиск по блогу'
-  #   draftLabel: 'Черновик'
-  #   links:
-  #     donate: 'Поддержать'
-  #     aboutBlog: 'О блоге'
-
-  # --- Локализованные UI-подписи (aria-labels, tooltips) ---
-  # → см. Переводы интерфейса и страница выбора языка (i18n-translations)
-  # sidebarMenuLabel: 'Меню'
-  # colorThemeMenuLabel: 'Тема'
-  # langMenuLabel: 'Язык интерфейса'
-  # stylePresetMenuLabel: 'Стиль'
-  # returnToTopLabel: 'Наверх'
-  # lightModeSwitchTitle: 'Светлая тема'
-  # darkModeSwitchTitle: 'Тёмная тема'
-  # notFound:
-  #   title: 'Страница не найдена'
-  #   linkText: 'На главную'
-
-  # → см. Авторы (authors) — обычно в _authors.yaml, можно инлайн
-  # authors:
-  #   - id: ivan-k
-  #     name: 'Иван К.'
-  #     image: /authors/ivan.jpg
-  #     imageWidth: 400
-  #     imageHeight: 200
-  #     description: 'Технический писатель'
-  #     twitterHandle: ivan_k
-  #     links:
-  #       - type: twitter
-  #         url: 'https://twitter.com/ivan_k'
-  #         title: 'Иван в Twitter'
-```
-
-
-
-
+| Секция | Уровень | Описание |
+| --- | --- | --- |
+| [Верхняя панель](#верхняя-панель-nav) | 2, 3 | Ссылки, иконки соцсетей |
+| [Сайдбар](#сайдбар) | 2, 3 | Флаги секций, логотип, ссылки |
+| [Кнопка «Поддержать»](#кнопка-поддержать-donate) | 2, 3 | `donate.url`, `postDonateCall` |
+| [Футер](#футер) | 3 | `message`, `copyright`, `links` |
+| [Иконки](#иконки) | 2 | Переопределение умолчаний Iconify |
+| [Внешние ссылки](#внешние-ссылки-в-контенте-постов) | 2 | Иконка ↗, `target="_blank"` |
+| [Относительные URL](#относительные-url-подстраиваются-под-локаль) | — | Авто-префикс локали для `href` |
+| [Подвал поста](#подвал-поста) | 2 | Состав и порядок блоков |
+| [Кнопки «поделиться»](#кнопки-поделиться) | 2 | `socialMediaShares` |
+| [Похожие посты](#похожие-посты) | 2 | `similarPostsCount` |
+| [Оглавление и правая колонка](#оглавление-и-правая-колонка) | 2 | `toc`, `asideLayouts` |
+| [Переводы интерфейса](#переводы-интерфейса) | 2, 3 | `themeConfig.t` |
+| [Рекомендации по уровням](#рекомендации-по-уровням) | — | Что куда помещать |
 
 ## Навигация, сайдбар и футер
 
@@ -500,6 +164,29 @@ themeConfig:
 
 Если нужен не набор ссылок, а собственная вёрстка футера, встроенный футер
 заменяется целиком через слот `footer` — см. [Кастомизация](customization#кастомизация-футера-сайта).
+
+### Кнопка «Поддержать» (donate)
+
+Флаги `nav.donate` и `sidebar.donate` только показывают кнопку — куда она ведёт,
+задаёт отдельная секция `donate`:
+
+```yaml
+# src/site.yaml — общий адрес для всех локалей
+themeConfig:
+  donate:
+    url: 'pages/donate'   # относительный путь дополняется локалью, либо внешний https://…
+    icon: 'fa6-solid:hand-holding-heart'   # необязательно, по умолчанию donateIcon
+```
+
+```yaml
+# src/<locale>/_site.yaml — текст призыва под статьёй
+themeConfig:
+  donate:
+    postDonateCall: 'Если статья оказалась полезной — поддержите блог.'
+```
+
+Без `donate.url` кнопки не будет, даже если флаги включены. Блок под статьёй
+управляется ключом `donate` в `postFooter` — см. ниже.
 
 ## Иконки
 
@@ -786,29 +473,9 @@ themeConfig: {
 
 ---
 
-## i18n Translations
+## Переводы интерфейса
 
-Встроенные переводы интерфейса поставляются для 21 локали (`en`, `ru`, `es`,
-`zh`, `sr`, `pt`, `fr`, `de`, `tr`, `ja`, `ko`, `it`, `pl`, `lv`, `nl`, `sv`,
-`cs`, `hi`, `th`, `he`, `ar`). Переопределить строки можно через `themeConfig.t`
-на любом уровне конфигурации — deep-merge дополняет встроенный слой, указывайте
-только нужные ключи.
-
-```yaml
-# src/ru/_site.yaml
-themeConfig:
-  t:
-    search: 'Поиск по блогу'
-    links:
-      donate: 'Поддержать'
-```
-
-Полный справочник ключей `t`, формы множественного числа, вложенные группы
-(`links`, `months`, `podcasts`, `audioFile`, `videoFile`, `fileDownload`,
-`lightbox`) и правила разрешения локалей — в [Переводы интерфейса и страница
-выбора языка](i18n-translations#строки-переводов-от-администратора).
-
----
+Встроенные переводы для 21 локали. Переопределения — через `themeConfig.t` на любом уровне (deep-merge дополняет встроенный слой). Полный справочник ключей — в [Переводы интерфейса и страница выбора языка](i18n-translations#строки-переводов-от-администратора).
 
 ## Рекомендации по уровням
 
@@ -841,36 +508,3 @@ themeConfig:
 
 Общее правило: если значение одинаковое для всех языков — оставляйте на уровне 2.
 Если отличается — переопределяйте на уровне 3, указывая только то, что отличается.
-
-
-
-
-
-
-
-
-
-
-
-## Кнопка «Поддержать»
-
-Флаги `nav.donate` и `sidebar.donate` только показывают кнопку — куда она ведёт,
-задаёт отдельная секция `donate`:
-
-```yaml
-# src/site.yaml — общий адрес для всех локалей
-themeConfig:
-  donate:
-    url: 'pages/donate'   # относительный путь дополняется локалью, либо внешний https://…
-    icon: 'fa6-solid:hand-holding-heart'   # необязательно, по умолчанию donateIcon
-```
-
-```yaml
-# src/<locale>/_site.yaml — текст призыва под статьёй
-themeConfig:
-  donate:
-    postDonateCall: 'Если статья оказалась полезной — поддержите блог.'
-```
-
-Без `donate.url` кнопки не будет, даже если флаги включены. Блок под статьёй
-управляется ключом `donate` в `postFooter` — см. ниже.
