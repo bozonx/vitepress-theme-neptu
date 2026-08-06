@@ -5,14 +5,14 @@ import SideBar from '../../../src/components/layout-parts/SideBar.vue'
 import { mockTheme } from '../../mocks/vitepress'
 
 const SideBarGroupStub = { name: 'SideBarGroup', template: '<div><slot /></div>' }
-const SideBarItemsStub = { name: 'SideBarItems', template: '<ul />', props: ['items', 'isMobile'] }
+const SideBarItemsStub = { name: 'SideBarItems', template: '<ul />', props: ['items', 'isMobileOrTablet'] }
 const SideBarTagsStub = { name: 'SideBarTags', template: '<div />', props: ['localePosts'] }
 const SideBarFooterStub = { name: 'SideBarFooter', template: '<footer />' }
 const IconStub = { name: 'Icon', template: '<span />', props: ['icon'] }
 
-function mountSideBar(isMobile = true) {
+function mountSideBar(isMobileOrTablet = true) {
   return mount(SideBar, {
-    props: { isMobile },
+    props: { isMobileOrTablet },
     global: {
       stubs: {
         SideBarGroup: SideBarGroupStub,
@@ -61,7 +61,7 @@ describe('SideBar drawer', () => {
     wrapper.vm.openDrawer()
     await nextTick()
     wrapper.vm.handleLeftSwipe()
-    await wrapper.setProps({ isMobile: false })
+    await wrapper.setProps({ isMobileOrTablet: false })
     vi.advanceTimersByTime(400)
     await nextTick()
 
@@ -74,8 +74,8 @@ describe('SideBar drawer', () => {
 
     wrapper.vm.openDrawer()
     await nextTick()
-    await wrapper.setProps({ isMobile: false })
-    await wrapper.setProps({ isMobile: true })
+    await wrapper.setProps({ isMobileOrTablet: false })
+    await wrapper.setProps({ isMobileOrTablet: true })
 
     const drawer = wrapper.find('.app-drawer')
     expect(wrapper.classes()).toContain('max-lg:hidden')

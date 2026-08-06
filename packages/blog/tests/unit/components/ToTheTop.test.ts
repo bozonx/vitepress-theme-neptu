@@ -8,7 +8,7 @@ const ToTheTopDesktopStub = { name: 'ToTheTopDesktop', template: '<div class="to
 describe('ToTheTop', () => {
   it('renders both variants with responsive visibility classes', () => {
     const wrapper = mount(ToTheTop, {
-      props: { scrollY: 2000, isMobile: true },
+      props: { scrollY: 2000, isMobileOrTablet: true },
       global: { stubs: { ToTheTopMobile: ToTheTopMobileStub, ToTheTopDesktop: ToTheTopDesktopStub } },
     })
     const mobile = wrapper.find('.to-top-mobile')

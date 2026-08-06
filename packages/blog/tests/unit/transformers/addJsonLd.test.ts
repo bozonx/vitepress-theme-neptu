@@ -32,7 +32,7 @@ vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
     ...actual,
     ...mergeActual,
     isPost: vi.fn(),
-    isAuthorPage: vi.fn(),
+    isAuthorPath: vi.fn(),
     isPage: vi.fn(),
     generatePageUrlPath: vi.fn((path: string) =>
       path.replace(/\.md$/, '').replace(/\/index$/, '')
@@ -129,7 +129,7 @@ describe('addJsonLd', () => {
 
   it('adds post JSON-LD for post layout', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -168,7 +168,7 @@ describe('addJsonLd', () => {
 
   it('adds page JSON-LD for page layout', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(true)
 
     const ctx = createContext({
@@ -189,7 +189,7 @@ describe('addJsonLd', () => {
 
   it('adds author JSON-LD for author page', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(true)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(true)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -211,7 +211,7 @@ describe('addJsonLd', () => {
 
   it('skips author JSON-LD when author not found', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(true)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(true)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -247,7 +247,7 @@ describe('addJsonLd', () => {
   it('adds custom JSON-LD when frontmatter.jsonLd is set', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
 
     const ctx = createContext({
       page: 'en/custom.md',
@@ -270,7 +270,7 @@ describe('addJsonLd', () => {
   it('skips empty or non-object JSON-LD', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
 
     const ctx = createContext({
       page: 'en/none.md',
@@ -286,7 +286,7 @@ describe('addJsonLd', () => {
 
   it('includes updatedDate when lastUpdated is present', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -297,7 +297,7 @@ describe('addJsonLd', () => {
 
   it('uses frontmatter description when pageData.description is missing', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -322,7 +322,7 @@ describe('addJsonLd', () => {
 
   it('uses frontmatter title for pages when pageData.title is missing', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(true)
 
     const ctx = createContext({
@@ -343,7 +343,7 @@ describe('addJsonLd', () => {
 
   it('skips invalid lastUpdated instead of throwing', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -364,7 +364,7 @@ describe('addJsonLd', () => {
 
   it('handles external cover URL', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -376,7 +376,7 @@ describe('addJsonLd', () => {
 
   it('normalizes relative cover paths without a leading slash', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -388,7 +388,7 @@ describe('addJsonLd', () => {
 
   it('includes keywords from tags', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -403,7 +403,7 @@ describe('addJsonLd', () => {
 
   it('falls back to author ID when name is missing', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -418,7 +418,7 @@ describe('addJsonLd', () => {
 
   it('constructs author URL for post', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -433,7 +433,7 @@ describe('addJsonLd', () => {
 
   it('normalizes URLs when siteUrl has a trailing slash', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()
@@ -449,7 +449,7 @@ describe('addJsonLd', () => {
 
   it('warns and falls back to base post JSON-LD when custom YAML is invalid', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -477,7 +477,7 @@ describe('addJsonLd', () => {
   it('warns and skips custom-only JSON-LD when YAML is invalid', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
 
     const ctx = createContext({
       page: 'en/custom.md',
@@ -497,7 +497,7 @@ describe('addJsonLd', () => {
   it('wraps top-level custom JSON-LD arrays in @graph', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
 
     const ctx = createContext({
       page: 'en/custom.md',
@@ -525,7 +525,7 @@ describe('addJsonLd', () => {
 
   it('ignores top-level custom arrays when merging into generated post JSON-LD', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -552,7 +552,7 @@ describe('addJsonLd', () => {
 
   it('JSON string jsonLd replaces auto-generated post JSON-LD entirely', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -582,7 +582,7 @@ describe('addJsonLd', () => {
 
   it('YAML object jsonLd deep-merges with auto-generated post JSON-LD', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -625,7 +625,7 @@ describe('addJsonLd', () => {
 
   it('JSON string jsonLd replaces auto-generated page JSON-LD entirely', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(true)
 
     const ctx = createContext({
@@ -654,7 +654,7 @@ describe('addJsonLd', () => {
 
   it('YAML object jsonLd deep-merges with auto-generated page JSON-LD', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(true)
 
     const ctx = createContext({
@@ -691,7 +691,7 @@ describe('addJsonLd', () => {
 
   it('YAML string jsonLd deep-merges with auto-generated post JSON-LD', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext({
@@ -730,7 +730,7 @@ describe('addJsonLd', () => {
 
   it('YAML string jsonLd deep-merges with auto-generated page JSON-LD', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(true)
 
     const ctx = createContext({
@@ -766,7 +766,7 @@ describe('addJsonLd', () => {
   it('YAML object jsonLd on non-post/page layout uses data directly', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
 
     const ctx = createContext({
       page: 'en/custom.md',
@@ -788,7 +788,7 @@ describe('addJsonLd', () => {
 
   it('does nothing when frontmatter.seo.jsonLd is false', () => {
     vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPage).mockReturnValue(false)
+    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
     vi.mocked(sharedUtils.isPage).mockReturnValue(false)
 
     const ctx = createContext()

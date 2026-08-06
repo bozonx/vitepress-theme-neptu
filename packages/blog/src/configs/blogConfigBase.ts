@@ -6,10 +6,10 @@ import type { UserConfig, SiteConfig } from 'vitepress'
 import { omitUndefined, hasNoIndex } from '../utils/shared/index.ts'
 import { deepMerge } from '../utils/shared/merge.ts'
 import {
-  asExtendedPageData,
-  asExtendedSiteConfig,
-  asTransformContext,
-  asTransformHeadContext,
+  castToExtendedPageData,
+  castToExtendedSiteConfig,
+  castToTransformContext,
+  castToTransformHeadContext,
   mergeReturnedPageData,
   hasTailwindPlugin,
   sharedBaseConfig,
@@ -404,8 +404,8 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     },
 
     async transformPageData(pageData, ctx) {
-      const extendedPageData = asExtendedPageData(pageData)
-      const extendedSiteConfig = asExtendedSiteConfig(ctx.siteConfig)
+      const extendedPageData = castToExtendedPageData(pageData)
+      const extendedSiteConfig = castToExtendedSiteConfig(ctx.siteConfig)
 
       collectImageDimensions(extendedPageData, extendedSiteConfig)
       resolveMediaPaths(extendedPageData)
@@ -434,8 +434,8 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     },
 
     async transformHead(ctx) {
-      const extendedCtx = asTransformHeadContext(ctx)
-      const typedCtx = asTransformContext(ctx)
+      const extendedCtx = castToTransformHeadContext(ctx)
+      const typedCtx = castToTransformContext(ctx)
 
       const pageSeo = extendedCtx.pageData.frontmatter?.seo
       const globalSeo = extendedCtx.siteConfig.userConfig?.themeConfig?.seo
@@ -457,9 +457,9 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     },
 
     buildEnd: async (cfg: SiteConfig) => {
-      await generateRssFeed(asExtendedSiteConfig(cfg))
-      generateRobotsTxt(asExtendedSiteConfig(cfg))
-      await generateSearchIndex(asExtendedSiteConfig(cfg))
+      await generateRssFeed(castToExtendedSiteConfig(cfg))
+      generateRobotsTxt(castToExtendedSiteConfig(cfg))
+      await generateSearchIndex(castToExtendedSiteConfig(cfg))
 
       if (config.buildEnd) {
         await config.buildEnd(cfg)

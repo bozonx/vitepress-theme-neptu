@@ -99,7 +99,7 @@ export function isAsideEnabled(
   })
 }
 
-export function isAuthorPage(filePath: string | null | undefined): boolean {
+export function isAuthorPath(filePath: string | null | undefined): boolean {
   if (!filePath) return false
 
   return (
@@ -111,7 +111,6 @@ export function isAuthorPage(filePath: string | null | undefined): boolean {
 /** Resolve explicit preview text from frontmatter. Or return undefined. */
 export function resolvePreviewText(frontmatter: PostFrontmatter): string | undefined {
   const { previewText, descriptionAsPreview, description } = frontmatter
-  const useDescr = descriptionAsPreview
   const normalizedPreviewText =
     typeof previewText === 'string' ? previewText.trim() : undefined
   const normalizedDescription =
@@ -119,7 +118,7 @@ export function resolvePreviewText(frontmatter: PostFrontmatter): string | undef
 
   if (normalizedPreviewText !== undefined) {
     return normalizedPreviewText || undefined
-  } else if (useDescr && normalizedDescription) {
+  } else if (descriptionAsPreview && normalizedDescription) {
     return normalizedDescription
   }
   return undefined

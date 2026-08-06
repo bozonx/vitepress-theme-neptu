@@ -8,10 +8,10 @@ export function useBreakpoint(
   win?: Window
 ): {
   windowWidth: Ref<number>
-  isMobile: Ref<boolean>
+  isMobileOrTablet: Ref<boolean>
 } {
   const windowWidth = ref(0)
-  const isMobile = ref(false)
+  const isMobileOrTablet = ref(false)
 
   const getWin = () => win || (inBrowser ? window : undefined)
 
@@ -19,7 +19,7 @@ export function useBreakpoint(
     const targetWin = getWin()
     if (!targetWin) return
     windowWidth.value = targetWin.innerWidth
-    isMobile.value = windowWidth.value < breakpoint
+    isMobileOrTablet.value = windowWidth.value < breakpoint
   }
 
   if (getWin()) {
@@ -39,5 +39,5 @@ export function useBreakpoint(
     targetWin.removeEventListener('resize', onResize)
   })
 
-  return { windowWidth, isMobile }
+  return { windowWidth, isMobileOrTablet }
 }

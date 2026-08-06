@@ -13,19 +13,19 @@ export type TransformHeadContext = {
   page: string
 }
 
-export function asExtendedPageData(pageData: unknown): ExtendedPageData {
+export function castToExtendedPageData(pageData: unknown): ExtendedPageData {
   return pageData as ExtendedPageData
 }
 
-export function asTransformContext(ctx: unknown): import('vitepress').TransformContext {
+export function castToTransformContext(ctx: unknown): import('vitepress').TransformContext {
   return ctx as unknown as import('vitepress').TransformContext
 }
 
-export function asExtendedSiteConfig(siteConfig: unknown): ExtendedSiteConfig {
+export function castToExtendedSiteConfig(siteConfig: unknown): ExtendedSiteConfig {
   return siteConfig as unknown as ExtendedSiteConfig
 }
 
-export function asTransformHeadContext(ctx: unknown): TransformHeadContext {
+export function castToTransformHeadContext(ctx: unknown): TransformHeadContext {
   return ctx as unknown as TransformHeadContext
 }
 

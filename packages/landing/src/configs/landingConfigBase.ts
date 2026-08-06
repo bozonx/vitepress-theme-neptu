@@ -6,10 +6,10 @@ import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu/utils'
 import { deepMerge } from 'vitepress-theme-neptu/utils'
 import { resolveBaseLocaleKey } from 'vitepress-theme-neptu/utils'
 import {
-  asExtendedPageData,
-  asExtendedSiteConfig,
-  asTransformContext,
-  asTransformHeadContext,
+  castToExtendedPageData,
+  castToExtendedSiteConfig,
+  castToTransformContext,
+  castToTransformHeadContext,
   mergeReturnedPageData,
   sharedBaseConfig,
   normalizeSitemapUrl,
@@ -270,8 +270,8 @@ export function mergeLandingConfig(
     },
 
     async transformPageData(pageData, ctx) {
-      const extendedPageData = asExtendedPageData(pageData)
-      const extendedSiteConfig = asExtendedSiteConfig(ctx.siteConfig)
+      const extendedPageData = castToExtendedPageData(pageData)
+      const extendedSiteConfig = castToExtendedSiteConfig(ctx.siteConfig)
 
       collectImageDimensions(extendedPageData, extendedSiteConfig)
       resolveMediaPaths(extendedPageData)
@@ -296,8 +296,8 @@ export function mergeLandingConfig(
     },
 
     async transformHead(ctx) {
-      const extendedCtx = asTransformHeadContext(ctx)
-      const typedCtx = asTransformContext(ctx)
+      const extendedCtx = castToTransformHeadContext(ctx)
+      const typedCtx = castToTransformContext(ctx)
 
       const pageSeo = extendedCtx.pageData.frontmatter?.seo
       const globalSeo = extendedCtx.siteConfig.userConfig?.themeConfig?.seo
@@ -321,7 +321,7 @@ export function mergeLandingConfig(
     },
 
     buildEnd: async (cfg: SiteConfig) => {
-      generateRobotsTxt(asExtendedSiteConfig(cfg))
+      generateRobotsTxt(castToExtendedSiteConfig(cfg))
 
       if (config.buildEnd) {
         await config.buildEnd(cfg)

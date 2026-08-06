@@ -5,7 +5,7 @@ import {
   isPage,
   isUtilPage,
   isPopularPostsRoute,
-  isAuthorPage,
+  isAuthorPath,
   resolvePreviewText,
   resolvePagefindBodyAttribute,
   resolveLayoutKey,
@@ -96,25 +96,25 @@ describe('isPopularPostsRoute', () => {
   })
 })
 
-describe('isAuthorPage', () => {
+describe('isAuthorPath', () => {
   it('returns true for author page path', () => {
-    expect(isAuthorPage('en/authors/john/1.md')).toBe(true)
+    expect(isAuthorPath('en/authors/john/1.md')).toBe(true)
   })
 
   it('returns false for author index page', () => {
-    expect(isAuthorPage('en/authors/index.md')).toBe(false)
+    expect(isAuthorPath('en/authors/index.md')).toBe(false)
   })
 
   it('returns false for null filePath', () => {
-    expect(isAuthorPage(null)).toBe(false)
+    expect(isAuthorPath(null)).toBe(false)
   })
 
   it('returns false for unrelated paths', () => {
-    expect(isAuthorPage('en/posts/hello.md')).toBe(false)
+    expect(isAuthorPath('en/posts/hello.md')).toBe(false)
   })
 
   it('matches locale with hyphen', () => {
-    expect(isAuthorPage('zh-CN/authors/john/1.md')).toBe(true)
+    expect(isAuthorPath('zh-CN/authors/john/1.md')).toBe(true)
   })
 })
 

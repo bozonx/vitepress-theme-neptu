@@ -14,7 +14,7 @@ import { resolveSidebarLogo } from '../../utils/shared/media.ts'
 import { makeCategoriesList, makeTagsList } from '../../list-helpers/listHelpers.ts'
 import type { PostLite, SidebarItem } from '../../types.d.ts'
 
-const props = defineProps<{ isMobile: boolean; localePosts?: PostLite[] }>()
+const props = defineProps<{ isMobileOrTablet: boolean; localePosts?: PostLite[] }>()
 const { localeIndex, site } = useData()
 const { theme } = useThemeConfig()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
@@ -182,7 +182,7 @@ const bottomLinks = computed<SidebarItem[]>(() => {
   return items
 })
 const openDrawer = () => {
-  if (!props.isMobile) return
+  if (!props.isMobileOrTablet) return
 
   clearAnimationTimeout()
   if (!drawerOpen.value) {
@@ -205,7 +205,7 @@ const finishClose = () => {
 }
 
 const closeDrawer = () => {
-  if (!props.isMobile || !drawerOpen.value) return
+  if (!props.isMobileOrTablet || !drawerOpen.value) return
 
   clearAnimationFrame()
   drawerTranslateXPx.value = -SIDEBAR_WIDTH
@@ -219,7 +219,7 @@ const closeDrawer = () => {
 }
 
 const handleKeydown = (event: KeyboardEvent) => {
-  if (!props.isMobile || !drawerOpen.value) return
+  if (!props.isMobileOrTablet || !drawerOpen.value) return
 
   if (event.key === 'Escape') {
     event.preventDefault()
@@ -251,17 +251,17 @@ defineExpose({
   openDrawer,
   isDrawerOpen: () => drawerOpen.value,
   handleLeftSwipe() {
-    if (props.isMobile) closeDrawer()
+    if (props.isMobileOrTablet) closeDrawer()
   },
 })
 
 watch(
-  () => props.isMobile,
-  (isMobile) => {
+  () => props.isMobileOrTablet,
+  (isMobileOrTablet) => {
     clearAnimationTimeout()
     clearAnimationFrame()
-    drawerOpen.value = !isMobile
-    drawerTranslateXPx.value = isMobile ? -SIDEBAR_WIDTH : 0
+    drawerOpen.value = !isMobileOrTablet
+    drawerTranslateXPx.value = isMobileOrTablet ? -SIDEBAR_WIDTH : 0
     backdropOpacity.value = 0
     setBodyScrollLocked(false)
     previousActiveElement = null
@@ -280,12 +280,12 @@ onUnmounted(() => {
   <div :class="{ 'max-lg:hidden': !drawerOpen }">
     <div
       ref="drawerRef"
-      :role="props.isMobile ? 'dialog' : undefined"
-      :aria-modal="props.isMobile ? 'true' : undefined"
-      :aria-label="props.isMobile ? theme.sidebarMenuLabel : undefined"
-      :tabindex="props.isMobile ? -1 : undefined"
+      :role="props.isMobileOrTablet ? 'dialog' : undefined"
+      :aria-modal="props.isMobileOrTablet ? 'true' : undefined"
+      :aria-label="props.isMobileOrTablet ? theme.sidebarMenuLabel : undefined"
+      :tabindex="props.isMobileOrTablet ? -1 : undefined"
       :style="{
-        transform: props.isMobile
+        transform: props.isMobileOrTablet
           ? `translate3d(${drawerTranslateXPx}px, 0, 0)`
           : 'none',
         width: `${SIDEBAR_WIDTH}px`,

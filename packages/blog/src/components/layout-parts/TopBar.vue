@@ -11,7 +11,7 @@ import type { LinkItem } from '../../types.d.ts'
 const { theme } = useThemeConfig()
 
 interface Props {
-  isMobile?: boolean
+  isMobileOrTablet?: boolean
   hideAppearance?: boolean
   hideMenuButton?: boolean
   minimal?: boolean

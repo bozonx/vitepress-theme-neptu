@@ -16,7 +16,7 @@ import { isAsideEnabled, resolvePagefindBodyAttribute } from '../utils/shared/in
 import type { ThemeConfig } from '../types.d.ts'
 
 const { theme, frontmatter } = useData<ThemeConfig>()
-const { isMobile } = useBreakpoint()
+const { isMobileOrTablet } = useBreakpoint()
 const { scrollY } = useScrollY()
 const sidebarRef = ref<InstanceType<typeof SideBar> | null>(null)
 const bodyMarker = computed(() =>
@@ -25,7 +25,7 @@ const bodyMarker = computed(() =>
 const showAside = computed(() => isAsideEnabled(theme.value, frontmatter.value))
 
 useSwipeDrawer({
-  enabled: () => isMobile.value,
+  enabled: () => isMobileOrTablet.value,
   canOpen: () => !sidebarRef.value?.isDrawerOpen(),
   canClose: () => Boolean(sidebarRef.value?.isDrawerOpen()),
   onOpen: () => sidebarRef.value?.openDrawer(),
@@ -36,7 +36,7 @@ useSwipeDrawer({
 <template>
   <div class="min-h-screen lg:flex w-full">
     <!--  left col-->
-    <SideBar ref="sidebarRef" class="site-sidebar" :is-mobile="isMobile">
+    <SideBar ref="sidebarRef" class="site-sidebar" :is-mobile-or-tablet="isMobileOrTablet">
       <template v-if="$slots['sidebar-top']" #sidebar-top>
         <slot name="sidebar-top" />
       </template>
@@ -54,7 +54,7 @@ useSwipeDrawer({
     <div class="flex-1 flex flex-col min-h-screen min-w-0">
       <header class="site-topbar">
         <TopBar
-          :is-mobile="isMobile"
+          :is-mobile-or-tablet="isMobileOrTablet"
           @open-drawer="() => sidebarRef?.openDrawer()"
         >
           <template #nav-bar-content-before>
@@ -111,6 +111,6 @@ useSwipeDrawer({
       </div>
     </div>
 
-    <ToTheTop :scroll-y="scrollY" :is-mobile="isMobile" />
+    <ToTheTop :scroll-y="scrollY" :is-mobile-or-tablet="isMobileOrTablet" />
   </div>
 </template>

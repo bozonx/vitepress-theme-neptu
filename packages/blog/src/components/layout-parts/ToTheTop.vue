@@ -4,7 +4,7 @@ import ToTheTopMobile from './ToTheTopMobile.vue'
 
 defineProps<{
   scrollY: number
-  isMobile: boolean
+  isMobileOrTablet: boolean
 }>()
 </script>
 

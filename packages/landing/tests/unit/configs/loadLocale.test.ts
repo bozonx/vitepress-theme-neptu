@@ -105,10 +105,10 @@ vi.mock('vitepress-theme-neptu/utils', () => ({
   extractThemeConfig: vi.fn((site: Record<string, unknown> | undefined) =>
     (site?.themeConfig as Record<string, unknown> | undefined) ?? {}
   ),
-  asExtendedPageData: vi.fn((d: unknown) => d),
-  asExtendedSiteConfig: vi.fn((d: unknown) => d),
-  asTransformContext: vi.fn((d: unknown) => d),
-  asTransformHeadContext: vi.fn((d: unknown) => d),
+  castToExtendedPageData: vi.fn((d: unknown) => d),
+  castToExtendedSiteConfig: vi.fn((d: unknown) => d),
+  castToTransformContext: vi.fn((d: unknown) => d),
+  castToTransformHeadContext: vi.fn((d: unknown) => d),
   mergeReturnedPageData: vi.fn(),
   hasTailwindPlugin: vi.fn(() => false),
   sharedBaseConfig: {

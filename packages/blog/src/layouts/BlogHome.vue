@@ -15,7 +15,7 @@ const props = withDefaults(
   { scrollY: 0 }
 )
 const { theme, frontmatter, isDark } = useData<ThemeConfig>()
-const { isMobile } = useBreakpoint()
+const { isMobileOrTablet } = useBreakpoint()
 const valueY = ref(0)
 const wrapperRef = ref<HTMLElement | null>(null)
 
@@ -100,7 +100,7 @@ watchEffect(() => {
   >
     <header class="w-full absolute top-0 left-0 z-10 home-topbar">
       <TopBar
-        :is-mobile="isMobile"
+        :is-mobile-or-tablet="isMobileOrTablet"
         :hide-appearance="appearance !== 'auto'"
         :hide-menu-button="true"
         :minimal="true"

@@ -21,12 +21,12 @@ describe('useBreakpoint', () => {
   })
 
   function mountComposable(breakpoint?: number) {
-    const result = { windowWidth: ref(0), isMobile: ref(true) }
+    const result = { windowWidth: ref(0), isMobileOrTablet: ref(true) }
     const TestComp = defineComponent({
       setup() {
         const composable = breakpoint !== undefined ? useBreakpoint(breakpoint) : useBreakpoint()
         result.windowWidth = composable.windowWidth
-        result.isMobile = composable.isMobile
+        result.isMobileOrTablet = composable.isMobileOrTablet
         return () => h('div')
       },
     })
@@ -35,46 +35,46 @@ describe('useBreakpoint', () => {
   }
 
   it('defaults to TABLET_BREAKPOINT (1024)', () => {
-    const { isMobile } = mountComposable()
-    expect(isMobile.value).toBe(false)
+    const { isMobileOrTablet } = mountComposable()
+    expect(isMobileOrTablet.value).toBe(false)
   })
 
   it('is mobile when width < breakpoint', () => {
     window.innerWidth = 500
-    const { isMobile } = mountComposable()
-    expect(isMobile.value).toBe(true)
+    const { isMobileOrTablet } = mountComposable()
+    expect(isMobileOrTablet.value).toBe(true)
   })
 
   it('is not mobile when width === breakpoint', () => {
     window.innerWidth = 1024
-    const { isMobile } = mountComposable()
-    expect(isMobile.value).toBe(false)
+    const { isMobileOrTablet } = mountComposable()
+    expect(isMobileOrTablet.value).toBe(false)
   })
 
   it('is not mobile when width > breakpoint', () => {
     window.innerWidth = 1200
-    const { isMobile } = mountComposable()
-    expect(isMobile.value).toBe(false)
+    const { isMobileOrTablet } = mountComposable()
+    expect(isMobileOrTablet.value).toBe(false)
   })
 
   it('accepts custom breakpoint', () => {
     window.innerWidth = 800
-    const { isMobile } = mountComposable(900)
-    expect(isMobile.value).toBe(true)
+    const { isMobileOrTablet } = mountComposable(900)
+    expect(isMobileOrTablet.value).toBe(true)
 
     window.innerWidth = 1000
     window.dispatchEvent(new Event('resize'))
-    expect(isMobile.value).toBe(false)
+    expect(isMobileOrTablet.value).toBe(false)
   })
 
   it('updates on window resize', async () => {
-    const { isMobile } = mountComposable()
-    expect(isMobile.value).toBe(false)
+    const { isMobileOrTablet } = mountComposable()
+    expect(isMobileOrTablet.value).toBe(false)
 
     window.innerWidth = 500
     window.dispatchEvent(new Event('resize'))
 
-    expect(isMobile.value).toBe(true)
+    expect(isMobileOrTablet.value).toBe(true)
   })
 
   it('removes listener on unmount', () => {
@@ -105,8 +105,8 @@ describe('useBreakpoint', () => {
 
     const TestComp = defineComponent({
       setup() {
-        const { windowWidth, isMobile } = useBreakpoint(800, mockWin)
-        return () => h('div', `${windowWidth.value}-${isMobile.value}`)
+        const { windowWidth, isMobileOrTablet } = useBreakpoint(800, mockWin)
+        return () => h('div', `${windowWidth.value}-${isMobileOrTablet.value}`)
       },
     })
 

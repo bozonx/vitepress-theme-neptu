@@ -38,7 +38,7 @@ function processSidebar(
 ): Record<string, unknown> {
   if (!sidebar) return {}
 
-  function processSidebarItems(items: unknown[], linkPrePath: string): unknown[] {
+  function processSidebarItems(items: unknown[], pathPrefix: string): unknown[] {
     for (const item of items) {
       const typedItem = item as Record<string, unknown>
       if (typeof typedItem.text === 'string') {
@@ -53,12 +53,12 @@ function processSidebar(
           link.indexOf('/') !== 0 &&
           !isExternalUrl(link)
         ) {
-          typedItem.link = linkPrePath + link
+          typedItem.link = pathPrefix + link
         }
       }
 
       if (Array.isArray(typedItem.items)) {
-        typedItem.items = processSidebarItems(typedItem.items, linkPrePath)
+        typedItem.items = processSidebarItems(typedItem.items, pathPrefix)
       }
     }
 
@@ -68,8 +68,8 @@ function processSidebar(
   const newSidebar: Record<string, unknown> = {}
 
   for (const key of Object.keys(sidebar)) {
-    const linkPrePath = `/${params.localeIndex}/${key}/`
-    newSidebar[linkPrePath] = processSidebarItems(sidebar[key]!, linkPrePath)
+    const pathPrefix = `/${params.localeIndex}/${key}/`
+    newSidebar[pathPrefix] = processSidebarItems(sidebar[key]!, pathPrefix)
   }
 
   return newSidebar

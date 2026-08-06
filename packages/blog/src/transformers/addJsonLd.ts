@@ -5,7 +5,7 @@ import { toIsoDuration } from '../utils/shared/readingTime.ts'
 import {
   isPost,
   generatePageUrlPath,
-  isAuthorPage,
+  isAuthorPath,
   isPage,
   makeAbsoluteUrl,
   normalizeSiteUrl,
@@ -449,7 +449,7 @@ export function addJsonLd({
     }) as JsonLdValue,
   }
 
-  if (isAuthorPage(page)) {
+  if (isAuthorPath(page)) {
     jsonLdData = createAuthorJsonLd(
       pageData,
       siteConfig,
