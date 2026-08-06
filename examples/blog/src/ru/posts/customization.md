@@ -208,14 +208,14 @@ YAML-настроек из `themeConfig.home` хватает для больши
 
 ### Слоты макета `home`
 
-Макет `layout: home` (компонент `BlogHome`) предоставляет два слота для
+Макет `layout: home` (компонент `BlogHome`) предоставляет слоты для
 дополнительного контента:
 
 | Слот | Расположение |
 |------|--------------|
 | `home-before` | Перед контентной областью (между шапкой и hero/секциями) |
 | `home-after` | После контентной области (перед закрытием страницы) |
-| `nav-bar-content-before` | В верхней панели, перед её содержимым |
+| `nav-bar-content-before` | В верхней панели, перед её содержимым (общий слот, есть во всех макетах) |
 
 Чтобы воспользоваться ими, оберните `BlogHome` в собственный компонент макета:
 
@@ -590,21 +590,44 @@ export default async () => defineBlogConfig({
 
 ### Переопределение отдельных блоков
 
-`PostFooter` предоставляет именованный слот для каждого ключа блока. Передайте свой контент,
-чтобы переопределить один блок, не трогая остальные:
+`PostFooter` предоставляет именованный слот для каждого ключа блока: `author`,
+`donate`, `comments`, `social-share`, `edit-link`, `categories`, `tags`, `similar`.
+Передайте свой контент, чтобы переопределить один блок, не трогая остальные.
+
+Эти слоты живут **внутри** `PostFooter` и не проксируются через цепочку макетов,
+поэтому их нельзя использовать прямо из `Layout.vue`. Чтобы добраться до них,
+соберите собственный `contentLayout` и отрендерите `PostFooter` вручную:
 
 ```vue
+<!-- .vitepress/theme/CustomPostContent.vue -->
+<script setup>
+import { PostFooter } from 'vitepress-theme-neptu/components'
+</script>
+
 <template>
-  <Layout>
-    <template #donate>
-      <MyCustomDonate />
-    </template>
-  </Layout>
+  <article>
+    <div class="vp-doc"><Content /></div>
+    <PostFooter>
+      <template #donate>
+        <MyCustomDonate />
+      </template>
+    </PostFooter>
+  </article>
 </template>
 ```
 
-> Именованные слоты проксируются через `NeptuLayout` → `DefaultLayout` → `PageContent` → `PostFooter`,
-> поэтому их можно использовать прямо из вашего `Layout.vue`.
+Затем подключите компонент глобально и укажите в frontmatter:
+
+```yaml
+---
+layout: post
+contentLayout: CustomPostContent
+---
+```
+
+Так сайдбар, верхняя панель, оглавление и правая колонка остаются от темы —
+вы заменяете только центральную колонку и в ней тонко переопределяете один
+блок подвала.
 
 ## Предупреждения при сборке
 

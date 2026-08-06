@@ -21,7 +21,7 @@ descriptionAsPreview: true
 
 ## Нужен ли баннер
 
-Коротко: если вы показываете рекламу или собираете аналитику, используя куки файлы и среди читателей есть жители ЕЭЗ или Великобритании — да. Аналитика без куки
+Коротко: если вы показываете рекламу или собираете аналитику, используя куки файлы и среди читателей есть жители ЕЭЗ, Великобритании или Швейцарии — да. Аналитика без куки
 (Plausible, Umami, GoatCounter) согласия не требует.
 
 - **ePrivacy Directive** требует получить согласие **до** записи и чтения
@@ -36,7 +36,7 @@ descriptionAsPreview: true
 Тема Neptu blog не имеет своего баннера согласия, так как он просто не может
 удовлетворять жёстким требованиям регуляторов. Баннер нужно подключить отдельно:
 
-- **Реклама Google (AdSense / Ad Manager)** с читателями из ЕЭЗ/Великобритании —
+- **Реклама Google (AdSense / Ad Manager)** с читателями из ЕЭЗ, Великобритании или Швейцарии —
   Google требует TCF-сертифицированную CMP. Проще всего включить
   **Privacy & messaging** в интерфейсе AdSense.
 - **Только аналитика на куки, без рекламы Google** — сертификация не нужна,
@@ -56,7 +56,7 @@ descriptionAsPreview: true
 
 ### Consent Mode v2 в `<head>`
 
-Тема вставляет первым скриптом на странице значения по умолчанию для четырёх
+Тема вставляет первым скриптом на странице значения по умолчанию для пяти
 сигналов Google Consent Mode v2:
 
 | Сигнал | Что закрывает |
@@ -65,6 +65,7 @@ descriptionAsPreview: true
 | `ad_storage` | Рекламные куки |
 | `ad_user_data` | Передача пользовательских данных в Google |
 | `ad_personalization` | Персонализация рекламы |
+| `functionality_storage` | Функциональные куки (язык, настройки) |
 
 Все — в `denied`. Порядок здесь принципиален: сигналы действуют только на теги,
 которые загрузились **после** них, поэтому скрипт стоит раньше gtag.js, AdSense
@@ -80,7 +81,7 @@ export default async () => defineBlogConfig({
     consent: {
       enabled: true,
       waitForUpdate: 500, // сколько теги ждут ответа CMP, мс
-      // region: ['ES', 'US-CA'], // ограничить регионами (ISO 3166-2)
+      // regions: ['ES', 'US-CA'], // ограничить регионами (ISO 3166-2)
       // defaults: { analytics: true }, // если вам это подходит юридически
     },
   },
@@ -101,8 +102,16 @@ Composable — шов, в который включается CMP. Вызови�
 ```ts
 import { useConsent } from 'vitepress-theme-neptu/composables'
 
-const { consent, hasDecided, adsAllowed, set, acceptAll, rejectAll, reset } =
-  useConsent()
+const {
+  consent,
+  hasDecided,
+  adsAllowed,
+  analyticsAllowed,
+  set,
+  acceptAll,
+  rejectAll,
+  reset,
+} = useConsent()
 
 // из колбэка вашей CMP
 set({ analytics: true, ads: false, adUserData: false, adPersonalization: false })
@@ -143,8 +152,9 @@ Consent Mode.
 1. Только счётчик без куки → баннер не нужен.
 2. Google Analytics → нужен баннер; проще всего взять опенсорсный и связать
    через `useConsent()`.
-3. AdSense или Ad Manager с читателями из ЕЭЗ/Великобритании → включите
-   **Privacy & messaging** в интерфейсе AdSense. Ничего писать не нужно.
+3. AdSense или Ad Manager с читателями из ЕЭЗ, Великобритании или Швейцарии → включите
+   **Privacy & messaging** в интерфейсе AdSense и активируйте **Consent Mode**
+   в настройках European regulations message. Ничего писать не нужно.
 4. Скрипт Consent Mode тема ставит сама — трогать `consent.enabled` нужно,
    только если CMP делает это за вас.
 
