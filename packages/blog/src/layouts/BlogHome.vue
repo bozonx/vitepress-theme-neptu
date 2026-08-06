@@ -35,7 +35,7 @@ const homeBackgroundImage = computed(() =>
   (frontmatter.value?.homeBackgroundImage as string) || home.value.background?.image || ''
 )
 const BG_HEIGHT_OFFSET = computed(
-  () => (frontmatter.value?.homeBgParallaxOffset as number) ?? home.value.background?.parallaxOffset ?? 0
+  () => (frontmatter.value?.homeBackgroundParallaxOffset as number) ?? home.value.background?.parallaxOffset ?? 0
 )
 
 const hasBgImage = computed(() =>

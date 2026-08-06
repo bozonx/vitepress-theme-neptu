@@ -59,7 +59,8 @@ export namespace NeptuBlogTheme {
      * When omitted, the first locale by key order is used as a fallback.
      */
     primaryLocale?: string
-    en?: { title?: string; description?: string }
+    /** Fallback title/description for the root language selector page at `/`. */
+    rootMeta?: { title?: string; description?: string }
   }
 
   export interface Config extends DefaultTheme.Config {
@@ -186,7 +187,7 @@ export namespace NeptuBlogTheme {
     /** Accessible label / tooltip for the locale switcher. */
     langMenuLabel?: string
     /** Landing-only: hero image URL shown on the home page. */
-    mainHeroImg?: string
+    heroImage?: string
 
     seo?: SeoConfig
     socialMediaShares?: SocialMediaShare[]
@@ -460,7 +461,7 @@ export namespace NeptuBlogTheme {
      * Restrict the defaults to these regions (ISO 3166-2 codes, e.g.
      * `['ES', 'US-CA']`). Omit to apply them everywhere.
      */
-    region?: string[]
+    regions?: string[]
 
     /**
      * Milliseconds tags wait for a CMP to update the signals before acting on
@@ -494,7 +495,7 @@ export namespace NeptuBlogTheme {
     hreflang?: boolean
     canonical?: boolean
     autoCanonical?: boolean
-    rss?: boolean
+    rssLinks?: boolean
     maxDescriptionLength?: number
     [key: string]: boolean | number | undefined
   }
@@ -673,7 +674,7 @@ export namespace NeptuBlogTheme {
     rssFeed?: boolean
     atomFeed?: boolean
     /** Override the sidebar title. Defaults to the locale `title`. Set `false` to hide. */
-    blogTitle?: string | false
+    sidebarTitle?: string | false
     /**
      * Sidebar logo. A plain string is used for both appearances; the object
      * form serves a different file per light/dark appearance. Both variants
@@ -727,9 +728,6 @@ export namespace NeptuBlogTheme {
     slug: string
     count?: number
   }
-
-  /** Categories share the tag data model; only their URLs and styling differ. */
-  export type CategoryInfo = TaxonomyEntry
 
   export interface BreadcrumbItem {
     text: string
@@ -821,7 +819,7 @@ export namespace NeptuBlogTheme {
     homeMaxWidth?: number
     homeBackground?: 'parallax' | 'none'
     homeBackgroundImage?: string
-    homeBgParallaxOffset?: number
+    homeBackgroundParallaxOffset?: number
   }
 
   export interface PostLite {
@@ -851,7 +849,7 @@ export namespace NeptuBlogTheme {
     /** Number of words in the post body, counted at build time. */
     wordCount?: number
     /** Estimated reading time in whole minutes. */
-    readingTime?: number
+    readingMinutes?: number
     analyticsStats?: Record<string, number>
     [key: string]: unknown
   }
@@ -879,7 +877,7 @@ export namespace NeptuBlogTheme {
     /** Word count of the post body, added by `addReadingTime`. */
     wordCount?: number
     /** Estimated reading time in whole minutes, added by `addReadingTime`. */
-    readingTime?: number
+    readingMinutes?: number
   }
 
   export interface ExtendedSiteConfig {
@@ -926,7 +924,6 @@ export type NavConfig = NeptuBlogTheme.NavConfig
 export type SidebarConfig = NeptuBlogTheme.SidebarConfig
 export type SidebarItem = NeptuBlogTheme.SidebarItem
 export type TaxonomyEntry = NeptuBlogTheme.TaxonomyEntry
-export type CategoryInfo = NeptuBlogTheme.CategoryInfo
 export type BreadcrumbItem = NeptuBlogTheme.BreadcrumbItem
 export type AuthorItem = NeptuBlogTheme.AuthorItem
 export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem

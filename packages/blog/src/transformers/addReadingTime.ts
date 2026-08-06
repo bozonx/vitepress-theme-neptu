@@ -48,7 +48,7 @@ export function addReadingTime(
     const metrics = measureMarkdown(content, config?.wpm ?? DEFAULT_READING_WPM)
 
     pageData.wordCount = metrics.wordCount
-    pageData.readingTime = metrics.readingTime
+    pageData.readingMinutes = metrics.readingTime
   } catch {
     // A missing or unreadable source file is not worth failing a build over —
     // the badge and the JSON-LD properties are simply omitted.

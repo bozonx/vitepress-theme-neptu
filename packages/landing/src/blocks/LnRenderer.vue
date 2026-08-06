@@ -20,7 +20,7 @@
 import { computed } from 'vue'
 import { useData } from 'vitepress'
 import LnPage from '../primitives/LnPage.vue'
-import { blockTypes, resolveBlock } from './registry.ts'
+import { blockTypes, resolveBlockComponent } from './registry.ts'
 import type { BlockSpec } from './types.ts'
 
 const props = defineProps<{
@@ -42,7 +42,7 @@ const isDev = (import.meta as { env?: { DEV?: boolean } }).env?.DEV === true
 const resolved = computed(() =>
   specs.value.map((spec, index) => {
     const { type, ...blockProps } = spec
-    const component = type ? resolveBlock(type) : undefined
+    const component = type ? resolveBlockComponent(type) : undefined
 
     if (!component && isDev && type && !warned.has(type)) {
       warned.add(type)

@@ -149,11 +149,11 @@ describe('addRssLinks', () => {
     )
   })
 
-  it('does nothing when frontmatter.seo.rss is false', () => {
+  it('does nothing when frontmatter.seo.rssLinks is false', () => {
     const ctx = createContext({
       pageData: {
         filePath: 'en/index.md',
-        frontmatter: { layout: 'home', seo: { rss: false } },
+        frontmatter: { layout: 'home', seo: { rssLinks: false } },
         relativePath: 'en/index.md',
       } as any,
     })

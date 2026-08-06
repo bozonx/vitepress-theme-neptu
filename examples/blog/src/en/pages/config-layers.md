@@ -195,11 +195,11 @@ This works for any nested `themeConfig` key: `sidebar`, `nav`, `footer`, `donate
 
 ## YAML templates and validation
 
-Only YAML supports templates. Substitutions use the form `${variable.path}`, where `path` is **any dot-path** within the corresponding object — e.g. `${theme.sidebar.blogTitle}`, `${config.siteUrl}`, `${t.links.aboutBlog}`.
+Only YAML supports templates. Substitutions use the form `${variable.path}`, where `path` is **any dot-path** within the corresponding object — e.g. `${theme.sidebar.sidebarTitle}`, `${config.siteUrl}`, `${t.links.aboutBlog}`.
 
 | Variable | Contents | Example |
 | --- | --- | --- |
-| `${theme.*}` | merged `themeConfig` (built-in defaults + `config.ts` + `site.yaml`) | `${theme.sidebar.blogTitle}` |
+| `${theme.*}` | merged `themeConfig` (built-in defaults + `config.ts` + `site.yaml`) | `${theme.sidebar.sidebarTitle}` |
 | `${site.*}` | resolved locale site object (`title`, `description`, `lang`, etc.) | `${site.title}` |
 | `${t.*}` | translation object (`theme.t`) — built-in or overridden keys | `${t.editLink}` |
 | `${config.*}` | the full `BlogUserConfig` from `config.ts` | `${config.siteUrl}` |

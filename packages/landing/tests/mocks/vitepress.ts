@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 
 export const mockTheme = ref<Record<string, unknown>>({
-  mainHeroImg: '/img/home-logo.svg',
+  heroImage: '/img/home-logo.svg',
   externalLinkIcon: true,
   i18nRouting: true,
   t: {

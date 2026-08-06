@@ -1,10 +1,13 @@
 export type DeepPathPart = string | number
 
+/** Sentinel marking a negative array index in a deep path. */
+export const NEGATIVE_INDEX: unique symbol = Symbol('NEGATIVE_INDEX')
+
 /** Split deep path to paths E.g "aa[0].bb[1].cc" => ['aa', 0, 'bb', 1, 'cc'] */
-export function splitDeepPath(pathTo: unknown): Array<DeepPathPart | '__NEGATIVE_INDEX__'> {
+export function splitDeepPath(pathTo: unknown): Array<DeepPathPart | typeof NEGATIVE_INDEX> {
   if (!pathTo || typeof pathTo !== 'string') return []
 
-  const res: Array<DeepPathPart | '__NEGATIVE_INDEX__'> = []
+  const res: Array<DeepPathPart | typeof NEGATIVE_INDEX> = []
   const DEEP_PATH_SEPARATOR = '.'
   const preparedPath = pathTo.replace(/\[/g, DEEP_PATH_SEPARATOR + '[')
   const segments = preparedPath.startsWith(DEEP_PATH_SEPARATOR)
@@ -19,7 +22,7 @@ export function splitDeepPath(pathTo: unknown): Array<DeepPathPart | '__NEGATIVE
         if (index >= 0) {
           res.push(index)
         } else {
-          res.push('__NEGATIVE_INDEX__')
+          res.push(NEGATIVE_INDEX)
         }
       } else {
         return []
@@ -65,29 +68,26 @@ export function deepGet(src: unknown, pathTo: unknown, defaultValue?: unknown): 
   const segments = splitDeepPath(pathTo)
   if (segments.length === 0) return defaultValue
 
-  const firstKey = segments[0]
-  const restPath = joinDeepPath(segments.slice(1))
+  let current: unknown = src
 
-  if (Array.isArray(src)) {
-    if (typeof firstKey !== 'number' || (firstKey as unknown) === '__NEGATIVE_INDEX__')
+  for (const key of segments) {
+    if (current === null || current === undefined) return defaultValue
+
+    if (Array.isArray(current)) {
+      if (typeof key !== 'number' || (key as unknown) === NEGATIVE_INDEX)
+        return defaultValue
+      current = current[key]
+    } else if (current && typeof current === 'object') {
+      if (typeof key !== 'string') return defaultValue
+      const obj = current as Record<string, unknown>
+      if (!Object.prototype.hasOwnProperty.call(obj, key)) return defaultValue
+      current = obj[key]
+    } else {
       return defaultValue
-
-    const value = src[firstKey]
-    if (restPath) {
-      return deepGet(value, restPath, defaultValue)
     }
-    return typeof value !== 'undefined' ? value : defaultValue
-  } else if (src && typeof src === 'object') {
-    if (typeof firstKey !== 'string') return defaultValue
-
-    const value = (src as Record<string, unknown>)[firstKey]
-    if (restPath) {
-      return deepGet(value, restPath, defaultValue)
-    }
-    return Object.prototype.hasOwnProperty.call(src, firstKey) ? value : defaultValue
   }
 
-  return defaultValue
+  return typeof current !== 'undefined' ? current : defaultValue
 }
 
 /** Omit undefined values from object */

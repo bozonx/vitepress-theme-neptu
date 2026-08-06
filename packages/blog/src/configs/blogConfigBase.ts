@@ -215,10 +215,10 @@ const LOG_PREFIX = '[vitepress-theme-neptu]'
  *
  * The root page has no locale of its own, so it borrows the primary locale's
  * title and description. The primary locale is resolved in this order:
- * `config.primaryLocale` (explicit), then `en` (conventional default), then
+ * `config.primaryLocale` (explicit), then `rootMeta` (conventional default), then
  * the first discovered locale. Without this the root falls back to
  * VitePress' own `"VitePress"` default, since locales live under
- * `config.locales` and never on `config.en`.
+ * `config.locales` and never on `config.rootMeta`.
  */
 function resolvePrimaryLocale(
   config: BlogUserConfig
@@ -263,9 +263,9 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
   return {
     ...blogBaseConfig,
     ...config,
-    title: config.title || config.en?.title || primaryLocale?.title,
+    title: config.title || config.rootMeta?.title || primaryLocale?.title,
     description:
-      config.description || config.en?.description || primaryLocale?.description,
+      config.description || config.rootMeta?.description || primaryLocale?.description,
     head: [
       // Consent Mode v2 defaults. Must be the very first script on the page:
       // the signals only bind tags that load after them, so anything emitted

@@ -5,6 +5,7 @@ import {
   isPathValid,
   deepGet,
   omitUndefined,
+  NEGATIVE_INDEX,
 } from '../../../../src/utils/shared/object.ts'
 
 describe('splitDeepPath', () => {
@@ -21,7 +22,7 @@ describe('splitDeepPath', () => {
   })
 
   it('marks negative indexes specially', () => {
-    expect(splitDeepPath('a[-1]')).toEqual(['a', '__NEGATIVE_INDEX__'])
+    expect(splitDeepPath('a[-1]')).toEqual(['a', NEGATIVE_INDEX])
   })
 
   it('returns empty array for non-string input', () => {

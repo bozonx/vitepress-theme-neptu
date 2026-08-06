@@ -33,8 +33,8 @@ export function createConsentHeadScript(config?: ConsentConfig): string {
     wait_for_update: config?.waitForUpdate ?? 500,
   }
 
-  if (config?.region?.length) {
-    defaultPayload.region = config.region
+  if (config?.regions?.length) {
+    defaultPayload.region = config.regions
   }
 
   const signals = JSON.stringify(CONSENT_SIGNAL_NAMES)

@@ -28,7 +28,7 @@ describe('createConsentHeadScript', () => {
   })
 
   it('scopes the defaults to a region when asked', () => {
-    expect(createConsentHeadScript({ region: ['ES', 'US-CA'] })).toContain(
+    expect(createConsentHeadScript({ regions: ['ES', 'US-CA'] })).toContain(
       '"region":["ES","US-CA"]'
     )
     expect(createConsentHeadScript()).not.toContain('"region"')

@@ -20,23 +20,18 @@ descriptionAsPreview: true
 | Параметр | Где описан |
 | --- | --- |
 | `home` | [Домашняя страница](home-page) |
-| `perPage`, `repo` | [Уровни конфигурации](config-layers) |
 | `i18nRouting` | [Локали и мультиязычность](locales) |
 | `authors` | [Авторы](authors) |
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
-| `socialMediaShares` | см. раздел [Кнопки «поделиться»](#кнопки-поделиться) ниже |
 | `search` | [Поиск Pagefind](search-pagefind) |
 | `popularPosts` | [Популярные посты через GA4](popular-posts) |
 | `ads` | [Рекламные блоки](ads) |
 | `consent` | [Согласие на куки и аналитика](consent-and-analytics) |
+| `feeds`, `seo`, `twitterSite`  | [SEO-механизмы](seo-features) |
 | `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
-| `feeds` | [SEO-механизмы](seo-features) |
-| `seo`, `twitterSite` | [SEO — обзор и механизмы](seo-features) |
-| `postList` | [Списки, страницы](lists-and-pages#карточки-постов-в-списках) |
-| `paginationMaxItems` | [Списки, страницы](lists-and-pages) |
+| `paginationMaxItems`, `postList` | [Списки, страницы](lists-and-pages) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
 | `heroImage` | [Кастомизация](customization) (тема landing) |
-| Стили (CSS-переменные) и слоты | [Кастомизация](customization) |
 
 ::: tip
 Пример полного конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)

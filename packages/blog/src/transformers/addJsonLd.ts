@@ -254,7 +254,7 @@ function createPostJsonLd(
     dateModified: toIsoDate(pageData.lastUpdated) as JsonLdValue,
     // Both are computed by `addReadingTime` and left off when it did not run.
     wordCount: (pageData.wordCount || undefined) as JsonLdValue,
-    timeRequired: toIsoDuration(pageData.readingTime ?? 0) as JsonLdValue,
+    timeRequired: toIsoDuration(pageData.readingMinutes ?? 0) as JsonLdValue,
     keywords:
       tags && tags.length > 0
         ? (tags as Array<string | Tag>)

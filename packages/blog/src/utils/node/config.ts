@@ -12,7 +12,7 @@ import { loadLocaleYamlChain } from './localeYamlChain.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
 import { resolveBaseLocaleKey } from '../shared/i18n.ts'
-import { blogBaseConfig as blogCommon } from '../../configs/blogConfigBase.ts'
+import { blogBaseConfig } from '../../configs/blogConfigBase.ts'
 import blogBaseLocales from '../../configs/blogLocalesBase/index.ts'
 import { resolveEditLinkPattern } from './editLink.ts'
 import type {
@@ -166,7 +166,7 @@ async function loadBlogLocaleYamlChain(
  * Builds a VitePress `LocaleConfig` for a single content locale by merging
  * every admin-editable and developer-provided layer in priority order:
  *
- *   built-in theme defaults (blogCommon)
+ *   built-in theme defaults (blogBaseConfig)
  *     → built-in content-locale defaults (`blogLocalesBase[*]`)
  *       → config.ts (`BlogUserConfig.themeConfig`)
  *         → `<srcDir>/site.yaml` (cross-locale admin)
@@ -215,7 +215,7 @@ export async function loadBlogLocale(
   }
 
   const builtInTheme = deepMerge(
-    (blogCommon.themeConfig || {}) as Record<string, unknown>,
+    (blogBaseConfig.themeConfig || {}) as Record<string, unknown>,
     {
       ...baseLocaleThemeRest,
       t: { ...baseLocale.t },

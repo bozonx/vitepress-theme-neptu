@@ -88,8 +88,8 @@ describe('BlogHome', () => {
     expect(root.classes()).not.toContain('home-has-bg')
   })
 
-  it('uses frontmatter homeBgParallaxOffset over theme default', () => {
-    mockFrontmatter.value = { homeBgParallaxOffset: 500, homeBackground: 'parallax' }
+  it('uses frontmatter homeBackgroundParallaxOffset over theme default', () => {
+    mockFrontmatter.value = { homeBackgroundParallaxOffset: 500, homeBackground: 'parallax' }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },

@@ -10,7 +10,7 @@ vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
       if (!isEval) return tmpl
       return tmpl.replace(/\{\{(.+?)\}\}/g, (_: string, key: string) => {
         if (key === 'params.tag') return 'MyTag'
-        if (key === 'theme.sidebar.blogTitle') return 'MySite'
+        if (key === 'theme.sidebar.sidebarTitle') return 'MySite'
         return ''
       })
     }),
@@ -34,7 +34,7 @@ describe('transformTitle', () => {
       site: {
         locales: {
           en: {
-            themeConfig: { sidebar: { blogTitle: 'MySite' } },
+            themeConfig: { sidebar: { sidebarTitle: 'MySite' } },
           },
         },
       },
@@ -66,7 +66,7 @@ describe('transformTitle', () => {
 
   it('uses theme config in template', () => {
     const pageData = createPageData({
-      frontmatter: { title: 'Site: {{theme.sidebar.blogTitle}}' },
+      frontmatter: { title: 'Site: {{theme.sidebar.sidebarTitle}}' },
     })
     transformTitle(pageData, { siteConfig: createSiteConfig() })
     expect(pageData.frontmatter.title).toBe('Site: MySite')

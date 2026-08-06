@@ -15,7 +15,7 @@ import {
   blockTypes,
   hasBlockType,
   registerBlockTypes,
-  resolveBlock,
+  resolveBlockComponent,
   unregisterBlockTypes,
 } from '../../../src/blocks/registry.ts'
 
@@ -31,8 +31,8 @@ describe('block registry', () => {
   })
 
   it('resolves known types and returns undefined for unknown ones', () => {
-    expect(resolveBlock('hero')).toBeTruthy()
-    expect(resolveBlock('nope')).toBeUndefined()
+    expect(resolveBlockComponent('hero')).toBeTruthy()
+    expect(resolveBlockComponent('nope')).toBeUndefined()
   })
 
   it('requires explicit overrides and safely unregisters custom types', () => {

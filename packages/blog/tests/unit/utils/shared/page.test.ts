@@ -7,7 +7,7 @@ import {
   isPopularPostsRoute,
   isAuthorPage,
   resolvePreviewText,
-  resolveSearchBodyAttribute,
+  resolvePagefindBodyAttr,
   resolveLayoutKey,
   isAsideEnabled,
 } from '../../../../src/utils/shared/page.ts'
@@ -156,29 +156,29 @@ describe('resolvePreviewText', () => {
   })
 })
 
-describe('resolveSearchBodyAttribute', () => {
+describe('resolvePagefindBodyAttr', () => {
   const theme: ThemeConfig = {
     search: { enabled: true },
   } as any
 
   it('returns bodyMarker for regular post', () => {
-    expect(resolveSearchBodyAttribute(theme, { layout: 'post' })).toBe('data-pagefind-body')
+    expect(resolvePagefindBodyAttr(theme, { layout: 'post' })).toBe('data-pagefind-body')
   })
 
   it('returns undefined when search is disabled', () => {
-    expect(resolveSearchBodyAttribute({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
+    expect(resolvePagefindBodyAttr({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
   })
 
   it('returns undefined for util page without searchIncluded', () => {
-    expect(resolveSearchBodyAttribute(theme, { layout: 'tag' })).toBeUndefined()
+    expect(resolvePagefindBodyAttr(theme, { layout: 'tag' })).toBeUndefined()
   })
 
   it('returns bodyMarker for util page with searchIncluded true', () => {
-    expect(resolveSearchBodyAttribute(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
+    expect(resolvePagefindBodyAttr(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
   })
 
   it('returns undefined for util page with searchIncluded false', () => {
-    expect(resolveSearchBodyAttribute(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
+    expect(resolvePagefindBodyAttr(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
   })
 })
 

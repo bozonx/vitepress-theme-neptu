@@ -12,7 +12,7 @@ interface SortablePost {
 
 
 /** Returns explicitly featured posts, newest first. */
-export function getFeaturedPostsSorted<T extends SortablePost & { featured?: boolean }>(
+export function getFeaturedPosts<T extends SortablePost & { featured?: boolean }>(
   posts: T[] | null | undefined,
   limit?: number
 ): T[] {

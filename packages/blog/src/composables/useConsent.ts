@@ -19,7 +19,7 @@ import type { ThemeConfig } from '../types.d.ts'
  * accepting in one component must unblock ad slots elsewhere on the page
  * without a reload.
  */
-const state = ref<ConsentState>({ ...CONSENT_DENIED })
+const consentState = ref<ConsentState>({ ...CONSENT_DENIED })
 const decided = ref(false)
 let hydrated = false
 
@@ -29,7 +29,7 @@ function readStorage(storageKey: string): void {
   const stored = parseStoredConsent(localStorage.getItem(storageKey))
 
   if (stored) {
-    state.value = normalizeConsent(stored)
+    consentState.value = normalizeConsent(stored)
     decided.value = true
   }
 
@@ -100,9 +100,9 @@ export function useConsent(): {
   })
 
   function set(next: Partial<ConsentState>): void {
-    const resolved = normalizeConsent(next, state.value)
+    const resolved = normalizeConsent(next, consentState.value)
 
-    state.value = resolved
+    consentState.value = resolved
     decided.value = true
 
     if (!inBrowser) return
@@ -119,7 +119,7 @@ export function useConsent(): {
   }
 
   function reset(): void {
-    state.value = { ...CONSENT_DENIED }
+    consentState.value = { ...CONSENT_DENIED }
     decided.value = false
 
     if (!inBrowser) return
@@ -130,15 +130,15 @@ export function useConsent(): {
       // ignore — see `set`
     }
 
-    pushToGtag(state.value)
+    pushToGtag(consentState.value)
     window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: null }))
   }
 
   return {
-    consent: readonly(state) as Readonly<Ref<ConsentState>>,
+    consent: readonly(consentState) as Readonly<Ref<ConsentState>>,
     hasDecided: readonly(decided),
-    adsAllowed: computed(() => state.value.ads),
-    analyticsAllowed: computed(() => state.value.analytics),
+    adsAllowed: computed(() => consentState.value.ads),
+    analyticsAllowed: computed(() => consentState.value.analytics),
     set,
     acceptAll: () => set(CONSENT_GRANTED),
     rejectAll: () => set(CONSENT_DENIED),

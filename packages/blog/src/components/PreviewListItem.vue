@@ -54,8 +54,8 @@ const params = computed(() => ({
       </h2>
 
       <PostReadingTime
-        v-if="(theme.postList?.showReadingTime ?? false) && props.item.readingTime"
-        :minutes="props.item.readingTime"
+        v-if="(theme.postList?.showReadingTime ?? false) && props.item.readingMinutes"
+        :minutes="props.item.readingMinutes"
         force-show
         class="text-sm! muted shrink-0 mt-1"
       />
@@ -71,7 +71,7 @@ const params = computed(() => ({
       :show-tags="theme.postList?.showTags ?? true"
       :show-thumbnail="theme.postList?.showThumbnail ?? true"
       :show-preview="theme.postList?.showPreview ?? true"
-      :reading-time="props.item.readingTime ?? 0"
+      :reading-time="props.item.readingMinutes ?? 0"
       :show-reading-time="theme.postList?.showReadingTime ?? false"
       :draft="props.item.draft === true"
     />

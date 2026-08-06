@@ -25,8 +25,6 @@ export function safeGetMonth(date: string | number | Date | undefined): number |
   return Number.isFinite(month) ? month : undefined
 }
 
-export type CategoryInfo = TaxonomyEntry
-
 /**
  * Tags and categories are the same data model with different URLs, so every
  * helper below works on either. The kind is the frontmatter field name, which
@@ -94,7 +92,7 @@ export function makeTagsList(
 
 export function makeCategoriesList(
   allPosts: PostLite[] = []
-): Array<CategoryInfo & { count: number }> {
+): Array<TaxonomyEntry & { count: number }> {
   return makeTaxonomyList(allPosts, 'categories')
 }
 

@@ -119,7 +119,7 @@ describe('mergeLandingConfig', () => {
     expect(result.themeConfig).toBeDefined()
     expect(result.themeConfig.externalLinkIcon).toBe(true)
     expect(result.themeConfig.i18nRouting).toBe(true)
-    expect(result.themeConfig.mainHeroImg).toBe('/img/home-logo.webp')
+    expect(result.themeConfig.heroImage).toBe('/img/home-logo.webp')
     expect(result.themeConfig.colorPicker).toBe(false)
     expect(result.themeConfig.stylePicker).toBe(false)
   })
@@ -130,10 +130,10 @@ describe('mergeLandingConfig', () => {
 
   it('overrides defaults with provided values', () => {
     const result = mergeLandingConfig({
-      themeConfig: { externalLinkIcon: false, mainHeroImg: '/img/custom.svg' },
+      themeConfig: { externalLinkIcon: false, heroImage: '/img/custom.svg' },
     })
     expect(result.themeConfig.externalLinkIcon).toBe(false)
-    expect(result.themeConfig.mainHeroImg).toBe('/img/custom.svg')
+    expect(result.themeConfig.heroImage).toBe('/img/custom.svg')
   })
 
   it('merges head arrays', () => {
@@ -246,8 +246,8 @@ describe('mergeLandingConfig', () => {
     expect(result.title).toBe('Custom Title')
   })
 
-  it('resolves title from en locale fallback', () => {
-    const result = mergeLandingConfig({ en: { title: 'EN Title' } })
+  it('resolves title from rootMeta fallback', () => {
+    const result = mergeLandingConfig({ rootMeta: { title: 'EN Title' } })
     expect(result.title).toBe('EN Title')
   })
 

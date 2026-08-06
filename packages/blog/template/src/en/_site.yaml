@@ -19,7 +19,7 @@ lang: 'en-US'
 
 # Canonical site title for this locale: browser tabs, SEO, feeds and the
 # sidebar default all use it. Override the sidebar label with
-# `themeConfig.sidebar.blogTitle`.
+# `themeConfig.sidebar.sidebarTitle`.
 title: 'My Neptu Blog'
 
 # Per-page title template. Use ':title' as the placeholder for the page title.
@@ -61,7 +61,7 @@ themeConfig:
 
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
   # sidebar:
-  #   blogTitle: 'My Neptu Blog'
+  #   sidebarTitle: 'My Neptu Blog'
 
   # -------------------------------------------------------------------------
   # Fine-grained overrides
@@ -182,7 +182,7 @@ themeConfig:
   # Sidebar
   # -------------------------------------------------------------------------
   sidebar:
-    # blogTitle: false  # Set false to hide the blog title below the logo, or a string to override it.
+    # sidebarTitle: false  # Set false to hide the blog title below the logo, or a string to override it.
     # popular: true # Show popular posts section. Requires popularPosts.enabled.
     # recent: true # Show recent posts section.
     # featured: true # Show the "Featured" section (posts with `featured: true`).

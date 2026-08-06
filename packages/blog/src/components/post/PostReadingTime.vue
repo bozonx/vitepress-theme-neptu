@@ -25,7 +25,7 @@ const { theme } = useThemeConfig()
 const translations = useTranslations()
 
 const minutes = computed(() =>
-  props.minutes ?? (page.value as { readingTime?: number }).readingTime ?? 0
+  props.minutes ?? (page.value as { readingMinutes?: number }).readingMinutes ?? 0
 )
 
 const visible = computed(() => {

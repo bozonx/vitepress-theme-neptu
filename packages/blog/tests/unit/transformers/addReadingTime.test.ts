@@ -50,7 +50,7 @@ describe('addReadingTime', () => {
     addReadingTime(pageData, { siteConfig: siteConfig(srcDir) })
 
     expect(pageData.wordCount).toBe(400)
-    expect(pageData.readingTime).toBe(2)
+    expect(pageData.readingMinutes).toBe(2)
   })
 
   it('honours the configured words per minute', () => {
@@ -59,7 +59,7 @@ describe('addReadingTime', () => {
 
     addReadingTime(pageData, { siteConfig: siteConfig(srcDir), readingTime: { wpm: 100 } })
 
-    expect(pageData.readingTime).toBe(4)
+    expect(pageData.readingMinutes).toBe(4)
   })
 
   it('skips non-post layouts', () => {

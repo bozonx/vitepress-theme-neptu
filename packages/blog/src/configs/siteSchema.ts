@@ -185,7 +185,7 @@ export const AuthorsListSchema = z.array(AuthorSchema)
 
 const ThemeConfigSchema = z
   .looseObject({
-    mainHeroImg: z.string().optional(),
+    heroImage: z.string().optional(),
     repo: z.never({
       error: 'repo is a developer setting — set it in .vitepress/config.ts, not in YAML',
     }).optional(),
@@ -274,7 +274,7 @@ const ThemeConfigSchema = z
       tags: z.boolean().optional(), categories: z.boolean().optional(),
       donate: z.boolean().optional(),
       rssFeed: z.boolean().optional(), atomFeed: z.boolean().optional(),
-      blogTitle: z.union([z.string(), z.literal(false)]).optional(),
+      sidebarTitle: z.union([z.string(), z.literal(false)]).optional(),
       links: z.array(NavLinkSchema).optional(),
       bottomLinks: z.array(NavLinkSchema).optional(),
       socialLinks: z.array(SocialLinkSchema).optional(),

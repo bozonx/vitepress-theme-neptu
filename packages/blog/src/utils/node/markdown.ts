@@ -5,7 +5,7 @@ import { remark } from 'remark'
 import remarkRehype from 'remark-rehype'
 import strip from 'strip-markdown'
 import { truncateText } from '../shared/string.ts'
-import { removeTitleFromMd } from '../shared/markdown.ts'
+import { removeTitleFromMarkdown } from '../shared/markdown.ts'
 
 const SAFE_URL_PROTOCOLS = new Set([
   'http:',
@@ -179,7 +179,7 @@ export function extractDescriptionFromContent(
   maxLength: number,
   markAtTheEnd?: boolean
 ): string {
-  const mdContentNoHeader = removeTitleFromMd(content)
+  const mdContentNoHeader = removeTitleFromMarkdown(content)
   const stripped = stripMd(mdContentNoHeader)
 
   return truncateText(stripped, maxLength, { respectWords: true, markAtTheEnd })

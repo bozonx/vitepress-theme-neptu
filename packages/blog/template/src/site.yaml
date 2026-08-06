@@ -162,7 +162,7 @@ themeConfig:
     # Override the sidebar title. Defaults to the locale `title`.
     # Set `false` to hide.
     # Default: falls back to locale `title`
-    # blogTitle: My Blog
+    # sidebarTitle: My Blog
     # Custom navigation links shown at the top of the sidebar.
     # links:
     #   - text: Home

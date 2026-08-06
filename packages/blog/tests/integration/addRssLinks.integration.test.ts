@@ -34,7 +34,7 @@ describe('addRssLinks integration', () => {
     ({
       frontmatter: {
         layout: 'home',
-        seo: { rss: rssEnabled },
+        seo: { rssLinks: rssEnabled },
       },
       filePath: 'ru/index.md',
     }) as any
@@ -91,7 +91,7 @@ describe('addRssLinks integration', () => {
     ])
   })
 
-  it('respects rss=false in page frontmatter and skips adding links', () => {
+  it('respects rssLinks=false in page frontmatter and skips adding links', () => {
     const head: HeadConfig[] = []
     const pageData = createHomePageData(false)
     const siteConfig = createMockSiteConfig()

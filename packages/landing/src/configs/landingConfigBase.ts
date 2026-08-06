@@ -64,7 +64,7 @@ import type {
 const commonThemeConfig = {
   externalLinkIcon: true,
   i18nRouting: true,
-  mainHeroImg: '/img/home-logo.webp',
+  heroImage: '/img/home-logo.webp',
   // Demo controls. A production site ships one theme via
   // `defaultColorTheme` / `defaultStylePreset` instead.
   colorPicker: false,
@@ -142,8 +142,8 @@ export function mergeLandingConfig(
   return {
     ...landingBaseConfig,
     ...config,
-    title: config.title || config.en?.title,
-    description: config.description || config.en?.description,
+    title: config.title || config.rootMeta?.title,
+    description: config.description || config.rootMeta?.description,
     head: [
       // Consent Mode v2 defaults. Must be the very first script on the page:
       // the signals only bind tags that load after them.

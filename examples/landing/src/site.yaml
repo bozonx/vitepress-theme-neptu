@@ -1,6 +1,6 @@
 themeConfig:
   logo: '/img/logo.svg'
-  mainHeroImg: '/img/home-logo.svg'
+  heroImage: '/img/home-logo.svg'
   defaultColorTheme: 'blue'
   defaultStylePreset: 'soft'
   publisher:

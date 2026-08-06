@@ -22,7 +22,7 @@ export function addRssLinks({
   pageData,
   siteConfig,
 }: AddRssLinksContext): void {
-  if (pageData.frontmatter?.seo?.rss === false) return
+  if (pageData.frontmatter?.seo?.rssLinks === false) return
 
   if (!isHomePage(pageData.frontmatter)) return
 

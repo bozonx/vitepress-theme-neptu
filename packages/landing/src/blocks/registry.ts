@@ -129,6 +129,6 @@ export function hasBlockType(type: string): boolean {
 }
 
 /** Resolves a block type, returning `undefined` for unknown ones. */
-export function resolveBlock(type: string): Component | undefined {
+export function resolveBlockComponent(type: string): Component | undefined {
   return blockRegistry[type]
 }

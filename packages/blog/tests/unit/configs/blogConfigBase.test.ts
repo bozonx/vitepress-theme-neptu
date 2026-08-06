@@ -257,8 +257,8 @@ describe('mergeBlogConfig', () => {
     expect(result.title).toBe('Custom Title')
   })
 
-  it('resolves title from en locale fallback', () => {
-    const result = mergeBlogConfig({ en: { title: 'EN Title' } })
+  it('resolves title from rootMeta fallback', () => {
+    const result = mergeBlogConfig({ rootMeta: { title: 'EN Title' } })
     expect(result.title).toBe('EN Title')
   })
 

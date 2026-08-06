@@ -31,7 +31,7 @@ export {
   registerBlockTypes,
   unregisterBlockTypes,
   hasBlockType,
-  resolveBlock,
+  resolveBlockComponent,
 } from './registry.ts'
 
 export type { RegisterBlockTypesOptions } from './registry.ts'

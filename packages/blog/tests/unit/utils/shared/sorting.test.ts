@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import {
-  getFeaturedPostsSorted,
+  getFeaturedPosts,
   sortPosts,
   sortSimilarPosts,
 } from '../../../../src/utils/shared/sorting.ts'
@@ -77,14 +77,14 @@ describe('sortPosts', () => {
 })
 
 
-describe('getFeaturedPostsSorted', () => {
+describe('getFeaturedPosts', () => {
   it('keeps only featured posts, newest first, and respects the limit', () => {
     const posts = [
       { date: '2024-01-01', url: 'old', featured: true },
       { date: '2024-03-01', url: 'regular', featured: false },
       { date: '2024-02-01', url: 'new', featured: true },
     ]
-    expect(getFeaturedPostsSorted(posts, 1).map((post) => post.url)).toEqual(['new'])
+    expect(getFeaturedPosts(posts, 1).map((post) => post.url)).toEqual(['new'])
   })
 })
 

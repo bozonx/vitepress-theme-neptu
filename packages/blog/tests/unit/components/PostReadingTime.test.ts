@@ -12,7 +12,7 @@ import {
 describe('PostReadingTime', () => {
   beforeEach(() => {
     mockFrontmatter.value = { layout: 'post' }
-    mockPage.value = { readingTime: 1 }
+    mockPage.value = { readingMinutes: 1 }
     mockRoute.value = { path: '/ru/posts/example' }
     mockTheme.value = {
       readingTime: { enabled: true, layouts: ['post'] },
@@ -27,7 +27,7 @@ describe('PostReadingTime', () => {
   })
 
   it('prefers forms configured by the site', () => {
-    mockPage.value = { readingTime: 2 }
+    mockPage.value = { readingMinutes: 2 }
     mockTheme.value.t = {
       readingTime: 'Время на статью',
       readingTimeForms: ['минута', 'минуты', 'минут'],
