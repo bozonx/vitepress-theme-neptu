@@ -51,9 +51,9 @@ layout: page
 
 ## Интеграция
 
-- [Согласие на куки](../posts/consent) — Consent Mode v2, CMP, GDPR
 - [Аналитика и популярные посты](../posts/analytics) — Подключение счётчиков, GA4 Data API, популярные статьи
 - [Рекламные блоки](../posts/ads) — Свой рекламный код в слотах темы
+- [Согласие на куки](../posts/consent) — Consent Mode v2, CMP, GDPR
 
 ## Продвинутое
 
