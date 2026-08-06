@@ -136,9 +136,12 @@ themeConfig:
   footer:
     rssFeed: true    # ссылка на RSS-ленту (по умолчанию true)
     atomFeed: true   # ссылка на Atom-ленту (по умолчанию true)
-    github: true     # ссылка на репозиторий из repo (по умолчанию true)
+    socialLinks:     # социальные ссылки (тот же формат, что в sidebar.socialLinks)
+      - icon: 'fa6-brands:github'
+        link: '${theme.repo}'
+        title: 'GitHub'
     message: 'Копирование разрешено только со ссылкой на источник.'
-    copyright: 'Copyright © 2026 Your Name.'
+    copyright: 'Copyright 2026 Your Name.'
     links:
       - text: '${t.links.aboutBlog}'
         href: 'pages/about'
@@ -147,17 +150,18 @@ themeConfig:
 ```
 
 Поля ссылок в `footer.links` описаны в [Поля ссылок](#поля-ссылок).
+Поля социальных ссылок в `footer.socialLinks` — там же, ниже.
 
-Флаги `rssFeed`, `atomFeed` и `github` включены по умолчанию и показываются
-только при наличии соответствующей ленты или репозитория. `github` использует
-`themeConfig.repo` — если он не задан, ссылка не выводится.
+Флаги `rssFeed` и `atomFeed` включены по умолчанию и показываются
+только при наличии соответствующей ленты.
 
 Эти флаги управляют **только главным футером** (виден на всех страницах, включая
 домашнюю) и не зависят от настроек сайдбара. Иконки RSS/Atom в подвале сайдбара
 настраиваются отдельно через `sidebar.rssFeed` и `sidebar.atomFeed`.
 
-Если нужен не набор ссылок, а собственная вёрстка футера, встроенный футер
-заменялся целиком через слот `footer` — см. [Кастомизация](customization#кастомизация-футера-сайта).
+::: tip
+Вы можете полностью заменить стандартный футер на свой, подробней в разделе [Кастомизация](customization#кастомизация-футера-сайта).
+:::
 
 ### Поля ссылок
 
@@ -174,7 +178,7 @@ themeConfig:
 | `mobileOnly` | `true` — скрывать на десктопе (показывать только в сайдбаре) |
 | `header` | Текст заголовка секции — рендерится как `<h4>`, а не как ссылка. **Только в сайдбаре** (`sidebar.links`, `sidebar.bottomLinks`) |
 
-Иконки соцсетей (`nav.socialLinks`, `sidebar.socialLinks`) используют те же `icon`, `iconClass`, `class`, `desktopOnly` и `mobileOnly`, но вместо `text`/`href` — поля `link` (URL) и `title` (tooltip).
+Иконки соцсетей (`nav.socialLinks`, `sidebar.socialLinks`, `footer.socialLinks`) используют те же `icon`, `iconClass`, `class`, `desktopOnly` и `mobileOnly`, но вместо `text`/`href` — поля `link` (URL) и `title` (tooltip).
 
 ### Кнопка «Поддержать» (donate)
 
@@ -587,7 +591,8 @@ themeConfig:
 - Иконки по умолчанию (`donateIcon`, `recentIcon`, `featuredIcon` и т.д.)
 - `toc` — настройки оглавления (порог, уровень, position)
 - `asideLayouts` — список макетов с правой колонкой
-- `footer.rssFeed`, `footer.atomFeed`, `footer.github` — флаги ссылок в футере
+- `footer.rssFeed`, `footer.atomFeed` — флаги ссылок на ленты в футере
+- `footer.socialLinks` — социальные ссылки в футере
 - `editLink.pattern` — шаблон ссылки на правку (если нестандартный; иначе авто-генерируется из `repo`)
 
 ### Уровень 3 — `_site.yaml` (отличия одной локали)
@@ -596,6 +601,7 @@ themeConfig:
 - `nav.socialLinks` — локализованные иконки соцсетей (если отличаются)
 - `footer.message`, `footer.copyright` — локализованный текст футера
 - `footer.links` — локализованные ссылки футера
+- `footer.socialLinks` — локализованные иконки соцсетей в футере (если отличаются)
 - `editLink.text` — локализованная подпись ссылки на правку
 - `donate.postDonateCall` — локализованный текст призыва
 - `t.*` — переводы подписей (`draftLabel` и т.д.)

@@ -224,10 +224,14 @@ themeConfig:
   footer:
     message: 'Built with Neptu Blog Theme & VitePress.'
     copyright: 'Copyright © 2026'
-    # Icon links in the footer. All three default to false.
+    # Icon links in the footer. Both default to false.
     # rssFeed: true
     # atomFeed: true
-    # github: true   # uses `themeConfig.repo` from .vitepress/config.ts
+    # Social links shown in the footer (same format as sidebar.socialLinks).
+    # socialLinks:
+    #   - icon: 'fa6-brands:github'
+    #     link: '${theme.repo}'
+    #     title: 'GitHub'
     links:
       - text: '${t.links.aboutBlog}'
         href: 'pages/about'

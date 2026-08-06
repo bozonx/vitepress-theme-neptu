@@ -291,13 +291,11 @@ themeConfig:
   # paginationMaxItems: 5
 
   # --- Footer ----------------------------------------------------------------
-  # `message`, `copyright` and `links` are wording, so they live per-locale in
-  # `<locale>/_site.yaml`. Put only the shared icon toggles here.
+  # `message`, `copyright`, `links` and `socialLinks` are wording, so they live
+  # per-locale in `<locale>/_site.yaml`. Put only the shared feed toggles here.
   # footer:
-  #   # All three default to false.
   #   rssFeed: true
   #   atomFeed: true
-  #   github: true   # uses `repo` from .vitepress/config.ts
 
   # --- Icons -----------------------------------------------------------------
   # Override any sidebar/nav icon with an Iconify icon name.

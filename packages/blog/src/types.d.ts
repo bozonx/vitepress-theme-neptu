@@ -240,7 +240,7 @@ export namespace NeptuBlogTheme {
       links?: NavLink[]
       rssFeed?: boolean
       atomFeed?: boolean
-      github?: boolean
+      socialLinks?: SocialLink[]
     }
   }
 
@@ -725,6 +725,7 @@ export namespace NeptuBlogTheme {
   export interface SocialLink {
     icon: string
     link: string
+    title?: string
     class?: string
     iconClass?: string
     desktopOnly?: boolean

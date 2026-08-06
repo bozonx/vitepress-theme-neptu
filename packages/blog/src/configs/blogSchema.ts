@@ -298,7 +298,7 @@ const ThemeConfigSchema = z
       links: z.array(NavLinkSchema).optional(),
       rssFeed: z.boolean().optional(),
       atomFeed: z.boolean().optional(),
-      github: z.boolean().optional(),
+      socialLinks: z.array(SocialLinkSchema).optional(),
     }).optional(),
     socialMediaShares: z.array(z.looseObject({
       name: z.string().optional(), icon: z.string().optional(), title: z.string().optional(),

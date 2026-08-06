@@ -22,24 +22,6 @@ const configuredFormats = computed(() =>
 
 const hasFormat = (format: string) => configuredFormats.value.includes(format)
 
-const resolvedRepoUrl = computed(() => {
-  if (theme.value.repo) {
-    const repo = theme.value.repo.trim()
-    if (repo.startsWith('http://') || repo.startsWith('https://')) return repo
-    return `https://github.com/${repo}`
-  }
-  const socialLinks = [
-    ...(theme.value.nav?.socialLinks || []),
-    ...(theme.value.sidebar?.socialLinks || []),
-  ]
-  const ghLink = socialLinks.find(
-    (item) =>
-      item.icon?.includes('github') ||
-      item.link?.includes('github.com')
-  )
-  return ghLink?.link || ''
-})
-
 const feedLinks = computed(() => {
   const links: Array<{
     text: string
@@ -72,11 +54,12 @@ const feedLinks = computed(() => {
     })
   }
 
-  if (theme.value.footer?.github !== false && resolvedRepoUrl.value) {
+  for (const item of theme.value.footer?.socialLinks || []) {
+    if (!item.link) continue
     links.push({
-      text: 'GitHub',
-      href: resolvedRepoUrl.value,
-      icon: ((theme.value as Record<string, unknown>).githubIcon as string) || 'fa6-brands:github',
+      text: item.title || '',
+      href: item.link,
+      icon: item.icon,
       target: '_blank',
     })
   }
