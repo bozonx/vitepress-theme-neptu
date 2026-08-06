@@ -14,7 +14,7 @@ translations:
 date: 2026-07-13
 category: { name: 'Мультиязычность', slug: 'i18n' }
 tags: [i18n, seo]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Эта статья есть и на **английском**. Нажмите переключатель языка в верхней

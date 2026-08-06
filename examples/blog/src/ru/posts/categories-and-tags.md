@@ -7,7 +7,7 @@ authorId: ivan-k
 date: 2026-07-27
 category: { name: 'Контент', slug: 'writing' }
 tags: [frontmatter, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 В теме две таксономии. Они устроены одинаково внутри, но решают разные задачи:

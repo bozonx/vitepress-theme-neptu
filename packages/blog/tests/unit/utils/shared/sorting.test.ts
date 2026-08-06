@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import {
-  filterFeaturedPosts,
+  getFeaturedPostsSorted,
   sortPosts,
   sortSimilarPosts,
 } from '../../../../src/utils/shared/sorting.ts'
@@ -44,7 +44,7 @@ describe('sortPosts', () => {
     expect(sortPosts(posts).map((p) => p.url)).toEqual(['a', 'b'])
   })
 
-  it('sorts by popularity when useAnalyticsStats is true and sortBy is provided', () => {
+  it('sorts by popularity when byPopularity is true and sortBy is provided', () => {
     const posts = [
       { date: '2024-01-01', url: 'a', analyticsStats: { views: 100 } },
       { date: '2024-01-02', url: 'b', analyticsStats: { views: 200 } },
@@ -53,7 +53,7 @@ describe('sortPosts', () => {
     expect(sortPosts(posts, 'views', true).map((p) => p.url)).toEqual(['b', 'a', 'c'])
   })
 
-  it('warns and returns original when useAnalyticsStats is true without sortBy', () => {
+  it('warns and returns original when byPopularity is true without sortBy', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     const posts = [{ url: 'a' }]
     expect(sortPosts(posts, undefined, true)).toEqual(posts)
@@ -77,14 +77,14 @@ describe('sortPosts', () => {
 })
 
 
-describe('filterFeaturedPosts', () => {
+describe('getFeaturedPostsSorted', () => {
   it('keeps only featured posts, newest first, and respects the limit', () => {
     const posts = [
       { date: '2024-01-01', url: 'old', featured: true },
       { date: '2024-03-01', url: 'regular', featured: false },
       { date: '2024-02-01', url: 'new', featured: true },
     ]
-    expect(filterFeaturedPosts(posts, 1).map((post) => post.url)).toEqual(['new'])
+    expect(getFeaturedPostsSorted(posts, 1).map((post) => post.url)).toEqual(['new'])
   })
 })
 

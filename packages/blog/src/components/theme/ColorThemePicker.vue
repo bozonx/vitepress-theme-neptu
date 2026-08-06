@@ -18,7 +18,7 @@ const props = defineProps<{
   icon?: string
 }>()
 
-const { activeTheme, setColorTheme, colorThemes } = useColorTheme()
+const { activeThemeId, setColorTheme, colorThemes } = useColorTheme()
 const { theme } = useThemeConfig()
 
 const enabled = computed(() => props.force || theme.value.colorPicker === true)
@@ -39,7 +39,7 @@ const options = computed(() =>
     v-if="enabled"
     class="color-theme-picker"
     :options="options"
-    :active-id="activeTheme"
+    :active-id="activeThemeId"
     :label="label"
     :icon="props.icon || 'fa6-solid:palette'"
     @select="setColorTheme"

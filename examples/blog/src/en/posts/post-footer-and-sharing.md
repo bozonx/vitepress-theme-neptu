@@ -13,7 +13,7 @@ category: Configuration
 tags:
   - frontmatter
   - guide
-descrAsPreview: true
+descriptionAsPreview: true
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 translations:
   ru: /ru/posts/post-footer-and-sharing

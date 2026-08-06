@@ -7,7 +7,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Контент', slug: 'writing' }
 tags: [frontmatter, config]
-descrAsPreview: true
+descriptionAsPreview: true
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
 podcastLang: RU

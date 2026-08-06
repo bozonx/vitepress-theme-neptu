@@ -12,7 +12,7 @@ coverAlt: Audio equipment and a mixing board
 category: Media
 tags:
   - media
-descrAsPreview: true
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/media-components
 ---

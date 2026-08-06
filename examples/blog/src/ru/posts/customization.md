@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [theme, config, advanced]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Тема поставляется с **восемью** готовыми цветовыми схемами. Выбирают одну из них

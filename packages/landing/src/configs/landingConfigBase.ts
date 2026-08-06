@@ -41,7 +41,7 @@ import {
 } from 'vitepress-theme-neptu/transformers'
 import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
 import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
-import siteBaseLocales from './siteLocalesBase/index.ts'
+import siteBaseLocales from './landingLocalesBase/index.ts'
 import { autoLoadLocales } from './loadLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
 // Imported from the modules rather than the barrels: the `configs` barrel

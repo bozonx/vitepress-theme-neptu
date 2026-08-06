@@ -86,8 +86,8 @@ export function isAuthorPage(filePath: string | null | undefined): boolean {
 
 /** Resolve explicit preview text from frontmatter. Or return undefined. */
 export function resolvePreviewText(frontmatter: PostFrontmatter): string | undefined {
-  const { previewText, descriptionAsPreview, descrAsPreview, description } = frontmatter
-  const useDescr = descriptionAsPreview ?? descrAsPreview
+  const { previewText, descriptionAsPreview, description } = frontmatter
+  const useDescr = descriptionAsPreview
   const normalizedPreviewText =
     typeof previewText === 'string' ? previewText.trim() : undefined
   const normalizedDescription =
@@ -101,7 +101,7 @@ export function resolvePreviewText(frontmatter: PostFrontmatter): string | undef
   return undefined
 }
 
-export function resolveSearchBodyMarker(theme: ThemeConfig, frontmatter: PostFrontmatter): string | undefined {
+export function resolveSearchBodyAttribute(theme: ThemeConfig, frontmatter: PostFrontmatter): string | undefined {
   // Pagefind is the only search provider; the body marker is fixed.
   if (theme.search?.enabled === false) return undefined
 

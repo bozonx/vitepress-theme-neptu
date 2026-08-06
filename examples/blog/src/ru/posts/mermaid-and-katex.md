@@ -7,7 +7,7 @@ translations:
 date: 2026-07-25
 category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [advanced]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Mermaid и KaTeX подключаются как опциональные Markdown-интеграции. Тема

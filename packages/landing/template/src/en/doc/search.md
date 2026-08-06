@@ -52,7 +52,7 @@ Anything beyond those two is a custom integration, and there are two routes:
 If the site outgrew the local index. Install `pagefind`, run its
 [CLI](https://pagefind.app/docs/) after `vitepress build`, add `pagefind-ui.js`
 / `pagefind-ui.css` on demand and mount `PagefindUI` in your own component. The
-blog theme's `PageFindSearch.vue` (in `vitepress-theme-neptu`) is a working
+blog theme's `PagefindSearch.vue` (in `vitepress-theme-neptu`) is a working
 reference — it lazy-loads the bundle, handles multilingual indexes and the modal
 history.
 

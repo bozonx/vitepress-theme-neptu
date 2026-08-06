@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-07-12
 category: { name: 'SEO', slug: 'seo' }
 tags: [seo, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Тема Neptu закрывает все технические аспекты SEO за вас: достаточно задать `siteUrl` — и при сборке появляется полный набор SEO механизмов позволяющий полностью закрыть тему SEO для вашего блога.

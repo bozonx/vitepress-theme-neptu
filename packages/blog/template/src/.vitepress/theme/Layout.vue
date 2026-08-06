@@ -3,7 +3,7 @@ import { provide } from 'vue'
 import Theme from 'vitepress-theme-neptu'
 import {
   NavSearchButton,
-  PageFindSearch,
+  PagefindSearch,
 } from 'vitepress-theme-neptu/components'
 import { posts } from 'virtual:neptu-posts-data'
 
@@ -21,9 +21,9 @@ const { Layout } = Theme
   <Layout>
     <!-- Search button in the top bar. Remove this slot to drop the search UI. -->
     <template #nav-bar-content-before>
-      <PageFindSearch>
+      <PagefindSearch>
         <NavSearchButton />
-      </PageFindSearch>
+      </PagefindSearch>
     </template>
   </Layout>
 </template>

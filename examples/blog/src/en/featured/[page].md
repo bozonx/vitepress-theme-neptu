@@ -8,12 +8,12 @@ head:
 ---
 
 <script setup>
-import { FeaturedList } from 'vitepress-theme-neptu/components'
+import { FeaturedPostsList } from 'vitepress-theme-neptu/components'
 import { useData } from 'vitepress'
 
 const { params } = useData()
 </script>
 
-<FeaturedList
+<FeaturedPostsList
   :curPage="params?.page"
 />

@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-07-08
 category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
 tags: [advanced, components]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Это справочная страница: перечень всего, что тема отдаёт наружу. Как этим
@@ -17,7 +17,7 @@ descrAsPreview: true
 ## Четыре точки импорта
 
 ```ts
-import { RecentList } from 'vitepress-theme-neptu/components'
+import { RecentPostsList } from 'vitepress-theme-neptu/components'
 import { useThemeConfig } from 'vitepress-theme-neptu/composables'
 import { isPost } from 'vitepress-theme-neptu/utils'
 import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
@@ -47,9 +47,9 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 
 | Компонент | Что выводит |
 | --- | --- |
-| `RecentList` | Свежие посты с пагинацией |
+| `RecentPostsList` | Свежие посты с пагинацией |
 | `PopularPostsList` | Популярные посты (требует `popularPosts.enabled`) |
-| `FeaturedList` | Посты с `featured: true` |
+| `FeaturedPostsList` | Посты с `featured: true` |
 | `TagPostsList` | Посты одного тега |
 | `CategoryPostsList` | Посты одной категории |
 | `MonthPostsList` | Посты одного месяца |
@@ -106,7 +106,7 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 | Компонент | Назначение |
 | --- | --- |
 | `NeptuBreadcrumbs` | Хлебные крошки ([пример](categories-and-tags#хлебные-крошки)) |
-| `PageFindSearch` | Модалка поиска |
+| `PagefindSearch` | Модалка поиска |
 | `NavSearchButton` | Кнопка вызова поиска |
 | `SwitchLang`, `LocaleSelector` | Переключение локали |
 | `SwitchAppearance` | Переключатель светлой / тёмной темы |
@@ -150,7 +150,7 @@ import { isPost, resolvePreviewText } from 'vitepress-theme-neptu/utils'
 | `isUtilPage(frontmatter)` | `true` для `util`, `tag`, `category`, `archive`, `author` |
 | `isHomePage(frontmatter)` | `true` для `layout: home` |
 | `resolvePreviewText(frontmatter)` | Текст превью по правилам темы |
-| `resolveSearchBodyMarker(theme, frontmatter)` | Маркер тела для Pagefind |
+| `resolveSearchBodyAttribute(theme, frontmatter)` | Маркер тела для Pagefind |
 | `isPopularPostsRoute(path, theme)` | Маршрут списка популярных |
 | `isAuthorPage(filePath, siteConfig)` | Путь страницы автора |
 

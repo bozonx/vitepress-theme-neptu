@@ -5,7 +5,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Настройка', slug: 'configuration' }
 tags: [config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Каждый из 3х уровней конфига имеет свою роль, хотя в конечном итоге все они смерживаются в один

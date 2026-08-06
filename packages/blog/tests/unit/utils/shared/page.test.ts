@@ -7,7 +7,7 @@ import {
   isPopularPostsRoute,
   isAuthorPage,
   resolvePreviewText,
-  resolveSearchBodyMarker,
+  resolveSearchBodyAttribute,
   resolveLayoutKey,
   isAsideEnabled,
 } from '../../../../src/utils/shared/page.ts'
@@ -126,8 +126,8 @@ describe('resolvePreviewText', () => {
     expect(resolvePreviewText({ description: 'Desc', descriptionAsPreview: true })).toBe('Desc')
   })
 
-  it('returns description when descrAsPreview is true', () => {
-    expect(resolvePreviewText({ description: 'Desc', descrAsPreview: true })).toBe('Desc')
+  it('returns description when descriptionAsPreview is true', () => {
+    expect(resolvePreviewText({ description: 'Desc', descriptionAsPreview: true })).toBe('Desc')
   })
 
   it('prefers previewText over description', () => {
@@ -140,45 +140,45 @@ describe('resolvePreviewText', () => {
     expect(resolvePreviewText({})).toBeUndefined()
   })
 
-  it('returns undefined when descrAsPreview is true but no description', () => {
-    expect(resolvePreviewText({ descrAsPreview: true })).toBeUndefined()
+  it('returns undefined when descriptionAsPreview is true but no description', () => {
+    expect(resolvePreviewText({ descriptionAsPreview: true })).toBeUndefined()
   })
 
   it('treats blank previewText as explicit absence', () => {
     expect(
-      resolvePreviewText({ previewText: '   ', description: 'Desc', descrAsPreview: true })
+      resolvePreviewText({ previewText: '   ', description: 'Desc', descriptionAsPreview: true })
     ).toBeUndefined()
   })
 
   it('trims previewText and description', () => {
     expect(resolvePreviewText({ previewText: '  Preview  ' })).toBe('Preview')
-    expect(resolvePreviewText({ description: '  Desc  ', descrAsPreview: true })).toBe('Desc')
+    expect(resolvePreviewText({ description: '  Desc  ', descriptionAsPreview: true })).toBe('Desc')
   })
 })
 
-describe('resolveSearchBodyMarker', () => {
+describe('resolveSearchBodyAttribute', () => {
   const theme: ThemeConfig = {
     search: { enabled: true },
   } as any
 
   it('returns bodyMarker for regular post', () => {
-    expect(resolveSearchBodyMarker(theme, { layout: 'post' })).toBe('data-pagefind-body')
+    expect(resolveSearchBodyAttribute(theme, { layout: 'post' })).toBe('data-pagefind-body')
   })
 
   it('returns undefined when search is disabled', () => {
-    expect(resolveSearchBodyMarker({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
+    expect(resolveSearchBodyAttribute({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
   })
 
   it('returns undefined for util page without searchIncluded', () => {
-    expect(resolveSearchBodyMarker(theme, { layout: 'tag' })).toBeUndefined()
+    expect(resolveSearchBodyAttribute(theme, { layout: 'tag' })).toBeUndefined()
   })
 
   it('returns bodyMarker for util page with searchIncluded true', () => {
-    expect(resolveSearchBodyMarker(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
+    expect(resolveSearchBodyAttribute(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
   })
 
   it('returns undefined for util page with searchIncluded false', () => {
-    expect(resolveSearchBodyMarker(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
+    expect(resolveSearchBodyAttribute(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
   })
 })
 

@@ -13,7 +13,7 @@ category: SEO
 tags:
   - seo
   - i18n
-descrAsPreview: true
+descriptionAsPreview: true
 # Link this post to its Russian counterpart. The theme uses this for the
 # language switcher AND for the <link rel="alternate" hreflang="ru"> tag.
 translations:

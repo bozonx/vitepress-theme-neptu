@@ -9,7 +9,7 @@ category: SEO
 tags:
   - seo
   - json-ld
-descrAsPreview: true
+descriptionAsPreview: true
 jsonLd: |
   "@type": TechArticle
   proficiencyLevel: Beginner

@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-07-06
 category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [advanced]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Вспомогательные функции постов в теме читают **локальные `.md` файлы**. Если ваш контент хранится в

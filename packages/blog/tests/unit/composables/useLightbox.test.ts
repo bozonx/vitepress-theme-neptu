@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { defineComponent, h, nextTick, provide, type ComputedRef, computed } from 'vue'
 import { mount } from '@vue/test-utils'
-import { useLightbox, useLightboxLocales, LightboxLocalesKey } from '../../../src/composables/useLightbox.ts'
+import { useLightbox, useLightboxLocales, LightboxKey } from '../../../src/composables/useLightbox.ts'
 
 vi.mock('vitepress', () => ({ inBrowser: true }))
 
@@ -141,7 +141,7 @@ describe('useLightboxLocales', () => {
     })
     const Parent = defineComponent({
       setup() {
-        provide(LightboxLocalesKey, { close: 'Close', next: 'Next' })
+        provide(LightboxKey, { close: 'Close', next: 'Next' })
         return () => h(Child)
       },
     })
@@ -159,7 +159,7 @@ describe('useLightboxLocales', () => {
     const Parent = defineComponent({
       setup() {
         const refLocales: ComputedRef<Record<string, string>> = computed(() => ({ prev: 'Previous' }))
-        provide(LightboxLocalesKey, refLocales)
+        provide(LightboxKey, refLocales)
         return () => h(Child)
       },
     })

@@ -22,7 +22,7 @@ export default defineConfig({
       exclude: [
         'src/**/*.d.ts',
         'src/**/index.ts',
-        'src/configs/siteLocalesBase/**',
+        'src/configs/landingLocalesBase/**',
       ],
     },
   },

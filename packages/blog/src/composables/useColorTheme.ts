@@ -21,11 +21,11 @@ export const COLOR_STORAGE_KEY = 'neptu-color-theme'
 export const COLOR_ATTRIBUTE = 'data-theme'
 export const DEFAULT_COLOR_THEME = 'blue'
 
-const activeTheme = ref<string>(DEFAULT_COLOR_THEME)
+const activeThemeId = ref<string>(DEFAULT_COLOR_THEME)
 
 export function useColorTheme() {
   const setColorTheme = (themeId: string) => {
-    activeTheme.value = themeId
+    activeThemeId.value = themeId
     if (typeof document !== 'undefined') {
       if (themeId) {
         document.documentElement.setAttribute('data-theme', themeId)
@@ -43,12 +43,12 @@ export function useColorTheme() {
       try {
         const saved = localStorage.getItem(COLOR_STORAGE_KEY)
         if (saved) {
-          activeTheme.value = saved
+          activeThemeId.value = saved
           document.documentElement.setAttribute('data-theme', saved)
         } else {
           const currentAttr = document.documentElement.getAttribute('data-theme')
           if (currentAttr) {
-            activeTheme.value = currentAttr
+            activeThemeId.value = currentAttr
           }
         }
       } catch {
@@ -62,7 +62,7 @@ export function useColorTheme() {
   })
 
   return {
-    activeTheme,
+    activeThemeId,
     setColorTheme,
     colorThemes: COLOR_THEME_OPTIONS,
   }

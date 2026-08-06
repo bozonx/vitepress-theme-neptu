@@ -15,7 +15,7 @@ tags:
   - frontmatter
   - cover
   - media
-descrAsPreview: true
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/cover-and-images
 ---

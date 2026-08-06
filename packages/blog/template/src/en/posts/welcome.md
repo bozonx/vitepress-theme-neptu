@@ -22,7 +22,7 @@ coverAlt: Notebook on table
 # Optional extras — uncomment what you need:
 # draft: true            # hidden from lists/feeds/search, still reachable by URL
 # previewText: Custom card preview instead of the first paragraph
-# descrAsPreview: true   # use `description` as the card preview
+# descriptionAsPreview: true   # use `description` as the card preview
 # translations:          # link this post to its translations: locale -> path
 #   ru: /ru/posts/welcome
 # commentLink: https://github.com/your-username/my-blog/discussions/1

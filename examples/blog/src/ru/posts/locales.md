@@ -5,7 +5,7 @@ authorId: ivan-k
 date: 2026-07-14
 category: { name: 'Мультиязычность', slug: 'i18n' }
 tags: [i18n, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Тема изначально спроектирована мультиязычной. Поддерживаются как короткие, так и

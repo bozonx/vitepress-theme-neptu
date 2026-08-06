@@ -5,7 +5,7 @@ import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
 import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import {
-  isPlausibleMediaUrl,
+  isValidMediaUrl,
   encodeMediaUrl,
   downloadFile as downloadFileUtil,
   getLastPathSegment,
@@ -48,7 +48,7 @@ const downloadFile = async () => {
 
   try {
     // Validate URL
-    if (!isPlausibleMediaUrl(props.url)) {
+    if (!isValidMediaUrl(props.url)) {
       hasError.value = true
       errorMessage.value = theme.value.t.audioFile.invalidUrlProvided
       return
@@ -81,7 +81,7 @@ const togglePlayPause = async () => {
 
   try {
     // Validate URL before playback
-    if (!isPlausibleMediaUrl(props.url)) {
+    if (!isValidMediaUrl(props.url)) {
       hasError.value = true
       errorMessage.value = theme.value.t.audioFile.invalidAudioUrlProvided
       console.error('Invalid audio URL provided')
@@ -463,7 +463,7 @@ onUnmounted(() => {
       <Icon icon="mdi:alert-circle" class="shrink-0" aria-hidden="true" />
       <span class="flex-1">{{ errorMessage || theme.t.audioFile.errorLoadingAudioFile }}</span>
       <NeptuBtn
-        v-if="!isPlausibleMediaUrl(props.url)"
+        v-if="!isValidMediaUrl(props.url)"
         :aria-label="theme.t.audioFile.retryWithValidUrl"
         icon="mdi:refresh"
         :text="theme.t.audioFile.retry"

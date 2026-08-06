@@ -9,7 +9,7 @@ import {
   getLightboxElements,
   removeBodyClass,
   type LightboxElement,
-} from '../utils/client/lightboxDOM.ts'
+} from '../utils/client/lightboxDom.ts'
 
 export interface LightboxItem {
   src: string
@@ -28,7 +28,7 @@ export interface UseLightboxReturn {
   prev: () => void
 }
 
-export const LightboxLocalesKey: InjectionKey<Record<string, string> | ComputedRef<Record<string, string>>> = Symbol('lightbox-locales')
+export const LightboxKey: InjectionKey<Record<string, string> | ComputedRef<Record<string, string>>> = Symbol('lightbox-locales')
 
 export function useLightbox(doc?: Document): UseLightboxReturn {
   const isOpen = ref(false)
@@ -116,6 +116,6 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
 }
 
 export function useLightboxLocales(): Record<string, string> {
-  const val = inject(LightboxLocalesKey, {})
+  const val = inject(LightboxKey, {})
   return isRef(val) ? val.value : val
 }

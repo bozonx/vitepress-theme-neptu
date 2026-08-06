@@ -30,11 +30,11 @@ interface SitePageRef {
   relativePath?: string
 }
 
-function ensureStartingSlash(path: string): string {
+function normalizeLeadingSlash(path: string): string {
   return /^\.\//.test(path) || /^\w+:/.test(path) || path.startsWith('/') ? path : `/${path}`
 }
 
-function normalizeLink(
+function buildLocaleLink(
   link: string,
   addPath: boolean,
   path: string,
@@ -46,7 +46,7 @@ function normalizeLink(
     .replace(/(^|\/)index\.md$/, '$1')
     .replace(/\.md$/, addHtmlExtension ? '.html' : '')
 
-  return link.replace(/\/$/, '') + ensureStartingSlash(normalizedPath)
+  return link.replace(/\/$/, '') + normalizeLeadingSlash(normalizedPath)
 }
 
 export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
@@ -102,7 +102,7 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
         return {
           text: value.label,
           link:
-            normalizeLink(
+            buildLocaleLink(
               localeBaseLink,
               correspondingLink,
               relativePath,

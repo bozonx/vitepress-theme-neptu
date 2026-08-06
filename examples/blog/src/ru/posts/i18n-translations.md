@@ -7,7 +7,7 @@ authorId: ivan-k
 date: 2026-08-05
 category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
 tags: [i18n, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Базовая модель локалей — маршрутизация, именование и добавление языков —

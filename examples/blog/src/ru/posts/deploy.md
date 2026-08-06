@@ -7,7 +7,7 @@ authorId: ivan-k
 date: 2026-07-30
 category: { name: 'Начало работы', slug: 'getting-started' }
 tags: [start, deploy]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Блог собирается в набор статических файлов — их можно выложить куда угодно: GitHub

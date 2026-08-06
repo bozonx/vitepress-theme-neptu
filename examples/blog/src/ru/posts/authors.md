@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Контент', slug: 'writing' }
 tags: [frontmatter, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Автор фигурирует в следующих местах:

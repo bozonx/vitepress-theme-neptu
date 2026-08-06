@@ -8,7 +8,7 @@ date: 2026-07-31
 category: { name: 'Начало работы', slug: 'getting-started' }
 tags: [start, frontmatter]
 featured: true
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Пост — это обычный Markdown-файл в папке `src/<локаль>/posts/`. Имя файла

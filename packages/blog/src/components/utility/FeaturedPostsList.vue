@@ -3,7 +3,7 @@ import { useData } from 'vitepress'
 import { computed, inject } from 'vue'
 import UtilPageHeader from './UtilPageHeader.vue'
 import PreviewList from '../PreviewList.vue'
-import { filterFeaturedPosts } from '../../utils/shared/index.ts'
+import { getFeaturedPostsSorted } from '../../utils/shared/index.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const { frontmatter, localeIndex } = useData()
@@ -19,7 +19,7 @@ const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []
 )
 const curPage = Number(props.curPage || 1)
-const featuredPosts = computed(() => filterFeaturedPosts(localePosts.value))
+const featuredPosts = computed(() => getFeaturedPostsSorted(localePosts.value))
 </script>
 
 <template>

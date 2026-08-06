@@ -7,7 +7,7 @@ import {
   addBodyClass,
   removeBodyClass,
   bodyHasClass,
-} from '../../../../src/utils/client/lightboxDOM.ts'
+} from '../../../../src/utils/client/lightboxDom.ts'
 
 function makeDoc(html: string): Document {
   const parser = new DOMParser()

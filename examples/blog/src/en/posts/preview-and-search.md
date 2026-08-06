@@ -1,7 +1,7 @@
 ---
 title: List Previews & the Search Index
 description: >
-  Control what shows in post-list cards (previewText / descrAsPreview /
+  Control what shows in post-list cards (previewText / descriptionAsPreview /
   maxPreviewLength) and whether a post is included in Pagefind search.
 date: 2025-01-08T08:00:00Z
 authorId: ivan-k
@@ -25,11 +25,11 @@ paragraph you're reading now.
 **1. Auto (default).** Do nothing — the theme excerpts the body up to
 `maxPreviewLength` characters.
 
-**2. Reuse the description.** Set `descrAsPreview: true` to use the frontmatter
+**2. Reuse the description.** Set `descriptionAsPreview: true` to use the frontmatter
 `description` as the card text (most demo posts do this).
 
 **3. Explicit text.** Set `previewText` to write the card copy by hand. Use
-`descrAsPreview` **or** `previewText`, not both.
+`descriptionAsPreview` **or** `previewText`, not both.
 
 ### How it's done
 
@@ -38,7 +38,7 @@ paragraph you're reading now.
 previewText: "This card's text was set explicitly with previewText…"
 
 # Alternatively:
-# descrAsPreview: true
+# descriptionAsPreview: true
 ```
 
 ## Preview length

@@ -784,8 +784,6 @@ export namespace NeptuBlogTheme {
     readingTime?: boolean
     previewText?: string
     descriptionAsPreview?: boolean
-    /** @deprecated Use `descriptionAsPreview` instead. */
-    descrAsPreview?: boolean
     jsonLd?: string | Record<string, unknown> | unknown[]
     searchIncluded?: boolean
     /**

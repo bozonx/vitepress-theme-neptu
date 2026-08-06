@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-07-11
 category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
 tags: [search, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Поиск работает на [Pagefind](https://pagefind.app): он индексирует уже собранный

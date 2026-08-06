@@ -13,7 +13,7 @@ coverDescription: "Закат над горными вершинами. Фото
 date: 2026-08-04
 category: { name: 'Медиа', slug: 'media' }
 tags: [media, frontmatter, components]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Изображение выше — это **обложка** поста, полностью заданная во frontmatter.

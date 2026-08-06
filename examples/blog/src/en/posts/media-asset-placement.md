@@ -10,7 +10,7 @@ category: Media
 tags:
   - media
   - guide
-descrAsPreview: true
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/media-asset-placement
 ---

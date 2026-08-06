@@ -148,7 +148,7 @@ Body content`)
     expect(item.featured).toBe(true)
   })
 
-  it('keeps SEO description out of a card unless descrAsPreview opts in', () => {
+  it('keeps SEO description out of a card unless descriptionAsPreview opts in', () => {
     readFileSyncMock.mockReturnValue(`---
 title: Hello
 description: Search-engine summary.
@@ -161,11 +161,11 @@ Independent body excerpt.`)
     expect(item.preview).toBe('Independent body excerpt.')
   })
 
-  it('uses description as a card preview only when descrAsPreview is true', () => {
+  it('uses description as a card preview only when descriptionAsPreview is true', () => {
     readFileSyncMock.mockReturnValue(`---
 title: Hello
 description: Search-engine summary.
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Independent body excerpt.`)

@@ -338,7 +338,7 @@ Anything beyond those two is a custom integration, and there are two routes:
 - **Pagefind**, if the site outgrew the local index. Install `pagefind`, run its
   [CLI](https://pagefind.app/docs/) after `vitepress build`, add
   `pagefind-ui.js` / `pagefind-ui.css` on demand and mount `PagefindUI` in your
-  own component. The blog theme's `PageFindSearch.vue` is a working reference —
+  own component. The blog theme's `PagefindSearch.vue` is a working reference —
   it lazy-loads the bundle, handles multilingual indexes and the modal history.
 - **Any hosted search** (Orama, Typesense, Meilisearch…) — replace the default
   theme's search slot with your own component:

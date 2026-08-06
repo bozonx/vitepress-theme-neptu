@@ -13,7 +13,7 @@ date: 2026-08-02
 category: { name: 'Начало работы', slug: 'getting-started' }
 tags: [start]
 featured: true
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Этот сайт — живое руководство по теме **Neptu**. Начнём с главного: как за

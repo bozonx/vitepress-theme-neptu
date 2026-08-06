@@ -1,7 +1,7 @@
 import { inBrowser } from 'vitepress'
 import { onMounted, onUnmounted } from 'vue'
 
-import { SWIPE_OFFSET } from '../constants.ts'
+import { SWIPE_THRESHOLD } from '../constants.ts'
 
 export interface UseSwipeDrawerOptions {
   /** Gate, e.g. isMobile. */
@@ -31,7 +31,7 @@ export function useSwipeDrawer({
   onOpen,
   onClose,
   edgePx = 50,
-  threshold = SWIPE_OFFSET,
+  threshold = SWIPE_THRESHOLD,
 }: UseSwipeDrawerOptions): void {
   let initialX: number | null = null
   let initialY: number | null = null

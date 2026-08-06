@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Настройка', slug: 'configuration' }
 tags: [config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Здесь описываются настройки `themeConfig`, которые задаются в `site.yaml`

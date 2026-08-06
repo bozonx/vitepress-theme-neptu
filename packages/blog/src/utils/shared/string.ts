@@ -2,12 +2,12 @@ import slug from 'slug'
 import { isPathValid, deepGet } from './object.ts'
 
 /**
- * Safe eval for template expressions. Uses `new Function()` with data injected
+ * Scoped eval for template expressions. Uses `new Function()` with data injected
  * as named parameters — expressions cannot access outer scope or globals beyond
  * what is explicitly passed in `data`. Only called when `eval: true` is set by
  * the caller, so opt-in only.
  */
-function safeEval(expression: string, data: Record<string, unknown>): unknown {
+function scopedEval(expression: string, data: Record<string, unknown>): unknown {
   try {
     const trimmedExpr = expression.trim()
     if (!trimmedExpr) return ''
@@ -53,7 +53,7 @@ export function mustacheTemplate(
       if (!key) {
         stringValue = ''
       } else {
-        const result = safeEval(key, data)
+        const result = scopedEval(key, data)
         stringValue = result === null || result === undefined ? '' : String(result)
       }
     } else {
@@ -92,7 +92,7 @@ export function interpolateDollarTemplate(
       if (!key.trim()) {
         stringValue = ''
       } else {
-        const result = safeEval(key, data)
+        const result = scopedEval(key, data)
         stringValue = result === null || result === undefined ? '' : String(result)
       }
     } else {

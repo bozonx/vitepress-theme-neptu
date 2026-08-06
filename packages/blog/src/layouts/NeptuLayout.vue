@@ -7,7 +7,7 @@ import { useScrollY } from '../composables/useScrollY.ts'
 import ImageLightbox from '../components/doc-components/ImageLightbox.vue'
 import BlogHome from './BlogHome.vue'
 import DefaultLayout from './DefaultLayout.vue'
-import { LightboxLocalesKey } from '../composables/useLightbox.ts'
+import { LightboxKey } from '../composables/useLightbox.ts'
 import { TranslationsKey } from '../composables/useTranslations.ts'
 import { resolveTranslationsByFilePath } from '../utils/shared/index.ts'
 
@@ -51,7 +51,7 @@ const translations = computed(() => resolveTranslationsByFilePath(route.path))
 provide(TranslationsKey, translations)
 
 const lightboxLocales = computed(() => translations.value.t.lightbox ?? {})
-provide(LightboxLocalesKey, lightboxLocales)
+provide(LightboxKey, lightboxLocales)
 </script>
 
 <template>

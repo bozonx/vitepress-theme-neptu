@@ -21,7 +21,7 @@ describe('components barrel', () => {
   it('exports utility components', () => {
     expect(components).toHaveProperty('HomeHero')
     expect(components).toHaveProperty('TagPostsList')
-    expect(components).toHaveProperty('RecentList')
+    expect(components).toHaveProperty('RecentPostsList')
   })
 
   it('exports doc components', () => {

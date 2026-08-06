@@ -3,7 +3,7 @@ import {
   downloadFile as downloadFileUtil,
   getLastPathSegment,
   encodeMediaUrl,
-  isPlausibleMediaUrl,
+  isValidMediaUrl,
 } from '../utils/shared/media.ts'
 
 export function useDownloadFile(
@@ -28,6 +28,6 @@ export function useDownloadFile(
     downloadFilename,
     triggerDownload,
     encodeMediaUrl,
-    isPlausibleMediaUrl,
+    isValidMediaUrl,
   }
 }

@@ -22,7 +22,7 @@ tags:
 
 # --- List preview --------------------------------------------------------
 # Reuse `description` as the post-list preview (instead of an auto excerpt).
-descrAsPreview: true
+descriptionAsPreview: true
 # previewText: "Or set explicit preview text — use one or the other, not both."
 
 # --- Footer links --------------------------------------------------------
@@ -54,7 +54,7 @@ button and podcast dropdown are all wired from the frontmatter.
 | Cover image + caption | `cover`, `coverWidth/Height`, `coverAlt`, `coverDescription` | top of post |
 | Author block | `authorId` | post footer |
 | Tags | `tags` | header + footer |
-| List preview | `descrAsPreview` | post-list cards |
+| List preview | `descriptionAsPreview` | post-list cards |
 | Video button | `videoLink`, `videoLinkLang` | top of post |
 | Podcast dropdown | `podcasts`, `podcastLang` | top of post |
 | Comment link | `commentLink` | post footer |
@@ -76,7 +76,7 @@ coverAlt: A tidy desk with a keyboard, notebook and plant
 coverDescription: "coverDescription supports **markdown** and [links](...)."
 
 tags: [frontmatter, guide]
-descrAsPreview: true
+descriptionAsPreview: true
 
 commentLink: https://github.com/.../discussions
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ

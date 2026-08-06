@@ -25,7 +25,7 @@ category: { name: 'Контент', slug: 'writing' }
 categories:
   - { name: 'Контент', slug: 'writing' }
 tags: [frontmatter]
-descrAsPreview: true
+descriptionAsPreview: true
 previewText: 'Кастомный текст превью для карточки списка постов.'
 featured: true
 readingTime: true
@@ -115,10 +115,10 @@ categories:
 # slug генерируется транслитерацией, если не указан явно.
 tags: [frontmatter]
 # Использовать description как текст превью в карточках списков постов.
-# Приоритет: previewText > descrAsPreview > авто-экстракт из контента.
+# Приоритет: previewText > descriptionAsPreview > авто-экстракт из контента.
 # По умолчанию: false.
-descrAsPreview: false
-# Явный текст превью. Имеет высший приоритет — перекрывает descrAsPreview.
+descriptionAsPreview: false
+# Явный текст превью. Имеет высший приоритет — перекрывает descriptionAsPreview.
 # Пустая строка ('') отключает превью, а не игнорируется.
 previewText: 'Кастомный текст превью для карточки списка постов.'
 # Помечает пост для коллекций избранных которые видны на главной странице и на отдельной странице избранных постов ссылка на которую ведет из левого сайдбара.

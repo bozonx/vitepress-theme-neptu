@@ -14,7 +14,7 @@ category: SEO
 tags:
   - seo
   - canonical
-descrAsPreview: true
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/canonical-crosspost
 ---

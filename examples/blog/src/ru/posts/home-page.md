@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Контент', slug: 'writing' }
 tags: [config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Главная страница локали `src/<локаль>/index.md` выглядит так:
@@ -123,14 +123,14 @@ layout: util
 ---
 
 <script setup>
-import { RecentList } from 'vitepress-theme-neptu/components'
+import { RecentPostsList } from 'vitepress-theme-neptu/components'
 </script>
 
-<RecentList :curPage="1" />
+<RecentPostsList :curPage="1" />
 ```
 
 Для популярных постов подставьте `PopularPostsList` (нужен
-`popularPosts.enabled`), для избранных — `FeaturedList`.
+`popularPosts.enabled`), для избранных — `FeaturedPostsList`.
 
 Три отличия от страницы-шаблона:
 

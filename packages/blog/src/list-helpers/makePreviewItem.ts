@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { DEFAULT_ENCODING, PREVIEW_LENGTH } from '../constants.ts'
+import { DEFAULT_ENCODING, DEFAULT_PREVIEW_LENGTH } from '../constants.ts'
 import {
   parseMdFile,
   extractDescriptionFromContent,
@@ -66,7 +66,7 @@ export function makePreviewItem(
   if (!preview)
     preview = extractDescriptionFromContent(
       content,
-      maxPreviewLength ?? PREVIEW_LENGTH
+      maxPreviewLength ?? DEFAULT_PREVIEW_LENGTH
     )
 
   const { wordCount, readingTime } = measureMarkdown(content, readingWpm)

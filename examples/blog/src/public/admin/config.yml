@@ -90,7 +90,7 @@ collections:
         preview: false
         i18n: true
       - label: "Use description as a preview (if not set previewText)"
-        name: "descrAsPreview"
+        name: "descriptionAsPreview"
         widget: "boolean"
         default: true
         required: false

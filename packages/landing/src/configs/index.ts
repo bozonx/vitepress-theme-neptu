@@ -3,7 +3,7 @@ export {
   mergeLandingConfig,
   defineLandingConfig,
   defineLandingConfigSync,
-} from './siteConfigBase.ts'
+} from './landingConfigBase.ts'
 export { loadLocale, autoLoadLocales } from './loadLocale.ts'
 export {
   defineSiteConfig,

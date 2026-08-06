@@ -9,7 +9,7 @@ category: Writing
 tags:
   - guide
   - frontmatter
-descrAsPreview: true
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/drafts-and-reading-time
 ---

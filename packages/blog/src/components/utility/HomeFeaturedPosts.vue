@@ -3,7 +3,7 @@ import { computed, inject } from 'vue'
 import { useData } from 'vitepress'
 import PreviewList from '../PreviewList.vue'
 import UtilSubPageHeader from './UtilSubPageHeader.vue'
-import { filterFeaturedPosts } from '../../utils/shared/index.ts'
+import { getFeaturedPostsSorted } from '../../utils/shared/index.ts'
 import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
@@ -22,7 +22,7 @@ const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []
 )
 const posts = computed(() =>
-  filterFeaturedPosts(localePosts.value, props.maxPosts)
+  getFeaturedPostsSorted(localePosts.value, props.maxPosts)
 )
 const title = computed(
   () => props.header || theme.value.t.featuredPosts || 'Featured Posts'

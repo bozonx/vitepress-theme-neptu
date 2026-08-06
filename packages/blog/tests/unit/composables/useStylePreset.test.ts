@@ -40,41 +40,41 @@ beforeEach(() => {
 
 describe('useStylePreset', () => {
   it('writes the attribute and persists the choice', () => {
-    const { setStylePreset, activeStyle } = useInComponent()
+    const { setStylePreset, activeStyleId } = useInComponent()
 
     setStylePreset('brutal')
 
     expect(document.documentElement.getAttribute(STYLE_ATTRIBUTE)).toBe('brutal')
     expect(localStorage.getItem(STYLE_STORAGE_KEY)).toBe('brutal')
-    expect(activeStyle.value).toBe('brutal')
+    expect(activeStyleId.value).toBe('brutal')
   })
 
   it('adopts the attribute already set by the head script', () => {
     document.documentElement.setAttribute(STYLE_ATTRIBUTE, 'glass')
 
-    const { activeStyle } = useInComponent()
+    const { activeStyleId } = useInComponent()
 
-    expect(activeStyle.value).toBe('glass')
+    expect(activeStyleId.value).toBe('glass')
   })
 
   it('restores a saved preset when no attribute is present', () => {
     localStorage.setItem(STYLE_STORAGE_KEY, 'editorial')
 
-    const { activeStyle } = useInComponent()
+    const { activeStyleId } = useInComponent()
 
-    expect(activeStyle.value).toBe('editorial')
+    expect(activeStyleId.value).toBe('editorial')
     expect(document.documentElement.getAttribute(STYLE_ATTRIBUTE)).toBe(
       'editorial'
     )
   })
 
   it('ignores an empty id', () => {
-    const { setStylePreset, activeStyle } = useInComponent()
+    const { setStylePreset, activeStyleId } = useInComponent()
     setStylePreset('sharp')
 
     setStylePreset('')
 
-    expect(activeStyle.value).toBe('sharp')
+    expect(activeStyleId.value).toBe('sharp')
   })
 
   it('ships the six built-in presets', () => {

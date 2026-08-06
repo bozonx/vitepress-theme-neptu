@@ -20,8 +20,8 @@ import type {
   ThemeConfig,
   I18nTranslations,
 } from '../types.d.ts'
-import siteBaseLocales from './siteLocalesBase/index.ts'
-import { landingBaseConfig as siteCommon } from './siteConfigBase.ts'
+import siteBaseLocales from './landingLocalesBase/index.ts'
+import { landingBaseConfig as siteCommon } from './landingConfigBase.ts'
 
 type SiteLocaleEntry = LocaleEntry
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
@@ -81,7 +81,7 @@ function processSidebar(
  * every admin-editable and developer-provided layer in priority order:
  *
  *   built-in theme defaults (siteCommon)
- *     → built-in content-locale defaults (`siteLocalesBase[*]`)
+ *     → built-in content-locale defaults (`landingLocalesBase[*]`)
  *       → config.ts (`LandingUserConfig.themeConfig`)
  *         → `<srcDir>/site.yaml` (cross-locale admin)
  *           → `<srcDir>/<localeIndex>/_site.yaml` extends chain

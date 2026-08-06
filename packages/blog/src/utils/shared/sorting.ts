@@ -12,7 +12,7 @@ interface SortablePost {
 
 
 /** Returns explicitly featured posts, newest first. */
-export function filterFeaturedPosts<T extends SortablePost & { featured?: boolean }>(
+export function getFeaturedPostsSorted<T extends SortablePost & { featured?: boolean }>(
   posts: T[] | null | undefined,
   limit?: number
 ): T[] {
@@ -24,17 +24,17 @@ export function filterFeaturedPosts<T extends SortablePost & { featured?: boolea
 export function sortPosts<T extends SortablePost>(
   posts: T[] | null | undefined,
   sortBy?: string,
-  useAnalyticsStats: boolean = false
+  byPopularity: boolean = false
 ): T[] {
   if (!posts || !Array.isArray(posts)) return []
 
-  if (useAnalyticsStats && !sortBy) {
+  if (byPopularity && !sortBy) {
     console.warn('⚠️ Warning: function sortPosts: sortBy is not defined')
     return posts
   }
 
   return [...posts].sort((a, b) => {
-    if (useAnalyticsStats && sortBy) {
+    if (byPopularity && sortBy) {
       // Sort by popularity
       const aHasStats = Number.isFinite(a.analyticsStats?.[sortBy])
       const bHasStats = Number.isFinite(b.analyticsStats?.[sortBy])

@@ -9,7 +9,7 @@ category: Configuration
 tags:
   - guide
   - config
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 The theme has two taxonomies. They share the same internals but answer

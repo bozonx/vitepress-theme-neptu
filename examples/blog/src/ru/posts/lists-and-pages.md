@@ -7,7 +7,7 @@ authorId: ivan-k
 date: 2026-07-19
 category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
 tags: [config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Вы пишете посты — а страницы-списки тема строит сама. Разберём, какие списки
@@ -113,18 +113,18 @@ layout: page
 **1. Автоматический (по умолчанию).** Ничего не делайте — тема сделает выжимку из текста статьи
 длиной до `maxPreviewLength` символов.
 
-**2. Использование описания.** Установите `descrAsPreview: true`, чтобы использовать поле `description`
+**2. Использование описания.** Установите `descriptionAsPreview: true`, чтобы использовать поле `description`
 из frontmatter как текст карточки (так сделано в большинстве демо-постов).
 
 **3. Явный текст.** Задайте `previewText`, чтобы вручную написать текст карточки. Используйте
-`descrAsPreview` **или** `previewText`, но не оба вместе.
+`descriptionAsPreview` **или** `previewText`, но не оба вместе.
 
 ```yaml
 # Явный текст превью:
 previewText: "Текст этой карточки задан явно через previewText…"
 
 # Или альтернативный вариант:
-# descrAsPreview: true
+# descriptionAsPreview: true
 ```
 
 ### Длина превью

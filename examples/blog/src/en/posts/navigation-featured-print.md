@@ -53,13 +53,13 @@ layout: util
 ---
 
 <script setup>
-import { RecentList } from 'vitepress-theme-neptu/components'
+import { RecentPostsList } from 'vitepress-theme-neptu/components'
 </script>
 
-<RecentList :curPage="1" />
+<RecentPostsList :curPage="1" />
 ```
 
-For popular posts, swap `RecentList` for `PopularPostsList` (requires
+For popular posts, swap `RecentPostsList` for `PopularPostsList` (requires
 `popularPosts.enabled` in `.vitepress/config.ts`).
 
 ### What's different from the listing template
@@ -69,7 +69,7 @@ For popular posts, swap `RecentList` for `PopularPostsList` (requires
 - **Remove `robots: noindex`.** The listing templates set `noindex` because
   paginated copies should not be indexed. Your home page *should* be indexed —
   drop the `head` block.
-- **Pagination links.** `RecentList` and `PopularPostsList` derive the
+- **Pagination links.** `RecentPostsList` and `PopularPostsList` derive the
   pagination base URL from the current route path. On the home page
   (`/en/`), links would point to `/en/1`, `/en/2` — which don't exist. The home
   page therefore works as a first-page view; for full pagination, link to

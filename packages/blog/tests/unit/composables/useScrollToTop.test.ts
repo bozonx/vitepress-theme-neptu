@@ -15,7 +15,7 @@ describe('useScrollToTop', () => {
 
   function mountComposable(animationMs?: number) {
     const result = {
-      isShown: ref(false),
+      isButtonVisible: ref(false),
       opacity: ref(0),
       show: () => {},
       hide: () => {},
@@ -24,7 +24,7 @@ describe('useScrollToTop', () => {
     const TestComp = defineComponent({
       setup() {
         const composable = animationMs !== undefined ? useScrollToTop(animationMs) : useScrollToTop()
-        result.isShown = composable.isShown
+        result.isButtonVisible = composable.isButtonVisible
         result.opacity = composable.opacity
         result.show = composable.show
         result.hide = composable.hide
@@ -37,57 +37,57 @@ describe('useScrollToTop', () => {
   }
 
   it('initial state is hidden', () => {
-    const { isShown, opacity } = mountComposable()
-    expect(isShown.value).toBe(false)
+    const { isButtonVisible, opacity } = mountComposable()
+    expect(isButtonVisible.value).toBe(false)
     expect(opacity.value).toBe(0)
   })
 
-  it('show sets isShown and transitions opacity', () => {
-    const { isShown, opacity, show } = mountComposable()
+  it('show sets isButtonVisible and transitions opacity', () => {
+    const { isButtonVisible, opacity, show } = mountComposable()
     show()
-    expect(isShown.value).toBe(true)
+    expect(isButtonVisible.value).toBe(true)
     vi.runAllTimers()
     expect(opacity.value).toBe(1)
   })
 
   it('show is idempotent', () => {
-    const { isShown, opacity, show } = mountComposable()
+    const { isButtonVisible, opacity, show } = mountComposable()
     show()
     show()
     vi.runAllTimers()
     expect(opacity.value).toBe(1)
-    expect(isShown.value).toBe(true)
+    expect(isButtonVisible.value).toBe(true)
   })
 
   it('hide sets opacity to 0 and hides after timeout', () => {
-    const { isShown, opacity, show, hide } = mountComposable(500)
+    const { isButtonVisible, opacity, show, hide } = mountComposable(500)
     show()
     vi.runAllTimers()
-    expect(isShown.value).toBe(true)
+    expect(isButtonVisible.value).toBe(true)
     expect(opacity.value).toBe(1)
 
     hide()
     expect(opacity.value).toBe(0)
-    expect(isShown.value).toBe(true)
+    expect(isButtonVisible.value).toBe(true)
 
     vi.advanceTimersByTime(500)
-    expect(isShown.value).toBe(false)
+    expect(isButtonVisible.value).toBe(false)
   })
 
   it('hide is idempotent when not shown', () => {
-    const { isShown, opacity, hide } = mountComposable()
+    const { isButtonVisible, opacity, hide } = mountComposable()
     hide()
-    expect(isShown.value).toBe(false)
+    expect(isButtonVisible.value).toBe(false)
     expect(opacity.value).toBe(0)
   })
 
   it('hide clears previous timeout', () => {
-    const { isShown, show, hide } = mountComposable(500)
+    const { isButtonVisible, show, hide } = mountComposable(500)
     show()
     hide()
     hide()
     vi.advanceTimersByTime(500)
-    expect(isShown.value).toBe(false)
+    expect(isButtonVisible.value).toBe(false)
   })
 
   it('handleClick scrolls to top', () => {

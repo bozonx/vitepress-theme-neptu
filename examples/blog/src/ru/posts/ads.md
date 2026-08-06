@@ -8,7 +8,7 @@ authorId: ivan-k
 date: 2026-07-05
 category: { name: 'Интеграция', slug: 'integration' }
 tags: [advanced, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Тема не содержит рекламного компонента и не привязана к сети. Она берёт на себя

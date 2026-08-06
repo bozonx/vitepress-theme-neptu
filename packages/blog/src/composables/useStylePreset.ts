@@ -26,7 +26,7 @@ export const STYLE_STORAGE_KEY = 'neptu-style-preset'
 export const STYLE_ATTRIBUTE = 'data-style'
 export const DEFAULT_STYLE_PRESET = 'soft'
 
-const activeStyle = ref<string>(DEFAULT_STYLE_PRESET)
+const activeStyleId = ref<string>(DEFAULT_STYLE_PRESET)
 
 /**
  * Reads and writes the `data-style` attribute on `<html>`.
@@ -36,13 +36,13 @@ const activeStyle = ref<string>(DEFAULT_STYLE_PRESET)
  * style; this composable only keeps the Vue side in sync.
  */
 export function useStylePreset(): {
-  activeStyle: Ref<string>
+  activeStyleId: Ref<string>
   setStylePreset: (id: string) => void
   stylePresets: StylePresetOption[]
 } {
   const setStylePreset = (id: string): void => {
     if (!id) return
-    activeStyle.value = id
+    activeStyleId.value = id
     if (typeof document === 'undefined') return
 
     document.documentElement.setAttribute(STYLE_ATTRIBUTE, id)
@@ -58,7 +58,7 @@ export function useStylePreset(): {
 
     const current = document.documentElement.getAttribute(STYLE_ATTRIBUTE)
     if (current) {
-      activeStyle.value = current
+      activeStyleId.value = current
       return
     }
 
@@ -70,5 +70,5 @@ export function useStylePreset(): {
     }
   })
 
-  return { activeStyle, setStylePreset, stylePresets: STYLE_PRESETS }
+  return { activeStyleId, setStylePreset, stylePresets: STYLE_PRESETS }
 }

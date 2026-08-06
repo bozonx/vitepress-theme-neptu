@@ -10,7 +10,7 @@ translations:
 date: 2026-07-24
 category: { name: 'Медиа', slug: 'media' }
 tags: [media]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Тема поддерживает три способа организации изображений и других медиафайлов.

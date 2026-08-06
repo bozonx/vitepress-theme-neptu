@@ -18,7 +18,7 @@ const props = defineProps<{
   icon?: string
 }>()
 
-const { activeStyle, setStylePreset, stylePresets } = useStylePreset()
+const { activeStyleId, setStylePreset, stylePresets } = useStylePreset()
 const { theme } = useThemeConfig()
 
 const enabled = computed(() => props.force || theme.value.stylePicker === true)
@@ -39,7 +39,7 @@ const options = computed(() =>
     v-if="enabled"
     class="style-preset-picker"
     :options="options"
-    :active-id="activeStyle"
+    :active-id="activeStyleId"
     :label="label"
     :icon="props.icon || 'fa6-solid:shapes'"
     @select="setStylePreset"

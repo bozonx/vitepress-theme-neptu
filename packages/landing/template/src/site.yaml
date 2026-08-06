@@ -101,7 +101,7 @@ themeConfig:
   # Partial translation overrides. Deep-merged over built-in locale defaults.
   # Only supply the keys you want to override. The landing theme adds its own
   # keys under `t.landing.*` (carousel, pricing, gallery, code, form, video,
-  # banner) — see node_modules/vitepress-theme-neptu-landing/src/configs/siteLocalesBase/en.ts.
+  # banner) — see node_modules/vitepress-theme-neptu-landing/src/configs/landingLocalesBase/en.ts.
   # t:
   #   returnToTopLabel: 'Return to top'
   #   landing:

@@ -9,7 +9,7 @@ authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Интеграция', slug: 'integration' }
 tags: [advanced, config, analytics]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 «Популярные посты» — это список статей, отсортированный по реальным

@@ -3,7 +3,7 @@ import {
   mergeLandingConfig,
   defineLandingConfig,
   defineLandingConfigSync,
-} from '../../../src/configs/siteConfigBase.ts'
+} from '../../../src/configs/landingConfigBase.ts'
 import { autoLoadLocales } from '../../../src/configs/loadLocale.ts'
 
 vi.mock('../../../src/configs/loadLocale.ts', () => ({

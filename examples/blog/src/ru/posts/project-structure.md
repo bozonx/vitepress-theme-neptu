@@ -8,7 +8,7 @@ date: 2026-08-01
 category: { name: 'Начало работы', slug: 'getting-started' }
 tags: [start]
 featured: true
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Блог, который вы [скопировали из шаблона](getting-started), имеет стандартизированную

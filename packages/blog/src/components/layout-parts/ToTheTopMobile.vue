@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 const SCROLL_BREAKPOINT = 1080
 const { theme } = useThemeConfig()
-const { isShown, opacity, show, hide, handleClick, animationMs } = useScrollToTop()
+const { isButtonVisible, opacity, show, hide, handleClick, animationMs } = useScrollToTop()
 
 watch(
   () => props.scrollY,
@@ -31,7 +31,7 @@ watch(
 
 <template>
   <div
-    :class="['bottom-0 right-0 fixed transition-opacity will-change-[opacity]', !isShown && 'hidden']"
+    :class="['bottom-0 right-0 fixed transition-opacity will-change-[opacity]', !isButtonVisible && 'hidden']"
     :style="{ opacity, 'transition-duration': `${animationMs}ms` }"
   >
     <button

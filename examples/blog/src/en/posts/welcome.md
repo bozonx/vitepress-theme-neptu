@@ -13,7 +13,7 @@ coverDescription: "Photo by [Alejandro Escamilla](https://unsplash.com/@alejandr
 category: Getting Started
 tags:
   - guide
-descrAsPreview: true
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/welcome
 ---

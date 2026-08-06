@@ -78,7 +78,7 @@ export function encodeMediaUrl(url: string): string {
  * Validates a URL for safe use in audio/video/download components.
  * Allows absolute URLs, relative paths, data: and blob: URIs.
  */
-export function isPlausibleMediaUrl(url: unknown): boolean {
+export function isValidMediaUrl(url: unknown): boolean {
   if (!url || typeof url !== 'string') {
     return false
   }

@@ -7,7 +7,7 @@ authorId: ivan-k
 date: 2026-07-04
 category: { name: 'Интеграция', slug: 'integration' }
 tags: [advanced, config]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Как только на сайте появляется реклама или счётчик посещений, появляется и

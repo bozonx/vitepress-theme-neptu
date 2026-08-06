@@ -13,7 +13,7 @@ translations:
 date: 2026-07-10
 category: { name: 'SEO', slug: 'seo' }
 tags: [seo]
-descrAsPreview: true
+descriptionAsPreview: true
 ---
 
 Откройте инструменты разработчика на этой странице и найдите в `<head>` тег
