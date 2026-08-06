@@ -14,10 +14,10 @@ themeConfig:
         alt: 'Логотип демо-блога'
       actions:
         - text: 'Начать за 5 минут'
-          href: 'post/getting-started'
+          href: 'posts/getting-started'
           primary: true
         - text: 'Содержание руководства'
-          href: 'page/contents'
+          href: 'pages/contents'
   editLink:
     text: 'Редактировать эту страницу на GitHub'
   donate:
@@ -25,13 +25,13 @@ themeConfig:
   nav:
     links:
       - text: 'Содержание'
-        href: 'page/contents'
+        href: 'pages/contents'
         icon: 'fa6-solid:list-ul'
         desktopOnly: true
   sidebar:
     links:
       - text: 'Содержание руководства'
-        href: 'page/contents'
+        href: 'pages/contents'
         icon: 'fa6-solid:list-ul'
     bottomLinks:
       - { header: '${t.links.links}' }
@@ -39,13 +39,13 @@ themeConfig:
         href: 'https://www.youtube.com/'
         icon: '${theme.youtubeIcon}'
       - text: 'Мы в соцсетях'
-        href: 'page/links'
+        href: 'pages/links'
         icon: 'fa6-solid:share-nodes'
   footer:
     message: 'Копирование разрешено только со ссылкой на источник.'
     copyright: 'Copyright © 2026-present Your Name.'
     links:
       - text: '${t.links.aboutBlog}'
-        href: 'page/about'
+        href: 'pages/about'
       - text: 'Содержание'
-        href: 'page/contents'
+        href: 'pages/contents'

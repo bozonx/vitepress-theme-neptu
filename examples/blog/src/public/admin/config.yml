@@ -43,9 +43,9 @@ collections:
     description: All the posts
     i18n: true
     folder: "src"
-    path: "post/{{slug}}"
+    path: "posts/{{slug}}"
     slug: "{{date | date('YYYY')}}-{{slug}}"
-    preview_path: "/{{locale}}/post/{{slug}}"
+    preview_path: "/{{locale}}/posts/{{slug}}"
     media_folder: /src/public/media
     public_folder: /media
     create: true
@@ -244,8 +244,8 @@ singletons:
         allow_language_selection: false
   - name: aboutblog
     label: About blog
-    file: "src/{{locale}}/page/about-blog.md"
-    preview_path: "/{{locale}}/page/{{slug}}"
+    file: "src/{{locale}}/pages/about-blog.md"
+    preview_path: "/{{locale}}/pages/{{slug}}"
     i18n: true
     fields:
       - label: "Description"

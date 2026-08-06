@@ -26,16 +26,16 @@ afterEach(() => {
 
 describe('collectColocatedMedia', () => {
   it('collects media next to posts and in media subfolders', () => {
-    write('ru/post/my-article/index.md')
-    write('ru/post/my-article/media/cover.jpg')
-    write('ru/post/next-to-me.md')
-    write('ru/post/next-to-me.png')
-    write('ru/page/deep/sub/demo.mp4')
+    write('ru/posts/my-article/index.md')
+    write('ru/posts/my-article/media/cover.jpg')
+    write('ru/posts/next-to-me.md')
+    write('ru/posts/next-to-me.png')
+    write('ru/pages/deep/sub/demo.mp4')
 
     expect(collectColocatedMedia(srcDir)).toEqual([
-      'ru/page/deep/sub/demo.mp4',
-      'ru/post/my-article/media/cover.jpg',
-      'ru/post/next-to-me.png',
+      'ru/pages/deep/sub/demo.mp4',
+      'ru/posts/my-article/media/cover.jpg',
+      'ru/posts/next-to-me.png',
     ])
   })
 
@@ -45,7 +45,7 @@ describe('collectColocatedMedia', () => {
     write('.vitepress/dist/img/built.png')
     write('ru/_authors.yaml')
     write('ru/getAllPosts.ts')
-    write('ru/post/a.md')
+    write('ru/posts/a.md')
 
     expect(collectColocatedMedia(srcDir)).toEqual([])
   })
@@ -57,38 +57,38 @@ describe('collectColocatedMedia', () => {
 
 describe('createColocatedMediaPlugin', () => {
   it('mirrors media into the output directory', () => {
-    write('ru/post/my-article/media/cover.jpg', 'jpeg-bytes')
+    write('ru/posts/my-article/media/cover.jpg', 'jpeg-bytes')
     const outDir = path.join(srcDir, '.vitepress', 'dist')
 
     createColocatedMediaPlugin(srcDir).writeBundle({ dir: outDir })
 
     expect(
       fs.readFileSync(
-        path.join(outDir, 'ru/post/my-article/media/cover.jpg'),
+        path.join(outDir, 'ru/posts/my-article/media/cover.jpg'),
         'utf-8'
       )
     ).toBe('jpeg-bytes')
   })
 
   it('never overwrites an already generated file', () => {
-    write('ru/post/a.png', 'source')
+    write('ru/posts/a.png', 'source')
     const outDir = path.join(srcDir, '.vitepress', 'dist')
-    fs.mkdirSync(path.join(outDir, 'ru/post'), { recursive: true })
-    fs.writeFileSync(path.join(outDir, 'ru/post/a.png'), 'generated')
+    fs.mkdirSync(path.join(outDir, 'ru/posts'), { recursive: true })
+    fs.writeFileSync(path.join(outDir, 'ru/posts/a.png'), 'generated')
 
     createColocatedMediaPlugin(srcDir).writeBundle({ dir: outDir })
 
-    expect(fs.readFileSync(path.join(outDir, 'ru/post/a.png'), 'utf-8')).toBe(
+    expect(fs.readFileSync(path.join(outDir, 'ru/posts/a.png'), 'utf-8')).toBe(
       'generated'
     )
   })
 
   it('skips the SSR bundle output', () => {
-    write('ru/post/a.png')
+    write('ru/posts/a.png')
     const tempDir = path.join(srcDir, '.vitepress', '.temp')
 
     createColocatedMediaPlugin(srcDir).writeBundle({ dir: tempDir })
 
-    expect(fs.existsSync(path.join(tempDir, 'ru/post/a.png'))).toBe(false)
+    expect(fs.existsSync(path.join(tempDir, 'ru/posts/a.png'))).toBe(false)
   })
 })

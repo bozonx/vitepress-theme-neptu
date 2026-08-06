@@ -96,6 +96,6 @@ feeds, archive, similar).
 ```
 
 Your `sync-remote-posts.mjs` fetches remote content and writes files like
-`src/en/post/<slug>.md` with the same frontmatter the theme expects (`title`,
+`src/en/posts/<slug>.md` with the same frontmatter the theme expects (`title`,
 `date`, `authorId`, `tags`, …). Because `prebuild` runs first, the freshly
 written posts are indexed on every build. See `docs/EXTERNAL_CONTENT.md`.

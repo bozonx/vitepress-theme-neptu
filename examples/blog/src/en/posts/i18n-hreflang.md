@@ -17,7 +17,7 @@ descrAsPreview: true
 # Link this post to its Russian counterpart. The theme uses this for the
 # language switcher AND for the <link rel="alternate" hreflang="ru"> tag.
 translations:
-  ru: "/ru/post/i18n-hreflang"
+  ru: "/ru/posts/i18n-hreflang"
 ---
 
 This very post exists in **Russian** too. Use the **language switcher** in the
@@ -62,15 +62,15 @@ article in other languages:
 ### How it's done
 
 ```yaml
-# in src/en/post/i18n-hreflang.md
+# in src/en/posts/i18n-hreflang.md
 translations:
-  ru: "/ru/post/i18n-hreflang"
+  ru: "/ru/posts/i18n-hreflang"
 ```
 
 ```yaml
-# in src/ru/post/i18n-hreflang.md
+# in src/ru/posts/i18n-hreflang.md
 translations:
-  en: "/en/post/i18n-hreflang"
+  en: "/en/posts/i18n-hreflang"
 ```
 
 From this the theme does two things automatically:

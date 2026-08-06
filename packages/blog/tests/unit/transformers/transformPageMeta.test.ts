@@ -59,7 +59,7 @@ describe('transformPageMeta', () => {
 
   it('normalizes object tags without slug', () => {
     const pageData = createPageData({
-      filePath: 'en/post/hello.md',
+      filePath: 'en/posts/hello.md',
       frontmatter: {
         layout: 'post',
         tags: [{ name: 'Foo Bar' } as any],

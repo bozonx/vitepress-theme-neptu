@@ -13,7 +13,7 @@ describe('PostReadingTime', () => {
   beforeEach(() => {
     mockFrontmatter.value = { layout: 'post' }
     mockPage.value = { readingTime: 1 }
-    mockRoute.value = { path: '/ru/post/example' }
+    mockRoute.value = { path: '/ru/posts/example' }
     mockTheme.value = {
       readingTime: { enabled: true, layouts: ['post'] },
       t: {},

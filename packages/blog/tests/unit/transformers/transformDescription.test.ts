@@ -33,7 +33,7 @@ describe('transformDescription', () => {
 
   it('leaves a static description to VitePress', () => {
     const pageData = {
-      filePath: 'en/page/about.md',
+      filePath: 'en/pages/about.md',
       frontmatter: { description: 'About the blog' },
       description: 'About the blog',
     } as any

@@ -21,8 +21,8 @@ export function isContentRelativePath(
 /**
  * Turns a path relative to a Markdown file into a site-root path.
  *
- * `./media/cover.jpg` inside `ru/post/my-article/index.md`
- * becomes `/ru/post/my-article/media/cover.jpg`.
+ * `./media/cover.jpg` inside `ru/posts/my-article/index.md`
+ * becomes `/ru/posts/my-article/media/cover.jpg`.
  *
  * Needed wherever the value is consumed away from its own page — list
  * previews, RSS items, `og:image`, JSON-LD — since a relative path would

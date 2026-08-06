@@ -82,8 +82,8 @@ collections:
             i18n: true
       - name: donate
         label: Donate
-        file: "src/{{locale}}/page/donate.md"
-        preview_path: "{{locale}}/page/{{slug}}"
+        file: "src/{{locale}}/pages/donate.md"
+        preview_path: "{{locale}}/pages/{{slug}}"
         i18n: true
         fields:
           - label: "Description"
@@ -98,8 +98,8 @@ collections:
             i18n: true
       - name: links
         label: Links
-        file: "src/{{locale}}/page/links.md"
-        preview_path: "{{locale}}/page/{{slug}}"
+        file: "src/{{locale}}/pages/links.md"
+        preview_path: "{{locale}}/pages/{{slug}}"
         i18n: true
         fields:
           - label: "Description"

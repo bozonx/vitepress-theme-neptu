@@ -30,8 +30,8 @@ src/
 ├── en/                  # a content locale (rename it, see below)
 │   ├── _site.yaml       # this locale: lang, title, description, overrides
 │   ├── _authors.yaml    # author profiles referenced by `authorId` in posts
-│   ├── post/            # your posts
-│   ├── page/            # standalone pages (about, donate, …)
+│   ├── posts/           # your posts
+│   ├── pages/           # standalone pages (about, donate, …)
 │   └── recent/ archive/ tags/ categories/ authors/ featured/ popular/
 │                        # generated list pages — see "Trim what you don't need"
 └── public/              # static assets served from the site root
@@ -54,7 +54,7 @@ selector and the only file allowed directly under `src/`.
   its `_site.yaml`.
 
 **Folder naming.** The folder name is the locale key and the URL prefix
-(`/ru/post/hello`). Use a bare ISO 639-1 code — `en`, `ru`, `de`, `pt` — unless
+(`/ru/posts/hello`). Use a bare ISO 639-1 code — `en`, `ru`, `de`, `pt` — unless
 you ship several variants of one language; then use BCP 47
 `<language>-<REGION>` with a lowercase language and an uppercase region:
 
@@ -88,9 +88,9 @@ bare.
    post-card and post-footer layout, `publisher` (used in JSON-LD).
 4. `src/<locale>/_authors.yaml` — replace the demo author; the `id` is what
    posts reference via `authorId`.
-5. `src/<locale>/page/` — rewrite `about.md`, `donate.md` (or delete them and
+5. `src/<locale>/pages/` — rewrite `about.md`, `donate.md` (or delete them and
    their links).
-6. `src/<locale>/post/` — delete `welcome.md` and `markdown-guide.md` and write
+6. `src/<locale>/posts/` — delete `welcome.md` and `markdown-guide.md` and write
    your own. `markdown-guide.md` doubles as a cheatsheet for the theme's
    Markdown extensions, so read it before deleting.
 7. `src/public/` — favicons, `site.webmanifest`, images. Paths in config are
@@ -111,7 +111,7 @@ page will point at pages that no longer exist.
 | Tags | `src/<locale>/tags/` | `sidebar.tags`, the `tags` home section, `tags` in `postFooter`, `tags` in post frontmatter |
 | Archive by year | `src/<locale>/archive/` | `sidebar.archive` |
 | Recent list page | `src/<locale>/recent/` | `sidebar.recent`, the `Browse Recent Posts` hero action in `_site.yaml` |
-| Donations | `src/<locale>/page/donate.md` | `nav.donate`, `sidebar.donate`, `donate` in `postFooter`, the `donate` block |
+| Donations | `src/<locale>/pages/donate.md` | `nav.donate`, `sidebar.donate`, `donate` in `postFooter`, the `donate` block |
 | Search | the `#nav-bar-content-before` slot in `src/.vitepress/theme/Layout.vue` | — |
 
 Sidebar and home flags live in `src/site.yaml`; `postFooter` too. Note that
@@ -123,7 +123,7 @@ arrays replace instead of merging across layers, so a `postFooter` override in
 1. Copy `src/<locale>/` to a new folder, e.g. `src/ru/`.
    - Copy **everything** if you want the same URLs in both languages, then
      translate the texts in place.
-   - Or copy everything except `post/` and `page/` if the new language gets its
+   - Or copy everything except `posts/` and `pages/` if the new language gets its
      own articles and page slugs.
 2. Edit the new `_site.yaml`: `lang`, `title`, `description`, hero and link
    texts. Use `extends: <locale>` to inherit another locale's settings instead of

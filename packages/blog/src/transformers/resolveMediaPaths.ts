@@ -5,8 +5,8 @@ import type { ExtendedPageData } from '../types.d.ts'
 /**
  * Rewrites co-located media paths in frontmatter to site-root paths.
  *
- * `cover: ./media/cover.jpg` in `ru/post/my-article/index.md` becomes
- * `/ru/post/my-article/media/cover.jpg`, so the same value stays correct in
+ * `cover: ./media/cover.jpg` in `ru/posts/my-article/index.md` becomes
+ * `/ru/posts/my-article/media/cover.jpg`, so the same value stays correct in
  * list previews, RSS items, `og:image` and JSON-LD — none of which are
  * rendered from the post's own URL.
  */

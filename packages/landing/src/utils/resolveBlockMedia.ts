@@ -2,8 +2,8 @@ import { resolveContentMediaPath } from 'vitepress-theme-neptu/utils'
 
 /**
  * Rewrites co-located media paths inside landing block data to site-root
- * paths, so `image: ./media/hero.svg` in `ru/page/pricing/index.md` becomes
- * `/ru/page/pricing/media/hero.svg`.
+ * paths, so `image: ./media/hero.svg` in `ru/pages/pricing/index.md` becomes
+ * `/ru/pages/pricing/media/hero.svg`.
  *
  * Block values are plain frontmatter strings rendered by Vue components, so
  * Vite never resolves them the way it resolves Markdown body images. Only

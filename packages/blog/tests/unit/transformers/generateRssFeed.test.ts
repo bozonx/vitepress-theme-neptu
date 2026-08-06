@@ -75,12 +75,12 @@ describe('generateRssFeed', () => {
   it('writes localized feeds and fills maxPosts with valid posts only', async () => {
     loadMock.mockResolvedValue([
       {
-        url: '/en/post/invalid',
+        url: '/en/posts/invalid',
         frontmatter: { date: '2024-03-03' },
         src: '# Missing title',
       },
       {
-        url: '/en/post/first',
+        url: '/en/posts/first',
         frontmatter: {
           title: 'First post',
           date: '2024-03-02',
@@ -91,7 +91,7 @@ describe('generateRssFeed', () => {
         src: '# First\n\nBody',
       },
       {
-        url: '/en/post/second',
+        url: '/en/posts/second',
         frontmatter: {
           title: 'Second post',
           date: '2024-03-01',
@@ -147,14 +147,14 @@ describe('generateRssFeed', () => {
     expect(rssPayload.items).toHaveLength(2)
     expect(rssPayload.items[0]).toMatchObject({
       title: 'First post',
-      link: 'https://example.com/en/post/first',
+      link: 'https://example.com/en/posts/first',
       image: 'https://example.com/img/post.webp',
       author: { name: 'Alice', link: 'https://example.com/en/authors/alice/1' },
       category: [{ name: 'Web Dev', domain: 'https://example.com/en/tags/web-dev/1' }],
     })
     expect(rssPayload.items[1]).toMatchObject({
       title: 'Second post',
-      link: 'https://example.com/en/post/second',
+      link: 'https://example.com/en/posts/second',
       category: [{ name: 'Vue', domain: 'https://example.com/en/tags/vue/1' }],
     })
   })
@@ -162,12 +162,12 @@ describe('generateRssFeed', () => {
   it('uses locale feed and SEO limits before global values', async () => {
     loadMock.mockResolvedValue([
       {
-        url: '/en/post/first',
+        url: '/en/posts/first',
         frontmatter: { title: 'First', date: '2024-03-02' },
         src: '# First\n\nA long body used as the generated description.',
       },
       {
-        url: '/en/post/second',
+        url: '/en/posts/second',
         frontmatter: { title: 'Second', date: '2024-03-01' },
         src: '# Second\n\nAnother generated description.',
       },

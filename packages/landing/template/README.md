@@ -69,7 +69,7 @@ npm run validate:blocks
 │   │   ├── _site.yaml      # Locale site config
 │   │   ├── index.md        # Landing page (blocks)
 │   │   ├── doc/            # Optional documentation
-│   │   └── page/           # Standalone pages
+│   │   └── pages/           # Standalone pages
 │   └── public/             # Static public assets (logo, hero…)
 ├── package.json
 └── README.md

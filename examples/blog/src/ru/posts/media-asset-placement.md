@@ -6,7 +6,7 @@ description: >
   выбрать.
 authorId: ivan-k
 translations:
-  en: /en/post/media-asset-placement
+  en: /en/posts/media-asset-placement
 date: 2026-07-24
 category: { name: 'Медиа', slug: 'media' }
 tags: [media]
@@ -30,7 +30,7 @@ src/
 │     ├─ cover.jpg
 │     └─ screenshot.png
 └─ ru/
-   └─ post/
+   └─ posts/
       └─ my-article.md
 ```
 
@@ -54,7 +54,7 @@ cover: /img/cover.jpg
 ```text
 src/
 └─ ru/
-   └─ post/
+   └─ posts/
       ├─ my-article.md
       ├─ my-other-article.md
       ├─ cover.jpg
@@ -72,18 +72,18 @@ cover: ./cover.jpg
 ```
 
 **Когда использовать**: когда медиа файлов не много и они не сильно засоряют папку с постами.
-Так же удобен вариант кастомной структуры папок в `post/` где можно сгруппировать несколько постов в отдельную папку и положить рядом с ними их картинки и другие медиа файлы.
+Так же удобен вариант кастомной структуры папок в `posts/` где можно сгруппировать несколько постов в отдельную папку и положить рядом с ними их картинки и другие медиа файлы.
 
 ## 3. Папка на статью с подпапкой media
 
 Каждая статья получает свою директорию. Markdown-файл называется `index.md`,
 а медиа лежат в подпапке (обычно `media`). URL остаётся чистым:
-`/ru/post/my-article/`.
+`/ru/posts/my-article/`.
 
 ```text
 src/
 └─ ru/
-   └─ post/
+   └─ posts/
       └─ my-article/
          ├─ index.md
          └─ media/

@@ -130,12 +130,12 @@ describe('mdImage', () => {
 
     const md = createMd()
     mdImage(md, { srcDir: '/src' })
-    md._rule(createMockState(tokens, { relativePath: 'en/post/my-article/index.md' }))
+    md._rule(createMockState(tokens, { relativePath: 'en/posts/my-article/index.md' }))
 
     expect(nodeUtils.getImageDimensions).toHaveBeenCalledWith(
       './photo.png',
       '/src',
-      'en/post/my-article/index.md'
+      'en/posts/my-article/index.md'
     )
     expect(imageToken.attrPush).toHaveBeenCalledWith(['width', '200'])
     expect(imageToken.attrPush).toHaveBeenCalledWith(['height', '100'])

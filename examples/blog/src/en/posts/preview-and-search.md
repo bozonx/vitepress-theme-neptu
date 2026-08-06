@@ -11,7 +11,7 @@ tags:
   - preview
 previewText: "This card's text was set explicitly with previewText — notice it differs from the first paragraph of the post body."
 translations:
-  ru: /ru/post/preview-and-search
+  ru: /ru/posts/preview-and-search
 ---
 
 Post-list cards (like the ones on **Recent**, **Tags**, and **Author** pages)
@@ -72,5 +72,5 @@ searchIncluded: false
 ```
 
 The post still renders and appears in listings; it just won't come up in search
-results. See [Feeds, Search & SEO Toggles](../page/seo-feeds-search) for how the
+results. See [Feeds, Search & SEO Toggles](../pages/seo-feeds-search) for how the
 whole search pipeline is wired.

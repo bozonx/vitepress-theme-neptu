@@ -22,7 +22,7 @@ describe('useContentLangs', () => {
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
       }),
       theme: ref({
         i18nRouting: true,
@@ -36,7 +36,7 @@ describe('useContentLangs', () => {
     expect(localeLinks.value).toEqual([
       {
         text: 'Русский',
-        link: '/ru/post/hello',
+        link: '/ru/posts/hello',
         lang: undefined,
         dir: undefined,
       },
@@ -54,7 +54,7 @@ describe('useContentLangs', () => {
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
       }),
       theme: ref({
         i18nRouting: true,
@@ -85,7 +85,7 @@ describe('useContentLangs', () => {
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
       }),
       theme: ref({
         i18nRouting: true,
@@ -98,7 +98,7 @@ describe('useContentLangs', () => {
     expect(localeLinks.value).toEqual([
       {
         text: 'English',
-        link: '/en-GB/post/hello',
+        link: '/en-GB/posts/hello',
         lang: undefined,
         dir: undefined,
       },
@@ -112,12 +112,12 @@ describe('useContentLangs', () => {
           en: { label: 'English' },
           ru: { label: 'Русский' },
         },
-        pages: [{ relativePath: 'en/post/hello.md' }],
+        pages: [{ relativePath: 'en/posts/hello.md' }],
         cleanUrls: true,
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
       }),
       theme: ref({
         i18nRouting: true,
@@ -138,17 +138,17 @@ describe('useContentLangs', () => {
           ru: { label: 'Русский' },
         },
         pages: [
-          { relativePath: 'en/post/hello-world.md' },
-          { relativePath: 'ru/post/privet-mir.md' },
+          { relativePath: 'en/posts/hello-world.md' },
+          { relativePath: 'ru/posts/privet-mir.md' },
         ],
         cleanUrls: true,
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello-world.md',
+        relativePath: 'en/posts/hello-world.md',
         frontmatter: {
           translations: {
-            ru: '/ru/post/privet-mir',
+            ru: '/ru/posts/privet-mir',
           },
         },
       }),
@@ -163,7 +163,7 @@ describe('useContentLangs', () => {
     expect(localeLinks.value).toEqual([
       {
         text: 'Русский',
-        link: '/ru/post/privet-mir#comments',
+        link: '/ru/posts/privet-mir#comments',
         lang: undefined,
         dir: undefined,
       },
@@ -178,14 +178,14 @@ describe('useContentLangs', () => {
           ru: { label: 'Русский' },
         },
         pages: [
-          { relativePath: 'en/post/hello-world.md' },
-          { relativePath: 'ru/post/hello-world.md' },
+          { relativePath: 'en/posts/hello-world.md' },
+          { relativePath: 'ru/posts/hello-world.md' },
         ],
         cleanUrls: true,
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello-world.md',
+        relativePath: 'en/posts/hello-world.md',
         frontmatter: {
           translations: {},
         },
@@ -209,14 +209,14 @@ describe('useContentLangs', () => {
           'pt-BR': { label: 'Português (Brasil)' },
         },
         pages: [
-          { relativePath: 'en-US/post/hello-world.md' },
+          { relativePath: 'en-US/posts/hello-world.md' },
           { relativePath: 'pt-BR/artigos/ola-mundo.md' },
         ],
         cleanUrls: true,
       }),
       localeIndex: ref('en-US'),
       page: ref({
-        relativePath: 'en-US/post/hello-world.md',
+        relativePath: 'en-US/posts/hello-world.md',
         frontmatter: {
           translations: {
             'pt-BR': '/pt-BR/artigos/ola-mundo',
@@ -249,14 +249,14 @@ describe('useContentLangs', () => {
           ru: { label: 'Русский' },
         },
         pages: [
-          { relativePath: 'en/post/hello.md' },
-          { relativePath: 'ru/post/hello.md' },
+          { relativePath: 'en/posts/hello.md' },
+          { relativePath: 'ru/posts/hello.md' },
         ],
         cleanUrls: true,
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {},
       }),
       theme: ref({
@@ -284,12 +284,12 @@ describe('useContentLangs', () => {
           en: { label: 'English' },
           ru: { label: 'Русский' },
         },
-        pages: [{ relativePath: 'en/post/hello.md' }],
+        pages: [{ relativePath: 'en/posts/hello.md' }],
         cleanUrls: true,
       }),
       localeIndex: ref('en'),
       page: ref({
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {},
       }),
       theme: ref({

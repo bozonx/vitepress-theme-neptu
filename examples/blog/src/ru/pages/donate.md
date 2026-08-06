@@ -3,7 +3,7 @@ title: Поддержать блог
 description: Демо-страница поддержки — цель кнопки «поддержать» в панели, сайдбаре и подвале поста.
 layout: page
 translations:
-  en: /en/page/donate
+  en: /en/pages/donate
 ---
 
 # Поддержать блог

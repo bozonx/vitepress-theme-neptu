@@ -123,7 +123,7 @@ src/
 │   ├── _site.yaml       # слой локали (заголовок, сайдбар)
 │   ├── index.md         # лендинг
 │   ├── doc/             # документация — необязательна
-│   └── page/            # отдельные страницы
+│   └── pages/            # отдельные страницы
 └── public/img/          # ассеты
 ```
 
@@ -135,7 +135,7 @@ src/
 выбора языка: страница может рекомендовать язык браузера, но не перенаправляет
 автоматически.
 
-Внутри `doc/` и `page/` вложенность не ограничена: страницу можно оформить
+Внутри `doc/` и `pages/` вложенность не ограничена: страницу можно оформить
 папкой с `index.md` и подпапкой `media/`. Подробности — в разделе
 [Структура и медиа](./structure).
 
@@ -165,4 +165,4 @@ DocSearch.
 [README лендинга](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/landing/README.md#search),
 а рабочий пример интеграции Pagefind — компонент `PageFindSearch.vue` из темы
 блога. В отличие от лендинга, тема блога поставляется с уже встроенным
-Pagefind — см. [Поиск в теме блога](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/post/seo-feeds-search).
+Pagefind — см. [Поиск в теме блога](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/posts/seo-feeds-search).

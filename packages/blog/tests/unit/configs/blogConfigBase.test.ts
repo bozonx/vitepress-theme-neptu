@@ -139,7 +139,7 @@ describe('mergeBlogConfig', () => {
     const result = mergeBlogConfig({})
     expect(result.sitemap).toBeDefined()
     expect(typeof result.sitemap.transformItems).toBe('function')
-    const items = [{ url: 'en/post/test', links: [] }]
+    const items = [{ url: 'en/posts/test', links: [] }]
     expect(result.sitemap.transformItems(items)).toEqual(items)
   })
 
@@ -306,7 +306,7 @@ describe('mergeBlogConfig', () => {
       customData: 'value',
     })
     const result = mergeBlogConfig({ transformPageData: customFn })
-    const pageData = { frontmatter: {}, relativePath: 'en/post/test.md' }
+    const pageData = { frontmatter: {}, relativePath: 'en/posts/test.md' }
     const ctx = { siteConfig: {} }
     await (result.transformPageData as any)(pageData, ctx)
     expect(customFn).toHaveBeenCalledWith(pageData, ctx)

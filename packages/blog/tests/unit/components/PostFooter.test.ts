@@ -75,7 +75,7 @@ describe('PostFooter', () => {
     const wrapper = mount(PostFooter, {
       global: {
         provide: {
-          posts: { en: [{ url: '/en/post/a' }], ru: [{ url: '/ru/post/a' }] },
+          posts: { en: [{ url: '/en/posts/a' }], ru: [{ url: '/ru/posts/a' }] },
         },
         stubs: defaultStubs,
       },
@@ -83,14 +83,14 @@ describe('PostFooter', () => {
 
     expect(
       wrapper.findComponent({ name: 'PostSimilarList' }).props('localePosts')
-    ).toEqual([{ url: '/en/post/a' }])
+    ).toEqual([{ url: '/en/posts/a' }])
 
     mockLocaleIndex.value = 'ru'
     await wrapper.vm.$nextTick()
 
     expect(
       wrapper.findComponent({ name: 'PostSimilarList' }).props('localePosts')
-    ).toEqual([{ url: '/ru/post/a' }])
+    ).toEqual([{ url: '/ru/posts/a' }])
   })
 
   it('renders blocks in the order defined by theme.postFooter', () => {

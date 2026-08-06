@@ -36,7 +36,7 @@ test('recent posts page loads', async ({ page }) => {
 // ---------------------------------------------------------------------------
 
 test('post page loads with content and JSON-LD', async ({ page }) => {
-  await page.goto('en/post/full-featured', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/posts/full-featured', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('h1')).toContainText('Full-Featured Post')
 
   const jsonLd = await page.locator('script[type="application/ld+json"]').textContent()
@@ -49,7 +49,7 @@ test('post page loads with content and JSON-LD', async ({ page }) => {
 // ---------------------------------------------------------------------------
 
 test('about page loads', async ({ page }) => {
-  await page.goto('en/page/about', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/pages/about', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('h1')).toContainText('About This Demo')
 })
 
@@ -78,7 +78,7 @@ test('a category lists its posts', async ({ page }) => {
 // The chip in a post footer must reach the generated route — a mismatch between
 // the frontmatter slug and the route slug would 404 here.
 test('post category chip links to a real category page', async ({ page }) => {
-  await page.goto('en/post/categories-and-tags', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/posts/categories-and-tags', { waitUntil: 'domcontentloaded' })
   const crumb = page.locator('nav[aria-label="Breadcrumb"] a').last()
   await expect(crumb).toBeVisible()
   await crumb.click()
@@ -102,9 +102,9 @@ test('archive page loads', async ({ page }) => {
 // ---------------------------------------------------------------------------
 
 test('canonical link present', async ({ page }) => {
-  await page.goto('en/post/full-featured', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/posts/full-featured', { waitUntil: 'domcontentloaded' })
   const canonical = page.locator('link[rel="canonical"]')
-  await expect(canonical).toHaveAttribute('href', /post\/full-featured/)
+  await expect(canonical).toHaveAttribute('href', /posts\/full-featured/)
 })
 
 test('alternate hreflang links present', async ({ page }) => {

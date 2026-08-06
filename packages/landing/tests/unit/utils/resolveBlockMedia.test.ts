@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { resolveBlockMedia } from '../../../src/utils/resolveBlockMedia.ts'
 
-const MD_PATH = 'ru/page/pricing/index.md'
+const MD_PATH = 'ru/pages/pricing/index.md'
 
 describe('resolveBlockMedia', () => {
   it('resolves relative media inside nested block data', () => {
@@ -21,12 +21,12 @@ describe('resolveBlockMedia', () => {
     expect(resolveBlockMedia(blocks, MD_PATH)).toEqual([
       {
         type: 'hero',
-        image: '/ru/page/pricing/media/hero.svg',
+        image: '/ru/pages/pricing/media/hero.svg',
         actions: [{ text: 'Go', link: '/ru/doc' }],
       },
       {
         type: 'cards',
-        items: [{ image: '/ru/page/shared/card.png' }],
+        items: [{ image: '/ru/pages/shared/card.png' }],
       },
     ])
   })

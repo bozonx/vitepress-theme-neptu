@@ -3,7 +3,7 @@ title: Support This Blog
 description: Demo donate page — the target of the donate button in the nav, sidebar, and post footer.
 layout: page
 translations:
-  ru: /ru/page/donate
+  ru: /ru/pages/donate
 ---
 
 # Support This Blog
@@ -21,7 +21,7 @@ Its URL and icon come from `themeConfig.donate`:
 # src/site.yaml
 themeConfig:
   donate:
-    url: 'page/donate'
+    url: 'pages/donate'
     postDonateCall: 'If you find this blog useful, consider supporting it.'
     # icon: 'fa6-solid:hand-holding-heart'
 ```

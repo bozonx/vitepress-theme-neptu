@@ -24,7 +24,7 @@ coverAlt: Notebook on table
 # previewText: Custom card preview instead of the first paragraph
 # descrAsPreview: true   # use `description` as the card preview
 # translations:          # link this post to its translations: locale -> path
-#   ru: /ru/post/welcome
+#   ru: /ru/posts/welcome
 # commentLink: https://github.com/your-username/my-blog/discussions/1
 # videoLink: https://youtu.be/xxxx
 # podcasts:

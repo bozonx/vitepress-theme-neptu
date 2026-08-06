@@ -79,7 +79,7 @@ Only article text is indexed: the author, comments, share, similar-posts and
 "Popular" blocks are marked with `data-pagefind-ignore` and never show up in
 snippets. Post tags are exposed as the `tag` filter and the post date as the
 `date` sort. Exclude a single post with `searchIncluded: false` in its
-frontmatter — see [Preview & Search](../post/preview-and-search).
+frontmatter — see [Preview & Search](../posts/preview-and-search).
 
 ### Tuning the index
 

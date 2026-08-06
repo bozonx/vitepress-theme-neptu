@@ -88,7 +88,7 @@ src/
     ├── _site.yaml
     ├── index.md         # landing page
     ├── doc/             # optional
-    └── page/            # optional
+    └── pages/           # optional
 ```
 
 The locale directory is required even when the site has only one language;

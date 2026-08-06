@@ -177,7 +177,7 @@ describe('mergeLandingConfig', () => {
     const result = mergeLandingConfig({})
     expect(result.sitemap).toBeDefined()
     expect(typeof result.sitemap.transformItems).toBe('function')
-    const items = [{ url: 'en/post/test', links: [] }]
+    const items = [{ url: 'en/posts/test', links: [] }]
     expect(result.sitemap.transformItems(items)).toEqual(items)
   })
 

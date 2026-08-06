@@ -15,7 +15,7 @@ tags:
   - guide
 descrAsPreview: true
 translations:
-  ru: /ru/post/welcome
+  ru: /ru/posts/welcome
 ---
 
 Welcome! This whole site is a **living manual** for
@@ -59,11 +59,11 @@ coverDescription: "Photo by [Alejandro Escamilla](https://unsplash.com/@...) on 
 - [Canonical & cross-posting](canonical-crosspost) — avoid duplicate-content penalties.
 - [i18n & hreflang](i18n-hreflang) — this post exists in Russian too.
 
-**Configuration** (in the `page/*` section)
-- [Config layers](../page/config-layers) · [Color themes & fonts](../page/color-themes) ·
-  [Nav, sidebar & footer](../page/nav-sidebar-footer) ·
-  [Feeds, search & SEO toggles](../page/seo-feeds-search) ·
-  [Advanced: hooks & external content](../page/advanced)
+**Configuration** (in the `pages/*` section)
+- [Config layers](../pages/config-layers) · [Color themes & fonts](../pages/color-themes) ·
+  [Nav, sidebar & footer](../pages/nav-sidebar-footer) ·
+  [Feeds, search & SEO toggles](../pages/seo-feeds-search) ·
+  [Advanced: hooks & external content](../pages/advanced)
 
 ## Explore the layouts
 

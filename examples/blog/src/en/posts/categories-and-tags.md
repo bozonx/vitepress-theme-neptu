@@ -123,13 +123,13 @@ import { NeptuBreadcrumbs } from 'vitepress-theme-neptu/components'
 <NeptuBreadcrumbs
   :items="[
     { text: 'Home', href: '/' },
-    { text: 'Docs', href: 'page/docs' },
+    { text: 'Docs', href: 'pages/docs' },
     { text: 'Current page' },
   ]"
 />
 ```
 
-Relative hrefs (`page/docs`) get the active locale prefix automatically. The
+Relative hrefs (`pages/docs`) get the active locale prefix automatically. The
 last item needs no `href` — the current page renders as plain text.
 
 ## Search

@@ -28,7 +28,7 @@ export interface LoadPostsOptions {
   /** Cache store for dependency injection. Falls back to the global singleton. */
   cache?: Record<string, Post[]>
   maxPreviewLength?: number
-  /** Posts subdirectory name inside each locale dir. Defaults to `POSTS_DIR` ("post"). */
+  /** Posts subdirectory name inside each locale dir. Defaults to `POSTS_DIR` ("posts"). */
   postsDir?: string
   /** Absolute path to srcDir. Passed to makePreviewItem to avoid hardcoded depth assumption. */
   srcDir?: string
@@ -52,7 +52,7 @@ function applyVisibility(posts: Post[], showDrafts: boolean): Post[] {
   return posts.filter((post) => isPostVisible(post.frontmatter))
 }
 
-/** Loads all posts from the `<localeDir>/post` directory. */
+/** Loads all posts from the `<localeDir>/posts` directory. */
 export async function loadPostsData(
   localeDir: string,
   options: LoadPostsOptions = {}
@@ -81,7 +81,7 @@ export async function loadPostsData(
 
   try {
     // Recursive: posts may live in subfolders — a folder per article
-    // (`post/my-article/index.md`) or any deeper grouping.
+    // (`posts/my-article/index.md`) or any deeper grouping.
     const files = await fs.readdir(postsDir, { recursive: true })
     const mdFiles = files.filter((file) => file.endsWith('.md')).sort()
     const fullPaths = mdFiles.map((file) => path.join(postsDir, file))
@@ -113,9 +113,8 @@ export async function loadPostsData(
 
 /**
  * Derives `srcDir` from a post path by locating the posts directory:
- * `<srcDir>/<locale>/<postsDir>/…/post.md`.
- *
- * Lets nested posts (`post/my-article/index.md`) resolve their locale and URL
+ * `<srcDir>/<locale>/<postsDir>/…/article.md`.
+   * Lets nested posts (`posts/my-article/index.md`) resolve their locale and URL
  * without the caller having to pass `srcDir` explicitly.
  */
 function inferSrcDir(filePath: string, postsDirName: string): string | undefined {

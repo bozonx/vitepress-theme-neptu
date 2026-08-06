@@ -25,12 +25,12 @@ describe('resolveTranslationsByFilePath', () => {
   })
 
   it('handles nested paths', () => {
-    const result = resolveTranslationsByFilePath('en/post/hello.md')
+    const result = resolveTranslationsByFilePath('en/posts/hello.md')
     expect(result).toBeDefined()
   })
 
   it('falls back from locale variant to base interface locale', () => {
-    const result = resolveTranslationsByFilePath('en-US/post/hello.md')
+    const result = resolveTranslationsByFilePath('en-US/posts/hello.md')
     expect(result).toBeDefined()
     expect(result.label).toBe('English')
   })

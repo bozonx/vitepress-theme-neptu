@@ -56,7 +56,7 @@ describe('SiteYamlSchema', () => {
         langMenuLabel: 'Change language',
         feeds: { formats: ['rss', 'atom'] },
         seo: { canonical: true, maxDescriptionLength: 300 },
-        nav: { links: [{ text: 'About', href: 'page/about' }] },
+        nav: { links: [{ text: 'About', href: 'pages/about' }] },
         popularPosts: { sortBy: 'pageviews' },
         home: {
           appearance: 'auto',

@@ -18,7 +18,7 @@ vi.mock('../../../../src/utils/node/i18n.ts', () => ({
       title: 'Example',
       description: 'Example description',
       themeConfig: {
-        donate: { url: 'page/donate' },
+        donate: { url: 'pages/donate' },
         resolvedLangMenuLabel: props.theme?.langMenuLabel,
         resolvedViewInAnotherLanguage: props.theme?.t?.viewInAnotherLanguage,
         t: { rootCustomKey: 'Root custom value', customKey: 'Custom value' },
@@ -83,7 +83,7 @@ describe('loadBlogLocale', () => {
 
     expect(result.lang).toBe('en-US')
     expect(result.label).toBe('English')
-    expect((result.themeConfig!.donate as any).url).toBe('page/donate')
+    expect((result.themeConfig!.donate as any).url).toBe('pages/donate')
     expect((result.themeConfig!.t as any).rootCustomKey).toBe(
       'Root custom value'
     )
@@ -144,14 +144,14 @@ describe('loadBlogLocale', () => {
       title: 'Parent title',
       description: 'Parent desc',
       themeConfig: {
-        donate: { url: 'page/donate-parent', postDonateCall: 'Parent call' },
+        donate: { url: 'pages/donate-parent', postDonateCall: 'Parent call' },
       },
     }
     siteMocks['en-GB'] = {
       extends: 'en',
       title: 'Child title',
       themeConfig: {
-        donate: { url: 'page/donate-gb' },
+        donate: { url: 'pages/donate-gb' },
       },
     }
 
@@ -162,7 +162,7 @@ describe('loadBlogLocale', () => {
     expect(result.description).toBe('Parent desc')
     expect((result.themeConfig!.donate as any).postDonateCall).toBe('Parent call')
     // Overridden by child
-    expect((result.themeConfig!.donate as any).url).toBe('page/donate-gb')
+    expect((result.themeConfig!.donate as any).url).toBe('pages/donate-gb')
   })
 
   it('detects cycles in _site.yaml extends chain without crashing', async () => {

@@ -19,7 +19,7 @@ describe('collectImageDimensions', () => {
 
     const pageData: any = {
       frontmatter: { cover: '/img/hero.png' },
-      relativePath: 'en/post/welcome.md',
+      relativePath: 'en/posts/welcome.md',
     }
     collectImageDimensions(pageData, { srcDir: '/src' } as any)
     expect(pageData.frontmatter.coverHeight).toBe(600)
@@ -31,7 +31,7 @@ describe('collectImageDimensions', () => {
 
     const pageData: any = {
       frontmatter: { cover: '/img/hero.png' },
-      relativePath: 'en/post/welcome.md',
+      relativePath: 'en/posts/welcome.md',
     }
     collectImageDimensions(pageData, { srcDir: '/src' } as any)
     expect(pageData.frontmatter.coverHeight).toBeUndefined()
@@ -43,13 +43,13 @@ describe('collectImageDimensions', () => {
 
     const pageData: any = {
       frontmatter: { cover: '/img/cover.jpg' },
-      relativePath: 'en/post/my-article/index.md',
+      relativePath: 'en/posts/my-article/index.md',
     }
     collectImageDimensions(pageData, { srcDir: '/project/src' } as any)
     expect(nodeUtils.getImageDimensions).toHaveBeenCalledWith(
       '/img/cover.jpg',
       '/project/src',
-      'en/post/my-article/index.md'
+      'en/posts/my-article/index.md'
     )
   })
 

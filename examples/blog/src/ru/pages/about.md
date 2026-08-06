@@ -3,7 +3,7 @@ title: О демо
 description: Что это за демо-блог и как использовать его как основу для своего сайта.
 layout: page
 translations:
-  en: /en/page/about
+  en: /en/pages/about
 ---
 
 # О демо
@@ -31,7 +31,7 @@ translations:
 
 - задайте `siteUrl` в `.vitepress/config.ts`,
 - отредактируйте `src/site.yaml` и `src/<локаль>/_site.yaml`,
-- удалите демо-посты в `src/<локаль>/post/` и напишите свои.
+- удалите демо-посты в `src/<локаль>/posts/` и напишите свои.
 
-Пошагово это описано в разделе [Запуск за 5 минут](../post/getting-started), а
-какой файл за что отвечает — в [Структуре проекта](../post/project-structure).
+Пошагово это описано в разделе [Запуск за 5 минут](../posts/getting-started), а
+какой файл за что отвечает — в [Структуре проекта](../posts/project-structure).

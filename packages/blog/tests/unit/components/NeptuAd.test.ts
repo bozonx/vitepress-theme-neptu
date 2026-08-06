@@ -19,7 +19,7 @@ const mountAd = (props = {}, slots = {}) =>
 describe('NeptuAd', () => {
   beforeEach(() => {
     mockFrontmatter.value = { layout: 'post' }
-    mockRoute.value = { path: '/en/post/hello' }
+    mockRoute.value = { path: '/en/posts/hello' }
     mockTheme.value = { ads: { component: 'AdUnit' } }
   })
 
@@ -57,7 +57,7 @@ describe('NeptuAd', () => {
 
   it('keys the unit by route so a new page requests a new creative', () => {
     const first = mountAd().findComponent(AdUnit).vm.$.vnode.key
-    mockRoute.value = { path: '/en/post/other' }
+    mockRoute.value = { path: '/en/posts/other' }
     const second = mountAd().findComponent(AdUnit).vm.$.vnode.key
 
     expect(first).not.toBe(second)

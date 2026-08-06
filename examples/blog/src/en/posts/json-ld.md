@@ -15,7 +15,7 @@ jsonLd: |
   proficiencyLevel: Beginner
   dependencies: VitePress, vitepress-theme-neptu
 translations:
-  ru: /ru/post/seo-json-ld
+  ru: /ru/posts/seo-json-ld
 ---
 
 Open your browser's dev tools on this page and look in `<head>` for a
@@ -104,4 +104,4 @@ themeConfig:
 ```
 
 For the other SEO features (OG, canonical, hreflang, RSS) and their toggles, see
-[Feeds, Search & SEO Toggles](../page/seo-feeds-search).
+[Feeds, Search & SEO Toggles](../pages/seo-feeds-search).

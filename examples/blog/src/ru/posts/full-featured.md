@@ -19,7 +19,7 @@ podcasts:
   applepodcasts: https://podcasts.apple.com/
   youtube: https://www.youtube.com/
 translations:
-  en: /en/post/full-featured
+  en: /en/posts/full-featured
 date: 2026-07-29
 category: { name: 'Контент', slug: 'writing' }
 categories:
@@ -69,7 +69,7 @@ layout: post
 # Важнно точно и без ошибок указывать ID автора чтобы правльно сформировались списки постов по авторам.
 authorId: ivan-k
 # URL обложки. Поддерживает URL и co-located пути: ./media/cover.jpg —
-# автоматически разрешается в site-root путь (/ru/post/.../media/cover.jpg).
+# автоматически разрешается в site-root путь (/ru/posts/.../media/cover.jpg).
 cover: https://images.unsplash.com/photo-...
 # Если не указать — автоматически вычисляются из локального файла.
 # Для внешних URL (https://...) нужно указывать вручную чтобы избежать CLS (Cumulative Layout Shift - прыгание контента при загрузке картинок).
@@ -98,7 +98,7 @@ podcasts:
 # Используется переключателем языков в шапке И hreflang-тегами для SEO.
 # Если не указать — переключатель пытается найти тот же путь в другой локали.
 translations:
-  en: /en/post/full-featured
+  en: /en/posts/full-featured
 # Дата публикации. Строка или Date. Используется для сортировки постов,
 # article:published_time в OG и datePublished в JSON-LD.
 date: 2026-07-29

@@ -16,7 +16,7 @@ tags:
 descrAsPreview: true
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
 translations:
-  ru: /ru/post/post-footer-and-sharing
+  ru: /ru/posts/post-footer-and-sharing
 ---
 
 Scroll to the bottom of this post and you'll see the whole footer stack in

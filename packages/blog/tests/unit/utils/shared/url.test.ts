@@ -93,17 +93,17 @@ describe('resolveI18Href', () => {
   })
 
   it('supports hyphenated locale indexes', () => {
-    expect(resolveI18Href('post/hello', 'en-US')).toBe('/en-US/post/hello')
+    expect(resolveI18Href('posts/hello', 'en-US')).toBe('/en-US/posts/hello')
   })
 })
 
 describe('generatePageUrlPath', () => {
   it('removes file extension', () => {
-    expect(generatePageUrlPath('post/hello.md')).toBe('post/hello')
+    expect(generatePageUrlPath('posts/hello.md')).toBe('posts/hello')
   })
 
   it('removes trailing /index', () => {
-    expect(generatePageUrlPath('post/index.md')).toBe('post')
+    expect(generatePageUrlPath('posts/index.md')).toBe('posts')
   })
 
   it('returns empty string for root index', () => {
@@ -111,7 +111,7 @@ describe('generatePageUrlPath', () => {
   })
 
   it('handles nested index', () => {
-    expect(generatePageUrlPath('en/post/index.md')).toBe('en/post')
+    expect(generatePageUrlPath('en/posts/index.md')).toBe('en/posts')
   })
 
   it('handles path without index', () => {
@@ -131,8 +131,8 @@ describe('normalizeSiteUrl', () => {
 
 describe('makeAbsoluteUrl', () => {
   it('joins relative paths with normalized siteUrl', () => {
-    expect(makeAbsoluteUrl('https://example.com/', 'en/post/hello')).toBe(
-      'https://example.com/en/post/hello'
+    expect(makeAbsoluteUrl('https://example.com/', 'en/posts/hello')).toBe(
+      'https://example.com/en/posts/hello'
     )
   })
 
@@ -151,7 +151,7 @@ describe('makeAbsoluteUrl', () => {
 
 describe('replaceRelativePathLocale', () => {
   it('replaces the locale prefix', () => {
-    expect(replaceRelativePathLocale('en/post/hello.md', 'ru')).toBe('ru/post/hello.md')
+    expect(replaceRelativePathLocale('en/posts/hello.md', 'ru')).toBe('ru/posts/hello.md')
   })
 
   it('returns undefined for invalid paths', () => {

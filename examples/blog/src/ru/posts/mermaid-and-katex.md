@@ -3,7 +3,7 @@ title: Диаграммы Mermaid и формулы KaTeX
 description: Опциональное подключение Mermaid и KaTeX к блогу Neptu без увеличения bundle всех сайтов.
 authorId: ivan-k
 translations:
-  en: /en/post/mermaid-and-katex
+  en: /en/posts/mermaid-and-katex
 date: 2026-07-25
 category: { name: 'Продвинутое', slug: 'advanced' }
 tags: [advanced]

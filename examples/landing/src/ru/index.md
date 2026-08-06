@@ -292,7 +292,7 @@ blocks:
           - Свои блоки
           - Дизайн-ревью
           - { text: On-prem CMS, included: false }
-        action: { text: Связаться, link: /ru/page/links, variant: alt }
+        action: { text: Связаться, link: /ru/pages/links, variant: alt }
 
   - type: compare
     id: compare
@@ -380,7 +380,7 @@ blocks:
     text: Раз в месяц — что появилось в теме и как это использовать.
     action: https://example.com/subscribe
     submitText: Подписаться
-    consent: 'Согласен с <a href="page/links">условиями</a>'
+    consent: 'Согласен с <a href="pages/links">условиями</a>'
     note: Отписаться можно в один клик.
 
   - type: cta

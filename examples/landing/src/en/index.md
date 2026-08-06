@@ -150,7 +150,7 @@ const plans = [
   {
     title: 'Enterprise', price: 'Custom', text: 'Design system integration and a support SLA.',
     features: ['Everything in Studio', 'Custom blocks', 'Design review', { text: 'On-prem CMS', included: false }],
-    action: { text: 'Contact us', link: `${L}/page/links`, variant: 'alt' },
+    action: { text: 'Contact us', link: `${L}/pages/links`, variant: 'alt' },
   },
 ]
 
@@ -385,7 +385,7 @@ const gallery = [1, 2, 3, 4, 5, 6].map((i) => ({
   text="Once a month: what shipped and how to use it."
   action="https://example.com/subscribe"
   submit-text="Subscribe"
-  consent="I agree to the <a href='page/links'>terms</a>"
+  consent="I agree to the <a href='pages/links'>terms</a>"
   note="Unsubscribe in one click."
 />
 

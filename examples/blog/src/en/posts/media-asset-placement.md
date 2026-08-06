@@ -12,7 +12,7 @@ tags:
   - guide
 descrAsPreview: true
 translations:
-  ru: /ru/post/media-asset-placement
+  ru: /ru/posts/media-asset-placement
 ---
 
 The theme supports three ways to organize images and other media files. All
@@ -31,7 +31,7 @@ src/
 │     ├─ cover.jpg
 │     └─ screenshot.png
 └─ en/
-   └─ post/
+   └─ posts/
       └─ my-article.md
 ```
 
@@ -56,7 +56,7 @@ path. The theme reads dimensions automatically at build time.
 ```text
 src/
 └─ en/
-   └─ post/
+   └─ posts/
       ├─ my-article.md
       ├─ cover.jpg
       └─ screenshot.png
@@ -79,12 +79,12 @@ in one place. Deleting the `.md` file also deletes its images.
 
 Each article gets its own directory. The markdown file is `index.md` and
 media lives in a subfolder (commonly named `media`). With `cleanUrls: true`
-(enabled by default), the URL stays clean: `/en/post/my-article/`.
+(enabled by default), the URL stays clean: `/en/posts/my-article/`.
 
 ```text
 src/
 └─ en/
-   └─ post/
+   └─ posts/
       └─ my-article/
          ├─ index.md
          └─ media/

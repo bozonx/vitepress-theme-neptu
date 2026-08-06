@@ -16,7 +16,7 @@ themeConfig:
           href: 'recent/1'
           primary: true
         - text: 'Read the guide'
-          href: 'post/welcome'
+          href: 'posts/welcome'
   editLink:
     text: 'Edit this page on GitHub'
   donate:
@@ -34,11 +34,11 @@ themeConfig:
         href: 'https://www.youtube.com/'
         icon: '${theme.youtubeIcon}'
       - text: 'We in social media'
-        href: 'page/links'
+        href: 'pages/links'
         icon: 'fa6-solid:share-nodes'
   footer:
     message: 'Copying allowed only with a link to the source.'
     copyright: 'Copyright © 2026-present Your Name.'
     links:
       - text: '${t.links.aboutBlog}'
-        href: 'page/about'
+        href: 'pages/about'

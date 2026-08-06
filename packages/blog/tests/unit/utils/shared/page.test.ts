@@ -91,7 +91,7 @@ describe('isPopularRoute', () => {
   })
 
   it('returns false for non-popular paths', () => {
-    expect(isPopularRoute('/en/post/hello')).toBe(false)
+    expect(isPopularRoute('/en/posts/hello')).toBe(false)
   })
 })
 
@@ -109,7 +109,7 @@ describe('isAuthorPage', () => {
   })
 
   it('returns false for unrelated paths', () => {
-    expect(isAuthorPage('en/post/hello.md')).toBe(false)
+    expect(isAuthorPage('en/posts/hello.md')).toBe(false)
   })
 
   it('matches locale with hyphen', () => {

@@ -11,7 +11,7 @@ tags:
   - frontmatter
 descrAsPreview: true
 translations:
-  ru: /ru/post/drafts-and-reading-time
+  ru: /ru/posts/drafts-and-reading-time
 ---
 
 # Drafts and reading time

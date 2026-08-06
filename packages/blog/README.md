@@ -46,7 +46,7 @@ cp -r vitepress-theme-neptu/packages/blog/template my-blog
 
 Requires Node.js 22.18+.
 
-Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/post/getting-started).
+Full walkthrough: [Getting started](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/posts/getting-started).
 
 ### Adding to an existing VitePress project
 
@@ -89,8 +89,8 @@ src/
 └── en/
     ├── _site.yaml
     ├── index.md
-    ├── post/
-    └── page/
+    ├── posts/
+    └── pages/
 ```
 
 A single-language site still has exactly one locale directory, such as
@@ -141,7 +141,7 @@ The theme supports three approaches for organizing images and media:
    subfolder, referenced as `./media/foo.png`. Best for image-heavy articles.
 
 All three get automatic `width`/`height` injection for both cover images and
-standalone body images. See the [full guide](https://bozonx.github.io/vitepress-theme-neptu/blog/en/post/media-asset-placement)
+standalone body images. See the [full guide](https://bozonx.github.io/vitepress-theme-neptu/blog/en/posts/media-asset-placement)
 for details and examples.
 
 ## Development

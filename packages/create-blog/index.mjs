@@ -214,7 +214,7 @@ ${c.green('✔')} Created ${c.bold(rel)}
   ${c.dim('Then:')}
     • set ${c.cyan('siteUrl')} and ${c.cyan('repo')} in src/.vitepress/config.ts
     • edit src/site.yaml and src/${locale}/_site.yaml
-    • replace the demo posts in src/${locale}/post/
+    • replace the demo posts in src/${locale}/posts/
 
   ${c.dim('Guide:')} https://bozonx.github.io/vitepress-theme-neptu/blog
 `)

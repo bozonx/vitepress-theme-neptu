@@ -83,25 +83,25 @@ describe('getImageDimensions', () => {
 
   it('resolves relative path against the markdown file directory', () => {
     vi.mocked(fs.existsSync).mockImplementation((p: any) =>
-      String(p) === '/src/en/post/my-article/cover.jpg'
+      String(p) === '/src/en/posts/my-article/cover.jpg'
     )
     vi.mocked(fs.readFileSync).mockReturnValue(Buffer.from([]))
     vi.mocked(imageSize).mockReturnValue({ width: 400, height: 300 } as any)
 
-    const result = getImageDimensions('./cover.jpg', '/src', 'en/post/my-article/index.md')
-    expect(fs.existsSync).toHaveBeenCalledWith('/src/en/post/my-article/cover.jpg')
+    const result = getImageDimensions('./cover.jpg', '/src', 'en/posts/my-article/index.md')
+    expect(fs.existsSync).toHaveBeenCalledWith('/src/en/posts/my-article/cover.jpg')
     expect(result).toEqual({ width: 400, height: 300 })
   })
 
   it('resolves relative path with subfolder against the markdown file directory', () => {
     vi.mocked(fs.existsSync).mockImplementation((p: any) =>
-      String(p) === '/src/en/post/my-article/media/photo.png'
+      String(p) === '/src/en/posts/my-article/media/photo.png'
     )
     vi.mocked(fs.readFileSync).mockReturnValue(Buffer.from([]))
     vi.mocked(imageSize).mockReturnValue({ width: 800, height: 600 } as any)
 
-    const result = getImageDimensions('media/photo.png', '/src', 'en/post/my-article/index.md')
-    expect(fs.existsSync).toHaveBeenCalledWith('/src/en/post/my-article/media/photo.png')
+    const result = getImageDimensions('media/photo.png', '/src', 'en/posts/my-article/index.md')
+    expect(fs.existsSync).toHaveBeenCalledWith('/src/en/posts/my-article/media/photo.png')
     expect(result).toEqual({ width: 800, height: 600 })
   })
 
@@ -112,7 +112,7 @@ describe('getImageDimensions', () => {
     vi.mocked(fs.readFileSync).mockReturnValue(Buffer.from([]))
     vi.mocked(imageSize).mockReturnValue({ width: 100, height: 100 } as any)
 
-    const result = getImageDimensions('shared.png', '/src', 'en/post/my-article/index.md')
+    const result = getImageDimensions('shared.png', '/src', 'en/posts/my-article/index.md')
     expect(fs.existsSync).toHaveBeenCalledWith(expect.stringContaining('public/shared.png'))
     expect(result).toEqual({ width: 100, height: 100 })
   })
@@ -124,7 +124,7 @@ describe('getImageDimensions', () => {
     vi.mocked(fs.readFileSync).mockReturnValue(Buffer.from([]))
     vi.mocked(imageSize).mockReturnValue({ width: 200, height: 200 } as any)
 
-    const result = getImageDimensions('/img/cover.jpg', '/src', 'en/post/my-article/index.md')
+    const result = getImageDimensions('/img/cover.jpg', '/src', 'en/posts/my-article/index.md')
     expect(fs.existsSync).toHaveBeenCalledWith(expect.stringContaining('public/img/cover.jpg'))
     expect(fs.existsSync).not.toHaveBeenCalledWith(expect.stringContaining('my-article'))
     expect(result).toEqual({ width: 200, height: 200 })

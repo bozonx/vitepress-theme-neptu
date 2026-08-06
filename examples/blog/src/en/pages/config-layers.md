@@ -164,7 +164,7 @@ themeConfig:
   nav:
     links:
       - text: About
-        href: page/about
+        href: pages/about
 ```
 
 Prefer Level 2 for a shared value. An override in this file is intentional: language, copy, a locale-specific URL, or a genuine regional UI difference.

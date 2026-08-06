@@ -22,8 +22,8 @@ describe('addOgMetaTags', () => {
     return {
       head: [],
       pageData: {
-        filePath: 'en/post/hello.md',
-        relativePath: 'en/post/hello.md',
+        filePath: 'en/posts/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           title: 'Hello',
           description: 'World',
@@ -76,8 +76,8 @@ describe('addOgMetaTags', () => {
   it('does nothing without matching locale config', () => {
     const ctx = createContext({
       pageData: {
-        filePath: 'de/post/hello.md',
-        relativePath: 'de/post/hello.md',
+        filePath: 'de/posts/hello.md',
+        relativePath: 'de/posts/hello.md',
         frontmatter: {},
       } as any,
     })
@@ -106,7 +106,7 @@ describe('addOgMetaTags', () => {
     ])
     expect(ctx.head).toContainEqual([
       'meta',
-      { property: 'og:url', content: 'https://example.com/en/post/hello' },
+      { property: 'og:url', content: 'https://example.com/en/posts/hello' },
     ])
     expect(ctx.head).toContainEqual([
       'meta',
@@ -361,7 +361,7 @@ describe('addOgMetaTags', () => {
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
       'meta',
-      { property: 'og:url', content: 'https://example.com/en/post/hello' },
+      { property: 'og:url', content: 'https://example.com/en/posts/hello' },
     ])
   })
 
@@ -372,7 +372,7 @@ describe('addOgMetaTags', () => {
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
       'meta',
-      { property: 'og:url', content: 'https://example.com/en/post/hello' },
+      { property: 'og:url', content: 'https://example.com/en/posts/hello' },
     ])
     expect(ctx.head).toContainEqual([
       'meta',
@@ -425,7 +425,7 @@ describe('addOgMetaTags', () => {
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
       'meta',
-      { property: 'og:url', content: 'https://example.com/en/post/hello' },
+      { property: 'og:url', content: 'https://example.com/en/posts/hello' },
     ])
   })
 

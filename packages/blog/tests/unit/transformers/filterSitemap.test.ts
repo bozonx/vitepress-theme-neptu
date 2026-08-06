@@ -11,8 +11,8 @@ describe('filterSitemap', () => {
 
   it('keeps single-locale pages that have no hreflang alternates', () => {
     const items = [
-      { url: 'ru/post/untranslated' },
-      { url: 'ru/post/my-article/' },
+      { url: 'ru/posts/untranslated' },
+      { url: 'ru/posts/my-article/' },
     ] as SitemapItem[]
 
     expect(filterSitemap(items)).toEqual(items)
@@ -54,32 +54,32 @@ describe('filterSitemap', () => {
 
   it('keeps post directory paths', () => {
     const items: SitemapItem[] = [
-      { url: 'en/post/hello', links: [] },
-      { url: 'en/post/tag/foo', links: [] },
+      { url: 'en/posts/hello', links: [] },
+      { url: 'en/posts/tag/foo', links: [] },
     ]
     expect(filterSitemap(items)).toEqual(items)
   })
 
   it('keeps post directory paths with non-latin locale', () => {
     const items: SitemapItem[] = [
-      { url: 'рус/post/hello', links: [] },
-      { url: '中文/post/tag/foo', links: [] },
+      { url: 'рус/posts/hello', links: [] },
+      { url: '中文/posts/tag/foo', links: [] },
     ]
     expect(filterSitemap(items)).toEqual(items)
   })
 
   it('keeps page directory paths', () => {
     const items: SitemapItem[] = [
-      { url: 'en/page/2', links: [] },
-      { url: 'en/page/99', links: [] },
+      { url: 'en/pages/2', links: [] },
+      { url: 'en/pages/99', links: [] },
     ]
     expect(filterSitemap(items)).toEqual(items)
   })
 
   it('keeps page directory paths with non-latin locale', () => {
     const items: SitemapItem[] = [
-      { url: 'рус/page/2', links: [] },
-      { url: '中文/page/99', links: [] },
+      { url: 'рус/pages/2', links: [] },
+      { url: '中文/pages/99', links: [] },
     ]
     expect(filterSitemap(items)).toEqual(items)
   })
@@ -129,9 +129,9 @@ describe('filterSitemap', () => {
   it('does not filter links for non-root pages', () => {
     const items: SitemapItem[] = [
       {
-        url: 'en/post/hello',
+        url: 'en/posts/hello',
         links: [
-          { url: 'https://example.com/en/post/hello' },
+          { url: 'https://example.com/en/posts/hello' },
           { href: 'not-url' },
         ],
       },

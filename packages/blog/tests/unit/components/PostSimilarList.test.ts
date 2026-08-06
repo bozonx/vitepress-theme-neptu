@@ -31,7 +31,7 @@ describe('PostSimilarList', () => {
       externalLinkIcon: true,
     }
     mockFrontmatter.value = {}
-    mockRoute.value = { path: '/en/post/current' }
+    mockRoute.value = { path: '/en/posts/current' }
   })
 
   it('does not render when frontmatter has no tags', () => {
@@ -39,7 +39,7 @@ describe('PostSimilarList', () => {
     const wrapper = mount(PostSimilarList, {
       props: {
         localePosts: [
-          { url: '/en/post/a', title: 'A', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/a', title: 'A', tags: [{ slug: 'js' }] },
         ],
       },
       global: { stubs: { PreviewList: PreviewListStub } },
@@ -50,12 +50,12 @@ describe('PostSimilarList', () => {
 
   it('does not render when no similar posts are found', () => {
     mockFrontmatter.value = { tags: [{ slug: 'python' }] }
-    mockRoute.value = { path: '/en/post/current' }
+    mockRoute.value = { path: '/en/posts/current' }
     const wrapper = mount(PostSimilarList, {
       props: {
         localePosts: [
-          { url: '/en/post/a', title: 'A', tags: [{ slug: 'js' }] },
-          { url: '/en/post/b', title: 'B', tags: [{ slug: 'ts' }] },
+          { url: '/en/posts/a', title: 'A', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/b', title: 'B', tags: [{ slug: 'ts' }] },
         ],
       },
       global: { stubs: { PreviewList: PreviewListStub } },
@@ -65,13 +65,13 @@ describe('PostSimilarList', () => {
 
   it('renders similar posts sorted by tag match', () => {
     mockFrontmatter.value = { tags: [{ slug: 'js' }] }
-    mockRoute.value = { path: '/en/post/current' }
+    mockRoute.value = { path: '/en/posts/current' }
     const wrapper = mount(PostSimilarList, {
       props: {
         localePosts: [
-          { url: '/en/post/a', title: 'A', tags: [{ slug: 'js' }, { slug: 'ts' }] },
-          { url: '/en/post/b', title: 'B', tags: [{ slug: 'js' }] },
-          { url: '/en/post/c', title: 'C', tags: [{ slug: 'rust' }] },
+          { url: '/en/posts/a', title: 'A', tags: [{ slug: 'js' }, { slug: 'ts' }] },
+          { url: '/en/posts/b', title: 'B', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/c', title: 'C', tags: [{ slug: 'rust' }] },
         ],
       },
       global: { stubs: { PreviewList: PreviewListStub } },
@@ -80,36 +80,36 @@ describe('PostSimilarList', () => {
     const list = wrapper.findComponent(PreviewListStub)
     expect(list.exists()).toBe(true)
     expect(list.props('localePosts')).toHaveLength(2)
-    expect(list.props('localePosts')[0].url).toBe('/en/post/a')
-    expect(list.props('localePosts')[1].url).toBe('/en/post/b')
+    expect(list.props('localePosts')[0].url).toBe('/en/posts/a')
+    expect(list.props('localePosts')[1].url).toBe('/en/posts/b')
   })
 
   it('excludes the current post even with trailing slash difference', () => {
     mockFrontmatter.value = { tags: [{ slug: 'js' }] }
-    mockRoute.value = { path: '/en/post/current/' }
+    mockRoute.value = { path: '/en/posts/current/' }
     const wrapper = mount(PostSimilarList, {
       props: {
         localePosts: [
-          { url: '/en/post/current', title: 'Current', tags: [{ slug: 'js' }] },
-          { url: '/en/post/other', title: 'Other', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/current', title: 'Current', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/other', title: 'Other', tags: [{ slug: 'js' }] },
         ],
       },
       global: { stubs: { PreviewList: PreviewListStub } },
     })
     const list = wrapper.findComponent(PreviewListStub)
     expect(list.props('localePosts')).toHaveLength(1)
-    expect(list.props('localePosts')[0].url).toBe('/en/post/other')
+    expect(list.props('localePosts')[0].url).toBe('/en/posts/other')
   })
 
   it('passes correct pagination props to PreviewList', () => {
     mockFrontmatter.value = { tags: [{ slug: 'js' }] }
-    mockRoute.value = { path: '/en/post/current' }
+    mockRoute.value = { path: '/en/posts/current' }
     mockTheme.value.similarPostsCount = 3
     const wrapper = mount(PostSimilarList, {
       props: {
         localePosts: [
-          { url: '/en/post/a', title: 'A', tags: [{ slug: 'js' }] },
-          { url: '/en/post/b', title: 'B', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/a', title: 'A', tags: [{ slug: 'js' }] },
+          { url: '/en/posts/b', title: 'B', tags: [{ slug: 'js' }] },
         ],
       },
       global: { stubs: { PreviewList: PreviewListStub } },
@@ -122,20 +122,20 @@ describe('PostSimilarList', () => {
 
   it('uses popularity sortBy when popularPosts are enabled', () => {
     mockFrontmatter.value = { tags: [{ slug: 'js' }] }
-    mockRoute.value = { path: '/en/post/current' }
+    mockRoute.value = { path: '/en/posts/current' }
     mockTheme.value.popularPosts = { enabled: true, sortBy: 'pageviews' }
     const wrapper = mount(PostSimilarList, {
       props: {
         localePosts: [
-          { url: '/en/post/a', title: 'A', tags: [{ slug: 'js' }], analyticsStats: { pageviews: 10 } },
-          { url: '/en/post/b', title: 'B', tags: [{ slug: 'js' }], analyticsStats: { pageviews: 50 } },
+          { url: '/en/posts/a', title: 'A', tags: [{ slug: 'js' }], analyticsStats: { pageviews: 10 } },
+          { url: '/en/posts/b', title: 'B', tags: [{ slug: 'js' }], analyticsStats: { pageviews: 50 } },
         ],
       },
       global: { stubs: { PreviewList: PreviewListStub } },
     })
     const list = wrapper.findComponent(PreviewListStub)
     // b has higher popularity (50) so it should come first when tag counts are equal
-    expect(list.props('localePosts')[0].url).toBe('/en/post/b')
-    expect(list.props('localePosts')[1].url).toBe('/en/post/a')
+    expect(list.props('localePosts')[0].url).toBe('/en/posts/b')
+    expect(list.props('localePosts')[1].url).toBe('/en/posts/a')
   })
 })

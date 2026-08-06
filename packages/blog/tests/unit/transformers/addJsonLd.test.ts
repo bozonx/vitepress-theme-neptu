@@ -53,13 +53,13 @@ describe('addJsonLd', () => {
     overrides: Partial<AddJsonLdContext> = {}
   ): AddJsonLdContext {
     return {
-      page: overrides.page ?? 'en/post/hello.md',
+      page: overrides.page ?? 'en/posts/hello.md',
       head: [],
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
-        filePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
+        filePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',
@@ -117,7 +117,7 @@ describe('addJsonLd', () => {
 
   it('does nothing without matching locale config', () => {
     const ctx = createContext({
-      page: 'de/post/hello.md',
+      page: 'de/posts/hello.md',
       siteConfig: {
         userConfig: { siteUrl: 'https://example.com' },
         site: { locales: {} },
@@ -143,7 +143,7 @@ describe('addJsonLd', () => {
     expect(json['@context']).toBe('https://schema.org')
     expect(json['@type']).toBe('BlogPosting')
     expect(json.headline).toBe('Hello')
-    expect(json.url).toBe('https://example.com/en/post/hello')
+    expect(json.url).toBe('https://example.com/en/posts/hello')
     expect(json.datePublished).toBe('2023-01-01T00:00:00.000Z')
     expect(json.inLanguage).toBe('en-US')
     expect(json.author).toEqual({
@@ -304,7 +304,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: undefined,
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           title: 'Hello',
@@ -350,7 +350,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: { layout: 'post', date: '2023-01-01' },
         lastUpdated: 'not-a-date',
       } as any,
@@ -443,7 +443,7 @@ describe('addJsonLd', () => {
     addJsonLd(ctx)
 
     const json = JSON.parse((ctx.head[0] as [string, any, string])[2])
-    expect(json.url).toBe('https://example.com/en/post/hello')
+    expect(json.url).toBe('https://example.com/en/posts/hello')
     expect(json.image.url).toBe('https://example.com/img/cover.png')
   })
 
@@ -456,7 +456,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',
@@ -532,7 +532,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',
@@ -559,7 +559,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',
@@ -589,7 +589,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',
@@ -698,7 +698,7 @@ describe('addJsonLd', () => {
       pageData: {
         title: 'Hello',
         description: 'World',
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: {
           layout: 'post',
           date: '2023-01-01',

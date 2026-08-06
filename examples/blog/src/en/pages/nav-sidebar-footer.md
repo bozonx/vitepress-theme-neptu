@@ -54,14 +54,14 @@ themeConfig:
         href: 'https://www.youtube.com/'
         icon: '${theme.youtubeIcon}'
       - text: 'We in social media'
-        href: 'page/links'
+        href: 'pages/links'
         icon: 'fa6-solid:share-nodes'
 ```
 
 Each built-in section maps to a generated layout — see them live via the
 sidebar: **Recent**, **Popular**, **Archive**, **Authors**, **Tags**,
 **Categories**. Categories are covered in [Categories and
-tags](../post/categories-and-tags).
+tags](../posts/categories-and-tags).
 
 ## Footer
 
@@ -72,7 +72,7 @@ themeConfig:
     copyright: 'Copyright © 2026 Your Name.'
     links:
       - text: '${t.links.aboutBlog}'
-        href: 'page/about'
+        href: 'pages/about'
 ```
 
 ## Icons
@@ -112,6 +112,6 @@ markdown: {
 
 ## Relative URLs are locale-aware
 
-A relative `href` like `page/about` is automatically prefixed with the current
-locale (`/en/page/about`, `/ru/page/about`). Use absolute URLs (`https://…`) for
+A relative `href` like `pages/about` is automatically prefixed with the current
+locale (`/en/pages/about`, `/ru/pages/about`). Use absolute URLs (`https://…`) for
 external links.

@@ -112,7 +112,7 @@ src/
     ├── _site.yaml        # per-locale config (Level 3)
     ├── index.md          # landing page
     ├── doc/              # optional documentation
-    └── page/             # optional standalone pages
+    └── pages/             # optional standalone pages
 ```
 
 The locale directory is required even for a single-language site. Do not place

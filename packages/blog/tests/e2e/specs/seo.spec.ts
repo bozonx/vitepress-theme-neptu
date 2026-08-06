@@ -12,7 +12,7 @@ test.describe('SEO & Meta Tags & 404', () => {
   })
 
   test('JSON-LD schema metadata is valid on post page', async ({ page }) => {
-    await page.goto('en/post/full-featured', { waitUntil: 'domcontentloaded' })
+    await page.goto('en/posts/full-featured', { waitUntil: 'domcontentloaded' })
 
     const script = page.locator('script[type="application/ld+json"]').first()
     await expect(script).toBeAttached()
@@ -36,7 +36,7 @@ test.describe('SEO & Meta Tags & 404', () => {
     // Home → categories → category → post.
     expect(breadcrumb.itemListElement).toHaveLength(4)
     expect(breadcrumb.itemListElement.at(-1).item).toContain(
-      '/en/post/full-featured'
+      '/en/posts/full-featured'
     )
   })
 

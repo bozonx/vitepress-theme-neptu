@@ -301,7 +301,7 @@ description: 'Справочник по всем блокам лендинга: 
       priceYearly: '90'
       periodYearly: / год
       features: [Проекты без ограничений, { text: Приоритетная поддержка, included: false }]
-      action: { text: Выбрать, link: /ru/page/donate }
+      action: { text: Выбрать, link: /ru/pages/donate }
 ```
 
 ## `faq` — `LnFaq`

@@ -10,7 +10,7 @@ coverHeight: 800
 coverAlt: Разноцветные флаги разных стран
 # Связываем этот пост с английской версией — для переключателя языка и hreflang.
 translations:
-  en: "/en/post/i18n-hreflang"
+  en: "/en/posts/i18n-hreflang"
 date: 2026-07-13
 category: { name: 'Мультиязычность', slug: 'i18n' }
 tags: [i18n, seo]
@@ -33,15 +33,15 @@ descrAsPreview: true
 ### Явное сопоставление
 
 ```yaml
-# src/ru/post/i18n-hreflang.md
+# src/ru/posts/i18n-hreflang.md
 translations:
-  en: "/en/post/i18n-hreflang"
+  en: "/en/posts/i18n-hreflang"
 ```
 
 ```yaml
-# src/en/post/i18n-hreflang.md
+# src/en/posts/i18n-hreflang.md
 translations:
-  ru: "/ru/post/i18n-hreflang"
+  ru: "/ru/posts/i18n-hreflang"
 ```
 
 Связь указывается с обеих сторон: каждая страница объявляет, где лежат её
@@ -51,7 +51,7 @@ translations:
 
 ```yaml
 translations:
-  en: /en/post/hello-world
+  en: /en/posts/hello-world
   'pt-BR': /pt-BR/artigos/ola-mundo
 ```
 
@@ -60,7 +60,7 @@ translations:
 Если вы придерживаетесь какого подхода в котором все пути статей одинаковы во всех локалях, включая папки и подпапки, но разное только содержимое статей на разных языках, то нет необходимости указывать поле  `translations` во frontmatter статей. Тепереводы будут определены автоматически:
 
 ```text
-en/post/article/hello-world.md  ←→  ru/post/article/hello-world.md  ←→  de/post/article/hello-world.md
+en/posts/article/hello-world.md  ←→  ru/posts/article/hello-world.md  ←→  de/posts/article/hello-world.md
 ```
 
 ## Что тема делает со связью
@@ -72,9 +72,9 @@ en/post/article/hello-world.md  ←→  ru/post/article/hello-world.md  ←→  
 `x-default`. Откройте исходный код этой страницы, они там:
 
 ```html
-<link rel="alternate" hreflang="ru-RU" href="https://…/ru/post/i18n-hreflang" />
-<link rel="alternate" hreflang="en-US" href="https://…/en/post/i18n-hreflang" />
-<link rel="alternate" hreflang="x-default" href="https://…/en/post/i18n-hreflang" />
+<link rel="alternate" hreflang="ru-RU" href="https://…/ru/posts/i18n-hreflang" />
+<link rel="alternate" hreflang="en-US" href="https://…/en/posts/i18n-hreflang" />
+<link rel="alternate" hreflang="x-default" href="https://…/en/posts/i18n-hreflang" />
 ```
 
 Поисковику это говорит: страницы не дубликаты, а версии одного материала для

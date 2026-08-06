@@ -19,7 +19,7 @@ npm run blog:preview   # preview the production build
 ```
 
 Content lives under `src/<locale>/` — see the
-[Getting started](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/post/getting-started)
+[Getting started](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/posts/getting-started)
 guide for the structure. To start a blog of your own, run
 `npm create neptu-blog@latest my-blog` (or copy
 [`packages/blog/template/`](../packages/blog/template)) rather than this site —

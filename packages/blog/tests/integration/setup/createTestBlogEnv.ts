@@ -84,7 +84,7 @@ export function createTestBlogEnv(options?: {
   ;(globalThis as any).VITEPRESS_CONFIG = siteConfig
 
   const createPost = ({ locale, slug, frontmatter, content = '' }: TestPostConfig): string => {
-    const postDir = path.join(srcDir, locale, 'post')
+    const postDir = path.join(srcDir, locale, 'posts')
     fs.mkdirSync(postDir, { recursive: true })
 
     const postPath = path.join(postDir, `${slug}.md`)

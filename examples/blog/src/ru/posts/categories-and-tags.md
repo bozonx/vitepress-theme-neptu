@@ -120,13 +120,13 @@ import { NeptuBreadcrumbs } from 'vitepress-theme-neptu/components'
 <NeptuBreadcrumbs
   :items="[
     { text: 'Главная', href: '/' },
-    { text: 'Документация', href: 'page/docs' },
+    { text: 'Документация', href: 'pages/docs' },
     { text: 'Текущая страница' },
   ]"
 />
 ```
 
-Относительные `href` (`page/docs`) автоматически получают префикс текущей
+Относительные `href` (`pages/docs`) автоматически получают префикс текущей
 локали. У последнего элемента `href` не нужен — текущая страница выводится
 обычным текстом.
 

@@ -40,44 +40,44 @@ describe('isContentRelativePath', () => {
 describe('resolveContentMediaPath', () => {
   it('resolves a media subfolder against a folder-per-article layout', () => {
     expect(
-      resolveContentMediaPath('./media/cover.jpg', 'ru/post/my-article/index.md')
-    ).toBe('/ru/post/my-article/media/cover.jpg')
+      resolveContentMediaPath('./media/cover.jpg', 'ru/posts/my-article/index.md')
+    ).toBe('/ru/posts/my-article/media/cover.jpg')
   })
 
   it('resolves a file sitting next to the post', () => {
-    expect(resolveContentMediaPath('./cover.jpg', 'ru/post/my-article.md')).toBe(
-      '/ru/post/cover.jpg'
+    expect(resolveContentMediaPath('./cover.jpg', 'ru/posts/my-article.md')).toBe(
+      '/ru/posts/cover.jpg'
     )
   })
 
   it('resolves paths in deeply nested folders', () => {
     expect(
-      resolveContentMediaPath('./near.png', 'ru/post/2026/trip/day-one.md')
-    ).toBe('/ru/post/2026/trip/near.png')
+      resolveContentMediaPath('./near.png', 'ru/posts/2026/trip/day-one.md')
+    ).toBe('/ru/posts/2026/trip/near.png')
   })
 
   it('walks up with ..', () => {
     expect(
-      resolveContentMediaPath('../shared/cover.jpg', 'ru/post/a/index.md')
-    ).toBe('/ru/post/shared/cover.jpg')
+      resolveContentMediaPath('../shared/cover.jpg', 'ru/posts/a/index.md')
+    ).toBe('/ru/posts/shared/cover.jpg')
   })
 
   it('resolves bare paths when allowBare is set', () => {
     expect(
-      resolveContentMediaPath('media/cover.jpg', 'ru/post/a/index.md', {
+      resolveContentMediaPath('media/cover.jpg', 'ru/posts/a/index.md', {
         allowBare: true,
       })
-    ).toBe('/ru/post/a/media/cover.jpg')
+    ).toBe('/ru/posts/a/media/cover.jpg')
   })
 
   it('returns site-root paths, URLs and empty values unchanged', () => {
-    expect(resolveContentMediaPath('/img/c.jpg', 'ru/post/a.md')).toBe(
+    expect(resolveContentMediaPath('/img/c.jpg', 'ru/posts/a.md')).toBe(
       '/img/c.jpg'
     )
     expect(
-      resolveContentMediaPath('https://example.com/c.jpg', 'ru/post/a.md')
+      resolveContentMediaPath('https://example.com/c.jpg', 'ru/posts/a.md')
     ).toBe('https://example.com/c.jpg')
-    expect(resolveContentMediaPath(undefined, 'ru/post/a.md')).toBeUndefined()
+    expect(resolveContentMediaPath(undefined, 'ru/posts/a.md')).toBeUndefined()
   })
 
   it('returns the value unchanged without a markdown path', () => {

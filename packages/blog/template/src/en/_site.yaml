@@ -56,7 +56,7 @@ themeConfig:
           # `primary: true` renders the filled accent button.
           primary: true
         - text: 'About Me'
-          href: 'page/about'
+          href: 'pages/about'
           # icon: 'fa6-solid:circle-info'
 
   # Optional visual sidebar label. Usually omit it and use the locale `title`.
@@ -103,7 +103,7 @@ themeConfig:
   # Relative URLs are automatically prefixed with the current locale.
   # -------------------------------------------------------------------------
   donate:
-    # url: "page/donate"
+    # url: "pages/donate"
     postDonateCall: 'If you find this blog helpful, consider supporting it!'
     # icon: "${theme.donateIcon}"  # override the default heart icon
 
@@ -156,7 +156,7 @@ themeConfig:
     # donate: true
     links:
       - text: 'About'
-        href: 'page/about'
+        href: 'pages/about'
         # Iconify string: "<prefix>:<icon-name>". Browse at https://icones.es
         icon: 'solar:document-linear'
         # iconClass: 'muted'
@@ -164,7 +164,7 @@ themeConfig:
         # desktopOnly: true
         # mobileOnly: true   # show only on mobile (where sidebar is hidden)
       # - text: "${t.links.donate}"
-      #   href: "page/donate"
+      #   href: "pages/donate"
       #   icon: "${theme.donateIcon}"
       #   # iconClass: 'muted'
       #   # class: 'custom-nav-link'
@@ -204,7 +204,7 @@ themeConfig:
     bottomLinks:
       - { header: '${t.links.links}' }
       - text: 'About'
-        href: 'page/about'
+        href: 'pages/about'
         icon: 'mdi:information-outline'
         # iconClass: 'muted'
         # class: 'custom-bottom-link'
@@ -230,7 +230,7 @@ themeConfig:
     # github: true   # uses `themeConfig.repo` from .vitepress/config.ts
     links:
       - text: '${t.links.aboutBlog}'
-        href: 'page/about'
+        href: 'pages/about'
         # icon: "mdi:information-outline"
         # iconClass: "muted"
         # class: "custom-footer-link"

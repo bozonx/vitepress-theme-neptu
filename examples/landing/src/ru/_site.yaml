@@ -32,7 +32,7 @@ themeConfig:
     - text: '🎨 Темизация'
       link: '/${localeIndex}/doc/theming'
     - text: '📢 Соцсети'
-      link: '/${localeIndex}/page/links'
+      link: '/${localeIndex}/pages/links'
 
   footer:
     message: 'Копирование разрешено только со ссылкой на источник.'

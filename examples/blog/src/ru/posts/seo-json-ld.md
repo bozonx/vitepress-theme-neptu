@@ -9,7 +9,7 @@ jsonLd: |
   proficiencyLevel: Beginner
   dependencies: VitePress, vitepress-theme-neptu
 translations:
-  en: /en/post/json-ld
+  en: /en/posts/json-ld
 date: 2026-07-10
 category: { name: 'SEO', slug: 'seo' }
 tags: [seo]

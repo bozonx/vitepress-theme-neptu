@@ -198,7 +198,7 @@ themeConfig:
   donate:
     # URL of the donate page (relative to site root).
     # Default: none (required if donate is shown)
-    url: 'page/donate'
+    url: 'pages/donate'
     # Override the donate icon (Iconify name).
     # Default: 'fa6-solid:hand-holding-heart' (falls back to `donateIcon`)
     # icon: 'fa6-solid:hand-holding-heart'

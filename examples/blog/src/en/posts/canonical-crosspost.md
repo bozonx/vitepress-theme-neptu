@@ -16,7 +16,7 @@ tags:
   - canonical
 descrAsPreview: true
 translations:
-  ru: /ru/post/canonical-crosspost
+  ru: /ru/posts/canonical-crosspost
 ---
 
 A **canonical link** tells search engines which URL is the authoritative version

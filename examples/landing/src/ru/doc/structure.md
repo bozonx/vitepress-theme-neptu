@@ -20,7 +20,7 @@ my-site/
 │  │  ├─ _site.yaml       # настройки локали: заголовок, nav, sidebar, footer
 │  │  ├─ index.md         # лендинг локали (layout: landing)
 │  │  ├─ doc/             # документация (layout: doc)
-│  │  └─ page/            # отдельные страницы
+│  │  └─ pages/            # отдельные страницы
 │  ├─ public/             # статические файлы
 │  └─ index.md            # корень сайта: страница выбора языка
 └─ package.json
@@ -38,9 +38,9 @@ my-site/
 перенести файл. Папка считается локалью, если содержит `_site.yaml` или
 `_site.ts`.
 
-## Вложенные папки в doc/ и page/
+## Вложенные папки в doc/ и pages/
 
-`doc/` и `page/` — не плоские списки. Внутри можно строить любую структуру,
+`doc/` и `pages/` — не плоские списки. Внутри можно строить любую структуру,
 URL повторяет расположение файлов:
 
 ```text
@@ -53,10 +53,10 @@ src/ru/
 │     └─ advanced/
 │        ├─ index.md              → /ru/doc/guide/advanced/
 │        └─ media/scheme.svg
-└─ page/
-   ├─ links.md                    → /ru/page/links
+└─ pages/
+   ├─ links.md                    → /ru/pages/links
    └─ pricing/
-      ├─ index.md                 → /ru/page/pricing/
+      ├─ index.md                 → /ru/pages/pricing/
       └─ media/hero.svg
 ```
 
@@ -101,8 +101,8 @@ blocks:
 ### 2. Рядом с markdown-файлом
 
 ```text
-src/ru/page/pricing.md
-src/ru/page/table.svg
+src/ru/pages/pricing.md
+src/ru/pages/table.svg
 ```
 
 ```md
@@ -112,7 +112,7 @@ src/ru/page/table.svg
 ### 3. Папка на страницу с подпапкой media
 
 ```text
-src/ru/page/pricing/
+src/ru/pages/pricing/
 ├─ index.md
 └─ media/
    ├─ hero.svg
@@ -140,7 +140,7 @@ blocks:
 
 В данных блоков относительным считается путь, начинающийся с `./` или `../`
 — именно такие значения тема разворачивает в путь от корня сайта
-(`./media/hero.svg` → `/ru/page/pricing/media/hero.svg`).
+(`./media/hero.svg` → `/ru/pages/pricing/media/hero.svg`).
 
 ```yaml
 blocks:

@@ -207,12 +207,12 @@ test('doc about page loads', async ({ page }) => {
 })
 
 test('donate page loads', async ({ page }) => {
-  await page.goto('en/page/donate', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/pages/donate', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('h1')).toBeVisible()
 })
 
 test('links page loads', async ({ page }) => {
-  await page.goto('en/page/links', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/pages/links', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('h1')).toBeVisible()
 })
 

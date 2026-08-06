@@ -3,7 +3,7 @@ title: About This Demo
 description: What this example blog is, and how to use it as a starting point for your own site.
 layout: page
 translations:
-  ru: /ru/page/about
+  ru: /ru/pages/about
 ---
 
 # About This Demo
@@ -23,9 +23,9 @@ It plays three roles at once:
 | Area | Where to look |
 | --- | --- |
 | Post frontmatter | Posts tagged [`frontmatter`](../tags/frontmatter/1) |
-| Media embeds | [Media components](../post/media-components) |
+| Media embeds | [Media components](../posts/media-components) |
 | SEO (OG, JSON-LD, canonical, hreflang) | Posts tagged [`seo`](../tags/seo/1) |
-| Configuration | This `page/*` section: [layers](config-layers), [themes & fonts](color-themes), [nav/sidebar/footer](nav-sidebar-footer), [feeds/search](seo-feeds-search), [advanced](advanced) |
+| Configuration | This `pages/*` section: [layers](config-layers), [themes & fonts](color-themes), [nav/sidebar/footer](nav-sidebar-footer), [feeds/search](seo-feeds-search), [advanced](advanced) |
 | Layout types | Sidebar: Recent · Popular · Archive · Authors · Tags |
 
 ## Run it locally
@@ -46,6 +46,6 @@ Copy `example/blog` somewhere new, then:
 
 - replace `siteUrl` in `.vitepress/config.ts`,
 - edit `src/site.yaml` and each `src/<locale>/_site.yaml`,
-- delete the demo posts in `src/<locale>/post/` and write your own.
+- delete the demo posts in `src/<locale>/posts/` and write your own.
 
 See [Config layers](config-layers) for what to edit where.

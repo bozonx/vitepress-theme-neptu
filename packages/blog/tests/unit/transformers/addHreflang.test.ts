@@ -26,7 +26,7 @@ describe('addHreflang', () => {
   ): AddHreflangContext {
     return {
       head: [],
-      pageData: { relativePath: 'en/post/hello.md' } as any,
+      pageData: { relativePath: 'en/posts/hello.md' } as any,
       siteConfig: {
         userConfig: { siteUrl: 'https://example.com' },
         site: { locales: { en: { lang: 'en' }, ru: { lang: 'ru' } } },
@@ -68,15 +68,15 @@ describe('addHreflang', () => {
 
   it('constructs correct locale paths', () => {
     const ctx = createContext({
-      pageData: { relativePath: 'en/post/hello.md' } as any,
+      pageData: { relativePath: 'en/posts/hello.md' } as any,
     })
     addHreflang(ctx)
     const enLink = ctx.head.find((h) => h[1]?.hreflang === 'en')
     const ruLink = ctx.head.find((h) => h[1]?.hreflang === 'ru')
     const defaultLink = ctx.head.find((h) => h[1]?.hreflang === 'x-default')
-    expect(enLink?.[1]?.href).toBe('https://example.com/en/post/hello')
-    expect(ruLink?.[1]?.href).toBe('https://example.com/ru/post/hello')
-    expect(defaultLink?.[1]?.href).toBe('https://example.com/en/post/hello')
+    expect(enLink?.[1]?.href).toBe('https://example.com/en/posts/hello')
+    expect(ruLink?.[1]?.href).toBe('https://example.com/ru/posts/hello')
+    expect(defaultLink?.[1]?.href).toBe('https://example.com/en/posts/hello')
   })
 
   it('uses the root language selector as x-default for locale home pages', () => {
@@ -94,7 +94,7 @@ describe('addHreflang', () => {
         userConfig: { siteUrl: 'https://example.com' },
         site: { locales: { en: {}, de: {} } },
       } as any,
-      pageData: { relativePath: 'en/post/hello.md' } as any,
+      pageData: { relativePath: 'en/posts/hello.md' } as any,
     })
     addHreflang(ctx)
     const deLink = ctx.head.find((h) => h[1]?.hreflang === 'de')
@@ -114,14 +114,14 @@ describe('addHreflang', () => {
       {
         rel: 'alternate',
         hreflang: 'en',
-        href: 'https://example.com/en/post/hello',
+        href: 'https://example.com/en/posts/hello',
       },
     ])
   })
 
   it('skips locales without a matching source file when srcDir is available', () => {
     vi.spyOn(fs, 'existsSync').mockImplementation((filePath: fs.PathLike) =>
-      String(filePath).endsWith('/en/post/hello.md')
+      String(filePath).endsWith('/en/posts/hello.md')
     )
 
     const ctx = createContext({
@@ -140,8 +140,8 @@ describe('addHreflang', () => {
   it('uses explicit frontmatter translations for hreflang alternates', () => {
     const ctx = createContext({
       pageData: {
-        relativePath: 'en/post/hello-world.md',
-        frontmatter: { translations: { ru: '/ru/post/privet-mir' } },
+        relativePath: 'en/posts/hello-world.md',
+        frontmatter: { translations: { ru: '/ru/posts/privet-mir' } },
       } as any,
       siteConfig: {
         userConfig: { siteUrl: 'https://example.com' },
@@ -152,8 +152,8 @@ describe('addHreflang', () => {
 
     vi.spyOn(fs, 'existsSync').mockImplementation(
       (filePath: fs.PathLike) =>
-        String(filePath).endsWith('/en/post/hello-world.md') ||
-        String(filePath).endsWith('/ru/post/privet-mir.md')
+        String(filePath).endsWith('/en/posts/hello-world.md') ||
+        String(filePath).endsWith('/ru/posts/privet-mir.md')
     )
 
     addHreflang(ctx)
@@ -163,7 +163,7 @@ describe('addHreflang', () => {
       {
         rel: 'alternate',
         hreflang: 'en-US',
-        href: 'https://example.com/en/post/hello-world',
+        href: 'https://example.com/en/posts/hello-world',
       },
     ])
     expect(ctx.head).toContainEqual([
@@ -171,7 +171,7 @@ describe('addHreflang', () => {
       {
         rel: 'alternate',
         hreflang: 'ru-RU',
-        href: 'https://example.com/ru/post/privet-mir',
+        href: 'https://example.com/ru/posts/privet-mir',
       },
     ])
   })
@@ -179,7 +179,7 @@ describe('addHreflang', () => {
   it('does not use same-path fallback when explicit translations are present', () => {
     const ctx = createContext({
       pageData: {
-        relativePath: 'en/post/hello-world.md',
+        relativePath: 'en/posts/hello-world.md',
         frontmatter: { translations: {} },
       } as any,
       siteConfig: {
@@ -191,8 +191,8 @@ describe('addHreflang', () => {
 
     vi.spyOn(fs, 'existsSync').mockImplementation(
       (filePath: fs.PathLike) =>
-        String(filePath).endsWith('/en/post/hello-world.md') ||
-        String(filePath).endsWith('/ru/post/hello-world.md')
+        String(filePath).endsWith('/en/posts/hello-world.md') ||
+        String(filePath).endsWith('/ru/posts/hello-world.md')
     )
 
     addHreflang(ctx)
@@ -203,7 +203,7 @@ describe('addHreflang', () => {
   it('supports full locale codes in explicit translations', () => {
     const ctx = createContext({
       pageData: {
-        relativePath: 'en-US/post/hello-world.md',
+        relativePath: 'en-US/posts/hello-world.md',
         frontmatter: { translations: { 'pt-BR': '/pt-BR/artigos/ola-mundo' } },
       } as any,
       siteConfig: {
@@ -217,7 +217,7 @@ describe('addHreflang', () => {
 
     vi.spyOn(fs, 'existsSync').mockImplementation(
       (filePath: fs.PathLike) =>
-        String(filePath).endsWith('/en-US/post/hello-world.md') ||
+        String(filePath).endsWith('/en-US/posts/hello-world.md') ||
         String(filePath).endsWith('/pt-BR/artigos/ola-mundo.md')
     )
 
@@ -236,7 +236,7 @@ describe('addHreflang', () => {
   it('does nothing when frontmatter.seo.hreflang is false', () => {
     const ctx = createContext({
       pageData: {
-        relativePath: 'en/post/hello.md',
+        relativePath: 'en/posts/hello.md',
         frontmatter: { seo: { hreflang: false } },
       } as any,
     })
@@ -246,7 +246,7 @@ describe('addHreflang', () => {
 
   it('uses primaryLocale for x-default when set', () => {
     const ctx = createContext({
-      pageData: { relativePath: 'en/post/hello.md' } as any,
+      pageData: { relativePath: 'en/posts/hello.md' } as any,
       siteConfig: {
         userConfig: {
           siteUrl: 'https://example.com',
@@ -257,12 +257,12 @@ describe('addHreflang', () => {
     })
     addHreflang(ctx)
     const defaultLink = ctx.head.find((h) => h[1]?.hreflang === 'x-default')
-    expect(defaultLink?.[1]?.href).toBe('https://example.com/ru/post/hello')
+    expect(defaultLink?.[1]?.href).toBe('https://example.com/ru/posts/hello')
   })
 
   it('falls back to first locale for x-default when primaryLocale is not set', () => {
     const ctx = createContext({
-      pageData: { relativePath: 'de/post/hello.md' } as any,
+      pageData: { relativePath: 'de/posts/hello.md' } as any,
       siteConfig: {
         userConfig: { siteUrl: 'https://example.com' },
         site: {
@@ -277,6 +277,6 @@ describe('addHreflang', () => {
     addHreflang(ctx)
     const defaultLink = ctx.head.find((h) => h[1]?.hreflang === 'x-default')
     // 'de' is first alphabetically
-    expect(defaultLink?.[1]?.href).toBe('https://example.com/de/post/hello')
+    expect(defaultLink?.[1]?.href).toBe('https://example.com/de/posts/hello')
   })
 })

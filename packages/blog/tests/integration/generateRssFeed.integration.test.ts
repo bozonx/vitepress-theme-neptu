@@ -147,7 +147,7 @@ describe('generateRssFeed integration', () => {
     expect(json.items[0].summary).toBe('Short description')
     expect(json.items[0].content_html).toContain('<h2>Full heading</h2>')
     expect(json.items[0].content_html).toContain(
-      'href="https://example.com/en/post/other"'
+      'href="https://example.com/en/posts/other"'
     )
     expect(json.items[0].content_html).toContain(
       'src="https://example.com/img/feed.png"'

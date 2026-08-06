@@ -19,7 +19,7 @@ describe('addCanonicalLink', () => {
   function createContext(
     overrides: Partial<AddCanonicalLinkContext> = {}
   ): AddCanonicalLinkContext {
-    const page = overrides.page ?? 'en/post/hello.md'
+    const page = overrides.page ?? 'en/posts/hello.md'
     const pageData =
       overrides.pageData === null
         ? null
@@ -65,7 +65,7 @@ describe('addCanonicalLink', () => {
     const ctx = createContext()
     addCanonicalLink(ctx)
     expect(ctx.head).toEqual([
-      ['link', { rel: 'canonical', href: 'https://example.com/en/post/hello' }],
+      ['link', { rel: 'canonical', href: 'https://example.com/en/posts/hello' }],
     ])
   })
 
@@ -85,12 +85,12 @@ describe('addCanonicalLink', () => {
 
   it('adds self-canonical link', () => {
     const ctx = createContext({
-      page: 'en/post/hello.md',
+      page: 'en/posts/hello.md',
       pageData: { frontmatter: { canonical: 'self' } } as any,
     })
     addCanonicalLink(ctx)
     expect(ctx.head).toEqual([
-      ['link', { rel: 'canonical', href: 'https://example.com/en/post/hello' }],
+      ['link', { rel: 'canonical', href: 'https://example.com/en/posts/hello' }],
     ])
   })
 
@@ -128,14 +128,14 @@ describe('addCanonicalLink', () => {
     })
     addCanonicalLink(ctx)
     expect(ctx.head).toEqual([
-      ['link', { rel: 'canonical', href: 'https://example.com/en/post/hello' }],
+      ['link', { rel: 'canonical', href: 'https://example.com/en/posts/hello' }],
     ])
   })
 
   it('warns and skips invalid explicit URL', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     const ctx = createContext({
-      page: 'en/post/hello.md',
+      page: 'en/posts/hello.md',
       pageData: { frontmatter: { canonical: 'not-a-url' } } as any,
     })
     addCanonicalLink(ctx)
@@ -156,7 +156,7 @@ describe('addCanonicalLink', () => {
 
   it('handles null pageData gracefully', () => {
     const ctx = createContext({
-      page: 'en/post/hello.md',
+      page: 'en/posts/hello.md',
       pageData: null as any,
     })
     addCanonicalLink(ctx)
@@ -166,7 +166,7 @@ describe('addCanonicalLink', () => {
   it('catches errors inside try block gracefully', () => {
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     const ctx = createContext({
-      page: 'en/post/hello.md',
+      page: 'en/posts/hello.md',
       pageData: { frontmatter: { canonical: 'self' } } as any,
       siteConfig: null as any,
     })
@@ -178,7 +178,7 @@ describe('addCanonicalLink', () => {
 
   it('auto-canonical respects locale themeConfig over userConfig themeConfig', () => {
     const ctx = createContext({
-      pageData: { filePath: 'en/post/hello.md', frontmatter: {} } as any,
+      pageData: { filePath: 'en/posts/hello.md', frontmatter: {} } as any,
       siteConfig: {
         userConfig: {
           siteUrl: 'https://example.com',
@@ -189,7 +189,7 @@ describe('addCanonicalLink', () => {
     })
     addCanonicalLink(ctx)
     expect(ctx.head).toEqual([
-      ['link', { rel: 'canonical', href: 'https://example.com/en/post/hello' }],
+      ['link', { rel: 'canonical', href: 'https://example.com/en/posts/hello' }],
     ])
   })
 

@@ -25,11 +25,11 @@ title: Folder post
 
 Body`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/my-article/index.md', {
+    const item = makePreviewItem('/tmp/site/src/en/posts/my-article/index.md', {
       srcDir: '/tmp/site/src',
     })
 
-    expect(item.url).toBe('/en/post/my-article/')
+    expect(item.url).toBe('/en/posts/my-article/')
   })
 
   it('keeps nested posts in their own subfolder URL', () => {
@@ -39,11 +39,11 @@ title: Nested post
 
 Body`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/2026/trip/day-one.md', {
+    const item = makePreviewItem('/tmp/site/src/en/posts/2026/trip/day-one.md', {
       srcDir: '/tmp/site/src',
     })
 
-    expect(item.url).toBe('/en/post/2026/trip/day-one')
+    expect(item.url).toBe('/en/posts/2026/trip/day-one')
   })
 
   it('turns a co-located cover into a site-root path', () => {
@@ -54,13 +54,13 @@ cover: ./media/cover.jpg
 
 Body`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/my-article/index.md', {
+    const item = makePreviewItem('/tmp/site/src/en/posts/my-article/index.md', {
       srcDir: '/tmp/site/src',
     })
 
-    expect(item.cover).toBe('/en/post/my-article/media/cover.jpg')
-    expect(item.thumbnail).toBe('/en/post/my-article/media/cover.jpg')
-    expect(item.frontmatter.cover).toBe('/en/post/my-article/media/cover.jpg')
+    expect(item.cover).toBe('/en/posts/my-article/media/cover.jpg')
+    expect(item.thumbnail).toBe('/en/posts/my-article/media/cover.jpg')
+    expect(item.frontmatter.cover).toBe('/en/posts/my-article/media/cover.jpg')
   })
 
   it('leaves a public cover path untouched', () => {
@@ -71,7 +71,7 @@ cover: /img/cover.jpg
 
 Body`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md', {
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md', {
       srcDir: '/tmp/site/src',
     })
 
@@ -89,7 +89,7 @@ tags:
 
 Body content`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md')
 
     expect(item.tags).toEqual([
       { name: 'Vue', slug: 'vue' },
@@ -104,8 +104,8 @@ title: [
 
 Body content`)
 
-    expect(() => makePreviewItem('/tmp/site/src/en/post/broken.md')).toThrow(
-      'Failed to parse frontmatter in /tmp/site/src/en/post/broken.md'
+    expect(() => makePreviewItem('/tmp/site/src/en/posts/broken.md')).toThrow(
+      'Failed to parse frontmatter in /tmp/site/src/en/posts/broken.md'
     )
   })
 
@@ -116,7 +116,7 @@ title: Hello
 
 This is a very long body content that should be truncated according to the custom maxPreviewLength parameter passed to the function.`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md', { maxPreviewLength: 20 })
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md', { maxPreviewLength: 20 })
 
     expect(item.preview).toBeDefined()
     expect(item.preview!.length).toBeLessThanOrEqual(20)
@@ -131,7 +131,7 @@ previewText: Custom preview.
 
 Body content`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md', { maxPreviewLength: 10 })
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md', { maxPreviewLength: 10 })
 
     expect(item.preview).toBe('Custom preview.')
   })
@@ -144,7 +144,7 @@ featured: true
 
 Body content`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md')
 
     expect(item.featured).toBe(true)
   })
@@ -157,7 +157,7 @@ description: Search-engine summary.
 
 Independent body excerpt.`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md')
 
     expect(item.preview).toBe('Independent body excerpt.')
   })
@@ -171,7 +171,7 @@ descrAsPreview: true
 
 Independent body excerpt.`)
 
-    const item = makePreviewItem('/tmp/site/src/en/post/hello.md')
+    const item = makePreviewItem('/tmp/site/src/en/posts/hello.md')
 
     expect(item.preview).toBe('Search-engine summary.')
   })

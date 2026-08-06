@@ -6,7 +6,7 @@ authorId: ivan-k
 category: Writing
 tags: [guide, advanced]
 translations:
-  ru: /ru/post/mermaid-and-katex
+  ru: /ru/posts/mermaid-and-katex
 ---
 
 # Mermaid Diagrams and KaTeX Formulas

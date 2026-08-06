@@ -14,7 +14,7 @@ tags:
   - media
 descrAsPreview: true
 translations:
-  ru: /ru/post/media-components
+  ru: /ru/posts/media-components
 ---
 
 The theme registers four media components globally, so you can drop them into any

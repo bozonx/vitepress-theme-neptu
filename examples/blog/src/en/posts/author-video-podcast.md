@@ -23,7 +23,7 @@ podcasts:
   applepodcasts: https://podcasts.apple.com/
   youtube: https://www.youtube.com/
 translations:
-  ru: /ru/post/author-video-podcast
+  ru: /ru/posts/author-video-podcast
 ---
 
 Three related fields turn a plain article into a rich, multi-format post. All of

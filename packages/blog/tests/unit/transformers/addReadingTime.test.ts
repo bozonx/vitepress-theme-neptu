@@ -34,8 +34,8 @@ function makePageData(
 ): ExtendedPageData {
   return {
     frontmatter,
-    filePath: 'en/post/a.md',
-    relativePath: 'en/post/a.md',
+    filePath: 'en/posts/a.md',
+    relativePath: 'en/posts/a.md',
   } as unknown as ExtendedPageData
 }
 

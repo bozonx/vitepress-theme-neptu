@@ -110,12 +110,12 @@ describe('addRssLinks integration', () => {
     const head: HeadConfig[] = []
     const pageData: ExtendedPageData = {
       frontmatter: { layout: 'post' },
-      filePath: 'ru/post/some-post.md',
+      filePath: 'ru/posts/some-post.md',
     } as any
     const siteConfig = createMockSiteConfig()
 
     addRssLinks({
-      page: 'ru/post/some-post.html',
+      page: 'ru/posts/some-post.html',
       head,
       pageData,
       siteConfig,

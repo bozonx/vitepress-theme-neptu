@@ -29,7 +29,7 @@ CMS, API или на другом сайте, синхронизируйте е�
 ```
 
 Ваш `sync-remote-posts.mjs` получает внешний контент и записывает файлы вида
-`src/ru/post/<slug>.md` с frontmatter, который ожидает тема (`title`,
+`src/ru/posts/<slug>.md` с frontmatter, который ожидает тема (`title`,
 `date`, `authorId`, `tags`, …). Поскольку `prebuild` выполняется первым, только что
 записанные посты индексируются при каждой сборке.
 
@@ -50,9 +50,9 @@ if (!response.ok) {
 const html = await response.text()
 const markdown = new TurndownService().turndown(html)
 
-await fs.mkdir('src/ru/post', { recursive: true })
+await fs.mkdir('src/ru/posts', { recursive: true })
 await fs.writeFile(
-  'src/ru/post/imported-article.md',
+  'src/ru/posts/imported-article.md',
   `---
 title: Импортированная статья
 date: 2026-05-09

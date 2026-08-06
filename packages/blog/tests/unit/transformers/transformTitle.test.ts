@@ -20,7 +20,7 @@ vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
 describe('transformTitle', () => {
   function createPageData(overrides: Partial<ExtendedPageData> = {}): ExtendedPageData {
     return {
-      filePath: 'en/post/hello.md',
+      filePath: 'en/posts/hello.md',
       frontmatter: { title: 'Hello' },
       ...overrides,
     } as ExtendedPageData

@@ -126,7 +126,7 @@ themeConfig:
     donate: true            # кнопка «Поддержать» (нужен donate.url)
     # links:                # ссылки навигации (обычно в _site.yaml — локализованные)
     #   - text: 'О блоге'
-    #     href: 'page/about'
+    #     href: 'pages/about'
     #     icon: 'solar:document-linear'
     #     desktopOnly: true  # скрывать на мобильных
     #     mobileOnly: false  # только на мобильных
@@ -137,7 +137,7 @@ themeConfig:
 
   # --- Кнопка «Поддержать» (donate) ---
   donate:
-    url: 'page/donate'      # обязательный — без него кнопок не будет
+    url: 'pages/donate'      # обязательный — без него кнопок не будет
     # icon: 'fa6-solid:hand-holding-heart'  # по умолчанию donateIcon
     # postDonateCall: 'Поддержите блог'     # текст призыва под статьёй (обычно в _site.yaml)
 
@@ -314,14 +314,14 @@ themeConfig:
     # bottomLinks:             # ссылки внизу
     #   - { header: '${t.links.links}' }
     #   - text: 'О блоге'
-    #     href: 'page/about'
+    #     href: 'pages/about'
     #     icon: 'mdi:information-outline'
 
   # --- Локализованная навигация ---
   nav:
     # links:
     #   - text: 'О блоге'
-    #     href: 'page/about'
+    #     href: 'pages/about'
     #     icon: 'solar:document-linear'
 
   # --- Локализованный футер сайта ---
@@ -333,7 +333,7 @@ themeConfig:
     # github: true
     links:
       - text: '${t.links.aboutBlog}'
-        href: 'page/about'
+        href: 'pages/about'
 
   # --- Локализованный призыв к донату ---
   donate:
@@ -441,7 +441,7 @@ themeConfig:
         href: 'https://www.youtube.com/'
         icon: '${theme.youtubeIcon}'
       - text: 'Мы в соцсетях'
-        href: 'page/links'
+        href: 'pages/links'
         icon: 'fa6-solid:share-nodes'
 ```
 
@@ -495,7 +495,7 @@ themeConfig:
     copyright: 'Copyright © 2026 Your Name.'
     links:
       - text: '${t.links.aboutBlog}'
-        href: 'page/about'
+        href: 'pages/about'
 ```
 
 Если нужен не набор ссылок, а собственная вёрстка футера, встроенный футер
@@ -544,8 +544,8 @@ markdown: {
 
 ## Относительные URL подстраиваются под локаль
 
-Относительный `href`, такой как `page/about`, автоматически дополняется префиксом текущей
-локали (`/en/page/about`, `/ru/page/about`). Для внешних ссылок используйте абсолютные URL (`https://…`).
+Относительный `href`, такой как `pages/about`, автоматически дополняется префиксом текущей
+локали (`/en/pages/about`, `/ru/pages/about`). Для внешних ссылок используйте абсолютные URL (`https://…`).
 
 ---
 
@@ -861,7 +861,7 @@ themeConfig:
 # src/site.yaml — общий адрес для всех локалей
 themeConfig:
   donate:
-    url: 'page/donate'   # относительный путь дополняется локалью, либо внешний https://…
+    url: 'pages/donate'   # относительный путь дополняется локалью, либо внешний https://…
     icon: 'fa6-solid:hand-holding-heart'   # необязательно, по умолчанию donateIcon
 ```
 

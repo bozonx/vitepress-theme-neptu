@@ -25,7 +25,7 @@ describe('resolveDescription', () => {
     const pageData: Record<string, any> = {
       frontmatter: { layout: 'post', description: 'Existing desc' },
       description: 'Existing desc',
-      filePath: 'en/post/hello.md',
+      filePath: 'en/posts/hello.md',
     }
     const readFile = vi.fn().mockReturnValue('raw content')
     resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: {} } as any }, readFile)
@@ -37,7 +37,7 @@ describe('resolveDescription', () => {
     const pageData: Record<string, any> = {
       frontmatter: { layout: 'post', head: [['meta', { name: 'description', content: 'Head desc' }]] },
       description: 'Head desc',
-      filePath: 'en/post/hello.md',
+      filePath: 'en/posts/hello.md',
     }
     const readFile = vi.fn()
     resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: {} } as any }, readFile)
@@ -51,10 +51,10 @@ describe('resolveDescription', () => {
     const pageData: Record<string, any> = {
       frontmatter: { layout: 'post', description: '' },
       description: undefined,
-      filePath: 'en/post/hello.md',
+      filePath: 'en/posts/hello.md',
     }
     resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: { themeConfig: { seo: { maxDescriptionLength: 200 } } } } as any }, readFile)
-    expect(readFile).toHaveBeenCalledWith('/src/en/post/hello.md')
+    expect(readFile).toHaveBeenCalledWith('/src/en/posts/hello.md')
     expect(pageData.description).toBe('# Title\n\nSome content here.')
   })
 
@@ -76,7 +76,7 @@ describe('resolveDescription', () => {
       {
         frontmatter: { layout: 'post' },
         description: '',
-        filePath: 'en/post/hello.md',
+        filePath: 'en/posts/hello.md',
       } as any,
       {
         siteConfig: {
@@ -92,7 +92,7 @@ describe('resolveDescription', () => {
       'content',
       123,
       undefined,
-      'en/post/hello.md'
+      'en/posts/hello.md'
     )
   })
 
@@ -105,13 +105,13 @@ describe('resolveDescription', () => {
     const pageData: Record<string, any> = {
       frontmatter: { layout: 'post', description: '' },
       description: undefined,
-      filePath: 'en/post/missing.md',
+      filePath: 'en/posts/missing.md',
     }
 
     resolveDescription(pageData as any, { siteConfig: { srcDir: '/src', userConfig: {} } as any }, readFile)
     expect(pageData.description).toBeUndefined()
     expect(warnSpy).toHaveBeenCalledWith(
-      'Failed to resolve description for en/post/missing.md:',
+      'Failed to resolve description for en/posts/missing.md:',
       'ENOENT'
     )
     warnSpy.mockRestore()

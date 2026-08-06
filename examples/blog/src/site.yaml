@@ -19,7 +19,7 @@ themeConfig:
   postList:
     showReadingTime: true
   donate:
-    url: 'page/donate'
+    url: 'pages/donate'
   publisher:
     name: 'Neptu'
     url: '${config.siteUrl}'
