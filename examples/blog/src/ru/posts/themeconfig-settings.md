@@ -51,6 +51,7 @@ descriptionAsPreview: true
 | [Верхняя панель](#верхняя-панель-nav) | 2, 3 | Ссылки, иконки соцсетей |
 | [Сайдбар](#сайдбар) | 2, 3 | Флаги секций, логотип, ссылки |
 | [Кнопка «Поддержать»](#кнопка-поддержать-donate) | 2, 3 | `donate.url`, `postDonateCall` |
+| [Ссылка на правку](#ссылка-на-правку-editlink) | 2, 3 | `editLink.pattern`, `editLink.text` |
 | [Футер](#футер) | 2, 3 | `message`, `copyright`, `links`, флаги RSS/Atom/GitHub |
 | [Иконки](#иконки) | 2 | Переопределение умолчаний Iconify |
 | [Внешние ссылки](#внешние-ссылки-в-контенте-постов) | 2 | Иконка ↗, `target="_blank"` |
@@ -60,7 +61,7 @@ descriptionAsPreview: true
 | [Похожие посты](#похожие-посты) | 2 | `similarPostsCount` |
 | [Оглавление и правая колонка](#оглавление-и-правая-колонка) | 2 | `toc`, `asideLayouts` |
 | [Переводы интерфейса](#переводы-интерфейса) | 2, 3 | `themeConfig.t` |
-| [Лейблы доступности](#лейблы-доступности) | 3 | `sidebarMenuLabel`, `langMenuLabel` и т.д. |
+| [Лейблы доступности и 404](#лейблы-доступности-и-страница-404) | 3 | `sidebarMenuLabel`, `langMenuLabel`, `returnToTopLabel`, `notFound` и т.д. |
 | [Рекомендации по уровням](#рекомендации-по-уровням) | — | Что куда помещать |
 
 ## Навигация, сайдбар и футер
@@ -224,6 +225,32 @@ themeConfig:
 Без `donate.url` кнопки не будет, даже если флаги включены. Блок под статьёй
 управляется ключом `donate` в `postFooter` — см. ниже.
 
+### Ссылка на правку (editLink)
+
+Блок `edit-link` в подвале поста выводит ссылку «Редактировать эту страницу».
+Тема сама собирает URL правки из `themeConfig.repo` для GitHub, GitLab,
+Bitbucket, Gitea, Forgejo и Codeberg — достаточно задать `repo` в
+`.vitepress/config.ts`. Переопределять `pattern` вручную нужно только для
+нестандартной ветки или пути к исходникам:
+
+```yaml
+# src/site.yaml — общий шаблон для всех локалей
+themeConfig:
+  editLink:
+    pattern: 'https://github.com/user/repo/edit/main/src/:path'
+```
+
+```yaml
+# src/<locale>/_site.yaml — локализованная подпись
+themeConfig:
+  editLink:
+    text: 'Редактировать на GitHub'
+```
+
+Если `repo` не задан, блок не выводится. Текст по умолчанию берётся из
+переводов (`t.editLink`) — переопределяйте только если стандартная фраза
+не подходит.
+
 ## Иконки
 
 Каждое поле `icon:` принимает строку [Iconify](https://icones.es) вида `prefix:name`,
@@ -320,8 +347,7 @@ themeConfig:
 
 Для `edit-link` достаточно задать `themeConfig.repo` в `.vitepress/config.ts` —
 адрес правки тема соберёт сама для GitHub, GitLab, Bitbucket, Gitea, Forgejo и
-Codeberg. `editLink.text` меняет только подпись, `editLink.pattern` нужен лишь
-для нестандартной ветки или пути к исходникам.
+Codeberg. Подробности и переопределение — в [Ссылка на правку](#ссылка-на-правку-editlink).
 
 ### Кнопки «поделиться»
 
@@ -517,11 +543,25 @@ themeConfig: {
 
 Встроенные переводы для 21 локали. Переопределения — через `themeConfig.t` на любом уровне (deep-merge дополняет встроенный слой). Полный справочник ключей — в [Переводы интерфейса и страница выбора языка](i18n-translations#строки-переводов-от-администратора).
 
-### Лейблы доступности
+Переводы модального окна поиска Pagefind вынесены в подобъект `t.searchUI` —
+`noResultsText`, `resetButtonTitle`, `displayDetails`, `backButtonTitle` и
+`footer.*` (подсказки клавиатуры). Они локализуются тем же способом, что и
+остальные ключи `t`:
+
+```yaml
+# src/<locale>/_site.yaml
+themeConfig:
+  t:
+    searchUI:
+      noResultsText: 'Ничего не найдено'
+      resetButtonTitle: 'Сбросить'
+```
+
+### Лейблы доступности и страница 404
 
 Помимо `t`, `themeConfig` содержит отдельные поля для accessibility-лейблов
-UI-контролов. Они не входят в объект переводов, но локализуются per-locale
-через `_site.yaml`:
+UI-контролов и текстов системных страниц. Они не входят в объект переводов,
+но локализуются per-locale через `_site.yaml`:
 
 | Поле | Назначение |
 | --- | --- |
@@ -529,12 +569,23 @@ UI-контролов. Они не входят в объект переводо
 | `langMenuLabel` | aria-label и tooltip переключателя языка |
 | `colorThemeMenuLabel` | aria-label и tooltip переключателя цветовой темы |
 | `stylePresetMenuLabel` | aria-label и tooltip переключателя стилевого пресета |
+| `returnToTopLabel` | текст кнопки «Наверх» |
+| `lightModeSwitchTitle` | tooltip переключателя на светлую тему |
+| `darkModeSwitchTitle` | tooltip переключателя на тёмную тему |
+| `notFound.title` | заголовок страницы 404 |
+| `notFound.linkText` | текст ссылки «на главную» на странице 404 |
 
 ```yaml
 # src/<locale>/_site.yaml
 themeConfig:
   sidebarMenuLabel: 'Меню'
   langMenuLabel: 'Сменить язык'
+  returnToTopLabel: 'Наверх'
+  lightModeSwitchTitle: 'Светлая тема'
+  darkModeSwitchTitle: 'Тёмная тема'
+  notFound:
+    title: 'Страница не найдена'
+    linkText: 'На главную'
 ```
 
 Встроенные локали уже содержат переводы этих полей — переопределяйте только
@@ -559,6 +610,7 @@ themeConfig:
 - `toc` — настройки оглавления (порог, уровень, position)
 - `asideLayouts` — список макетов с правой колонкой
 - `footer.rssFeed`, `footer.atomFeed`, `footer.github` — флаги ссылок в футере
+- `editLink.pattern` — шаблон ссылки на правку (если нестандартный; иначе авто-генерируется из `repo`)
 
 ### Уровень 3 — `_site.yaml` (отличия одной локали)
 
@@ -574,6 +626,9 @@ themeConfig:
 - `sidebar.socialLinks` — локализованные иконки соцсетей (если отличаются)
 - `toc.label` — локализованный заголовок оглавления
 - `sidebarMenuLabel`, `langMenuLabel`, `colorThemeMenuLabel`, `stylePresetMenuLabel` — локализованные лейблы доступности
+- `returnToTopLabel`, `lightModeSwitchTitle`, `darkModeSwitchTitle` — локализованные подписи кнопок темы и «наверх»
+- `notFound.title`, `notFound.linkText` — локализованные тексты страницы 404
+- `t.searchUI.*` — переводы модального окна поиска Pagefind
 
 Общее правило: если значение одинаковое для всех языков — оставляйте на уровне 2.
 Если отличается — переопределяйте на уровне 3, указывая только то, что отличается.
