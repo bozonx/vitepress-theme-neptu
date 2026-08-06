@@ -8,6 +8,16 @@ date: 2026-08-04
 category: { name: 'Контент', slug: 'writing' }
 tags: [frontmatter, config]
 descrAsPreview: true
+videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+videoLinkLang: RU
+podcastLang: RU
+podcasts:
+  spotify: https://open.spotify.com/…
+  applepodcasts: https://podcasts.apple.com/…
+  youtube: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+  amazonmusic: https://music.amazon.com/…
+  yandexmusic: https://music.yandex.ru/…
+  rss: https://example.com/podcast/rss
 ---
 
 ## Черновики
