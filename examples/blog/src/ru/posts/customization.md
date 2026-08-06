@@ -390,6 +390,49 @@ CSS-переменные и слоты для кастомизации.
 Показ колонки на конкретных layout'ах по-прежнему управляется через
 `themeConfig.asideLayouts` и frontmatter `aside`.
 
+## Стилизация страницы выбора языка
+
+Корневая страница `/` (для многоязычных сайтов) построена из компонента
+`LocaleSelector`. Описание её поведения — в
+[Переводах интерфейса](i18n-translations#поведение-при-первом-посещении).
+Здесь — CSS-структура и переменные для кастомизации.
+
+Компонент использует следующие классы:
+
+| Класс | Элемент |
+| --- | --- |
+| `.locale-selector-wrapper` | Внешний контейнер всей страницы |
+| `.locale-selector` | Основная область с фоновыми градиентами |
+| `.locale-selector__panel` | Карточка с заголовком и ссылками |
+| `.locale-selector__title` | Заголовок сайта (`<h1>`) |
+| `.locale-selector__links` | Навигация со ссылками на локали (`<nav>`) |
+| `.locale-selector__link` | Ссылка на одну локаль (`<a>`) |
+| `.locale-selector__link--detected` | Модификатор: язык, определённый из браузера |
+| `.locale-selector__label` | Блок с названием языка и кодом внутри ссылки |
+| `.locale-selector__arrow` | Стрелка справа в ссылке |
+
+Визуальные значения вынесены в CSS-переменные на `.locale-selector-wrapper`.
+Их можно переопределить в своём CSS — без `!important` и борьбы со scoped-стилями:
+
+```css
+.locale-selector-wrapper {
+  --locale-selector-bg: #f8f4ff;
+  --locale-selector-panel-bg: rgba(255, 255, 255, 0.9);
+  --locale-selector-panel-border: 1px solid #e8e0f0;
+  --locale-selector-panel-radius: 1.5rem;
+  --locale-selector-title-color: #6b21a8;
+  --locale-selector-link-bg: #faf5ff;
+  --locale-selector-link-border: #e9d5ff;
+  --locale-selector-link-hover-bg: #f3e8ff;
+  --locale-selector-link-hover-border: #a855f7;
+  --locale-selector-arrow-color: #a855f7;
+}
+```
+
+Полный список переменных с значениями по умолчанию — в исходнике компонента
+`LocaleSelector.vue`. Тёмная тема переопределяется через `.dark
+.locale-selector-wrapper { ... }`.
+
 ## Пользовательские трансформ-хуки
 
 Когда настроек из YAML не хватает, тема предоставляет стандартные хуки VitePress

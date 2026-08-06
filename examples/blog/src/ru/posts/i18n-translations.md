@@ -1,7 +1,7 @@
 ---
 title: Переводы интерфейса и корневая страница выбора языка
 description: >
-  Встроенные переводы, справочник ключей t, стилизация страницы выбора языка,
+  Встроенные переводы, справочник ключей t, поведение корневой страницы выбора языка,
   наследование локалей, форматирование по языку, RTL и доступ к переводам из кода.
 authorId: ivan-k
 date: 2026-08-05
@@ -42,43 +42,8 @@ HTML-ссылками на все доступные локали. Ссылки 
 HTTP-редирект `301` или `308` на хостинге. Это правило развёртывания, а не второй
 режим структуры исходников.
 
-### Стилизация страницы выбора языка
-
-Страница построена из компонента `LocaleSelector` со следующей структурой классов:
-
-| Класс | Элемент |
-| --- | --- |
-| `.locale-selector-wrapper` | Внешний контейнер всей страницы |
-| `.locale-selector` | Основная область с фоновыми градиентами |
-| `.locale-selector__panel` | Карточка с заголовком и ссылками |
-| `.locale-selector__title` | Заголовок сайта (`<h1>`) |
-| `.locale-selector__links` | Навигация со ссылками на локали (`<nav>`) |
-| `.locale-selector__link` | Ссылка на одну локаль (`<a>`) |
-| `.locale-selector__link--detected` | Модификатор: язык, определённый из браузера |
-| `.locale-selector__label` | Блок с названием языка и кодом внутри ссылки |
-| `.locale-selector__arrow` | Стрелка справа в ссылке |
-
-Визуальные значения вынесены в CSS-переменные на `.locale-selector-wrapper`.
-Их можно переопределить в своём CSS — без `!important` и борьбы со scoped-стилями:
-
-```css
-.locale-selector-wrapper {
-  --locale-selector-bg: #f8f4ff;
-  --locale-selector-panel-bg: rgba(255, 255, 255, 0.9);
-  --locale-selector-panel-border: 1px solid #e8e0f0;
-  --locale-selector-panel-radius: 1.5rem;
-  --locale-selector-title-color: #6b21a8;
-  --locale-selector-link-bg: #faf5ff;
-  --locale-selector-link-border: #e9d5ff;
-  --locale-selector-link-hover-bg: #f3e8ff;
-  --locale-selector-link-hover-border: #a855f7;
-  --locale-selector-arrow-color: #a855f7;
-}
-```
-
-Полный список переменных с значениями по умолчанию — в исходнике компонента
-`LocaleSelector.vue`. Тёмная тема переопределяется через `.dark
-.locale-selector-wrapper { ... }`.
+Стилизация этой страницы — CSS-переменные и классы компонента `LocaleSelector` —
+разобрана в [Кастомизации](customization#стилизация-страницы-выбора-языка).
 
 ## Встроенные переводы
 
