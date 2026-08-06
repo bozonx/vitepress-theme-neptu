@@ -222,6 +222,56 @@ themeConfig:
 [`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml)
 все ключи перечислены закомментированными — это самый удобный справочник под рукой.
 
+### Переводы модального окна поиска (`t.searchUI`)
+
+Переводы модального окна поиска Pagefind вынесены в подобъект `t.searchUI` —
+`noResultsText`, `resetButtonTitle`, `displayDetails`, `backButtonTitle` и
+`footer.*` (подсказки клавиатуры). Они локализуются тем же способом, что и
+остальные ключи `t`:
+
+```yaml
+# src/<locale>/_site.yaml
+themeConfig:
+  t:
+    searchUI:
+      noResultsText: 'Ничего не найдено'
+      resetButtonTitle: 'Сбросить'
+```
+
+### Лейблы доступности и страница 404
+
+Помимо `t`, `themeConfig` содержит отдельные поля для accessibility-лейблов
+UI-контролов и текстов системных страниц. Они не входят в объект переводов,
+но локализуются per-locale через `_site.yaml`:
+
+| Поле | Назначение |
+| --- | --- |
+| `sidebarMenuLabel` | tooltip кнопки открытия сайдбара на мобильных |
+| `langMenuLabel` | aria-label и tooltip переключателя языка |
+| `colorThemeMenuLabel` | aria-label и tooltip переключателя цветовой темы |
+| `stylePresetMenuLabel` | aria-label и tooltip переключателя стилевого пресета |
+| `returnToTopLabel` | текст кнопки «Наверх» |
+| `lightModeSwitchTitle` | tooltip переключателя на светлую тему |
+| `darkModeSwitchTitle` | tooltip переключателя на тёмную тему |
+| `notFound.title` | заголовок страницы 404 |
+| `notFound.linkText` | текст ссылки «на главную» на странице 404 |
+
+```yaml
+# src/<locale>/_site.yaml
+themeConfig:
+  sidebarMenuLabel: 'Меню'
+  langMenuLabel: 'Сменить язык'
+  returnToTopLabel: 'Наверх'
+  lightModeSwitchTitle: 'Светлая тема'
+  darkModeSwitchTitle: 'Тёмная тема'
+  notFound:
+    title: 'Страница не найдена'
+    linkText: 'На главную'
+```
+
+Встроенные локали уже содержат переводы этих полей — переопределяйте только
+при необходимости.
+
 ## Наследование локалей (`extends`)
 
 Близкие локали не нужно настраивать дважды. `extends` в `_site.yaml` указывает

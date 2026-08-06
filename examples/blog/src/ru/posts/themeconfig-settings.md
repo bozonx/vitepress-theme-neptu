@@ -2,7 +2,7 @@
 title: Настройки themeConfig — 2 и 3 уровень конфигурации
 description: >
   Все не системные настройки themeConfig второго и третьего уровня: навигация,
-  сайдбар, футер, подвал поста, оглавление, иконки и переводы. Остальные
+  сайдбар, футер, подвал поста, оглавление и переводы. Остальные
   параметры вынесены в отдельные статьи.
 authorId: ivan-k
 date: 2026-08-04
@@ -31,6 +31,7 @@ descriptionAsPreview: true
 | `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
 | `paginationMaxItems`, `postList` | [Списки, страницы](lists-and-pages) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
+| `donateIcon`, `recentIcon`, `featuredIcon`, `popularIcon` и др. | [Кастомизация — иконки](customization#иконки) |
 
 ::: tip
 Пример полного конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
@@ -172,6 +173,7 @@ themeConfig:
 | `text` | Текст ссылки. Кроме socialLinks, так как это просто иконки, не содержащие текста|
 | `title` | Текст подсказки |
 | `href` | URL; относительный дополняется префиксом локали, абсолютный (`https://…`) — как есть |
+
 | `icon` | Имя иконки [Iconify](https://icon-sets.iconify.design/), например `solar:document-linear` |
 | `iconClass` | CSS-класс для иконки |
 | `class` | CSS-класс для всего элемента ссылки |
@@ -440,84 +442,6 @@ themeConfig: {
 
 Отдельная страница переопределяет список через frontmatter `aside: true` или
 `aside: false`.
-
----
-
-## Иконки
-
-Каждое поле `icon:` принимает строку [Iconify](https://icon-sets.iconify.design/) вида `prefix:name`,
-например `fa6-solid:hand-holding-heart`. Иконки по умолчанию («Поддержать», свежие,
-популярное, RSS и т.д.) можно переопределить глобально в `src/site.yaml`:
-
-```yaml
-themeConfig:
-  donateIcon: 'fa6-solid:hand-holding-heart'
-  recentIcon: 'fa6-solid:bolt'
-  featuredIcon: 'fa6-solid:bookmark'
-  popularIcon: 'fa6-solid:star'
-  byDateIcon: 'fa6-solid:calendar-days'
-  authorsIcon: 'mdi:users'
-  tagsIcon: 'fa6-solid:tag'
-  categoriesIcon: 'fa6-solid:folder-open'  # по умолчанию нет — fallback на tagsIcon
-  rssIcon: 'bi:rss-fill'
-  atomIcon: 'vscode-icons:file-type-atom'
-  youtubeIcon: 'fa6-brands:youtube'
-```
-
-`categoriesIcon` не имеет собственного умолчания: если поле не задано,
-используется `tagsIcon`. `youtubeIcon` применяется в кнопке видео-ссылки поста.
-
-## Переводы интерфейса
-
-Встроенные переводы для 21 локали. Переопределения — через `themeConfig.t` на любом уровне (deep-merge дополняет встроенный слой). Полный справочник ключей — в [Переводы интерфейса и страница выбора языка](i18n-translations#строки-переводов-от-администратора).
-
-Переводы модального окна поиска Pagefind вынесены в подобъект `t.searchUI` —
-`noResultsText`, `resetButtonTitle`, `displayDetails`, `backButtonTitle` и
-`footer.*` (подсказки клавиатуры). Они локализуются тем же способом, что и
-остальные ключи `t`:
-
-```yaml
-# src/<locale>/_site.yaml
-themeConfig:
-  t:
-    searchUI:
-      noResultsText: 'Ничего не найдено'
-      resetButtonTitle: 'Сбросить'
-```
-
-### Лейблы доступности и страница 404
-
-Помимо `t`, `themeConfig` содержит отдельные поля для accessibility-лейблов
-UI-контролов и текстов системных страниц. Они не входят в объект переводов,
-но локализуются per-locale через `_site.yaml`:
-
-| Поле | Назначение |
-| --- | --- |
-| `sidebarMenuLabel` | tooltip кнопки открытия сайдбара на мобильных |
-| `langMenuLabel` | aria-label и tooltip переключателя языка |
-| `colorThemeMenuLabel` | aria-label и tooltip переключателя цветовой темы |
-| `stylePresetMenuLabel` | aria-label и tooltip переключателя стилевого пресета |
-| `returnToTopLabel` | текст кнопки «Наверх» |
-| `lightModeSwitchTitle` | tooltip переключателя на светлую тему |
-| `darkModeSwitchTitle` | tooltip переключателя на тёмную тему |
-| `notFound.title` | заголовок страницы 404 |
-| `notFound.linkText` | текст ссылки «на главную» на странице 404 |
-
-```yaml
-# src/<locale>/_site.yaml
-themeConfig:
-  sidebarMenuLabel: 'Меню'
-  langMenuLabel: 'Сменить язык'
-  returnToTopLabel: 'Наверх'
-  lightModeSwitchTitle: 'Светлая тема'
-  darkModeSwitchTitle: 'Тёмная тема'
-  notFound:
-    title: 'Страница не найдена'
-    linkText: 'На главную'
-```
-
-Встроенные локали уже содержат переводы этих полей — переопределяйте только
-при необходимости.
 
 ## Рекомендации по уровням
 

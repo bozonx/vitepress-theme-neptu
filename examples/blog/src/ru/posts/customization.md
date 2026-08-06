@@ -2,8 +2,8 @@
 title: Кастомизация — цветовые схемы, стили, шрифты, хуки, слоты и свои макеты
 description: >
   Восемь цветовых схем и шесть стилевых пресетов, собственный оттенок через
-  CSS-переменные, светлая и тёмная темы, свои шрифты, печатная версия статьи,
-  трансформ-хуки сборки, слоты макета и собственные макеты.
+  CSS-переменные, светлая и тёмная темы, свои шрифты, иконки, печатная версия
+  статьи, трансформ-хуки сборки, слоты макета и собственные макеты.
 authorId: ivan-k
 date: 2026-08-04
 category: { name: 'Продвинутое', slug: 'advanced' }
@@ -158,6 +158,30 @@ head: [
 
 Если шрифт нужен только для заголовков, не меняйте `--font-body`, а переопределите `h1…h6`
 в `styles.css`.
+
+## Иконки
+
+Каждое поле `icon:` принимает строку [Iconify](https://icon-sets.iconify.design/) вида `prefix:name`,
+например `fa6-solid:hand-holding-heart`. Иконки по умолчанию («Поддержать», свежие,
+популярное, RSS и т.д.) можно переопределить глобально в `src/site.yaml`:
+
+```yaml
+themeConfig:
+  donateIcon: 'fa6-solid:hand-holding-heart'
+  recentIcon: 'fa6-solid:bolt'
+  featuredIcon: 'fa6-solid:bookmark'
+  popularIcon: 'fa6-solid:star'
+  byDateIcon: 'fa6-solid:calendar-days'
+  authorsIcon: 'mdi:users'
+  tagsIcon: 'fa6-solid:tag'
+  categoriesIcon: 'fa6-solid:folder-open'  # по умолчанию нет — fallback на tagsIcon
+  rssIcon: 'bi:rss-fill'
+  atomIcon: 'vscode-icons:file-type-atom'
+  youtubeIcon: 'fa6-brands:youtube'
+```
+
+`categoriesIcon` не имеет собственного умолчания: если поле не задано,
+используется `tagsIcon`. `youtubeIcon` применяется в кнопке видео-ссылки поста.
 
 ## Фоновое изображение главной страницы
 
