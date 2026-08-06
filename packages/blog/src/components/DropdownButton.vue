@@ -60,15 +60,22 @@ const focusTrigger = () => {
 }
 
 const openList = async (focusPosition?: 'first' | 'last') => {
-  if (listOpen.value) return
+  if (animationTimeout) {
+    clearTimeout(animationTimeout)
+    animationTimeout = null
+  }
 
-  listOpen.value = true
-  if (opacityTimeout) clearTimeout(opacityTimeout)
-  // Run on the next tick to guarantee CSS transition fires
-  opacityTimeout = setTimeout(() => {
-    opacity.value = Number(listOpen.value)
-    opacityTimeout = null
-  }, 50)
+  if (!listOpen.value) {
+    listOpen.value = true
+    if (opacityTimeout) clearTimeout(opacityTimeout)
+    // Run on the next tick to guarantee CSS transition fires
+    opacityTimeout = setTimeout(() => {
+      opacity.value = Number(listOpen.value)
+      opacityTimeout = null
+    }, 50)
+  } else {
+    opacity.value = 1
+  }
 
   if (focusPosition) {
     await nextTick()

@@ -123,9 +123,9 @@ describe('NeptuFooter', () => {
 
   it('renders centered feed links (RSS, Atom, GitHub) when configured', () => {
     mockTheme.value = {
-      repo: 'owner/my-blog',
       footer: {
         copyright: 'Copyright 2026',
+        socialLinks: [{ title: 'GitHub', href: 'https://github.com/owner/my-blog' }],
       },
     }
     const wrapper = mount(NeptuFooter)
@@ -137,12 +137,11 @@ describe('NeptuFooter', () => {
 
   it('hides feed links if explicitly disabled in footer config', () => {
     mockTheme.value = {
-      repo: 'owner/my-blog',
       footer: {
         copyright: 'Copyright 2026',
         rssFeed: false,
         atomFeed: false,
-        github: false,
+        socialLinks: [],
       },
     }
     const wrapper = mount(NeptuFooter)

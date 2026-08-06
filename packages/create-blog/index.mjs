@@ -195,8 +195,8 @@ Options:
 
   await edit(path.join(target, 'src', locale, '_site.yaml'), (s) =>
     s
-      .replace(/^lang: '[^']*'$/m, `lang: '${lang}'`)
-      .replace(/^title: '[^']*'$/m, `title: '${title.replace(/'/g, "''")}'`)
+      .replace(/^lang:\s*['"]?[^'"]*['"]?$/m, `lang: '${lang}'`)
+      .replace(/^title:\s*['"]?[^'"]*['"]?$/m, `title: '${title.replace(/'/g, "''")}'`)
   )
 
   // Schema hints are written relative to a `node_modules` sibling; they resolve

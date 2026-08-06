@@ -118,7 +118,8 @@ export async function loadPostsData(
  * without the caller having to pass `srcDir` explicitly.
  */
 function inferSrcDir(filePath: string, postsDirName: string): string | undefined {
-  const segments = filePath.split(path.sep)
+  const normalized = path.normalize(filePath)
+  const segments = normalized.split(path.sep)
   const postsIndex = segments.lastIndexOf(postsDirName)
 
   // Needs at least `<srcDir>/<locale>/<postsDir>` before the file name.

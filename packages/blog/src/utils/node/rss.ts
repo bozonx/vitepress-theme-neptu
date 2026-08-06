@@ -1,6 +1,6 @@
 import type { Feed } from 'feed'
 import { normalizeTag } from '../shared/tags.ts'
-import { normalizeSiteUrl, makeAbsoluteUrl } from '../shared/url.ts'
+import { normalizeSiteUrl } from '../shared/url.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../../types.d.ts'
 
 type RssSiteConfig = Partial<Omit<ExtendedSiteConfig, 'userConfig' | 'site'>> & {

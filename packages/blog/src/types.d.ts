@@ -614,6 +614,7 @@ export namespace NeptuBlogTheme {
     name?: string
     slug?: string
     count?: number
+    [key: string]: unknown
   }
 
   export interface AuthorItem {
@@ -753,6 +754,7 @@ export namespace NeptuBlogTheme {
     name: string
     slug: string
     count?: number
+    [key: string]: unknown
   }
 
   export interface BreadcrumbItem {
