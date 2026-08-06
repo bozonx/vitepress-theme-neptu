@@ -41,12 +41,15 @@ export function interpolateMustache(
   let res = tmpl
   const mustacheRegex = /\{\{([^}]*)\}\}/g
   let match: RegExpExecArray | null
+  const replaced = new Set<string>()
 
   while ((match = mustacheRegex.exec(tmpl)) !== null) {
+    const fullMatch = match[0]
+    if (replaced.has(fullMatch)) continue
+    replaced.add(fullMatch)
+
     const originalKey = match[1] ?? ''
     const key = originalKey.trim()
-    const escapedKey = originalKey.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    const replaceRegex = new RegExp(`\\{\\{${escapedKey}\\}\\}`, 'g')
 
     let stringValue: string
     if (options.eval) {
@@ -58,13 +61,14 @@ export function interpolateMustache(
       }
     } else {
       if (!isPathValid(key)) {
-        stringValue = match[0]
+        stringValue = fullMatch
       } else {
         const value = deepGet(data, key)
         stringValue = value === null || value === undefined ? '' : String(value)
       }
     }
-    res = res.replace(replaceRegex, stringValue)
+    // Use split/join to avoid regex construction per placeholder
+    res = res.split(fullMatch).join(stringValue)
   }
   return res
 }

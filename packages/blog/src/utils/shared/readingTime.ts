@@ -6,7 +6,7 @@
  * client-side measuring happens.
  */
 
-import { isHomePage, resolveLayoutKey } from './page.ts'
+import { isFeatureEnabled } from './page.ts'
 import type { PostFrontmatter, ThemeConfig } from '../../types.d.ts'
 
 /** Words per minute assumed for an average reader of latin-script prose. */
@@ -75,13 +75,11 @@ export function isReadingTimeEnabled(
   theme: ThemeConfig | null | undefined,
   frontmatter: PostFrontmatter | null | undefined
 ): boolean {
-  if (isHomePage(frontmatter)) return false
-  if (theme?.readingTime?.enabled === false) return false
-  if (typeof frontmatter?.readingTime === 'boolean') return frontmatter.readingTime
-
-  const layouts = theme?.readingTime?.layouts ?? DEFAULT_READING_TIME_LAYOUTS
-
-  return layouts.includes(resolveLayoutKey(frontmatter))
+  return isFeatureEnabled(frontmatter, {
+    frontmatterKey: 'readingTime',
+    enabledFlag: theme?.readingTime?.enabled,
+    layouts: theme?.readingTime?.layouts ?? DEFAULT_READING_TIME_LAYOUTS,
+  })
 }
 
 /**

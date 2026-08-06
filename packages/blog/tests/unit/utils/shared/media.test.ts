@@ -4,6 +4,7 @@ import {
   isContentRelativePath,
   resolveContentMediaPath,
   resolveSidebarLogo,
+  isValidMediaUrl,
 } from '../../../../src/utils/shared/media.ts'
 
 describe('isContentRelativePath', () => {
@@ -122,5 +123,46 @@ describe('resolveSidebarLogo', () => {
     expect(resolveSidebarLogo('')).toBeUndefined()
     expect(resolveSidebarLogo({})).toBeUndefined()
     expect(resolveSidebarLogo(42)).toBeUndefined()
+  })
+})
+
+describe('isValidMediaUrl', () => {
+  it('accepts absolute URLs', () => {
+    expect(isValidMediaUrl('https://example.com/audio.mp3')).toBe(true)
+    expect(isValidMediaUrl('http://example.com/video.mp4')).toBe(true)
+  })
+
+  it('accepts site-root paths', () => {
+    expect(isValidMediaUrl('/media/cover.jpg')).toBe(true)
+  })
+
+  it('accepts relative paths with file extension', () => {
+    expect(isValidMediaUrl('./media/cover.jpg')).toBe(true)
+    expect(isValidMediaUrl('cover.mp3')).toBe(true)
+  })
+
+  it('accepts data: and blob: URIs', () => {
+    expect(isValidMediaUrl('data:image/png;base64,AAA')).toBe(true)
+    expect(isValidMediaUrl('blob:https://example.com/uuid')).toBe(true)
+  })
+
+  it('rejects empty and non-string values', () => {
+    expect(isValidMediaUrl('')).toBe(false)
+    expect(isValidMediaUrl(null)).toBe(false)
+    expect(isValidMediaUrl(undefined)).toBe(false)
+    expect(isValidMediaUrl(123)).toBe(false)
+  })
+
+  it('rejects strings without a file extension', () => {
+    expect(isValidMediaUrl('just-text')).toBe(false)
+    expect(isValidMediaUrl('....')).toBe(false)
+  })
+
+  it('rejects meaningless strings with dots', () => {
+    expect(isValidMediaUrl('.')).toBe(false)
+    expect(isValidMediaUrl('..')).toBe(false)
+    expect(isValidMediaUrl('...')).toBe(false)
+    expect(isValidMediaUrl('a.')).toBe(false)
+    expect(isValidMediaUrl('.a')).toBe(false)
   })
 })

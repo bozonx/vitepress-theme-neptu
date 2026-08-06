@@ -50,7 +50,6 @@ const feedLinks = computed(() => {
 
   if (
     theme.value.footer?.rssFeed !== false &&
-    theme.value.sidebar?.rssFeed !== false &&
     hasFormat('rss')
   ) {
     links.push({
@@ -63,7 +62,6 @@ const feedLinks = computed(() => {
 
   if (
     theme.value.footer?.atomFeed !== false &&
-    theme.value.sidebar?.atomFeed !== false &&
     hasFormat('atom')
   ) {
     links.push({

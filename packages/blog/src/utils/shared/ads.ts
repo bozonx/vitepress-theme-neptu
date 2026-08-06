@@ -1,5 +1,5 @@
 import type { AdsConfig, PostFrontmatter, ThemeConfig } from '../../types.d.ts'
-import { isHomePage, resolveLayoutKey } from './page.ts'
+import { isFeatureEnabled } from './page.ts'
 
 /**
  * Layouts that may render ad slots unless `themeConfig.ads.layouts` says
@@ -41,15 +41,12 @@ export function isAdsEnabled(
   theme: ThemeConfig | null | undefined,
   frontmatter: PostFrontmatter | null | undefined
 ): boolean {
-  if (isHomePage(frontmatter)) return false
-  if (theme?.ads?.enabled === false) return false
-  if (typeof frontmatter?.ads === 'boolean') return frontmatter.ads
-
-  const layouts = theme?.ads?.layouts ?? DEFAULT_ADS_LAYOUTS
-
-  return layouts.includes(
-    resolveLayoutKey(frontmatter, theme?.ads?.defaultLayout)
-  )
+  return isFeatureEnabled(frontmatter, {
+    frontmatterKey: 'ads',
+    enabledFlag: theme?.ads?.enabled,
+    layouts: theme?.ads?.layouts ?? DEFAULT_ADS_LAYOUTS,
+    fallbackLayout: theme?.ads?.defaultLayout,
+  })
 }
 
 /** Whether one specific placement is turned on in the config. */

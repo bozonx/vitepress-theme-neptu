@@ -59,6 +59,32 @@ export function resolveLayoutKey(
 }
 
 /**
+ * Generic feature-on/off check shared by {@link isAsideEnabled}, `isAdsEnabled`,
+ * `isTocEnabled` and `isReadingTimeEnabled`.
+ *
+ * Resolution order:
+ * 1. Home page → never;
+ * 2. Master switch (`enabledFlag === false`) → off;
+ * 3. Frontmatter boolean override → wins;
+ * 4. Layout list match → decides.
+ */
+export function isFeatureEnabled(
+  frontmatter: PostFrontmatter | null | undefined,
+  options: {
+    frontmatterKey: 'ads' | 'toc' | 'readingTime' | 'aside'
+    enabledFlag?: boolean | undefined
+    layouts: string[]
+    fallbackLayout?: string
+  }
+): boolean {
+  if (isHomePage(frontmatter)) return false
+  if (options.enabledFlag === false) return false
+  const fmFlag = frontmatter?.[options.frontmatterKey]
+  if (typeof fmFlag === 'boolean') return fmFlag
+  return options.layouts.includes(resolveLayoutKey(frontmatter, options.fallbackLayout))
+}
+
+/**
  * Whether the aside column should be rendered for the current page.
  * PostFrontmatter `aside` wins over `themeConfig.asideLayouts`; the home page
  * never renders an aside because it uses its own full-takeover layout.
@@ -67,12 +93,10 @@ export function isAsideEnabled(
   theme: ThemeConfig | null | undefined,
   frontmatter: PostFrontmatter | null | undefined
 ): boolean {
-  if (isHomePage(frontmatter)) return false
-  if (typeof frontmatter?.aside === 'boolean') return frontmatter.aside
-
-  const layouts = theme?.asideLayouts ?? DEFAULT_ASIDE_LAYOUTS
-
-  return layouts.includes(resolveLayoutKey(frontmatter))
+  return isFeatureEnabled(frontmatter, {
+    frontmatterKey: 'aside',
+    layouts: theme?.asideLayouts ?? DEFAULT_ASIDE_LAYOUTS,
+  })
 }
 
 export function isAuthorPage(filePath: string | null | undefined): boolean {

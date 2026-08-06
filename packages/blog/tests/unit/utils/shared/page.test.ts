@@ -10,6 +10,7 @@ import {
   resolvePagefindBodyAttribute,
   resolveLayoutKey,
   isAsideEnabled,
+  isFeatureEnabled,
 } from '../../../../src/utils/shared/page.ts'
 import type { ThemeConfig } from '../../../../src/types.d.ts'
 
@@ -230,5 +231,66 @@ describe('isAsideEnabled', () => {
     const configured = { asideLayouts: [] } as unknown as ThemeConfig
 
     expect(isAsideEnabled(configured, { layout: 'post' })).toBe(false)
+  })
+})
+
+describe('isFeatureEnabled', () => {
+  it('never enables on the home page', () => {
+    expect(
+      isFeatureEnabled({ layout: 'home', ads: true }, {
+        frontmatterKey: 'ads',
+        layouts: ['post'],
+      })
+    ).toBe(false)
+  })
+
+  it('respects the master switch', () => {
+    expect(
+      isFeatureEnabled({ layout: 'post' }, {
+        frontmatterKey: 'ads',
+        enabledFlag: false,
+        layouts: ['post'],
+      })
+    ).toBe(false)
+  })
+
+  it('lets frontmatter boolean override the layout list', () => {
+    expect(
+      isFeatureEnabled({ layout: 'page', ads: true }, {
+        frontmatterKey: 'ads',
+        layouts: ['post'],
+      })
+    ).toBe(true)
+    expect(
+      isFeatureEnabled({ layout: 'post', ads: false }, {
+        frontmatterKey: 'ads',
+        layouts: ['post'],
+      })
+    ).toBe(false)
+  })
+
+  it('falls back to the layout list when no frontmatter flag is set', () => {
+    expect(
+      isFeatureEnabled({ layout: 'post' }, {
+        frontmatterKey: 'ads',
+        layouts: ['post'],
+      })
+    ).toBe(true)
+    expect(
+      isFeatureEnabled({ layout: 'page' }, {
+        frontmatterKey: 'ads',
+        layouts: ['post'],
+      })
+    ).toBe(false)
+  })
+
+  it('uses fallbackLayout when provided', () => {
+    expect(
+      isFeatureEnabled({}, {
+        frontmatterKey: 'ads',
+        layouts: ['doc'],
+        fallbackLayout: 'doc',
+      })
+    ).toBe(true)
   })
 })

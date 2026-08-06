@@ -96,7 +96,9 @@ export function isValidMediaUrl(url: unknown): boolean {
       return true
     }
 
-    if (url.includes('.') && url.length > 3) {
+    // Relative paths: require at least one segment with a file extension
+    // to avoid accepting arbitrary strings like "...." or "a.b" as media URLs
+    if (/^[^/]+\.[a-z0-9]+$/i.test(url)) {
       return true
     }
 

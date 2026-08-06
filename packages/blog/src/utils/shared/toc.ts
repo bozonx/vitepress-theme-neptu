@@ -1,5 +1,5 @@
 import type { PostFrontmatter, ThemeConfig, TocConfig } from '../../types.d.ts'
-import { isHomePage, resolveLayoutKey } from './page.ts'
+import { isFeatureEnabled } from './page.ts'
 
 /**
  * A heading as VitePress exposes it on `page.headers`: a tree keyed by the
@@ -112,13 +112,11 @@ export function isTocEnabled(
   theme: ThemeConfig | null | undefined,
   frontmatter: PostFrontmatter | null | undefined
 ): boolean {
-  if (isHomePage(frontmatter)) return false
-  if (theme?.toc?.enabled === false) return false
-  if (typeof frontmatter?.toc === 'boolean') return frontmatter.toc
-
-  const layouts = theme?.toc?.layouts ?? DEFAULT_TOC_LAYOUTS
-
-  return layouts.includes(resolveLayoutKey(frontmatter))
+  return isFeatureEnabled(frontmatter, {
+    frontmatterKey: 'toc',
+    enabledFlag: theme?.toc?.enabled,
+    layouts: theme?.toc?.layouts ?? DEFAULT_TOC_LAYOUTS,
+  })
 }
 
 /**

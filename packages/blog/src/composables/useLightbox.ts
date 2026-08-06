@@ -10,6 +10,7 @@ import {
   removeBodyClass,
   type LightboxElement,
 } from '../utils/client/lightboxDom.ts'
+import { debounce } from '../utils/shared/timer.ts'
 
 export interface LightboxItem {
   src: string
@@ -37,6 +38,7 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
 
   let elements: LightboxElement[] = []
   let observer: MutationObserver | null = null
+  let debouncedRefresh: (() => void) | null = null
 
   const resolvedDoc = doc || (inBrowser ? document : undefined)
 
@@ -89,9 +91,8 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
     refreshItems()
     resolvedDoc.addEventListener('click', onClick, true)
 
-    observer = new MutationObserver(() => {
-      refreshItems()
-    })
+    debouncedRefresh = debounce(refreshItems, 150)
+    observer = new MutationObserver(debouncedRefresh)
     observer.observe(resolvedDoc.body, { childList: true, subtree: true })
   })
 
