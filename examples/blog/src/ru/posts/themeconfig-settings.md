@@ -24,9 +24,9 @@ descriptionAsPreview: true
 | `authors` | [Авторы](authors) |
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
 | `search` | [Поиск Pagefind](search-pagefind) |
-| `popularPosts` | [Популярные посты через GA4](popular-posts) |
+| `popularPosts` | [Аналитика и популярные посты](analytics) |
 | `ads` | [Рекламные блоки](ads) |
-| `consent` | [Согласие на куки и аналитика](consent-and-analytics) |
+| `consent` | [Согласие на куки](consent) |
 | `feeds`, `seo`, `twitterSite`  | [SEO-механизмы](seo-features) |
 | `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
 | `paginationMaxItems`, `postList` | [Списки, страницы](lists-and-pages) |

@@ -51,8 +51,8 @@ layout: page
 
 ## Интеграция
 
-- [Согласие на куки и аналитика](../posts/consent-and-analytics) — Consent Mode v2, CMP, счётчики
-- [Популярные посты через GA4](../posts/popular-posts) — Настройка GA4, Service Account, сортировка по просмотрам
+- [Согласие на куки](../posts/consent) — Consent Mode v2, CMP, GDPR
+- [Аналитика и популярные посты](../posts/analytics) — Подключение счётчиков, GA4 Data API, популярные статьи
 - [Рекламные блоки](../posts/ads) — Свой рекламный код в слотах темы
 
 ## Продвинутое

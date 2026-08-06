@@ -134,7 +134,7 @@ import { useThemeConfig, useBreakpoint } from 'vitepress-theme-neptu/composables
 | `useOnClickOutside()` | Клик вне элемента |
 | `useColorTheme()` | Чтение и смена цветовой схемы |
 | `useStylePreset()` | Чтение и смена стилевого пресета |
-| `useConsent()` | Согласие на куки — см. [Согласие и аналитику](consent-and-analytics) |
+| `useConsent()` | Согласие на куки — см. [Согласие на куки](consent) |
 | `useDownloadFile()` | Логика скачивания для своих кнопок |
 
 ## Утилиты
