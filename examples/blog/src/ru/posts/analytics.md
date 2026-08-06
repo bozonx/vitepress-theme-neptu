@@ -158,7 +158,7 @@ export default async () => defineBlogConfig({
 
 ### Включение отображения
 
-После включения интеграции в `config.ts` нужно включить блоки отображения в `site.yaml` (уровень 2) или `_site.yaml` (уровень 3).
+После включения интеграции в `config.ts` нужно включить блоки отображения в `site.yaml` (уровень 2) или `_site.yaml` (уровень 3). На странице автора и в архиве автоматически появятся пререключатели сортировки списков по популярным постам.
 
 #### Сайдбар
 
@@ -180,21 +180,6 @@ themeConfig:
 ```
 
 `limit` ограничивает количество статей. Без него показывается одна страница — значение `perPage`. Пустая секция не рисуется: пока данных нет, блок просто не появится. Подробнее — в [Домашней странице](home-page).
-
-#### Страница списка
-
-Шаблон `popular/[page].md` уже входит в тему — создавать его вручную не нужно. Страница доступна по адресу `/<locale>/popular/1` и использует компонент `PopularPostsList`:
-
-```vue
-<script setup>
-import { PopularPostsList } from 'vitepress-theme-neptu/components'
-import { useData } from 'vitepress'
-
-const { params } = useData()
-</script>
-
-<PopularPostsList :curPage="params?.page" />
-```
 
 ---
 
