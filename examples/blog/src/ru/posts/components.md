@@ -59,6 +59,9 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 | `AuthorDetails` | Карточка одного автора |
 | `NeptuYears` | Архив по годам |
 | `MonthsOfYear` | Месяцы внутри года |
+| `UtilPageContent` | Содержимое служебной страницы |
+| `UtilPageHeader` | Заголовок служебной страницы |
+| `UtilSubPageHeader` | Подзаголовок служебной страницы |
 
 Все списки принимают `curPage` и рисуют свою пагинацию сами; страницы-шаблоны
 в `recent/`, `tags/` и `archive/` показывают, как их подключать.
@@ -127,7 +130,7 @@ import { useThemeConfig, useBreakpoint } from 'vitepress-theme-neptu/composables
 | `useContentLangs()` | Текущая локаль и список доступных |
 | `useBreakpoint()` | Реактивные проверки mobile / tablet / desktop |
 | `useScrollY()` | Реактивный `window.scrollY` |
-| `useScrollToTop()` | Логика показа кнопки «наверх» |
+| `useScrollToTopButton()` | Логика показа кнопки «наверх» |
 | `useToc()` | Заголовки страницы для своего оглавления |
 | `useLightbox()` | Управление лайтбоксом изображений |
 | `useSwipeDrawer()` | Свайп-жесты мобильного сайдбара |
@@ -150,8 +153,8 @@ import { isPost, resolvePreviewText } from 'vitepress-theme-neptu/utils'
 | `isUtilPage(frontmatter)` | `true` для `util`, `tag`, `category`, `archive`, `author` |
 | `isHomePage(frontmatter)` | `true` для `layout: home` |
 | `resolvePreviewText(frontmatter)` | Текст превью по правилам темы |
-| `resolveSearchBodyAttribute(theme, frontmatter)` | Маркер тела для Pagefind |
-| `isPopularPostsRoute(path, theme)` | Маршрут списка популярных |
+| `resolvePagefindBodyAttribute(theme, frontmatter)` | Маркер тела для Pagefind |
+| `isPopularPostsRoute(path)` | Маршрут списка популярных |
 | `isAuthorPath(filePath)` | Путь страницы автора |
 
 Функции, работающие с файловой системой, вынесены отдельно:
@@ -160,9 +163,76 @@ import { isPost, resolvePreviewText } from 'vitepress-theme-neptu/utils'
 
 ## Хелперы списков
 
-`vitepress-theme-neptu/list-helpers` — то, чем пользуются страницы-шаблоны:
-`makeTagsList`, `makeCategoriesList`, `makePostsOfTagList`,
-`makePostsOfCategoryList`, `makeTagsParams`, `makeCategoriesParams` и их общие
-формы `makeTaxonomy*`. Ветка `…/list-helpers/node` содержит
-`loadPostsDataFromFiles` для собственных data-лоадеров — см. [Внешний
-контент](external-content).
+`vitepress-theme-neptu/list-helpers` — то, чем пользуются страницы-шаблоны.
+
+### Функции списков
+
+| Функция | Что делает |
+| --- | --- |
+| `makeTagsList(allPosts)` | Все теги с количеством постов |
+| `makeCategoriesList(allPosts)` | Все категории с количеством постов |
+| `makePostsOfTagList(allPosts, slug)` | Посты указанного тега |
+| `makePostsOfCategoryList(allPosts, slug)` | Посты указанной категории |
+| `makeTaxonomyList(allPosts, kind)` | Общая форма для tags / categories |
+| `makePostsOfTaxonomyList(allPosts, kind, slug)` | Общая форма фильтрации по таксономии |
+| `makeYearsList(allPosts)` | Года с количеством постов |
+| `makeMonthsList(allPosts, year)` | Месяцы года с количеством постов |
+| `makePostsOfMonthList(allPosts, year, month)` | Посты конкретного месяца |
+| `makeAuthorsList(allPosts, allAuthors)` | Авторы с количеством постов |
+| `safeGetYear(date)` | Безопасное извлечение года |
+| `safeGetMonth(date)` | Безопасное извлечение месяца (1-based) |
+
+### Функции params для маршрутов
+
+| Функция | Что делает |
+| --- | --- |
+| `makeAllPostsParams(posts, perPage)` | Params для пагинации всех постов |
+| `makeFeaturedPostsParams(posts, perPage)` | Params для избранных постов |
+| `makeYearPostsParams(posts, perPage)` | Params для постов по годам |
+| `makeYearMonthParams(posts)` | Params для год + месяц |
+| `makeTagsParams(posts, perPage, lang?)` | Params для страниц тегов |
+| `makeCategoriesParams(posts, perPage, lang?)` | Params для страниц категорий |
+| `makeTaxonomyParams(posts, kind, perPage, lang?)` | Общая форма params для таксономии |
+| `makeAuthorsParams(posts, perPage)` | Params для страниц авторов |
+
+Ветка `…/list-helpers/node` содержит `loadPostsDataFromFiles` для собственных
+data-лоадеров — см. [Внешний контент](external-content).
+
+## Типы
+
+Главный entry point темы экспортирует TypeScript-типы для типизации
+собственных компонентов, конфигов и data-лоадеров:
+
+```ts
+import type {
+  Author,
+  BlogUserConfig,
+  DeepPartial,
+  ExtendedPageData,
+  ExtendedSiteConfig,
+  I18nTranslations,
+  LocaleDefinition,
+  Post,
+  PostFrontmatter,
+  PostLite,
+  SeoConfig,
+  Tag,
+  ThemeConfig,
+} from 'vitepress-theme-neptu'
+```
+
+| Тип | Описание |
+| --- | --- |
+| `Author` | Описание автора блога |
+| `BlogUserConfig` | Пользовательская конфигурация блога |
+| `DeepPartial<T>` | Рекурсивный `Partial` для вложенных объектов |
+| `ExtendedPageData` | Расширенные данные страницы VitePress |
+| `ExtendedSiteConfig` | Расширенная конфигурация сайта |
+| `I18nTranslations` | Строки переводов текущей локали |
+| `LocaleDefinition` | Описание одной локали |
+| `Post` | Полная модель поста |
+| `PostFrontmatter` | Типизированный frontmatter поста |
+| `PostLite` | Облегчённая модель поста для списков |
+| `SeoConfig` | Конфигурация SEO |
+| `Tag` | Описание тега |
+| `ThemeConfig` | Полная конфигурация темы |

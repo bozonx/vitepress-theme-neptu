@@ -6,7 +6,7 @@ translations:
   en: /en/posts/mermaid-and-katex
 date: 2026-07-25
 category: { name: 'Продвинутое', slug: 'advanced' }
-tags: [advanced]
+tags: [guide, advanced]
 descriptionAsPreview: true
 ---
 
@@ -19,7 +19,7 @@ Mermaid и KaTeX подключаются как опциональные Markdo
 Установите renderer и сам Mermaid:
 
 ```bash
-npm install -D vitepress-plugin-mermaid mermaid
+pnpm add -D vitepress-plugin-mermaid mermaid
 ```
 
 В `.vitepress/config.ts` оберните уже собранный конфиг Neptu:
@@ -50,12 +50,26 @@ flowchart LR
 VitePress. Параметры и совместимость версий приведены в
 [репозитории плагина](https://github.com/emersonbottero/vitepress-plugin-mermaid).
 
+Плагин принимает объект настроек Mermaid — тему, направление диаграммы и другие
+опции — первым аргументом:
+
+```ts
+return withMermaid(await defineBlogConfig(config), {
+  dark: 'dark',
+  // Mermaid launch configuration
+})
+```
+
+Mermaid рендерится на клиенте: при SSR и в собранном HTML диаграммы пустые,
+затем отрисовываются после гидратации. Это нормально и не требует
+дополнительной настройки.
+
 ## KaTeX
 
 Установите Markdown-it plugin и KaTeX:
 
 ```bash
-npm install -D @mdit/plugin-katex katex
+pnpm add -D @mdit/plugin-katex katex
 ```
 
 Зарегистрируйте его через существующий Markdown hook VitePress:
@@ -79,6 +93,12 @@ const config = {
 import 'katex/dist/katex.min.css'
 ```
 
+Плагин принимает опции — например, чтобы не рвать рендеринг на ошибке:
+
+```ts
+md.use(katex, { throwOnError: false })
+```
+
 Строчные и блочные формулы используют разделители `$` и `$$`:
 
 ```md
@@ -93,6 +113,15 @@ $$
 но не запускает произвольные плагины VitePress и Vue-компоненты. Поэтому без
 собственного feed transformer диаграммы и формулы останутся в ленте исходным
 текстом.
+
+## Решение проблем
+
+- **Формулы рендерятся как исходный текст** — проверьте, что CSS KaTeX
+  импортирован в `theme/index.ts`, а плагин зарегистрирован в `markdown.config`.
+- **`$` конфликтует с валютой** — символ доллара в тексте без формулы нужно
+  экранировать: `\$`. Либо настройте другие разделители через опции плагина.
+- **Диаграмма не появляется** — Mermaid рендерится только в браузере. Откройте
+  консоль DevTools: ошибки синтаксиса диаграммы выводятся туда.
 
 Рецепт KaTeX основан на
 [документации `@mdit/plugin-katex`](https://mdit-plugins.github.io/katex.html).

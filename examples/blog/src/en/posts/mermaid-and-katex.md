@@ -50,6 +50,20 @@ flowchart LR
 See the [plugin repository](https://github.com/emersonbottero/vitepress-plugin-mermaid)
 for Mermaid configuration and version compatibility.
 
+The plugin accepts a Mermaid configuration object — theme, diagram direction,
+and other options — as its first argument:
+
+```ts
+return withMermaid(await defineBlogConfig(config), {
+  dark: 'dark',
+  // Mermaid launch configuration
+})
+```
+
+Mermaid renders on the client: during SSR and in the built HTML diagrams are
+empty, then drawn after hydration. This is expected and requires no extra
+configuration.
+
 ## KaTeX
 
 Install the Markdown-it plugin and KaTeX:
@@ -79,6 +93,12 @@ Import the required stylesheet once in `.vitepress/theme/index.ts`:
 import 'katex/dist/katex.min.css'
 ```
 
+The plugin accepts options — for example, to avoid breaking rendering on error:
+
+```ts
+md.use(katex, { throwOnError: false })
+```
+
 Inline and display formulas then use dollar delimiters:
 
 ```md
@@ -93,6 +113,15 @@ The full-content feed renderer intentionally handles safe standard Markdown,
 not arbitrary VitePress plugins or Vue components. Mermaid blocks and KaTeX
 formulas therefore remain source text in feeds unless you provide a custom feed
 transformer.
+
+## Troubleshooting
+
+- **Formulas render as source text** — make sure KaTeX CSS is imported in
+  `theme/index.ts` and the plugin is registered in `markdown.config`.
+- **`$` conflicts with currency** — escape the dollar sign in non-formula text
+  with `\$`, or configure different delimiters via plugin options.
+- **Diagram does not appear** — Mermaid only renders in the browser. Open the
+  DevTools console: diagram syntax errors are logged there.
 
 The KaTeX setup follows the
 [`@mdit/plugin-katex` documentation](https://mdit-plugins.github.io/katex.html).
