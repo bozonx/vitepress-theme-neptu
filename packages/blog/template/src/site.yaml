@@ -153,6 +153,14 @@ themeConfig:
     # Show the "Categories" cloud section.
     # Default: false
     categories: true
+    # Maximum number of tags shown in the sidebar tag cloud.
+    # Beyond this count a "view all tags" link is shown instead.
+    # Default: 15
+    # tagsCount: 15
+    # Maximum number of categories shown in the sidebar category cloud.
+    # Beyond this count a "view all categories" link is shown instead.
+    # Default: 10
+    # categoriesCount: 10
     # Show a donate link/button in the sidebar.
     donate: true
     # Show an RSS feed link.
@@ -273,15 +281,6 @@ themeConfig:
   # `perPage` is a build-time parameter — configure it in `.vitepress/config.ts`
   # (exported as `PER_PAGE`) because path generators (`*.paths.js`) import it
   # at build time to compute pagination routes.
-
-  # Maximum number of tags shown in the sidebar tag cloud.
-  # Default: 15
-  # sidebarTagsCount: 15
-
-  # Maximum number of categories shown in the sidebar category cloud.
-  # Beyond this count a "view all categories" link is shown instead.
-  # Default: 10
-  # sidebarCategoriesCount: 10
 
   # Number of similar posts to display in the post-footer "similar" block.
   # Default: 5

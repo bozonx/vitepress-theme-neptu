@@ -3,7 +3,7 @@
     kind="tag"
     :locale-posts="localePosts"
     :header="resolvedShowHeader ? (header ?? theme.t.tags) : undefined"
-    :limit="theme.sidebarTagsCount"
+    :limit="theme.sidebar?.tagsCount"
     :all-label="theme.t.allTagsCall"
     :all-icon="theme.tagsIcon"
     @item-click="emit('itemClick')"

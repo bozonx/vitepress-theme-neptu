@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `packages/blog`: tag and category list pages now filter posts by slug rather than by display name, and `makeTagsList` keys entries by slug — two spellings of one slug no longer split into separate entries.
 - `packages/blog`: post JSON-LD is emitted as an `@graph` when the post has a category (article + `BreadcrumbList`); it stays a single node otherwise.
 - `packages/blog` **breaking**: `sidebarLogoSrc` and `sidebarLogoHeight` moved from the top level of `themeConfig` into the `sidebar` object as `sidebar.logoSrc` and `sidebar.logoHeight`. Update `site.yaml` / `_site.yaml` accordingly.
+- `packages/blog` **breaking**: `sidebarTagsCount` and `sidebarCategoriesCount` moved from the top level of `themeConfig` into the `sidebar` object as `sidebar.tagsCount` and `sidebar.categoriesCount`. Update `site.yaml` / `_site.yaml` accordingly.
 - `packages/blog` **breaking**: renamed frontmatter field `coverDescr` → `coverDescription` for consistency with `coverWidth` / `coverHeight`. Update your post frontmatter and CMS config.
 - `packages/blog` **breaking**: removed top-level `themeConfig.blogTitle`. Use the locale `title` in `_site.yaml` for the site identity and `themeConfig.sidebar.sidebarTitle` to override the sidebar label. Update `site.yaml` / `_site.yaml` accordingly.
 

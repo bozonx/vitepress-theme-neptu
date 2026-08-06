@@ -92,8 +92,8 @@ themeConfig:
   sidebar:
     tags: true
     categories: true # off unless set
-  # How many categories the sidebar shows before the "all categories" link.
-  sidebarCategoriesCount: 10
+    # How many categories the sidebar shows before the "all categories" link.
+    categoriesCount: 10
   # Icon for category links; falls back to tagsIcon.
   categoriesIcon: 'fa6-solid:folder-open'
   postFooter:

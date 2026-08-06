@@ -72,8 +72,10 @@ const defaultBlogThemeConfig = {
   stylePicker: false,
 
   perPage: 10,
-  sidebarTagsCount: 15,
-  sidebarCategoriesCount: 10,
+  sidebar: {
+    tagsCount: 15,
+    categoriesCount: 10,
+  },
   similarPostsCount: 5,
   home: {
     appearance: 'auto' as const,

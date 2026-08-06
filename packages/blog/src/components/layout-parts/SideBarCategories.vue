@@ -3,7 +3,7 @@
     kind="category"
     :locale-posts="localePosts"
     :header="resolvedShowHeader ? (header ?? theme.t.categories) : undefined"
-    :limit="theme.sidebarCategoriesCount"
+    :limit="theme.sidebar?.categoriesCount"
     :all-label="theme.t.allCategoriesCall"
     :all-icon="theme.categoriesIcon || theme.tagsIcon"
     @item-click="emit('itemClick')"

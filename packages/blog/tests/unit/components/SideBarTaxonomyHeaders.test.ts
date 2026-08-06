@@ -8,8 +8,10 @@ import type { PostLite } from '../../../src/types'
 describe('SideBar Taxonomy Headers logic', () => {
   beforeEach(() => {
     mockTheme.value = {
-      sidebarCategoriesCount: 10,
-      sidebarTagsCount: 10,
+      sidebar: {
+        categoriesCount: 10,
+        tagsCount: 10,
+      },
       t: {
         categories: 'Categories',
         tags: 'Tags',

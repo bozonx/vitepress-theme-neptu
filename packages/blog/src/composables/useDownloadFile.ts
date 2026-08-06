@@ -3,7 +3,6 @@ import {
   downloadFile as downloadFileUtil,
   getLastPathSegment,
   encodeMediaUrl,
-  isValidMediaUrl,
 } from '../utils/shared/media.ts'
 
 export function useDownloadFile(

@@ -110,9 +110,6 @@ export namespace NeptuBlogTheme {
     stylePicker?: boolean
     i18nRouting?: boolean
     perPage?: number
-    sidebarTagsCount?: number
-    /** Max categories shown in the sidebar cloud before the "all" link appears. */
-    sidebarCategoriesCount?: number
     similarPostsCount?: number
     paginationMaxItems?: number
     postList?: {
@@ -690,6 +687,10 @@ export namespace NeptuBlogTheme {
     tags?: boolean
     /** Show the category cloud section. Off unless set. */
     categories?: boolean
+    /** Max tags shown in the sidebar tag cloud before the "all" link appears. Defaults to 15. */
+    tagsCount?: number
+    /** Max categories shown in the sidebar category cloud before the "all" link appears. Defaults to 10. */
+    categoriesCount?: number
     bottomLinks?: NavLink[]
     donate?: boolean
     socialLinks?: SocialLink[]

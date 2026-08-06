@@ -88,8 +88,8 @@ themeConfig:
   sidebar:
     tags: true
     categories: true # по умолчанию выключено
-  # Сколько категорий показывать в сайдбаре; дальше — ссылка «Все категории».
-  sidebarCategoriesCount: 10
+    # Сколько категорий показывать в сайдбаре; дальше — ссылка «Все категории».
+    categoriesCount: 10
   # Иконка для ссылок на категории (по умолчанию — tagsIcon).
   categoriesIcon: 'fa6-solid:folder-open'
   postFooter:
