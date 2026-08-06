@@ -38,6 +38,12 @@ descriptionAsPreview: true
 | `mainHeroImg` | [Кастомизация](customization) (тема landing) |
 | Стили (CSS-переменные) и слоты | [Кастомизация](customization) |
 
+::: tip
+Пример конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
+
+Пример конфига 3 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/en/_site.yaml)
+:::
+
 ## Что в этой статье
 
 | Секция | Уровень | Описание |
