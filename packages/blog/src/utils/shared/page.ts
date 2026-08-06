@@ -37,6 +37,7 @@ export const DEFAULT_ASIDE_LAYOUTS = [
   'post',
   'util',
   'tag',
+  'category',
   'archive',
   'author',
 ]

@@ -201,6 +201,7 @@ describe('isAsideEnabled', () => {
     expect(isAsideEnabled(theme, {})).toBe(true)
     expect(isAsideEnabled(theme, { layout: 'post' })).toBe(true)
     expect(isAsideEnabled(theme, { layout: 'tag' })).toBe(true)
+    expect(isAsideEnabled(theme, { layout: 'category' })).toBe(true)
     expect(isAsideEnabled(theme, { layout: 'archive' })).toBe(true)
     expect(isAsideEnabled(theme, { layout: 'author' })).toBe(true)
     expect(isAsideEnabled(theme, { layout: 'util' })).toBe(true)

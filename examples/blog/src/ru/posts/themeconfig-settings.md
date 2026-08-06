@@ -354,14 +354,15 @@ themeConfig:
 ### На каких страницах есть колонка
 
 Список макетов задаётся `asideLayouts`. По умолчанию это
-`['post', 'util', 'tag', 'archive', 'author']` — то есть всё, кроме главной,
-`layout: page` и страниц категорий. Список задаётся целиком и заменяет
-умолчание, а не дополняет его:
+`['post', 'util', 'tag', 'category', 'archive', 'author']` — то есть всё, кроме
+главной и `layout: page`. Список задаётся целиком и заменяет умолчание, а не
+дополняет его:
 
 ```yaml
 # src/site.yaml
 themeConfig:
-  asideLayouts: [post, util, tag, category, archive, author] # как по умолчанию, плюс страницы категорий
+  # как по умолчанию, плюс страницы с layout: page
+  asideLayouts: [post, util, tag, category, archive, author, page]
 ```
 
 Отдельная страница переопределяет список через frontmatter `aside: true` или

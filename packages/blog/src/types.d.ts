@@ -172,8 +172,8 @@ export namespace NeptuBlogTheme {
      * Layouts that render the right-hand aside column (the `aside` slot of
      * `Layout.vue`, typically used for ad units). Supported keys: 'post',
      * 'page', 'util', 'tag', 'category', 'archive', 'author', plus the name of any custom
-     * `contentLayout`. Defaults to `['post', 'util', 'tag', 'archive',
-     * 'author']` — everything except the home page and `layout: page`.
+     * `contentLayout`. Defaults to `['post', 'util', 'tag', 'category',
+     * 'archive', 'author']` — everything except the home page and `layout: page`.
      *
      * Per-page frontmatter `aside: true | false` overrides this list.
      * The column itself is only visible from 1550px viewport width.
