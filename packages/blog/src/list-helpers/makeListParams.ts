@@ -87,9 +87,9 @@ export function makeMonthsParams(
   }
 
   return Object.keys(monthCount).map((item) => {
-    const splat = item.split('-')
-    const year = Number(splat[0])
-    const month = Number(splat[1])
+    const parts = item.split('-')
+    const year = Number(parts[0])
+    const month = Number(parts[1])
 
     return { params: { year, month } }
   })

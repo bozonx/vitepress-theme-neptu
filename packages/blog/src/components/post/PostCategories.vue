@@ -4,12 +4,12 @@ import { computed } from 'vue'
 import TagsList from '../TagsList.vue'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
-import type { CategoryInfo } from '../../types.d.ts'
+import type { TaxonomyEntry } from '../../types.d.ts'
 
 const { frontmatter } = useData()
 const { theme } = useUiTheme()
 // `transformPageMeta` folds `category` sugar into this normalized list.
-const categories = computed<CategoryInfo[]>(
+const categories = computed<TaxonomyEntry[]>(
   () => frontmatter.value.categories || []
 )
 </script>

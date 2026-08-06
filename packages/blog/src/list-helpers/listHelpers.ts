@@ -1,14 +1,7 @@
-import type { PostLite } from '../types.d.ts'
+import type { PostLite, TaxonomyEntry } from '../types.d.ts'
 import { safeDateTime } from '../utils/shared/date.ts'
 
 export type { PostLite }
-
-export interface TagInfo {
-  name?: string
-  slug?: string
-  count?: number
-  [key: string]: unknown
-}
 
 interface AuthorLite {
   id: string
@@ -32,7 +25,7 @@ export function safeGetMonth(date: string | number | Date | undefined): number |
   return Number.isFinite(month) ? month : undefined
 }
 
-export type CategoryInfo = TagInfo
+export type CategoryInfo = TaxonomyEntry
 
 /**
  * Tags and categories are the same data model with different URLs, so every
@@ -42,9 +35,9 @@ export type CategoryInfo = TagInfo
 export type TaxonomyKind = 'tags' | 'categories'
 
 /** Reads one taxonomy off a post. Values are already normalized by `makePreviewItem`. */
-function readTaxonomy(post: PostLite, kind: TaxonomyKind): TagInfo[] {
+function readTaxonomy(post: PostLite, kind: TaxonomyKind): TaxonomyEntry[] {
   const value = post[kind]
-  return Array.isArray(value) ? (value as TagInfo[]) : []
+  return Array.isArray(value) ? (value as TaxonomyEntry[]) : []
 }
 
 /**
@@ -55,8 +48,8 @@ function readTaxonomy(post: PostLite, kind: TaxonomyKind): TagInfo[] {
 export function makeTaxonomyList(
   allPosts: PostLite[] = [],
   kind: TaxonomyKind
-): Array<TagInfo & { count: number }> {
-  const bySlug: Record<string, TagInfo & { count: number }> = {}
+): Array<TaxonomyEntry & { count: number }> {
+  const bySlug: Record<string, TaxonomyEntry & { count: number }> = {}
 
   for (const post of allPosts) {
     for (const item of readTaxonomy(post, kind)) {
@@ -95,7 +88,7 @@ export function makePostsOfTaxonomyList(
 
 export function makeTagsList(
   allPosts: PostLite[] = []
-): Array<TagInfo & { count: number }> {
+): Array<TaxonomyEntry & { count: number }> {
   return makeTaxonomyList(allPosts, 'tags')
 }
 

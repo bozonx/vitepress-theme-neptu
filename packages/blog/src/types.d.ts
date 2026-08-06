@@ -590,7 +590,7 @@ export namespace NeptuBlogTheme {
     title?: string
   }
 
-  export interface TagInfo {
+  export interface TaxonomyEntry {
     name?: string
     slug?: string
     count?: number
@@ -730,11 +730,7 @@ export namespace NeptuBlogTheme {
   }
 
   /** Categories share the tag data model; only their URLs and styling differ. */
-  export interface CategoryInfo {
-    name: string
-    slug: string
-    count?: number
-  }
+  export type CategoryInfo = TaxonomyEntry
 
   export interface BreadcrumbItem {
     text: string
@@ -773,7 +769,7 @@ export namespace NeptuBlogTheme {
      * during `transformPageData`, so components only ever read `categories`.
      */
     category?: string
-    categories?: Array<string | CategoryInfo>
+    categories?: Array<string | TaxonomyEntry>
     /** Marks the post for explicit featured-post collections. Does not change chronological lists. */
     featured?: boolean
     /**
@@ -930,7 +926,7 @@ export type SeoConfig = NeptuBlogTheme.SeoConfig
 export type NavConfig = NeptuBlogTheme.NavConfig
 export type SidebarConfig = NeptuBlogTheme.SidebarConfig
 export type SideBarItem = NeptuBlogTheme.SideBarItem
-export type TagInfo = NeptuBlogTheme.TagInfo
+export type TaxonomyEntry = NeptuBlogTheme.TaxonomyEntry
 export type CategoryInfo = NeptuBlogTheme.CategoryInfo
 export type BreadcrumbItem = NeptuBlogTheme.BreadcrumbItem
 export type AuthorItem = NeptuBlogTheme.AuthorItem

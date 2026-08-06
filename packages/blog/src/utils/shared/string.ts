@@ -170,9 +170,9 @@ export function truncateText(
 export function pathTrimExt(fileName: unknown): string {
   if (typeof fileName !== 'string') return ''
   if (fileName.indexOf('.') < 0) return fileName
-  const splat = fileName.split('.')
-  splat.pop()
-  return splat.join('.')
+  const parts = fileName.split('.')
+  parts.pop()
+  return parts.join('.')
 }
 
 /** Transliterate string */

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import TagItem from './TagItem.vue'
-import type { TagInfo } from '../types.d.ts'
+import type { TaxonomyEntry } from '../types.d.ts'
 
 const {
   tags,
@@ -12,7 +12,7 @@ const {
   kind = 'tag',
 } = defineProps<{
   /** Taxonomy entries — tags or categories, they share the `{ name, slug }` shape. */
-  tags: TagInfo[]
+  tags: TaxonomyEntry[]
   sizeXl?: boolean
   sizeSm?: boolean
   class?: string | Record<string, unknown> | unknown[]

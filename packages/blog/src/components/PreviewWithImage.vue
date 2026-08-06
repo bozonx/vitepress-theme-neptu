@@ -4,14 +4,14 @@ import { withBase } from 'vitepress'
 import BaseLink from './BaseLink.vue'
 import TagsList from './TagsList.vue'
 import PostDraftBadge from './post/PostDraftBadge.vue'
-import type { TagInfo } from '../types.d.ts'
+import type { TaxonomyEntry } from '../types.d.ts'
 
 const props = withDefaults(
   defineProps<{
     postUrl?: string
     date?: string
     localeDate?: string
-    tags?: TagInfo[]
+    tags?: TaxonomyEntry[]
     preview?: string
     authorName?: string
     thumbnail?: string

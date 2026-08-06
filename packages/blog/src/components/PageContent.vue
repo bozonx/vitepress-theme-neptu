@@ -7,7 +7,7 @@ import {
   isUtilPage,
 } from '../utils/shared/index.ts'
 import { useUiTheme } from '../composables/useUiTheme.ts'
-import type { BreadcrumbItem, CategoryInfo, PostFrontmatter } from '../types.d.ts'
+import type { BreadcrumbItem, TaxonomyEntry, PostFrontmatter } from '../types.d.ts'
 import NeptuAd from './NeptuAd.vue'
 import TocCollapsible from './toc/TocCollapsible.vue'
 import PostFooter from './post/PostFooter.vue'
@@ -31,7 +31,7 @@ const articlePreviewText = ref<string | null | undefined>(null)
  * `addJsonLd` builds the matching `BreadcrumbList` from the same data.
  */
 const breadcrumbs = computed<BreadcrumbItem[]>(() => {
-  const category = (frontmatter.value.categories as CategoryInfo[] | undefined)?.[0]
+  const category = (frontmatter.value.categories as TaxonomyEntry[] | undefined)?.[0]
   if (!category?.slug) return []
 
   const items: BreadcrumbItem[] = [

@@ -15,7 +15,7 @@ import {
 import { getImageDimensions } from '../utils/node/image.ts'
 import { measureMarkdown } from '../utils/node/readingTime.ts'
 import { isDraft } from '../utils/shared/publication.ts'
-import type { PostFrontmatter, Tag, CategoryInfo } from '../types.d.ts'
+import type { PostFrontmatter, Tag, TaxonomyEntry } from '../types.d.ts'
 
 export interface PreviewItem {
   url: string
@@ -24,7 +24,7 @@ export interface PreviewItem {
   title: string | undefined
   tags: Tag[]
   /** Normalized `{ name, slug }` list — `category` sugar is folded in here. */
-  categories: CategoryInfo[]
+  categories: TaxonomyEntry[]
   preview: string | undefined
   draft: boolean
   wordCount: number
