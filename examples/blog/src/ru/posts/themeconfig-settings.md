@@ -195,6 +195,10 @@ themeConfig:
 Без `donate.url` не будут выводиться кнопки пожертвования в топбаре, сайдбаре и в футере поста, даже если они включены.
 :::
 
+::: tip
+Относительный `href`, такой как `pages/about`, автоматически дополняется префиксом текущей локали (`/en/pages/about`, `/ru/pages/about`). Для внешних ссылок используйте абсолютные URL (`https://…`).
+:::
+
 ## Ссылка на правку (editLink)
 
 Блок `edit-link` в подвале поста выводит ссылку «Редактировать эту страницу».
@@ -216,34 +220,10 @@ themeConfig:
 не подходит.
 :::
 
-## Иконки
-
-Каждое поле `icon:` принимает строку [Iconify](https://icones.es) вида `prefix:name`,
-например `fa6-solid:hand-holding-heart`. Иконки по умолчанию («Поддержать», свежие,
-популярное, RSS и т.д.) можно переопределить глобально в `src/site.yaml`:
-
-```yaml
-themeConfig:
-  donateIcon: 'fa6-solid:hand-holding-heart'
-  recentIcon: 'fa6-solid:bolt'
-  featuredIcon: 'fa6-solid:bookmark'
-  popularIcon: 'fa6-solid:star'
-  byDateIcon: 'fa6-solid:calendar-days'
-  authorsIcon: 'mdi:users'
-  tagsIcon: 'fa6-solid:tag'
-  categoriesIcon: 'fa6-solid:folder-open'  # по умолчанию нет — fallback на tagsIcon
-  rssIcon: 'bi:rss-fill'
-  atomIcon: 'vscode-icons:file-type-atom'
-  youtubeIcon: 'fa6-brands:youtube'
-```
-
-`categoriesIcon` не имеет собственного умолчания: если поле не задано,
-используется `tagsIcon`. `youtubeIcon` применяется в кнопке видео-ссылки поста.
-
 ## Внешние ссылки в контенте постов
 
 К внешним ссылкам внутри вашей markdown-разметки (не в навигации) по умолчанию
-добавляется иконка перехода, чтобы читатели видели уход с сайта. Эту иконку можно отключить глобально:
+добавляется иконка перехода, чтобы читатели видели что ссылка ведет на внешнюю страницу и будет открыта в новой вкладке. Эту иконку можно отключить глобально:
 
 ```yaml
 # src/site.yaml
@@ -251,22 +231,15 @@ themeConfig:
   externalLinkIcon: true   # установите false, чтобы убрать иконку ↗ на внешних ссылках
 ```
 
-Под капотом тема открывает внешние ссылки в новой вкладке (`target="_blank"`).
-Если вам нужно изменить атрибут `rel` (VitePress добавляет `rel="noreferrer"` по умолчанию),
-переопределите `markdown.externalLinks` в `.vitepress/config.ts`:
+::: tip
+Если вам нужно изменить атрибут `rel` (VitePress добавляет `rel="noreferrer"` по умолчанию), переопределите `markdown.externalLinks` в `.vitepress/config.ts`:
 
 ```ts
 markdown: {
   externalLinks: { target: '_blank', rel: [] }, // например, убрать rel="noreferrer"
 }
 ```
-
-## Относительные URL подстраиваются под локаль
-
-Относительный `href`, такой как `pages/about`, автоматически дополняется префиксом текущей
-локали (`/en/pages/about`, `/ru/pages/about`). Для внешних ссылок используйте абсолютные URL (`https://…`).
-
----
+:::
 
 ## Подвал поста
 
@@ -507,6 +480,30 @@ themeConfig: {
 `aside: false`.
 
 ---
+
+## Иконки
+
+Каждое поле `icon:` принимает строку [Iconify](https://icones.es) вида `prefix:name`,
+например `fa6-solid:hand-holding-heart`. Иконки по умолчанию («Поддержать», свежие,
+популярное, RSS и т.д.) можно переопределить глобально в `src/site.yaml`:
+
+```yaml
+themeConfig:
+  donateIcon: 'fa6-solid:hand-holding-heart'
+  recentIcon: 'fa6-solid:bolt'
+  featuredIcon: 'fa6-solid:bookmark'
+  popularIcon: 'fa6-solid:star'
+  byDateIcon: 'fa6-solid:calendar-days'
+  authorsIcon: 'mdi:users'
+  tagsIcon: 'fa6-solid:tag'
+  categoriesIcon: 'fa6-solid:folder-open'  # по умолчанию нет — fallback на tagsIcon
+  rssIcon: 'bi:rss-fill'
+  atomIcon: 'vscode-icons:file-type-atom'
+  youtubeIcon: 'fa6-brands:youtube'
+```
+
+`categoriesIcon` не имеет собственного умолчания: если поле не задано,
+используется `tagsIcon`. `youtubeIcon` применяется в кнопке видео-ссылки поста.
 
 ## Переводы интерфейса
 

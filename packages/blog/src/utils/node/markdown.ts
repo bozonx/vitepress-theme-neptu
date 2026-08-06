@@ -75,8 +75,6 @@ function isSafeUrl(value: string): boolean {
   return sanitizeUrl(value) !== undefined
 }
 
-
-
 export function stripMd(mdContent: string | null | undefined): string {
   if (!mdContent) return mdContent ?? ''
 
