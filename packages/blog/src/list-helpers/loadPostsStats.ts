@@ -1,5 +1,4 @@
 import crypto from 'node:crypto'
-import fs from 'node:fs'
 import { POSTS_DIR } from '../constants.ts'
 import type { Post } from '../types.d.ts'
 
@@ -128,27 +127,13 @@ function parseCredentials(
   let credentialsJson = dataSource.credentialsJson
 
   if (!credentialsJson && typeof process !== 'undefined' && process.env) {
-    credentialsJson =
-      process.env.GA_CREDENTIALS_JSON ||
-      process.env.GOOGLE_APPLICATION_CREDENTIALS
+    credentialsJson = process.env.GA_CREDENTIALS_JSON
   }
 
   if (!credentialsJson) return null
 
   try {
-    let jsonString = credentialsJson.trim()
-    if (!jsonString.startsWith('{')) {
-      if (fs.existsSync(jsonString)) {
-        jsonString = fs.readFileSync(jsonString, 'utf-8')
-      } else {
-        console.warn(
-          `\x1b[33mCredentials file not found: ${jsonString}\x1b[0m`
-        )
-        return null
-      }
-    }
-
-    const parsed = JSON.parse(jsonString)
+    const parsed = JSON.parse(credentialsJson.trim())
     if (
       parsed &&
       typeof parsed.client_email === 'string' &&

@@ -109,29 +109,9 @@ GA_PROPERTY_ID=123456789
 GA_CREDENTIALS_JSON='{"type": "service_account", "client_email": "...", "private_key": "...", ...}'
 ```
 
-Тема ищет credentials в следующем порядке:
-
-1. `dataSource.credentialsJson` — строка с JSON или путь к файлу.
-2. `process.env.GA_CREDENTIALS_JSON` — строка с JSON.
-3. `process.env.GOOGLE_APPLICATION_CREDENTIALS` — путь к JSON-файлу (стандартная переменная Google).
-
-Если `credentialsJson` — путь к существующему файлу, тема прочитает его. Если строка начинается с `{` — попытается распарсить как JSON напрямую.
-
-::: tip Хранение ключа в CI
-В CI/CD положите ключ в секретную переменную. Пример для GitHub Actions:
-
-```yaml
-env:
-  GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
-  GA_CREDENTIALS_JSON: ${{ secrets.GA_CREDENTIALS_JSON }}
-```
-
-Как настроить секреты — в статье [Публикация и деплой](deploy).
-:::
-
 ### Включение в конфиге
 
-Настройка популярных постов — это **уровень 1** (`.vitepress/config.ts`): здесь живут credentials, env-переменные и интеграции. Подробнее об уровнях — в [Уровнях конфигурации](config-layers).
+Настройка популярных постов производится в конфигурации первого уровня (`.vitepress/config.ts`): здесь живут credentials, env-переменные и интеграции. Подробнее об уровнях — в [Уровнях конфигурации](config-layers).
 
 ```ts
 // .vitepress/config.ts
