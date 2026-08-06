@@ -74,16 +74,16 @@ themeConfig:
 themeConfig:
   sidebar:
     sidebarTitle: 'Мой блог'  # заголовок сайдбара; false — скрыть
-    recent: true
-    featured: true   # посты с featured: true
-    popular: true    # требуется popularPosts.enabled (по умолчанию выключен)
-    archive: true    # по годам → месяцам
-    authors: true
-    tags: true       # облако тегов
-    categories: true # облако категорий (по умолчанию выключено)
-    donate: true
-    rssFeed: true
-    atomFeed: true
+    recent: true     # Показывать ли ссылку на последние посты
+    featured: true   # Показывать ли ссылку на посты с featured: true
+    popular: true    # Показывать ли ссылку на популярные посты. требуется popularPosts.enabled (по умолчанию выключен)
+    archive: true    # Показывать ли ссылку на архив по годам → месяцам
+    authors: true    # Показывать ли ссылку на авторов
+    tags: true       # Показывать ли облако тегов
+    categories: true # Показывать ли облако категорий (по умолчанию выключено)
+    donate: true     # Показывать ли ссылку на донат
+    rssFeed: true    # Показывать ли ссылку на RSS-ленту
+    atomFeed: true   # Показывать ли ссылку на Atom-ленту
     links:           # свои ссылки над встроенными секциями
       - text: 'Главная'
         href: '/'
@@ -101,16 +101,6 @@ themeConfig:
       - text: 'Мы в соцсетях'
         href: 'pages/links'
         icon: 'fa6-solid:share-nodes'
-```
-
-Запись с полем `header` вместо `text`/`href` рендерится как заголовок секции (`<h4>`), а не как ссылка — удобно для разделения групп в `links` и `bottomLinks`.
-
-Помимо `links` и `bottomLinks`, сайдбар принимает `socialLinks` — иконки
-соцсетей в нижней части. Они попадают и в футер сайта вместе с `nav.socialLinks`:
-
-```yaml
-themeConfig:
-  sidebar:
     socialLinks:
       - icon: 'fa6-brands:telegram'
         link: 'https://t.me/yourchannel'
@@ -118,7 +108,7 @@ themeConfig:
         # mobileOnly: true   # скрывать на десктопе
 ```
 
-Поля `socialLinks` описаны в [Поля ссылок](#поля-ссылок).
+Поля `links`, `bottomLinks` и `socialLinks` описаны в [Поля ссылок](#поля-ссылок).
 
 Каждый флаг включает готовую страницу-список — все они видны в сайдбаре этого
 демо. Размер облаков ограничивают `sidebarTagsCount` (по умолчанию 15) и
