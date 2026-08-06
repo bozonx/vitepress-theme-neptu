@@ -30,7 +30,7 @@ export interface TemplateOptions {
 }
 
 /** Mustache templates `{{value.child}}` */
-export function mustacheTemplate(
+export function interpolateMustache(
   tmpl: string | null | undefined,
   data: Record<string, unknown> | null | undefined,
   options: TemplateOptions = { eval: false }
@@ -120,7 +120,7 @@ export interface TruncateTextOptions {
 
 /** Truncate string with optional ellipsis and word-boundary respect */
 export function truncateText(
-  rawString: string,
+  text: string,
   length: number,
   options: TruncateTextOptions = {}
 ): string {
@@ -132,10 +132,10 @@ export function truncateText(
     appendEllipsis = true,
   } = options
 
-  if (typeof ellipsis !== 'string' || typeof rawString !== 'string' || length <= 4)
-    return rawString
+  if (typeof ellipsis !== 'string' || typeof text !== 'string' || length <= 4)
+    return text
 
-  let str = rawString
+  let str = text
   if (removeReturns) {
     str = str.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim()
   } else {

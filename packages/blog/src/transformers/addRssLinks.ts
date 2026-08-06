@@ -1,7 +1,7 @@
 import type { HeadConfig } from 'vitepress'
 import {
   getFeedUrl,
-  getRssFormatInfo,
+  getFeedFormatInfo,
   resolveRssFormats,
 } from '../utils/node/index.ts'
 import { normalizeSiteUrl } from '../utils/shared/url.ts'
@@ -44,7 +44,7 @@ export function addRssLinks({
 
     for (const format of rssFormats) {
       const feedUrl = getFeedUrl(siteUrl, locale, format)
-      const formatInfo = getRssFormatInfo(format)
+      const formatInfo = getFeedFormatInfo(format)
       head.push([
         'link',
         {

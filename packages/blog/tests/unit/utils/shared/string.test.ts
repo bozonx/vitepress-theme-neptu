@@ -1,43 +1,43 @@
 import { describe, it, expect } from 'vitest'
 import {
-  mustacheTemplate,
+  interpolateMustache,
   interpolateDollarTemplate,
   truncateText,
   stripExtension,
   slugify,
 } from '../../../../src/utils/shared/string.ts'
 
-describe('mustacheTemplate', () => {
+describe('interpolateMustache', () => {
   it('replaces simple key', () => {
-    expect(mustacheTemplate('Hello {{name}}!', { name: 'World' })).toBe('Hello World!')
+    expect(interpolateMustache('Hello {{name}}!', { name: 'World' })).toBe('Hello World!')
   })
 
   it('replaces nested key', () => {
-    expect(mustacheTemplate('{{user.name}}', { user: { name: 'Alice' } })).toBe('Alice')
+    expect(interpolateMustache('{{user.name}}', { user: { name: 'Alice' } })).toBe('Alice')
   })
 
   it('replaces unknown keys with empty string', () => {
-    expect(mustacheTemplate('{{unknown}}', {})).toBe('')
+    expect(interpolateMustache('{{unknown}}', {})).toBe('')
   })
 
   it('replaces multiple occurrences', () => {
-    expect(mustacheTemplate('{{a}} and {{a}}', { a: 'X' })).toBe('X and X')
+    expect(interpolateMustache('{{a}} and {{a}}', { a: 'X' })).toBe('X and X')
   })
 
   it('handles eval option', () => {
-    expect(mustacheTemplate('{{a + b}}', { a: 1, b: 2 }, { eval: true })).toBe('3')
+    expect(interpolateMustache('{{a + b}}', { a: 1, b: 2 }, { eval: true })).toBe('3')
   })
 
   it('returns empty string for null template', () => {
-    expect(mustacheTemplate(null, { a: 1 })).toBe('')
+    expect(interpolateMustache(null, { a: 1 })).toBe('')
   })
 
   it('returns original template for null data', () => {
-    expect(mustacheTemplate('{{a}}', null)).toBe('{{a}}')
+    expect(interpolateMustache('{{a}}', null)).toBe('{{a}}')
   })
 
   it('ignores spaces inside tags by trimming key', () => {
-    expect(mustacheTemplate('{{ name }}', { name: 'Bob' })).toBe('Bob')
+    expect(interpolateMustache('{{ name }}', { name: 'Bob' })).toBe('Bob')
   })
 })
 

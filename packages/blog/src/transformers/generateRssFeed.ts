@@ -7,18 +7,18 @@ import { DEFAULT_ENCODING, POSTS_DIR } from '../constants.ts'
 import { extractDescriptionFromMd, mdToFeedHtml, parseMdFile } from '../utils/node/index.ts'
 import {
   createPostGuid,
-  formatTagsForRss,
+  tagsToRssCategories,
   getFeedPath,
   getFeedUrl,
-  getRssFormatInfo,
+  getFeedFormatInfo,
   resolveRssFormats,
-  makeAuthorForRss,
+  resolveRssAuthor,
   validatePostForRss,
   validateRssConfig,
 } from '../utils/node/index.ts'
 import { makeAbsoluteUrl, normalizeSiteUrl } from '../utils/shared/url.ts'
 import { resolveContentMediaPath, resolveSidebarLogo } from '../utils/shared/media.ts'
-import { isPostListed, resolveShowDrafts } from '../utils/shared/publication.ts'
+import { shouldListPost, resolveShowDrafts } from '../utils/shared/publication.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
 
 /**
@@ -95,7 +95,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
         )
         const sortedPosts = posts
           .filter((post) =>
-            isPostListed(post.frontmatter as PostFrontmatter, { showDrafts })
+            shouldListPost(post.frontmatter as PostFrontmatter, { showDrafts })
           )
           .sort(
             (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
@@ -142,7 +142,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
                   maxDescriptionLength
                 )
             const guid = createPostGuid(siteUrl, url, fm.date)
-            const categories = formatTagsForRss(fm.tags, siteUrl, localeIndex)
+            const categories = tagsToRssCategories(fm.tags, siteUrl, localeIndex)
             const content = fullContent
               ? mdToFeedHtml(
                   parseMdFile(src!, url).content,
@@ -163,7 +163,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
                   allowBare: true,
                 }) as string | undefined
               ),
-              author: makeAuthorForRss(
+              author: resolveRssAuthor(
                 config,
                 fm,
                 localeSiteUrl,
@@ -197,7 +197,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
 
         for (const format of rssFormats) {
           try {
-            const formatInfo = getRssFormatInfo(format)
+            const formatInfo = getFeedFormatInfo(format)
             const feedPath = path.join(feedDir, path.basename(getFeedPath(localeIndex, format)))
 
             const feedContent = formatInfo.generator(feeds[localeIndex]!)

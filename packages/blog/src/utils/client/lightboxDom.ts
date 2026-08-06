@@ -61,8 +61,8 @@ export function getLightboxElements(doc: Document): LightboxElement[] {
 /**
  * Build the lightbox item list from a list of elements.
  */
-export function buildLightboxItems(links: LightboxElement[]): LightboxItem[] {
-  return links.map((el) => {
+export function buildLightboxItems(elements: LightboxElement[]): LightboxItem[] {
+  return elements.map((el) => {
     const isImg =
       (typeof HTMLImageElement !== 'undefined' &&
         el instanceof HTMLImageElement) ||

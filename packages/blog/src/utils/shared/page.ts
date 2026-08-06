@@ -101,7 +101,7 @@ export function resolvePreviewText(frontmatter: PostFrontmatter): string | undef
   return undefined
 }
 
-export function resolvePagefindBodyAttr(theme: ThemeConfig, frontmatter: PostFrontmatter): string | undefined {
+export function resolvePagefindBodyAttribute(theme: ThemeConfig, frontmatter: PostFrontmatter): string | undefined {
   // Pagefind is the only search provider; the body marker is fixed.
   if (theme.search?.enabled === false) return undefined
 

@@ -17,7 +17,7 @@ interface LocaleLink {
 interface CurrentLang {
   label?: string
   link: string
-  code: string
+  locale: string
 }
 
 interface LocaleSpecificConfig {
@@ -30,7 +30,7 @@ interface SitePageRef {
   relativePath?: string
 }
 
-function normalizeLeadingSlash(path: string): string {
+function ensureLeadingSlash(path: string): string {
   return /^\.\//.test(path) || /^\w+:/.test(path) || path.startsWith('/') ? path : `/${path}`
 }
 
@@ -46,7 +46,7 @@ function buildLocaleLink(
     .replace(/(^|\/)index\.md$/, '$1')
     .replace(/\.md$/, addHtmlExtension ? '.html' : '')
 
-  return link.replace(/\/$/, '') + normalizeLeadingSlash(normalizedPath)
+  return link.replace(/\/$/, '') + ensureLeadingSlash(normalizedPath)
 }
 
 export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
@@ -59,7 +59,7 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
     return {
       label: currentLocale?.label,
       link: `/${localeIndex.value}/`,
-      code: localeIndex.value,
+      locale: localeIndex.value,
     }
   })
 

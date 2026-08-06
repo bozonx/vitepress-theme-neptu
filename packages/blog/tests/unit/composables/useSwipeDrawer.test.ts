@@ -30,7 +30,7 @@ describe('useSwipeDrawer', () => {
     onOpen: () => void
     onClose: () => void
     edgePx: number
-    threshold: number
+    thresholdPx: number
   }> = {}) {
     const TestComp = defineComponent({
       setup() {
@@ -41,7 +41,7 @@ describe('useSwipeDrawer', () => {
           onOpen: options.onOpen ?? onOpen,
           onClose: options.onClose ?? onClose,
           edgePx: options.edgePx ?? 50,
-          threshold: options.threshold ?? 50,
+          thresholdPx: options.thresholdPx ?? 50,
         })
         return () => h('div')
       },
@@ -159,7 +159,7 @@ describe('useSwipeDrawer', () => {
   })
 
   it('uses custom edge and threshold', () => {
-    mountComposable({ edgePx: 10, threshold: 20 })
+    mountComposable({ edgePx: 10, thresholdPx: 20 })
 
     window.dispatchEvent(createTouchEvent('touchstart', [{ clientX: 5, clientY: 100 }]))
     window.dispatchEvent(createTouchEvent('touchmove', [{ clientX: 30, clientY: 100 }]))

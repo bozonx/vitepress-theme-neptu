@@ -1,4 +1,4 @@
-import { mustacheTemplate } from '../utils/shared/index.ts'
+import { interpolateMustache } from '../utils/shared/index.ts'
 import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
 
 /**
@@ -15,7 +15,7 @@ export function transformDescription(
   if (typeof description !== 'string' || !description.includes('{{')) return
 
   const localeIndex = pageData.filePath.split('/')[0]!
-  const resolvedDescription = mustacheTemplate(
+  const resolvedDescription = interpolateMustache(
     description,
     {
       theme: siteConfig.site?.locales?.[localeIndex]?.themeConfig,

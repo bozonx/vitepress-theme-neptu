@@ -17,7 +17,7 @@ export interface UseSwipeDrawerOptions {
   /** Left-edge trigger width. */
   edgePx?: number
   /** Horizontal px required to trigger. */
-  threshold?: number
+  thresholdPx?: number
 }
 
 /**
@@ -31,7 +31,7 @@ export function useSwipeDrawer({
   onOpen,
   onClose,
   edgePx = 50,
-  threshold = SWIPE_THRESHOLD,
+  thresholdPx = SWIPE_THRESHOLD,
 }: UseSwipeDrawerOptions): void {
   let initialX: number | null = null
   let initialY: number | null = null
@@ -64,7 +64,7 @@ export function useSwipeDrawer({
       reset()
       return
     }
-    if (Math.abs(dx) < threshold) return
+    if (Math.abs(dx) < thresholdPx) return
 
     processed = true
 

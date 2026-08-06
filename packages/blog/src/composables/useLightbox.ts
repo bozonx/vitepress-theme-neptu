@@ -35,15 +35,15 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
   const currentIndex = ref(0)
   const items = ref<LightboxItem[]>([])
 
-  let links: LightboxElement[] = []
+  let elements: LightboxElement[] = []
   let observer: MutationObserver | null = null
 
   const resolvedDoc = doc || (inBrowser ? document : undefined)
 
   const refreshItems = () => {
     if (!resolvedDoc) return
-    links = getLightboxElements(resolvedDoc)
-    items.value = buildLightboxItems(links)
+    elements = getLightboxElements(resolvedDoc)
+    items.value = buildLightboxItems(elements)
   }
 
   const open = (index: number) => {
@@ -73,10 +73,10 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
   }
 
   const onClick = (e: MouseEvent) => {
-    let idx = getClickedLightboxIndex(e.target, links)
+    let idx = getClickedLightboxIndex(e.target, elements)
     if (idx === -1 && resolvedDoc) {
       refreshItems()
-      idx = getClickedLightboxIndex(e.target, links)
+      idx = getClickedLightboxIndex(e.target, elements)
     }
     if (idx !== -1) {
       e.preventDefault()

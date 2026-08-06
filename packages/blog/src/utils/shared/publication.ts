@@ -47,7 +47,7 @@ export function resolveShowDrafts(
 }
 
 /** True when the post belongs in public listings. */
-export function isPostListed(
+export function shouldListPost(
   frontmatter: PublicationFrontmatter | undefined,
   options: PostListingOptions = {}
 ): boolean {

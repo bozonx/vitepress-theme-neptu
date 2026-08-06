@@ -26,7 +26,7 @@ const props = defineProps<{ noBg?: boolean }>()
           height="1.2rem"
           aria-hidden="true"
         />
-        <span v-if="currentLang.code" class="text-xs font-semibold uppercase leading-none">{{ currentLang.code }}</span>
+        <span v-if="currentLang.locale" class="text-xs font-semibold uppercase leading-none">{{ currentLang.locale }}</span>
       </span>
     </template>
     <MenuItem :disabled="true" :title="theme.t?.currentLang || 'Current language'">

@@ -21,7 +21,7 @@ export function useScrollToTopButton(animationMs = 1000) {
     }, animationMs)
   }
 
-  const handleClick = () => {
+  const scrollToTop = () => {
     window.scrollTo(0, 0)
   }
 
@@ -29,6 +29,6 @@ export function useScrollToTopButton(animationMs = 1000) {
     if (animationTimeout) clearTimeout(animationTimeout)
   })
 
-  return { isButtonVisible, opacity, show, hide, handleClick, animationMs }
+  return { isButtonVisible, opacity, show, hide, scrollToTop, animationMs }
 }
 

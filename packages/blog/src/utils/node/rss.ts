@@ -66,15 +66,15 @@ export interface RssCategory {
 
 
 export function getFeedPath(localeIndex: string, format: string): string {
-  return `/${localeIndex}/feed.${getRssFormatInfo(format).extension}`
+  return `/${localeIndex}/feed.${getFeedFormatInfo(format).extension}`
 }
 
 export function getFeedUrl(siteUrl: string, localeIndex: string, format: string): string {
   return `${normalizeSiteUrl(siteUrl)!}${getFeedPath(localeIndex, format)}`
 }
 
-/** Formats tags for RSS categories. */
-export function formatTagsForRss(
+/** Converts tags into RSS categories. */
+export function tagsToRssCategories(
   tags: unknown,
   siteUrl: string,
   localeIndex: string
@@ -123,8 +123,8 @@ export interface RssFormatInfo {
   generator: (feed: Feed) => string
 }
 
-/** Returns information about the RSS format */
-export function getRssFormatInfo(format: string): RssFormatInfo {
+/** Returns information about the feed format */
+export function getFeedFormatInfo(format: string): RssFormatInfo {
   const formats: Record<string, RssFormatInfo> = {
     rss: {
       mimeType: 'application/rss+xml',
@@ -164,7 +164,7 @@ export function resolveRssFormats(config: RssSiteConfig): string[] {
     .filter((format) => knownFormats.has(format))
 }
 
-export function makeAuthorForRss(
+export function resolveRssAuthor(
   config: RssSiteConfig,
   frontmatter: PostFrontmatter,
   siteUrl: string,

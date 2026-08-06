@@ -2,13 +2,13 @@ import { describe, it, expect, vi } from 'vitest'
 import {
   validatePostForRss,
   createPostGuid,
-  formatTagsForRss,
+  tagsToRssCategories,
   getFeedPath,
   getFeedUrl,
   validateRssConfig,
-  getRssFormatInfo,
+  getFeedFormatInfo,
   resolveRssFormats,
-  makeAuthorForRss,
+  resolveRssAuthor,
 } from '../../../../src/utils/node/rss.ts'
 
 describe('validatePostForRss', () => {
@@ -86,40 +86,40 @@ describe('createPostGuid', () => {
   })
 })
 
-describe('formatTagsForRss', () => {
+describe('tagsToRssCategories', () => {
   it('formats tags into categories', () => {
-    expect(formatTagsForRss(['JavaScript', 'Vue'], 'https://site.com', 'en')).toEqual([
+    expect(tagsToRssCategories(['JavaScript', 'Vue'], 'https://site.com', 'en')).toEqual([
       { name: 'JavaScript', domain: 'https://site.com/en/tags/javascript/1' },
       { name: 'Vue', domain: 'https://site.com/en/tags/vue/1' },
     ])
   })
 
   it('trims whitespace and replaces spaces with hyphens', () => {
-    expect(formatTagsForRss(['  web dev  '], 'https://site.com', 'en')).toEqual([
+    expect(tagsToRssCategories(['  web dev  '], 'https://site.com', 'en')).toEqual([
       { name: 'web dev', domain: 'https://site.com/en/tags/web-dev/1' },
     ])
   })
 
   it('filters non-string and empty entries', () => {
-    expect(formatTagsForRss(['ok', '', 123, null, '   '], 'https://site.com', 'en')).toEqual([
+    expect(tagsToRssCategories(['ok', '', 123, null, '   '], 'https://site.com', 'en')).toEqual([
       { name: 'ok', domain: 'https://site.com/en/tags/ok/1' },
     ])
   })
 
   it('supports tag objects with explicit slug', () => {
     expect(
-      formatTagsForRss([{ name: 'Web Dev', slug: 'custom-web-dev' }], 'https://site.com', 'en')
+      tagsToRssCategories([{ name: 'Web Dev', slug: 'custom-web-dev' }], 'https://site.com', 'en')
     ).toEqual([
       { name: 'Web Dev', domain: 'https://site.com/en/tags/custom-web-dev/1' },
     ])
   })
 
   it('returns empty array for null', () => {
-    expect(formatTagsForRss(null, 'https://site.com', 'en')).toEqual([])
+    expect(tagsToRssCategories(null, 'https://site.com', 'en')).toEqual([])
   })
 
   it('returns empty array for non-array', () => {
-    expect(formatTagsForRss('tag', 'https://site.com', 'en')).toEqual([])
+    expect(tagsToRssCategories('tag', 'https://site.com', 'en')).toEqual([])
   })
 
 })
@@ -156,25 +156,25 @@ describe('validateRssConfig', () => {
   })
 })
 
-describe('getRssFormatInfo', () => {
+describe('getFeedFormatInfo', () => {
   it('returns RSS info for rss', () => {
-    const info = getRssFormatInfo('rss')
+    const info = getFeedFormatInfo('rss')
     expect(info.mimeType).toBe('application/rss+xml')
     expect(info.extension).toBe('rss')
   })
 
   it('returns Atom info for atom', () => {
-    const info = getRssFormatInfo('atom')
+    const info = getFeedFormatInfo('atom')
     expect(info.mimeType).toBe('application/atom+xml')
   })
 
   it('returns JSON info for json', () => {
-    const info = getRssFormatInfo('json')
+    const info = getFeedFormatInfo('json')
     expect(info.mimeType).toBe('application/feed+json')
   })
 
   it('defaults to rss for unknown format', () => {
-    const info = getRssFormatInfo('unknown')
+    const info = getFeedFormatInfo('unknown')
     expect(info.mimeType).toBe('application/rss+xml')
   })
 })
@@ -211,7 +211,7 @@ describe('feed helpers', () => {
   })
 })
 
-describe('makeAuthorForRss', () => {
+describe('resolveRssAuthor', () => {
   it('returns author info when found', () => {
     const config = {
       userConfig: {
@@ -224,14 +224,14 @@ describe('makeAuthorForRss', () => {
         },
       },
     }
-    expect(makeAuthorForRss(config, { authorId: 'john' }, 'https://site.com', 'en')).toEqual({
+    expect(resolveRssAuthor(config, { authorId: 'john' }, 'https://site.com', 'en')).toEqual({
       name: 'John',
       link: 'https://site.com/authors/john/1',
     })
   })
 
   it('returns undefined when authorId is missing', () => {
-    expect(makeAuthorForRss({}, {}, 'https://site.com', 'en')).toBeUndefined()
+    expect(resolveRssAuthor({}, {}, 'https://site.com', 'en')).toBeUndefined()
   })
 
   it('returns undefined when authors array is missing', () => {
@@ -240,7 +240,7 @@ describe('makeAuthorForRss', () => {
         locales: { en: { themeConfig: {} } },
       },
     }
-    expect(makeAuthorForRss(config, { authorId: 'john' }, 'https://site.com', 'en')).toBeUndefined()
+    expect(resolveRssAuthor(config, { authorId: 'john' }, 'https://site.com', 'en')).toBeUndefined()
   })
 
   it('reads authors from built site locales when available', () => {
@@ -258,7 +258,7 @@ describe('makeAuthorForRss', () => {
         themeConfig: {},
       },
     }
-    expect(makeAuthorForRss(config, { authorId: 'john' }, 'https://site.com/en', 'en')).toEqual({
+    expect(resolveRssAuthor(config, { authorId: 'john' }, 'https://site.com/en', 'en')).toEqual({
       name: 'John',
       link: 'https://site.com/en/authors/john/1',
     })
@@ -276,6 +276,6 @@ describe('makeAuthorForRss', () => {
         },
       },
     }
-    expect(makeAuthorForRss(config, { authorId: 'john' }, 'https://site.com', 'en')).toBeUndefined()
+    expect(resolveRssAuthor(config, { authorId: 'john' }, 'https://site.com', 'en')).toBeUndefined()
   })
 })

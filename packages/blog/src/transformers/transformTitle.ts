@@ -1,4 +1,4 @@
-import { mustacheTemplate } from '../utils/shared/index.ts'
+import { interpolateMustache } from '../utils/shared/index.ts'
 import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
 
 /**
@@ -22,7 +22,7 @@ export function transformTitle(
     params: pageData.params || {},
   }
 
-  const resolvedTitle = mustacheTemplate(
+  const resolvedTitle = interpolateMustache(
     title,
     options,
     { eval: true }

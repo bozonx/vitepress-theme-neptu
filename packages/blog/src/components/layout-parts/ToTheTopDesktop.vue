@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 const { theme } = useThemeConfig()
 const SCROLL_BREAKPOINT = 1080
-const { isButtonVisible, opacity, show, hide, handleClick, animationMs } = useScrollToTopButton()
+const { isButtonVisible, opacity, show, hide, scrollToTop, animationMs } = useScrollToTopButton()
 
 watch(
   () => props.scrollY,
@@ -36,7 +36,7 @@ watch(
       type="button"
       class="mb-9 ml-4 flex gap-x-2 px-2 py-2 cursor-pointer text-[var(--gray-600)] hover:text-[var(--gray-900)] dark:text-[var(--gray-300)] dark:hover:text-[var(--gray-100)] border-0 bg-transparent"
       :aria-label="theme.returnToTopLabel || 'Return to top'"
-      @click.prevent.stop="handleClick"
+      @click.prevent.stop="scrollToTop"
     >
       <Icon icon="fa6-solid:arrow-up" width="1.3rem" height="1.3rem" aria-hidden="true" />
       {{ theme.returnToTopLabel }}

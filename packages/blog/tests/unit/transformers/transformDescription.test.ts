@@ -5,7 +5,7 @@ vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../../src/utils/shared/index.ts')>()
   return {
     ...actual,
-    mustacheTemplate: vi.fn((template: string) =>
+    interpolateMustache: vi.fn((template: string) =>
       template.replace('{{params.name}}', 'SEO')
     ),
   }

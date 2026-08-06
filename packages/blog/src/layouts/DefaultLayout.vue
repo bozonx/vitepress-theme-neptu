@@ -11,7 +11,7 @@ import TopBar from '../components/layout-parts/TopBar.vue'
 import { useBreakpoint } from '../composables/useBreakpoint.ts'
 import { useScrollY } from '../composables/useScrollY.ts'
 import { useSwipeDrawer } from '../composables/useSwipeDrawer.ts'
-import { isAsideEnabled, resolvePagefindBodyAttr } from '../utils/shared/index.ts'
+import { isAsideEnabled, resolvePagefindBodyAttribute } from '../utils/shared/index.ts'
 
 import type { ThemeConfig } from '../types.d.ts'
 
@@ -20,7 +20,7 @@ const { isMobile } = useBreakpoint()
 const { scrollY } = useScrollY()
 const sidebarRef = ref<InstanceType<typeof SideBar> | null>(null)
 const bodyMarker = computed(() =>
-  resolvePagefindBodyAttr(theme.value, frontmatter.value)
+  resolvePagefindBodyAttribute(theme.value, frontmatter.value)
 )
 const showAside = computed(() => isAsideEnabled(theme.value, frontmatter.value))
 

@@ -27,7 +27,5 @@ export function useDownloadFile(
   return {
     downloadFilename,
     triggerDownload,
-    encodeMediaUrl,
-    isValidMediaUrl,
   }
 }

@@ -19,7 +19,7 @@ describe('useScrollToTopButton', () => {
       opacity: ref(0),
       show: () => {},
       hide: () => {},
-      handleClick: () => {},
+      scrollToTop: () => {},
     }
     const TestComp = defineComponent({
       setup() {
@@ -28,7 +28,7 @@ describe('useScrollToTopButton', () => {
         result.opacity = composable.opacity
         result.show = composable.show
         result.hide = composable.hide
-        result.handleClick = composable.handleClick
+        result.scrollToTop = composable.scrollToTop
         return () => h('div')
       },
     })
@@ -90,10 +90,10 @@ describe('useScrollToTopButton', () => {
     expect(isButtonVisible.value).toBe(false)
   })
 
-  it('handleClick scrolls to top', () => {
+  it('scrollToTop scrolls to top', () => {
     const scrollSpy = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
-    const { handleClick } = mountComposable()
-    handleClick()
+    const { scrollToTop } = mountComposable()
+    scrollToTop()
     expect(scrollSpy).toHaveBeenCalledWith(0, 0)
   })
 

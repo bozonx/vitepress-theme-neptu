@@ -6,7 +6,7 @@ vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../../src/utils/shared/index.ts')>()
   return {
     ...actual,
-    mustacheTemplate: vi.fn((tmpl: string, _options: any, { eval: isEval }: { eval?: boolean }) => {
+    interpolateMustache: vi.fn((tmpl: string, _options: any, { eval: isEval }: { eval?: boolean }) => {
       if (!isEval) return tmpl
       return tmpl.replace(/\{\{(.+?)\}\}/g, (_: string, key: string) => {
         if (key === 'params.tag') return 'MyTag'

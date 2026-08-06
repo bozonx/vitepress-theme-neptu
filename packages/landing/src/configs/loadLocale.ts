@@ -21,12 +21,11 @@ import type {
   I18nTranslations,
 } from '../types.d.ts'
 import landingBaseLocales from './landingLocalesBase/index.ts'
-import { landingBaseConfig as siteCommon } from './landingConfigBase.ts'
+import { landingBaseConfig } from './landingConfigBase.ts'
 
-type SiteLocaleEntry = LocaleEntry
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
 
-const localeMap = landingBaseLocales as unknown as Record<string, SiteLocaleEntry>
+const localeMap = landingBaseLocales as unknown as Record<string, LocaleEntry>
 
 /**
  * Processes a VitePress sidebar config (keyed by section name) by applying
@@ -80,7 +79,7 @@ function processSidebar(
  * Builds a VitePress `LocaleConfig` for a single content locale by merging
  * every admin-editable and developer-provided layer in priority order:
  *
- *   built-in theme defaults (siteCommon)
+ *   built-in theme defaults (landingBaseConfig)
  *     → built-in content-locale defaults (`landingLocalesBase[*]`)
  *       → config.ts (`LandingUserConfig.themeConfig`)
  *         → `<srcDir>/site.yaml` (cross-locale admin)
@@ -92,7 +91,7 @@ function processSidebar(
 export async function loadLocale(
   localeIndex: string,
   config: LandingUserConfig
-): Promise<SiteLocaleEntry> {
+): Promise<LocaleEntry> {
   const baseLocaleKey = resolveBaseLocaleKey(localeIndex, localeMap)
   const baseLocale = localeMap[baseLocaleKey]
 
@@ -101,7 +100,7 @@ export async function loadLocale(
   // locale. Sits between config.ts and per-locale YAML in priority.
   // ------------------------------------------------------------------
   const themeForTemplates = {
-    ...((siteCommon.themeConfig || {}) as Record<string, unknown>),
+    ...((landingBaseConfig.themeConfig || {}) as Record<string, unknown>),
     ...((config.themeConfig || {}) as Record<string, unknown>),
   }
   const sharedSite = (await parseSharedSite(config.srcDir || '', {
@@ -206,7 +205,7 @@ export async function loadLocale(
  */
 export async function autoLoadLocales(
   config: LandingUserConfig
-): Promise<Record<string, SiteLocaleEntry>> {
+): Promise<Record<string, LocaleEntry>> {
   return autoLoadLocalesFactory({
     config,
     loadLocale: loadLocale,
