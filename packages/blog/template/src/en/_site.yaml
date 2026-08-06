@@ -157,7 +157,7 @@ themeConfig:
     links:
       - text: 'About'
         href: 'pages/about'
-        # Iconify string: "<prefix>:<icon-name>". Browse at https://icones.es
+        # Iconify string: "<prefix>:<icon-name>". Browse at https://icon-sets.iconify.design/
         icon: 'solar:document-linear'
         # iconClass: 'muted'
         # class: 'custom-nav-link'

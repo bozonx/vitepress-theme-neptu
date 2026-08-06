@@ -77,7 +77,7 @@ themeConfig:
 
 ## Icons
 
-Every `icon:` field takes an [Iconify](https://icones.es) string in the form
+Every `icon:` field takes an [Iconify](https://icon-sets.iconify.design/) string in the form
 `prefix:name`, e.g. `fa6-solid:hand-holding-heart`. The theme's default icons
 (donate, recent, popular, RSS, …) can be overridden globally in `src/site.yaml`:
 

@@ -28,18 +28,7 @@ export namespace NeptuBlogTheme {
      * live in `<srcDir>/<locale>/_site.yaml` under `themeConfig.t`.
      */
     themeConfig?: Partial<Omit<Config, 't'>> & { t?: DeepPartial<I18nTranslations> }
-    locales?: Record<
-      string,
-      {
-        label?: string
-        link?: string
-        lang?: string
-        title?: string
-        titleTemplate?: string | boolean
-        description?: string
-        themeConfig?: Partial<Config>
-      }
-    >
+    locales?: Record<string, BlogLocaleConfig>
     /**
      * Absolute public base URL of the site, including the `http://` or
      * `https://` protocol and without a trailing slash.
@@ -87,6 +76,53 @@ export namespace NeptuBlogTheme {
     }
   }
 
+  export interface BlogLocaleConfig {
+    label?: string
+    link?: string
+    lang?: string
+    title?: string
+    titleTemplate?: string | boolean
+    description?: string
+    themeConfig?: Partial<Config>
+  }
+
+  export interface PostListConfig {
+    showDate?: boolean
+    showTags?: boolean
+    showThumbnail?: boolean
+    showPreview?: boolean
+    showAuthor?: boolean
+    maxPreviewLength?: number
+    /** Show the reading-time badge on list items. Defaults to false. */
+    showReadingTime?: boolean
+  }
+
+  export interface FeedsConfig {
+    maxPosts?: number
+    formats?: string[]
+    /** Include rendered article HTML instead of only the description. Defaults to false. */
+    fullContent?: boolean
+  }
+
+  export interface SearchConfig {
+    enabled?: boolean
+  }
+
+  export interface PublisherConfig {
+    name?: string
+    url?: string
+    logo?: string
+  }
+
+  export interface FooterConfig {
+    message?: string
+    copyright?: string
+    links?: NavLink[]
+    rssFeed?: boolean
+    atomFeed?: boolean
+    socialLinks?: SocialLink[]
+  }
+
   export interface Config extends DefaultTheme.Config {
     externalLinkIcon?: boolean
     /**
@@ -112,16 +148,7 @@ export namespace NeptuBlogTheme {
     perPage?: number
     similarPostsCount?: number
     paginationMaxItems?: number
-    postList?: {
-      showDate?: boolean
-      showTags?: boolean
-      showThumbnail?: boolean
-      showPreview?: boolean
-      showAuthor?: boolean
-      maxPreviewLength?: number
-      /** Show the reading-time badge on list items. Defaults to false. */
-      showReadingTime?: boolean
-    }
+    postList?: PostListConfig
 
     /** Reading-time estimation — see {@link ReadingTimeConfig}. */
     readingTime?: ReadingTimeConfig
@@ -193,12 +220,7 @@ export namespace NeptuBlogTheme {
     sidebar?: SidebarConfig
     donate?: DonateConfig
     repo?: string
-    feeds?: {
-      maxPosts?: number
-      formats?: string[]
-      /** Include rendered article HTML instead of only the description. Defaults to false. */
-      fullContent?: boolean
-    }
+    feeds?: FeedsConfig
 
     sidebarMenuLabel?: string
     /** Accessible label / tooltip for the color-theme picker. */
@@ -228,20 +250,11 @@ export namespace NeptuBlogTheme {
      * through the standard `t.searchUI` key — see `I18nTranslations.searchUI`.
      * Pagefind documentation: https://pagefind.app
      */
-    search?: {
-      enabled?: boolean
-    }
+    search?: SearchConfig
 
-    publisher?: { name?: string; url?: string; logo?: string }
+    publisher?: PublisherConfig
 
-    footer?: {
-      message?: string
-      copyright?: string
-      links?: NavLink[]
-      rssFeed?: boolean
-      atomFeed?: boolean
-      socialLinks?: SocialLink[]
-    }
+    footer?: FooterConfig
   }
 
   export interface I18nTranslations {
@@ -301,45 +314,51 @@ export namespace NeptuBlogTheme {
      * via `themeConfig.t.searchUI` in `site.yaml` or `_site.yaml`.
      * See https://pagefind.app/docs/ui/ for the full reference.
      */
-    searchUI?: {
-      noResultsText?: string
-      resetButtonTitle?: string
-      displayDetails?: string
-      backButtonTitle?: string
-      footer?: {
-        selectText?: string
-        selectKeyAriaLabel?: string
-        navigateText?: string
-        navigateUpKeyAriaLabel?: string
-        navigateDownKeyAriaLabel?: string
-        closeText?: string
-        closeKeyAriaLabel?: string
-      }
-    }
+    searchUI?: SearchUIConfig
     /** Heading above the table of contents. */
     tocLabel: string
     /** Disclosure label above an ad unit. */
     adLabel: string
 
-    links: {
-      aboutBlog: string
-      donate: string
-      recent: string
-      featured?: string
-      popular: string
-      byDate: string
-      links: string
-      authors: string
-      aboutUs: string
-      rssFeed: string
-      atomFeed: string
-    }
+    links: I18nLinks
     months: string[]
     podcasts: Record<string, string>
     audioFile: Record<string, string>
     fileDownload: Record<string, string>
     videoFile: Record<string, string>
     lightbox: Record<string, string>
+  }
+
+  export interface SearchUIFooter {
+    selectText?: string
+    selectKeyAriaLabel?: string
+    navigateText?: string
+    navigateUpKeyAriaLabel?: string
+    navigateDownKeyAriaLabel?: string
+    closeText?: string
+    closeKeyAriaLabel?: string
+  }
+
+  export interface SearchUIConfig {
+    noResultsText?: string
+    resetButtonTitle?: string
+    displayDetails?: string
+    backButtonTitle?: string
+    footer?: SearchUIFooter
+  }
+
+  export interface I18nLinks {
+    aboutBlog: string
+    donate: string
+    recent: string
+    featured?: string
+    popular: string
+    byDate: string
+    links: string
+    authors: string
+    aboutUs: string
+    rssFeed: string
+    atomFeed: string
   }
 
   export interface TocConfig {
@@ -389,6 +408,27 @@ export namespace NeptuBlogTheme {
     label?: string
   }
 
+  export interface InContentAdsConfig {
+    /** Defaults to `true`. */
+    enabled?: boolean
+    /**
+     * What to place the slot before: `'heading'` (top-level `##`, the
+     * default) sits at a section break; `'paragraph'` splits the prose.
+     */
+    anchor?: 'heading' | 'paragraph'
+    /** Ordinal of the first anchor to use, 1-based. Defaults to `2`. */
+    start?: number
+    /** Anchors between consecutive slots. Defaults to `3`. */
+    every?: number
+    /** Hard cap per page. Defaults to `2`. */
+    max?: number
+    /**
+     * Skip short articles: pages with fewer top-level blocks than this get
+     * no in-content slots. Defaults to `6`.
+     */
+    minBlocks?: number
+  }
+
   export interface AdsConfig {
     /** Master switch. Defaults to `true`. */
     enabled?: boolean
@@ -417,26 +457,7 @@ export namespace NeptuBlogTheme {
     aside?: boolean
 
     /** In-content slots, placed at build time by the markdown plugin. */
-    inContent?: {
-      /** Defaults to `true`. */
-      enabled?: boolean
-      /**
-       * What to place the slot before: `'heading'` (top-level `##`, the
-       * default) sits at a section break; `'paragraph'` splits the prose.
-       */
-      anchor?: 'heading' | 'paragraph'
-      /** Ordinal of the first anchor to use, 1-based. Defaults to `2`. */
-      start?: number
-      /** Anchors between consecutive slots. Defaults to `3`. */
-      every?: number
-      /** Hard cap per page. Defaults to `2`. */
-      max?: number
-      /**
-       * Skip short articles: pages with fewer top-level blocks than this get
-       * no in-content slots. Defaults to `6`.
-       */
-      minBlocks?: number
-    }
+    inContent?: InContentAdsConfig
 
     /** Slot after the article body, before the post footer. Defaults to `false`. */
     afterContent?: boolean
@@ -547,28 +568,34 @@ export namespace NeptuBlogTheme {
     primary?: boolean
   }
 
+  export interface HomeBackgroundConfig {
+    type?: 'parallax' | 'none'
+    image?: string
+    parallaxOffset?: number
+  }
+
+  export type HomeHeroImage =
+    | string
+    | {
+        src?: string
+        light?: string
+        dark?: string
+        alt?: string
+      }
+
+  export interface HomeHeroConfig {
+    title?: string
+    description?: string
+    image?: HomeHeroImage
+    actions?: HomeActionConfig[]
+  }
+
   export interface HomeConfig {
     /** Follow the visitor preference, or force one appearance on the home page. */
     appearance?: 'auto' | 'light' | 'dark'
     maxWidth?: number
-    background?: {
-      type?: 'parallax' | 'none'
-      image?: string
-      parallaxOffset?: number
-    }
-    hero?: {
-      title?: string
-      description?: string
-      image?:
-        | string
-        | {
-            src?: string
-            light?: string
-            dark?: string
-            alt?: string
-          }
-      actions?: HomeActionConfig[]
-    }
+    background?: HomeBackgroundConfig
+    hero?: HomeHeroConfig
     /** Ordered home blocks. Arrays replace across YAML config layers. */
     sections?: HomeSectionConfig[]
   }
@@ -579,14 +606,19 @@ export namespace NeptuBlogTheme {
     title?: string
   }
 
-  export interface Author {
+  /** Shared fields between config-time and runtime author representations. */
+  export interface AuthorBase {
     id: string
-    name: string
+    name?: string
     image?: string
-    description?: string
-    links?: AuthorLink[]
     imageHeight?: number
     imageWidth?: number
+    description?: string
+  }
+
+  export interface Author extends AuthorBase {
+    name: string
+    links?: AuthorLink[]
     twitterHandle?: string
     [key: string]: unknown
   }
@@ -597,15 +629,11 @@ export namespace NeptuBlogTheme {
     socialLinks?: SocialLink[]
   }
 
-  export interface SidebarItem {
+  export interface SidebarItem extends BaseLink {
     header?: string
     href?: string
     icon?: string
-    class?: string
-    iconClass?: string
     mobile?: boolean
-    mobileOnly?: boolean
-    desktopOnly?: boolean
     text?: string
     title?: string
   }
@@ -617,32 +645,18 @@ export namespace NeptuBlogTheme {
     [key: string]: unknown
   }
 
-  export interface AuthorItem {
-    id: string
-    name?: string
-    image?: string
-    imageHeight?: number
-    imageWidth?: number
-    description?: string
+  export interface AuthorItem extends AuthorBase {
     count?: number
   }
 
-  export interface SocialLinkItem {
+  export interface SocialLinkItem extends BaseLink {
     href: string
     icon?: string
     title?: string
     target?: string
-    class?: string
-    iconClass?: string
-    desktopOnly?: boolean
-    mobileOnly?: boolean
   }
 
-  export interface LinkItem {
-    desktopOnly?: boolean
-    mobileOnly?: boolean
-    class?: string
-    iconClass?: string
+  export interface LinkItem extends BaseLink {
     text?: string
     title?: string
     href?: string
@@ -714,25 +728,25 @@ export namespace NeptuBlogTheme {
     logoHeight?: number
   }
 
-  export interface NavLink {
-    text: string
-    href: string
-    title?: string
-    icon?: string
-    iconClass?: string
+  /** Common optional fields shared by all link-like types. */
+  export interface BaseLink {
     class?: string
+    iconClass?: string
     desktopOnly?: boolean
     mobileOnly?: boolean
   }
 
-  export interface SocialLink {
+  export interface NavLink extends BaseLink {
+    text: string
+    href: string
+    title?: string
+    icon?: string
+  }
+
+  export interface SocialLink extends BaseLink {
     icon: string
     href: string
     title?: string
-    class?: string
-    iconClass?: string
-    desktopOnly?: boolean
-    mobileOnly?: boolean
   }
 
   export interface DonateConfig {
@@ -750,11 +764,9 @@ export namespace NeptuBlogTheme {
     enabled?: boolean
   }
 
-  export interface Tag {
+  export interface Tag extends TaxonomyEntry {
     name: string
     slug: string
-    count?: number
-    [key: string]: unknown
   }
 
   export interface BreadcrumbItem {
@@ -854,18 +866,8 @@ export namespace NeptuBlogTheme {
     url: string
     title?: string
     date?: string | number | Date
-    tags?: Array<{
-      slug?: string
-      name?: string
-      count?: number
-      [key: string]: unknown
-    }>
-    categories?: Array<{
-      slug?: string
-      name?: string
-      count?: number
-      [key: string]: unknown
-    }>
+    tags?: Array<TaxonomyEntry>
+    categories?: Array<TaxonomyEntry>
     authorId?: string
     preview?: string
     cover?: string
@@ -968,6 +970,28 @@ export type SidebarLogo = NeptuBlogTheme.SidebarLogo
 export type ConsentConfig = NeptuBlogTheme.ConsentConfig
 export type ConsentState = NeptuBlogTheme.ConsentState
 export type ResolvedBlogConfig = NeptuBlogTheme.ResolvedBlogConfig
+export type NavLink = NeptuBlogTheme.NavLink
+export type DonateConfig = NeptuBlogTheme.DonateConfig
+export type AuthorLink = NeptuBlogTheme.AuthorLink
+export type AuthorBase = NeptuBlogTheme.AuthorBase
+export type BaseLink = NeptuBlogTheme.BaseLink
+export type BlogLocaleConfig = NeptuBlogTheme.BlogLocaleConfig
+export type PostListConfig = NeptuBlogTheme.PostListConfig
+export type FeedsConfig = NeptuBlogTheme.FeedsConfig
+export type SearchConfig = NeptuBlogTheme.SearchConfig
+export type PublisherConfig = NeptuBlogTheme.PublisherConfig
+export type FooterConfig = NeptuBlogTheme.FooterConfig
+export type SearchUIConfig = NeptuBlogTheme.SearchUIConfig
+export type SearchUIFooter = NeptuBlogTheme.SearchUIFooter
+export type I18nLinks = NeptuBlogTheme.I18nLinks
+export type InContentAdsConfig = NeptuBlogTheme.InContentAdsConfig
+export type HomeBackgroundConfig = NeptuBlogTheme.HomeBackgroundConfig
+export type HomeHeroImage = NeptuBlogTheme.HomeHeroImage
+export type HomeHeroConfig = NeptuBlogTheme.HomeHeroConfig
+export type HomeSectionType = NeptuBlogTheme.HomeSectionType
+export type HomeActionConfig = NeptuBlogTheme.HomeActionConfig
+export type PopularPostsConfig = NeptuBlogTheme.PopularPostsConfig
+export type AnalyticsDataSource = NeptuBlogTheme.AnalyticsDataSource
 
 declare const theme: Theme
 export default theme

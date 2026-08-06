@@ -172,7 +172,7 @@ themeConfig:
 | `text` | Текст ссылки. Кроме socialLinks, так как это просто иконки, не содержащие текста|
 | `title` | Текст подсказки |
 | `href` | URL; относительный дополняется префиксом локали, абсолютный (`https://…`) — как есть |
-| `icon` | Имя иконки [Iconify](https://icones.es), например `solar:document-linear` |
+| `icon` | Имя иконки [Iconify](https://icon-sets.iconify.design/), например `solar:document-linear` |
 | `iconClass` | CSS-класс для иконки |
 | `class` | CSS-класс для всего элемента ссылки |
 | `desktopOnly` | `true` — скрывать на мобильных (где работает сайдбар) |
@@ -284,6 +284,22 @@ themeConfig:
 выше.
 :::
 
+::: tip
+Полная замена подвала — через слот `post-footer` или именованные слоты
+отдельных блоков — описана в [Кастомизация](customization#кастомизация-подвала-поста).
+:::
+
+### Похожие посты
+
+Блок `similar` подбирает статьи с общими тегами — настраивать его для каждого
+поста не нужно. Чем больше совпавших тегов, тем выше пост в списке:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  similarPostsCount: 5
+```
+
 ### Кнопки «поделиться»
 
 Блок `social-share` в подвале поста выводит кнопки шеринга соцсетей. Каждая
@@ -313,13 +329,13 @@ themeConfig:
       enabled: false
 ```
 
-Поля записи:
+Поля кнопки:
 
 | Поле | Описание |
 | --- | --- |
 | `name` | Ключ объединения — по нему запись находит встроенную |
-| `icon` | Имя иконки [Iconify](https://icones.es), например `logos:telegram` |
-| `title` | Подпись и tooltip |
+| `icon` | Имя иконки [Iconify](https://icon-sets.iconify.design/), например `logos:telegram` |
+| `title` | tooltip |
 | `urlTemplate` | Ссылка шеринга с плейсхолдерами `{url}` и `{title}` |
 | `class` | Необязательные CSS-классы кнопки |
 | `enabled` | `false` скрывает кнопку, не удаляя её из конфигурации |
@@ -339,20 +355,6 @@ urlTemplate: 'https://x.com/intent/tweet?text={title}&url={url}%3Futm_source%3Ds
 
 Порядок блоков подвала поста (включая `social-share`) задаётся массивом
 `postFooter` — см. [выше](#состав-и-порядок-блоков).
-
-### Похожие посты
-
-Блок `similar` подбирает статьи с общими тегами — настраивать его для каждого
-поста не нужно. Чем больше совпавших тегов, тем выше пост в списке:
-
-```yaml
-# src/site.yaml
-themeConfig:
-  similarPostsCount: 5
-```
-
-Полная замена подвала — через слот `post-footer` или именованные слоты
-отдельных блоков — описана в [Кастомизация](customization#кастомизация-подвала-поста).
 
 ---
 
@@ -480,7 +482,7 @@ themeConfig: {
 
 ## Иконки
 
-Каждое поле `icon:` принимает строку [Iconify](https://icones.es) вида `prefix:name`,
+Каждое поле `icon:` принимает строку [Iconify](https://icon-sets.iconify.design/) вида `prefix:name`,
 например `fa6-solid:hand-holding-heart`. Иконки по умолчанию («Поддержать», свежие,
 популярное, RSS и т.д.) можно переопределить глобально в `src/site.yaml`:
 

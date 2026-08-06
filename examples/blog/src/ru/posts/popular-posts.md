@@ -217,7 +217,7 @@ themeConfig:
   popularIcon: 'fa6-solid:star'  # по умолчанию
 ```
 
-Значение — имя иконки [Iconify](https://icones.es) в формате `prefix:name`.
+Значение — имя иконки [Iconify](https://icon-sets.iconify.design/) в формате `prefix:name`.
 
 ## Перевод заголовка
 
