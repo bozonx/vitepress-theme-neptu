@@ -10,7 +10,7 @@ vi.mock('../../../src/utils/node/index.ts', async (importOriginal) => {
   return {
     ...actual,
     getRssFormats: vi.fn((_config: any) => ['rss', 'atom']),
-    getFormatInfo: vi.fn((format: string) => {
+    getRssFormatInfo: vi.fn((format: string) => {
       const map: Record<string, { mimeType: string; title: string }> = {
         rss: { mimeType: 'application/rss+xml', title: 'RSS Feed' },
         atom: { mimeType: 'application/atom+xml', title: 'Atom Feed' },

@@ -1,4 +1,5 @@
 import type { PostLite } from '../types.d.ts'
+import { safeDateTime } from '../utils/shared/date.ts'
 
 export type { PostLite }
 
@@ -29,13 +30,6 @@ export function safeGetMonth(date: string | number | Date | undefined): number |
   const parsed = new Date(date)
   const month = parsed.getUTCMonth() + 1
   return Number.isFinite(month) ? month : undefined
-}
-
-/** Safely parse a date into a timestamp. Returns 0 for invalid values. */
-function safeDateTime(date: string | number | Date | undefined): number {
-  if (!date) return 0
-  const time = new Date(date).getTime()
-  return Number.isFinite(time) ? time : 0
 }
 
 export type CategoryInfo = TagInfo

@@ -3,7 +3,7 @@ import {
   parseSharedSite,
 } from 'vitepress-theme-neptu/utils/node'
 import {
-  standardTemplate,
+  interpolateDollarTemplate,
   isExternalUrl,
   deepMerge,
   resolveBaseLocaleKey,
@@ -43,11 +43,11 @@ function processSidebar(
     for (const item of items) {
       const typedItem = item as Record<string, unknown>
       if (typeof typedItem.text === 'string') {
-        typedItem.text = standardTemplate(typedItem.text, params)
+        typedItem.text = interpolateDollarTemplate(typedItem.text, params)
       }
 
       if (typeof typedItem.link === 'string') {
-        typedItem.link = standardTemplate(typedItem.link, params)
+        typedItem.link = interpolateDollarTemplate(typedItem.link, params)
 
         const link = typedItem.link as string
         if (

@@ -6,7 +6,7 @@ import {
   getFeedPath,
   getFeedUrl,
   validateRssConfig,
-  getFormatInfo,
+  getRssFormatInfo,
   getRssFormats,
   makeAuthorForRss,
 } from '../../../../src/utils/node/rss.ts'
@@ -156,25 +156,25 @@ describe('validateRssConfig', () => {
   })
 })
 
-describe('getFormatInfo', () => {
+describe('getRssFormatInfo', () => {
   it('returns RSS info for rss', () => {
-    const info = getFormatInfo('rss')
+    const info = getRssFormatInfo('rss')
     expect(info.mimeType).toBe('application/rss+xml')
     expect(info.extension).toBe('rss')
   })
 
   it('returns Atom info for atom', () => {
-    const info = getFormatInfo('atom')
+    const info = getRssFormatInfo('atom')
     expect(info.mimeType).toBe('application/atom+xml')
   })
 
   it('returns JSON info for json', () => {
-    const info = getFormatInfo('json')
+    const info = getRssFormatInfo('json')
     expect(info.mimeType).toBe('application/feed+json')
   })
 
   it('defaults to rss for unknown format', () => {
-    const info = getFormatInfo('unknown')
+    const info = getRssFormatInfo('unknown')
     expect(info.mimeType).toBe('application/rss+xml')
   })
 })

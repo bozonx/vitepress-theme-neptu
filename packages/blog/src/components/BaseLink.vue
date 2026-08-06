@@ -2,7 +2,7 @@
 // Internal component — consumed by other components only.
 import { useData, useRoute, withBase } from 'vitepress'
 import { computed } from 'vue'
-import { resolveI18Href, isExternalUrl } from '../utils/shared/index.ts'
+import { resolveI18nHref, isExternalUrl } from '../utils/shared/index.ts'
 
 type ClassValue = string | Record<string, unknown> | unknown[]
 
@@ -27,7 +27,7 @@ const route = useRoute()
 const props = defineProps<Props>()
 // Reactive computed properties
 const i18nHref = computed(() =>
-  resolveI18Href(props.href || '', localeIndex.value)
+  resolveI18nHref(props.href || '', localeIndex.value)
 )
 const isExternal = computed(() => isExternalUrl(props.href))
 const resolvedHref = computed(() =>

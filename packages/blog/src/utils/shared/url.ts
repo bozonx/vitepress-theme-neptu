@@ -91,7 +91,7 @@ export function replaceRelativePathLocale(
  * Resolves URLs for multilingual sites by adding a language prefix to
  * internal links.
  */
-export function resolveI18Href(
+export function resolveI18nHref(
   rawHref: string,
   localeIndex: string
 ): string {

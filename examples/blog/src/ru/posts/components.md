@@ -140,7 +140,7 @@ import { useUiTheme, useBreakpoint } from 'vitepress-theme-neptu/composables'
 ## Утилиты
 
 ```ts
-import { isPost, resolveArticlePreview } from 'vitepress-theme-neptu/utils'
+import { isPost, resolvePreviewText } from 'vitepress-theme-neptu/utils'
 ```
 
 | Утилита | Описание |
@@ -149,7 +149,7 @@ import { isPost, resolveArticlePreview } from 'vitepress-theme-neptu/utils'
 | `isPage(frontmatter)` | `true` для `layout: page` |
 | `isUtilPage(frontmatter)` | `true` для `util`, `tag`, `category`, `archive`, `author` |
 | `isHomePage(frontmatter)` | `true` для `layout: home` |
-| `resolveArticlePreview(frontmatter)` | Текст превью по правилам темы |
+| `resolvePreviewText(frontmatter)` | Текст превью по правилам темы |
 | `resolveBodyMarker(theme, frontmatter)` | Маркер тела для Pagefind |
 | `isPopularRoute(path, theme)` | Маршрут списка популярных |
 | `isAuthorPage(filePath, siteConfig)` | Путь страницы автора |

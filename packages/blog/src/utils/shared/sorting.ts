@@ -1,13 +1,7 @@
-import { arraysIntersection } from './array.ts'
+import { arrayIntersection } from './array.ts'
 import { normalizeUrlPath } from './url.ts'
+import { safeDateTime } from './date.ts'
 
-
-/** Safely parse a date string/number into a timestamp. Returns 0 for invalid values. */
-function safeDateTime(date: string | number | Date | null | undefined): number {
-  if (!date) return 0
-  const time = new Date(date).getTime()
-  return Number.isFinite(time) ? time : 0
-}
 
 interface SortablePost {
   url?: string
@@ -72,7 +66,7 @@ function getTagsIntersection(
   const slugs1 = [...new Set(tags1.map((tag) => tag?.slug).filter(Boolean) as string[])]
   const slugs2 = [...new Set(tags2.map((tag) => tag?.slug).filter(Boolean) as string[])]
 
-  return arraysIntersection(slugs1, slugs2)
+  return arrayIntersection(slugs1, slugs2)
 }
 
 /**

@@ -77,7 +77,7 @@ function makeAbsoluteUrl(siteUrl: string, rawPath: string | undefined): string |
 }
 
 export function getFeedPath(localeIndex: string, format: string): string {
-  return `/${localeIndex}/feed.${getFormatInfo(format).extension}`
+  return `/${localeIndex}/feed.${getRssFormatInfo(format).extension}`
 }
 
 export function getFeedUrl(siteUrl: string, localeIndex: string, format: string): string {
@@ -135,7 +135,7 @@ export interface RssFormatInfo {
 }
 
 /** Returns information about the RSS format */
-export function getFormatInfo(format: string): RssFormatInfo {
+export function getRssFormatInfo(format: string): RssFormatInfo {
   const formats: Record<string, RssFormatInfo> = {
     rss: {
       mimeType: 'application/rss+xml',

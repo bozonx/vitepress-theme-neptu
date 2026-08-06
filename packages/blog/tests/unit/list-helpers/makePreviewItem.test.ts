@@ -59,7 +59,6 @@ Body`)
     })
 
     expect(item.cover).toBe('/en/posts/my-article/media/cover.jpg')
-    expect(item.thumbnail).toBe('/en/posts/my-article/media/cover.jpg')
     expect(item.frontmatter.cover).toBe('/en/posts/my-article/media/cover.jpg')
   })
 

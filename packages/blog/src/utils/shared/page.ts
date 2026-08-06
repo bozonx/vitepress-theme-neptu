@@ -5,8 +5,8 @@ export type Frontmatter = PostFrontmatter
 const UTIL_LAYOUTS = new Set(['util', 'tag', 'archive', 'author'])
 
 /** True for posts: explicit `layout: post` or no layout set. */
-export function isPost(frontmatter: Frontmatter | null | undefined): boolean | undefined {
-  if (!frontmatter) return
+export function isPost(frontmatter: Frontmatter | null | undefined): boolean {
+  if (!frontmatter) return false
   if (frontmatter.layout === 'post') return true
   return frontmatter.layout == null
 }
@@ -25,8 +25,8 @@ export function isUtilPage(frontmatter: Frontmatter | null | undefined): boolean
   return UTIL_LAYOUTS.has(frontmatter?.layout as string)
 }
 
-export function isPopularRoute(routPath: string): boolean {
-  return routPath.includes('/popular/')
+export function isPopularRoute(routePath: string): boolean {
+  return routePath.includes('/popular/')
 }
 
 /**
@@ -100,23 +100,14 @@ export function resolvePreviewText(frontmatter: Frontmatter): string | undefined
   return undefined
 }
 
-/** Resolve article preview text inside article. Or return undefined */
-export function resolveArticlePreview(frontmatter: Frontmatter): string | undefined {
-  return resolvePreviewText(frontmatter)
-}
-
 export function resolveBodyMarker(theme: ThemeConfig, frontmatter: Frontmatter): string | undefined {
   // Pagefind is the only search provider; the body marker is fixed.
   if (theme.search?.enabled === false) return undefined
-
-  const bodyMarker = 'data-pagefind-body'
-
-  if (!bodyMarker) return undefined
 
   // By default util pages are excluded from search
   const allowed = isUtilPage(frontmatter)
     ? frontmatter.searchIncluded || false
     : (frontmatter.searchIncluded ?? true)
 
-  return allowed ? bodyMarker : undefined
+  return allowed ? 'data-pagefind-body' : undefined
 }

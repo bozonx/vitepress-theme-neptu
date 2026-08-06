@@ -60,7 +60,7 @@ vi.mock('vitepress-theme-neptu/utils/node', async (importOriginal) => {
 })
 
 vi.mock('vitepress-theme-neptu/utils', () => ({
-  standardTemplate: vi.fn(
+  interpolateDollarTemplate: vi.fn(
     (tmpl: string | null | undefined, data: Record<string, unknown> | null) => {
       if (!tmpl) return ''
       let result = tmpl

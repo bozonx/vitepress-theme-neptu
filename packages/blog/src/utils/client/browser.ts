@@ -1,4 +1,4 @@
-export function handleFastRedirectToRecentPosts(window: Window): void {
+export function stripRecentRedirectParam(window: Window): void {
   const urlParams = new URLSearchParams(window.location.search)
   const isRedirect = urlParams.get('recent')
 

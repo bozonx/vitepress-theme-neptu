@@ -34,7 +34,7 @@ describe('useBreakpoint', () => {
     return result
   }
 
-  it('defaults to MOBILE_BREAKPOINT (1024)', () => {
+  it('defaults to TABLET_BREAKPOINT (1024)', () => {
     const { isMobile } = mountComposable()
     expect(isMobile.value).toBe(false)
   })

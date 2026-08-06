@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import { computed } from 'vue'
-import { makeHumanDate } from '../utils/shared/index.ts'
+import { formatReadableDate } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
 import PreviewWithImage from './PreviewWithImage.vue'
 import PostReadingTime from './post/PostReadingTime.vue'
@@ -20,7 +20,7 @@ function formatPreview(preview: string | undefined): string | undefined {
 const params = computed(() => ({
   tags: props.item.tags,
   date: props.item.date ? String(props.item.date) : undefined,
-  localeDate: makeHumanDate(props.item.date, lang.value),
+  localeDate: formatReadableDate(props.item.date, lang.value),
   preview: formatPreview(props.item.preview),
   authorName:
     (theme.value.postList?.showAuthor ?? true)
@@ -64,7 +64,7 @@ const params = computed(() => ({
     <PreviewWithImage
       v-bind="params"
       :post-url="props.item.url"
-      :thumbnail="props.item.thumbnail"
+      :thumbnail="props.item.cover"
       :cover-height="props.item.coverHeight"
       :cover-width="props.item.coverWidth"
       :show-date="theme.postList?.showDate ?? true"

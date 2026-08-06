@@ -1,3 +1,10 @@
+/** Safely parse a date string/number into a timestamp. Returns 0 for invalid values. */
+export function safeDateTime(date: string | number | Date | null | undefined): number {
+  if (!date) return 0
+  const time = new Date(date).getTime()
+  return Number.isFinite(time) ? time : 0
+}
+
 const EXCLUDED_WORDS = [
   'de', 'г', 'г.', 'of', 'van', 'der', 'den', 'del',
   'da', 'di', 'du', 'des', 'von', 'zu', 'zur',
@@ -5,13 +12,13 @@ const EXCLUDED_WORDS = [
 ]
 
 /** Determine whether a token represents a year. */
-export function isYear(item: string): boolean {
+export function isYearToken(item: string): boolean {
   const cleanItem = item.replace(/[^\d]/g, '')
   return cleanItem.length === 4 && /^\d{4}$/.test(cleanItem)
 }
 
 /** Determine whether a token represents a month name. */
-export function isMonth(item: string): boolean {
+export function isMonthNameToken(item: string): boolean {
   const cleanItem = item.replace(/[^\wа-яё]/gi, '').toLowerCase()
   return (
     cleanItem.length >= 3 &&
@@ -20,7 +27,7 @@ export function isMonth(item: string): boolean {
   )
 }
 
-export function makeHumanDate(
+export function formatReadableDate(
   rawDate: string | number | Date | null | undefined,
   lang?: string,
   toTimeZone: string = 'UTC'

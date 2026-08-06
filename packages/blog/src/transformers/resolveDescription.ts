@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { DEFAULT_ENCODE } from '../constants.ts'
+import { DEFAULT_ENCODING } from '../constants.ts'
 import { isPost, isPage } from '../utils/shared/index.ts'
 import { extractDescriptionFromMd } from '../utils/node/index.ts'
 import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
@@ -15,7 +15,7 @@ import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
 export function resolveDescription(
   pageData: ExtendedPageData,
   { siteConfig }: { siteConfig: ExtendedSiteConfig },
-  readFile: (filePath: string) => string = (filePath) => fs.readFileSync(filePath, DEFAULT_ENCODE)
+  readFile: (filePath: string) => string = (filePath) => fs.readFileSync(filePath, DEFAULT_ENCODING)
 ): void {
   const existingDescription =
     typeof pageData.description === 'string' ? pageData.description.trim() : ''

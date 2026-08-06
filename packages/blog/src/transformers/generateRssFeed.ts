@@ -3,14 +3,14 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createContentLoader } from 'vitepress'
 
-import { DEFAULT_ENCODE, POSTS_DIR } from '../constants.ts'
+import { DEFAULT_ENCODING, POSTS_DIR } from '../constants.ts'
 import { extractDescriptionFromMd, mdToFeedHtml, parseMdFile } from '../utils/node/index.ts'
 import {
   createPostGuid,
   formatTagsForRss,
   getFeedPath,
   getFeedUrl,
-  getFormatInfo,
+  getRssFormatInfo,
   getRssFormats,
   makeAbsoluteUrl,
   makeAuthorForRss,
@@ -198,12 +198,12 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
 
         for (const format of rssFormats) {
           try {
-            const formatInfo = getFormatInfo(format)
+            const formatInfo = getRssFormatInfo(format)
             const feedPath = path.join(feedDir, path.basename(getFeedPath(localeIndex, format)))
 
             const feedContent = formatInfo.generator(feeds[localeIndex]!)
 
-            fs.writeFileSync(feedPath, feedContent, DEFAULT_ENCODE)
+            fs.writeFileSync(feedPath, feedContent, DEFAULT_ENCODING)
           } catch (formatError) {
             const error = new Error(
               `Error generating ${format} feed for locale ${localeIndex}: ${(formatError as Error).message}`,

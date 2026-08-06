@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { DEFAULT_ENCODE, PREVIEW_LENGTH } from '../constants.ts'
+import { DEFAULT_ENCODING, PREVIEW_LENGTH } from '../constants.ts'
 import {
   parseMdFile,
   extractDescriptionFromContent,
@@ -29,7 +29,6 @@ export interface PreviewItem {
   draft: boolean
   wordCount: number
   readingTime: number
-  thumbnail: string | undefined
   cover: string | undefined
   coverHeight: number | undefined
   coverWidth: number | undefined
@@ -58,7 +57,7 @@ export function makePreviewItem(
   // `/posts/my-article/index`.
   const url =
     '/' + relativePath.replace(/\.md$/, '').replace(/(^|\/)index$/, '$1')
-  const rawContent = fs.readFileSync(filePath, DEFAULT_ENCODE)
+  const rawContent = fs.readFileSync(filePath, DEFAULT_ENCODING)
   const { frontmatter, content } = parseMdFile(rawContent, filePath)
   const fm = frontmatter as PostFrontmatter
 
@@ -97,14 +96,9 @@ export function makePreviewItem(
     draft: isDraft(fm),
     wordCount,
     readingTime,
-    thumbnail: cover,
     cover,
     coverHeight: coverDimensions?.height,
     coverWidth: coverDimensions?.width,
     frontmatter: { ...fm, cover },
   }
-}
-
-export function resolvePreview(frontmatter: PostFrontmatter): string | undefined {
-  return resolvePreviewText(frontmatter)
 }

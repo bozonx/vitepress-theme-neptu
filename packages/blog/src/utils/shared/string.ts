@@ -69,8 +69,8 @@ export function mustacheTemplate(
   return res
 }
 
-/** Standard templates `${value.child}` */
-export function standardTemplate(
+/** Dollar templates `${value.child}` */
+export function interpolateDollarTemplate(
   tmpl: string | null | undefined,
   data: Record<string, unknown> | null | undefined,
   options: TemplateOptions = { eval: false }
@@ -110,7 +110,7 @@ export function standardTemplate(
   return res
 }
 
-export interface SmartTruncateOptions {
+export interface TruncateTextOptions {
   mark?: string
   position?: number
   respectWords?: boolean
@@ -118,11 +118,11 @@ export interface SmartTruncateOptions {
   markAtTheEnd?: boolean
 }
 
-/** Smart truncate string */
-export function smartTruncate(
+/** Truncate string with optional ellipsis and word-boundary respect */
+export function truncateText(
   rawString: string,
   length: number,
-  options: SmartTruncateOptions = {}
+  options: TruncateTextOptions = {}
 ): string {
   const {
     mark = '\u2026',

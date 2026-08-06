@@ -1,1 +1,1 @@
-export { handleFastRedirectToRecentPosts } from './utils/client/browser.ts'
+export { stripRecentRedirectParam } from './utils/client/browser.ts'

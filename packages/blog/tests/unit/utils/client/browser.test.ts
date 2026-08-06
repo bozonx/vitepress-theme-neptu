@@ -1,16 +1,16 @@
 import { describe, it, expect, vi } from 'vitest'
 import {
-  handleFastRedirectToRecentPosts,
+  stripRecentRedirectParam,
   resolveNavigatorLang,
 } from '../../../../src/utils/client/browser.ts'
 
-describe('handleFastRedirectToRecentPosts', () => {
+describe('stripRecentRedirectParam', () => {
   it('replaces state when ?recent=1', () => {
     const history = { replaceState: vi.fn() } as unknown as History
     const location = { search: '?recent=1', pathname: '/en/post' } as unknown as Location
     const win = { history, location } as unknown as Window
 
-    handleFastRedirectToRecentPosts(win)
+    stripRecentRedirectParam(win)
     expect(history.replaceState).toHaveBeenCalledWith({}, '', '/en/post')
   })
 
@@ -19,7 +19,7 @@ describe('handleFastRedirectToRecentPosts', () => {
     const location = { search: '?page=2', pathname: '/en/post' } as unknown as Location
     const win = { history, location } as unknown as Window
 
-    handleFastRedirectToRecentPosts(win)
+    stripRecentRedirectParam(win)
     expect(history.replaceState).not.toHaveBeenCalled()
   })
 
@@ -28,7 +28,7 @@ describe('handleFastRedirectToRecentPosts', () => {
     const location = { search: '?recent=0', pathname: '/en/post' } as unknown as Location
     const win = { history, location } as unknown as Window
 
-    handleFastRedirectToRecentPosts(win)
+    stripRecentRedirectParam(win)
     expect(history.replaceState).not.toHaveBeenCalled()
   })
 })

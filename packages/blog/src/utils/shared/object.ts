@@ -7,11 +7,11 @@ export function splitDeepPath(pathTo: unknown): Array<DeepPathPart | '__NEGATIVE
   const res: Array<DeepPathPart | '__NEGATIVE_INDEX__'> = []
   const DEEP_PATH_SEPARATOR = '.'
   const preparedPath = pathTo.replace(/\[/g, DEEP_PATH_SEPARATOR + '[')
-  const splatDots = preparedPath.startsWith(DEEP_PATH_SEPARATOR)
+  const segments = preparedPath.startsWith(DEEP_PATH_SEPARATOR)
     ? preparedPath.slice(1).split(DEEP_PATH_SEPARATOR)
     : preparedPath.split(DEEP_PATH_SEPARATOR)
 
-  for (const el of splatDots) {
+  for (const el of segments) {
     if (el.indexOf('[') === 0) {
       const match = el.match(/^\[(-?\d+)\]$/)
       if (match && match[1]) {
@@ -53,8 +53,8 @@ export function joinDeepPath(pathParts: unknown): string {
 /** Check if path is valid (can be parsed correctly) */
 export function isPathValid(pathTo: unknown): boolean {
   if (!pathTo || typeof pathTo !== 'string') return false
-  const splatPath = splitDeepPath(pathTo)
-  return splatPath.length > 0
+  const segments = splitDeepPath(pathTo)
+  return segments.length > 0
 }
 
 /** Get value deeply from object or array. */
@@ -62,11 +62,11 @@ export function deepGet(src: unknown, pathTo: unknown, defaultValue?: unknown): 
   if (src === null || src === undefined) return defaultValue
   if (typeof pathTo !== 'string') return defaultValue
 
-  const splatPath = splitDeepPath(pathTo)
-  if (splatPath.length === 0) return defaultValue
+  const segments = splitDeepPath(pathTo)
+  if (segments.length === 0) return defaultValue
 
-  const firstKey = splatPath[0]
-  const restPath = joinDeepPath(splatPath.slice(1))
+  const firstKey = segments[0]
+  const restPath = joinDeepPath(segments.slice(1))
 
   if (Array.isArray(src)) {
     if (typeof firstKey !== 'number' || (firstKey as unknown) === '__NEGATIVE_INDEX__')

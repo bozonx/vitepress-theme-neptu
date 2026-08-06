@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import yaml from 'yaml'
-import { standardTemplate } from '../shared/string.ts'
-import { DEFAULT_ENCODE } from '../../constants.ts'
+import { interpolateDollarTemplate } from '../shared/string.ts'
+import { DEFAULT_ENCODING } from '../../constants.ts'
 import { importConfigModule } from './tsLoader.ts'
 import {
   SiteYamlSchema,
@@ -37,8 +37,8 @@ function parseYamlWithTemplate(
   }
 
   try {
-    const raw = fs.readFileSync(absPath, DEFAULT_ENCODE)
-    const substituted = standardTemplate(raw, props)
+    const raw = fs.readFileSync(absPath, DEFAULT_ENCODING)
+    const substituted = interpolateDollarTemplate(raw, props)
     return yaml.parse(substituted) || {}
   } catch (error) {
     console.warn(
@@ -54,7 +54,7 @@ export function resolveConfigTemplates<T>(
   value: T,
   props: Record<string, unknown>
 ): T {
-  if (typeof value === 'string') return standardTemplate(value, props) as T
+  if (typeof value === 'string') return interpolateDollarTemplate(value, props) as T
   if (Array.isArray(value)) {
     return value.map((item) => resolveConfigTemplates(item, props)) as T
   }

@@ -5,7 +5,7 @@ import {
   isSafeExternalUrl,
   sanitizeUrl,
   externalTarget,
-  resolveI18Href,
+  resolveI18nHref,
   generatePageUrlPath,
   normalizeSiteUrl,
   makeAbsoluteUrl,
@@ -59,41 +59,41 @@ describe('isExternalUrl', () => {
   })
 })
 
-describe('resolveI18Href', () => {
+describe('resolveI18nHref', () => {
   it('returns locale-prefixed root for /', () => {
-    expect(resolveI18Href('/', 'en')).toBe('/en')
+    expect(resolveI18nHref('/', 'en')).toBe('/en')
   })
 
   it('returns external URL unchanged', () => {
-    expect(resolveI18Href('https://example.com', 'en')).toBe('https://example.com')
+    expect(resolveI18nHref('https://example.com', 'en')).toBe('https://example.com')
   })
 
   it('returns already-absolute internal path unchanged', () => {
-    expect(resolveI18Href('/path', 'en')).toBe('/path')
+    expect(resolveI18nHref('/path', 'en')).toBe('/path')
   })
 
   it('prepends locale to relative path', () => {
-    expect(resolveI18Href('path/to/page', 'en')).toBe('/en/path/to/page')
+    expect(resolveI18nHref('path/to/page', 'en')).toBe('/en/path/to/page')
   })
 
   it('trims whitespace', () => {
-    expect(resolveI18Href('  path  ', 'en')).toBe('/en/path')
+    expect(resolveI18nHref('  path  ', 'en')).toBe('/en/path')
   })
 
   it('returns stringified non-string input', () => {
-    expect(resolveI18Href(123 as any, 'en')).toBe('123')
+    expect(resolveI18nHref(123 as any, 'en')).toBe('123')
   })
 
   it('returns empty string for empty string', () => {
-    expect(resolveI18Href('', 'en')).toBe('')
+    expect(resolveI18nHref('', 'en')).toBe('')
   })
 
   it('does not add double slashes', () => {
-    expect(resolveI18Href('/path', 'en')).toBe('/path')
+    expect(resolveI18nHref('/path', 'en')).toBe('/path')
   })
 
   it('supports hyphenated locale indexes', () => {
-    expect(resolveI18Href('posts/hello', 'en-US')).toBe('/en-US/posts/hello')
+    expect(resolveI18nHref('posts/hello', 'en-US')).toBe('/en-US/posts/hello')
   })
 })
 

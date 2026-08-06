@@ -2,7 +2,7 @@
 import { useData } from 'vitepress'
 import { computed } from 'vue'
 
-import { makeHumanDate, isYear, isMonth } from '../../utils/shared/index.ts'
+import { formatReadableDate, isYearToken, isMonthNameToken } from '../../utils/shared/index.ts'
 import BaseLink from '../BaseLink.vue'
 
 const { page, lang } = useData()
@@ -13,7 +13,7 @@ const dateObj = computed(() => (rawDate.value ? new Date(rawDate.value) : null))
 const year = computed(() => (dateObj.value ? dateObj.value.getUTCFullYear() : null))
 const month = computed(() => (dateObj.value ? dateObj.value.getUTCMonth() + 1 : null))
 
-const localeDate = computed(() => makeHumanDate(rawDate.value, lang.value || 'en') || '')
+const localeDate = computed(() => formatReadableDate(rawDate.value, lang.value || 'en') || '')
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const localeDate = computed(() => makeHumanDate(rawDate.value, lang.value || 'en
       <template v-for="item in localeDate.split(' ')" :key="item">
         <!-- Year link -->
         <BaseLink
-          v-if="isYear(item)"
+          v-if="isYearToken(item)"
           :href="`archive/${year}/1`"
           class="underline hover:brightness-[1.4]"
         >
@@ -39,7 +39,7 @@ const localeDate = computed(() => makeHumanDate(rawDate.value, lang.value || 'en
         </BaseLink>
         <!-- Month link -->
         <BaseLink
-          v-else-if="isMonth(item)"
+          v-else-if="isMonthNameToken(item)"
           :href="`archive/${year}/month/${month}`"
           class="underline hover:brightness-[1.4]"
         >

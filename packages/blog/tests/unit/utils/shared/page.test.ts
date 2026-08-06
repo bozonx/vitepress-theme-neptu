@@ -6,7 +6,7 @@ import {
   isUtilPage,
   isPopularRoute,
   isAuthorPage,
-  resolveArticlePreview,
+  resolvePreviewText,
   resolveBodyMarker,
   resolveLayoutKey,
   isAsideEnabled,
@@ -28,12 +28,12 @@ describe('isPost', () => {
     expect(isPost({ layout: 'tag' })).toBe(false)
   })
 
-  it('returns undefined for null input', () => {
-    expect(isPost(null)).toBeUndefined()
+  it('returns false for null input', () => {
+    expect(isPost(null)).toBe(false)
   })
 
-  it('returns undefined for undefined input', () => {
-    expect(isPost(undefined)).toBeUndefined()
+  it('returns false for undefined input', () => {
+    expect(isPost(undefined)).toBe(false)
   })
 })
 
@@ -117,38 +117,38 @@ describe('isAuthorPage', () => {
   })
 })
 
-describe('resolveArticlePreview', () => {
+describe('resolvePreviewText', () => {
   it('returns previewText if present', () => {
-    expect(resolveArticlePreview({ previewText: 'Preview' })).toBe('Preview')
+    expect(resolvePreviewText({ previewText: 'Preview' })).toBe('Preview')
   })
 
   it('returns description when descrAsPreview is true', () => {
-    expect(resolveArticlePreview({ description: 'Desc', descrAsPreview: true })).toBe('Desc')
+    expect(resolvePreviewText({ description: 'Desc', descrAsPreview: true })).toBe('Desc')
   })
 
   it('prefers previewText over description', () => {
     expect(
-      resolveArticlePreview({ previewText: 'Preview', description: 'Desc', descrAsPreview: true })
+      resolvePreviewText({ previewText: 'Preview', description: 'Desc', descrAsPreview: true })
     ).toBe('Preview')
   })
 
   it('returns undefined when nothing matches', () => {
-    expect(resolveArticlePreview({})).toBeUndefined()
+    expect(resolvePreviewText({})).toBeUndefined()
   })
 
   it('returns undefined when descrAsPreview is true but no description', () => {
-    expect(resolveArticlePreview({ descrAsPreview: true })).toBeUndefined()
+    expect(resolvePreviewText({ descrAsPreview: true })).toBeUndefined()
   })
 
   it('treats blank previewText as explicit absence', () => {
     expect(
-      resolveArticlePreview({ previewText: '   ', description: 'Desc', descrAsPreview: true })
+      resolvePreviewText({ previewText: '   ', description: 'Desc', descrAsPreview: true })
     ).toBeUndefined()
   })
 
   it('trims previewText and description', () => {
-    expect(resolveArticlePreview({ previewText: '  Preview  ' })).toBe('Preview')
-    expect(resolveArticlePreview({ description: '  Desc  ', descrAsPreview: true })).toBe('Desc')
+    expect(resolvePreviewText({ previewText: '  Preview  ' })).toBe('Preview')
+    expect(resolvePreviewText({ description: '  Desc  ', descrAsPreview: true })).toBe('Desc')
   })
 })
 

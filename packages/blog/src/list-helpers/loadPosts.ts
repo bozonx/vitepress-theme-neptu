@@ -16,9 +16,9 @@ import type { Post } from '../types.d.ts'
 const POSTS_CACHE_KEY = '__neptuBlogCache__'
 
 function getDefaultCache(): Record<string, Post[]> {
-  const g = globalThis as Record<string, unknown>
-  if (!g[POSTS_CACHE_KEY]) g[POSTS_CACHE_KEY] = {}
-  return g[POSTS_CACHE_KEY] as Record<string, Post[]>
+  const globalObj = globalThis as Record<string, unknown>
+  if (!globalObj[POSTS_CACHE_KEY]) globalObj[POSTS_CACHE_KEY] = {}
+  return globalObj[POSTS_CACHE_KEY] as Record<string, Post[]>
 }
 
 export interface LoadPostsOptions {

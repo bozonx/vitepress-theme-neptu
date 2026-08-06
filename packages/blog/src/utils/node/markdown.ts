@@ -4,7 +4,7 @@ import html from 'rehype-stringify'
 import { remark } from 'remark'
 import remarkRehype from 'remark-rehype'
 import strip from 'strip-markdown'
-import { smartTruncate } from '../shared/string.ts'
+import { truncateText } from '../shared/string.ts'
 import { removeTitleFromMd } from '../shared/markdown.ts'
 
 const SAFE_URL_PROTOCOLS = new Set([
@@ -180,7 +180,7 @@ export function extractDescriptionFromContent(
   markAtTheEnd?: boolean
 ): string {
   const mdContentNoHeader = removeTitleFromMd(content)
-  const striped = stripMd(mdContentNoHeader)
+  const stripped = stripMd(mdContentNoHeader)
 
-  return smartTruncate(striped, maxLength, { respectWords: true, markAtTheEnd })
+  return truncateText(stripped, maxLength, { respectWords: true, markAtTheEnd })
 }

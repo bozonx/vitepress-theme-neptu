@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { DEFAULT_ENCODE } from '../constants.ts'
+import { DEFAULT_ENCODING } from '../constants.ts'
 import { isPost } from '../utils/shared/page.ts'
 import { parseMdFile } from '../utils/node/markdown.ts'
 import { measureMarkdown } from '../utils/node/readingTime.ts'
@@ -42,7 +42,7 @@ export function addReadingTime(
   try {
     const raw = fs.readFileSync(
       path.join(srcDir, pageData.filePath),
-      DEFAULT_ENCODE
+      DEFAULT_ENCODING
     )
     const { content } = parseMdFile(raw, pageData.filePath)
     const metrics = measureMarkdown(content, config?.wpm ?? DEFAULT_READING_WPM)

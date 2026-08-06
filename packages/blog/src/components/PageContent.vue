@@ -2,7 +2,7 @@
 import { useData } from 'vitepress'
 import { computed, ref, resolveDynamicComponent, watchEffect } from 'vue'
 import {
-  resolveArticlePreview,
+  resolvePreviewText,
   isPage,
   isUtilPage,
 } from '../utils/shared/index.ts'
@@ -46,7 +46,7 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => {
 })
 
 watchEffect(() => {
-  articlePreviewText.value = resolveArticlePreview(
+  articlePreviewText.value = resolvePreviewText(
     frontmatter.value as PostFrontmatter
   )
 })

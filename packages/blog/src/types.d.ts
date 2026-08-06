@@ -847,7 +847,6 @@ export namespace NeptuBlogTheme {
     }>
     authorId?: string
     preview?: string
-    thumbnail?: string
     cover?: string
     coverHeight?: number | string
     coverWidth?: number | string

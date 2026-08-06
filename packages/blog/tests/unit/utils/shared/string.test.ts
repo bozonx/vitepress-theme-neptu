@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import {
   mustacheTemplate,
-  standardTemplate,
-  smartTruncate,
+  interpolateDollarTemplate,
+  truncateText,
   pathTrimExt,
   transliterate,
 } from '../../../../src/utils/shared/string.ts'
@@ -41,89 +41,89 @@ describe('mustacheTemplate', () => {
   })
 })
 
-describe('standardTemplate', () => {
+describe('interpolateDollarTemplate', () => {
   it('replaces simple key', () => {
-    expect(standardTemplate('Hello ${name}!', { name: 'World' })).toBe('Hello World!')
+    expect(interpolateDollarTemplate('Hello ${name}!', { name: 'World' })).toBe('Hello World!')
   })
 
   it('replaces nested key', () => {
-    expect(standardTemplate('${user.name}', { user: { name: 'Alice' } })).toBe('Alice')
+    expect(interpolateDollarTemplate('${user.name}', { user: { name: 'Alice' } })).toBe('Alice')
   })
 
   it('preserves unknown keys for a later config-merge pass', () => {
-    expect(standardTemplate('${unknown}', {})).toBe('${unknown}')
+    expect(interpolateDollarTemplate('${unknown}', {})).toBe('${unknown}')
   })
 
   it('replaces multiple occurrences', () => {
-    expect(standardTemplate('${a} and ${a}', { a: 'X' })).toBe('X and X')
+    expect(interpolateDollarTemplate('${a} and ${a}', { a: 'X' })).toBe('X and X')
   })
 
   it('handles eval option', () => {
-    expect(standardTemplate('${a + b}', { a: 1, b: 2 }, { eval: true })).toBe('3')
+    expect(interpolateDollarTemplate('${a + b}', { a: 1, b: 2 }, { eval: true })).toBe('3')
   })
 
   it('returns empty string for null template', () => {
-    expect(standardTemplate(null, { a: 1 })).toBe('')
+    expect(interpolateDollarTemplate(null, { a: 1 })).toBe('')
   })
 
   it('returns original template for null data', () => {
-    expect(standardTemplate('${a}', null)).toBe('${a}')
+    expect(interpolateDollarTemplate('${a}', null)).toBe('${a}')
   })
 
   it('ignores spaces inside tags by trimming key', () => {
-    expect(standardTemplate('${ name }', { name: 'Bob' })).toBe('Bob')
+    expect(interpolateDollarTemplate('${ name }', { name: 'Bob' })).toBe('Bob')
   })
 })
 
-describe('smartTruncate', () => {
+describe('truncateText', () => {
   it('returns rawString when length is <= 4', () => {
-    expect(smartTruncate('abc', 4)).toBe('abc')
+    expect(truncateText('abc', 4)).toBe('abc')
   })
 
   it('returns rawString when mark is not a string', () => {
-    expect(smartTruncate('abcdef', 3, { mark: 123 as any })).toBe('abcdef')
+    expect(truncateText('abcdef', 3, { mark: 123 as any })).toBe('abcdef')
   })
 
   it('returns rawString when shorter than limit', () => {
-    expect(smartTruncate('short', 100)).toBe('short')
+    expect(truncateText('short', 100)).toBe('short')
   })
 
   it('returns rawString when invalid input', () => {
-    expect(smartTruncate(undefined as any, 10)).toBe(undefined)
+    expect(truncateText(undefined as any, 10)).toBe(undefined)
   })
 
   it('truncates without respecting words', () => {
-    expect(smartTruncate('abcdefgh', 5)).toBe('abcd…')
+    expect(truncateText('abcdefgh', 5)).toBe('abcd…')
   })
 
   it('truncates respecting words', () => {
-    expect(smartTruncate('Hello world there', 12, { respectWords: true })).toBe('Hello…')
+    expect(truncateText('Hello world there', 12, { respectWords: true })).toBe('Hello…')
   })
 
   it('returns mark when text is too short for mark', () => {
-    expect(smartTruncate('abcdefgh', 5, { respectWords: true, mark: '.....' })).toBe('.....')
+    expect(truncateText('abcdefgh', 5, { respectWords: true, mark: '.....' })).toBe('.....')
   })
 
   it('removes returns by default', () => {
-    expect(smartTruncate('Hello\nworld\nthere', 10, { respectWords: true })).toBe('Hello…')
+    expect(truncateText('Hello\nworld\nthere', 10, { respectWords: true })).toBe('Hello…')
   })
 
   it('keeps returns when removeReturns is false', () => {
-    const result = smartTruncate('Hello\nworld\nthere', 10, { respectWords: true, removeReturns: false })
+    const result = truncateText('Hello\nworld\nthere', 10, { respectWords: true, removeReturns: false })
     expect(result).toContain('\n')
     expect(result.endsWith('…')).toBe(true)
   })
 
   it('supports custom position', () => {
-    expect(smartTruncate('abcdefgh', 5, { position: 2 })).toBe('ab…gh')
+    expect(truncateText('abcdefgh', 5, { position: 2 })).toBe('ab…gh')
   })
 
   it('supports custom mark', () => {
-    expect(smartTruncate('abcdefgh', 5, { mark: '...' })).toBe('ab...')
+    expect(truncateText('abcdefgh', 5, { mark: '...' })).toBe('ab...')
   })
 
   it('returns plain substring when markAtTheEnd is false', () => {
-    expect(smartTruncate('abcdefgh', 5, { markAtTheEnd: false })).toBe('abcde')
+    expect(truncateText('abcdefgh', 5, { markAtTheEnd: false })).toBe('abcde')
   })
 })
 
