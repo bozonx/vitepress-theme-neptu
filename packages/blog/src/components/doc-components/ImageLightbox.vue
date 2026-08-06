@@ -252,14 +252,12 @@ onUnmounted(() => {
           <Icon icon="mdi:chevron-right" />
         </button>
 
-        <!-- Counter / zoom reset -->
+        <!-- Zoom reset -->
         <div
-          v-if="hasMultiple || isZoomed"
+          v-if="isZoomed"
           class="lightbox-counter"
         >
-          <span v-if="hasMultiple" aria-hidden="true">{{ currentIndex + 1 }} / {{ items.length }}</span>
           <button
-            v-if="isZoomed"
             type="button"
             class="lightbox-zoom-level"
             :aria-label="locales.resetZoom || 'Reset zoom'"
