@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { watch } from 'vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import { useScrollToTop } from '../../composables/useScrollToTop.ts'
 
 const props = defineProps<{
   scrollY: number
 }>()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const SCROLL_BREAKPOINT = 1080
 const { isShown, opacity, show, hide, handleClick, animationMs } = useScrollToTop()
 

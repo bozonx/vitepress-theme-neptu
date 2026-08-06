@@ -1,5 +1,6 @@
 import type { Feed } from 'feed'
 import { normalizeTag } from '../shared/tags.ts'
+import { normalizeSiteUrl, makeAbsoluteUrl } from '../shared/url.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../../types.d.ts'
 
 type RssSiteConfig = Partial<Omit<ExtendedSiteConfig, 'userConfig' | 'site'>> & {
@@ -63,25 +64,13 @@ export interface RssCategory {
   domain: string
 }
 
-function normalizeSiteUrl(siteUrl: string): string {
-  return siteUrl.replace(/\/+$/, '')
-}
-
-function makeAbsoluteUrl(siteUrl: string, rawPath: string | undefined): string | undefined {
-  if (!rawPath) return undefined
-  if (/^[a-z\d]+:\/\//i.test(rawPath)) return rawPath
-
-  const base = normalizeSiteUrl(siteUrl)
-  const path = rawPath.startsWith('/') ? rawPath : `/${rawPath}`
-  return `${base}${path}`
-}
 
 export function getFeedPath(localeIndex: string, format: string): string {
   return `/${localeIndex}/feed.${getRssFormatInfo(format).extension}`
 }
 
 export function getFeedUrl(siteUrl: string, localeIndex: string, format: string): string {
-  return `${normalizeSiteUrl(siteUrl)}${getFeedPath(localeIndex, format)}`
+  return `${normalizeSiteUrl(siteUrl)!}${getFeedPath(localeIndex, format)}`
 }
 
 /** Formats tags for RSS categories. */
@@ -92,7 +81,7 @@ export function formatTagsForRss(
 ): RssCategory[] {
   if (!tags || !Array.isArray(tags)) return []
 
-  const baseUrl = normalizeSiteUrl(siteUrl)
+  const baseUrl = normalizeSiteUrl(siteUrl)!
 
   return (tags as unknown[])
     .map((tag) => normalizeTag(tag, localeIndex))
@@ -197,8 +186,6 @@ export function makeAuthorForRss(
 
   return {
     name: author.name,
-    link: `${normalizeSiteUrl(siteUrl)}/authors/${author.id}/1`,
+    link: `${normalizeSiteUrl(siteUrl)!}/authors/${author.id}/1`,
   }
 }
-
-export { makeAbsoluteUrl, normalizeSiteUrl }

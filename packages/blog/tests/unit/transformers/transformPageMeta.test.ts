@@ -7,7 +7,6 @@ vi.mock('../../../src/utils/shared/index.ts', async (importOriginal) => {
   return {
     ...actual,
     slugify: vi.fn((str: string, _lang?: string) => str.toLowerCase().replace(/\s+/g, '-')),
-    transliterate: vi.fn((str: string, _lang?: string) => str.toLowerCase().replace(/\s+/g, '-')),
   }
 })
 

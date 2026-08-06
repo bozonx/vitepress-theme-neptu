@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
-  loadSiteLocale,
-  autoLoadSiteLocales,
-} from '../../../src/configs/loadSiteLocale.ts'
+  loadLocale,
+  autoLoadLocales,
+} from '../../../src/configs/loadLocale.ts'
 
 vi.mock('vitepress-theme-neptu/utils/node', async (importOriginal) => {
   const actual = await importOriginal<typeof import('vitepress-theme-neptu/utils/node')>()
@@ -169,13 +169,13 @@ const { parseLocaleSite, parseSharedSite, hasLocaleSite } = await import(
 
 // existsSync mock is accessed via mockedExistsSync directly
 
-describe('loadSiteLocale', () => {
+describe('loadLocale', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
   it('returns a locale with label from built-in base', async () => {
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -188,7 +188,7 @@ describe('loadSiteLocale', () => {
       label: 'British English',
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -202,7 +202,7 @@ describe('loadSiteLocale', () => {
       description: 'A great landing',
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -216,7 +216,7 @@ describe('loadSiteLocale', () => {
       titleTemplate: ':title | My Site',
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -228,7 +228,7 @@ describe('loadSiteLocale', () => {
       title: 'Locale Title',
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -243,7 +243,7 @@ describe('loadSiteLocale', () => {
       themeConfig: { footer: { copyright: '© 2024' } },
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -258,7 +258,7 @@ describe('loadSiteLocale', () => {
       .mockResolvedValueOnce({ extends: 'ru', title: 'EN Title' })
       .mockResolvedValueOnce({ lang: 'ru-RU', description: 'RU Description' })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -273,7 +273,7 @@ describe('loadSiteLocale', () => {
       .mockResolvedValueOnce({ extends: 'ru' })
       .mockResolvedValueOnce({ extends: 'en' })
 
-    await loadSiteLocale('en', {
+    await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -284,7 +284,7 @@ describe('loadSiteLocale', () => {
   })
 
   it('sets editLink pattern from repo', async () => {
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
       themeConfig: { repo: 'https://github.com/example/repo' },
@@ -303,7 +303,7 @@ describe('loadSiteLocale', () => {
       themeConfig: { t: { customKey: 'Locale' } },
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -322,7 +322,7 @@ describe('loadSiteLocale', () => {
       },
     })
 
-    const result = await loadSiteLocale('en', {
+    const result = await loadLocale('en', {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -335,14 +335,14 @@ describe('loadSiteLocale', () => {
   })
 })
 
-describe('autoLoadSiteLocales', () => {
+describe('autoLoadLocales', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
   it('warns when srcDir is not set', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    const result = await autoLoadSiteLocales({})
+    const result = await autoLoadLocales({})
     expect(result).toEqual({})
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringContaining('is not set')
@@ -353,7 +353,7 @@ describe('autoLoadSiteLocales', () => {
   it('warns when srcDir does not exist', async () => {
     mockedExistsSync.mockReturnValue(false)
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    const result = await autoLoadSiteLocales({ srcDir: '/nonexistent' })
+    const result = await autoLoadLocales({ srcDir: '/nonexistent' })
     expect(result).toEqual({})
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringContaining('does not exist')
@@ -366,7 +366,7 @@ describe('autoLoadSiteLocales', () => {
     mockedExistsSync.mockReturnValue(true)
     vi.mocked(hasLocaleSite).mockReturnValue(true)
 
-    const result = await autoLoadSiteLocales({
+    const result = await autoLoadLocales({
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -380,7 +380,7 @@ describe('autoLoadSiteLocales', () => {
     vi.mocked(hasLocaleSite).mockReturnValue(false)
 
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    const result = await autoLoadSiteLocales({
+    const result = await autoLoadLocales({
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })

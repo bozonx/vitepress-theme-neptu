@@ -15,12 +15,12 @@ import { useData } from 'vitepress'
 import UtilSubPageHeader from './UtilSubPageHeader.vue'
 import PreviewList from '../PreviewList.vue'
 import { sortPosts } from '../../utils/shared/index.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const props = defineProps<{ localePosts?: PostLite[]; limit?: number }>()
 const { localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = props.localePosts || allPosts[localeIndex.value] || []
 const sortKey = theme.value.popularPosts?.sortBy

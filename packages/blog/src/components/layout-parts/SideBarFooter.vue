@@ -5,14 +5,14 @@ import { computed } from 'vue'
 import NeptuBtn from '../NeptuBtn.vue'
 import SwitchAppearance from './SwitchAppearance.vue'
 import SwitchLang from './SwitchLang.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { SocialLinkItem } from '../../types.d.ts'
 
 const props = defineProps<{
   class?: string
 }>()
 const { localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const configuredFormats = computed(() =>
   Array.isArray(theme.value.feeds?.formats)
@@ -27,7 +27,7 @@ const hasFormat = (format: string) => configuredFormats.value.includes(format)
 const socialLinks = computed<SocialLinkItem[]>(() => {
   const links: SocialLinkItem[] = [
     ...(theme.value.sidebar?.socialLinks || []).map((item) => ({
-      href: item.url || item.link,
+      href: item.link,
       icon: item.icon,
       class: item.class,
       iconClass: item.iconClass,

@@ -27,9 +27,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import NeptuBtn from './NeptuBtn.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const props = withDefaults(
   defineProps<{

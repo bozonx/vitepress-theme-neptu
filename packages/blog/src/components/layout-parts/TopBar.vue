@@ -4,11 +4,11 @@ import SwitchAppearance from './SwitchAppearance.vue'
 import ColorThemePicker from '../theme/ColorThemePicker.vue'
 import StylePresetPicker from '../theme/StylePresetPicker.vue'
 import SwitchLang from './SwitchLang.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import { computed } from 'vue'
 import type { LinkItem } from '../../types.d.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 interface Props {
   isMobile?: boolean
@@ -50,7 +50,7 @@ const mobileHideClass = computed(() =>
 )
 const socialLinks = computed<LinkItem[]>(() =>
   (theme.value.nav?.socialLinks || []).map((item) => ({
-    href: item.url || item.link,
+    href: item.link,
     icon: item.icon,
     iconClass: item.iconClass,
     class: item.class,

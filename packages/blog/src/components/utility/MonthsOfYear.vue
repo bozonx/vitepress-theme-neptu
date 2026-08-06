@@ -2,12 +2,12 @@
 import { useData, useRoute } from 'vitepress'
 import { inject } from 'vue'
 import { makeMonthsList } from '../../list-helpers/listHelpers.ts'
-import { sortPosts, isPopularRoute } from '../../utils/shared/index.ts'
+import { sortPosts, isPopularPostsRoute } from '../../utils/shared/index.ts'
 import ListItemWithBadge from '../ListItemWithBadge.vue'
 import PreviewList from '../PreviewList.vue'
 import UtilPageHeader from './UtilPageHeader.vue'
 import ListPageHeader from '../ListPageHeader.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const props = defineProps<{
@@ -19,7 +19,7 @@ const props = defineProps<{
   showPopularPostsSwitch?: boolean
 }>()
 const { frontmatter, localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const route = useRoute()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = props.localePosts || allPosts[localeIndex.value] || []
@@ -35,7 +35,7 @@ const filtered = localePosts.filter((item) => {
 const sorted = sortPosts(
   filtered,
   theme.value.popularPosts?.sortBy,
-  isPopularRoute(route.path)
+  isPopularPostsRoute(route.path)
 )
 </script>
 

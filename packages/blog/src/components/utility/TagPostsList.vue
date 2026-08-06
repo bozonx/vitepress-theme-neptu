@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TaxonomyPostsList from './TaxonomyPostsList.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const props = defineProps<{
@@ -11,7 +11,7 @@ const props = defineProps<{
   tagSlug?: string
   showPopularPostsSwitch?: boolean
 }>()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 </script>
 
 <template>

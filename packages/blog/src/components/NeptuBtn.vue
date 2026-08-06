@@ -3,7 +3,7 @@ import { useSlots, computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import { isExternalUrl } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
 type ClassValue = string | Record<string, unknown> | unknown[]
 
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const slots = useSlots()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const {
   customClass,
   innerClass,

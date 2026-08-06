@@ -2,10 +2,10 @@
 import { computed } from 'vue'
 import PreviewListItem from './PreviewListItem.vue'
 import NeptuPagination from './NeptuPagination.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 import type { PostLite } from '../types.d.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const {
   localePosts,

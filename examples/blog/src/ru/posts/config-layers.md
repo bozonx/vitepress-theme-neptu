@@ -213,7 +213,7 @@ export default async () => {
 
 ## Пользовательские поля в `themeConfig`
 
-В `themeConfig` можно добавлять **любые собственные поля** — они проходят через весь конвейер слияния и доступны в рантайме через `useUiTheme()`. Объекты рекурсивно объединяются между уровнями, массивы заменяются целиком.
+В `themeConfig` можно добавлять **любые собственные поля** — они проходят через весь конвейер слияния и доступны в рантайме через `useThemeConfig()`. Объекты рекурсивно объединяются между уровнями, массивы заменяются целиком.
 
 Уровень 1 — `config.ts`, переменная окружения:
 
@@ -244,9 +244,9 @@ themeConfig:
 
 ```vue
 <script setup lang="ts">
-import { useUiTheme } from 'vitepress-theme-neptu/composables'
+import { useThemeConfig } from 'vitepress-theme-neptu/composables'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 console.log(theme.value.apiUrl)        // "https://api.example.com"
 console.log(theme.value.endpoint)      // "https://api.example.com/v2/posts"
 console.log(theme.value.featureEnabled) // true

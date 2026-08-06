@@ -2,11 +2,11 @@
 import { useRoute, useData } from 'vitepress'
 import { computed } from 'vue'
 import NeptuBtn from './NeptuBtn.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
 const route = useRoute()
 const { site } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const props = defineProps<{
   paginationMaxItems?: number
   curPage: number

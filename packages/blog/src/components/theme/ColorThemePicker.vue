@@ -9,7 +9,7 @@
 import { computed } from 'vue'
 import ThemeAxisPicker from './ThemeAxisPicker.vue'
 import { useColorTheme } from '../../composables/useColorTheme.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 const props = defineProps<{
   /** Renders the control even when `colorPicker` is off. */
@@ -19,7 +19,7 @@ const props = defineProps<{
 }>()
 
 const { activeTheme, setColorTheme, colorThemes } = useColorTheme()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const enabled = computed(() => props.force || theme.value.colorPicker === true)
 const label = computed(

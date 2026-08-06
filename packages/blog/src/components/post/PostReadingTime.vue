@@ -5,7 +5,7 @@ import { computed } from 'vue'
 import { pluralize } from '../../utils/shared/i18n.ts'
 import { isReadingTimeEnabled, toIsoDuration } from '../../utils/shared/readingTime.ts'
 import { useTranslations } from '../../composables/useTranslations.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostFrontmatter } from '../../types.d.ts'
 
 const props = withDefaults(
@@ -21,7 +21,7 @@ const props = withDefaults(
 )
 
 const { page, frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const translations = useTranslations()
 
 const minutes = computed(() =>

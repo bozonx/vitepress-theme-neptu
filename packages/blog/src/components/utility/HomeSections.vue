@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import HomeFeaturedPosts from './HomeFeaturedPosts.vue'
 import HomeLatestPosts from './HomeLatestPosts.vue'
 import HomePopularPosts from './HomePopularPosts.vue'
@@ -8,7 +8,7 @@ import HomeTags from './HomeTags.vue'
 import HomeCategories from './HomeCategories.vue'
 import type { HomeSectionConfig } from '../../types.d.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const sections = computed(() =>
   (theme.value.home?.sections || []).filter((section) => section.enabled !== false)
 )

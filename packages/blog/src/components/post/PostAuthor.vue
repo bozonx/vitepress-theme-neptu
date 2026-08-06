@@ -3,11 +3,11 @@ import { useData } from 'vitepress'
 import { computed } from 'vue'
 
 import SimpleLink from '../SimpleLink.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { Author } from '../../types.d.ts'
 
 const { frontmatter, localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const themeAuthor = computed(() =>
   frontmatter.value.authorId

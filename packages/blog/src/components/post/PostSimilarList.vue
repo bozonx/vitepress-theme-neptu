@@ -3,12 +3,12 @@ import { computed } from 'vue'
 import { useData, useRoute } from 'vitepress'
 import PreviewList from '../PreviewList.vue'
 import { sortSimilarPosts } from '../../utils/shared/index.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const props = defineProps<{ localePosts?: PostLite[] }>()
 const { frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const route = useRoute()
 
 // Get similar posts using the helper

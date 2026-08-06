@@ -11,7 +11,7 @@
  *   - type: features
  *     items: [...]
  * ---
- * <LandingRenderer />
+ * <LnRenderer />
  * ```
  *
  * With no `blocks` prop it reads `frontmatter.blocks` of the current page, so

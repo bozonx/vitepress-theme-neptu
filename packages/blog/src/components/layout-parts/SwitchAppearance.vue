@@ -3,10 +3,10 @@
 // and https://github.com/vuejs/vitepress/blob/9b1bb4ffc6423ef0f16a213133980fdb6e9bf552/src/client/theme-default/components/VPSwitchAppearance.vue
 import { useData } from 'vitepress'
 import { inject, computed } from 'vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 const { isDark } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const toggleAppearance = inject('toggle-appearance', () => {
   isDark.value = !isDark.value
 })

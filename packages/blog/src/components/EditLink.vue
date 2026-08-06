@@ -14,10 +14,10 @@ import { useData } from 'vitepress'
 import { computed } from 'vue'
 import { isPost, isPage } from '../utils/shared/index.ts'
 import NeptuBtnLink from './NeptuBtnLink.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
 const { page, frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const allowEditLink = computed(() => {
   return (

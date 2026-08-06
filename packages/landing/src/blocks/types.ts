@@ -345,7 +345,7 @@ export type BlockSpec<CustomType extends string = never> =
 
 /**
  * Keeps a data-mode block list narrow to built-in contracts. Use it when
- * declaring blocks in TypeScript before passing them to `LandingRenderer`.
+ * declaring blocks in TypeScript before passing them to `LnRenderer`.
  */
 export function defineBuiltInBlocks(blocks: BuiltInBlockSpec[]): BuiltInBlockSpec[] {
   return blocks

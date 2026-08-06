@@ -4,9 +4,9 @@ import { inject, isRef, onMounted, onUnmounted, ref, type Ref, type InjectionKey
 import {
   addBodyClass,
   bodyHasClass,
-  buildItems,
-  getClickIndex,
-  getLightboxLinks,
+  buildLightboxItems,
+  getClickedLightboxIndex,
+  getLightboxElements,
   removeBodyClass,
   type LightboxElement,
 } from '../utils/client/lightboxDOM.ts'
@@ -42,8 +42,8 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
 
   const refreshItems = () => {
     if (!resolvedDoc) return
-    links = getLightboxLinks(resolvedDoc)
-    items.value = buildItems(links)
+    links = getLightboxElements(resolvedDoc)
+    items.value = buildLightboxItems(links)
   }
 
   const open = (index: number) => {
@@ -73,10 +73,10 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
   }
 
   const onClick = (e: MouseEvent) => {
-    let idx = getClickIndex(e.target, links)
+    let idx = getClickedLightboxIndex(e.target, links)
     if (idx === -1 && resolvedDoc) {
       refreshItems()
-      idx = getClickIndex(e.target, links)
+      idx = getClickedLightboxIndex(e.target, links)
     }
     if (idx !== -1) {
       e.preventDefault()

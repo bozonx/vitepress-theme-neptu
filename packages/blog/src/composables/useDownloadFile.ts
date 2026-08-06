@@ -1,9 +1,9 @@
 import { computed } from 'vue'
 import {
   downloadFile as downloadFileUtil,
-  extractFilenameFromUrl,
+  getLastPathSegment,
   encodeMediaUrl,
-  isValidMediaUrl,
+  isPlausibleMediaUrl,
 } from '../utils/shared/media.ts'
 
 export function useDownloadFile(
@@ -14,7 +14,7 @@ export function useDownloadFile(
 ) {
   const downloadFilename = computed(() => {
     if (filename()) return filename()
-    return extractFilenameFromUrl(url(), fallbackName)
+    return getLastPathSegment(url(), fallbackName)
   })
 
   const triggerDownload = () => {
@@ -28,6 +28,6 @@ export function useDownloadFile(
     downloadFilename,
     triggerDownload,
     encodeMediaUrl,
-    isValidMediaUrl,
+    isPlausibleMediaUrl,
   }
 }

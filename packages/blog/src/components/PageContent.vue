@@ -6,7 +6,7 @@ import {
   isPage,
   isUtilPage,
 } from '../utils/shared/index.ts'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 import type { BreadcrumbItem, TaxonomyEntry, PostFrontmatter } from '../types.d.ts'
 import NeptuAd from './NeptuAd.vue'
 import TocCollapsible from './toc/TocCollapsible.vue'
@@ -19,7 +19,7 @@ import PostImage from './post/PostImage.vue'
 import NeptuBreadcrumbs from './utility/NeptuBreadcrumbs.vue'
 
 const { page, frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const articlePreviewText = ref<string | null | undefined>(null)
 
 /**
@@ -37,7 +37,7 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => {
   const items: BreadcrumbItem[] = [
     { text: theme.value.t.breadcrumbHome, href: '/' },
     { text: theme.value.t.categories, href: 'categories' },
-    { text: category.name, href: `categories/${category.slug}/1` },
+    { text: category.name || category.slug, href: `categories/${category.slug}/1` },
   ]
 
   if (page.value.title) items.push({ text: page.value.title })

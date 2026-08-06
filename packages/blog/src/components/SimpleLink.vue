@@ -2,7 +2,7 @@
 import { useAttrs, computed } from 'vue'
 import { isExternalUrl } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
 type ClassValue = string | Record<string, unknown> | unknown[]
 
@@ -14,7 +14,7 @@ interface Props {
 const props = defineProps<Props>()
 const $attrs = useAttrs()
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const isExternal = computed(
   () => !props.hideExternalIcon && isExternalUrl($attrs.href as string | undefined)
 )

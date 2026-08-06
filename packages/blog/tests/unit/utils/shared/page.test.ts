@@ -4,10 +4,10 @@ import {
   isHomePage,
   isPage,
   isUtilPage,
-  isPopularRoute,
+  isPopularPostsRoute,
   isAuthorPage,
   resolvePreviewText,
-  resolveBodyMarker,
+  resolveSearchBodyMarker,
   resolveLayoutKey,
   isAsideEnabled,
 } from '../../../../src/utils/shared/page.ts'
@@ -85,13 +85,13 @@ describe('isUtilPage', () => {
   })
 })
 
-describe('isPopularRoute', () => {
+describe('isPopularPostsRoute', () => {
   it('detects popular route path', () => {
-    expect(isPopularRoute('/en/popular/1')).toBe(true)
+    expect(isPopularPostsRoute('/en/popular/1')).toBe(true)
   })
 
   it('returns false for non-popular paths', () => {
-    expect(isPopularRoute('/en/posts/hello')).toBe(false)
+    expect(isPopularPostsRoute('/en/posts/hello')).toBe(false)
   })
 })
 
@@ -156,29 +156,29 @@ describe('resolvePreviewText', () => {
   })
 })
 
-describe('resolveBodyMarker', () => {
+describe('resolveSearchBodyMarker', () => {
   const theme: ThemeConfig = {
     search: { enabled: true },
   } as any
 
   it('returns bodyMarker for regular post', () => {
-    expect(resolveBodyMarker(theme, { layout: 'post' })).toBe('data-pagefind-body')
+    expect(resolveSearchBodyMarker(theme, { layout: 'post' })).toBe('data-pagefind-body')
   })
 
   it('returns undefined when search is disabled', () => {
-    expect(resolveBodyMarker({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
+    expect(resolveSearchBodyMarker({ search: { enabled: false } } as ThemeConfig, { layout: 'post' })).toBeUndefined()
   })
 
   it('returns undefined for util page without searchIncluded', () => {
-    expect(resolveBodyMarker(theme, { layout: 'tag' })).toBeUndefined()
+    expect(resolveSearchBodyMarker(theme, { layout: 'tag' })).toBeUndefined()
   })
 
   it('returns bodyMarker for util page with searchIncluded true', () => {
-    expect(resolveBodyMarker(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
+    expect(resolveSearchBodyMarker(theme, { layout: 'tag', searchIncluded: true })).toBe('data-pagefind-body')
   })
 
   it('returns undefined for util page with searchIncluded false', () => {
-    expect(resolveBodyMarker(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
+    expect(resolveSearchBodyMarker(theme, { layout: 'tag', searchIncluded: false })).toBeUndefined()
   })
 })
 

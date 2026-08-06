@@ -44,14 +44,14 @@ import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import {
   encodeMediaUrl,
   downloadFile as downloadFileUtil,
-  extractFilenameFromUrl,
+  getLastPathSegment,
 } from '../../utils/shared/media.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 // Component props
 const props = defineProps<{
@@ -72,7 +72,7 @@ const downloadFilename = computed(() => {
   }
 
   // Extract full filename with extension from URL
-  return extractFilenameFromUrl(props.url, 'file')
+  return getLastPathSegment(props.url, 'file')
 })
 
 const extensionName = computed(() => {

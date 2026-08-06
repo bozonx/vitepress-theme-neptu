@@ -12,7 +12,7 @@ export type LightboxElement = HTMLAnchorElement | HTMLImageElement
  * This is extracted from the composable so it can be unit-tested
  * with a fake DOM implementation.
  */
-export function getLightboxLinks(doc: Document): LightboxElement[] {
+export function getLightboxElements(doc: Document): LightboxElement[] {
   const result: LightboxElement[] = []
 
   const lightboxAnchors = Array.from(
@@ -61,7 +61,7 @@ export function getLightboxLinks(doc: Document): LightboxElement[] {
 /**
  * Build the lightbox item list from a list of elements.
  */
-export function buildItems(links: LightboxElement[]): LightboxItem[] {
+export function buildLightboxItems(links: LightboxElement[]): LightboxItem[] {
   return links.map((el) => {
     const isImg =
       (typeof HTMLImageElement !== 'undefined' &&
@@ -126,7 +126,7 @@ export function buildItems(links: LightboxElement[]): LightboxItem[] {
 /**
  * Find the index of the clicked link inside the pre-collected list.
  */
-export function getClickIndex(
+export function getClickedLightboxIndex(
   target: EventTarget | null,
   links: LightboxElement[]
 ): number {

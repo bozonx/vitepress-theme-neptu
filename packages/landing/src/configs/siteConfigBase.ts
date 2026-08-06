@@ -42,7 +42,7 @@ import {
 import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
 import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
 import siteBaseLocales from './siteLocalesBase/index.ts'
-import { autoLoadSiteLocales } from './loadSiteLocale.ts'
+import { autoLoadLocales } from './loadLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
 // Imported from the modules rather than the barrels: the `configs` barrel
 // pulls in the whole server-side config pipeline, and both of these are
@@ -96,7 +96,7 @@ const commonThemeConfig = {
   },
 } satisfies Partial<LandingThemeConfig>
 
-export const common: LandingUserConfig = {
+export const landingBaseConfig: LandingUserConfig = {
   ...commonBaseConfig,
   themeConfig: commonThemeConfig,
 }
@@ -140,7 +140,7 @@ export function mergeLandingConfig(
   )?.themeConfig
 
   return {
-    ...common,
+    ...landingBaseConfig,
     ...config,
     title: config.title || config.en?.title,
     description: config.description || config.en?.description,
@@ -156,7 +156,7 @@ export function mergeLandingConfig(
               createConsentHeadScript(config.themeConfig?.consent),
             ] as [string, Record<string, string>, string],
           ]),
-      ...(common.head || []),
+      ...(landingBaseConfig.head || []),
       // Restores the saved theme before the first paint and arms the reveal
       // animations. Must run inline, before any stylesheet is applied.
       [
@@ -175,7 +175,7 @@ export function mergeLandingConfig(
     ],
     locales: Object.fromEntries(
       Object.entries({
-        ...(common.locales || {}),
+        ...(landingBaseConfig.locales || {}),
         ...(config.locales || {}),
       }).map(([key, locale]) => {
         const titleTemplate =
@@ -238,7 +238,7 @@ export function mergeLandingConfig(
     },
 
     themeConfig: {
-      ...common.themeConfig,
+      ...landingBaseConfig.themeConfig,
       ...config.themeConfig,
       socialLinks: config.themeConfig?.repo
         ? [{ icon: 'github', link: config.themeConfig.repo }]
@@ -367,6 +367,6 @@ export async function defineLandingConfig(
 
   return defineLandingConfigSync({
     ...config,
-    locales: hasLocales ? config.locales : await autoLoadSiteLocales(config),
+    locales: hasLocales ? config.locales : await autoLoadLocales(config),
   })
 }

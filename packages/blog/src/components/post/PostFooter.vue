@@ -9,7 +9,7 @@ import PostSocialShare from './PostSocialShare.vue'
 import PostTags from './PostTags.vue'
 import PostCategories from './PostCategories.vue'
 import EditLink from '../EditLink.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const DEFAULT_ORDER = [
@@ -25,7 +25,7 @@ const DEFAULT_ORDER = [
 
 const props = defineProps<{ localePosts?: PostLite[] }>()
 const { localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []

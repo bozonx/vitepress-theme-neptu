@@ -78,7 +78,7 @@ export function encodeMediaUrl(url: string): string {
  * Validates a URL for safe use in audio/video/download components.
  * Allows absolute URLs, relative paths, data: and blob: URIs.
  */
-export function isValidMediaUrl(url: unknown): boolean {
+export function isPlausibleMediaUrl(url: unknown): boolean {
   if (!url || typeof url !== 'string') {
     return false
   }
@@ -127,7 +127,7 @@ export function downloadFile(url: string, filename: string): void {
  * Extracts the filename from a URL, optionally falling back to a
  * default name when the URL has no recognizable filename segment.
  */
-export function extractFilenameFromUrl(url: string, fallback: string): string {
+export function getLastPathSegment(url: string, fallback: string): string {
   return url.split('/').pop() || fallback
 }
 

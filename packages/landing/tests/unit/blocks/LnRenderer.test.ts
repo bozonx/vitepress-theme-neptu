@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import LandingRenderer from '../../../src/blocks/LandingRenderer.vue'
+import LnRenderer from '../../../src/blocks/LnRenderer.vue'
 import { registerBlockTypes, unregisterBlockTypes } from '../../../src/blocks/registry.ts'
 import { defineBuiltInBlocks, defineCustomBlocks } from '../../../src/blocks/types.ts'
 import { mockFrontmatter } from '../../mocks/vitepress'
@@ -10,7 +10,7 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-describe('LandingRenderer', () => {
+describe('LnRenderer', () => {
   it('keeps data-mode required fields strict at compile time', () => {
     // @ts-expect-error a declarative hero requires a title
     defineBuiltInBlocks([{ type: 'hero' }])
@@ -28,7 +28,7 @@ describe('LandingRenderer', () => {
   })
 
   it('renders blocks passed as a prop', () => {
-    const wrapper = mount(LandingRenderer, {
+    const wrapper = mount(LnRenderer, {
       props: {
         blocks: [
           { type: 'hero', title: 'Hello' },
@@ -46,13 +46,13 @@ describe('LandingRenderer', () => {
   it('falls back to frontmatter.blocks', () => {
     mockFrontmatter.value = { blocks: [{ type: 'faq', title: 'Questions' }] }
 
-    const wrapper = mount(LandingRenderer)
+    const wrapper = mount(LnRenderer)
 
     expect(wrapper.text()).toContain('Questions')
   })
 
   it('passes every other key to the block as a prop', () => {
-    const wrapper = mount(LandingRenderer, {
+    const wrapper = mount(LnRenderer, {
       props: { blocks: [{ type: 'stats', bg: 'inverse', items: [{ value: '42' }] }] },
     })
 
@@ -61,7 +61,7 @@ describe('LandingRenderer', () => {
   })
 
   it('skips unknown block types instead of crashing', () => {
-    const wrapper = mount(LandingRenderer, {
+    const wrapper = mount(LnRenderer, {
       props: { blocks: [{ type: 'nope' }, { type: 'cta', title: 'Kept' }] },
     })
 
@@ -73,7 +73,7 @@ describe('LandingRenderer', () => {
   it('ignores a non-array blocks value', () => {
     mockFrontmatter.value = { blocks: 'not an array' }
 
-    const wrapper = mount(LandingRenderer)
+    const wrapper = mount(LnRenderer)
 
     expect(wrapper.findAll('.ln-section').length).toBe(0)
   })
@@ -84,7 +84,7 @@ describe('LandingRenderer', () => {
     })
 
     try {
-      const wrapper = mount(LandingRenderer, {
+      const wrapper = mount(LnRenderer, {
         props: { blocks: [{ type: 'custom-block' }] },
       })
 

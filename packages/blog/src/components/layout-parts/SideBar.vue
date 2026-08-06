@@ -9,14 +9,14 @@ import SideBarItems from './SideBarItems.vue'
 import { Icon } from '@iconify/vue'
 import SideBarTags from './SideBarTags.vue'
 import SideBarCategories from './SideBarCategories.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import { resolveSidebarLogo } from '../../utils/shared/media.ts'
 import { makeCategoriesList, makeTagsList } from '../../list-helpers/listHelpers.ts'
 import type { PostLite, SidebarItem } from '../../types.d.ts'
 
 const props = defineProps<{ isMobile: boolean; localePosts?: PostLite[] }>()
 const { localeIndex, site } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []

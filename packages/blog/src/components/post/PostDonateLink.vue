@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import { externalTarget } from '../../utils/shared/index.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const donateTarget = computed(() => externalTarget(theme.value.donate?.url))
 </script>

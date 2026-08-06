@@ -1,31 +1,31 @@
 import type { PostFrontmatter, ThemeConfig } from '../../types.d.ts'
 
-export type Frontmatter = PostFrontmatter
+
 
 const UTIL_LAYOUTS = new Set(['util', 'tag', 'archive', 'author'])
 
 /** True for posts: explicit `layout: post` or no layout set. */
-export function isPost(frontmatter: Frontmatter | null | undefined): boolean {
+export function isPost(frontmatter: PostFrontmatter | null | undefined): boolean {
   if (!frontmatter) return false
   if (frontmatter.layout === 'post') return true
   return frontmatter.layout == null
 }
 
-export function isHomePage(frontmatter: Frontmatter | null | undefined): boolean {
+export function isHomePage(frontmatter: PostFrontmatter | null | undefined): boolean {
   return frontmatter?.layout === 'home'
 }
 
 /** Plain content page (no post chrome, no util chrome). Explicit only. */
-export function isPage(frontmatter: Frontmatter | null | undefined): boolean {
+export function isPage(frontmatter: PostFrontmatter | null | undefined): boolean {
   return frontmatter?.layout === 'page'
 }
 
 /** True for layout: util / tag / archive / author. */
-export function isUtilPage(frontmatter: Frontmatter | null | undefined): boolean {
+export function isUtilPage(frontmatter: PostFrontmatter | null | undefined): boolean {
   return UTIL_LAYOUTS.has(frontmatter?.layout as string)
 }
 
-export function isPopularRoute(routePath: string): boolean {
+export function isPopularPostsRoute(routePath: string): boolean {
   return routePath.includes('/popular/')
 }
 
@@ -50,7 +50,7 @@ export const DEFAULT_ASIDE_LAYOUTS = [
  * default where it is a `doc`.
  */
 export function resolveLayoutKey(
-  frontmatter: Frontmatter | null | undefined,
+  frontmatter: PostFrontmatter | null | undefined,
   fallback = 'post'
 ): string {
   const layout = frontmatter?.layout
@@ -60,12 +60,12 @@ export function resolveLayoutKey(
 
 /**
  * Whether the aside column should be rendered for the current page.
- * Frontmatter `aside` wins over `themeConfig.asideLayouts`; the home page
+ * PostFrontmatter `aside` wins over `themeConfig.asideLayouts`; the home page
  * never renders an aside because it uses its own full-takeover layout.
  */
 export function isAsideEnabled(
   theme: ThemeConfig | null | undefined,
-  frontmatter: Frontmatter | null | undefined
+  frontmatter: PostFrontmatter | null | undefined
 ): boolean {
   if (isHomePage(frontmatter)) return false
   if (typeof frontmatter?.aside === 'boolean') return frontmatter.aside
@@ -85,7 +85,7 @@ export function isAuthorPage(filePath: string | null | undefined): boolean {
 }
 
 /** Resolve explicit preview text from frontmatter. Or return undefined. */
-export function resolvePreviewText(frontmatter: Frontmatter): string | undefined {
+export function resolvePreviewText(frontmatter: PostFrontmatter): string | undefined {
   const { previewText, descriptionAsPreview, descrAsPreview, description } = frontmatter
   const useDescr = descriptionAsPreview ?? descrAsPreview
   const normalizedPreviewText =
@@ -101,7 +101,7 @@ export function resolvePreviewText(frontmatter: Frontmatter): string | undefined
   return undefined
 }
 
-export function resolveBodyMarker(theme: ThemeConfig, frontmatter: Frontmatter): string | undefined {
+export function resolveSearchBodyMarker(theme: ThemeConfig, frontmatter: PostFrontmatter): string | undefined {
   // Pagefind is the only search provider; the body marker is fixed.
   if (theme.search?.enabled === false) return undefined
 

@@ -2,10 +2,10 @@
 import { useData, withBase } from 'vitepress'
 import { computed } from 'vue'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 const { localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const footerLinksCount = computed(() => theme.value.footer?.links?.length || 0)
 const hasMultipleFooterLinks = computed(
@@ -35,10 +35,9 @@ const resolvedRepoUrl = computed(() => {
   const ghLink = socialLinks.find(
     (item) =>
       item.icon?.includes('github') ||
-      item.link?.includes('github.com') ||
-      item.url?.includes('github.com')
+      item.link?.includes('github.com')
   )
-  return ghLink?.url || ghLink?.link || ''
+  return ghLink?.link || ''
 })
 
 const feedLinks = computed(() => {

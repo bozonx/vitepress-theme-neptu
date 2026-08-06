@@ -12,7 +12,6 @@ export type {
   LandingThemeConfig,
   ResolvedLandingConfig,
   ThemeConfig,
-  I18n,
   I18nTranslations,
   SeoConfig,
   DeepPartial,

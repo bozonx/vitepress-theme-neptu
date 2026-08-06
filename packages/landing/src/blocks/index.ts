@@ -22,7 +22,7 @@ export { default as LnBanner } from './LnBanner.vue'
 export { default as LnContent } from './LnContent.vue'
 export { default as LnCollection } from './LnCollection.vue'
 export { default as LnEmbed } from './LnEmbed.vue'
-export { default as LandingRenderer } from './LandingRenderer.vue'
+export { default as LnRenderer } from './LnRenderer.vue'
 
 export {
   blockRegistry,

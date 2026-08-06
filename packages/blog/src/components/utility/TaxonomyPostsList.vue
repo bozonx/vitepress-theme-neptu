@@ -4,11 +4,11 @@ import { useData, useRoute } from 'vitepress'
 import { computed, inject } from 'vue'
 import PreviewList from '../PreviewList.vue'
 import ListPageHeader from '../ListPageHeader.vue'
-import { sortPosts, isPopularRoute } from '../../utils/shared/index.ts'
+import { sortPosts, isPopularPostsRoute } from '../../utils/shared/index.ts'
 import { makePostsOfTaxonomyList } from '../../list-helpers/listHelpers.ts'
 import type { TaxonomyKind } from '../../list-helpers/listHelpers.ts'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const props = defineProps<{
@@ -24,7 +24,7 @@ const props = defineProps<{
   allIcon?: string
 }>()
 const { localeIndex, frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const route = useRoute()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
@@ -43,7 +43,7 @@ const sorted = computed(() =>
   sortPosts(
     makePostsOfTaxonomyList(localePosts.value, props.kind, slug.value),
     theme.value.popularPosts?.sortBy,
-    isPopularRoute(route.path)
+    isPopularPostsRoute(route.path)
   )
 )
 </script>

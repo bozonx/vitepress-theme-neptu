@@ -39,7 +39,6 @@ const VitePressNavItemSchema = z.looseObject({
 const SocialLinkSchema = z.looseObject({
   icon: z.string().optional(),
   link: z.string().optional(),
-  url: z.string().optional(),
   title: z.string().optional(),
   iconClass: z.string().optional(),
   class: z.string().optional(),

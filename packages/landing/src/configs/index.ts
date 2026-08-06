@@ -1,10 +1,10 @@
 export {
-  common as siteCommonConfig,
+  landingBaseConfig as siteCommonConfig,
   mergeLandingConfig,
   defineLandingConfig,
   defineLandingConfigSync,
 } from './siteConfigBase.ts'
-export { loadSiteLocale, autoLoadSiteLocales } from './loadSiteLocale.ts'
+export { loadLocale, autoLoadLocales } from './loadLocale.ts'
 export {
   defineSiteConfig,
   defineLocaleConfig,

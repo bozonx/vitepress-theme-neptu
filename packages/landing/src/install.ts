@@ -1,7 +1,7 @@
 import type { App } from 'vue'
 import * as primitives from './primitives/index.ts'
 import { blockComponents } from './blocks/registry.ts'
-import LandingRenderer from './blocks/LandingRenderer.vue'
+import LnRenderer from './blocks/LnRenderer.vue'
 import {
   LocaleSelector,
   ColorThemePicker,
@@ -11,7 +11,7 @@ import {
 
 /**
  * Registers every block, primitive and helper component globally, so markdown
- * pages can use `<LnHero>`, `<LnFeatureGrid>`, `<LandingRenderer>` and friends
+ * pages can use `<LnHero>`, `<LnFeatureGrid>`, `<LnRenderer>` and friends
  * without a `<script setup>` import block.
  *
  * Called for you by the default theme export; call it manually only if you
@@ -21,8 +21,8 @@ export function registerLandingComponents(app: App): void {
   for (const [name, component] of Object.entries({
     ...primitives,
     ...blockComponents,
-    LandingRenderer,
-    landing: LandingRenderer,
+    LnRenderer,
+    landing: LnRenderer,
     ColorThemePicker,
     StylePresetPicker,
     LocaleSelector,

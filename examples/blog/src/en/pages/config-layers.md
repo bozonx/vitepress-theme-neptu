@@ -216,7 +216,7 @@ YAML files link to `site.schema.json` / `authors.schema.json` for editor complet
 
 ## Custom fields in `themeConfig`
 
-You can add **any own fields** to `themeConfig` — they pass through the entire merge pipeline and are accessible at runtime via `useUiTheme()`. Objects deep-merge across layers; arrays replace.
+You can add **any own fields** to `themeConfig` — they pass through the entire merge pipeline and are accessible at runtime via `useThemeConfig()`. Objects deep-merge across layers; arrays replace.
 
 ```yaml
 # src/site.yaml
@@ -231,9 +231,9 @@ Access in a Vue component:
 
 ```vue
 <script setup lang="ts">
-import { useUiTheme } from 'vitepress-theme-neptu/composables'
+import { useThemeConfig } from 'vitepress-theme-neptu/composables'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 console.log(theme.value.myCustomField)   // "hello"
 console.log(theme.value.myCustomConfig)  // { featureEnabled: true, apiUrl: "..." }
 </script>

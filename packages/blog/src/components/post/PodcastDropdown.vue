@@ -5,12 +5,12 @@ import { computed } from 'vue'
 import DropdownButton from '../DropdownButton.vue'
 import MenuItem from '../MenuItem.vue'
 import PodcastIcon from './PodcastIcon.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 import type { ThemeConfig, PostFrontmatter } from '../../types.d.ts'
 
 const { frontmatter } = useData<ThemeConfig>()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const fm = computed(() => frontmatter.value as PostFrontmatter)
 const btnText = computed(() => theme.value.t.listenPodcast)
 </script>

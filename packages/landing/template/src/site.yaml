@@ -113,7 +113,7 @@ themeConfig:
 
   # --- Custom Fields ---------------------------------------------------------
   # You can add any own fields to `themeConfig` — they are preserved through
-  # the merge pipeline and accessible at runtime via `useUiTheme()` in your
+  # the merge pipeline and accessible at runtime via `useThemeConfig()` in your
   # Vue components. Objects are deep-merged across layers; arrays replace.
   #
   # Example:
@@ -123,6 +123,6 @@ themeConfig:
   #     apiUrl: "https://api.example.com"
   #
   # Access in a component:
-  #   const { theme } = useUiTheme()
+  #   const { theme } = useThemeConfig()
   #   console.log(theme.value.myCustomField)        // "hello"
   #   console.log(theme.value.myCustomConfig)       // { featureEnabled: true, ... }

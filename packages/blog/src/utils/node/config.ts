@@ -12,7 +12,7 @@ import { loadLocaleYamlChain } from './localeYamlChain.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
 import { resolveBaseLocaleKey } from '../shared/i18n.ts'
-import { common as blogCommon } from '../../configs/blogConfigBase.ts'
+import { blogBaseConfig as blogCommon } from '../../configs/blogConfigBase.ts'
 import blogBaseLocales from '../../configs/blogLocalesBase/index.ts'
 import { resolveEditLinkPattern } from './editLink.ts'
 import type {
@@ -66,12 +66,12 @@ function resolveLocaleTemplates(
  * that generic deep-merge does not touch them — they are merged separately
  * with by-id / by-name strategies.
  */
-function stripThemeArrays(
+function extractThemeArrays(
   site: Record<string, unknown>
 ): {
   site: Record<string, unknown>
   authors: Author[]
-  socialShares: SocialMediaShare[]
+  socialMediaShares: SocialMediaShare[]
 } {
   const themeConfig = extractThemeConfig(site)
   const {
@@ -90,7 +90,7 @@ function stripThemeArrays(
         ? { ...siteRest, themeConfig: themeConfigRest }
         : siteRest,
     authors: Array.isArray(themeAuthors) ? (themeAuthors as Author[]) : [],
-    socialShares: Array.isArray(themeSocialShares)
+    socialMediaShares: Array.isArray(themeSocialShares)
       ? (themeSocialShares as SocialMediaShare[])
       : [],
   }
@@ -102,7 +102,7 @@ interface LocaleYamlChain {
   /** Merged authors list from every step of the `extends` chain. */
   authors: Author[]
   /** Merged socialMediaShares list from every step of the `extends` chain. */
-  socialShares: SocialMediaShare[]
+  socialMediaShares: SocialMediaShare[]
 }
 
 /**
@@ -122,7 +122,7 @@ async function loadBlogLocaleYamlChain(
 
   const result = await loadLocaleYamlChain<{
     authors: Author[]
-    socialShares: SocialMediaShare[]
+    socialMediaShares: SocialMediaShare[]
   }>(localeIndex, {
     srcDir,
     templateParams,
@@ -133,32 +133,32 @@ async function loadBlogLocaleYamlChain(
     ) => Promise<Record<string, unknown>>,
     logPrefix: '[vitepress-theme-neptu]',
     prepareSite: async (rawSite) => {
-      const { site: siteWithoutArrays, authors: siteAuthors, socialShares } =
-        stripThemeArrays(rawSite)
+      const { site: siteWithoutArrays, authors: siteAuthors, socialMediaShares } =
+        extractThemeArrays(rawSite)
       const localeParams = { ...templateParams, localeIndex }
       const authorsFile = (await parseLocaleAuthors(srcDir, localeParams)) as Author[]
       return {
         site: siteWithoutArrays,
         extra: {
           authors: mergeAuthorsById(siteAuthors, authorsFile),
-          socialShares,
+          socialMediaShares,
         },
       }
     },
     mergeExtra: (parent, current) => ({
       authors: mergeAuthorsById(parent.authors, current.authors),
-      socialShares: mergeSocialMediaSharesByName(
-        parent.socialShares,
-        current.socialShares
+      socialMediaShares: mergeSocialMediaSharesByName(
+        parent.socialMediaShares,
+        current.socialMediaShares
       ),
     }),
-    defaultExtra: { authors: [], socialShares: [] },
+    defaultExtra: { authors: [], socialMediaShares: [] },
   })
 
   return {
     site: result.site,
     authors: result.extra.authors,
-    socialShares: result.extra.socialShares,
+    socialMediaShares: result.extra.socialMediaShares,
   }
 }
 
@@ -190,7 +190,7 @@ export async function loadBlogLocale(
   // ------------------------------------------------------------------
   // Shared <srcDir>/site.yaml — admin-editable layer applied to every
   // locale. Sits between config.ts and per-locale YAML in priority.
-  // Template substitution context uses common+config defaults so that
+  // Template substitution context uses blogBaseConfig+config defaults so that
   // ${theme.*} can reference values declared in config.ts.
   // ------------------------------------------------------------------
   // Keep this order identical to the public three-layer contract:
@@ -221,21 +221,21 @@ export async function loadBlogLocale(
       t: { ...baseLocale.t },
     }
   )
-  const sharedThemeBaseForTemplate = deepMerge(
+  const themeForTemplates = deepMerge(
     builtInTheme,
     configThemeRest as Record<string, unknown>
   )
   const sharedSite = (await parseSharedSite(config.srcDir || '', {
     localeIndex,
     config,
-    theme: sharedThemeBaseForTemplate,
-    t: (sharedThemeBaseForTemplate.t as Record<string, unknown> | undefined) ?? {},
+    theme: themeForTemplates,
+    t: (themeForTemplates.t as Record<string, unknown> | undefined) ?? {},
   })) as Record<string, unknown>
-  const { site: sharedSiteSanitized, authors: sharedAuthors, socialShares: sharedSocialShares } =
-    stripThemeArrays(sharedSite)
+  const { site: sharedSiteSanitized, authors: sharedAuthors, socialMediaShares: sharedSocialShares } =
+    extractThemeArrays(sharedSite)
   const { repo: _sharedYamlRepo, ...sharedThemeConfig } = extractThemeConfig(sharedSiteSanitized)
 
-  const resolvedTheme = deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig)
+  const resolvedTheme = deepMerge(themeForTemplates, sharedThemeConfig)
   const templateParams = {
     config,
     theme: resolvedTheme,
@@ -262,7 +262,7 @@ export async function loadBlogLocale(
       ),
       sharedSocialShares,
     ),
-    chain.socialShares,
+    chain.socialMediaShares,
   )
   const rawMergedThemeConfig = deepMerge(resolvedTheme, localeThemeConfig)
   const templated = resolveLocaleTemplates(

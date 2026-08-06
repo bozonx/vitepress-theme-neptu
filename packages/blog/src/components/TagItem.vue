@@ -2,9 +2,9 @@
 import { computed } from 'vue'
 import BaseLink from './BaseLink.vue'
 import NeptuBadge from './NeptuBadge.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 interface Props {
   name?: string

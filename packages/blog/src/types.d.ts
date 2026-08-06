@@ -701,7 +701,6 @@ export namespace NeptuBlogTheme {
   export interface SocialLink {
     icon: string
     link: string
-    url?: string
     class?: string
     iconClass?: string
     desktopOnly?: boolean
@@ -907,7 +906,7 @@ export type ThemeConfig = NeptuBlogTheme.Config
  * Same as `ThemeConfig` but also allows arbitrary user-defined keys.
  * The theme deep-merges and preserves any extra fields declared in
  * `themeConfig` (config.ts, site.yaml, or _site.yaml), making them
- * accessible at runtime via `useUiTheme()`. Known Neptu fields keep
+ * accessible at runtime via `useThemeConfig()`. Known Neptu fields keep
  * their specific types; custom fields resolve to `unknown`.
  */
 export type RuntimeThemeConfig = NeptuBlogTheme.Config & {
@@ -920,8 +919,6 @@ export type PostFrontmatter = NeptuBlogTheme.PostFrontmatter
 export type Tag = NeptuBlogTheme.Tag
 export type Author = NeptuBlogTheme.Author
 export type I18nTranslations = NeptuBlogTheme.I18nTranslations
-/** @deprecated Use `I18nTranslations` instead. */
-export type I18n = I18nTranslations
 export type LocaleDefinition = NeptuBlogTheme.LocaleDefinition
 export type ExtendedPageData = NeptuBlogTheme.ExtendedPageData
 export type ExtendedSiteConfig = NeptuBlogTheme.ExtendedSiteConfig
@@ -930,8 +927,6 @@ export type SeoConfig = NeptuBlogTheme.SeoConfig
 export type NavConfig = NeptuBlogTheme.NavConfig
 export type SidebarConfig = NeptuBlogTheme.SidebarConfig
 export type SidebarItem = NeptuBlogTheme.SidebarItem
-/** @deprecated Use `SidebarItem` instead. */
-export type SideBarItem = SidebarItem
 export type TaxonomyEntry = NeptuBlogTheme.TaxonomyEntry
 export type CategoryInfo = NeptuBlogTheme.CategoryInfo
 export type BreadcrumbItem = NeptuBlogTheme.BreadcrumbItem

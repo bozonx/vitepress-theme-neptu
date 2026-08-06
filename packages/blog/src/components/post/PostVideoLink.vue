@@ -3,10 +3,10 @@ import { useData } from 'vitepress'
 import { computed } from 'vue'
 
 import NeptuBtn from '../NeptuBtn.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 const { frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const text = computed(
   () =>
     theme.value.t.postVideoButton +

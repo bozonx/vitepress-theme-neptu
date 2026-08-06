@@ -3,17 +3,17 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { Icon } from '@iconify/vue'
 import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import {
-  isValidMediaUrl,
+  isPlausibleMediaUrl,
   encodeMediaUrl,
   downloadFile as downloadFileUtil,
-  extractFilenameFromUrl,
+  getLastPathSegment,
   getMediaErrorMessage,
 } from '../../utils/shared/media.ts'
 import { debounce } from '../../utils/shared/timer.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const props = withDefaults(
   defineProps<{
@@ -40,7 +40,7 @@ const downloadFilename = computed(() => {
   }
 
   // Extract full filename with extension from URL
-  return extractFilenameFromUrl(props.url, 'audio file')
+  return getLastPathSegment(props.url, 'audio file')
 })
 
 const downloadFile = async () => {
@@ -48,7 +48,7 @@ const downloadFile = async () => {
 
   try {
     // Validate URL
-    if (!isValidMediaUrl(props.url)) {
+    if (!isPlausibleMediaUrl(props.url)) {
       hasError.value = true
       errorMessage.value = theme.value.t.audioFile.invalidUrlProvided
       return
@@ -81,7 +81,7 @@ const togglePlayPause = async () => {
 
   try {
     // Validate URL before playback
-    if (!isValidMediaUrl(props.url)) {
+    if (!isPlausibleMediaUrl(props.url)) {
       hasError.value = true
       errorMessage.value = theme.value.t.audioFile.invalidAudioUrlProvided
       console.error('Invalid audio URL provided')
@@ -463,7 +463,7 @@ onUnmounted(() => {
       <Icon icon="mdi:alert-circle" class="shrink-0" aria-hidden="true" />
       <span class="flex-1">{{ errorMessage || theme.t.audioFile.errorLoadingAudioFile }}</span>
       <NeptuBtn
-        v-if="!isValidMediaUrl(props.url)"
+        v-if="!isPlausibleMediaUrl(props.url)"
         :aria-label="theme.t.audioFile.retryWithValidUrl"
         icon="mdi:refresh"
         :text="theme.t.audioFile.retry"

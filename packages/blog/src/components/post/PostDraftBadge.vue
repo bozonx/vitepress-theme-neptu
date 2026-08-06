@@ -3,7 +3,7 @@ import { useData } from 'vitepress'
 import { computed } from 'vue'
 
 import { isDraft } from '../../utils/shared/publication.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 const props = withDefaults(
   defineProps<{
@@ -14,7 +14,7 @@ const props = withDefaults(
 )
 
 const { frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const visible = computed(() => {
   return props.draft ?? isDraft(frontmatter.value)

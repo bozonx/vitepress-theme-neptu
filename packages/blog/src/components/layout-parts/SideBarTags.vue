@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import SideBarTaxonomy from './SideBarTaxonomy.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import { makeCategoriesList, makeTagsList } from '../../list-helpers/listHelpers.ts'
 import type { PostLite } from '../../types.d.ts'
 
@@ -28,7 +28,7 @@ const props = withDefaults(
   }
 )
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const emit = defineEmits<{
   (e: 'itemClick'): void
 }>()

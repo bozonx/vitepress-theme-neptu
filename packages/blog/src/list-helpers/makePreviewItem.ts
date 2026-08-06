@@ -27,6 +27,7 @@ export interface PreviewItem {
   categories: TaxonomyEntry[]
   preview: string | undefined
   draft: boolean
+  featured?: boolean
   wordCount: number
   readingTime: number
   cover: string | undefined

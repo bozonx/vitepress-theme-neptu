@@ -21,7 +21,7 @@ import type {
   I18nTranslations,
 } from '../types.d.ts'
 import siteBaseLocales from './siteLocalesBase/index.ts'
-import { common as siteCommon } from './siteConfigBase.ts'
+import { landingBaseConfig as siteCommon } from './siteConfigBase.ts'
 
 type SiteLocaleEntry = LocaleEntry
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
@@ -39,7 +39,7 @@ function processSidebar(
 ): Record<string, unknown> {
   if (!sidebar) return {}
 
-  function menuRecursive(items: unknown[], linkPrePath: string): unknown[] {
+  function processSidebarItems(items: unknown[], linkPrePath: string): unknown[] {
     for (const item of items) {
       const typedItem = item as Record<string, unknown>
       if (typeof typedItem.text === 'string') {
@@ -59,7 +59,7 @@ function processSidebar(
       }
 
       if (Array.isArray(typedItem.items)) {
-        typedItem.items = menuRecursive(typedItem.items, linkPrePath)
+        typedItem.items = processSidebarItems(typedItem.items, linkPrePath)
       }
     }
 
@@ -70,7 +70,7 @@ function processSidebar(
 
   for (const key of Object.keys(sidebar)) {
     const linkPrePath = `/${params.localeIndex}/${key}/`
-    newSidebar[linkPrePath] = menuRecursive(sidebar[key]!, linkPrePath)
+    newSidebar[linkPrePath] = processSidebarItems(sidebar[key]!, linkPrePath)
   }
 
   return newSidebar
@@ -89,7 +89,7 @@ function processSidebar(
  * Prefer `defineLandingConfig` in application code; this function
  * is the lower-level primitive and is re-exported for advanced usage.
  */
-export async function loadSiteLocale(
+export async function loadLocale(
   localeIndex: string,
   config: LandingUserConfig
 ): Promise<SiteLocaleEntry> {
@@ -100,20 +100,20 @@ export async function loadSiteLocale(
   // Shared <srcDir>/site.yaml — admin-editable layer applied to every
   // locale. Sits between config.ts and per-locale YAML in priority.
   // ------------------------------------------------------------------
-  const sharedThemeBaseForTemplate = {
+  const themeForTemplates = {
     ...((siteCommon.themeConfig || {}) as Record<string, unknown>),
     ...((config.themeConfig || {}) as Record<string, unknown>),
   }
   const sharedSite = (await parseSharedSite(config.srcDir || '', {
     localeIndex,
     config,
-    theme: sharedThemeBaseForTemplate,
-    t: (sharedThemeBaseForTemplate.t as Record<string, unknown> | undefined) ?? {},
+    theme: themeForTemplates,
+    t: (themeForTemplates.t as Record<string, unknown> | undefined) ?? {},
   })) as Record<string, unknown>
   const { repo: _sharedYamlRepo, ...sharedThemeConfig } = extractThemeConfig(sharedSite)
 
   const resolvedTheme = deepMerge(
-    deepMerge(sharedThemeBaseForTemplate, sharedThemeConfig),
+    deepMerge(themeForTemplates, sharedThemeConfig),
     {
       ...((baseLocale.themeConfig || {}) as Record<string, unknown>),
       t: { ...((baseLocale.t || {}) as Record<string, unknown>) },
@@ -204,12 +204,12 @@ export async function loadSiteLocale(
  * This locale directory is required even for a single-language Neptu site;
  * root-level content is reserved for the language selector.
  */
-export async function autoLoadSiteLocales(
+export async function autoLoadLocales(
   config: LandingUserConfig
 ): Promise<Record<string, SiteLocaleEntry>> {
   return autoLoadLocalesFactory({
     config,
-    loadLocale: loadSiteLocale,
+    loadLocale: loadLocale,
     logPrefix: '[vitepress-theme-neptu-landing]',
   })
 }

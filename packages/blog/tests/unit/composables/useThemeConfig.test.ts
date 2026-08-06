@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { defineComponent, h, ref, type Ref } from 'vue'
 import { mount } from '@vue/test-utils'
-import { useUiTheme } from '../../../src/composables/useUiTheme.ts'
+import { useThemeConfig } from '../../../src/composables/useThemeConfig.ts'
 
 const mockTheme: Ref<any> = ref({
   langMenuLabel: 'Change language',
@@ -21,7 +21,7 @@ vi.mock('vitepress', () => ({
   }),
 }))
 
-describe('useUiTheme', () => {
+describe('useThemeConfig', () => {
   beforeEach(() => {
     mockTheme.value = {
       langMenuLabel: 'Change language',
@@ -37,7 +37,7 @@ describe('useUiTheme', () => {
     const result: Record<string, any> = {}
     const TestComp = defineComponent({
       setup() {
-        Object.assign(result, useUiTheme())
+        Object.assign(result, useThemeConfig())
         return () => h('div')
       },
     })

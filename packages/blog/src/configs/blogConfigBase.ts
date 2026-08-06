@@ -203,7 +203,7 @@ const commonThemeConfig = {
   tagsIcon: 'fa6-solid:tag',
 } satisfies Partial<ThemeConfig>
 
-export const common: BlogUserConfig = {
+export const blogBaseConfig: BlogUserConfig = {
   ...commonBaseConfig,
   themeConfig: commonThemeConfig,
 }
@@ -261,7 +261,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
   )?.themeConfig
 
   return {
-    ...common,
+    ...blogBaseConfig,
     ...config,
     title: config.title || config.en?.title || primaryLocale?.title,
     description:
@@ -279,7 +279,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
               createConsentHeadScript(config.themeConfig?.consent),
             ] as [string, Record<string, string>, string],
           ]),
-      ...(common.head || []),
+      ...(blogBaseConfig.head || []),
       // Restores both theme axes before the first paint. Must run inline,
       // before any stylesheet is applied.
       [
@@ -299,7 +299,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     // Keep the locale identity fields native. VitePress already uses `title`
     // as the default suffix and avoids duplicating it on a home page; creating
     // `:title | ${locale.title}` here defeats that behaviour.
-    locales: { ...(common.locales || {}), ...(config.locales || {}) },
+    locales: { ...(blogBaseConfig.locales || {}), ...(config.locales || {}) },
     vite: {
       ...config.vite,
       plugins: [
@@ -352,7 +352,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     },
 
     themeConfig: {
-      ...common.themeConfig,
+      ...blogBaseConfig.themeConfig,
       ...config.themeConfig,
 
       popularPosts: {

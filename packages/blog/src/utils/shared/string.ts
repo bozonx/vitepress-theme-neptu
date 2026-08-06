@@ -175,9 +175,6 @@ export function stripExtension(fileName: unknown): string {
   return parts.join('.')
 }
 
-/** @deprecated Use `stripExtension` instead. */
-export const pathTrimExt = stripExtension
-
 /** Convert string to a URL-friendly slug */
 export function slugify(rawStr: string, lang?: string): string {
   if (!rawStr) return ''
@@ -206,6 +203,3 @@ export function slugify(rawStr: string, lang?: string): string {
 
   return slug(rawStr, { locale: lang })
 }
-
-/** @deprecated Use `slugify` instead. */
-export const transliterate = slugify

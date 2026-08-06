@@ -3,10 +3,10 @@ import { useData } from 'vitepress'
 import { computed } from 'vue'
 import TagsList from '../TagsList.vue'
 import NeptuBtnLink from '../NeptuBtnLink.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
 const { frontmatter } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const tags = computed(() =>
   [...(frontmatter.value.tags || [])].sort((a, b) =>
     String(a.name).localeCompare(b.name)

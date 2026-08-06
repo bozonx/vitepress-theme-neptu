@@ -12,12 +12,11 @@ import {
   getFeedUrl,
   getRssFormatInfo,
   getRssFormats,
-  makeAbsoluteUrl,
   makeAuthorForRss,
-  normalizeSiteUrl,
   validatePostForRss,
   validateRssConfig,
 } from '../utils/node/index.ts'
+import { makeAbsoluteUrl, normalizeSiteUrl } from '../utils/shared/url.ts'
 import { resolveContentMediaPath, resolveSidebarLogo } from '../utils/shared/media.ts'
 import { isPostVisible, resolveShowDrafts } from '../utils/shared/publication.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
@@ -45,7 +44,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
     }
 
     const feeds: Record<string, Feed> = {}
-    const siteUrl = normalizeSiteUrl(config.userConfig!.siteUrl!)
+    const siteUrl = normalizeSiteUrl(config.userConfig!.siteUrl!)!
     const rssFormats = getRssFormats(config)
     const generationErrors: Error[] = []
 

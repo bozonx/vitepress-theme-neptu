@@ -5,11 +5,11 @@ import { formatReadableDate } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
 import PreviewWithImage from './PreviewWithImage.vue'
 import PostReadingTime from './post/PostReadingTime.vue'
-import { useUiTheme } from '../composables/useUiTheme.ts'
+import { useThemeConfig } from '../composables/useThemeConfig.ts'
 import type { PostLite } from '../types.d.ts'
 
 const { lang } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const props = defineProps<{ item: PostLite }>()
 function formatPreview(preview: string | undefined): string | undefined {

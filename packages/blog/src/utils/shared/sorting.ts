@@ -24,17 +24,17 @@ export function filterFeaturedPosts<T extends SortablePost & { featured?: boolea
 export function sortPosts<T extends SortablePost>(
   posts: T[] | null | undefined,
   sortBy?: string,
-  sortByPopularity: boolean = false
+  useAnalyticsStats: boolean = false
 ): T[] {
   if (!posts || !Array.isArray(posts)) return []
 
-  if (sortByPopularity && !sortBy) {
+  if (useAnalyticsStats && !sortBy) {
     console.warn('⚠️ Warning: function sortPosts: sortBy is not defined')
     return posts
   }
 
   return [...posts].sort((a, b) => {
-    if (sortByPopularity && sortBy) {
+    if (useAnalyticsStats && sortBy) {
       // Sort by popularity
       const aHasStats = Number.isFinite(a.analyticsStats?.[sortBy])
       const bHasStats = Number.isFinite(b.analyticsStats?.[sortBy])

@@ -3,15 +3,15 @@ import { ref, computed, onUnmounted } from 'vue'
 import { Icon } from '@iconify/vue'
 import { withBase } from 'vitepress'
 import NeptuBtn from '../NeptuBtn.vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import {
   encodeMediaUrl,
   downloadFile as downloadFileUtil,
-  extractFilenameFromUrl,
+  getLastPathSegment,
   getMediaErrorMessage,
 } from '../../utils/shared/media.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 
 const props = withDefaults(
   defineProps<{
@@ -36,7 +36,7 @@ const mediaUrl = computed(() =>
 
 const downloadFilename = computed(() => {
   if (props.filename) return props.filename
-  return extractFilenameFromUrl(props.url, 'video file')
+  return getLastPathSegment(props.url, 'video file')
 })
 
 const downloadFile = () => {

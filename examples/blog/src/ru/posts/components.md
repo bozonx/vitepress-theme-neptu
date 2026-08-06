@@ -18,7 +18,7 @@ descrAsPreview: true
 
 ```ts
 import { RecentList } from 'vitepress-theme-neptu/components'
-import { useUiTheme } from 'vitepress-theme-neptu/composables'
+import { useThemeConfig } from 'vitepress-theme-neptu/composables'
 import { isPost } from 'vitepress-theme-neptu/utils'
 import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 ```
@@ -117,12 +117,12 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 ## Composables
 
 ```ts
-import { useUiTheme, useBreakpoint } from 'vitepress-theme-neptu/composables'
+import { useThemeConfig, useBreakpoint } from 'vitepress-theme-neptu/composables'
 ```
 
 | Composable | Описание |
 | --- | --- |
-| `useUiTheme()` | Типизированный доступ к объединённому `themeConfig` |
+| `useThemeConfig()` | Типизированный доступ к объединённому `themeConfig` |
 | `useTranslations()` | Строки `t` текущей локали |
 | `useContentLangs()` | Текущая локаль и список доступных |
 | `useBreakpoint()` | Реактивные проверки mobile / tablet / desktop |
@@ -150,8 +150,8 @@ import { isPost, resolvePreviewText } from 'vitepress-theme-neptu/utils'
 | `isUtilPage(frontmatter)` | `true` для `util`, `tag`, `category`, `archive`, `author` |
 | `isHomePage(frontmatter)` | `true` для `layout: home` |
 | `resolvePreviewText(frontmatter)` | Текст превью по правилам темы |
-| `resolveBodyMarker(theme, frontmatter)` | Маркер тела для Pagefind |
-| `isPopularRoute(path, theme)` | Маршрут списка популярных |
+| `resolveSearchBodyMarker(theme, frontmatter)` | Маркер тела для Pagefind |
+| `isPopularPostsRoute(path, theme)` | Маршрут списка популярных |
 | `isAuthorPage(filePath, siteConfig)` | Путь страницы автора |
 
 Функции, работающие с файловой системой, вынесены отдельно:

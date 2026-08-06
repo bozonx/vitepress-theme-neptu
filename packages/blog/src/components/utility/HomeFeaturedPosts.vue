@@ -4,7 +4,7 @@ import { useData } from 'vitepress'
 import PreviewList from '../PreviewList.vue'
 import UtilSubPageHeader from './UtilSubPageHeader.vue'
 import { filterFeaturedPosts } from '../../utils/shared/index.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { PostLite } from '../../types.d.ts'
 
 const props = withDefaults(
@@ -16,7 +16,7 @@ const props = withDefaults(
   { maxPosts: 3 }
 )
 const { localeIndex } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = computed(
   () => props.localePosts || allPosts[localeIndex.value] || []

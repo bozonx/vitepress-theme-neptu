@@ -4,11 +4,11 @@ import {
   defineLandingConfig,
   defineLandingConfigSync,
 } from '../../../src/configs/siteConfigBase.ts'
-import { autoLoadSiteLocales } from '../../../src/configs/loadSiteLocale.ts'
+import { autoLoadLocales } from '../../../src/configs/loadLocale.ts'
 
-vi.mock('../../../src/configs/loadSiteLocale.ts', () => ({
-  autoLoadSiteLocales: vi.fn(async () => ({ en: { lang: 'en-US' } })),
-  loadSiteLocale: vi.fn(async () => ({ lang: 'en-US' })),
+vi.mock('../../../src/configs/loadLocale.ts', () => ({
+  autoLoadLocales: vi.fn(async () => ({ en: { lang: 'en-US' } })),
+  loadLocale: vi.fn(async () => ({ lang: 'en-US' })),
 }))
 
 vi.mock('vitepress-theme-neptu/transformers', () => ({
@@ -344,7 +344,7 @@ describe('defineLandingConfig', () => {
       srcDir: '/src',
     })
 
-    expect(autoLoadSiteLocales).toHaveBeenCalledWith({
+    expect(autoLoadLocales).toHaveBeenCalledWith({
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
@@ -352,14 +352,14 @@ describe('defineLandingConfig', () => {
   })
 
   it('preserves explicit locales', async () => {
-    vi.mocked(autoLoadSiteLocales).mockClear()
+    vi.mocked(autoLoadLocales).mockClear()
 
     const result = await defineLandingConfig({
       siteUrl: 'https://example.com',
       locales: { ru: { lang: 'ru-RU' } },
     })
 
-    expect(autoLoadSiteLocales).not.toHaveBeenCalled()
+    expect(autoLoadLocales).not.toHaveBeenCalled()
     expect(result.locales.ru.lang).toBe('ru-RU')
   })
 })

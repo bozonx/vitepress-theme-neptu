@@ -18,7 +18,7 @@ const { default: StylePresetPicker } = await import(
 const { STYLE_PRESETS, STYLE_ATTRIBUTE } = await import(
   '../../../src/composables/useStylePreset.ts'
 )
-const { COLOR_THEMES, COLOR_ATTRIBUTE } = await import(
+const { COLOR_THEME_OPTIONS, COLOR_ATTRIBUTE } = await import(
   '../../../src/composables/useColorTheme.ts'
 )
 
@@ -49,7 +49,7 @@ describe('ColorThemePicker', () => {
     const wrapper = mountPicker(ColorThemePicker)
 
     expect(wrapper.findAll('[role="menuitemradio"]')).toHaveLength(
-      COLOR_THEMES.length
+      COLOR_THEME_OPTIONS.length
     )
   })
 
@@ -60,7 +60,7 @@ describe('ColorThemePicker', () => {
     await wrapper.findAll('[role="menuitemradio"]')[2]!.trigger('click')
 
     expect(document.documentElement.getAttribute(COLOR_ATTRIBUTE)).toBe(
-      COLOR_THEMES[2]!.id
+      COLOR_THEME_OPTIONS[2]!.id
     )
   })
 

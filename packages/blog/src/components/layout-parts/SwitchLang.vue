@@ -3,9 +3,9 @@ import DropdownButton from '../DropdownButton.vue'
 import MenuItem from '../MenuItem.vue'
 import { Icon } from '@iconify/vue'
 import { useContentLangs } from '../../composables/useContentLangs.ts'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const { currentLang, localeLinks } = useContentLangs({ correspondingLink: true })
 const props = defineProps<{ noBg?: boolean }>()
 </script>

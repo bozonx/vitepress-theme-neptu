@@ -6,7 +6,7 @@ export interface ColorThemeOption {
   color: string
 }
 
-export const COLOR_THEMES: ColorThemeOption[] = [
+export const COLOR_THEME_OPTIONS: ColorThemeOption[] = [
   { id: 'blue', label: 'Blue', color: 'hsl(213, 66%, 46%)' },
   { id: 'green', label: 'Green', color: 'hsl(115, 70%, 37%)' },
   { id: 'purple', label: 'Purple', color: 'hsl(270, 66%, 46%)' },
@@ -21,7 +21,6 @@ export const COLOR_STORAGE_KEY = 'neptu-color-theme'
 export const COLOR_ATTRIBUTE = 'data-theme'
 export const DEFAULT_COLOR_THEME = 'blue'
 
-const STORAGE_KEY = COLOR_STORAGE_KEY
 const activeTheme = ref<string>(DEFAULT_COLOR_THEME)
 
 export function useColorTheme() {
@@ -31,7 +30,7 @@ export function useColorTheme() {
       if (themeId) {
         document.documentElement.setAttribute('data-theme', themeId)
         try {
-          localStorage.setItem(STORAGE_KEY, themeId)
+          localStorage.setItem(COLOR_STORAGE_KEY, themeId)
         } catch {
           // ignore
         }
@@ -42,7 +41,7 @@ export function useColorTheme() {
   const initColorTheme = () => {
     if (typeof document !== 'undefined') {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY)
+        const saved = localStorage.getItem(COLOR_STORAGE_KEY)
         if (saved) {
           activeTheme.value = saved
           document.documentElement.setAttribute('data-theme', saved)
@@ -65,6 +64,6 @@ export function useColorTheme() {
   return {
     activeTheme,
     setColorTheme,
-    colorThemes: COLOR_THEMES,
+    colorThemes: COLOR_THEME_OPTIONS,
   }
 }

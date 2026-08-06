@@ -3,11 +3,11 @@ import { useData } from 'vitepress'
 import { computed } from 'vue'
 
 import { Icon } from '@iconify/vue'
-import { useUiTheme } from '../../composables/useUiTheme.ts'
+import { useThemeConfig } from '../../composables/useThemeConfig.ts'
 import type { NeptuBlogTheme } from '../../types.d.ts'
 
 const { title } = useData()
-const { theme } = useUiTheme()
+const { theme } = useThemeConfig()
 const siteFullTitle = computed(() => encodeURIComponent(title.value || ''))
 
 interface ShareItem {
