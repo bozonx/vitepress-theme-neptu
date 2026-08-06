@@ -28,10 +28,14 @@ descriptionAsPreview: true
 | `seo`, `twitterSite` | [SEO — обзор и механизмы](seo-features) |
 | `search` | [Поиск Pagefind](search-pagefind) |
 | `popularPosts` | [Популярные посты через GA4](popular-posts) |
+| `ads` | [Рекламные блоки](ads) |
+| `consent` | [Согласие на куки и аналитика](consent-and-analytics) |
+| `authors` | [Авторы](authors) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
 | `i18nRouting` | [Локали и мультиязычность](locales) |
 | `perPage`, `repo` | [Уровни конфигурации](config-layers) |
 | `paginationMaxItems` | [Списки, страницы](lists-and-pages) |
+| `mainHeroImg` | [Кастомизация](customization) (тема landing) |
 | Стили (CSS-переменные) и слоты | [Кастомизация](customization) |
 
 ## Что в этой статье
@@ -41,7 +45,7 @@ descriptionAsPreview: true
 | [Верхняя панель](#верхняя-панель-nav) | 2, 3 | Ссылки, иконки соцсетей |
 | [Сайдбар](#сайдбар) | 2, 3 | Флаги секций, логотип, ссылки |
 | [Кнопка «Поддержать»](#кнопка-поддержать-donate) | 2, 3 | `donate.url`, `postDonateCall` |
-| [Футер](#футер) | 3 | `message`, `copyright`, `links` |
+| [Футер](#футер) | 2, 3 | `message`, `copyright`, `links`, флаги RSS/Atom/GitHub |
 | [Иконки](#иконки) | 2 | Переопределение умолчаний Iconify |
 | [Внешние ссылки](#внешние-ссылки-в-контенте-постов) | 2 | Иконка ↗, `target="_blank"` |
 | [Относительные URL](#относительные-url-подстраиваются-под-локаль) | — | Авто-префикс локали для `href` |
@@ -50,6 +54,7 @@ descriptionAsPreview: true
 | [Похожие посты](#похожие-посты) | 2 | `similarPostsCount` |
 | [Оглавление и правая колонка](#оглавление-и-правая-колонка) | 2 | `toc`, `asideLayouts` |
 | [Переводы интерфейса](#переводы-интерфейса) | 2, 3 | `themeConfig.t` |
+| [Лейблы доступности](#лейблы-доступности) | 3 | `sidebarMenuLabel`, `langMenuLabel` и т.д. |
 | [Рекомендации по уровням](#рекомендации-по-уровням) | — | Что куда помещать |
 
 ## Навигация, сайдбар и футер
@@ -109,6 +114,17 @@ themeConfig:
         icon: 'fa6-solid:share-nodes'
 ```
 
+Помимо `links` и `bottomLinks`, сайдбар принимает `socialLinks` — иконки
+соцсетей в нижней части. Они попадают и в футер сайта вместе с `nav.socialLinks`:
+
+```yaml
+themeConfig:
+  sidebar:
+    socialLinks:
+      - icon: 'fa6-brands:telegram'
+        link: 'https://t.me/yourchannel'
+```
+
 Каждый флаг включает готовую страницу-список — все они видны в сайдбаре этого
 демо. Размер облаков ограничивают `sidebarTagsCount` (по умолчанию 15) и
 `sidebarCategoriesCount` (10); за порогом появляется ссылка «Все теги» /
@@ -153,6 +169,16 @@ themeConfig:
 ### Футер
 
 ```yaml
+# src/site.yaml — флаги RSS/Atom/GitHub одинаковы для всех локалей
+themeConfig:
+  footer:
+    rssFeed: true    # ссылка на RSS-ленту (по умолчанию true)
+    atomFeed: true   # ссылка на Atom-ленту (по умолчанию true)
+    github: true     # ссылка на репозиторий из repo (по умолчанию true)
+```
+
+```yaml
+# src/<locale>/_site.yaml — локализованные текст и ссылки
 themeConfig:
   footer:
     message: 'Копирование разрешено только со ссылкой на источник.'
@@ -161,6 +187,10 @@ themeConfig:
       - text: '${t.links.aboutBlog}'
         href: 'pages/about'
 ```
+
+Флаги `rssFeed`, `atomFeed` и `github` включены по умолчанию и показываются
+только при наличии соответствующей ленты или репозитория. `github` использует
+`themeConfig.repo` — если он не задан, ссылка не выводится.
 
 Если нужен не набор ссылок, а собственная вёрстка футера, встроенный футер
 заменяется целиком через слот `footer` — см. [Кастомизация](customization#кастомизация-футера-сайта).
@@ -198,15 +228,19 @@ themeConfig:
 themeConfig:
   donateIcon: 'fa6-solid:hand-holding-heart'
   recentIcon: 'fa6-solid:bolt'
-  featuredIcon: 'fa6-solid:certificate'
+  featuredIcon: 'fa6-solid:bookmark'
   popularIcon: 'fa6-solid:star'
   byDateIcon: 'fa6-solid:calendar-days'
   authorsIcon: 'mdi:users'
   tagsIcon: 'fa6-solid:tag'
-  categoriesIcon: 'fa6-solid:folder-open'
+  categoriesIcon: 'fa6-solid:folder-open'  # по умолчанию нет — fallback на tagsIcon
   rssIcon: 'bi:rss-fill'
   atomIcon: 'vscode-icons:file-type-atom'
+  youtubeIcon: 'fa6-brands:youtube'
 ```
+
+`categoriesIcon` не имеет собственного умолчания: если поле не задано,
+используется `tagsIcon`. `youtubeIcon` применяется в кнопке видео-ссылки поста.
 
 ## Внешние ссылки в контенте постов
 
@@ -285,7 +319,7 @@ Codeberg. `editLink.text` меняет только подпись, `editLink.pa
 
 ### Кнопки «поделиться»
 
-Блок `social-share` в подвале поста выводит кнопки шерингa соцсетей. Каждая
+Блок `social-share` в подвале поста выводит кнопки шеринга соцсетей. Каждая
 локаль приносит свой готовый набор — для русской это Telegram, WhatsApp, VK, X,
 Facebook и LinkedIn. Они работают без настройки.
 
@@ -477,6 +511,29 @@ themeConfig: {
 
 Встроенные переводы для 21 локали. Переопределения — через `themeConfig.t` на любом уровне (deep-merge дополняет встроенный слой). Полный справочник ключей — в [Переводы интерфейса и страница выбора языка](i18n-translations#строки-переводов-от-администратора).
 
+### Лейблы доступности
+
+Помимо `t`, `themeConfig` содержит отдельные поля для accessibility-лейблов
+UI-контролов. Они не входят в объект переводов, но локализуются per-locale
+через `_site.yaml`:
+
+| Поле | Назначение |
+| --- | --- |
+| `sidebarMenuLabel` | tooltip кнопки открытия сайдбара на мобильных |
+| `langMenuLabel` | aria-label и tooltip переключателя языка |
+| `colorThemeMenuLabel` | aria-label и tooltip переключателя цветовой темы |
+| `stylePresetMenuLabel` | aria-label и tooltip переключателя стилевого пресета |
+
+```yaml
+# src/<locale>/_site.yaml
+themeConfig:
+  sidebarMenuLabel: 'Меню'
+  langMenuLabel: 'Сменить язык'
+```
+
+Встроенные локали уже содержат переводы этих полей — переопределяйте только
+при необходимости.
+
 ## Рекомендации по уровням
 
 Настройки `themeConfig` можно задавать на уровне 2 (`site.yaml`) или уровне 3
@@ -486,6 +543,8 @@ themeConfig: {
 
 - `sidebar.*` — флаги секций (`recent`, `featured`, `popular`, `archive`, `authors`, `tags`, `categories`, `donate`, `rssFeed`, `atomFeed`)
 - `sidebar.logoSrc`, `sidebar.logoHeight` — логотип сайдбара
+- `sidebar.socialLinks` — иконки соцсетей (если одинаковы для всех локалей)
+- `sidebarTagsCount`, `sidebarCategoriesCount` — размеры облаков
 - `donate.url`, `donate.icon` — общий адрес поддержки
 - `postFooter` — порядок блоков подвала (если не отличается по локалям)
 - `similarPostsCount` — количество похожих постов
@@ -493,10 +552,12 @@ themeConfig: {
 - Иконки по умолчанию (`donateIcon`, `recentIcon`, `featuredIcon` и т.д.)
 - `toc` — настройки оглавления (порог, уровень, position)
 - `asideLayouts` — список макетов с правой колонкой
+- `footer.rssFeed`, `footer.atomFeed`, `footer.github` — флаги ссылок в футере
 
 ### Уровень 3 — `_site.yaml` (отличия одной локали)
 
 - `nav.links` — локализованные ссылки навигации
+- `nav.socialLinks` — локализованные иконки соцсетей (если отличаются)
 - `footer.message`, `footer.copyright` — локализованный текст футера
 - `footer.links` — локализованные ссылки футера
 - `editLink.text` — локализованная подпись ссылки на правку
@@ -504,7 +565,9 @@ themeConfig: {
 - `t.*` — переводы подписей (`draftLabel` и т.д.)
 - `sidebar.blogTitle` — локализованный заголовок сайдбара
 - `sidebar.links`, `sidebar.bottomLinks` — локализованные ссылки сайдбара
+- `sidebar.socialLinks` — локализованные иконки соцсетей (если отличаются)
 - `toc.label` — локализованный заголовок оглавления
+- `sidebarMenuLabel`, `langMenuLabel`, `colorThemeMenuLabel`, `stylePresetMenuLabel` — локализованные лейблы доступности
 
 Общее правило: если значение одинаковое для всех языков — оставляйте на уровне 2.
 Если отличается — переопределяйте на уровне 3, указывая только то, что отличается.

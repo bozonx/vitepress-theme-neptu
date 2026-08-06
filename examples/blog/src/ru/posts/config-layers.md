@@ -36,6 +36,10 @@ descriptionAsPreview: true
 
 Это файл разработчика, который представляет из себя расширенние стандартного конфига VitePress.
 
+::: tip
+Так же вы можете посмотреть пример конфига [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/.vitepress/config.ts).
+:::
+
 ```ts
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
