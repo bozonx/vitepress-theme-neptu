@@ -290,8 +290,8 @@ export async function loadBlogLocale(
         return {
           ...templatedAuthor,
           description: mdToHtml(templatedAuthor.description),
-          imageHeight: imageDimensions?.height,
-          imageWidth: imageDimensions?.width,
+          imageHeight: imageDimensions?.height ?? templatedAuthor.imageHeight,
+          imageWidth: imageDimensions?.width ?? templatedAuthor.imageWidth,
         }
       })
     : undefined

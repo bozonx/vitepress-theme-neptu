@@ -82,9 +82,14 @@ export function buildItems(links: LightboxElement[]): LightboxItem[] {
         ? img.getAttribute('src') || img.currentSrc || img.src || rawSrc
         : rawSrc || img.currentSrc || img.src || ''
 
+      const imgWidth = img.getAttribute('width')
+      const imgHeight = img.getAttribute('height')
+
       return {
         src,
         alt: img.getAttribute('alt') || '',
+        width: imgWidth ? Number(imgWidth) : undefined,
+        height: imgHeight ? Number(imgHeight) : undefined,
       }
     }
 
@@ -102,6 +107,9 @@ export function buildItems(links: LightboxElement[]): LightboxItem[] {
       ? img?.getAttribute('src') || img?.currentSrc || img?.src || anchor.href || rawHref
       : rawHref || img?.getAttribute('src') || img?.currentSrc || img?.src || ''
 
+    const imgWidth = img?.getAttribute('width')
+    const imgHeight = img?.getAttribute('height')
+
     return {
       src,
       alt:
@@ -109,6 +117,8 @@ export function buildItems(links: LightboxElement[]): LightboxItem[] {
         anchor.getAttribute('aria-label') ||
         anchor.getAttribute('title') ||
         '',
+      width: imgWidth ? Number(imgWidth) : undefined,
+      height: imgHeight ? Number(imgHeight) : undefined,
     }
   })
 }

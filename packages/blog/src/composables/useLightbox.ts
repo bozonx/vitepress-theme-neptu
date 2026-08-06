@@ -14,6 +14,8 @@ import {
 export interface LightboxItem {
   src: string
   alt: string
+  width?: number
+  height?: number
 }
 
 export interface UseLightboxReturn {

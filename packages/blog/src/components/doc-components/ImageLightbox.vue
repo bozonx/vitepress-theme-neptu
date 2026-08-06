@@ -13,10 +13,13 @@ const containerRef = ref<HTMLDivElement | null>(null)
 const imgRef = ref<HTMLImageElement | null>(null)
 
 // SVG images without explicit width/height attributes collapse to 0x0 in flex
-// containers. We read naturalWidth/naturalHeight on load and set them as
-// explicit dimensions so the image is visible.
+// containers. We prefer the original img's width/height (from LightboxItem),
+// falling back to naturalWidth/naturalHeight on load.
 const imgWidth = ref<number | undefined>(undefined)
 const imgHeight = ref<number | undefined>(undefined)
+
+const itemWidth = computed(() => currentItem.value?.width)
+const itemHeight = computed(() => currentItem.value?.height)
 
 // Zoom / pan state
 const scale = ref(1)
@@ -71,8 +74,8 @@ function onImgLoad() {
   loaded.value = true
   const img = imgRef.value
   if (img && img.naturalWidth > 0) {
-    imgWidth.value = img.naturalWidth
-    imgHeight.value = img.naturalHeight
+    imgWidth.value = itemWidth.value ?? img.naturalWidth
+    imgHeight.value = itemHeight.value ?? img.naturalHeight
   }
 }
 
