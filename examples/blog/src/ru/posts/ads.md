@@ -115,7 +115,6 @@ themeConfig: {
 | `enabled` | `boolean` | `true` | Главный переключатель. Frontmatter `ads: true \| false` на странице перекрывает это значение. |
 | `component` | `string` | — | Имя глобально зарегистрированного компонента, который рендерит рекламный блок. Получает props `placement` и `index`. Без него `NeptuAd` рендерит только содержимое default-слота. |
 | `layouts` | `string[]` | `['post']` | Layout-ы, на которых разрешены рекламные слоты. Доступные: `'post'`, `'page'`, `'util'`, `'tag'`, `'category'`, `'archive'`, `'author'` |
-| `defaultLayout` | `string` | `'post'` (блог) / `'doc'` (лендинг) | Layout по умолчанию, если во frontmatter не указан `layout`. |
 | `aside` | `boolean` | `true` | Блок в правой колонке. |
 | `afterContent` | `boolean` | `false` | Блок под телом статьи, перед футером поста. |
 | `requireConsent` | `boolean` | `false` | Не рендерить блок, пока посетитель не дал согласие. |
