@@ -31,7 +31,8 @@ interface SitePageRef {
 }
 
 function ensureLeadingSlash(path: string): string {
-  return /^\.\//.test(path) || /^\w+:/.test(path) || path.startsWith('/') ? path : `/${path}`
+  if (path.startsWith('./') || path.startsWith('/') || /^\w+:/.test(path)) return path
+  return `/${path}`
 }
 
 function buildLocaleLink(

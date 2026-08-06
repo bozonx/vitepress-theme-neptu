@@ -79,10 +79,6 @@ export function useConsent(): {
     () => theme.value?.consent?.storageKey || CONSENT_STORAGE_KEY
   )
 
-  if (inBrowser && !hydrated) {
-    readStorage(storageKey.value)
-  }
-
   // A decision made in another tab must not leave this one showing ads the
   // visitor just rejected.
   const onExternalChange = (): void => readStorage(storageKey.value)

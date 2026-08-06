@@ -86,7 +86,7 @@ const socialLinks = computed<LinkItem[]>(() =>
         <NeptuBtn
           v-bind="item"
           :no-bg="true"
-          :title="item.text"
+          :title="item.title || item.text"
           :class="[item.class, 'px-[0.7rem]']"
           :icon-class="item.iconClass || 'muted'"
         />

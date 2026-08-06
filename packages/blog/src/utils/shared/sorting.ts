@@ -29,7 +29,7 @@ export function sortPosts<T extends SortablePost>(
   if (!posts || !Array.isArray(posts)) return []
 
   if (sortByPopularity && !popularityMetric) {
-    console.warn('⚠️ Warning: function sortPosts: popularityMetric is not defined')
+    console.warn('[vitepress-theme-neptu] sortPosts: popularityMetric is not defined')
     return posts
   }
 

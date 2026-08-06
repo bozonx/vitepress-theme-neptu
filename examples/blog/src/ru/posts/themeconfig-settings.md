@@ -169,16 +169,14 @@ themeConfig:
 
 | Поле | Назначение |
 | --- | --- |
-| `text` | Текст ссылки |
+| `text` | Текст ссылки. Кроме socialLinks, так как это просто иконки, не содержащие текста|
+| `title` | Текст подсказки |
 | `href` | URL; относительный дополняется префиксом локали, абсолютный (`https://…`) — как есть |
 | `icon` | Имя иконки [Iconify](https://icones.es), например `solar:document-linear` |
 | `iconClass` | CSS-класс для иконки |
 | `class` | CSS-класс для всего элемента ссылки |
 | `desktopOnly` | `true` — скрывать на мобильных (где работает сайдбар) |
 | `mobileOnly` | `true` — скрывать на десктопе (показывать только в сайдбаре) |
-| `header` | Текст заголовка секции — рендерится как `<h4>`, а не как ссылка. **Только в сайдбаре** (`sidebar.links`, `sidebar.bottomLinks`) |
-
-Иконки соцсетей (`nav.socialLinks`, `sidebar.socialLinks`, `footer.socialLinks`) используют те же `icon`, `iconClass`, `class`, `desktopOnly` и `mobileOnly` и `href` (URL), но вместо `text` — поле `title` (tooltip / `aria-label`).
 
 ### Кнопка «Поддержать» (donate)
 

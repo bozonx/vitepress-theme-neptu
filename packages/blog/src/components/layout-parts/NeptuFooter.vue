@@ -132,6 +132,7 @@ const feedLinks = computed(() => {
           >
             <NeptuBtnLink
               :text="item.text"
+              :title="item.title"
               :href="item.href"
               :icon="item.icon"
               :icon-class="item.iconClass"

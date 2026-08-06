@@ -415,7 +415,9 @@ export function addJsonLd({
   if (pageData.frontmatter?.seo?.jsonLd === false) return
 
   let jsonLdData: JsonLdObject | JsonLdArray | undefined
-  const localeIndex = page.split('/')[0]!
+  const cleanPage = page.startsWith('/') ? page.slice(1) : page
+  const localeIndex = cleanPage.split('/')[0]
+  if (!localeIndex) return
   const langConfig = siteConfig.site.locales[localeIndex] as LocaleDefinition
 
   if (!langConfig || !langConfig.themeConfig) return

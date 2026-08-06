@@ -26,6 +26,21 @@ import type {
 
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
 
+/**
+ * Recursively checks whether any string leaf still contains a `${...}`
+ * placeholder. Used by {@link resolveLocaleTemplates} to decide when the
+ * iterative substitution has converged — cheaper and order-independent
+ * compared to `JSON.stringify` equality.
+ */
+function hasUnresolvedTemplates(value: unknown): boolean {
+  if (typeof value === 'string') return /\$\{[^}]*\}/.test(value)
+  if (Array.isArray(value)) return value.some(hasUnresolvedTemplates)
+  if (value && typeof value === 'object') {
+    return Object.values(value).some(hasUnresolvedTemplates)
+  }
+  return false
+}
+
 function resolveLocaleTemplates(
   site: Record<string, unknown>,
   theme: Record<string, unknown>,
@@ -48,14 +63,14 @@ function resolveLocaleTemplates(
     }
     const nextSite = resolveConfigTemplates(resolvedSite, context)
     const nextTheme = resolveConfigTemplates(resolvedTheme, context)
-    if (
-      JSON.stringify(nextSite) === JSON.stringify(resolvedSite) &&
-      JSON.stringify(nextTheme) === JSON.stringify(resolvedTheme)
-    ) {
-      break
-    }
+
+    // Stop when no `${...}` placeholders remain in any string leaf —
+    // cheaper and more stable than JSON.stringify comparison.
+    const siteDone = !hasUnresolvedTemplates(nextSite)
+    const themeDone = !hasUnresolvedTemplates(nextTheme)
     resolvedSite = nextSite
     resolvedTheme = nextTheme
+    if (siteDone && themeDone) break
   }
 
   return { site: resolvedSite, theme: resolvedTheme }

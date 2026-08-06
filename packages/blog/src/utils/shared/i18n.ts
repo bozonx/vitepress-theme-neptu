@@ -14,9 +14,11 @@ export function resolveBaseLocaleKey(
   const shortLocale = localeIndex.split('-')[0]
   if (shortLocale && map[shortLocale]) return shortLocale
 
-  if (shortLocale === 'es' && map['es-419']) return 'es-419'
-  if (shortLocale === 'zh' && map['zh-CN']) return 'zh-CN'
-  if (shortLocale === 'zh' && map['zh-Hans']) return 'zh-Hans'
+  // Look for any regional variant of the short locale
+  // (e.g., 'es' matches 'es-419', 'zh' matches 'zh-CN' or 'zh-Hans')
+  for (const key of Object.keys(map)) {
+    if (key.startsWith(shortLocale + '-')) return key
+  }
 
   return DEFAULT_LOCALE
 }

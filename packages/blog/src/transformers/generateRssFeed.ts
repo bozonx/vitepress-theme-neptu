@@ -138,14 +138,14 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
             const description = explicitDescription
               ? explicitDescription
               : extractDescriptionFromMd(
-                  src!,
+                  src ?? '',
                   maxDescriptionLength
                 )
             const guid = createPostGuid(siteUrl, url, fm.date)
             const categories = tagsToRssCategories(fm.tags, siteUrl, localeIndex)
             const content = fullContent
               ? mdToFeedHtml(
-                  parseMdFile(src!, url).content,
+                  parseMdFile(src ?? '', url).content,
                   `${siteUrl}${url}`
                 )
               : undefined

@@ -19,7 +19,7 @@ export function isYearToken(item: string): boolean {
 
 /** Determine whether a token represents a month name. */
 export function isMonthNameToken(item: string): boolean {
-  const cleanItem = item.replace(/[^\wа-яё]/gi, '').toLowerCase()
+  const cleanItem = item.replace(/[^\p{L}\p{N}]/gu, '').toLowerCase()
   return (
     cleanItem.length >= 3 &&
     !EXCLUDED_WORDS.includes(cleanItem) &&

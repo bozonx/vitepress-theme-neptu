@@ -643,6 +643,7 @@ export namespace NeptuBlogTheme {
     class?: string
     iconClass?: string
     text?: string
+    title?: string
     href?: string
     icon?: string
     target?: string
@@ -715,6 +716,7 @@ export namespace NeptuBlogTheme {
   export interface NavLink {
     text: string
     href: string
+    title?: string
     icon?: string
     iconClass?: string
     class?: string

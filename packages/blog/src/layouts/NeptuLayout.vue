@@ -21,6 +21,7 @@ const BUILTIN_LAYOUTS = [
   'page',
   'util',
   'tag',
+  'category',
   'archive',
   'author',
 ]

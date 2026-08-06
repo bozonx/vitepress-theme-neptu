@@ -106,11 +106,8 @@ export function resolveI18nHref(
 
   if (isExternal) return trimmed
   // Already includes language prefix
-  if (trimmed.indexOf('/') === 0) return trimmed
-  // Add language prefix — insert a slash between localeIndex and trimmed.
-  // Remove leading slash from trimmed to avoid double slashes.
-  const cleanHref = trimmed.startsWith('/') ? trimmed.slice(1) : trimmed
-  return `/${localeIndex}/${cleanHref}`
+  if (trimmed.startsWith('/')) return trimmed
+  return `/${localeIndex}/${trimmed}`
 }
 
 /** Generates the full URL path from pageData.relativePath. */
