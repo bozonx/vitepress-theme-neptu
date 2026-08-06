@@ -9,7 +9,7 @@ import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 import type { GalleryItem, HeadingProps, SectionProps } from './types.ts'
 import { useSectionProps } from './sectionProps.ts'
 
@@ -104,8 +104,8 @@ const onKeydown = (event: KeyboardEvent): void => {
           :is="item.link ? 'a' : props.lightbox ? 'button' : 'div'"
           class="ln-gallery__media"
           :class="{ 'ln-gallery__media--static': !item.link && !props.lightbox }"
-          :href="resolveUrl(item.link)" :target="externalTarget(item.link)"
-          :rel="item.link && externalTarget(item.link) ? 'noreferrer' : undefined"
+          :href="resolveUrl(item.link)" :target="externalLinkTarget(item.link)"
+          :rel="item.link && externalLinkTarget(item.link) ? 'noreferrer' : undefined"
           :type="!item.link && props.lightbox ? 'button' : undefined"
           @click="!item.link && open(i)"
         >

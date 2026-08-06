@@ -6,7 +6,7 @@ import {
   getClickedLightboxIndex,
   addBodyClass,
   removeBodyClass,
-  bodyHasClass,
+  hasBodyClass,
 } from '../../../../src/utils/client/lightboxDom.ts'
 
 function makeDoc(html: string): Document {
@@ -180,10 +180,10 @@ describe('getClickedLightboxIndex', () => {
 describe('body class helpers', () => {
   it('adds and removes class on body', () => {
     const doc = makeDoc('<html><body></body></html>')
-    expect(bodyHasClass(doc, 'modal-open')).toBe(false)
+    expect(hasBodyClass(doc, 'modal-open')).toBe(false)
     addBodyClass(doc, 'modal-open')
-    expect(bodyHasClass(doc, 'modal-open')).toBe(true)
+    expect(hasBodyClass(doc, 'modal-open')).toBe(true)
     removeBodyClass(doc, 'modal-open')
-    expect(bodyHasClass(doc, 'modal-open')).toBe(false)
+    expect(hasBodyClass(doc, 'modal-open')).toBe(false)
   })
 })

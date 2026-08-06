@@ -11,7 +11,7 @@ import {
   getFeedPath,
   getFeedUrl,
   getRssFormatInfo,
-  getRssFormats,
+  resolveRssFormats,
   makeAuthorForRss,
   validatePostForRss,
   validateRssConfig,
@@ -45,7 +45,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
 
     const feeds: Record<string, Feed> = {}
     const siteUrl = normalizeSiteUrl(config.userConfig!.siteUrl!)!
-    const rssFormats = getRssFormats(config)
+    const rssFormats = resolveRssFormats(config)
     const generationErrors: Error[] = []
 
     for (const localeIndex of Object.keys(config.site!.locales!)) {

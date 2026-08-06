@@ -56,14 +56,14 @@ coverDescription: "Подпись с **markdown** и [ссылками](https://
 
 Вставляйте медиа файлы с плеером и кнопкой для скачивания прямо в тело статьи.
 
-### YoutubeVideo
+### YouTubeVideo
 
 Адаптивный ролик 16:9. Передайте `id` видео (то, что после `?v=`).
 
-<YoutubeVideo id="dQw4w9WgXcQ" />
+<YouTubeVideo id="dQw4w9WgXcQ" />
 
 ```md
-<YoutubeVideo id="dQw4w9WgXcQ" />
+<YouTubeVideo id="dQw4w9WgXcQ" />
 ```
 
 ### VideoFile
@@ -116,7 +116,7 @@ coverDescription: "Подпись с **markdown** и [ссылками](https://
 | `containerClass` | `string` | `''` | Дополнительные CSS-классы обёртки |
 | `disabled` | `boolean` | `false` | Заблокировать плеер или кнопку |
 
-`YoutubeVideo` принимает только `id` — одиннадцатисимвольный идентификатор
+`YouTubeVideo` принимает только `id` — одиннадцатисимвольный идентификатор
 ролика.
 
 У всех трёх файловых компонентов есть слот по умолчанию — короткое пояснение

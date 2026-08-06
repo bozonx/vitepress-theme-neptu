@@ -3,7 +3,7 @@ import { inject, isRef, onMounted, onUnmounted, ref, type Ref, type InjectionKey
 
 import {
   addBodyClass,
-  bodyHasClass,
+  hasBodyClass,
   buildLightboxItems,
   getClickedLightboxIndex,
   getLightboxElements,
@@ -28,7 +28,7 @@ export interface UseLightboxReturn {
   prev: () => void
 }
 
-export const LightboxKey: InjectionKey<Record<string, string> | ComputedRef<Record<string, string>>> = Symbol('lightbox-locales')
+export const LightboxLocalesKey: InjectionKey<Record<string, string> | ComputedRef<Record<string, string>>> = Symbol('lightbox-locales')
 
 export function useLightbox(doc?: Document): UseLightboxReturn {
   const isOpen = ref(false)
@@ -99,7 +99,7 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
     if (!inBrowser || !resolvedDoc) return
     resolvedDoc.removeEventListener('click', onClick, true)
     observer?.disconnect()
-    if (bodyHasClass(resolvedDoc, 'modal-open')) {
+    if (hasBodyClass(resolvedDoc, 'modal-open')) {
       removeBodyClass(resolvedDoc, 'modal-open')
     }
   })
@@ -116,6 +116,6 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
 }
 
 export function useLightboxLocales(): Record<string, string> {
-  const val = inject(LightboxKey, {})
+  const val = inject(LightboxLocalesKey, {})
   return isRef(val) ? val.value : val
 }

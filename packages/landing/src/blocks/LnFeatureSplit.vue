@@ -12,7 +12,7 @@ import LnButtonGroup from '../primitives/LnButtonGroup.vue'
 import LnReveal from '../primitives/LnReveal.vue'
 import type { HeadingProps, SectionProps, SplitItem } from './types.ts'
 import { useSectionProps } from './sectionProps.ts'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
@@ -79,8 +79,8 @@ const isReversed = (index: number): boolean =>
             v-else-if="item.link && item.linkText"
             class="ln-split__link"
             :href="resolveUrl(item.link)"
-            :target="item.target ?? externalTarget(item.link)"
-            :rel="item.rel ?? (externalTarget(item.link) ? 'noreferrer' : undefined)"
+            :target="item.target ?? externalLinkTarget(item.link)"
+            :rel="item.rel ?? (externalLinkTarget(item.link) ? 'noreferrer' : undefined)"
           >
             {{ item.linkText }}
           </a>

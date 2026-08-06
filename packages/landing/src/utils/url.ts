@@ -2,7 +2,7 @@
  * URL helpers for landing blocks and primitives.
  *
  * The shared URL safety helpers (`isExternalUrl`, `isAnchorUrl`,
- * `isSafeExternalUrl`, `sanitizeUrl`, `externalTarget`) live in the blog
+ * `isSafeExternalUrl`, `sanitizeUrl`, `externalLinkTarget`) live in the blog
  * package and are re-exported here so landing-only projects never reach across
  * packages. `resolveUrl` stays local because it depends on VitePress's
  * `withBase`, a runtime import that does not belong in the blog's shared
@@ -14,10 +14,10 @@ import {
   isAnchorUrl,
   isSafeExternalUrl,
   sanitizeUrl,
-  externalTarget,
+  externalLinkTarget,
 } from 'vitepress-theme-neptu/utils'
 
-export { isExternalUrl, isAnchorUrl, isSafeExternalUrl, sanitizeUrl, externalTarget }
+export { isExternalUrl, isAnchorUrl, isSafeExternalUrl, sanitizeUrl, externalLinkTarget }
 
 /**
  * Resolves a link or an asset path against the site `base`.

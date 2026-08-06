@@ -1,5 +1,5 @@
 export {
-  landingBaseConfig as siteCommonConfig,
+  landingBaseConfig,
   mergeLandingConfig,
   defineLandingConfig,
   defineLandingConfigSync,

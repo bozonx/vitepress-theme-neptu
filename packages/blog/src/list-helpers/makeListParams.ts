@@ -67,7 +67,7 @@ export function makeYearPostsParams(
   return res
 }
 
-export function makeMonthsParams(
+export function makeYearMonthParams(
   posts: PostWithDate[]
 ): Array<{ params: { year: number; month: number } }> {
   const monthCount: Record<string, number> = {}

@@ -6,7 +6,7 @@
 import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 import type { HeadingProps, LogoItem, SectionProps } from './types.ts'
 import { useSectionProps } from './sectionProps.ts'
 
@@ -74,8 +74,8 @@ const sectionProps = useSectionProps(props)
             :key="`${logo.src}-${i}`"
             class="ln-logos__item"
             :href="!isClone ? resolveUrl(logo.link) : undefined"
-            :target="!isClone ? externalTarget(logo.link) : undefined"
-            :rel="logo.link && !isClone && externalTarget(logo.link) ? 'noreferrer' : undefined"
+            :target="!isClone ? externalLinkTarget(logo.link) : undefined"
+            :rel="logo.link && !isClone && externalLinkTarget(logo.link) ? 'noreferrer' : undefined"
             :tabindex="isClone ? -1 : undefined"
           >
             <img
@@ -96,8 +96,8 @@ const sectionProps = useSectionProps(props)
         :key="`${logo.src}-${i}`"
         class="ln-logos__item"
         :href="resolveUrl(logo.link)"
-        :target="externalTarget(logo.link)"
-        :rel="logo.link && externalTarget(logo.link) ? 'noreferrer' : undefined"
+        :target="externalLinkTarget(logo.link)"
+        :rel="logo.link && externalLinkTarget(logo.link) ? 'noreferrer' : undefined"
       >
         <img
           :src="resolveUrl(logo.src)"

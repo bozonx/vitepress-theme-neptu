@@ -4,7 +4,7 @@
  * team...). Renders an `<a>` when `link` is set so the whole card is clickable.
  */
 import { computed } from 'vue'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<{
@@ -24,7 +24,7 @@ const props = withDefaults(
 )
 
 const href = computed(() => resolveUrl(props.link))
-const target = computed(() => props.target ?? externalTarget(props.link))
+const target = computed(() => props.target ?? externalLinkTarget(props.link))
 </script>
 
 <template>

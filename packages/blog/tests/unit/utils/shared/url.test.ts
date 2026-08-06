@@ -4,7 +4,7 @@ import {
   isAnchorUrl,
   isSafeExternalUrl,
   sanitizeUrl,
-  externalTarget,
+  externalLinkTarget,
   resolveI18nHref,
   generatePageUrlPath,
   normalizeSiteUrl,
@@ -226,18 +226,18 @@ describe('sanitizeUrl', () => {
   })
 })
 
-describe('externalTarget', () => {
+describe('externalLinkTarget', () => {
   it('returns _blank for http(s) URLs', () => {
-    expect(externalTarget('https://example.com')).toBe('_blank')
-    expect(externalTarget('http://example.com')).toBe('_blank')
+    expect(externalLinkTarget('https://example.com')).toBe('_blank')
+    expect(externalLinkTarget('http://example.com')).toBe('_blank')
   })
 
   it('returns _blank for protocol-relative URLs', () => {
-    expect(externalTarget('//example.com')).toBe('_blank')
+    expect(externalLinkTarget('//example.com')).toBe('_blank')
   })
 
   it('returns undefined for local paths', () => {
-    expect(externalTarget('/path')).toBeUndefined()
-    expect(externalTarget('mailto:foo@example.com')).toBeUndefined()
+    expect(externalLinkTarget('/path')).toBeUndefined()
+    expect(externalLinkTarget('mailto:foo@example.com')).toBeUndefined()
   })
 })

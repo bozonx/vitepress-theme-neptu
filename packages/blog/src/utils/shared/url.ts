@@ -38,7 +38,7 @@ export const sanitizeUrl = (url?: string): string | undefined => {
 }
 
 /** `_blank` for external links, `undefined` for local ones. */
-export const externalTarget = (url?: string): '_blank' | undefined =>
+export const externalLinkTarget = (url?: string): '_blank' | undefined =>
   /^(?:https?:)?\/\//i.test(url ?? '') ? '_blank' : undefined
 
 export function normalizeSiteUrl(siteUrl: string | null | undefined): string | undefined {

@@ -3,7 +3,7 @@ import {
   makeAllPostsParams,
   makeFeaturedPostsParams,
   makeYearPostsParams,
-  makeMonthsParams,
+  makeYearMonthParams,
   makeTagsParams,
   makeCategoriesParams,
   makeAuthorsParams,
@@ -81,9 +81,9 @@ describe('makeYearPostsParams', () => {
   })
 })
 
-describe('makeMonthsParams', () => {
+describe('makeYearMonthParams', () => {
   it('returns empty array for empty posts', () => {
-    expect(makeMonthsParams([])).toEqual([])
+    expect(makeYearMonthParams([])).toEqual([])
   })
 
   it('creates unique year-month combinations', () => {
@@ -93,7 +93,7 @@ describe('makeMonthsParams', () => {
       { date: '2023-02-01' },
       { date: '2024-01-01' },
     ]
-    const result = makeMonthsParams(posts)
+    const result = makeYearMonthParams(posts)
     expect(result).toHaveLength(3)
     expect(result).toContainEqual({ params: { year: 2023, month: 1 } })
     expect(result).toContainEqual({ params: { year: 2023, month: 2 } })
@@ -104,7 +104,7 @@ describe('makeMonthsParams', () => {
     const posts = [
       { date: Date.parse('2023-06-15') },
     ]
-    expect(makeMonthsParams(posts)).toEqual([{ params: { year: 2023, month: 6 } }])
+    expect(makeYearMonthParams(posts)).toEqual([{ params: { year: 2023, month: 6 } }])
   })
 })
 

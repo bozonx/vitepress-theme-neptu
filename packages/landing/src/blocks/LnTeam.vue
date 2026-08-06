@@ -6,7 +6,7 @@ import LnHeading from '../primitives/LnHeading.vue'
 import LnGrid from '../primitives/LnGrid.vue'
 import LnCard from '../primitives/LnCard.vue'
 import LnIcon from '../primitives/LnIcon.vue'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 import type { HeadingProps, SectionProps, TeamGroup, TeamMember } from './types.ts'
 import { useSectionProps } from './sectionProps.ts'
 
@@ -81,8 +81,8 @@ const sectionProps = useSectionProps(props)
             :key="li"
             :href="resolveUrl(link.link)"
             class="ln-member__link"
-            :target="externalTarget(link.link)"
-            :rel="externalTarget(link.link) ? 'noreferrer' : undefined"
+            :target="externalLinkTarget(link.link)"
+            :rel="externalLinkTarget(link.link) ? 'noreferrer' : undefined"
             :aria-label="link.text ?? link.link"
           >
             <LnIcon v-if="link.icon" :icon="link.icon" size="1.05rem" />

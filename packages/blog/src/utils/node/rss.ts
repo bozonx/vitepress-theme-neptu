@@ -150,7 +150,7 @@ export function getRssFormatInfo(format: string): RssFormatInfo {
 }
 
 /** Gets RSS format settings from configuration */
-export function getRssFormats(config: RssSiteConfig): string[] {
+export function resolveRssFormats(config: RssSiteConfig): string[] {
   const configuredFormats = config.userConfig?.themeConfig?.feeds?.formats
   const knownFormats = new Set(['rss', 'atom', 'json'])
 

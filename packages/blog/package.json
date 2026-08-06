@@ -39,10 +39,6 @@
       "types": "./src/configs/index.ts",
       "import": "./src/configs/index.ts"
     },
-    "./helpers": {
-      "types": "./src/helpers.ts",
-      "import": "./src/helpers.ts"
-    },
     "./utils": {
       "types": "./src/utils/shared/index.ts",
       "import": "./src/utils/shared/index.ts"

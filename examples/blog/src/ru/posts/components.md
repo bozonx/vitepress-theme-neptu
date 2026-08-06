@@ -30,7 +30,7 @@ import { makeTagsList } from 'vitepress-theme-neptu/list-helpers'
 
 | Компонент | Назначение |
 | --- | --- |
-| `YoutubeVideo` | Адаптивный ролик YouTube |
+| `YouTubeVideo` | Адаптивный ролик YouTube |
 | `VideoFile` | Плеер локального видео |
 | `AudioFile` | Аудиоплеер со ссылкой на скачивание |
 | `FileDownload` | Кнопка скачивания файла |

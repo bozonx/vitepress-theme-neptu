@@ -168,7 +168,7 @@ export function removeBodyClass(doc: Document, className: string): void {
 /**
  * Check whether the document body has a given CSS class.
  */
-export function bodyHasClass(doc: Document, className: string): boolean {
+export function hasBodyClass(doc: Document, className: string): boolean {
   return doc.body.classList.contains(className)
 }
 

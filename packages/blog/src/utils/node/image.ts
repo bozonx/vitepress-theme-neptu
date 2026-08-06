@@ -7,7 +7,7 @@ export interface ImageDimensions {
   height: number
 }
 
-export interface ImageSizeResult extends ImageDimensions {
+export interface ImageMetadata extends ImageDimensions {
   type: string | undefined
 }
 
@@ -67,7 +67,7 @@ export function getImageDimensions(
 }
 
 /** Gets image dimensions from a buffer */
-export function getImageSize(buffer: Buffer): ImageSizeResult {
+export function getImageSize(buffer: Buffer): ImageMetadata {
   if (!Buffer.isBuffer(buffer)) {
     throw new Error('Input must be a Buffer')
   }

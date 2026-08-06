@@ -7,7 +7,7 @@ import {
   getFeedUrl,
   validateRssConfig,
   getRssFormatInfo,
-  getRssFormats,
+  resolveRssFormats,
   makeAuthorForRss,
 } from '../../../../src/utils/node/rss.ts'
 
@@ -179,20 +179,20 @@ describe('getRssFormatInfo', () => {
   })
 })
 
-describe('getRssFormats', () => {
+describe('resolveRssFormats', () => {
   it('returns defaults when no config', () => {
-    expect(getRssFormats({})).toEqual(['rss', 'atom', 'json'])
+    expect(resolveRssFormats({})).toEqual(['rss', 'atom', 'json'])
   })
 
   it('returns configured formats', () => {
     expect(
-      getRssFormats({ userConfig: { themeConfig: { feeds: { formats: ['rss', 'json'] } } } })
+      resolveRssFormats({ userConfig: { themeConfig: { feeds: { formats: ['rss', 'json'] } } } })
     ).toEqual(['rss', 'json'])
   })
 
   it('normalizes, deduplicates and filters invalid formats', () => {
     expect(
-      getRssFormats({
+      resolveRssFormats({
         userConfig: {
           themeConfig: { feeds: { formats: [' RSS ', 'atom', 'atom', 'invalid'] } },
         },

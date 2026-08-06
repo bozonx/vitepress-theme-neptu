@@ -5,7 +5,7 @@
  */
 import { computed } from 'vue'
 import LnIcon from './LnIcon.vue'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 import type { ButtonSize, ButtonVariant } from '../blocks/types.ts'
 
 const props = withDefaults(
@@ -27,7 +27,7 @@ const props = withDefaults(
 )
 
 const href = computed(() => resolveUrl(props.link))
-const target = computed(() => props.target ?? externalTarget(props.link))
+const target = computed(() => props.target ?? externalLinkTarget(props.link))
 const rel = computed(
   () => props.rel ?? (target.value === '_blank' ? 'noreferrer' : undefined)
 )

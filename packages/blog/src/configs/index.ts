@@ -6,7 +6,7 @@
 // feed, ...). Do not import from .vue / markdown files.
 
 export {
-  blogBaseConfig as blogCommonConfig,
+  blogBaseConfig,
   defineBlogConfig,
   defineBlogConfigSync,
   mergeBlogConfig,

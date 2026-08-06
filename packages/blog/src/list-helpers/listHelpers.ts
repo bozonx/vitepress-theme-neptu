@@ -1,5 +1,5 @@
 import type { PostLite, TaxonomyEntry } from '../types.d.ts'
-import { safeDateTime } from '../utils/shared/date.ts'
+import { safeGetTime } from '../utils/shared/date.ts'
 
 export type { PostLite }
 
@@ -178,7 +178,7 @@ export function makePostsOfMonthList(
   const curMonth = Number(month)
 
   return allPosts
-    .sort((a, b) => safeDateTime(b.date) - safeDateTime(a.date))
+    .sort((a, b) => safeGetTime(b.date) - safeGetTime(a.date))
     .filter((item) => {
       const postYear = safeGetYear(item.date)
       if (postYear !== curYear) return false

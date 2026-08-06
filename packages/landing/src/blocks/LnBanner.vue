@@ -14,7 +14,7 @@ import LnSection from '../primitives/LnSection.vue'
 import LnIcon from '../primitives/LnIcon.vue'
 import type { IconLike, SectionProps } from './types.ts'
 import { useSectionProps } from './sectionProps.ts'
-import { externalTarget, resolveUrl } from '../utils/url.ts'
+import { externalLinkTarget, resolveUrl } from '../utils/url.ts'
 
 const props = withDefaults(
   defineProps<
@@ -84,8 +84,8 @@ const sectionProps = useSectionProps(props)
         v-if="props.link && props.linkText"
         class="ln-banner__link"
         :href="resolveUrl(props.link)"
-        :target="externalTarget(props.link)"
-        :rel="externalTarget(props.link) ? 'noreferrer' : undefined"
+        :target="externalLinkTarget(props.link)"
+        :rel="externalLinkTarget(props.link) ? 'noreferrer' : undefined"
       >
         {{ props.linkText }}
       </a>

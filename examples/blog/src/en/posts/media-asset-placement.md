@@ -135,7 +135,7 @@ You are not locked into one approach. A common pattern:
 
 ## Media components
 
-The theme's built-in components (`YoutubeVideo`, `VideoFile`, `AudioFile`,
+The theme's built-in components (`YouTubeVideo`, `VideoFile`, `AudioFile`,
 `FileDownload`) also work with all three approaches. For local files, use
 absolute paths from the public directory:
 

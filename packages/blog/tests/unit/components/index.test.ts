@@ -27,6 +27,6 @@ describe('components barrel', () => {
   it('exports doc components', () => {
     expect(components).toHaveProperty('AudioFile')
     expect(components).toHaveProperty('FileDownload')
-    expect(components).toHaveProperty('YoutubeVideo')
+    expect(components).toHaveProperty('YouTubeVideo')
   })
 })

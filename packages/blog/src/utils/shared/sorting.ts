@@ -1,6 +1,6 @@
 import { arrayIntersection } from './array.ts'
 import { normalizeUrlPath } from './url.ts'
-import { safeDateTime } from './date.ts'
+import { safeGetTime } from './date.ts'
 
 
 interface SortablePost {
@@ -48,9 +48,9 @@ export function sortPosts<T extends SortablePost>(
       if (aHasStats && !bHasStats) return -1
       if (!aHasStats && bHasStats) return 1
 
-      return safeDateTime(b.date) - safeDateTime(a.date)
+      return safeGetTime(b.date) - safeGetTime(a.date)
     } else {
-      return safeDateTime(b.date) - safeDateTime(a.date)
+      return safeGetTime(b.date) - safeGetTime(a.date)
     }
   })
 }
@@ -100,7 +100,7 @@ export function sortSimilarPosts<T extends SortablePost>(
         tagScore: tagIntersection.length,
         hasStats,
         popularity: popularity as number,
-        dateTime: safeDateTime(post.date),
+        dateTime: safeGetTime(post.date),
       }
     })
     .filter(

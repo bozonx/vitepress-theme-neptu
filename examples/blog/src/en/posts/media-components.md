@@ -2,7 +2,7 @@
 title: Media Components — YouTube, Video, Audio, Download
 description: >
   Four components are auto-registered by the theme and usable in any markdown
-  file with no imports: YoutubeVideo, VideoFile, AudioFile, FileDownload.
+  file with no imports: YouTubeVideo, VideoFile, AudioFile, FileDownload.
 date: 2025-03-10T10:00:00Z
 authorId: ivan-k
 cover: https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop
@@ -21,16 +21,16 @@ The theme registers four media components globally, so you can drop them into an
 markdown file without importing anything. Each is rendered live below, followed
 by the exact tag that produced it.
 
-## YoutubeVideo
+## YouTubeVideo
 
 Responsive 16:9 YouTube embed. Pass the video `id` (the part after `?v=`).
 
-<YoutubeVideo id="dQw4w9WgXcQ" />
+<YouTubeVideo id="dQw4w9WgXcQ" />
 
 ### How it's done
 
 ```md
-<YoutubeVideo id="dQw4w9WgXcQ" />
+<YouTubeVideo id="dQw4w9WgXcQ" />
 ```
 
 ## VideoFile
@@ -84,5 +84,5 @@ A styled download button for any file.
 ## Mixing them
 
 You can combine all four in one post — e.g. a tutorial with a `<VideoFile>`
-screencast, a related `<YoutubeVideo>` talk, an `<AudioFile>` podcast version,
+screencast, a related `<YouTubeVideo>` talk, an `<AudioFile>` podcast version,
 and a `<FileDownload>` for the sample project.

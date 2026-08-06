@@ -2,7 +2,7 @@ import type { HeadConfig } from 'vitepress'
 import {
   getFeedUrl,
   getRssFormatInfo,
-  getRssFormats,
+  resolveRssFormats,
 } from '../utils/node/index.ts'
 import { normalizeSiteUrl } from '../utils/shared/url.ts'
 import { isHomePage } from '../utils/shared/index.ts'
@@ -37,7 +37,7 @@ export function addRssLinks({
   const siteUrl = normalizeSiteUrl(rawSiteUrl)!
   const supportedLocales = Object.keys(siteConfig.site.locales)
 
-  const rssFormats = getRssFormats(siteConfig)
+  const rssFormats = resolveRssFormats(siteConfig)
 
   for (const locale of supportedLocales) {
     const localeConfig = siteConfig.site.locales[locale]

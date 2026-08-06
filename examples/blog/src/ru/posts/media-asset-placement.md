@@ -113,7 +113,7 @@ cover: ./media/cover.jpg
 - При любом подходе, даже при статья с подпапкой media можно делать вложенную структуру - подстатьи
 - Все три подхода получают автоматические `width`/`height` и для обложек, и
 для отдельных изображений в тексте (тех, что оборачиваются в `<figure>`).
-- Встроенные компоненты темы (`YoutubeVideo`, `VideoFile`, `AudioFile`, `FileDownload`) работают со всеми тремя подходами. поле url укаызваете по такому же принципу: `<VideoFile url="/media/demo.mp4" />` или например `<VideoFile url="./media/demo.mp4" />`
+- Встроенные компоненты темы (`YouTubeVideo`, `VideoFile`, `AudioFile`, `FileDownload`) работают со всеми тремя подходами. поле url укаызваете по такому же принципу: `<VideoFile url="/media/demo.mp4" />` или например `<VideoFile url="./media/demo.mp4" />`
 - Обрабатываются файлы обычных медиа-расширений: изображения (`png`, `jpg`, `jpeg`,
 `gif`, `svg`, `webp`, `avif`, `ico`, `bmp`), видео (`mp4`, `webm`, `ogv`,
 `mov`, `m4v`), аудио (`mp3`, `wav`, `ogg`, `oga`, `m4a`, `flac`, `aac`) и

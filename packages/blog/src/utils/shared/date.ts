@@ -1,5 +1,5 @@
 /** Safely parse a date string/number into a timestamp. Returns 0 for invalid values. */
-export function safeDateTime(date: string | number | Date | null | undefined): number {
+export function safeGetTime(date: string | number | Date | null | undefined): number {
   if (!date) return 0
   const time = new Date(date).getTime()
   return Number.isFinite(time) ? time : 0
