@@ -10,6 +10,13 @@ const currentItem = computed(() => items.value[currentIndex.value])
 const hasMultiple = computed(() => items.value.length > 1)
 const loaded = ref(false)
 const containerRef = ref<HTMLDivElement | null>(null)
+const imgRef = ref<HTMLImageElement | null>(null)
+
+// SVG images without explicit width/height attributes collapse to 0x0 in flex
+// containers. We read naturalWidth/naturalHeight on load and set them as
+// explicit dimensions so the image is visible.
+const imgWidth = ref<number | undefined>(undefined)
+const imgHeight = ref<number | undefined>(undefined)
 
 // Zoom / pan state
 const scale = ref(1)
@@ -33,18 +40,41 @@ let hasDragged = false
 
 watch(currentIndex, () => {
   loaded.value = false
+  imgWidth.value = undefined
+  imgHeight.value = undefined
   resetZoom()
+  nextTick(() => {
+    if (imgRef.value?.complete) {
+      onImgLoad()
+    }
+  })
 })
 
 watch(isOpen, async (open) => {
   if (open) {
     loaded.value = false
+    imgWidth.value = undefined
+    imgHeight.value = undefined
     await nextTick()
     containerRef.value?.focus()
+    // Cached images may fire `load` before the @load listener is attached,
+    // so check completeness after the DOM is ready.
+    if (imgRef.value?.complete) {
+      onImgLoad()
+    }
   } else {
     resetZoom()
   }
 })
+
+function onImgLoad() {
+  loaded.value = true
+  const img = imgRef.value
+  if (img && img.naturalWidth > 0) {
+    imgWidth.value = img.naturalWidth
+    imgHeight.value = img.naturalHeight
+  }
+}
 
 function resetZoom() {
   scale.value = 1
@@ -216,21 +246,24 @@ onUnmounted(() => {
           @wheel.prevent="onWheel"
           @mousedown="onMouseDown"
         >
+          <img
+            ref="imgRef"
+            :src="currentItem?.src"
+            :alt="currentItem?.alt || ''"
+            :width="imgWidth"
+            :height="imgHeight"
+            class="lightbox-img will-change-[transform]"
+            :class="{ 'lightbox-img--zoomed': isZoomed }"
+            :style="imgStyle"
+            @load="onImgLoad"
+            @error="loaded = true"
+            @dblclick="resetZoom"
+            @click="onImageClick"
+          />
           <div v-if="!loaded" class="lightbox-loader" role="status">
             <Icon icon="mdi:loading" class="lightbox-spinner" />
             <span class="sr-only">{{ locales.loadingIndicatorLabel || 'Loading...' }}</span>
           </div>
-          <img
-            v-show="loaded"
-            :src="currentItem?.src"
-            :alt="currentItem?.alt || ''"
-            class="lightbox-img will-change-[transform]"
-            :class="{ 'lightbox-img--zoomed': isZoomed }"
-            :style="imgStyle"
-            @load="loaded = true"
-            @dblclick="resetZoom"
-            @click="onImageClick"
-          />
         </div>
 
         <!-- Caption -->
@@ -285,6 +318,7 @@ onUnmounted(() => {
 }
 
 .lightbox-img-wrap {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -306,12 +340,13 @@ onUnmounted(() => {
 }
 
 .lightbox-loader {
-  width: 64px;
-  height: 64px;
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  pointer-events: none;
 }
 
 .lightbox-spinner {
