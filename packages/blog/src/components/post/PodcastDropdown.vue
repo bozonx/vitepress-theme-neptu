@@ -40,3 +40,10 @@ const btnText = computed(() => theme.value.t.listenPodcast)
     </template>
   </DropdownButton>
 </template>
+
+<style scoped>
+.podcasts-btn :deep(.btn-base:hover) {
+  transform: none;
+}
+</style>
+
