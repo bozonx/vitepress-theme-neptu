@@ -100,7 +100,7 @@ export function consentToGtagPayload(
   const payload: Record<string, 'granted' | 'denied'> = {}
 
   for (const [category, signal] of Object.entries(CONSENT_SIGNAL_NAMES)) {
-    payload[signal] = state[category as keyof ConsentState] ? 'granted' : 'denied'
+    payload[signal] = state[category as keyof typeof CONSENT_SIGNAL_NAMES] ? 'granted' : 'denied'
   }
 
   return payload

@@ -165,4 +165,9 @@ describe('isValidMediaUrl', () => {
     expect(isValidMediaUrl('a.')).toBe(false)
     expect(isValidMediaUrl('.a')).toBe(false)
   })
+
+  it('rejects javascript: and vbscript: schemes', () => {
+    expect(isValidMediaUrl('javascript:alert(1)')).toBe(false)
+    expect(isValidMediaUrl('vbscript:msgbox("x")')).toBe(false)
+  })
 })

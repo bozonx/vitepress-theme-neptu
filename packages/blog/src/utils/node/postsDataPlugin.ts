@@ -19,6 +19,11 @@ interface VirtualModulePlugin {
       add(pattern: string | string[]): void
       on(event: string, handler: (filePath: string) => void): void
     }
+    config: {
+      logger: {
+        error(msg: string): void
+      }
+    }
     restart(): Promise<void>
   }): void
   handleHotUpdate?(ctx: { file: string; server: { restart(): Promise<void> } }): void | Promise<void>
@@ -170,7 +175,11 @@ export function createPostsDataPlugin(
 
         // The virtual module content depends on which locale folders exist,
         // so a restart is needed to re-scan and regenerate the imports.
-        server.restart().catch(() => {})
+        server.restart().catch((error: Error) => {
+          server.config.logger.error(
+            `[neptu-blog] Failed to restart dev server: ${error.message}`
+          )
+        })
       }
 
       server.watcher.on('add', onChange)

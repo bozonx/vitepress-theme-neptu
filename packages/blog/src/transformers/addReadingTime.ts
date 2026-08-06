@@ -49,8 +49,10 @@ export function addReadingTime(
 
     pageData.wordCount = metrics.wordCount
     pageData.readingMinutes = metrics.readingTime
-  } catch {
-    // A missing or unreadable source file is not worth failing a build over —
-    // the badge and the JSON-LD properties are simply omitted.
+  } catch (error) {
+    console.warn(
+      `[neptu-blog] Failed to compute reading time for ${pageData.filePath}:`,
+      (error as Error)?.message
+    )
   }
 }

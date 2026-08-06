@@ -30,7 +30,7 @@ export function filterSitemap(
       else return true
     })
     .map((item) => {
-      if (item.links && item.url.indexOf('/') === item.url.length - 1) {
+      if (item.links && item.url.endsWith('/')) {
         return { ...item, links: item.links.filter((link) => link.url) }
       } else return item
     })

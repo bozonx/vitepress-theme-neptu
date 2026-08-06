@@ -16,7 +16,7 @@ function scopedEval(expression: string, data: Record<string, unknown>): unknown 
     const paramNames = Object.keys(context)
     const paramValues = Object.values(context)
 
-    const func = new Function(...paramNames, `return (${trimmedExpr});`)
+    const func = new Function(...paramNames, `'use strict'; return (${trimmedExpr});`)
     const result = func(...paramValues)
 
     return result === null || result === undefined ? '' : result

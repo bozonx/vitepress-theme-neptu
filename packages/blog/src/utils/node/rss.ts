@@ -70,7 +70,9 @@ export function getFeedPath(localeIndex: string, format: string): string {
 }
 
 export function getFeedUrl(siteUrl: string, localeIndex: string, format: string): string {
-  return `${normalizeSiteUrl(siteUrl)!}${getFeedPath(localeIndex, format)}`
+  const normalized = normalizeSiteUrl(siteUrl)
+  if (!normalized) return getFeedPath(localeIndex, format)
+  return `${normalized}${getFeedPath(localeIndex, format)}`
 }
 
 /** Converts tags into RSS categories. */
@@ -81,7 +83,8 @@ export function tagsToRssCategories(
 ): RssCategory[] {
   if (!tags || !Array.isArray(tags)) return []
 
-  const baseUrl = normalizeSiteUrl(siteUrl)!
+  const baseUrl = normalizeSiteUrl(siteUrl)
+  if (!baseUrl) return []
 
   return (tags as unknown[])
     .map((tag) => normalizeTag(tag, localeIndex))
@@ -146,7 +149,12 @@ export function getFeedFormatInfo(format: string): RssFormatInfo {
     },
   }
 
-  return formats[format] ?? formats.rss!
+  const known = formats[format]
+  if (!known) {
+    console.warn(`[neptu-blog] Unknown RSS format "${format}", falling back to rss.`)
+    return formats.rss!
+  }
+  return known
 }
 
 /** Gets RSS format settings from configuration */
@@ -186,6 +194,6 @@ export function resolveRssAuthor(
 
   return {
     name: author.name,
-    link: `${normalizeSiteUrl(siteUrl)!}/authors/${author.id}/1`,
+    link: `${normalizeSiteUrl(siteUrl) ?? ''}/authors/${author.id}/1`,
   }
 }

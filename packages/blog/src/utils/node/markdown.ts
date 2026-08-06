@@ -6,13 +6,7 @@ import remarkRehype from 'remark-rehype'
 import strip from 'strip-markdown'
 import { truncateText } from '../shared/string.ts'
 import { removeTitleFromMarkdown } from '../shared/markdown.ts'
-
-const SAFE_URL_PROTOCOLS = new Set([
-  'http:',
-  'https:',
-  'mailto:',
-  'tel:',
-])
+import { isExternalUrl, sanitizeUrl } from '../shared/url.ts'
 
 interface RehypeNode {
   type: string
@@ -75,23 +69,13 @@ function sanitizeHtmlTree() {
   }
 }
 
-
-function isExternalUrl(value: string): boolean {
-  return /^(?:https?:)?\/\//i.test(value)
-}
-
 function isSafeUrl(value: string): boolean {
   if (!value) return false
-  if (value.startsWith('#') || value.startsWith('/')) return true
-  if (value.startsWith('./') || value.startsWith('../')) return true
-
-  try {
-    const parsed = new URL(value, 'https://example.com')
-    return SAFE_URL_PROTOCOLS.has(parsed.protocol)
-  } catch {
-    return false
-  }
+  if (value.startsWith('#') || value.startsWith('/') || value.startsWith('./') || value.startsWith('../')) return true
+  return sanitizeUrl(value) !== undefined
 }
+
+
 
 export function stripMd(mdContent: string | null | undefined): string {
   if (!mdContent) return mdContent ?? ''

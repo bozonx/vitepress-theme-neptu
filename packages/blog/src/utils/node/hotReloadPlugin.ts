@@ -63,17 +63,24 @@ export function createSiteYamlHotReloadPlugin(srcDir: string): Plugin {
         path.join(absSrcDir, '**/_authors.ts'),
       ])
 
+      let restartTimer: ReturnType<typeof setTimeout> | null = null
+
       const onChange = (changedPath: string): void => {
         if (!shouldHandle(changedPath)) return
-        server.config.logger.info(
-          `\n[neptu-blog] Site config changed: ${path.relative(absSrcDir, changedPath)} — restarting dev server...`,
-          { timestamp: true }
-        )
-        server.restart().catch((error: Error) => {
-          server.config.logger.error(
-            `[neptu-blog] Failed to restart dev server: ${error.message}`
+
+        if (restartTimer) clearTimeout(restartTimer)
+        restartTimer = setTimeout(() => {
+          restartTimer = null
+          server.config.logger.info(
+            `\n[neptu-blog] Site config changed: ${path.relative(absSrcDir, changedPath)} — restarting dev server...`,
+            { timestamp: true }
           )
-        })
+          server.restart().catch((error: Error) => {
+            server.config.logger.error(
+              `[neptu-blog] Failed to restart dev server: ${error.message}`
+            )
+          })
+        }, 300)
       }
 
       server.watcher.on('add', onChange)

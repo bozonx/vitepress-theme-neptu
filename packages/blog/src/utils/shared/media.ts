@@ -84,7 +84,11 @@ export function isValidMediaUrl(url: unknown): boolean {
   }
 
   try {
-    new URL(url)
+    const parsed = new URL(url)
+    const protocol = parsed.protocol.toLowerCase()
+    if (protocol === 'javascript:' || protocol === 'vbscript:') {
+      return false
+    }
     return true
   } catch {
     if (url.startsWith('/')) {

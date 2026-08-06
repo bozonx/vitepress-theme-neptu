@@ -95,9 +95,11 @@ export function resolveI18nHref(
   rawHref: string,
   localeIndex: string
 ): string {
-  const trimmed = String(rawHref).trim()
+  if (typeof rawHref !== 'string') {
+    return rawHref === null || rawHref === undefined ? '' : String(rawHref).trim()
+  }
+  const trimmed = rawHref.trim()
 
-  if (typeof rawHref !== 'string') return trimmed
   if (!trimmed) return rawHref
   // Main page
   else if (trimmed === '/') return '/' + localeIndex

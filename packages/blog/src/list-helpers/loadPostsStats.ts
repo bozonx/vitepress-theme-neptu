@@ -19,8 +19,14 @@ function warnNoAnalyticsData(): void {
   if (globalThis.warnedGaNoData) return
   globalThis.warnedGaNoData = true
   console.warn(
-    '\x1b[33m⚠️ Popular posts are enabled, but GA4 returned no data (or credentials missing). Popular posts list will be empty.\x1b[0m'
+    '\x1b[33mPopular posts are enabled, but GA4 returned no data (or credentials missing). Popular posts list will be empty.\x1b[0m'
   )
+}
+
+/** Reset module-level cache and warning state. Useful for tests and watch-mode rebuilds. */
+export function resetAnalyticsState(): void {
+  globalThis.loadingGaStatsPromise = null
+  globalThis.warnedGaNoData = false
 }
 
 export interface AnalyticsDataSource {
@@ -134,6 +140,11 @@ function parseCredentials(
     if (!jsonString.startsWith('{')) {
       if (fs.existsSync(jsonString)) {
         jsonString = fs.readFileSync(jsonString, 'utf-8')
+      } else {
+        console.warn(
+          `\x1b[33mCredentials file not found: ${jsonString}\x1b[0m`
+        )
+        return null
       }
     }
 
@@ -150,7 +161,7 @@ function parseCredentials(
     }
   } catch (err) {
     console.warn(
-      '\x1b[33m⚠️ Failed to parse Google Analytics credentials JSON.\x1b[0m',
+      '\x1b[33mFailed to parse Google Analytics credentials JSON.\x1b[0m',
       err
     )
   }
@@ -174,7 +185,7 @@ export async function mergeWithAnalytics(
       globalThis.loadingGaStatsPromise = loadGoogleAnalytics(dataSource)
     }
 
-    stats = await globalThis.loadingGaStatsPromise!
+    stats = await globalThis.loadingGaStatsPromise
 
     if (!stats || Object.keys(stats).length === 0) {
       warnNoAnalyticsData()
@@ -194,13 +205,13 @@ export async function mergeWithAnalytics(
 
     if (postsWithStatsCount > 0) {
       console.info(
-        `\x1b[32m📈 Merged GA stats for ${postsWithStatsCount} posts.\x1b[0m`
+        `\x1b[32mMerged GA stats for ${postsWithStatsCount} posts.\x1b[0m`
       )
     }
 
     return postsWithStats
   } catch (err) {
-    console.error('\x1b[31m❌ Error merging GA stats with posts:\x1b[0m', err)
+    console.error('\x1b[31mError merging GA stats with posts:\x1b[0m', err)
     warnNoAnalyticsData()
     return posts
   }
@@ -213,7 +224,7 @@ export async function loadGoogleAnalytics(
     const credentials = parseCredentials(dataSource)
     if (!credentials) {
       console.warn(
-        '\x1b[33m⚠️ No valid Google Analytics credentials provided (client_email and private_key are required).\x1b[0m'
+        '\x1b[33mNo valid Google Analytics credentials provided (client_email and private_key are required).\x1b[0m'
       )
       return {}
     }
@@ -230,7 +241,7 @@ export async function loadGoogleAnalytics(
     const url = `https://analyticsdata.googleapis.com/v1beta/properties/${dataSource.propertyId}:runReport`
 
     console.info(
-      `\x1b[36m🔍 Fetching GA stats for property ${dataSource.propertyId}...\x1b[0m`
+      `\x1b[36mFetching GA stats for property ${dataSource.propertyId}...\x1b[0m`
     )
 
     const response = await fetch(url, {
@@ -283,7 +294,7 @@ export async function loadGoogleAnalytics(
     const rows = data.rows
 
     if (!rows || rows.length === 0) {
-      console.warn('\x1b[33m⚠️ GA returned no data for this period.\x1b[0m')
+      console.warn('\x1b[33mGA returned no data for this period.\x1b[0m')
       return {}
     }
 
@@ -300,13 +311,13 @@ export async function loadGoogleAnalytics(
     })
 
     console.info(
-      `\x1b[32m✅ Loaded GA stats for ${Object.keys(stats).length} paths.\x1b[0m`
+      `\x1b[32mLoaded GA stats for ${Object.keys(stats).length} paths.\x1b[0m`
     )
 
     return stats
   } catch (err: unknown) {
     console.error(
-      '\x1b[31m❌ Critical error fetching Google Analytics data:\x1b[0m'
+      '\x1b[31mCritical error fetching Google Analytics data:\x1b[0m'
     )
     if (err instanceof Error) {
       console.error(err.message)

@@ -8,7 +8,7 @@ export function safeGetTime(date: string | number | Date | null | undefined): nu
 const EXCLUDED_WORDS = [
   'de', 'г', 'г.', 'of', 'van', 'der', 'den', 'del',
   'da', 'di', 'du', 'des', 'von', 'zu', 'zur',
-  'the', 'a', 'an', 'in', 'on', 'at', 'word-break',
+  'the', 'a', 'an', 'in', 'on', 'at',
 ]
 
 /** Determine whether a token represents a year. */
@@ -23,7 +23,7 @@ export function isMonthNameToken(item: string): boolean {
   return (
     cleanItem.length >= 3 &&
     !EXCLUDED_WORDS.includes(cleanItem) &&
-    /^[^\d.\-,]{3,}$/.test(item)
+    /^[^\d.\-,\s]{3,}$/.test(item)
   )
 }
 

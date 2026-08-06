@@ -75,7 +75,7 @@ export async function loadPostsData(
   const cacheKey = path.resolve(postsDir)
   const cache = cacheOpt ?? getDefaultCache()
 
-  if (cache[cacheKey] && cache[cacheKey].length > 0 && !ignoreCache) {
+  if (cache[cacheKey] && !ignoreCache) {
     return cache[cacheKey]!
   }
 
@@ -144,12 +144,14 @@ export async function loadPostsDataFromFiles(
     .filter((file) => file.endsWith('.md'))
     .map((file) => path.resolve(file))
     .sort()
-  const cacheKey = fullPaths.join('|')
+  const cacheKey = fullPaths.length > 0
+    ? `${fullPaths.length}:${fullPaths[0]}${fullPaths.length > 1 ? `:${fullPaths[fullPaths.length - 1]}` : ''}`
+    : ''
   const cache = cacheOpt ?? getDefaultCache()
 
   if (!fullPaths.length) return []
 
-  if (cache[cacheKey] && cache[cacheKey].length > 0 && !ignoreCache) {
+  if (cache[cacheKey] && !ignoreCache) {
     return cache[cacheKey]!
   }
 

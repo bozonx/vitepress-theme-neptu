@@ -38,7 +38,7 @@ describe('createConsentHeadScript', () => {
     const script = createConsentHeadScript()
 
     expect(script).toContain("gtag('consent','update'")
-    expect(script).toContain(`saved.v!==${CONSENT_SCHEMA_VERSION}`)
+    expect(script).toContain(`saved.schemaVersion!==${CONSENT_SCHEMA_VERSION}`)
   })
 
   it('reads the configured storage key', () => {
@@ -92,8 +92,8 @@ describe('createConsentHeadScript', () => {
           adUserData: false,
           adPersonalization: false,
           functional: true,
-          ts: 1,
-          v: CONSENT_SCHEMA_VERSION,
+          timestamp: 1,
+          schemaVersion: CONSENT_SCHEMA_VERSION,
         }),
     }) as unknown[]
 

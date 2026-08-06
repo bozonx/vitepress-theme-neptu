@@ -95,7 +95,9 @@ export function mdImage(md: unknown, { srcDir }: MdImageOptions = {}): void {
             linkToken.attrPush(['class', 'lightbox'])
           } else {
             const linkOpen = new state.Token('link_open', 'a', 1)
-            linkOpen.attrPush(['href', imageSrc || undefined])
+            if (imageSrc) {
+              linkOpen.attrPush(['href', imageSrc])
+            }
             linkOpen.attrPush(['class', 'lightbox'])
 
             const linkClose = new state.Token('link_close', 'a', -1)
