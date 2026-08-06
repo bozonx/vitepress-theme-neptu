@@ -116,14 +116,21 @@ GA_CREDENTIALS_JSON='{"type": "service_account", "client_email": "...", "private
 ```ts
 // .vitepress/config.ts
 export const popularPosts = {
+  // Включить интеграцию с GA4 (по умолчанию: false)
   enabled: true,
-  sortBy: 'pageviews', // 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage'
+  // Метрика сортировки: 'pageviews' | 'uniquePageviews' | 'avgTimeOnPage' (по умолчанию: 'pageviews')
+  sortBy: 'pageviews',
   dataSource: {
+    // Провайдер данных (пока только GA4)
     provider: 'ga4',
+    // Property ID ресурса GA4 (по умолчанию: null)
     propertyId: process.env.GA_PROPERTY_ID,
+    // JSON-ключ или путь к файлу (по умолчанию: null)
     credentialsJson: process.env.GA_CREDENTIALS_JSON,
-    // dataPeriodDays: 30,  // глубина выборки в днях (по умолчанию 30)
-    // dataLimit: 1000,     // сколько строк запрашивать у GA (по умолчанию 1000)
+    // Глубина выборки в днях (по умолчанию: 30)
+    // dataPeriodDays: 30,
+    // Максимум строк от GA (по умолчанию: 1000)
+    // dataLimit: 1000,
   },
 } satisfies NonNullable<ThemeConfig['popularPosts']>
 
@@ -135,19 +142,9 @@ export default async () => defineBlogConfig({
 })
 ```
 
+::: info
 Значение `popularPosts` используется дважды: его импортирует data-лоадер локали (`loadPosts.data.ts`) и оно же попадает в `themeConfig.popularPosts`.
-
-#### Параметры
-
-| Параметр | Тип | По умолчанию | Описание |
-| --- | --- | --- | --- |
-| `enabled` | `boolean` | `false` | Включить интеграцию с GA4 |
-| `sortBy` | `'pageviews' \| 'uniquePageviews' \| 'avgTimeOnPage'` | `'pageviews'` | Метрика сортировки |
-| `dataSource.provider` | `'ga4'` | `'ga4'` | Провайдер данных (пока только GA4) |
-| `dataSource.propertyId` | `string` | `null` | Property ID ресурса GA4 |
-| `dataSource.credentialsJson` | `string` | `null` | JSON-ключ или путь к файлу |
-| `dataSource.dataPeriodDays` | `number` | `30` | Глубина выборки в днях |
-| `dataSource.dataLimit` | `number` | `1000` | Максимум строк от GA |
+:::
 
 #### Метрики сортировки
 
