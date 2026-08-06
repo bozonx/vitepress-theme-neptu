@@ -27,7 +27,7 @@ const iconClass = computed(() => {
     v-bind="$attrs"
     role="menuitem"
     :custom-class="[
-      'menu-item w-full border-0! shadow-none! transition-none! transform-none! rounded-none py-2.5 px-[1.125rem]',
+      'menu-item w-full border-0! shadow-none! transition-none! transform-none! rounded-none! py-2.5 px-[1.125rem]',
       customClass,
     ]"
     inner-class="menu-item-inner"
@@ -39,6 +39,10 @@ const iconClass = computed(() => {
 </template>
 
 <style scoped>
+.menu-item {
+  border-radius: 0 !important;
+}
+
 /**** Lighter Btn for use on lighter background */
 .menu-item:hover {
   filter: brightness(99%);
