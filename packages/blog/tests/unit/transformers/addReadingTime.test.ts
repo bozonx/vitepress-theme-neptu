@@ -19,9 +19,9 @@ afterEach(() => {
 function makeSrcDir(content: string): string {
   const srcDir = fs.mkdtempSync(path.join(os.tmpdir(), 'neptu-reading-'))
   tempDirs.push(srcDir)
-  fs.mkdirSync(path.join(srcDir, 'en', 'post'), { recursive: true })
+  fs.mkdirSync(path.join(srcDir, 'en', 'posts'), { recursive: true })
   fs.writeFileSync(
-    path.join(srcDir, 'en', 'post', 'a.md'),
+    path.join(srcDir, 'en', 'posts', 'a.md'),
     `---\ntitle: A\n---\n\n${content}`,
     'utf8'
   )
