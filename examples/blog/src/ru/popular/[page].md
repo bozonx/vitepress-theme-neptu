@@ -8,7 +8,7 @@ head:
 ---
 
 <script setup>
-import { PopularPostsList } from 'vitepress-theme-neptu/components'
+import { PopularPostsList, UtilPageContent } from 'vitepress-theme-neptu/components'
 import { useData } from 'vitepress'
 
 const { params } = useData()
@@ -18,4 +18,6 @@ const { params } = useData()
   :curPage="params?.page"
 />
 
-В этом демосайте не может быть показан список популярныйх постов, так как он не подключен к Google аналитике. Но в вашем блоге здесь будут отображаться популярные посты, как их настроить смотрите в [документации](/ru/post/popular-posts).
+<UtilPageContent>
+  В этом демосайте не может быть показан список популярных постов, так как он не подключен к Google аналитике. Но в вашем блоге здесь будут отображаться популярные посты, как их настроить смотрите в <a href="/ru/post/popular-posts">документации</a>.
+</UtilPageContent>
