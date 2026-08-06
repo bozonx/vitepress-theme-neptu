@@ -63,6 +63,30 @@ export namespace NeptuBlogTheme {
     rootMeta?: { title?: string; description?: string }
   }
 
+  export type ResolvedBlogConfig = BlogUserConfig & {
+    head: NonNullable<UserConfig['head']>
+    locales: NonNullable<BlogUserConfig['locales']>
+    markdown: NonNullable<UserConfig['markdown']> & {
+      image: NonNullable<NonNullable<UserConfig['markdown']>['image']>
+    }
+    sitemap: NonNullable<UserConfig['sitemap']> & {
+      transformItems: NonNullable<
+        NonNullable<UserConfig['sitemap']>['transformItems']
+      >
+    }
+    themeConfig: Partial<Config> & {
+      popularPosts: NonNullable<Config['popularPosts']>
+      home: NonNullable<Config['home']>
+      feeds: NonNullable<Config['feeds']>
+      seo: NonNullable<Config['seo']>
+      t: I18nTranslations
+    }
+    vite: NonNullable<UserConfig['vite']> & {
+      ssr: NonNullable<NonNullable<UserConfig['vite']>['ssr']>
+      build: NonNullable<NonNullable<UserConfig['vite']>['build']>
+    }
+  }
+
   export interface Config extends DefaultTheme.Config {
     externalLinkIcon?: boolean
     /**
@@ -186,8 +210,6 @@ export namespace NeptuBlogTheme {
     stylePresetMenuLabel?: string
     /** Accessible label / tooltip for the locale switcher. */
     langMenuLabel?: string
-    /** Landing-only: hero image URL shown on the home page. */
-    heroImage?: string
 
     seo?: SeoConfig
     socialMediaShares?: SocialMediaShare[]
@@ -496,8 +518,8 @@ export namespace NeptuBlogTheme {
     canonical?: boolean
     autoCanonical?: boolean
     rssLinks?: boolean
+    rss?: boolean
     maxDescriptionLength?: number
-    [key: string]: boolean | number | undefined
   }
 
   export interface PopularPostsConfig {
@@ -939,6 +961,7 @@ export type HomeSectionConfig = NeptuBlogTheme.HomeSectionConfig
 export type SidebarLogo = NeptuBlogTheme.SidebarLogo
 export type ConsentConfig = NeptuBlogTheme.ConsentConfig
 export type ConsentState = NeptuBlogTheme.ConsentState
+export type ResolvedBlogConfig = NeptuBlogTheme.ResolvedBlogConfig
 
 declare const theme: Theme
 export default theme

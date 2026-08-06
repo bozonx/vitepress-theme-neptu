@@ -111,11 +111,11 @@ export function interpolateDollarTemplate(
 }
 
 export interface TruncateTextOptions {
-  mark?: string
-  position?: number
+  ellipsis?: string
+  splitPosition?: number
   respectWords?: boolean
   removeReturns?: boolean
-  markAtTheEnd?: boolean
+  appendEllipsis?: boolean
 }
 
 /** Truncate string with optional ellipsis and word-boundary respect */
@@ -125,14 +125,14 @@ export function truncateText(
   options: TruncateTextOptions = {}
 ): string {
   const {
-    mark = '\u2026',
-    position = length - 1,
+    ellipsis = '\u2026',
+    splitPosition = length - 1,
     respectWords = false,
     removeReturns = true,
-    markAtTheEnd = true,
+    appendEllipsis = true,
   } = options
 
-  if (typeof mark !== 'string' || typeof rawString !== 'string' || length <= 4)
+  if (typeof ellipsis !== 'string' || typeof rawString !== 'string' || length <= 4)
     return rawString
 
   let str = rawString
@@ -143,27 +143,27 @@ export function truncateText(
   }
 
   if (str.length < 4 || length >= str.length) return str
-  if (!markAtTheEnd) return str.substring(0, length)
+  if (!appendEllipsis) return str.substring(0, length)
 
   if (respectWords) {
     if (str.length <= length) return str
-    const maxTextLength = length - mark.length
-    if (maxTextLength <= 0) return mark
+    const maxTextLength = length - ellipsis.length
+    if (maxTextLength <= 0) return ellipsis
     const truncated = str.substring(0, maxTextLength)
     const lastSpaceIndex = truncated.lastIndexOf(' ')
     if (lastSpaceIndex > 0) {
-      return truncated.substring(0, lastSpaceIndex) + mark
+      return truncated.substring(0, lastSpaceIndex) + ellipsis
     }
-    return truncated + mark
+    return truncated + ellipsis
   }
 
-  if (position >= str.length || position >= length - mark.length) {
-    return str.substring(0, length - mark.length) + mark
+  if (splitPosition >= str.length || splitPosition >= length - ellipsis.length) {
+    return str.substring(0, length - ellipsis.length) + ellipsis
   }
 
-  const start = str.substring(0, position)
-  const end = str.slice(position + mark.length - length)
-  return `${start}${mark}${end}`
+  const start = str.substring(0, splitPosition)
+  const end = str.slice(splitPosition + ellipsis.length - length)
+  return `${start}${ellipsis}${end}`
 }
 
 /** Trim extension from filename */

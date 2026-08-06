@@ -1,6 +1,6 @@
 import { ref, onUnmounted } from 'vue'
 
-export function useScrollToTop(animationMs = 1000) {
+export function useScrollToTopButton(animationMs = 1000) {
   const isButtonVisible = ref(false)
   const opacity = ref(0)
   let animationTimeout: ReturnType<typeof setTimeout> | null = null

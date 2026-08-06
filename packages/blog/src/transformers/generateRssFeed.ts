@@ -18,7 +18,7 @@ import {
 } from '../utils/node/index.ts'
 import { makeAbsoluteUrl, normalizeSiteUrl } from '../utils/shared/url.ts'
 import { resolveContentMediaPath, resolveSidebarLogo } from '../utils/shared/media.ts'
-import { isPostVisible, resolveShowDrafts } from '../utils/shared/publication.ts'
+import { isPostListed, resolveShowDrafts } from '../utils/shared/publication.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
 
 /**
@@ -95,7 +95,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
         )
         const sortedPosts = posts
           .filter((post) =>
-            isPostVisible(post.frontmatter as PostFrontmatter, { showDrafts })
+            isPostListed(post.frontmatter as PostFrontmatter, { showDrafts })
           )
           .sort(
             (a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)

@@ -49,7 +49,7 @@ describe('consentToGtagPayload', () => {
 describe('parseStoredConsent', () => {
   it('round-trips a serialised decision', () => {
     const stored = parseStoredConsent(serializeConsent(CONSENT_GRANTED, 1234))
-    expect(stored).toEqual({ ...CONSENT_GRANTED, ts: 1234, v: CONSENT_SCHEMA_VERSION })
+    expect(stored).toEqual({ ...CONSENT_GRANTED, timestamp: 1234, schemaVersion: CONSENT_SCHEMA_VERSION })
   })
 
   it('returns null for missing or unparsable input', () => {
@@ -61,7 +61,7 @@ describe('parseStoredConsent', () => {
   it('rejects a record written by another schema version', () => {
     // Asking again beats holding the visitor to a decision about categories
     // that no longer exist.
-    const raw = JSON.stringify({ ...CONSENT_GRANTED, ts: 1, v: 999 })
+    const raw = JSON.stringify({ ...CONSENT_GRANTED, timestamp: 1, schemaVersion: 999 })
     expect(parseStoredConsent(raw)).toBeNull()
   })
 })

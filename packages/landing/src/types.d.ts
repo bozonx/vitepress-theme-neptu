@@ -63,6 +63,8 @@ export type LandingThemeConfig = Partial<
   Omit<ThemeConfig, 't' | keyof LandingChromeConfig>
 > &
   Partial<LandingChromeConfig> & {
+  /** Hero image URL shown on the home page. */
+  heroImage?: string
   t?: DeepPartial<I18nTranslations>
 }
 

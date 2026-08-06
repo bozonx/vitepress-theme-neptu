@@ -20,13 +20,13 @@ import type {
   ThemeConfig,
   I18nTranslations,
 } from '../types.d.ts'
-import siteBaseLocales from './landingLocalesBase/index.ts'
+import landingBaseLocales from './landingLocalesBase/index.ts'
 import { landingBaseConfig as siteCommon } from './landingConfigBase.ts'
 
 type SiteLocaleEntry = LocaleEntry
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
 
-const localeMap = siteBaseLocales as unknown as Record<string, SiteLocaleEntry>
+const localeMap = landingBaseLocales as unknown as Record<string, SiteLocaleEntry>
 
 /**
  * Processes a VitePress sidebar config (keyed by section name) by applying

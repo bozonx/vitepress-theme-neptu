@@ -49,7 +49,7 @@ vi.mock('vitepress-theme-neptu/utils', () => ({
       Object.assign(pageData, returned)
     }
   }),
-  commonBaseConfig: {
+  sharedBaseConfig: {
     head: [
       ['meta', { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' }],
       ['link', { rel: 'icon', sizes: '16x16', href: '/img/favicon-16x16.png' }],

@@ -12,7 +12,7 @@ import {
   asTransformHeadContext,
   mergeReturnedPageData,
   hasTailwindPlugin,
-  commonBaseConfig,
+  sharedBaseConfig,
   normalizeSitemapUrl,
   prefixSitemapItems,
   resolveSitemapSiteUrl,
@@ -60,33 +60,10 @@ import type {
   ThemeConfig,
   SeoConfig,
   I18nTranslations,
+  ResolvedBlogConfig,
 } from '../types.d.ts'
 
-type ResolvedBlogConfig = BlogUserConfig & {
-  head: NonNullable<UserConfig['head']>
-  locales: NonNullable<BlogUserConfig['locales']>
-  markdown: NonNullable<UserConfig['markdown']> & {
-    image: NonNullable<NonNullable<UserConfig['markdown']>['image']>
-  }
-  sitemap: NonNullable<UserConfig['sitemap']> & {
-    transformItems: NonNullable<
-      NonNullable<UserConfig['sitemap']>['transformItems']
-    >
-  }
-  themeConfig: Partial<ThemeConfig> & {
-    popularPosts: NonNullable<ThemeConfig['popularPosts']>
-    home: NonNullable<ThemeConfig['home']>
-    feeds: NonNullable<ThemeConfig['feeds']>
-    seo: NonNullable<ThemeConfig['seo']>
-    t: I18nTranslations
-  }
-  vite: NonNullable<UserConfig['vite']> & {
-    ssr: NonNullable<NonNullable<UserConfig['vite']>['ssr']>
-    build: NonNullable<NonNullable<UserConfig['vite']>['build']>
-  }
-}
-
-const commonThemeConfig = {
+const defaultBlogThemeConfig = {
   externalLinkIcon: true,
 
   // Both theme pickers are demo controls. A production blog ships one chosen
@@ -204,8 +181,8 @@ const commonThemeConfig = {
 } satisfies Partial<ThemeConfig>
 
 export const blogBaseConfig: BlogUserConfig = {
-  ...commonBaseConfig,
-  themeConfig: commonThemeConfig,
+  ...sharedBaseConfig,
+  themeConfig: defaultBlogThemeConfig,
 }
 
 const LOG_PREFIX = '[vitepress-theme-neptu]'
@@ -250,7 +227,7 @@ function resolvePrimaryLocale(
 export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
   const externalLinkIcon = resolveExternalLinkIcon(
     config.themeConfig?.externalLinkIcon,
-    commonThemeConfig.externalLinkIcon
+    defaultBlogThemeConfig.externalLinkIcon
   )
 
   const noIndexUrls = new Set<string>()
@@ -342,7 +319,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
         // Places in-content ad slots while the page is compiled, so they are
         // part of the server-rendered HTML instead of appearing after load.
         md.use(mdAdSlots, {
-          ads: { ...commonThemeConfig.ads, ...config.themeConfig?.ads },
+          ads: { ...defaultBlogThemeConfig.ads, ...config.themeConfig?.ads },
         })
 
         if (config.markdown?.config) {
@@ -356,65 +333,65 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       ...config.themeConfig,
 
       popularPosts: {
-        ...commonThemeConfig.popularPosts,
+        ...defaultBlogThemeConfig.popularPosts,
         ...config.themeConfig?.popularPosts,
         dataSource: {
-          ...commonThemeConfig.popularPosts.dataSource,
+          ...defaultBlogThemeConfig.popularPosts.dataSource,
           ...config.themeConfig?.popularPosts?.dataSource,
         },
       },
 
       home: {
-        ...commonThemeConfig.home,
+        ...defaultBlogThemeConfig.home,
         ...config.themeConfig?.home,
         ...(config.themeConfig?.home?.hero
           ? { hero: { ...config.themeConfig.home.hero } }
           : {}),
         sections:
-          config.themeConfig?.home?.sections ?? commonThemeConfig.home.sections,
+          config.themeConfig?.home?.sections ?? defaultBlogThemeConfig.home.sections,
       },
 
       postList: {
-        ...commonThemeConfig.postList,
+        ...defaultBlogThemeConfig.postList,
         ...config.themeConfig?.postList,
       },
 
       readingTime: {
-        ...commonThemeConfig.readingTime,
+        ...defaultBlogThemeConfig.readingTime,
         ...config.themeConfig?.readingTime,
       },
 
       drafts: {
-        ...commonThemeConfig.drafts,
+        ...defaultBlogThemeConfig.drafts,
         ...config.themeConfig?.drafts,
       },
 
       feeds: {
-        ...commonThemeConfig.feeds,
+        ...defaultBlogThemeConfig.feeds,
         ...config.themeConfig?.feeds,
       },
 
       seo: {
-        ...commonThemeConfig.seo,
+        ...defaultBlogThemeConfig.seo,
         ...config.themeConfig?.seo,
       },
 
       toc: {
-        ...commonThemeConfig.toc,
+        ...defaultBlogThemeConfig.toc,
         ...config.themeConfig?.toc,
       },
 
       ads: {
-        ...commonThemeConfig.ads,
+        ...defaultBlogThemeConfig.ads,
         ...config.themeConfig?.ads,
         inContent: {
-          ...commonThemeConfig.ads.inContent,
+          ...defaultBlogThemeConfig.ads.inContent,
           ...config.themeConfig?.ads?.inContent,
         },
       },
 
       consent: {
-        ...commonThemeConfig.consent,
+        ...defaultBlogThemeConfig.consent,
         ...config.themeConfig?.consent,
       },
 

@@ -49,7 +49,7 @@ export function createConsentHeadScript(config?: ConsentConfig): string {
     `var raw=localStorage.getItem(${JSON.stringify(storageKey)});` +
     `if(!raw)return;` +
     `var saved=JSON.parse(raw);` +
-    `if(!saved||saved.v!==${CONSENT_SCHEMA_VERSION})return;` +
+    `if(!saved||saved.schemaVersion!==${CONSENT_SCHEMA_VERSION})return;` +
     `var names=${signals},update={};` +
     `for(var k in names){update[names[k]]=saved[k]?'granted':'denied'}` +
     `gtag('consent','update',update);` +

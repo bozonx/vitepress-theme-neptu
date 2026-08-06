@@ -16,7 +16,7 @@ export {
   defineLocaleConfig,
   defineAuthorsList,
   type SiteYamlConfig,
-} from './defineSite.ts'
+} from './defineBlogSite.ts'
 export {
   createThemeHeadScript,
   COLOR_STORAGE_KEY,

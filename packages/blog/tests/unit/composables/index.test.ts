@@ -8,7 +8,7 @@ describe('composables barrel', () => {
     expect(composables).toHaveProperty('useLightbox')
     expect(composables).toHaveProperty('useScrollY')
     expect(composables).toHaveProperty('useSwipeDrawer')
-    expect(composables).toHaveProperty('useScrollToTop')
+    expect(composables).toHaveProperty('useScrollToTopButton')
     expect(composables).toHaveProperty('useThemeConfig')
   })
 })

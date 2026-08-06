@@ -8,7 +8,7 @@ import {
   SiteYamlSchema,
   AuthorsListSchema,
   validateAndWarn,
-} from '../../configs/siteSchema.ts'
+} from '../../configs/blogSchema.ts'
 
 // YAML file (inside the locale folder) holding the per-locale site config.
 export const LOCALE_SITE_FILE = '_site.yaml'

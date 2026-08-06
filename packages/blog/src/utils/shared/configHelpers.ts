@@ -73,10 +73,10 @@ export const commonHead: HeadConfig[] = [
 ]
 
 /**
- * Common base config fields shared by both themes (excluding `themeConfig`,
+ * Shared base config fields shared by both themes (excluding `themeConfig`,
  * which differs between blog and landing).
  */
-export const commonBaseConfig = {
+export const sharedBaseConfig = {
   head: commonHead,
   lastUpdated: true,
   cleanUrls: true,

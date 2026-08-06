@@ -8,7 +8,7 @@
  * unlisted and marked `noindex`.
  */
 
-export interface PostVisibilityOptions {
+export interface PostListingOptions {
   /**
    * Keep drafts in the result. Defaults to `false` — callers that want the
    * dev-server behaviour pass {@link areDraftsVisibleByDefault}.
@@ -47,9 +47,9 @@ export function resolveShowDrafts(
 }
 
 /** True when the post belongs in public listings. */
-export function isPostVisible(
+export function isPostListed(
   frontmatter: PublicationFrontmatter | undefined,
-  options: PostVisibilityOptions = {}
+  options: PostListingOptions = {}
 ): boolean {
   if (options.showDrafts) return true
 

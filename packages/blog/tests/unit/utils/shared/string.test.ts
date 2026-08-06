@@ -80,8 +80,8 @@ describe('truncateText', () => {
     expect(truncateText('abc', 4)).toBe('abc')
   })
 
-  it('returns rawString when mark is not a string', () => {
-    expect(truncateText('abcdef', 3, { mark: 123 as any })).toBe('abcdef')
+  it('returns rawString when ellipsis is not a string', () => {
+    expect(truncateText('abcdef', 3, { ellipsis: 123 as any })).toBe('abcdef')
   })
 
   it('returns rawString when shorter than limit', () => {
@@ -100,8 +100,8 @@ describe('truncateText', () => {
     expect(truncateText('Hello world there', 12, { respectWords: true })).toBe('Hello…')
   })
 
-  it('returns mark when text is too short for mark', () => {
-    expect(truncateText('abcdefgh', 5, { respectWords: true, mark: '.....' })).toBe('.....')
+  it('returns ellipsis when text is too short for ellipsis', () => {
+    expect(truncateText('abcdefgh', 5, { respectWords: true, ellipsis: '.....' })).toBe('.....')
   })
 
   it('removes returns by default', () => {
@@ -114,16 +114,16 @@ describe('truncateText', () => {
     expect(result.endsWith('…')).toBe(true)
   })
 
-  it('supports custom position', () => {
-    expect(truncateText('abcdefgh', 5, { position: 2 })).toBe('ab…gh')
+  it('supports custom splitPosition', () => {
+    expect(truncateText('abcdefgh', 5, { splitPosition: 2 })).toBe('ab…gh')
   })
 
-  it('supports custom mark', () => {
-    expect(truncateText('abcdefgh', 5, { mark: '...' })).toBe('ab...')
+  it('supports custom ellipsis', () => {
+    expect(truncateText('abcdefgh', 5, { ellipsis: '...' })).toBe('ab...')
   })
 
-  it('returns plain substring when markAtTheEnd is false', () => {
-    expect(truncateText('abcdefgh', 5, { markAtTheEnd: false })).toBe('abcde')
+  it('returns plain substring when appendEllipsis is false', () => {
+    expect(truncateText('abcdefgh', 5, { appendEllipsis: false })).toBe('abcde')
   })
 })
 

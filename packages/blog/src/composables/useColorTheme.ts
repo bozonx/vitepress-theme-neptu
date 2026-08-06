@@ -6,7 +6,7 @@ export interface ColorThemeOption {
   color: string
 }
 
-export const COLOR_THEME_OPTIONS: ColorThemeOption[] = [
+export const COLOR_THEME_PRESETS: ColorThemeOption[] = [
   { id: 'blue', label: 'Blue', color: 'hsl(213, 66%, 46%)' },
   { id: 'green', label: 'Green', color: 'hsl(115, 70%, 37%)' },
   { id: 'purple', label: 'Purple', color: 'hsl(270, 66%, 46%)' },
@@ -64,6 +64,6 @@ export function useColorTheme() {
   return {
     activeThemeId,
     setColorTheme,
-    colorThemes: COLOR_THEME_OPTIONS,
+    colorThemes: COLOR_THEME_PRESETS,
   }
 }

@@ -3,7 +3,7 @@ import {
   SiteYamlSchema,
   AuthorsListSchema,
   validateAndWarn,
-} from '../../../src/configs/siteSchema.ts'
+} from '../../../src/configs/blogSchema.ts'
 
 describe('SiteYamlSchema', () => {
   it('accepts a minimal config', () => {

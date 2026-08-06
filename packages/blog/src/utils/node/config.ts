@@ -66,7 +66,7 @@ function resolveLocaleTemplates(
  * that generic deep-merge does not touch them — they are merged separately
  * with by-id / by-name strategies.
  */
-function extractThemeArrays(
+function extractMergeableThemeArrays(
   site: Record<string, unknown>
 ): {
   site: Record<string, unknown>
@@ -134,7 +134,7 @@ async function loadBlogLocaleYamlChain(
     logPrefix: '[vitepress-theme-neptu]',
     prepareSite: async (rawSite) => {
       const { site: siteWithoutArrays, authors: siteAuthors, socialMediaShares } =
-        extractThemeArrays(rawSite)
+        extractMergeableThemeArrays(rawSite)
       const localeParams = { ...templateParams, localeIndex }
       const authorsFile = (await parseLocaleAuthors(srcDir, localeParams)) as Author[]
       return {
@@ -232,7 +232,7 @@ export async function loadBlogLocale(
     t: (themeForTemplates.t as Record<string, unknown> | undefined) ?? {},
   })) as Record<string, unknown>
   const { site: sharedSiteSanitized, authors: sharedAuthors, socialMediaShares: sharedSocialShares } =
-    extractThemeArrays(sharedSite)
+    extractMergeableThemeArrays(sharedSite)
   const { repo: _sharedYamlRepo, ...sharedThemeConfig } = extractThemeConfig(sharedSiteSanitized)
 
   const resolvedTheme = deepMerge(themeForTemplates, sharedThemeConfig)

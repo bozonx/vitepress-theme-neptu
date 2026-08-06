@@ -4,7 +4,7 @@ export function debounce<T extends (...args: unknown[]) => void>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | undefined
-  return function executedFunction(...args: Parameters<T>) {
+  return function debounced(...args: Parameters<T>) {
     const later = () => {
       clearTimeout(timeout)
       func(...args)

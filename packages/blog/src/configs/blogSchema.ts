@@ -185,7 +185,6 @@ export const AuthorsListSchema = z.array(AuthorSchema)
 
 const ThemeConfigSchema = z
   .looseObject({
-    heroImage: z.string().optional(),
     repo: z.never({
       error: 'repo is a developer setting — set it in .vitepress/config.ts, not in YAML',
     }).optional(),

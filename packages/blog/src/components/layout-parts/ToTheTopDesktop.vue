@@ -2,14 +2,14 @@
 import { Icon } from '@iconify/vue'
 import { watch } from 'vue'
 import { useThemeConfig } from '../../composables/useThemeConfig.ts'
-import { useScrollToTop } from '../../composables/useScrollToTop.ts'
+import { useScrollToTopButton } from '../../composables/useScrollToTopButton.ts'
 
 const props = defineProps<{
   scrollY: number
 }>()
 const { theme } = useThemeConfig()
 const SCROLL_BREAKPOINT = 1080
-const { isButtonVisible, opacity, show, hide, handleClick, animationMs } = useScrollToTop()
+const { isButtonVisible, opacity, show, hide, handleClick, animationMs } = useScrollToTopButton()
 
 watch(
   () => props.scrollY,

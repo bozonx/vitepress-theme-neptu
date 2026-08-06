@@ -9,7 +9,7 @@ import {
 import { makePreviewItem } from './makePreviewItem.ts'
 import {
   areDraftsVisibleByDefault,
-  isPostVisible,
+  isPostListed,
 } from '../utils/shared/publication.ts'
 import type { Post } from '../types.d.ts'
 
@@ -49,7 +49,7 @@ export interface LoadPostsOptions {
 function applyVisibility(posts: Post[], showDrafts: boolean): Post[] {
   if (showDrafts) return posts
 
-  return posts.filter((post) => isPostVisible(post.frontmatter))
+  return posts.filter((post) => isPostListed(post.frontmatter))
 }
 
 /** Loads all posts from the `<localeDir>/posts` directory. */

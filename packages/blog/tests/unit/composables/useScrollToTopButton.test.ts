@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
-import { useScrollToTop } from '../../../src/composables/useScrollToTop.ts'
+import { useScrollToTopButton } from '../../../src/composables/useScrollToTopButton.ts'
 
-describe('useScrollToTop', () => {
+describe('useScrollToTopButton', () => {
   beforeEach(() => {
     vi.useFakeTimers()
   })
@@ -23,7 +23,7 @@ describe('useScrollToTop', () => {
     }
     const TestComp = defineComponent({
       setup() {
-        const composable = animationMs !== undefined ? useScrollToTop(animationMs) : useScrollToTop()
+        const composable = animationMs !== undefined ? useScrollToTopButton(animationMs) : useScrollToTopButton()
         result.isButtonVisible = composable.isButtonVisible
         result.opacity = composable.opacity
         result.show = composable.show
@@ -101,7 +101,7 @@ describe('useScrollToTop', () => {
     const clearSpy = vi.spyOn(globalThis, 'clearTimeout')
     const TestComp = defineComponent({
       setup() {
-        const { show, hide } = useScrollToTop()
+        const { show, hide } = useScrollToTopButton()
         show()
         hide()
         return {}

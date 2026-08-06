@@ -11,7 +11,7 @@ import {
   asTransformContext,
   asTransformHeadContext,
   mergeReturnedPageData,
-  commonBaseConfig,
+  sharedBaseConfig,
   normalizeSitemapUrl,
   prefixSitemapItems,
   resolveSitemapSiteUrl,
@@ -41,7 +41,7 @@ import {
 } from 'vitepress-theme-neptu/transformers'
 import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
 import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
-import siteBaseLocales from './landingLocalesBase/index.ts'
+import landingBaseLocales from './landingLocalesBase/index.ts'
 import { autoLoadLocales } from './loadLocale.ts'
 import { createLandingHeadScript } from './headScript.ts'
 // Imported from the modules rather than the barrels: the `configs` barrel
@@ -61,7 +61,7 @@ import type {
 // Common defaults
 // ---------------------------------------------------------------------------
 
-const commonThemeConfig = {
+const defaultLandingThemeConfig = {
   externalLinkIcon: true,
   i18nRouting: true,
   heroImage: '/img/home-logo.webp',
@@ -97,8 +97,8 @@ const commonThemeConfig = {
 } satisfies Partial<LandingThemeConfig>
 
 export const landingBaseConfig: LandingUserConfig = {
-  ...commonBaseConfig,
-  themeConfig: commonThemeConfig,
+  ...sharedBaseConfig,
+  themeConfig: defaultLandingThemeConfig,
 }
 
 const LOG_PREFIX = '[vitepress-theme-neptu-landing]'
@@ -118,7 +118,7 @@ export function mergeLandingConfig(
 ): ResolvedLandingConfig {
   const externalLinkIcon = resolveExternalLinkIcon(
     config.themeConfig?.externalLinkIcon,
-    commonThemeConfig.externalLinkIcon
+    defaultLandingThemeConfig.externalLinkIcon
   )
 
   const noIndexUrls = new Set<string>()
@@ -128,10 +128,10 @@ export function mergeLandingConfig(
     config.primaryLocale || Object.keys(config.locales || {})[0]
   const baseLocaleKey = resolveBaseLocaleKey(
     primaryLocaleKey,
-    siteBaseLocales as unknown as Record<string, unknown>
+    landingBaseLocales as unknown as Record<string, unknown>
   )
   const baseLocale = (
-    siteBaseLocales as unknown as Record<string, { t: Record<string, unknown> }>
+    landingBaseLocales as unknown as Record<string, { t: Record<string, unknown> }>
   )[baseLocaleKey]
   const primaryLocaleTheme = (
     (config.locales || {})[primaryLocaleKey] as
@@ -228,7 +228,7 @@ export function mergeLandingConfig(
         // Places in-content ad slots while the page is compiled, so they are
         // part of the server-rendered HTML instead of appearing after load.
         md.use(mdAdSlots, {
-          ads: { ...commonThemeConfig.ads, ...config.themeConfig?.ads },
+          ads: { ...defaultLandingThemeConfig.ads, ...config.themeConfig?.ads },
         })
 
         if (config.markdown?.config) {
@@ -245,21 +245,21 @@ export function mergeLandingConfig(
         : undefined,
 
       seo: {
-        ...commonThemeConfig.seo,
+        ...defaultLandingThemeConfig.seo,
         ...config.themeConfig?.seo,
       },
 
       ads: {
-        ...commonThemeConfig.ads,
+        ...defaultLandingThemeConfig.ads,
         ...config.themeConfig?.ads,
         inContent: {
-          ...commonThemeConfig.ads.inContent,
+          ...defaultLandingThemeConfig.ads.inContent,
           ...config.themeConfig?.ads?.inContent,
         },
       },
 
       consent: {
-        ...commonThemeConfig.consent,
+        ...defaultLandingThemeConfig.consent,
         ...config.themeConfig?.consent,
       },
 

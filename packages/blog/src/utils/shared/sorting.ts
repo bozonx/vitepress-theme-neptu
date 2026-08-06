@@ -23,25 +23,25 @@ export function getFeaturedPosts<T extends SortablePost & { featured?: boolean }
 /** Sorts posts by popularity or by date. */
 export function sortPosts<T extends SortablePost>(
   posts: T[] | null | undefined,
-  sortBy?: string,
-  byPopularity: boolean = false
+  popularityMetric?: string,
+  sortByPopularity: boolean = false
 ): T[] {
   if (!posts || !Array.isArray(posts)) return []
 
-  if (byPopularity && !sortBy) {
-    console.warn('⚠️ Warning: function sortPosts: sortBy is not defined')
+  if (sortByPopularity && !popularityMetric) {
+    console.warn('⚠️ Warning: function sortPosts: popularityMetric is not defined')
     return posts
   }
 
   return [...posts].sort((a, b) => {
-    if (byPopularity && sortBy) {
+    if (sortByPopularity && popularityMetric) {
       // Sort by popularity
-      const aHasStats = Number.isFinite(a.analyticsStats?.[sortBy])
-      const bHasStats = Number.isFinite(b.analyticsStats?.[sortBy])
+      const aHasStats = Number.isFinite(a.analyticsStats?.[popularityMetric])
+      const bHasStats = Number.isFinite(b.analyticsStats?.[popularityMetric])
 
       if (aHasStats && bHasStats && a.analyticsStats && b.analyticsStats) {
-        const aValue = a.analyticsStats[sortBy] as number
-        const bValue = b.analyticsStats[sortBy] as number
+        const aValue = a.analyticsStats[popularityMetric] as number
+        const bValue = b.analyticsStats[popularityMetric] as number
         return bValue - aValue
       }
 
@@ -77,7 +77,7 @@ export function sortSimilarPosts<T extends SortablePost>(
   posts: T[] | null | undefined,
   currentPostTags: Array<{ slug?: string }> | null | undefined,
   currentPostUrl: string,
-  sortBy?: string,
+  popularityMetric?: string,
   limit: number = 5
 ): T[] {
   if (!posts || !Array.isArray(posts)) return []
@@ -90,9 +90,9 @@ export function sortSimilarPosts<T extends SortablePost>(
       const normalizedPostUrl = normalizeUrlPath(post.url)
       const tagIntersection = getTagsIntersection(post.tags, currentPostTags)
       const hasStats =
-        sortBy && Number.isFinite(post.analyticsStats?.[sortBy])
+        popularityMetric && Number.isFinite(post.analyticsStats?.[popularityMetric])
       const popularity =
-        hasStats && post.analyticsStats ? post.analyticsStats[sortBy] : 0
+        hasStats && post.analyticsStats ? post.analyticsStats[popularityMetric] : 0
 
       return {
         post,

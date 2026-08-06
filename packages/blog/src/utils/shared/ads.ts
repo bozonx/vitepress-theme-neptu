@@ -19,9 +19,9 @@ export type AdPlacement = 'aside' | 'in-content' | 'after-content'
  * section break instead of splitting an argument in half, and `start: 2`
  * leaves the opening section clean.
  */
-export type InContentRule = Required<NonNullable<AdsConfig['inContent']>>
+export type InContentAdRule = Required<NonNullable<AdsConfig['inContent']>>
 
-export const DEFAULT_ADS_IN_CONTENT: InContentRule = {
+export const DEFAULT_ADS_IN_CONTENT: InContentAdRule = {
   enabled: true,
   anchor: 'heading',
   start: 2,
@@ -83,6 +83,6 @@ export function requiresAdConsent(
  */
 export function resolveInContentRule(
   ads: AdsConfig | null | undefined
-): InContentRule {
+): InContentAdRule {
   return { ...DEFAULT_ADS_IN_CONTENT, ...ads?.inContent }
 }

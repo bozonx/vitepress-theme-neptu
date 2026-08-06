@@ -34,9 +34,9 @@ export type { ConsentState }
 /** A stored decision — the state plus when it was recorded. */
 export interface StoredConsent extends ConsentState {
   /** Epoch milliseconds. */
-  ts: number
+  timestamp: number
   /** Schema version, so a future category change can invalidate old records. */
-  v: number
+  schemaVersion: number
 }
 
 export const CONSENT_SCHEMA_VERSION = 1
@@ -119,12 +119,12 @@ export function parseStoredConsent(
   try {
     const parsed = JSON.parse(raw) as Partial<StoredConsent>
     if (!parsed || typeof parsed !== 'object') return null
-    if (parsed.v !== CONSENT_SCHEMA_VERSION) return null
+    if (parsed.schemaVersion !== CONSENT_SCHEMA_VERSION) return null
 
     return {
       ...normalizeConsent(parsed),
-      ts: typeof parsed.ts === 'number' ? parsed.ts : 0,
-      v: CONSENT_SCHEMA_VERSION,
+      timestamp: typeof parsed.timestamp === 'number' ? parsed.timestamp : 0,
+      schemaVersion: CONSENT_SCHEMA_VERSION,
     }
   } catch {
     return null
@@ -138,7 +138,7 @@ export function serializeConsent(
 ): string {
   return JSON.stringify({
     ...state,
-    ts: now,
-    v: CONSENT_SCHEMA_VERSION,
+    timestamp: now,
+    schemaVersion: CONSENT_SCHEMA_VERSION,
   } satisfies StoredConsent)
 }

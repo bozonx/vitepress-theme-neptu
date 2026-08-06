@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from 'vitest'
 import {
   areDraftsVisibleByDefault,
   isDraft,
-  isPostVisible,
+  isPostListed,
   resolveShowDrafts,
 } from '../../../../src/utils/shared/publication.ts'
 
@@ -26,14 +26,14 @@ describe('isDraft', () => {
   })
 })
 
-describe('isPostVisible', () => {
+describe('isPostListed', () => {
   it('hides drafts by default', () => {
-    expect(isPostVisible({ draft: true })).toBe(false)
-    expect(isPostVisible({ title: 'Published' })).toBe(true)
+    expect(isPostListed({ draft: true })).toBe(false)
+    expect(isPostListed({ title: 'Published' })).toBe(true)
   })
 
   it('keeps drafts when asked to', () => {
-    expect(isPostVisible({ draft: true }, { showDrafts: true })).toBe(true)
+    expect(isPostListed({ draft: true }, { showDrafts: true })).toBe(true)
   })
 })
 

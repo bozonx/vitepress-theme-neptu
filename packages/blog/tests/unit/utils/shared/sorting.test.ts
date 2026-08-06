@@ -44,7 +44,7 @@ describe('sortPosts', () => {
     expect(sortPosts(posts).map((p) => p.url)).toEqual(['a', 'b'])
   })
 
-  it('sorts by popularity when byPopularity is true and sortBy is provided', () => {
+  it('sorts by popularity when sortByPopularity is true and popularityMetric is provided', () => {
     const posts = [
       { date: '2024-01-01', url: 'a', analyticsStats: { views: 100 } },
       { date: '2024-01-02', url: 'b', analyticsStats: { views: 200 } },
@@ -53,7 +53,7 @@ describe('sortPosts', () => {
     expect(sortPosts(posts, 'views', true).map((p) => p.url)).toEqual(['b', 'a', 'c'])
   })
 
-  it('warns and returns original when byPopularity is true without sortBy', () => {
+  it('warns and returns original when sortByPopularity is true without popularityMetric', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
     const posts = [{ url: 'a' }]
     expect(sortPosts(posts, undefined, true)).toEqual(posts)

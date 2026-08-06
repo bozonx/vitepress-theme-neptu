@@ -166,21 +166,21 @@ export function parseMdFile(
 export function extractDescriptionFromMd(
   rawContent: string,
   maxLength: number,
-  markAtTheEnd?: boolean,
+  appendEllipsis?: boolean,
   sourceName?: string
 ): string {
   const { content } = parseMdFile(rawContent, sourceName)
 
-  return extractDescriptionFromContent(content, maxLength, markAtTheEnd)
+  return extractDescriptionFromContent(content, maxLength, appendEllipsis)
 }
 
 export function extractDescriptionFromContent(
   content: string,
   maxLength: number,
-  markAtTheEnd?: boolean
+  appendEllipsis?: boolean
 ): string {
   const mdContentNoHeader = removeTitleFromMarkdown(content)
   const stripped = stripMd(mdContentNoHeader)
 
-  return truncateText(stripped, maxLength, { respectWords: true, markAtTheEnd })
+  return truncateText(stripped, maxLength, { respectWords: true, appendEllipsis })
 }
