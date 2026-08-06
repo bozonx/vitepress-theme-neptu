@@ -13,35 +13,35 @@ descriptionAsPreview: true
 
 Здесь описываются настройки `themeConfig`, которые задаются в `site.yaml`
 (уровень 2) и `_site.yaml` (уровень 3).
-Системные настройки и общая схема уровней — в [Уровни конфигурации, конфиг первого уровня и шаблоны строк](config-layers).
+Системные настройки и общая схема уровней описаны в [Уровни конфигурации, конфиг первого уровня и шаблоны строк](config-layers).
 
-Часть параметров описана в отдельных статьях:
+Часть параметров конфигов 2 и 3 уровней описана в отдельных статьях:
 
 | Параметр | Где описан |
 | --- | --- |
 | `home` | [Домашняя страница](home-page) |
-| `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
+| `perPage`, `repo` | [Уровни конфигурации](config-layers) |
+| `i18nRouting` | [Локали и мультиязычность](locales) |
+| `authors` | [Авторы](authors) |
 | `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
-| `postList` | [Списки, страницы](lists-and-pages#карточки-постов-в-списках) |
 | `socialMediaShares` | см. раздел [Кнопки «поделиться»](#кнопки-поделиться) ниже |
-| `feeds` | [SEO-механизмы](seo-features) |
-| `seo`, `twitterSite` | [SEO — обзор и механизмы](seo-features) |
 | `search` | [Поиск Pagefind](search-pagefind) |
 | `popularPosts` | [Популярные посты через GA4](popular-posts) |
 | `ads` | [Рекламные блоки](ads) |
 | `consent` | [Согласие на куки и аналитика](consent-and-analytics) |
-| `authors` | [Авторы](authors) |
-| `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
-| `i18nRouting` | [Локали и мультиязычность](locales) |
-| `perPage`, `repo` | [Уровни конфигурации](config-layers) |
+| `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
+| `feeds` | [SEO-механизмы](seo-features) |
+| `seo`, `twitterSite` | [SEO — обзор и механизмы](seo-features) |
+| `postList` | [Списки, страницы](lists-and-pages#карточки-постов-в-списках) |
 | `paginationMaxItems` | [Списки, страницы](lists-and-pages) |
-| `mainHeroImg` | [Кастомизация](customization) (тема landing) |
+| `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
+| `heroImage` | [Кастомизация](customization) (тема landing) |
 | Стили (CSS-переменные) и слоты | [Кастомизация](customization) |
 
 ::: tip
-Пример конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
+Пример полного конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
 
-Пример конфига 3 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/en/_site.yaml)
+Пример полгого конфига 3 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/en/_site.yaml)
 :::
 
 ## Что в этой статье
@@ -96,7 +96,7 @@ themeConfig:
 ```yaml
 themeConfig:
   sidebar:
-    blogTitle: 'Мой блог'  # заголовок сайдбара; false — скрыть
+    sidebarTitle: 'Мой блог'  # заголовок сайдбара; false — скрыть
     recent: true
     featured: true   # посты с featured: true
     popular: true    # требуется popularPosts.enabled (по умолчанию выключен)
@@ -621,7 +621,7 @@ themeConfig:
 - `editLink.text` — локализованная подпись ссылки на правку
 - `donate.postDonateCall` — локализованный текст призыва
 - `t.*` — переводы подписей (`draftLabel` и т.д.)
-- `sidebar.blogTitle` — локализованный заголовок сайдбара
+- `sidebar.sidebarTitle` — локализованный заголовок сайдбара
 - `sidebar.links`, `sidebar.bottomLinks` — локализованные ссылки сайдбара
 - `sidebar.socialLinks` — локализованные иконки соцсетей (если отличаются)
 - `toc.label` — локализованный заголовок оглавления
