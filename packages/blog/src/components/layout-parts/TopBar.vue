@@ -50,7 +50,7 @@ const mobileHideClass = computed(() =>
 )
 const socialLinks = computed<LinkItem[]>(() =>
   (theme.value.nav?.socialLinks || []).map((item) => ({
-    href: item.link,
+    href: item.href,
     icon: item.icon,
     iconClass: item.iconClass,
     class: item.class,

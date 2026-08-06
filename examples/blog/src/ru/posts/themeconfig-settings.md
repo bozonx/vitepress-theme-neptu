@@ -35,7 +35,7 @@ descriptionAsPreview: true
 ::: tip
 Пример полного конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
 
-Пример полгого конфига 3 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/en/_site.yaml)
+Пример полного конфига 3 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/en/_site.yaml)
 :::
 
 ## Навигация, сайдбар и футер
@@ -80,7 +80,7 @@ themeConfig:
     categoriesCount: 10 # максимум категорий в облаке сайдбара
     recent: true        # Показывать ли ссылку на последние посты
     featured: true      # Показывать ли ссылку на посты с featured: true
-    popular: true       # Показывать ли ссылку на популярные посты. требуется popularPosts.enabled (по умолчанию выключен)
+    popular: true       # Показывать ли ссылку на популярные посты. Требуется popularPosts.enabled (по умолчанию выключен)
     archive: true       # Показывать ли ссылку на архив по годам → месяцам
     authors: true       # Показывать ли ссылку на авторов
     tags: true          # Показывать ли облако тегов
@@ -178,7 +178,7 @@ themeConfig:
 | `mobileOnly` | `true` — скрывать на десктопе (показывать только в сайдбаре) |
 | `header` | Текст заголовка секции — рендерится как `<h4>`, а не как ссылка. **Только в сайдбаре** (`sidebar.links`, `sidebar.bottomLinks`) |
 
-Иконки соцсетей (`nav.socialLinks`, `sidebar.socialLinks`, `footer.socialLinks`) используют те же `icon`, `iconClass`, `class`, `desktopOnly` и `mobileOnly`, но вместо `text`/`href` — поля `link` (URL) и `title` (tooltip).
+Иконки соцсетей (`nav.socialLinks`, `sidebar.socialLinks`, `footer.socialLinks`) используют те же `icon`, `iconClass`, `class`, `desktopOnly` и `mobileOnly` и `href` (URL), но вместо `text` — поле `title` (tooltip / `aria-label`).
 
 ### Кнопка «Поддержать» (donate)
 

@@ -49,6 +49,6 @@
   },
   "$defs": {
     "NavLink": { "type": "object", "properties": { "text": { "type": "string" }, "href": { "type": "string" }, "icon": { "type": "string" }, "iconClass": { "type": "string" }, "class": { "type": "string" }, "mobileOnly": { "type": "boolean" }, "desktopOnly": { "type": "boolean" }, "header": { "type": "string" } }, "additionalProperties": true },
-    "SocialLink": { "type": "object", "properties": { "icon": { "type": "string" }, "link": { "type": "string" }, "url": { "type": "string" }, "title": { "type": "string" }, "class": { "type": "string" }, "iconClass": { "type": "string" }, "mobileOnly": { "type": "boolean" }, "desktopOnly": { "type": "boolean" } }, "additionalProperties": true }
+    "SocialLink": { "type": "object", "properties": { "icon": { "type": "string" }, "href": { "type": "string" }, "title": { "type": "string" }, "class": { "type": "string" }, "iconClass": { "type": "string" }, "mobileOnly": { "type": "boolean" }, "desktopOnly": { "type": "boolean" } }, "additionalProperties": true }
   }
 }

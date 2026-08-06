@@ -41,10 +41,10 @@ themeConfig:
     atomFeed: true
     socialLinks:
       - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
+        href: '${theme.repo}'
   nav:
     donate: true
     socialLinks:
       - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
+        href: '${theme.repo}'
         desktopOnly: true

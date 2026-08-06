@@ -31,7 +31,7 @@ describe('TopBar', () => {
           { text: 'Home', href: '/', desktopOnly: true },
           { text: 'Mobile', href: '/m', mobileOnly: true },
         ],
-        socialLinks: [{ link: 'https://x.com/test', icon: 'x' }],
+        socialLinks: [{ href: 'https://x.com/test', icon: 'x' }],
       },
       donate: null,
       sidebarMenuLabel: 'Menu',
@@ -168,7 +168,7 @@ describe('TopBar', () => {
     mockTheme.value = {
       nav: {
         links: [],
-        socialLinks: [{ link: 'https://x.com/test', icon: 'x', iconClass: 'text-xl' }],
+        socialLinks: [{ href: 'https://x.com/test', icon: 'x', iconClass: 'text-xl' }],
       },
       donate: null,
       sidebarMenuLabel: 'Menu',

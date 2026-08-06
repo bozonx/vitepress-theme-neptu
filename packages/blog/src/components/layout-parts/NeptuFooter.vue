@@ -55,10 +55,10 @@ const feedLinks = computed(() => {
   }
 
   for (const item of theme.value.footer?.socialLinks || []) {
-    if (!item.link) continue
+    if (!item.href) continue
     links.push({
       text: item.title || '',
-      href: item.link,
+      href: item.href,
       icon: item.icon,
       target: '_blank',
     })

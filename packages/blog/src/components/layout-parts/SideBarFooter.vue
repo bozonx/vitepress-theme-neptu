@@ -27,7 +27,7 @@ const hasFormat = (format: string) => configuredFormats.value.includes(format)
 const socialLinks = computed<SocialLinkItem[]>(() => {
   const links: SocialLinkItem[] = [
     ...(theme.value.sidebar?.socialLinks || []).map((item) => ({
-      href: item.link,
+      href: item.href,
       icon: item.icon,
       class: item.class,
       iconClass: item.iconClass,

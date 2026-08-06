@@ -724,7 +724,7 @@ export namespace NeptuBlogTheme {
 
   export interface SocialLink {
     icon: string
-    link: string
+    href: string
     title?: string
     class?: string
     iconClass?: string
