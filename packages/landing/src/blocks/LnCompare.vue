@@ -51,6 +51,10 @@ const body = computed(() =>
 )
 
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean'
+
+const plainAriaLabel = computed(() =>
+  (props.ariaLabel ?? props.title ?? 'Comparison').replace(/<[^>]*>/g, '')
+)
 const sectionProps = useSectionProps(props)
 
 /* Dev-mode validation: each row's values must match the column count. */
@@ -78,7 +82,7 @@ if (import.meta.env.DEV) {
       :align="props.align"
     />
 
-    <div class="ln-compare__scroll" tabindex="0" role="region" :aria-label="props.ariaLabel ?? props.title ?? 'Comparison'">
+    <div class="ln-compare__scroll" tabindex="0" role="region" :aria-label="plainAriaLabel">
       <table class="ln-compare__table" :class="{ 'ln-compare__table--sticky': props.stickyHead }">
         <thead>
           <tr>

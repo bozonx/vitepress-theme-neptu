@@ -55,6 +55,7 @@ const controls = computed(() => spec.value.controls ?? props.controls ?? !autopl
         v-if="video"
         :src="video"
         :poster="poster"
+        :aria-label="alt || undefined"
         :style="{ objectFit: fit }"
         :autoplay="autoplay"
         :controls="controls"

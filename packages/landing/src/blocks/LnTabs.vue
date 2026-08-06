@@ -7,7 +7,7 @@
  * All panels stay in the DOM (hidden with `v-show`) so the copy is indexed by
  * search engines and found by in-page search.
  */
-import { computed, ref, useId } from 'vue'
+import { computed, ref, useId, watch } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
@@ -50,6 +50,9 @@ const onKeydown = (event: KeyboardEvent, index: number): void => {
   const strip = (event.currentTarget as HTMLElement).parentElement
   ;(strip?.children[next] as HTMLElement | undefined)?.focus()
 }
+watch(tabs, (list) => {
+  if (active.value >= list.length) active.value = Math.max(0, list.length - 1)
+})
 const sectionProps = useSectionProps(props)
 </script>
 

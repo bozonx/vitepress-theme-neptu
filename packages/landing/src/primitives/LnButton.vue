@@ -31,6 +31,10 @@ const target = computed(() => props.target ?? externalLinkTarget(props.link))
 const rel = computed(
   () => props.rel ?? (target.value === '_blank' ? 'noreferrer' : undefined)
 )
+
+const isDisabled = computed(() =>
+  href.value && !props.disabled ? undefined : (props.disabled || undefined)
+)
 </script>
 
 <template>
@@ -45,7 +49,7 @@ const rel = computed(
     :href="href && !props.disabled ? href : undefined"
     :target="href ? target : undefined"
     :rel="href ? rel : undefined"
-    :disabled="href && !props.disabled ? undefined : props.disabled || undefined"
+    :disabled="isDisabled"
   >
     <LnIcon v-if="props.icon && !props.iconRight" :icon="props.icon" size="1.1em" />
     <span v-if="props.text || $slots.default" class="ln-btn__label">

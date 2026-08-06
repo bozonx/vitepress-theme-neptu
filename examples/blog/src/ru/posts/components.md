@@ -152,7 +152,7 @@ import { isPost, resolvePreviewText } from 'vitepress-theme-neptu/utils'
 | `resolvePreviewText(frontmatter)` | Текст превью по правилам темы |
 | `resolveSearchBodyAttribute(theme, frontmatter)` | Маркер тела для Pagefind |
 | `isPopularPostsRoute(path, theme)` | Маршрут списка популярных |
-| `isAuthorPage(filePath, siteConfig)` | Путь страницы автора |
+| `isAuthorPath(filePath)` | Путь страницы автора |
 
 Функции, работающие с файловой системой, вынесены отдельно:
 `vitepress-theme-neptu/utils/node` доступен только в конфиге и сборочных

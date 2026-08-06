@@ -58,7 +58,7 @@ const sectionProps = useSectionProps(props)
           :aria-label="`${item.rating} / 5`"
         >
           <LnIcon
-            v-for="star in Math.round(item.rating)"
+            v-for="star in Math.min(Math.max(Math.round(item.rating), 0), 5)"
             :key="star"
             icon="fa6-solid:star"
             size="0.9rem"

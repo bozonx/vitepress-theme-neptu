@@ -1,5 +1,6 @@
 <script setup lang="ts">
 /** Lazy iframe for maps, calendars, demos and booking widgets. */
+import { computed } from 'vue'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
@@ -25,6 +26,9 @@ const props = withDefaults(
   >(),
   { mediaRatio: '16/9', loading: 'lazy', align: 'center', width: 'default' }
 )
+const iframeTitle = computed(() =>
+  (props.embedTitle ?? props.title ?? 'Embedded content').replace(/<[^>]*>/g, '')
+)
 const sectionProps = useSectionProps(props)
 </script>
 
@@ -32,7 +36,7 @@ const sectionProps = useSectionProps(props)
   <LnSection v-bind="sectionProps" class="ln-embed">
     <LnHeading :eyebrow="props.eyebrow" :title="props.title" :text="props.text" :align="props.align" />
     <figure v-if="props.src" class="ln-embed__frame">
-      <iframe :src="resolveUrl(props.src)" :title="props.embedTitle ?? props.title ?? 'Embedded content'" :loading="props.loading" :allow="props.allow" :sandbox="props.sandbox" :style="{ aspectRatio: props.mediaRatio }" />
+      <iframe :src="resolveUrl(props.src)" :title="iframeTitle" :loading="props.loading" :allow="props.allow" :sandbox="props.sandbox" :style="{ aspectRatio: props.mediaRatio }" />
       <figcaption v-if="props.caption">{{ props.caption }}</figcaption>
     </figure>
     <LnButtonGroup v-if="props.actions?.length" :actions="props.actions" :align="props.align" class="ln-embed__actions" />

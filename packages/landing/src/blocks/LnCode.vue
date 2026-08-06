@@ -9,7 +9,7 @@
  * can also drop a normal fenced block into the default slot and let VitePress
  * highlight it.
  */
-import { computed, ref, useId } from 'vue'
+import { computed, onBeforeUnmount, ref, useId, watch } from 'vue'
 import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
@@ -86,6 +86,13 @@ const copySample = async (): Promise<void> => {
     // A denied clipboard permission is not worth breaking the page over.
   }
 }
+watch(samples, (list) => {
+  if (active.value >= list.length) active.value = Math.max(0, list.length - 1)
+})
+
+onBeforeUnmount(() => {
+  if (resetTimer) clearTimeout(resetTimer)
+})
 const sectionProps = useSectionProps(props)
 </script>
 

@@ -44,7 +44,7 @@ const sectionProps = useSectionProps(props)
         <LnMedia v-if="item.image" :media="item.image" :ratio="props.mediaRatio" rounded="md" class="ln-collection__media" />
         <div class="ln-collection__body">
           <div v-if="item.date || item.meta?.length" class="ln-collection__meta">
-            <time v-if="item.date">{{ item.date }}</time><span v-for="meta in item.meta" :key="meta">{{ meta }}</span>
+            <time v-if="item.date" :datetime="item.date">{{ item.date }}</time><span v-for="meta in item.meta" :key="meta">{{ meta }}</span>
           </div>
           <LnIcon v-if="item.icon" :icon="item.icon" class="ln-collection__icon" />
           <span v-if="item.badge" class="ln-collection__badge">{{ item.badge }}</span>

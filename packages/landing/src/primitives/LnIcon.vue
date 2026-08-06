@@ -24,7 +24,7 @@ const kind = computed<'none' | 'iconify' | 'image' | 'text'>(() => {
   const icon = props.icon
   if (!icon) return 'none'
   if (typeof icon === 'object') return 'image'
-  if (/^(https?:)?\/|^\/|\.(svg|png|jpe?g|webp|avif|gif)$/i.test(icon)) return 'image'
+  if (/^(https?:)?\/|\.(svg|png|jpe?g|webp|avif|gif)$/i.test(icon)) return 'image'
   if (/^[\w-]+:[\w-]+$/.test(icon)) return 'iconify'
   return 'text'
 })
