@@ -50,6 +50,7 @@ const isDisabled = computed(() =>
     :target="href ? target : undefined"
     :rel="href ? rel : undefined"
     :disabled="isDisabled"
+    :type="href && !props.disabled ? undefined : 'button'"
   >
     <LnIcon v-if="props.icon && !props.iconRight" :icon="props.icon" size="1.1em" />
     <span v-if="props.text || $slots.default" class="ln-btn__label">

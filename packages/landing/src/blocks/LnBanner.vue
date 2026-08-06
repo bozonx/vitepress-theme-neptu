@@ -81,13 +81,13 @@ const sectionProps = useSectionProps(props)
       <slot />
 
       <a
-        v-if="props.link && props.linkText"
+        v-if="props.link"
         class="ln-banner__link"
         :href="resolveUrl(props.link)"
         :target="externalLinkTarget(props.link)"
         :rel="externalLinkTarget(props.link) ? 'noreferrer' : undefined"
       >
-        {{ props.linkText }}
+        {{ props.linkText ?? props.link }}
       </a>
 
       <button

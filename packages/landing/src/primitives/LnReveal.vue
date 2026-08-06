@@ -70,7 +70,6 @@ onBeforeUnmount(() => {
   transition:
     opacity 0.5s var(--ln-ease) var(--ln-reveal-delay, 0ms),
     transform 0.5s var(--ln-ease) var(--ln-reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 :global(html.ln-js) .ln-reveal.is-shown {

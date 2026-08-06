@@ -32,7 +32,9 @@ const { frontmatter } = useData()
 
 const specs = computed<BlockSpec<string>[]>(() => {
   const list = props.blocks ?? (frontmatter.value.blocks as BlockSpec<string>[] | undefined)
-  return Array.isArray(list) ? list : []
+  return Array.isArray(list)
+    ? list.filter((item): item is BlockSpec<string> => Boolean(item) && typeof item === 'object')
+    : []
 })
 
 const warned = new Set<string>()

@@ -53,7 +53,13 @@ const body = computed(() =>
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean'
 
 const plainAriaLabel = computed(() =>
-  (props.ariaLabel ?? props.title ?? 'Comparison').replace(/<[^>]*>/g, '')
+  (props.ariaLabel ?? props.title ?? 'Comparison')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
 )
 const sectionProps = useSectionProps(props)
 

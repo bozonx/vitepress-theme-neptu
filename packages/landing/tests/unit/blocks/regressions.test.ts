@@ -13,6 +13,7 @@ import LnFaq from '../../../src/blocks/LnFaq.vue'
 import LnIcon from '../../../src/primitives/LnIcon.vue'
 import LnCta from '../../../src/blocks/LnCta.vue'
 import LnButton from '../../../src/primitives/LnButton.vue'
+import LnCompare from '../../../src/blocks/LnCompare.vue'
 import { resolveUrl, sanitizeUrl } from '../../../src/utils/url.ts'
 import { mockSite } from '../../mocks/vitepress'
 
@@ -183,7 +184,9 @@ describe('dangerous URL scheme filtering', () => {
 
     // A button element is rendered when href is undefined — never an anchor.
     expect(wrapper.find('a').exists()).toBe(false)
-    expect(wrapper.find('button').exists()).toBe(true)
+    const btn = wrapper.find('button')
+    expect(btn.exists()).toBe(true)
+    expect(btn.attributes('type')).toBe('button')
   })
 
   it('sanitizeUrl passes through safe external URLs', () => {
@@ -191,3 +194,20 @@ describe('dangerous URL scheme filtering', () => {
     expect(sanitizeUrl('mailto:a@b.com')).toBe('mailto:a@b.com')
   })
 })
+
+describe('audit edge-case regressions', () => {
+  it('LnButton renders type="button" on non-link buttons', () => {
+    const wrapper = mount(LnButton, { props: { text: 'Click me' } })
+    const btn = wrapper.find('button')
+    expect(btn.exists()).toBe(true)
+    expect(btn.attributes('type')).toBe('button')
+  })
+
+  it('LnCompare decodes HTML entities in plainAriaLabel', () => {
+    const wrapper = mount(LnCompare, {
+      props: { title: 'Plans &amp; Pricing &lt;Pro&gt;' },
+    })
+    expect(wrapper.find('.ln-compare__scroll').attributes('aria-label')).toBe('Plans & Pricing <Pro>')
+  })
+})
+

@@ -95,9 +95,11 @@ const onSubmit = async (event: Event): Promise<void> => {
     // Serialize the form data as query params instead.
     const params = new URLSearchParams()
     for (const [key, value] of formData) params.append(key, String(value))
+    const separator = url.includes('?') ? '&' : '?'
+    const requestUrl = props.method === 'get' ? `${url}${separator}${params}` : url
     const response =
       props.method === 'get'
-        ? await fetch(`${url}?${params}`, {
+        ? await fetch(requestUrl, {
             method: 'GET',
             headers: { Accept: 'application/json' },
           })
