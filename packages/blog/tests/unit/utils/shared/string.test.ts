@@ -3,8 +3,8 @@ import {
   mustacheTemplate,
   interpolateDollarTemplate,
   truncateText,
-  pathTrimExt,
-  transliterate,
+  stripExtension,
+  slugify,
 } from '../../../../src/utils/shared/string.ts'
 
 describe('mustacheTemplate', () => {
@@ -127,48 +127,48 @@ describe('truncateText', () => {
   })
 })
 
-describe('pathTrimExt', () => {
+describe('stripExtension', () => {
   it('trims single extension', () => {
-    expect(pathTrimExt('file.md')).toBe('file')
+    expect(stripExtension('file.md')).toBe('file')
   })
 
   it('trims last extension only', () => {
-    expect(pathTrimExt('archive.tar.gz')).toBe('archive.tar')
+    expect(stripExtension('archive.tar.gz')).toBe('archive.tar')
   })
 
   it('returns input when no dot', () => {
-    expect(pathTrimExt('README')).toBe('README')
+    expect(stripExtension('README')).toBe('README')
   })
 
   it('returns empty string for empty input', () => {
-    expect(pathTrimExt('')).toBe('')
+    expect(stripExtension('')).toBe('')
   })
 
   it('returns empty string for non-string', () => {
-    expect(pathTrimExt(123 as any)).toBe('')
+    expect(stripExtension(123 as any)).toBe('')
   })
 })
 
-describe('transliterate', () => {
+describe('slugify', () => {
   it('returns empty string for empty input', () => {
-    expect(transliterate('')).toBe('')
+    expect(slugify('')).toBe('')
   })
 
   it('returns empty string for falsy input', () => {
-    expect(transliterate(null as any)).toBe('')
+    expect(slugify(null as any)).toBe('')
   })
 
   it('transliterates esperanto characters', () => {
-    expect(transliterate('ĉĝĥĵŝŭ', 'eo')).toBe('cygyxjysyw')
-    expect(transliterate('ĈĜĤĴŜŬ', 'eo')).toBe('CyGyXJySyW')
+    expect(slugify('ĉĝĥĵŝŭ', 'eo')).toBe('cygyxjysyw')
+    expect(slugify('ĈĜĤĴŜŬ', 'eo')).toBe('CyGyXJySyW')
   })
 
   it('slugifies russian text', () => {
-    const result = transliterate('Привет мир', 'ru')
+    const result = slugify('Привет мир', 'ru')
     expect(result).toBe('privet-mir')
   })
 
   it('slugifies english text', () => {
-    expect(transliterate('Hello World')).toBe('hello-world')
+    expect(slugify('Hello World')).toBe('hello-world')
   })
 })

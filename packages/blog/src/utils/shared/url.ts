@@ -1,4 +1,4 @@
-import { pathTrimExt } from './string.ts'
+import { stripExtension } from './string.ts'
 
 /** `https://…`, `//…` or any other scheme (`mailto:`, `tel:`). */
 export function isExternalUrl(url: string | null | undefined): boolean {
@@ -116,7 +116,7 @@ export function resolveI18nHref(
 /** Generates the full URL path from pageData.relativePath. */
 export function generatePageUrlPath(relativePath: string): string {
   // Remove file extension
-  const cleanPath = pathTrimExt(relativePath)
+  const cleanPath = stripExtension(relativePath)
 
   // Remove trailing /index
   let finalPath = cleanPath.replace(/\/index$/, '')

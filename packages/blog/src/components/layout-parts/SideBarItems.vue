@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import SideBarHeader from './SideBarHeader.vue'
 import MenuItem from '../MenuItem.vue'
-import type { SideBarItem } from '../../types.d.ts'
+import type { SidebarItem } from '../../types.d.ts'
 
-const props = defineProps<{ items: SideBarItem[] }>()
+const props = defineProps<{ items: SidebarItem[] }>()
 </script>
 
 <template>

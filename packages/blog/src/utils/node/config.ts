@@ -21,7 +21,7 @@ import type {
   SocialMediaShare,
   BlogUserConfig,
   ThemeConfig,
-  I18n,
+  I18nTranslations,
 } from '../../types.d.ts'
 
 type EditLinkConfig = NonNullable<ThemeConfig['editLink']>
@@ -331,7 +331,7 @@ export async function loadBlogLocale(
       t: {
         ...((mergedThemeConfig.t || {}) as Record<string, unknown>),
         ...((extractThemeConfig(templatedSite).t || {}) as Record<string, unknown>),
-      } as unknown as I18n,
+      } as unknown as I18nTranslations,
       authors,
       ...(mergedSocialShares.length > 0
         ? {

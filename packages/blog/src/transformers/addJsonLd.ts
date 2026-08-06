@@ -17,7 +17,7 @@ import type {
   Author,
   LocaleDefinition,
   Tag,
-  I18n,
+  I18nTranslations,
 } from '../types.d.ts'
 
 export interface AddJsonLdContext {
@@ -164,7 +164,7 @@ function createBreadcrumbJsonLd(
   localeIndexUrl: string,
   pageUrl: string,
   title: string | undefined,
-  t: I18n | undefined
+  t: I18nTranslations | undefined
 ): JsonLdObject | undefined {
   const category = categories[0]
   if (!category?.slug) return

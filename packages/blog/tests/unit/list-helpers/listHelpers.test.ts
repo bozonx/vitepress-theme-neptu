@@ -5,7 +5,7 @@ import {
   makePostsOfCategoryList,
   makeYearsList,
   makeMonthsList,
-  makePostOfMonthList,
+  makePostsOfMonthList,
   makeAuthorsList,
   type PostLite,
 } from '../../../src/list-helpers/listHelpers.ts'
@@ -227,9 +227,9 @@ describe('makeMonthsList', () => {
   })
 })
 
-describe('makePostOfMonthList', () => {
+describe('makePostsOfMonthList', () => {
   it('returns empty array for empty input', () => {
-    expect(makePostOfMonthList([], 2023, 1)).toEqual([])
+    expect(makePostsOfMonthList([], 2023, 1)).toEqual([])
   })
 
   it('filters posts by year and month', () => {
@@ -239,7 +239,7 @@ describe('makePostOfMonthList', () => {
       { url: '/c', date: '2023-02-01' },
       { url: '/d', date: '2024-01-01' },
     ]
-    const result = makePostOfMonthList(posts, 2023, 1)
+    const result = makePostsOfMonthList(posts, 2023, 1)
     expect(result).toHaveLength(2)
     expect(result.map((p) => p.url)).toEqual(['/b', '/a'])
   })
@@ -250,13 +250,13 @@ describe('makePostOfMonthList', () => {
       { url: '/b', date: '2023-01-20' },
       { url: '/c', date: '2023-01-05' },
     ]
-    const result = makePostOfMonthList(posts, 2023, 1)
+    const result = makePostsOfMonthList(posts, 2023, 1)
     expect(result.map((p) => p.url)).toEqual(['/b', '/a', '/c'])
   })
 
   it('accepts string year and month', () => {
     const posts: PostLite[] = [{ url: '/a', date: '2023-06-15' }]
-    expect(makePostOfMonthList(posts, '2023', '6')).toHaveLength(1)
+    expect(makePostsOfMonthList(posts, '2023', '6')).toHaveLength(1)
   })
 
   it('excludes posts with invalid dates', () => {
@@ -264,7 +264,7 @@ describe('makePostOfMonthList', () => {
       { url: '/a', date: 'not-a-date' },
       { url: '/b', date: '2023-01-01' },
     ]
-    expect(makePostOfMonthList(posts, 2023, 1)).toHaveLength(1)
+    expect(makePostsOfMonthList(posts, 2023, 1)).toHaveLength(1)
   })
 })
 

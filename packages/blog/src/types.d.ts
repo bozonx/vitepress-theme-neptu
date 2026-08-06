@@ -27,7 +27,7 @@ export namespace NeptuBlogTheme {
      * supply the keys you want to override globally. Per-locale overrides
      * live in `<srcDir>/<locale>/_site.yaml` under `themeConfig.t`.
      */
-    themeConfig?: Partial<Omit<Config, 't'>> & { t?: DeepPartial<I18n> }
+    themeConfig?: Partial<Omit<Config, 't'>> & { t?: DeepPartial<I18nTranslations> }
     locales?: Record<
       string,
       {
@@ -191,7 +191,7 @@ export namespace NeptuBlogTheme {
     seo?: SeoConfig
     socialMediaShares?: SocialMediaShare[]
 
-    t: I18n
+    t: I18nTranslations
 
     /**
      * Search powered by Pagefind — the only provider the theme supports.
@@ -205,7 +205,7 @@ export namespace NeptuBlogTheme {
      * custom flags, or when search is not needed.
      *
      * UI translations (modal labels, keyboard hints, etc.) are localised
-     * through the standard `t.searchUI` key — see `I18n.searchUI`.
+     * through the standard `t.searchUI` key — see `I18nTranslations.searchUI`.
      * Pagefind documentation: https://pagefind.app
      */
     search?: {
@@ -224,7 +224,7 @@ export namespace NeptuBlogTheme {
     }
   }
 
-  export interface I18n {
+  export interface I18nTranslations {
     popularPosts: string
     /** Heading for the explicitly curated posts shown on a home page. */
     featuredPosts?: string
@@ -577,7 +577,7 @@ export namespace NeptuBlogTheme {
     socialLinks?: SocialLink[]
   }
 
-  export interface SideBarItem {
+  export interface SidebarItem {
     header?: string
     href?: string
     icon?: string
@@ -784,6 +784,8 @@ export namespace NeptuBlogTheme {
      */
     readingTime?: boolean
     previewText?: string
+    descriptionAsPreview?: boolean
+    /** @deprecated Use `descriptionAsPreview` instead. */
     descrAsPreview?: boolean
     jsonLd?: string | Record<string, unknown> | unknown[]
     searchIncluded?: boolean
@@ -869,7 +871,7 @@ export namespace NeptuBlogTheme {
     description?: string
     head?: DefaultTheme.Config['head']
     themeConfig?: DeepPartial<Config>
-    t?: DeepPartial<I18n>
+    t?: DeepPartial<I18nTranslations>
     label?: string
     link?: string
   }
@@ -917,7 +919,9 @@ export type Post = NeptuBlogTheme.Post
 export type PostFrontmatter = NeptuBlogTheme.PostFrontmatter
 export type Tag = NeptuBlogTheme.Tag
 export type Author = NeptuBlogTheme.Author
-export type I18n = NeptuBlogTheme.I18n
+export type I18nTranslations = NeptuBlogTheme.I18nTranslations
+/** @deprecated Use `I18nTranslations` instead. */
+export type I18n = I18nTranslations
 export type LocaleDefinition = NeptuBlogTheme.LocaleDefinition
 export type ExtendedPageData = NeptuBlogTheme.ExtendedPageData
 export type ExtendedSiteConfig = NeptuBlogTheme.ExtendedSiteConfig
@@ -925,7 +929,9 @@ export type BlogUserConfig = NeptuBlogTheme.BlogUserConfig
 export type SeoConfig = NeptuBlogTheme.SeoConfig
 export type NavConfig = NeptuBlogTheme.NavConfig
 export type SidebarConfig = NeptuBlogTheme.SidebarConfig
-export type SideBarItem = NeptuBlogTheme.SideBarItem
+export type SidebarItem = NeptuBlogTheme.SidebarItem
+/** @deprecated Use `SidebarItem` instead. */
+export type SideBarItem = SidebarItem
 export type TaxonomyEntry = NeptuBlogTheme.TaxonomyEntry
 export type CategoryInfo = NeptuBlogTheme.CategoryInfo
 export type BreadcrumbItem = NeptuBlogTheme.BreadcrumbItem

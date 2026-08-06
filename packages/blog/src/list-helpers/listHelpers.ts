@@ -168,7 +168,7 @@ export function makeMonthsList(
   return res
 }
 
-export function makePostOfMonthList(
+export function makePostsOfMonthList(
   allPosts: PostLite[] = [],
   year?: number | string,
   month?: number | string

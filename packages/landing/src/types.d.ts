@@ -3,7 +3,7 @@ import type { DefaultTheme, Theme } from 'vitepress'
 import type {
   BlogUserConfig,
   ThemeConfig,
-  I18n,
+  I18nTranslations,
   SeoConfig,
   DeepPartial,
   Author,
@@ -18,7 +18,7 @@ export type {
   DeepPartial,
   ExtendedPageData,
   ExtendedSiteConfig,
-  I18n,
+  I18nTranslations,
   LocaleDefinition,
   SeoConfig,
   ThemeConfig,
@@ -63,7 +63,7 @@ export type LandingThemeConfig = Partial<
   Omit<ThemeConfig, 't' | keyof LandingChromeConfig>
 > &
   Partial<LandingChromeConfig> & {
-  t?: DeepPartial<I18n>
+  t?: DeepPartial<I18nTranslations>
 }
 
 /**
@@ -95,7 +95,7 @@ export type ResolvedLandingConfig = LandingUserConfig & {
   }
   themeConfig: LandingThemeConfig & {
     seo: NonNullable<ThemeConfig['seo']>
-    t: I18n
+    t: I18nTranslations
   }
   vite: NonNullable<LandingUserConfig['vite']> & {
     ssr: NonNullable<NonNullable<LandingUserConfig['vite']>['ssr']>

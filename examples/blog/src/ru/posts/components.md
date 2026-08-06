@@ -127,7 +127,7 @@ import { useUiTheme, useBreakpoint } from 'vitepress-theme-neptu/composables'
 | `useContentLangs()` | Текущая локаль и список доступных |
 | `useBreakpoint()` | Реактивные проверки mobile / tablet / desktop |
 | `useScrollY()` | Реактивный `window.scrollY` |
-| `useToTheTop()` | Логика показа кнопки «наверх» |
+| `useScrollToTop()` | Логика показа кнопки «наверх» |
 | `useToc()` | Заголовки страницы для своего оглавления |
 | `useLightbox()` | Управление лайтбоксом изображений |
 | `useSwipeDrawer()` | Свайп-жесты мобильного сайдбара |

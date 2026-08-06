@@ -122,13 +122,17 @@ describe('resolvePreviewText', () => {
     expect(resolvePreviewText({ previewText: 'Preview' })).toBe('Preview')
   })
 
+  it('returns description when descriptionAsPreview is true', () => {
+    expect(resolvePreviewText({ description: 'Desc', descriptionAsPreview: true })).toBe('Desc')
+  })
+
   it('returns description when descrAsPreview is true', () => {
     expect(resolvePreviewText({ description: 'Desc', descrAsPreview: true })).toBe('Desc')
   })
 
   it('prefers previewText over description', () => {
     expect(
-      resolvePreviewText({ previewText: 'Preview', description: 'Desc', descrAsPreview: true })
+      resolvePreviewText({ previewText: 'Preview', description: 'Desc', descriptionAsPreview: true })
     ).toBe('Preview')
   })
 

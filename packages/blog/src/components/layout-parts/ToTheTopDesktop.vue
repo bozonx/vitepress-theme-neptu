@@ -2,14 +2,14 @@
 import { Icon } from '@iconify/vue'
 import { watch } from 'vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
-import { useToTheTop } from '../../composables/useToTheTop.ts'
+import { useScrollToTop } from '../../composables/useScrollToTop.ts'
 
 const props = defineProps<{
   scrollY: number
 }>()
 const { theme } = useUiTheme()
 const SCROLL_BREAKPOINT = 1080
-const { showed, opacity, show, hide, handleClick, animationMs } = useToTheTop()
+const { isShown, opacity, show, hide, handleClick, animationMs } = useScrollToTop()
 
 watch(
   () => props.scrollY,
@@ -28,7 +28,7 @@ watch(
   <div
     :class="[
       'bottom-0 fixed transition-opacity will-change-[opacity] to-the-top-desk',
-      !showed && 'hidden',
+      !isShown && 'hidden',
     ]"
     :style="{ opacity, 'transition-duration': `${animationMs}ms` }"
   >

@@ -86,7 +86,8 @@ export function isAuthorPage(filePath: string | null | undefined): boolean {
 
 /** Resolve explicit preview text from frontmatter. Or return undefined. */
 export function resolvePreviewText(frontmatter: Frontmatter): string | undefined {
-  const { previewText, descrAsPreview, description } = frontmatter
+  const { previewText, descriptionAsPreview, descrAsPreview, description } = frontmatter
+  const useDescr = descriptionAsPreview ?? descrAsPreview
   const normalizedPreviewText =
     typeof previewText === 'string' ? previewText.trim() : undefined
   const normalizedDescription =
@@ -94,7 +95,7 @@ export function resolvePreviewText(frontmatter: Frontmatter): string | undefined
 
   if (normalizedPreviewText !== undefined) {
     return normalizedPreviewText || undefined
-  } else if (descrAsPreview && normalizedDescription) {
+  } else if (useDescr && normalizedDescription) {
     return normalizedDescription
   }
   return undefined

@@ -13,6 +13,7 @@ export type {
   ResolvedLandingConfig,
   ThemeConfig,
   I18n,
+  I18nTranslations,
   SeoConfig,
   DeepPartial,
   Author,

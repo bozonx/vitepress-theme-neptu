@@ -53,7 +53,7 @@ import type {
   LandingUserConfig,
   ResolvedLandingConfig,
   SeoConfig,
-  I18n,
+  I18nTranslations,
   LandingThemeConfig,
 } from '../types.d.ts'
 
@@ -266,7 +266,7 @@ export function mergeLandingConfig(
       t: deepMerge(
         (baseLocale?.t ?? {}) as unknown as Record<string, unknown>,
         (config.themeConfig?.t ?? {}) as unknown as Record<string, unknown>
-      ) as unknown as I18n,
+      ) as unknown as I18nTranslations,
     },
 
     async transformPageData(pageData, ctx) {

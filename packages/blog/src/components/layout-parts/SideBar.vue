@@ -12,7 +12,7 @@ import SideBarCategories from './SideBarCategories.vue'
 import { useUiTheme } from '../../composables/useUiTheme.ts'
 import { resolveSidebarLogo } from '../../utils/shared/media.ts'
 import { makeCategoriesList, makeTagsList } from '../../list-helpers/listHelpers.ts'
-import type { PostLite, SideBarItem } from '../../types.d.ts'
+import type { PostLite, SidebarItem } from '../../types.d.ts'
 
 const props = defineProps<{ isMobile: boolean; localePosts?: PostLite[] }>()
 const { localeIndex, site } = useData()
@@ -123,9 +123,9 @@ const runOpenAnimation = async () => {
   })
 }
 
-const links = computed<SideBarItem[]>(() => {
+const links = computed<SidebarItem[]>(() => {
   const cfg = theme.value.sidebar || {}
-  const items: SideBarItem[] = [...(cfg.links || [])]
+  const items: SidebarItem[] = [...(cfg.links || [])]
 
   if (cfg.recent) {
     items.push({
@@ -166,9 +166,9 @@ const links = computed<SideBarItem[]>(() => {
   return items
 })
 
-const bottomLinks = computed<SideBarItem[]>(() => {
+const bottomLinks = computed<SidebarItem[]>(() => {
   const cfg = theme.value.sidebar || {}
-  const items: SideBarItem[] = [...(cfg.bottomLinks || [])]
+  const items: SidebarItem[] = [...(cfg.bottomLinks || [])]
 
   if (cfg.donate && theme.value.donate) {
     items.push({

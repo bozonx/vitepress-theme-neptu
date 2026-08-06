@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { defineComponent, h, ref } from 'vue'
 import { mount } from '@vue/test-utils'
-import { useToTheTop } from '../../../src/composables/useToTheTop.ts'
+import { useScrollToTop } from '../../../src/composables/useScrollToTop.ts'
 
-describe('useToTheTop', () => {
+describe('useScrollToTop', () => {
   beforeEach(() => {
     vi.useFakeTimers()
   })
@@ -15,7 +15,7 @@ describe('useToTheTop', () => {
 
   function mountComposable(animationMs?: number) {
     const result = {
-      showed: ref(false),
+      isShown: ref(false),
       opacity: ref(0),
       show: () => {},
       hide: () => {},
@@ -23,8 +23,8 @@ describe('useToTheTop', () => {
     }
     const TestComp = defineComponent({
       setup() {
-        const composable = animationMs !== undefined ? useToTheTop(animationMs) : useToTheTop()
-        result.showed = composable.showed
+        const composable = animationMs !== undefined ? useScrollToTop(animationMs) : useScrollToTop()
+        result.isShown = composable.isShown
         result.opacity = composable.opacity
         result.show = composable.show
         result.hide = composable.hide
@@ -37,60 +37,57 @@ describe('useToTheTop', () => {
   }
 
   it('initial state is hidden', () => {
-    const { showed, opacity } = mountComposable()
-    expect(showed.value).toBe(false)
+    const { isShown, opacity } = mountComposable()
+    expect(isShown.value).toBe(false)
     expect(opacity.value).toBe(0)
   })
 
-  it('show sets showed and transitions opacity', () => {
-    const { showed, opacity, show } = mountComposable()
+  it('show sets isShown and transitions opacity', () => {
+    const { isShown, opacity, show } = mountComposable()
     show()
-    expect(showed.value).toBe(true)
+    expect(isShown.value).toBe(true)
     vi.runAllTimers()
     expect(opacity.value).toBe(1)
   })
 
   it('show is idempotent', () => {
-    const { showed, opacity, show } = mountComposable()
+    const { isShown, opacity, show } = mountComposable()
     show()
     show()
     vi.runAllTimers()
     expect(opacity.value).toBe(1)
-    expect(showed.value).toBe(true)
+    expect(isShown.value).toBe(true)
   })
 
   it('hide sets opacity to 0 and hides after timeout', () => {
-    const { showed, opacity, show, hide } = mountComposable(500)
+    const { isShown, opacity, show, hide } = mountComposable(500)
     show()
     vi.runAllTimers()
-    expect(showed.value).toBe(true)
+    expect(isShown.value).toBe(true)
     expect(opacity.value).toBe(1)
 
     hide()
     expect(opacity.value).toBe(0)
-    expect(showed.value).toBe(true)
+    expect(isShown.value).toBe(true)
 
     vi.advanceTimersByTime(500)
-    expect(showed.value).toBe(false)
+    expect(isShown.value).toBe(false)
   })
 
   it('hide is idempotent when not shown', () => {
-    const { showed, opacity, hide } = mountComposable()
+    const { isShown, opacity, hide } = mountComposable()
     hide()
-    expect(showed.value).toBe(false)
+    expect(isShown.value).toBe(false)
     expect(opacity.value).toBe(0)
   })
 
   it('hide clears previous timeout', () => {
-    const { showed, show, hide } = mountComposable(500)
+    const { isShown, show, hide } = mountComposable(500)
     show()
     hide()
     hide()
     vi.advanceTimersByTime(500)
-    // After clearing timeout, showed should stay true because hide() already ran synchronously
-    // Actually hide sets opacity=0 and starts timeout. Double hide should clear first timeout
-    // and start second. After 500ms showed should become false.
-    expect(showed.value).toBe(false)
+    expect(isShown.value).toBe(false)
   })
 
   it('handleClick scrolls to top', () => {
@@ -104,7 +101,7 @@ describe('useToTheTop', () => {
     const clearSpy = vi.spyOn(globalThis, 'clearTimeout')
     const TestComp = defineComponent({
       setup() {
-        const { show, hide } = useToTheTop()
+        const { show, hide } = useScrollToTop()
         show()
         hide()
         return {}

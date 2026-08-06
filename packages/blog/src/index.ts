@@ -34,6 +34,7 @@ export type {
   ExtendedPageData,
   ExtendedSiteConfig,
   I18n,
+  I18nTranslations,
   LocaleDefinition,
   Post,
   PostFrontmatter,

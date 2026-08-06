@@ -18,7 +18,7 @@ import {
 import type {
   LandingUserConfig,
   ThemeConfig,
-  I18n,
+  I18nTranslations,
 } from '../types.d.ts'
 import siteBaseLocales from './siteLocalesBase/index.ts'
 import { common as siteCommon } from './siteConfigBase.ts'
@@ -188,7 +188,7 @@ export async function loadSiteLocale(
         ...((baseLocale.t || {}) as Record<string, unknown>),
         ...((sharedThemeConfig.t || {}) as Record<string, unknown>),
         ...((localeThemeConfig.t || {}) as Record<string, unknown>),
-      } as unknown as I18n,
+      } as unknown as I18nTranslations,
       sidebar,
     },
   }

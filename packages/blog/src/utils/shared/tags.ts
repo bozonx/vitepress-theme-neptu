@@ -1,4 +1,4 @@
-import { transliterate } from './string.ts'
+import { slugify } from './string.ts'
 import type { Tag } from '../../types.d.ts'
 
 function normalizeTagName(value: string): string | undefined {
@@ -16,7 +16,7 @@ export function normalizeTag(
 
     return {
       name,
-      slug: transliterate(name, lang),
+      slug: slugify(name, lang),
     }
   }
 
@@ -31,7 +31,7 @@ export function normalizeTag(
   return {
     ...record,
     name: name || rawSlug || '',
-    slug: rawSlug || transliterate(name || '', lang),
+    slug: rawSlug || slugify(name || '', lang),
   } as Tag
 }
 

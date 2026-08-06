@@ -167,7 +167,7 @@ export function truncateText(
 }
 
 /** Trim extension from filename */
-export function pathTrimExt(fileName: unknown): string {
+export function stripExtension(fileName: unknown): string {
   if (typeof fileName !== 'string') return ''
   if (fileName.indexOf('.') < 0) return fileName
   const parts = fileName.split('.')
@@ -175,8 +175,11 @@ export function pathTrimExt(fileName: unknown): string {
   return parts.join('.')
 }
 
-/** Transliterate string */
-export function transliterate(rawStr: string, lang?: string): string {
+/** @deprecated Use `stripExtension` instead. */
+export const pathTrimExt = stripExtension
+
+/** Convert string to a URL-friendly slug */
+export function slugify(rawStr: string, lang?: string): string {
   if (!rawStr) return ''
 
   if (lang === 'eo') {
@@ -203,3 +206,6 @@ export function transliterate(rawStr: string, lang?: string): string {
 
   return slug(rawStr, { locale: lang })
 }
+
+/** @deprecated Use `slugify` instead. */
+export const transliterate = slugify

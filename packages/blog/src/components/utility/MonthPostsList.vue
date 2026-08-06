@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useData } from 'vitepress'
 import { inject } from 'vue'
-import { makePostOfMonthList } from '../../list-helpers/listHelpers.ts'
+import { makePostsOfMonthList } from '../../list-helpers/listHelpers.ts'
 import PreviewListItem from '../PreviewListItem.vue'
 import UtilPageHeader from './UtilPageHeader.vue'
 import type { PostLite } from '../../types.d.ts'
@@ -14,7 +14,7 @@ const props = defineProps<{
 const { frontmatter, localeIndex } = useData()
 const allPosts = inject<Record<string, PostLite[]>>('posts', {})
 const localePosts = props.localePosts || allPosts[localeIndex.value] || []
-const items = makePostOfMonthList(localePosts, props.year, props.month)
+const items = makePostsOfMonthList(localePosts, props.year, props.month)
 </script>
 
 <template>

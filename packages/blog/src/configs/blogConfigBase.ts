@@ -59,7 +59,7 @@ import type {
   LocaleDefinition,
   ThemeConfig,
   SeoConfig,
-  I18n,
+  I18nTranslations,
 } from '../types.d.ts'
 
 type ResolvedBlogConfig = BlogUserConfig & {
@@ -78,7 +78,7 @@ type ResolvedBlogConfig = BlogUserConfig & {
     home: NonNullable<ThemeConfig['home']>
     feeds: NonNullable<ThemeConfig['feeds']>
     seo: NonNullable<ThemeConfig['seo']>
-    t: I18n
+    t: I18nTranslations
   }
   vite: NonNullable<UserConfig['vite']> & {
     ssr: NonNullable<NonNullable<UserConfig['vite']>['ssr']>
@@ -419,9 +419,9 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       },
 
       t: deepMerge(
-        (blogBaseLocales.en as { t: I18n }).t,
+        (blogBaseLocales.en as { t: I18nTranslations }).t,
         (config.themeConfig?.t ?? {}) as Record<string, unknown>
-      ) as I18n,
+      ) as I18nTranslations,
     },
 
     async transformPageData(pageData, ctx) {

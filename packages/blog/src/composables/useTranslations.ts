@@ -1,10 +1,10 @@
 import { useRoute } from 'vitepress'
 import { computed, inject, type ComputedRef, type InjectionKey } from 'vue'
 
-import type { I18n } from '../types.d.ts'
+import type { I18nTranslations } from '../types.d.ts'
 import { resolveTranslationsByFilePath } from '../utils/shared/index.ts'
 
-export type TranslationsResult = { t: I18n; [key: string]: unknown }
+export type TranslationsResult = { t: I18nTranslations; [key: string]: unknown }
 
 export const TranslationsKey: InjectionKey<ComputedRef<TranslationsResult>> =
   Symbol('neptu-translations')

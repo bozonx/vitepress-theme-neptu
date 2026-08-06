@@ -1,22 +1,22 @@
 import { ref, onUnmounted } from 'vue'
 
-export function useToTheTop(animationMs = 1000) {
-  const showed = ref(false)
+export function useScrollToTop(animationMs = 1000) {
+  const isShown = ref(false)
   const opacity = ref(0)
   let animationTimeout: ReturnType<typeof setTimeout> | null = null
 
   const show = () => {
-    if (showed.value) return
-    showed.value = true
+    if (isShown.value) return
+    isShown.value = true
     setTimeout(() => (opacity.value = 1))
   }
 
   const hide = () => {
-    if (!showed.value) return
+    if (!isShown.value) return
     opacity.value = 0
     if (animationTimeout) clearTimeout(animationTimeout)
     animationTimeout = setTimeout(() => {
-      showed.value = false
+      isShown.value = false
       animationTimeout = null
     }, animationMs)
   }
@@ -29,5 +29,8 @@ export function useToTheTop(animationMs = 1000) {
     if (animationTimeout) clearTimeout(animationTimeout)
   })
 
-  return { showed, opacity, show, hide, handleClick, animationMs }
+  return { isShown, opacity, show, hide, handleClick, animationMs }
 }
+
+/** @deprecated Use `useScrollToTop` instead. */
+export const useToTheTop = useScrollToTop
