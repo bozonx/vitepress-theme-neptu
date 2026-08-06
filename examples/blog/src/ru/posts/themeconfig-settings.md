@@ -30,8 +30,8 @@ descriptionAsPreview: true
 | `feeds`, `seo`, `twitterSite`  | [SEO-механизмы](seo-features) |
 | `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
 | `paginationMaxItems`, `postList` | [Списки, страницы](lists-and-pages) |
-| `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
-| `donateIcon`, `recentIcon`, `featuredIcon`, `popularIcon` и др. | [Кастомизация — иконки](customization#иконки) |
+| `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker`, замена стандартных иконок | [Кастомизация](customization) |
+| `t`, `t.searchUI`, лейблы доступности, `notFound` | [Переводы интерфейса и страница выбора языка](i18n-translations) |
 
 ::: tip
 Пример полного конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
