@@ -70,12 +70,16 @@ descriptionAsPreview: true
 ```yaml
 # src/ru/_site.yaml
 themeConfig:
+  # В верхнем уровне themeConfig находятся стандартные строки перевода, по стандарту Vitepress
   langMenuLabel: 'Сменить язык'
+  # В обьеке `t` находятся все остальные переводы темы Neptu blog
   t:
     search: 'Поиск по блогу'
     links:
       donate: 'Поддержать'
 ```
+
+
 
 ### Ключи `t`
 
@@ -164,40 +168,6 @@ themeConfig:
       noResultsText: 'Ничего не найдено'
       resetButtonTitle: 'Сбросить'
 ```
-
-### Лейблы доступности и страница 404
-
-Помимо `t`, `themeConfig` содержит отдельные поля для accessibility-лейблов
-UI-контролов и текстов системных страниц. Они не входят в объект переводов,
-но локализуются per-locale через `_site.yaml`:
-
-| Поле | Назначение |
-| --- | --- |
-| `sidebarMenuLabel` | tooltip кнопки открытия сайдбара на мобильных |
-| `langMenuLabel` | aria-label и tooltip переключателя языка |
-| `colorThemeMenuLabel` | aria-label и tooltip переключателя цветовой темы |
-| `stylePresetMenuLabel` | aria-label и tooltip переключателя стилевого пресета |
-| `returnToTopLabel` | текст кнопки «Наверх» |
-| `lightModeSwitchTitle` | tooltip переключателя на светлую тему |
-| `darkModeSwitchTitle` | tooltip переключателя на тёмную тему |
-| `notFound.title` | заголовок страницы 404 |
-| `notFound.linkText` | текст ссылки «на главную» на странице 404 |
-
-```yaml
-# src/<locale>/_site.yaml
-themeConfig:
-  sidebarMenuLabel: 'Меню'
-  langMenuLabel: 'Сменить язык'
-  returnToTopLabel: 'Наверх'
-  lightModeSwitchTitle: 'Светлая тема'
-  darkModeSwitchTitle: 'Тёмная тема'
-  notFound:
-    title: 'Страница не найдена'
-    linkText: 'На главную'
-```
-
-Встроенные локали уже содержат переводы этих полей — переопределяйте только
-при необходимости.
 
 ## Наследование локалей (`extends`)
 
