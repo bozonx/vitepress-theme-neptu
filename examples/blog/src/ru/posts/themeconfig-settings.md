@@ -31,33 +31,12 @@ descriptionAsPreview: true
 | `publisher` | [Микроразметка JSON-LD](seo-json-ld) |
 | `paginationMaxItems`, `postList` | [Списки, страницы](lists-and-pages) |
 | `defaultColorTheme`, `defaultStylePreset`, `colorPicker`, `stylePicker` | [Кастомизация](customization) |
-| `heroImage` | [Кастомизация](customization) (тема landing) |
 
 ::: tip
 Пример полного конфига 2 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/site.yaml)
 
 Пример полгого конфига 3 уровня можете посмотреть [здесь](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/template/src/en/_site.yaml)
 :::
-
-## Что в этой статье
-
-| Секция | Уровень | Описание |
-| --- | --- | --- |
-| [Верхняя панель](#верхняя-панель-nav) | 2, 3 | Ссылки, иконки соцсетей |
-| [Сайдбар](#сайдбар) | 2, 3 | Флаги секций, логотип, ссылки |
-| [Кнопка «Поддержать»](#кнопка-поддержать-donate) | 2, 3 | `donate.url`, `postDonateCall` |
-| [Ссылка на правку](#ссылка-на-правку-editlink) | 2, 3 | `editLink.pattern`, `editLink.text` |
-| [Футер](#футер) | 2, 3 | `message`, `copyright`, `links`, флаги RSS/Atom/GitHub |
-| [Иконки](#иконки) | 2 | Переопределение умолчаний Iconify |
-| [Внешние ссылки](#внешние-ссылки-в-контенте-постов) | 2 | Иконка ↗, `target="_blank"` |
-| [Относительные URL](#относительные-url-подстраиваются-под-локаль) | — | Авто-префикс локали для `href` |
-| [Подвал поста](#подвал-поста) | 2 | Состав и порядок блоков |
-| [Кнопки «поделиться»](#кнопки-поделиться) | 2 | `socialMediaShares` |
-| [Похожие посты](#похожие-посты) | 2 | `similarPostsCount` |
-| [Оглавление и правая колонка](#оглавление-и-правая-колонка) | 2 | `toc`, `asideLayouts` |
-| [Переводы интерфейса](#переводы-интерфейса) | 2, 3 | `themeConfig.t` |
-| [Лейблы доступности и 404](#лейблы-доступности-и-страница-404) | 3 | `sidebarMenuLabel`, `langMenuLabel`, `returnToTopLabel`, `notFound` и т.д. |
-| [Рекомендации по уровням](#рекомендации-по-уровням) | — | Что куда помещать |
 
 ## Навигация, сайдбар и футер
 
@@ -76,13 +55,16 @@ themeConfig:
         href: 'https://example.org/'
         icon: 'solar:document-linear'
         desktopOnly: true   # скрывать на мобильных (где работает сайдбар)
+      - text: 'Только в сайдбаре'
+        href: 'pages/mobile-info'
+        icon: 'solar:phone-linear'
+        mobileOnly: true    # скрывать на десктопе (показывать только в сайдбаре)
     socialLinks:
       - icon: 'fa6-brands:github'
         link: '${theme.repo}'
 ```
 
-Каждая ссылка поддерживает параметры `icon`, `iconClass`, `class`, а также флаги видимости
-`desktopOnly` / `mobileOnly`.
+Каждая ссылка поддерживает параметры `icon`, `iconClass`, `class`, а также флаги видимости `desktopOnly` / `mobileOnly`.
 
 ### Сайдбар
 
@@ -106,11 +88,15 @@ themeConfig:
       - text: 'Главная'
         href: '/'
         icon: 'fa6-solid:house'
+        # desktopOnly: true  # скрывать на мобильных (где работает сайдбар)
+        # mobileOnly: true   # скрывать на десктопе
     bottomLinks:
       - { header: '${t.links.links}' }        # заголовок секции
       - text: 'Наш YouTube-канал'
         href: 'https://www.youtube.com/'
         icon: '${theme.youtubeIcon}'
+        # desktopOnly: true  # скрывать на мобильных
+        # mobileOnly: true   # скрывать на десктопе
       - text: 'Мы в соцсетях'
         href: 'pages/links'
         icon: 'fa6-solid:share-nodes'
@@ -125,7 +111,12 @@ themeConfig:
     socialLinks:
       - icon: 'fa6-brands:telegram'
         link: 'https://t.me/yourchannel'
+        # desktopOnly: true  # скрывать на мобильных
+        # mobileOnly: true   # скрывать на десктопе
 ```
+
+Каждая иконка `socialLinks` поддерживает флаги видимости `desktopOnly` и
+`mobileOnly` — они работают и в сайдбаре, и в футере сайта.
 
 Каждый флаг включает готовую страницу-список — все они видны в сайдбаре этого
 демо. Размер облаков ограничивают `sidebarTagsCount` (по умолчанию 15) и
@@ -188,7 +179,12 @@ themeConfig:
     links:
       - text: '${t.links.aboutBlog}'
         href: 'pages/about'
+        # desktopOnly: true  # скрывать на мобильных
+        # mobileOnly: true   # скрывать на десктопе
 ```
+
+Каждая ссылка в `footer.links` поддерживает флаги видимости `desktopOnly` и
+`mobileOnly`.
 
 Флаги `rssFeed`, `atomFeed` и `github` включены по умолчанию и показываются
 только при наличии соответствующей ленты или репозитория. `github` использует
