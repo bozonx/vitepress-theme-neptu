@@ -54,8 +54,8 @@ export function makePreviewItem(
   const relativePath = path.relative(baseDir, filePath)
   const lang = relativePath.split('/')[0]!
 
-  // `post/my-article/index.md` is served as `/post/my-article/`, not
-  // `/post/my-article/index`.
+  // `posts/my-article/index.md` is served as `/posts/my-article/`, not
+  // `/posts/my-article/index`.
   const url =
     '/' + relativePath.replace(/\.md$/, '').replace(/(^|\/)index$/, '$1')
   const rawContent = fs.readFileSync(filePath, DEFAULT_ENCODE)
