@@ -53,7 +53,7 @@ and the values are identical to the component mode, so the
 
 ## Mixing modes
 
-`LandingRenderer` accepts an explicit list, so you can compute blocks and still
+`LnRenderer` accepts an explicit list, so you can compute blocks and still
 add hand-written sections around them:
 
 ```md
@@ -61,13 +61,13 @@ add hand-written sections around them:
 const blocks = [{ type: 'hero', title: 'Computed' }]
 </script>
 
-<LandingRenderer :blocks="blocks">
+<LnRenderer :blocks="blocks">
   <template #before>
     <LnAnnouncement />
   </template>
 
   <LnSection bg="soft">Custom section after the generated ones</LnSection>
-</LandingRenderer>
+</LnRenderer>
 ```
 
 ## Custom block types

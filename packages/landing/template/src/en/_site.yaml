@@ -39,7 +39,7 @@ themeConfig:
   # Nav bar (VitePress default theme shape)
   #
   # `link` values use ${localeIndex} template substitution and are prefixed
-  # with the locale automatically by loadSiteLocale.
+  # with the locale automatically by loadLocale.
   # -------------------------------------------------------------------------
   nav:
     - text: 'Docs'

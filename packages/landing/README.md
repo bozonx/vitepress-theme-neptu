@@ -415,7 +415,7 @@ built-in picker lists built-in presets only.
 | Import | Contents |
 |--------|----------|
 | `vitepress-theme-neptu-landing` | Theme entry (default export) |
-| `…/blocks` | Blocks, `LandingRenderer`, registry, `useSectionProps`, types |
+| `…/blocks` | Blocks, `LnRenderer`, registry, `useSectionProps`, types |
 | `…/primitives` | `LnSection`, `LnGrid`, `LnCard`, … |
 | `…/components` | `ColorThemePicker`, `StylePresetPicker` (re-exported from the blog theme) |
 | `…/composables` | `useStylePreset`, `useColorTheme` |
@@ -430,8 +430,8 @@ built-in picker lists built-in presets only.
 | `defineLandingConfig(config)` | Async entry point — auto-discovers locales, applies defaults, validates required fields. |
 | `defineLandingConfigSync(config)` | Sync variant, without locale auto-discovery. |
 | `mergeLandingConfig(config)` | Low-level merge without validation warnings. |
-| `loadSiteLocale(localeIndex, config)` | Build a single locale from YAML layers. |
-| `autoLoadSiteLocales(config)` | Auto-discover all locale folders. |
+| `loadLocale(localeIndex, config)` | Build a single locale from YAML layers. |
+| `autoLoadLocales(config)` | Auto-discover all locale folders. |
 | `createLandingHeadScript(defaults)` | Inline head script restoring the theme; added automatically. |
 
 ### YAML config layers

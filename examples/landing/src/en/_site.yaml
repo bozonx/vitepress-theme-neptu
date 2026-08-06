@@ -6,7 +6,7 @@ description: 'A modern landing page theme for VitePress — SEO-first, i18n-read
 
 themeConfig:
   # VitePress native sidebar (keyed by section name).
-  # Template substitution and locale-prefixing are applied by loadSiteLocale.
+  # Template substitution and locale-prefixing are applied by loadLocale.
   sidebar:
     doc:
       - text: 'Guide'

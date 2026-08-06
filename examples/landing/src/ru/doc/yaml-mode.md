@@ -55,7 +55,7 @@ blocks:
 
 ## Смешанный режим
 
-`LandingRenderer` принимает и явный список, так что блоки можно вычислять и
+`LnRenderer` принимает и явный список, так что блоки можно вычислять и
 дополнять ручными секциями:
 
 ```md
@@ -63,13 +63,13 @@ blocks:
 const blocks = [{ type: 'hero', title: 'Вычисленный' }]
 </script>
 
-<LandingRenderer :blocks="blocks">
+<LnRenderer :blocks="blocks">
   <template #before>
     <LnBanner text="Короткое объявление" />
   </template>
 
   <LnSection bg="soft">Своя секция после сгенерированных</LnSection>
-</LandingRenderer>
+</LnRenderer>
 ```
 
 ## Свои типы блоков
