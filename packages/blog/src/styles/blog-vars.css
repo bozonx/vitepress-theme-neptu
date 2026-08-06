@@ -85,8 +85,7 @@
   /**** Buttons */
   --btn-bg: var(--gray-150);
   --btn-text: var(--gray-700);
-  --btn-bg-active: var(--primary-btn-bg);
-  --btn-text-active: #ffffff;
+  --btn-bg-active: var(--gray-270);
   --btn-bg-disabled: var(--gray-300);
   /**** DropdownButton */
   --dropdown-list-bg: var(--drawer-bg);
@@ -186,8 +185,7 @@
   /**** Buttons */
   --btn-bg: var(--gray-790);
   --btn-text: var(--gray-300);
-  --btn-bg-active: var(--primary-btn-bg);
-  --btn-text-active: #ffffff;
+  --btn-bg-active: var(--gray-770);
   --btn-bg-disabled: var(--gray-600);
   /**** DropdownButton */
   --dropdown-list-bg: var(--drawer-bg);

@@ -104,3 +104,11 @@ const items = computed(() => {
     </ul>
   </nav>
 </template>
+
+<style scoped>
+nav[aria-label='Pagination'] :deep(.btn-base.active),
+nav[aria-label='Pagination'] :deep(.btn-base[aria-current='page']) {
+  background: var(--primary-btn-bg);
+  color: #ffffff;
+}
+</style>

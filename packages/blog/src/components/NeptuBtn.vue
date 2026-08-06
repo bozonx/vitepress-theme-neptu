@@ -147,13 +147,13 @@ const btnProps = computed(() => {
 .btn-base.active,
 .btn-base[aria-current='page'] {
   background: var(--btn-bg-active);
-  color: var(--btn-text-active, #ffffff);
+  color: var(--gray-900);
 }
 
 .dark .btn-base.active,
 .dark .btn-base[aria-current='page'] {
   background: var(--btn-bg-active);
-  color: var(--btn-text-active, #ffffff);
+  color: var(--gray-100);
 }
 
 .btn-base.btn--primary {

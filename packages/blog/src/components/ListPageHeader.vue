@@ -48,3 +48,10 @@ const shouldShowPopularSwitch = computed(
   () => props.showPopularPostsSwitch && theme.value.popularPosts?.enabled
 )
 </script>
+
+<style scoped>
+.list-page-header-switcher :deep(.btn-base.active) {
+  background: var(--primary-btn-bg);
+  color: #ffffff;
+}
+</style>
