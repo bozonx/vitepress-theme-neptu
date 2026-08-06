@@ -8,6 +8,7 @@ import {
   getClickIndex,
   getLightboxLinks,
   removeBodyClass,
+  type LightboxElement,
 } from '../utils/client/lightboxDOM.ts'
 
 export interface LightboxItem {
@@ -32,7 +33,7 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
   const currentIndex = ref(0)
   const items = ref<LightboxItem[]>([])
 
-  let links: HTMLAnchorElement[] = []
+  let links: LightboxElement[] = []
   let observer: MutationObserver | null = null
 
   const resolvedDoc = doc || (inBrowser ? document : undefined)
@@ -70,7 +71,11 @@ export function useLightbox(doc?: Document): UseLightboxReturn {
   }
 
   const onClick = (e: MouseEvent) => {
-    const idx = getClickIndex(e.target, links)
+    let idx = getClickIndex(e.target, links)
+    if (idx === -1 && resolvedDoc) {
+      refreshItems()
+      idx = getClickIndex(e.target, links)
+    }
     if (idx !== -1) {
       e.preventDefault()
       open(idx)

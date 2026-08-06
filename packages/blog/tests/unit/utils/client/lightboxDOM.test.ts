@@ -1,3 +1,4 @@
+// @vitest-environment happy-dom
 import { describe, it, expect } from 'vitest'
 import {
   getLightboxLinks,
@@ -30,7 +31,7 @@ describe('getLightboxLinks', () => {
     expect(links[1].getAttribute('href')).toBe('/b.jpg')
   })
 
-  it('ignores links without lightbox class', () => {
+  it('ignores links without lightbox class when not in doc content', () => {
     const doc = makeDoc(`
       <a href="/a.jpg">link</a>
       <a class="lightbox" href="/b.jpg">img</a>
@@ -38,6 +39,42 @@ describe('getLightboxLinks', () => {
     const links = getLightboxLinks(doc)
     expect(links).toHaveLength(1)
     expect(links[0].getAttribute('href')).toBe('/b.jpg')
+  })
+
+  it('collects standalone images inside post body (.vp-doc)', () => {
+    const doc = makeDoc(`
+      <div class="vp-doc">
+        <img src="/resolved-body.jpg" alt="Body Image" />
+        <a href="https://example.com"><img src="/external-link.jpg" alt="External Link" /></a>
+      </div>
+    `)
+    const links = getLightboxLinks(doc)
+    expect(links).toHaveLength(1)
+    expect(links[0].getAttribute('src')).toBe('/resolved-body.jpg')
+  })
+
+  it('collects body images wrapped by mdImage where lightbox class was overwritten by externalLinks', () => {
+    const doc = makeDoc(`
+      <div class="vp-doc">
+        <a href="https://example.com/photo.jpg" class="vp-external-link-icon" target="_blank" rel="noreferrer">
+          <img src="https://example.com/photo.jpg" alt="External Photo" loading="lazy" decoding="async" tabindex="0" />
+        </a>
+      </div>
+    `)
+    const links = getLightboxLinks(doc)
+    expect(links).toHaveLength(1)
+    expect(links[0].tagName).toBe('IMG')
+    expect(links[0].getAttribute('src')).toBe('https://example.com/photo.jpg')
+  })
+
+  it('does not collect images inside regular content links (href differs from src)', () => {
+    const doc = makeDoc(`
+      <div class="vp-doc">
+        <a href="https://example.com/other-page"><img src="https://example.com/photo.jpg" alt="Link Photo" /></a>
+      </div>
+    `)
+    const links = getLightboxLinks(doc)
+    expect(links).toHaveLength(0)
   })
 })
 
@@ -52,6 +89,19 @@ describe('buildItems', () => {
     expect(items).toEqual([
       { src: '/a.jpg', alt: 'Alpha' },
       { src: '/b.jpg', alt: 'Beta' },
+    ])
+  })
+
+  it('resolves relative href using img src when href is relative', () => {
+    const doc = makeDoc(`
+      <a class="lightbox" href="./relative-photo.jpg">
+        <img src="/blog/assets/relative-photo.hash.jpg" alt="Relative" />
+      </a>
+    `)
+    const links = getLightboxLinks(doc)
+    const items = buildItems(links)
+    expect(items).toEqual([
+      { src: '/blog/assets/relative-photo.hash.jpg', alt: 'Relative' },
     ])
   })
 
@@ -94,6 +144,30 @@ describe('getClickIndex', () => {
     const links = getLightboxLinks(doc)
     const target = links[1].querySelector('img')!
     expect(getClickIndex(target, links)).toBe(1)
+  })
+
+  it('returns index when click is on a post body standalone image', () => {
+    const doc = makeDoc(`
+      <div class="vp-doc">
+        <img src="/body1.jpg" alt="Body 1" />
+      </div>
+    `)
+    const links = getLightboxLinks(doc)
+    const target = doc.querySelector('img')!
+    expect(getClickIndex(target, links)).toBe(0)
+  })
+
+  it('returns index when click is on an image inside a non-lightbox anchor with matching href', () => {
+    const doc = makeDoc(`
+      <div class="vp-doc">
+        <a href="https://example.com/photo.jpg" class="vp-external-link-icon" target="_blank">
+          <img src="https://example.com/photo.jpg" alt="External Photo" />
+        </a>
+      </div>
+    `)
+    const links = getLightboxLinks(doc)
+    const target = doc.querySelector('img')!
+    expect(getClickIndex(target, links)).toBe(0)
   })
 
   it('returns -1 when click is outside any lightbox link', () => {
