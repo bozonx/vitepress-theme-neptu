@@ -23,14 +23,6 @@ export interface TocItem {
   depth: number
 }
 
-/**
- * Layouts that render a table of contents unless `themeConfig.toc.layouts`
- * says otherwise. Only posts by default: utility pages (tag / archive /
- * author listings) have no prose to navigate, and `page` layouts are usually
- * short standalone pages where a TOC is noise.
- */
-export const DEFAULT_TOC_LAYOUTS = ['post']
-
 /** Heading levels included by default — `##` and `###`. */
 export const DEFAULT_TOC_LEVEL: [number, number] = [2, 3]
 
@@ -103,8 +95,8 @@ export function flattenTocHeaders(
 /**
  * Whether the table of contents should be rendered for the current page.
  *
- * Frontmatter `toc: true | false` wins over `themeConfig.toc.layouts`; the
- * home page never renders one because it uses its own full-takeover layout.
+ * Frontmatter `toc: true | false` wins over the default; the home page never
+ * renders one because it uses its own full-takeover layout.
  * The heading-count threshold is applied separately by the components, which
  * are the only place that knows how many headings survived the level filter.
  */
@@ -115,7 +107,7 @@ export function isTocEnabled(
   return isFeatureEnabled(frontmatter, {
     frontmatterKey: 'toc',
     enabledFlag: theme?.toc?.enabled,
-    layouts: theme?.toc?.layouts ?? DEFAULT_TOC_LAYOUTS,
+    layouts: ['post'],
   })
 }
 

@@ -28,7 +28,6 @@ import {
 } from '../utils/shared/ads.ts'
 import { DEFAULT_READING_WPM } from '../utils/shared/readingTime.ts'
 import {
-  DEFAULT_TOC_LAYOUTS,
   DEFAULT_TOC_LEVEL,
   DEFAULT_TOC_MIN_HEADINGS,
 } from '../utils/shared/toc.ts'
@@ -143,7 +142,6 @@ const defaultBlogThemeConfig = {
 
   toc: {
     enabled: true,
-    layouts: DEFAULT_TOC_LAYOUTS,
     level: DEFAULT_TOC_LEVEL,
     minHeadings: DEFAULT_TOC_MIN_HEADINGS,
     position: 'auto' as const,

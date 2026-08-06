@@ -366,16 +366,6 @@ export namespace NeptuBlogTheme {
     enabled?: boolean
 
     /**
-     * Layouts that render a table of contents. Supported keys: 'post',
-     * 'page', 'util', 'tag', 'category', 'archive', 'author', plus the name of any custom
-     * `contentLayout`. Defaults to `['post']` — listing and utility pages
-     * have no prose to navigate.
-     *
-     * Per-page frontmatter `toc: true | false` overrides this list.
-     */
-    layouts?: string[]
-
-    /**
      * Heading levels to include, in the shape the VitePress default theme
      * uses for `outline`: a single level, a `[min, max]` tuple, or `'deep'`
      * for h2–h6. Defaults to `[2, 3]`.
@@ -830,8 +820,8 @@ export namespace NeptuBlogTheme {
      */
     aside?: boolean
     /**
-     * Force the table of contents on or off for this page, overriding
-     * `themeConfig.toc.layouts`. The heading-count threshold still applies.
+     * Force the table of contents on or off for this page. The heading-count
+     * threshold still applies.
      */
     toc?: boolean
     /**

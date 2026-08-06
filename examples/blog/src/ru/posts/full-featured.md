@@ -132,9 +132,9 @@ readingTime: true
 # По умолчанию: следует themeConfig.asideLayouts.
 aside: true
 # Показать/скрыть оглавление для этой страницы.
-# Перекрывает themeConfig.toc.layouts, но порог по количеству заголовков
-# (themeConfig.toc.minHeadings) всё равно применяется.
-# По умолчанию: следует themeConfig.toc.layouts.
+# Порог по количеству заголовков (themeConfig.toc.minHeadings)
+# всё равно применяется.
+# По умолчанию: включено на постах, выключено на остальных layout'ах.
 toc: true
 # Включить/выключить рекламные слоты для этой страницы.
 # Перекрывает themeConfig.ads.layouts. Влияет и на in-content слоты,

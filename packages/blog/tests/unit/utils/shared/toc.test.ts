@@ -112,16 +112,11 @@ describe('isTocEnabled', () => {
     )
   })
 
-  it('lets frontmatter override the layout list', () => {
+  it('lets frontmatter override the default', () => {
     expect(isTocEnabled(theme, { layout: 'page', toc: true })).toBe(true)
     expect(isTocEnabled(theme, { layout: 'post', toc: false })).toBe(false)
   })
 
-  it('respects a custom layout list', () => {
-    const custom = { toc: { layouts: ['page'] } } as ThemeConfig
-    expect(isTocEnabled(custom, { layout: 'page' })).toBe(true)
-    expect(isTocEnabled(custom, { layout: 'post' })).toBe(false)
-  })
 })
 
 describe('hasEnoughHeadings', () => {
