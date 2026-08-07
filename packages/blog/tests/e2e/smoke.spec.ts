@@ -36,7 +36,7 @@ test('recent posts page loads', async ({ page }) => {
 // ---------------------------------------------------------------------------
 
 test('post page loads with content and JSON-LD', async ({ page }) => {
-  await page.goto('en/posts/full-featured', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/posts/frontmatter', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('h1')).toContainText('Full-Featured Post')
 
   const jsonLd = await page.locator('script[type="application/ld+json"]').textContent()
@@ -102,9 +102,9 @@ test('archive page loads', async ({ page }) => {
 // ---------------------------------------------------------------------------
 
 test('canonical link present', async ({ page }) => {
-  await page.goto('en/posts/full-featured', { waitUntil: 'domcontentloaded' })
+  await page.goto('en/posts/frontmatter', { waitUntil: 'domcontentloaded' })
   const canonical = page.locator('link[rel="canonical"]')
-  await expect(canonical).toHaveAttribute('href', /posts\/full-featured/)
+  await expect(canonical).toHaveAttribute('href', /posts\/frontmatter/)
 })
 
 test('alternate hreflang links present', async ({ page }) => {

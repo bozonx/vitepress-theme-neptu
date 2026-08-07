@@ -39,7 +39,7 @@ podcasts:
   applepodcasts: https://podcasts.apple.com/
   youtube: https://www.youtube.com/
 translations:
-  ru: /ru/posts/full-featured
+  ru: /ru/posts/frontmatter
 ---
 
 This is the **kitchen-sink** post. Every optional frontmatter field is turned on

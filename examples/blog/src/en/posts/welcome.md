@@ -45,7 +45,7 @@ coverDescription: "Photo by [Alejandro Escamilla](https://unsplash.com/@...) on 
 ## The tour
 
 **Frontmatter**
-- [Full-featured post](full-featured) — every field, turned on at once.
+- [Full-featured post](frontmatter) — every field, turned on at once.
 - [Cover images & lightbox](cover-and-images) — local vs external covers, body images.
 - [Author, video & podcast](author-video-podcast) — author block, video button, podcast dropdown.
 - [Preview & search](preview-and-search) — control list previews and the search index.

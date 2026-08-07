@@ -19,7 +19,7 @@ podcasts:
   applepodcasts: https://podcasts.apple.com/
   youtube: https://www.youtube.com/
 translations:
-  en: /en/posts/full-featured
+  en: /en/posts/frontmatter
 date: 2026-07-29
 category: writing
 categories:
@@ -98,7 +98,7 @@ podcasts:
 # Используется переключателем языков в шапке И hreflang-тегами для SEO.
 # Если не указать — переключатель пытается найти тот же путь в другой локали.
 translations:
-  en: /en/posts/full-featured
+  en: /en/posts/frontmatter
 # Дата публикации. Строка или Date. Используется для сортировки постов,
 # article:published_time в OG и datePublished в JSON-LD.
 date: 2026-07-29
