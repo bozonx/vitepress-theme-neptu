@@ -4,6 +4,7 @@ import {
   makeAbsoluteUrl,
   normalizeSiteUrl,
 } from '../utils/shared/index.ts'
+import { hasNoIndex } from '../utils/shared/head.ts'
 
 import type {
   ExtendedPageData,
@@ -62,6 +63,11 @@ export function addCanonicalLink({
   }
 
   if (!pageData?.frontmatter) return
+
+  // Skip noindex pages (e.g. drafts) so canonical is never emitted for them,
+  // even when this transformer is called outside the default transformHead
+  // pipeline.
+  if (hasNoIndex(pageData.frontmatter?.head)) return
 
   const canonicalValue = pageData.frontmatter.canonical
 

@@ -59,7 +59,7 @@
 import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import { useData, withBase } from 'vitepress'
 import { GLOBAL_MODALS_CONTAINER_ID } from '../../constants.ts'
-import type { ThemeConfig } from '../../types.ts'
+import type { ThemeConfig } from '../../types.d.ts'
 
 declare global {
   interface Window {

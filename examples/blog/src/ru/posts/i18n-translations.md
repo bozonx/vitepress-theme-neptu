@@ -99,91 +99,10 @@ UI-контролов и текстов системных страниц. Он�
 
 ### Ключи `t`
 
-**Строковые ключи верхнего уровня:**
+Все ключи `themeConfig.t` вы можете посмотреть в следующих файлах:
 
-| Ключ | Значение по умолчанию (en) |
-| --- | --- |
-| `popularPosts` | Popular Posts |
-| `featuredPosts` | Featured Posts |
-| `similarPosts` | Similar Posts |
-| `shareSocialMedia` | Share on Social Media |
-| `currentLang` | Current language |
-| `tags` | Tags |
-| `allTags` | All Tags |
-| `allTagsCall` | View All Tags |
-| `tagPageHeader` | All Posts by Tag |
-| `tagBadgeCount` | The number of posts on this tag |
-| `categories` | Categories |
-| `allCategories` | All Categories |
-| `allCategoriesCall` | View All Categories |
-| `categoryPageHeader` | All Posts in Category |
-| `categoryBadgeCount` | The number of posts in this category |
-| `breadcrumbHome` | Home |
-| `paginationToStart` | First Page |
-| `paginationToEnd` | Last Page |
-| `toHome` | Go to the home page |
-| `toBlog` | Go to blog |
-| `author` | Author |
-| `year` | Year |
-| `showMorePosts` | Load More |
-| `listenPodcast` | Listen to podcast |
-| `commentLink` | Discuss this post |
-| `viewInAnotherLanguage` | View in another language |
-| `postVideoButton` | Watch Video |
-| `allPostsOfAuthor` | Posts of the author |
-| `allPostsOfYear` | All posts of the year |
-| `closeMenu` | Close menu |
-| `pageNotFound` | 404 not found |
-| `postsCount` | Publications |
-| `editLink` | Found an error? Suggest an edit |
-| `draftLabel` | Draft |
-| `draftTitle` | This post is a draft and is hidden from lists |
-| `readingTime` | Reading time |
-| `tocLabel` | On this page |
-| `adLabel` | Advertisement |
-| `search` | Search |
-| `searchInBlog` | Search in this blog |
-
-**Формы множественного числа** — массивы, длина которых зависит от языка:
-`postsCountForms` (английский: `['Publication', 'Publications']`, русский:
-`['публикация', 'публикации', 'публикаций']`) и `readingTimeForms`
-(русский: `['мин', 'мин', 'мин']`). Порядок для славянских языков —
-1 / 2–4 / 5–20; для языков без склонения достаточно одного элемента.
-
-**`months`** — массив из 12 названий месяцев, с января по декабрь.
-
-**Вложенные группы:**
-
-| Группа | Что подписывает |
-| --- | --- |
-| `links` | Навигация и сайдбар: `aboutBlog`, `donate`, `recent`, `featured`, `popular`, `byDate`, `links`, `authors`, `aboutUs`, `rssFeed`, `atomFeed` |
-| `podcasts` | Названия платформ подкастов: `site`, `rss`, `spotify`, `applepodcasts`, `youtube`, `castbox`, `deezer`, `overcast` и другие |
-| `audioFile` | Аудиоплеер: подписи управления, состояния и ошибки |
-| `videoFile` | Видеоплеер: то же для видео |
-| `fileDownload` | Кнопка скачивания файла |
-| `lightbox` | Лайтбокс изображений: `prev`, `next`, `close`, `resetZoom`, `dialogTitle`, `loadingIndicatorLabel` |
-
-Значения по умолчанию для каждого языка лежат в
-`src/configs/blogLocalesBase/<locale>.ts` и
-`src/configs/sharedLocalesBase/<locale>.ts`. В стартовом шаблоне
-[`src/site.yaml`](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/site.yaml)
-все ключи перечислены закомментированными — это самый удобный справочник под рукой.
-
-### Переводы модального окна поиска (`t.searchUI`)
-
-Переводы модального окна поиска Pagefind вынесены в подобъект `t.searchUI` —
-`noResultsText`, `resetButtonTitle`, `displayDetails`, `backButtonTitle` и
-`footer.*` (подсказки клавиатуры). Они локализуются тем же способом, что и
-остальные ключи `t`:
-
-```yaml
-# src/<locale>/_site.yaml
-themeConfig:
-  t:
-    searchUI:
-      noResultsText: 'Ничего не найдено'
-      resetButtonTitle: 'Сбросить'
-```
+- [blogLocalesBase/en.ts](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/src/configs/blogLocalesBase/en.ts) - Клиючи темы блога
+- [sharedLocalesBase/en.ts](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/blog/src/configs/sharedLocalesBase/en.ts) - Общие ключи между темой блога и лендинга
 
 ## Наследование локалей (`extends`)
 

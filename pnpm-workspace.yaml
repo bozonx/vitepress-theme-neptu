@@ -1,4 +1,0 @@
-allowBuilds:
-  esbuild: false
-minimumReleaseAgeExclude:
-  - tsx@4.23.5

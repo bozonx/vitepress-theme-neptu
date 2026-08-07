@@ -9,6 +9,7 @@ import {
   pickExistingTranslationRelativePath,
   resolveTranslationRelativePathCandidates,
 } from '../utils/shared/index.ts'
+import { hasNoIndex } from '../utils/shared/head.ts'
 import type {
   ExtendedPageData,
   ExtendedSiteConfig,
@@ -28,6 +29,11 @@ export function addHreflang({
   siteConfig,
 }: AddHreflangContext): void {
   if (pageData?.frontmatter?.seo?.hreflang === false) return
+
+  // Skip noindex pages (e.g. drafts) so hreflang is never emitted for them,
+  // even when this transformer is called outside the default transformHead
+  // pipeline.
+  if (hasNoIndex(pageData?.frontmatter?.head)) return
 
   const siteUrl = normalizeSiteUrl(siteConfig.userConfig.siteUrl)
   if (!siteUrl || !pageData) return

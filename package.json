@@ -1,5 +1,5 @@
 {
-  "name": "vitepress-theme-neptu",
+  "name": "neptu-monorepo",
   "version": "0.20.0",
   "private": true,
   "description": "Monorepo for the Neptu VitePress themes — blog theme, landing theme, docs, and templates.",

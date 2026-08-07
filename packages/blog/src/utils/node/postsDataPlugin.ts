@@ -98,7 +98,7 @@ function generateModuleSource(srcDir: string): string {
   const mapEntries: string[] = []
 
   for (const locale of locales) {
-    const varName = `${locale.replace(/[^a-zA-Z0-9]/g, '')}Data`
+    const varName = `locale_${locale.replace(/[^a-zA-Z0-9]/g, '_')}_data`
     // Relative path from the project root — Vite resolves these at build time.
     // Using a relative path from srcDir keeps the module portable.
     const relPath = `./${locale}/${LOAD_POSTS_DATA_FILE}`

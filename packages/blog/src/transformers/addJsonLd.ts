@@ -10,6 +10,7 @@ import {
   makeAbsoluteUrl,
   normalizeSiteUrl,
 } from '../utils/shared/index.ts'
+import { hasNoIndex } from '../utils/shared/head.ts'
 import type {
   ExtendedPageData,
   ExtendedSiteConfig,
@@ -413,6 +414,11 @@ export function addJsonLd({
   }
 
   if (pageData.frontmatter?.seo?.jsonLd === false) return
+
+  // Skip noindex pages (e.g. drafts) so JSON-LD is never emitted for them,
+  // even when this transformer is called outside the default transformHead
+  // pipeline.
+  if (hasNoIndex(pageData.frontmatter?.head)) return
 
   let jsonLdData: JsonLdObject | JsonLdArray | undefined
   const cleanPage = page.startsWith('/') ? page.slice(1) : page
