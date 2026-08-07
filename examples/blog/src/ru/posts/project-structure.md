@@ -5,7 +5,7 @@ description: >
   файлы — и что из этого вам предстоит редактировать.
 authorId: ivan-k
 date: 2026-08-01
-category: { name: 'Начало работы', slug: 'getting-started' }
+category: getting-started
 tags: [start]
 featured: true
 descriptionAsPreview: true

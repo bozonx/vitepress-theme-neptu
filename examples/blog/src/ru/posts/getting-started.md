@@ -10,7 +10,7 @@ coverHeight: 800
 coverAlt: Ноутбук и чашка кофе на деревянном столе
 coverDescription: "Фото [Alejandro Escamilla](https://unsplash.com/@alejandroescamilla) на Unsplash."
 date: 2026-08-02
-category: { name: 'Начало работы', slug: 'getting-started' }
+category: getting-started
 tags: [start]
 featured: true
 descriptionAsPreview: true
