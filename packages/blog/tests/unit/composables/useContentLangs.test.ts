@@ -2,9 +2,20 @@ import { ref } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
 import { useContentLangs } from '../../../src/composables/useContentLangs.ts'
 
-const { mockedUseData } = vi.hoisted(() => ({
+const { mockedUseData, provided } = vi.hoisted(() => ({
   mockedUseData: vi.fn(),
+  // Stands in for what the app Layout provides.
+  provided: {} as Record<string, unknown>,
 }))
+
+vi.mock('vue', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('vue')>()
+  return {
+    ...actual,
+    inject: (key: string, fallback?: unknown) =>
+      key in provided ? provided[key] : fallback,
+  }
+})
 
 vi.mock('vitepress', () => ({
   useData: mockedUseData,
@@ -311,16 +322,15 @@ describe('useContentLangs', () => {
   })
 })
 
-describe('useContentLangs on category pages', () => {
-  // A category page is a dynamic route, so there is no per-locale source file
-  // to match on — the mapping goes through the shared category id instead.
-  function mockCategoryPage(options: {
-    ruSlug?: string
+describe('useContentLangs on generated list routes', () => {
+  // These routes come from `paths()`, not from files, so the file-path match
+  // used for ordinary pages cannot tell whether the target locale has the page.
+  function mockListPage(options: {
+    relativePath: string
+    params: Record<string, unknown>
+    ruPosts?: unknown[]
     ruCategories?: Array<Record<string, unknown>>
-    relativePath?: string
-  } = {}) {
-    const { ruSlug = 'nastrojka', relativePath = 'en/categories/configuration/1.md' } = options
-
+  }) {
     mockedUseData.mockReturnValue({
       site: ref({
         locales: {
@@ -329,7 +339,7 @@ describe('useContentLangs on category pages', () => {
             label: 'Русский',
             themeConfig: {
               categories: options.ruCategories ?? [
-                { id: 'configuration', name: 'Настройка', slug: ruSlug },
+                { id: 'configuration', name: 'Настройка', slug: 'nastrojka' },
               ],
             },
           },
@@ -338,35 +348,157 @@ describe('useContentLangs on category pages', () => {
         pages: [],
       }),
       localeIndex: ref('en'),
-      page: ref({ relativePath }),
+      page: ref({ relativePath: options.relativePath }),
       theme: ref({ i18nRouting: true }),
       hash: ref(''),
-      params: ref({ id: 'configuration', slug: 'configuration', page: 1 }),
+      params: ref(options.params),
     })
+    provided.posts = { ru: options.ruPosts ?? [] }
   }
 
   it('maps a category page to the target locale slug', () => {
-    mockCategoryPage()
+    mockListPage({
+      relativePath: 'en/categories/configuration/1.md',
+      params: { id: 'configuration', slug: 'configuration', page: 1 },
+      ruPosts: [{ categories: [{ id: 'configuration' }] }],
+    })
     const { localeLinks } = useContentLangs({ correspondingLink: true })
 
     expect(localeLinks.value).toMatchObject([{ link: '/ru/categories/nastrojka/1' }])
   })
 
-  it('keeps the trailing route segments', () => {
-    mockCategoryPage({ relativePath: 'en/categories/configuration/popular/2.md' })
+  // The reader asked for another language, not for the same offset into a
+  // different set of posts — and page 3 may not exist there at all.
+  it('always lands on page 1 of the target list', () => {
+    mockListPage({
+      relativePath: 'en/categories/configuration/3.md',
+      params: { id: 'configuration', slug: 'configuration', page: 3 },
+      ruPosts: [{ categories: [{ id: 'configuration' }] }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/categories/nastrojka/1' }])
+  })
+
+  it('stays on the popular variant of the list', () => {
+    mockListPage({
+      relativePath: 'en/categories/configuration/popular/2.md',
+      params: { id: 'configuration', slug: 'configuration', page: 2 },
+      ruPosts: [{ categories: [{ id: 'configuration' }] }],
+    })
     const { localeLinks } = useContentLangs({ correspondingLink: true })
 
     expect(localeLinks.value).toMatchObject([
-      { link: '/ru/categories/nastrojka/popular/2' },
+      { link: '/ru/categories/nastrojka/popular/1' },
     ])
   })
 
-  // Without a shared id there is no way to know where the page lives in the
-  // other locale, and the file-path fallback cannot match a dynamic route.
   it('drops the link when the target locale does not declare the category', () => {
-    mockCategoryPage({ ruCategories: [{ id: 'writing', name: 'Контент' }] })
+    mockListPage({
+      relativePath: 'en/categories/configuration/1.md',
+      params: { id: 'configuration', slug: 'configuration', page: 1 },
+      ruCategories: [{ id: 'writing', name: 'Контент' }],
+    })
     const { localeLinks } = useContentLangs({ correspondingLink: true })
 
     expect(localeLinks.value).toEqual([])
+  })
+
+  // A tag has no id beyond its slug, so that is what identifies it.
+  it('maps a tag page by slug', () => {
+    mockListPage({
+      relativePath: 'en/tags/config/2.md',
+      params: { slug: 'config', name: 'config', id: 'config', page: 2 },
+      ruPosts: [{ tags: [{ slug: 'config' }] }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/tags/config/1' }])
+  })
+
+  it('drops a tag link when no post in the target locale uses it', () => {
+    mockListPage({
+      relativePath: 'en/tags/analytics/1.md',
+      params: { slug: 'analytics', name: 'analytics', id: 'analytics', page: 1 },
+      ruPosts: [{ tags: [{ slug: 'config' }] }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([])
+  })
+
+  it('drops an author link when the author has no posts in the target locale', () => {
+    mockListPage({
+      relativePath: 'en/authors/maria/1.md',
+      params: { id: 'maria', page: 1 },
+      ruPosts: [{ authorId: 'ivan' }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([])
+  })
+
+  it('maps an archive year when the target locale has posts from it', () => {
+    mockListPage({
+      relativePath: 'en/archive/2026/2.md',
+      params: { year: 2026, page: 2 },
+      ruPosts: [{ date: '2026-03-01' }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/archive/2026/1' }])
+  })
+
+  it('drops an archive year the target locale has no posts from', () => {
+    mockListPage({
+      relativePath: 'en/archive/2026/1.md',
+      params: { year: 2026, page: 1 },
+      ruPosts: [{ date: '2024-03-01' }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([])
+  })
+
+  it('drops a featured page when the target locale has no featured posts', () => {
+    mockListPage({
+      relativePath: 'en/featured/1.md',
+      params: { page: 1 },
+      ruPosts: [{ featured: false }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([])
+  })
+
+  it('sends a deep recent page to page 1', () => {
+    mockListPage({
+      relativePath: 'en/recent/3.md',
+      params: { page: 3 },
+      ruPosts: [{ date: '2026-03-01' }],
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/recent/1' }])
+  })
+
+  // `tags/index.md` is an ordinary file: no route params, so it keeps the
+  // file-path mapping.
+  it('leaves the taxonomy index pages on the file-path mapping', () => {
+    mockedUseData.mockReturnValue({
+      site: ref({
+        locales: { en: { label: 'English' }, ru: { label: 'Русский' } },
+        cleanUrls: true,
+        pages: [{ relativePath: 'ru/tags/index.md' }],
+      }),
+      localeIndex: ref('en'),
+      page: ref({ relativePath: 'en/tags/index.md' }),
+      theme: ref({ i18nRouting: true }),
+      hash: ref(''),
+      params: ref({}),
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/tags/' }])
   })
 })

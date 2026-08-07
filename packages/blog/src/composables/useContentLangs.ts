@@ -51,66 +51,166 @@ function buildLocaleLink(
 }
 
 /**
- * Category pages live on a dynamic route (`categories/[slug]/[page].md`), so
- * there is no per-locale source file to match on the way `useContentLangs`
- * matches ordinary pages. Instead the route carries the category `id`, which is
- * the same in every locale, and each locale's registry says which slug that id
- * uses there.
+ * The list routes the theme generates from posts rather than from files.
  *
- * Returns undefined for every other kind of page, and whenever the target
- * locale would not have a page to land on — the category route only exists
- * where at least one post uses it, so a declared-but-unused category must not
- * produce a link.
+ * They are the reason this module needs a second resolution strategy at all:
+ * `tags/[slug]/[page].md` is one physical file shared by every locale, so the
+ * "does the translated file exist?" check that maps ordinary pages always
+ * succeeds — even when the route itself was never generated for the target
+ * locale, which is how a language switcher ends up pointing at a 404.
  */
-function resolveCategoryLocalePath(
+const LIST_ROUTE_KINDS = [
+  'recent',
+  'popular',
+  'featured',
+  'archive',
+  'authors',
+  'tags',
+  'categories',
+] as const
+
+type ListRouteKind = (typeof LIST_ROUTE_KINDS)[number]
+
+function getYear(date: PostLite['date']): number | undefined {
+  if (!date) return undefined
+  const year = new Date(date).getUTCFullYear()
+  return Number.isFinite(year) ? year : undefined
+}
+
+/**
+ * Whether the target locale generates any page for this list at all.
+ *
+ * Route params are not consulted for the page number on purpose — see
+ * {@link resolveListRouteLocalePath}.
+ */
+function targetHasPosts(
+  kind: ListRouteKind,
+  params: Record<string, unknown>,
+  posts: PostLite[],
+  categoryId: string | undefined
+): boolean {
+  switch (kind) {
+    case 'recent':
+    case 'popular':
+      return posts.length > 0
+    case 'featured':
+      return posts.some((post) => post.featured === true)
+    case 'archive': {
+      const year = Number(params.year)
+      const month = params.month === undefined ? undefined : Number(params.month)
+      return posts.some((post) => {
+        if (getYear(post.date) !== year) return false
+        if (month === undefined) return true
+        return new Date(post.date as string).getUTCMonth() + 1 === month
+      })
+    }
+    case 'authors':
+      return posts.some((post) => post.authorId === params.id)
+    case 'tags':
+      return posts.some((post) =>
+        post.tags?.some((item) => item?.slug === params.slug)
+      )
+    case 'categories':
+      return posts.some((post) =>
+        post.categories?.some((item) => item?.id === categoryId)
+      )
+  }
+}
+
+/**
+ * Maps a generated list route onto the equivalent route in another locale.
+ *
+ * Two rules make this work without knowing how either locale paginates:
+ *
+ *  - **Always land on page 1.** The reader asked for another language, not for
+ *    the same offset into a different set of posts — and page 3 of a list that
+ *    is one page long in the target locale does not exist.
+ *  - **Only link when the list is non-empty there.** These routes exist only
+ *    where posts put them, so an empty list means there is nowhere to land.
+ *
+ * Identity across locales differs per taxonomy: a category is matched by the
+ * `id` from `_categories.yaml` (its slug may be translated), while a tag is
+ * matched by its slug, which is all the identity a tag has.
+ *
+ * Returns undefined when the page is not a list route, or when the target
+ * locale has no such page — the caller then emits no link rather than falling
+ * back to the file-path match, which cannot be trusted here.
+ */
+function resolveListRouteLocalePath(
   relativePath: string | undefined,
-  categoryId: string | undefined,
+  routeParams: Record<string, unknown> | undefined,
   targetLocaleTheme: NeptuBlogTheme.Config | undefined,
   targetLocalePosts: PostLite[] | undefined
 ): string | undefined {
-  if (!categoryId || !relativePath) return undefined
+  if (!relativePath || !routeParams) return undefined
 
   const segments = relativePath.replace(/\.md$/, '').split('/')
-  // `<locale>/categories/<slug>/…`
-  if (segments[1] !== 'categories' || segments.length < 3) return undefined
+  const kind = segments[1] as ListRouteKind | undefined
+  if (!kind || !LIST_ROUTE_KINDS.includes(kind)) return undefined
 
-  const registry = targetLocaleTheme?.categories as CategoryDefinition[] | undefined
-  const entry = registry?.find((item) => item?.id === categoryId)
-  if (!entry) return undefined
+  // `<locale>/<kind>/<key>/popular/<page>` — keep the reader on the popular
+  // variant of the list they were looking at.
+  const popular = segments[3] === 'popular' ? ['popular'] : []
 
-  // Without the post index there is nothing to verify against, so trust the
-  // registry rather than dropping a link that is probably fine.
+  let target: string[]
+
+  if (kind === 'categories') {
+    const categoryId = routeParams.id as string | undefined
+    const registry = targetLocaleTheme?.categories as CategoryDefinition[] | undefined
+    const entry = registry?.find((item) => item?.id === categoryId)
+    if (!entry) return undefined
+    target = ['categories', entry.slug || entry.id, ...popular, '1']
+  } else if (kind === 'tags') {
+    if (!routeParams.slug) return undefined
+    target = ['tags', String(routeParams.slug), ...popular, '1']
+  } else if (kind === 'authors') {
+    if (!routeParams.id) return undefined
+    target = ['authors', String(routeParams.id), ...popular, '1']
+  } else if (kind === 'archive') {
+    if (!routeParams.year) return undefined
+    target =
+      routeParams.month === undefined
+        ? ['archive', String(routeParams.year), ...popular, '1']
+        : ['archive', String(routeParams.year), 'month', String(routeParams.month)]
+  } else {
+    target = [kind, '1']
+  }
+
+  // Without the post index there is nothing to verify against. Keep the link:
+  // it is still better targeted than the file-path fallback would be.
   if (
     targetLocalePosts &&
-    !targetLocalePosts.some((post) =>
-      post.categories?.some((item) => item?.id === categoryId)
+    !targetHasPosts(
+      kind,
+      routeParams,
+      targetLocalePosts,
+      routeParams.id as string | undefined
     )
   ) {
     return undefined
   }
 
-  const targetSlug = entry.slug || entry.id
-  // Keep whatever follows the slug — `popular/2` stays `popular/2`.
-  const rest = segments.slice(3)
-
-  return ['categories', targetSlug, ...rest].join('/')
+  return target.join('/')
 }
 
 export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
   const { correspondingLink = false } = options
   const { site, localeIndex, page, theme, hash, params } =
     useData<NeptuBlogTheme.Config>()
-  // Provided by the app Layout. Used only to check that a category page
+  // Provided by the app Layout. Used to check that a generated list page
   // actually exists in the target locale.
   const allPosts = inject<Record<string, PostLite[]> | undefined>('posts', undefined)
 
-  // A single category's paginated route, as opposed to `categories/index.md`
-  // — that one is an ordinary file and maps across locales by path.
-  const isCategoryRoute = computed(
-    () =>
-      (page.value.relativePath || '').split('/')[1] === 'categories' &&
-      !!params?.value?.id
-  )
+  // Route params exist only on dynamic routes, which is exactly what separates
+  // a generated list page from `tags/index.md` and friends — those are ordinary
+  // files and map across locales by path.
+  const listRouteParams = computed(() => {
+    const routeParams = params?.value as Record<string, unknown> | undefined
+    if (!routeParams || Object.keys(routeParams).length === 0) return undefined
+
+    const kind = (page.value.relativePath || '').split('/')[1] as ListRouteKind
+    return LIST_ROUTE_KINDS.includes(kind) ? routeParams : undefined
+  })
 
   const currentLang = computed<CurrentLang>(() => {
     const currentLocale = site.value.locales[localeIndex.value] as LocaleSpecificConfig | undefined
@@ -150,19 +250,18 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
           }
         }
 
-        // Dynamic category routes map across locales by id, not by file path.
-        // The file-path fallback below cannot help here: `[slug]/[page].md` is
-        // the same file in every locale, so it would happily point at a route
-        // that was never generated. Category pages resolve here or not at all.
-        if (isCategoryRoute.value) {
-          const categoryPath = resolveCategoryLocalePath(
+        // Generated list routes resolve here or not at all. The file-path
+        // fallback below cannot help them: `[slug]/[page].md` is the same file
+        // in every locale, so it would happily point at a route that was never
+        // generated for this one.
+        if (listRouteParams.value) {
+          const listPath = resolveListRouteLocalePath(
             page.value.relativePath,
-            // `params` is only populated on dynamic routes.
-            params?.value?.id as string | undefined,
+            listRouteParams.value,
             value.themeConfig as NeptuBlogTheme.Config | undefined,
             allPosts?.[key]
           )
-          if (!categoryPath) return []
+          if (!listPath) return []
 
           return {
             text: value.label,
@@ -172,7 +271,7 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
                 correspondingLink,
                 // `buildLocaleLink` speaks relative *paths* — it strips `.md`
                 // and re-adds `.html` when clean URLs are off.
-                `${categoryPath}.md`,
+                `${listPath}.md`,
                 !site.value.cleanUrls
               ) + hash.value,
             lang: value.lang,
