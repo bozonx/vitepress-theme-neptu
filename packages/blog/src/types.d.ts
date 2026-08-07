@@ -229,6 +229,15 @@ export namespace NeptuBlogTheme {
      * `themeConfig.categories` in the `_site.yaml` chain. Merged by `id`.
      */
     categories?: CategoryDefinition[]
+    /**
+     * List sections this locale actually builds, detected from the directories
+     * present under `<srcDir>/<locale>/`. Filled in by the loader — do not set
+     * it by hand.
+     *
+     * The language switcher reads it off the *target* locale so it can tell a
+     * section that is empty there from one that locale does not have at all.
+     */
+    listSections?: string[]
     nav?: NavConfig
     sidebar?: SidebarConfig
     donate?: DonateConfig

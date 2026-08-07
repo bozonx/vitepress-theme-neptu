@@ -44,6 +44,7 @@ import { generateRssFeed } from '../transformers/generateRssFeed.ts'
 import { generateRobotsTxt } from '../transformers/generateRobotsTxt.ts'
 import { generateSearchIndex } from '../transformers/generateSearchIndex.ts'
 import { transformPageMeta } from '../transformers/transformPageMeta.ts'
+import { resolveTranslationLinks } from '../transformers/resolveTranslationLinks.ts'
 import { transformDescription } from '../transformers/transformDescription.ts'
 import { transformTitle } from '../transformers/transformTitle.ts'
 import { resolveDescription } from '../transformers/resolveDescription.ts'
@@ -435,6 +436,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
       transformDescription(extendedPageData, { siteConfig: extendedSiteConfig })
       transformPageMeta(extendedPageData, { siteConfig: extendedSiteConfig })
+      resolveTranslationLinks(extendedPageData, { siteConfig: extendedSiteConfig })
       resolveDescription(extendedPageData, { siteConfig: extendedSiteConfig })
 
       if (hasNoIndex(extendedPageData.frontmatter.head)) {

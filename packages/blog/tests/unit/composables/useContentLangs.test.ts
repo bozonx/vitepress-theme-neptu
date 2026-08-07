@@ -502,3 +502,109 @@ describe('useContentLangs on generated list routes', () => {
     expect(localeLinks.value).toMatchObject([{ link: '/ru/tags/' }])
   })
 })
+
+describe('useContentLangs with build-time resolved translations', () => {
+  // `site.pages` only exists in dev. In a production bundle the old candidate
+  // check had nothing to filter against and offered every locale on every page.
+  function mockPage(frontmatter: Record<string, unknown>) {
+    mockedUseData.mockReturnValue({
+      site: ref({
+        locales: {
+          en: { label: 'English' },
+          ru: { label: 'Русский' },
+          de: { label: 'Deutsch' },
+        },
+        cleanUrls: true,
+      }),
+      localeIndex: ref('en'),
+      page: ref({ relativePath: 'en/posts/hello.md', frontmatter }),
+      theme: ref({ i18nRouting: true }),
+      hash: ref(''),
+      params: ref({}),
+    })
+  }
+
+  it('offers only the locales that actually have the page', () => {
+    mockPage({
+      __neptuTranslations: {
+        en: 'en/posts/hello.md',
+        ru: 'ru/posts/hello.md',
+      },
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/posts/hello' }])
+  })
+
+  it('offers nothing when the page has no translations', () => {
+    mockPage({ __neptuTranslations: { en: 'en/posts/hello.md' } })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([])
+  })
+
+  // Honours an explicitly declared target, which the resolver already followed.
+  it('uses the resolved path even when it does not mirror the source path', () => {
+    mockPage({
+      translations: { ru: '/ru/posts/privet' },
+      __neptuTranslations: {
+        en: 'en/posts/hello.md',
+        ru: 'ru/posts/privet.md',
+      },
+    })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/posts/privet' }])
+  })
+})
+
+describe('useContentLangs and missing list sections', () => {
+  // A blog opts out of a section by deleting its directory.
+  it('drops the link when the target locale does not build the section', () => {
+    mockedUseData.mockReturnValue({
+      site: ref({
+        locales: {
+          en: { label: 'English' },
+          ru: {
+            label: 'Русский',
+            themeConfig: { listSections: ['recent', 'tags'] },
+          },
+        },
+        cleanUrls: true,
+      }),
+      localeIndex: ref('en'),
+      page: ref({ relativePath: 'en/popular/2.md' }),
+      theme: ref({ i18nRouting: true }),
+      hash: ref(''),
+      params: ref({ page: 2 }),
+    })
+    provided.posts = { ru: [{ date: '2026-01-01' }] }
+
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+    expect(localeLinks.value).toEqual([])
+  })
+
+  it('keeps the link for a section the target locale does build', () => {
+    mockedUseData.mockReturnValue({
+      site: ref({
+        locales: {
+          en: { label: 'English' },
+          ru: {
+            label: 'Русский',
+            themeConfig: { listSections: ['recent', 'popular'] },
+          },
+        },
+        cleanUrls: true,
+      }),
+      localeIndex: ref('en'),
+      page: ref({ relativePath: 'en/popular/2.md' }),
+      theme: ref({ i18nRouting: true }),
+      hash: ref(''),
+      params: ref({ page: 2 }),
+    })
+    provided.posts = { ru: [{ date: '2026-01-01' }] }
+
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/popular/1' }])
+  })
+})

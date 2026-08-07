@@ -14,6 +14,7 @@ import {
   resolveConfigTemplates,
 } from './i18n.ts'
 import { registerCategories } from './categoriesRegistry.ts'
+import { detectListSections } from './localeStructure.ts'
 import { loadLocaleYamlChain } from './localeYamlChain.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
@@ -409,6 +410,7 @@ export async function loadBlogLocale(
       } as unknown as I18nTranslations,
       authors,
       ...(categories.length > 0 ? { categories } : {}),
+      listSections: detectListSections(config.srcDir, localeIndex),
       ...(mergedSocialShares.length > 0
         ? {
             socialMediaShares: resolveConfigTemplates(

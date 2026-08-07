@@ -6,6 +6,7 @@ import {
   pickExistingTranslationRelativePath,
   resolveTranslationRelativePathCandidates,
 } from '../utils/shared/index.ts'
+import { TRANSLATION_LINKS_KEY } from '../transformers/resolveTranslationLinks.ts'
 
 interface LocaleLink {
   text: string
@@ -148,6 +149,12 @@ function resolveListRouteLocalePath(
   const kind = segments[1] as ListRouteKind | undefined
   if (!kind || !LIST_ROUTE_KINDS.includes(kind)) return undefined
 
+  // A blog opts out of a section by deleting its directory, so the target
+  // locale may not build this kind of list at all — no amount of posts there
+  // would make the route exist.
+  const sections = targetLocaleTheme?.listSections
+  if (sections && !sections.includes(kind)) return undefined
+
   // `<locale>/<kind>/<key>/popular/<page>` — keep the reader on the popular
   // variant of the list they were looking at.
   const popular = segments[3] === 'popular' ? ['popular'] : []
@@ -228,6 +235,13 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
     const knownRelativePaths = knownPages?.flatMap((sitePage) =>
       sitePage.relativePath ? [sitePage.relativePath] : []
     )
+    // Resolved at build time against the filesystem — the only source here that
+    // is complete in a production bundle. `site.pages` exists in dev only, and
+    // without it `pickExistingTranslationRelativePath` accepts every candidate
+    // unchecked, which is what used to offer every locale on every page.
+    const resolvedTranslations = page.value.frontmatter?.[
+      TRANSLATION_LINKS_KEY
+    ] as Record<string, string> | undefined
 
     return Object.entries(
       site.value.locales as SiteData<NeptuBlogTheme.Config>['locales']
@@ -279,10 +293,16 @@ export function useContentLangs(options: { correspondingLink?: boolean } = {}) {
           }
         }
 
-        const localeRelativePath = pickExistingTranslationRelativePath(
-          resolveTranslationRelativePathCandidates(page.value.relativePath, key, translations),
-          { knownRelativePaths }
-        )
+        const localeRelativePath = resolvedTranslations
+          ? resolvedTranslations[key]
+          : pickExistingTranslationRelativePath(
+              resolveTranslationRelativePathCandidates(
+                page.value.relativePath,
+                key,
+                translations
+              ),
+              { knownRelativePaths }
+            )
         if (!localeRelativePath) return []
 
         const relativePath = localeRelativePath.slice(localeBaseLink.length - 1)

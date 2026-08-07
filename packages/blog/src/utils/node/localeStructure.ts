@@ -44,3 +44,42 @@ export function assertStrictLocaleStructure(
     )
   }
 }
+
+/**
+ * Directories holding the list routes the theme generates from posts.
+ *
+ * A blog opts out of a section by deleting its directory (see the project
+ * structure docs), so presence on disk — not a themeConfig flag — is what says
+ * whether `/‹locale›/popular/1` will exist.
+ */
+export const LIST_SECTION_DIRS = [
+  'recent',
+  'popular',
+  'featured',
+  'archive',
+  'authors',
+  'tags',
+  'categories',
+] as const
+
+export type ListSectionDir = (typeof LIST_SECTION_DIRS)[number]
+
+/**
+ * Which list sections a locale actually builds.
+ *
+ * Published on `themeConfig.listSections` so the language switcher can tell a
+ * section that is merely empty in another locale from one that locale does not
+ * have at all — both would otherwise produce a link to a route that was never
+ * generated.
+ */
+export function detectListSections(
+  srcDir: string | undefined,
+  localeIndex: string
+): ListSectionDir[] {
+  if (!srcDir) return []
+
+  return LIST_SECTION_DIRS.filter((dir) => {
+    const abs = path.join(srcDir, localeIndex, dir)
+    return fs.existsSync(abs) && fs.statSync(abs).isDirectory()
+  })
+}

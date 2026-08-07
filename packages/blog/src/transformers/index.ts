@@ -19,5 +19,9 @@ export { resolveDescription } from './resolveDescription.ts'
 export { resolveMediaPaths } from './resolveMediaPaths.ts'
 export { addDescriptionMetaTag } from './addDescriptionMetaTag.ts'
 export { transformPageMeta } from './transformPageMeta.ts'
+export {
+  resolveTranslationLinks,
+  TRANSLATION_LINKS_KEY,
+} from './resolveTranslationLinks.ts'
 export { transformDescription } from './transformDescription.ts'
 export { transformTitle } from './transformTitle.ts'
