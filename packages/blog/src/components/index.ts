@@ -39,6 +39,7 @@ export { default as UtilSubPageHeader } from './utility/UtilSubPageHeader.vue'
 export { default as NeptuYears } from './utility/NeptuYears.vue'
 
 export { default as AudioFile } from './doc-components/AudioFile.vue'
+export { default as Badge } from './doc-components/Badge.vue'
 export { default as FileDownload } from './doc-components/FileDownload.vue'
 export { default as YouTubeVideo } from './doc-components/YouTubeVideo.vue'
 export { default as VideoFile } from './doc-components/VideoFile.vue'

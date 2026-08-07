@@ -10,16 +10,26 @@
   --vp-c-bg-alt: #f6f6f7;
   --vp-c-indigo-1: #3451b2;
   --vp-c-indigo-2: #3a5ccc;
+  --vp-c-indigo-soft: rgba(100, 108, 255, 0.14);
   --vp-c-gray-soft: rgba(142, 150, 170, 0.14);
   --vp-c-red-soft: rgba(244, 63, 94, 0.14);
   --vp-c-yellow-soft: rgba(234, 179, 8, 0.14);
   --vp-c-red-soft: rgba(244, 63, 94, 0.14);
+
+  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+  --vp-c-yellow-1: #915930;
+  --vp-c-red-1: #b8272c;
 
   --vp-c-danger-soft: var(--vp-c-red-soft);
   --vp-c-warning-soft: var(--vp-c-yellow-soft);
   --vp-c-brand-1: var(--vp-c-indigo-1);
   --vp-c-brand-2: var(--vp-c-indigo-2);
   --vp-c-default-soft: var(--vp-c-gray-soft);
+
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+  --vp-c-warning-1: var(--vp-c-yellow-1);
+  --vp-c-danger-1: var(--vp-c-red-1);
 
   --vp-header-anchor-symbol: '#';
   --vp-font-family-mono:
@@ -37,10 +47,14 @@
   --vp-c-bg-alt: #161618;
   --vp-c-indigo-1: #a8b1ff;
   --vp-c-indigo-2: #5c73e7;
+  --vp-c-indigo-soft: rgba(100, 108, 255, 0.16);
   --vp-c-gray-soft: rgba(101, 117, 133, 0.16);
   --vp-c-red-soft: rgba(244, 63, 94, 0.16);
   --vp-c-yellow-soft: rgba(234, 179, 8, 0.16);
   --vp-c-red-soft: rgba(244, 63, 94, 0.16);
+
+  --vp-c-yellow-1: #f9b44e;
+  --vp-c-red-1: #f66f81;
 }
 
 /**
@@ -160,6 +174,28 @@
   --vp-custom-block-details-text: var(--vp-custom-block-info-text);
   --vp-custom-block-details-bg: var(--vp-custom-block-info-bg);
   --vp-custom-block-details-code-bg: var(--vp-custom-block-info-code-bg);
+}
+
+/**
+ * Component: Badge
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-badge-info-border: var(--vp-c-divider);
+  --vp-badge-info-text: var(--vp-c-text-2);
+  --vp-badge-info-bg: var(--vp-c-default-soft);
+
+  --vp-badge-tip-border: var(--vp-c-tip-1);
+  --vp-badge-tip-text: var(--vp-c-tip-1);
+  --vp-badge-tip-bg: var(--vp-c-tip-soft);
+
+  --vp-badge-warning-border: var(--vp-c-warning-1);
+  --vp-badge-warning-text: var(--vp-c-warning-1);
+  --vp-badge-warning-bg: var(--vp-c-warning-soft);
+
+  --vp-badge-danger-border: var(--vp-c-danger-1);
+  --vp-badge-danger-text: var(--vp-c-danger-1);
+  --vp-badge-danger-bg: var(--vp-c-danger-soft);
 }
 
 /**
