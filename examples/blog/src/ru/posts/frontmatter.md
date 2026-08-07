@@ -71,6 +71,8 @@ description: >
   подкастов и ссылка на обсуждение — всё включено сразу.
 # layout для постов можно не указывать, по умолчанию всеравно значение 'post'.
 # Доступные варианты: post, home, page, util, tag, category, archive, author.
+# Кроме них: false — голый контент без сайдбара, шапки и подвала;
+# имя глобально зарегистрированного компонента — полная замена layout'а.
 layout: post
 # ID автора из themeConfig.authors. Если ID не найден — блок автора не рендерится.
 # Важнно точно и без ошибок указывать ID автора чтобы правльно сформировались списки постов по авторам.
@@ -165,9 +167,14 @@ ads: false
 # По умолчанию: false.
 draft: false
 # Включить страницу в индекс поиска (Pagefind).
-# По умолчанию: true для постов.
+# По умолчанию: true для постов и страниц, false для layout: util.
 # draft: true принудительно сбрасывает это в false.
 searchIncluded: true
+# Скрыть ссылку «редактировать страницу» на этом посте.
+# Работает только на layout: post и layout: page и только если
+# themeConfig.editLink вообще настроен.
+# По умолчанию: ссылка показывается.
+editLink: false
 
 ### SEO ###
 
@@ -195,6 +202,11 @@ seo:
 jsonLd:
   "@type": TechArticle
   proficiencyLevel: Beginner
+# Стандартное поле VitePress для произвольных тегов в <head>.
+# Тема его тоже читает: если положить сюда noindex, она не станет
+# добавлять к странице JSON-LD и canonical.
+head:
+  - [meta, { name: robots, content: noindex }]
 
 ### Прочее ###
 
@@ -241,8 +253,10 @@ translations:
 - `draft` — черновик: URL работает для превью, но страница исключается из
   sitemap, поиска и помечается `noindex`.
 - `searchIncluded` — участие в индексе Pagefind. По умолчанию `true`.
-- `canonical`, `seo` — канонический URL и покомандное отключение SEO-фич.
+- `canonical`, `seo`, `head` — канонический URL, покомандное отключение
+  SEO-фич и произвольные теги в `<head>`.
 - `jsonLd` — свой JSON-LD, объектом (deep-merge) или строкой (полная замена).
+- `editLink` — `false` убирает ссылку «редактировать страницу».
 - `contentLayout` — подмена центральной области своим компонентом.
 
 Все остальные поля из примера поста на `layout: page` **игнорируются**: `date`,
@@ -254,9 +268,9 @@ translations:
 
 ## Главная страница (`layout: home`)
 
-Главная собирается из `themeConfig.home` — hero-блок, секции и фон описываются в
-конфиге, а не во frontmatter (подробно — в статье [Домашняя страница](home-page)).
-Сам `src/<локаль>/index.md` в минимальном виде содержит только layout:
+**Главная не настраивается через frontmatter.** Весь её вид — hero-блок, секции,
+ширина, тема оформления и фон — описывается в конфиге, а `src/<локаль>/index.md`
+содержит только layout:
 
 ```yaml
 ---
@@ -264,39 +278,29 @@ layout: home
 ---
 ```
 
-Но пять параметров оформления можно перекрыть прямо во frontmatter конкретной
-страницы — удобно, когда локалей несколько и одной из них нужен свой фон или
-своя ширина:
+Оформление задаётся в `site.yaml`, локализуемые тексты — в `_site.yaml` локали
+(подробно — в статье [Домашняя страница](home-page)). Слои конфига мержатся
+глубоко, поэтому даже «одной локали нужен свой фон» решается конфигом, без
+frontmatter:
 
 ```yaml
----
-layout: home
-# Перекрывает themeConfig.home.appearance
-# auto | light | dark. При light|dark тема на главной не переключается
-homeTheme: dark
-# Перекрывает themeConfig.home.maxWidth — максимальная ширина контента в пикселях
-homeMaxWidth: 900
-# Перекрывает themeConfig.home.background.type
-# none | parallax — параллакс-фон при скролле
-homeBackground: parallax
-# Перекрывает themeConfig.home.background.image
-homeBackgroundImage: /img/home-ru.webp
-# Перекрывает themeConfig.home.background.parallaxOffset —
-# смещение фона в пикселях при скролле
-homeBackgroundParallaxOffset: 300
----
+# ru/_site.yaml — перекрывает только image, остальное берётся из site.yaml
+themeConfig:
+  home:
+    background:
+      image: /img/home-ru.webp
 ```
 
-Каждое из этих полей работает по принципу «frontmatter → конфиг → значение по
-умолчанию»: не указали во frontmatter — берётся из `themeConfig.home`.
+Из общих полей frontmatter на главной имеют смысл только `title`,
+`description`, `translations`, `canonical`, `seo` и `draft`. Поля `aside`,
+`toc`, `ads` и `readingTime` игнорируются всегда, даже если указать их явно:
+главная использует собственный полноэкранный layout без боковых колонок.
 
-Hero-блок и секции через frontmatter не переопределяются — в них локализуемый
-текст, которому место в `_site.yaml`.
-
-Из общих полей на главной работают `title`, `description`, `translations`,
-`canonical`, `seo` и `draft`. А вот `aside`, `toc`, `ads` и `readingTime` на
-`layout: home` игнорируются всегда, даже если указать их явно: главная
-использует собственный полноэкранный layout без боковых колонок.
+> Исторически тема понимает во frontmatter главной пять полей —
+> `homeTheme`, `homeMaxWidth`, `homeBackground`, `homeBackgroundImage`,
+> `homeBackgroundParallaxOffset`. Они перекрывают соответствующие ключи
+> `themeConfig.home`, но использовать их не рекомендуется: конфиг умеет то же
+> самое и держит все настройки главной в одном месте.
 
 ## Дальше по темам
 
