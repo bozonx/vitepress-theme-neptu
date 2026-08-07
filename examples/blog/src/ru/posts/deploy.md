@@ -42,7 +42,9 @@ npm run preview    # или: pnpm preview / yarn preview
 
 Тоесть если сайт публикуется в корне (`myblog.org`) то `base` задавать не нужно. Он задается только при размещении сайта не в корне.
 
-ВАЖНО! **Если сайт находится не в корне** (используется, например `base: /path-to-site/`), то тот же путь нужно включить и в `siteUrl` тоже — например `https://myblog.org/path-to-site`, но без слэша на конце.
+::: info
+Если сайт находится не в корне (используется, например `base: /path-to-site/`), то путь `base` **автоматически добавляется** к `siteUrl` для всех SEO-ссылок (canonical, sitemap, RSS, Open Graph, JSON-LD). Дублировать путь в `siteUrl` вручную не нужно — достаточно указать домен: `https://myblog.org`.
+:::
 
 ## GitHub Pages (проектная страница)
 
@@ -62,8 +64,10 @@ npm run preview    # или: pnpm preview / yarn preview
 
 ```ts
 // .vitepress/config.ts
-siteUrl: 'https://<user>.github.io/my-blog'
+siteUrl: 'https://<user>.github.io'
 ```
+
+Путь `/my-blog/` добавится автоматически из `base`.
 
 ## Автоматический деплой через GitHub Actions
 
@@ -165,7 +169,8 @@ Codex, Cascade, Claude Code и тд) сделать это за вас. Аген
 > vitepress-theme-neptu на GitHub Pages при пуше в `main`. Установи
 > `base: '/<repo>/'` — передай через `--base` в скрипте `build` в `package.json`.
 > Сборка через `npm run build`, артефакт из `src/.vitepress/dist`.
-> Укажи `siteUrl: 'https://<user>.github.io/<repo>'` в `.vitepress/config.ts`.
+> Укажи `siteUrl: 'https://<user>.github.io'` в `.vitepress/config.ts`
+> — путь `/repo/` добавится автоматически из `base`.
 
 ### Что агент может сделать
 
