@@ -2,10 +2,10 @@
 title: Публикация и деплой
 description: >
   Как собрать статический сайт и выложить его на любой статический хостинг —
-  на примере GitHub Pages с поддоменным путём.
+  на примере GitHub Pages
 authorId: ivan-k
 date: 2026-07-30
-category: { name: 'Начало работы', slug: 'getting-started' }
+category: getting-started
 tags: [start, deploy]
 descriptionAsPreview: true
 ---
@@ -28,7 +28,7 @@ Pagefind — тема делает это сама, отдельный шаг с
 npm run preview    # или: pnpm preview / yarn preview
 ```
 
-Содержимое `src/.vitepress/dist` — это и есть готовый сайт. Загрузите эту папку на
+Содержимое `src/.vitepress/dist` — это и есть готовый сайт. Загрузите эту папку на ваш
 хостинг, и всё будет работать.
 
 ## Два адреса: `siteUrl` и `base`
@@ -36,12 +36,13 @@ npm run preview    # или: pnpm preview / yarn preview
 Их легко перепутать, но это разные вещи:
 
 - **`siteUrl`** — абсолютный адрес сайта (`https://myblog.org`). Нужен для canonical,
-  sitemap, RSS, Open Graph. Задаётся в `.vitepress/config.ts`.
+  sitemap, RSS, Open Graph. Задаётся в `.vitepress/config.ts`. 
 - **`base`** — путь, по которому сайт лежит на домене. Для корня домена это `/`.
-  Для «проектной» страницы GitHub Pages — `/<имя-репозитория>/`.
+  Для GitHub Pages, например это `/<имя-репозитория>/`. Так же вы можете размещать сайт по любому пути, даже вложеному `/path/to/site/`.
 
-Если сайт публикуется в корне (`myblog.org`), `base` менять не нужно. Он важен
-только при размещении в подпапке.
+Тоесть если сайт публикуется в корне (`myblog.org`) то `base` задавать не нужно. Он задается только при размещении сайта не в корне.
+
+ВАЖНО! **Если сайт находится не в корне** (используется, например `base: /path-to-site/`), то тот же путь нужно включить и в `siteUrl` тоже — например `https://myblog.org/path-to-site`, но без слэша на конце.
 
 ## GitHub Pages (проектная страница)
 
