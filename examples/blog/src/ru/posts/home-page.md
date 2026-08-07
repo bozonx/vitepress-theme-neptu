@@ -44,6 +44,12 @@ themeConfig:
       # parallaxOffset: 300
 ```
 
+> Все пять параметров из этого блока можно перекрыть во frontmatter самого
+> `index.md` — полями `homeTheme`, `homeMaxWidth`, `homeBackground`,
+> `homeBackgroundImage` и `homeBackgroundParallaxOffset`. Это удобно, когда
+> локалей несколько и одной из них нужен свой фон. Подробности — в статье
+> [Все поля frontmatter](frontmatter#главная-страница-layout-home).
+
 ```yaml
 # ru/_site.yaml
 themeConfig:
