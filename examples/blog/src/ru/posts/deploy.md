@@ -71,7 +71,7 @@ siteUrl: 'https://<user>.github.io'
 
 ## Автоматический деплой через GitHub Actions
 
-Workflow собирает сайт при каждом пуше в `main` и публикует его на Pages:
+Этот workflow собирает сайт при каждом пуше в `main` и публикует его на Pages:
 
 ```yaml
 # .github/workflows/deploy.yml
@@ -79,6 +79,9 @@ name: Deploy
 on:
   push:
     branches: [main]
+concurrency:
+  group: pages
+  cancel-in-progress: true
 jobs:
   build:
     permissions:
@@ -99,7 +102,6 @@ jobs:
   deploy:
     needs: build
     permissions:
-      contents: read
       pages: write
       id-token: write
     runs-on: ubuntu-latest
@@ -133,7 +135,7 @@ Actions** и пробросьте их в шаг `npm run build` через `env
 ## Деплой с помощью ИИ-агента
 
 Если вы не хотите настраивать деплой вручную, попросите ИИ-агента (например,
-Codex, Cascade, Claude Code и тд) сделать это за вас. Агент может
+Codex, Claude Code, Cascade и тд) сделать это за вас. Агент может
 создать конфигурацию, написать workflow и проверить сборку.
 
 Выполняйте запрос в корне вашего блога.
