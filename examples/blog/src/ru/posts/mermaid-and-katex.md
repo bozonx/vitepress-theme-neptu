@@ -10,12 +10,11 @@ tags: [guide, advanced]
 descriptionAsPreview: true
 ---
 
-Mermaid и KaTeX подключаются как опциональные Markdown-интеграции через `markdown.
-config` который предоставляет VitePress.
+Mermaid и KaTeX подключаются как опциональные Markdown-интеграции стандартным для VitePress образом.
 
 ## Mermaid
 
-Установите renderer и сам Mermaid:
+Установите в ваш блог renderer и сам Mermaid:
 
 ```bash
 pnpm add -D vitepress-plugin-mermaid mermaid
@@ -46,8 +45,7 @@ flowchart LR
 ````
 
 `withMermaid` должен оставаться внешней обёрткой, чтобы добавить свои хуки
-VitePress. Параметры и совместимость версий приведены в
-[репозитории плагина](https://github.com/emersonbottero/vitepress-plugin-mermaid).
+VitePress. Параметры и совместимость версий приведены в [репозитории плагина](https://github.com/emersonbottero/vitepress-plugin-mermaid).
 
 Плагин принимает объект настроек Mermaid — тему, направление диаграммы и другие
 опции — первым аргументом:
