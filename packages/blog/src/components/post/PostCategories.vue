@@ -19,7 +19,7 @@ const categories = computed<TaxonomyEntry[]>(
     <div class="md:flex">
       <p class="md:mt-1 md:mr-2 max-md:mb-3 muted">{{ theme.t.categories }}:</p>
 
-      <TagsList :tags="categories" kind="category" pagefind-filter="category">
+      <TagsList :tags="categories" kind="category">
         <template #after>
           <li class="flex items-center ml-2 max-md:mt-2">
             <NeptuBtnLink

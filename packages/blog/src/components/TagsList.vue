@@ -19,8 +19,6 @@ const {
   activeCompareMethod?: 'soft' | 'pagination' | 'softPagination' | 'none' | 'strict'
   /** Which taxonomy the entries belong to. Drives item URLs and styling. */
   kind?: 'tag' | 'category'
-  /** Pagefind filter name to expose each entry under (e.g. `tag`). */
-  pagefindFilter?: string
 }>()
 const emit = defineEmits<{
   (e: 'itemClick'): void
@@ -44,7 +42,6 @@ const sizeClass = computed(() => {
     <li
       v-for="(item, index) in tags"
       :key="item.slug || item.name || index"
-      v-bind="pagefindFilter ? { 'data-pagefind-filter': pagefindFilter } : {}"
     >
       <TagItem
         v-bind="item"

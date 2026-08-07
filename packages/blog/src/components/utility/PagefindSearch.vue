@@ -161,6 +161,7 @@ const createPagefindUI = () => {
     bundlePath: withBase('/pagefind/'),
     showSubResults: true,
     showImages: true,
+    showFilters: false,
     ...(searchUI ? { translations: searchUI } : {}),
   })
 }
