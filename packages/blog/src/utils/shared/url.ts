@@ -24,6 +24,7 @@ const SAFE_SCHEMES = new Set(['http:', 'https:', 'mailto:', 'tel:'])
  * non-matching scheme while the browser executes it as `javascript:`.
  */
 function normalizeForUrlCheck(url: string): string {
+  // eslint-disable-next-line no-control-regex -- intentional: strips control chars to prevent XSS bypass
   return url.replace(/[\u0000-\u0020]/g, '').trim()
 }
 

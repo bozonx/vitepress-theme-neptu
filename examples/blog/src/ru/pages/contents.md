@@ -21,6 +21,7 @@ layout: page
 
 ## Контент
 
+- [Возможности Markdown и кастомные блоки](../posts/markdown-syntax) — Полный справочник синтаксиса Markdown, спецконтейнеры (`::: tip`, `::: warning`), блоки кода, бейджи и медиа-компоненты
 - [Все поля frontmatter](../posts/full-featured) — все поля в одном месте
 - [Категории и теги](../posts/categories-and-tags) — Две таксономии, хлебные крошки
 - [Черновики, время чтения, видео-кнопка и подкасты](../posts/drafts-video-podcasts) — `draft: true`, оценка времени, `videoLink`, `podcasts`
