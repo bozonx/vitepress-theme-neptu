@@ -62,6 +62,7 @@ describe('isExternalUrl', () => {
 describe('resolveI18nHref', () => {
   it('returns locale-prefixed root for /', () => {
     expect(resolveI18nHref('/', 'en')).toBe('/en')
+    expect(resolveI18nHref('/', 'root')).toBe('/')
   })
 
   it('returns external URL unchanged', () => {

@@ -84,7 +84,7 @@ export default {
     allPostsOfAuthor: 'Посты автора',
     closeMenu: 'Закрыть меню',
     allPostsOfYear: 'Все посты за год',
-    pageNotFound: 'Страница не найдена',
+    pageNotFound: '404 Страница не найдена',
     postsCount: 'Публикаций',
     postsCountForms: ['публикация', 'публикации', 'публикаций'],
     draftLabel: 'Черновик',

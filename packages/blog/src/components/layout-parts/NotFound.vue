@@ -2,6 +2,7 @@
 import { useData, withBase } from 'vitepress'
 import { computed } from 'vue'
 import { useThemeConfig } from '../../composables/useThemeConfig.ts'
+import SimpleLink from '../SimpleLink.vue'
 
 const { localeIndex } = useData()
 const { theme } = useThemeConfig()
@@ -25,7 +26,7 @@ const homeLink = computed(() =>
     <div>
       <h1 class="text-[var(--body-text-color)] text-4xl">{{ pageNotFoundText }}</h1>
       <div class="text-xl mt-1">
-        <a class="simple-link" :href="withBase(homeLink)">{{ toHomeText }}</a>
+        <SimpleLink :href="withBase(homeLink)">{{ toHomeText }}</SimpleLink>
       </div>
     </div>
   </div>

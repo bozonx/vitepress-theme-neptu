@@ -116,7 +116,7 @@ export function resolveI18nHref(
 
   if (!trimmed) return rawHref
   // Main page
-  else if (trimmed === '/') return '/' + localeIndex
+  if (trimmed === '/') return !localeIndex || localeIndex === 'root' ? '/' : '/' + localeIndex
 
   const isExternal = isExternalUrl(trimmed)
 
