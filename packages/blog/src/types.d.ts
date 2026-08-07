@@ -80,6 +80,7 @@ export namespace NeptuBlogTheme {
     label?: string
     link?: string
     lang?: string
+    dir?: 'ltr' | 'rtl' | 'auto'
     title?: string
     titleTemplate?: string | boolean
     description?: string
@@ -881,6 +882,7 @@ export namespace NeptuBlogTheme {
 
   export interface LocaleDefinition {
     lang?: string
+    dir?: 'ltr' | 'rtl' | 'auto'
     title?: string
     titleTemplate?: string | boolean
     description?: string

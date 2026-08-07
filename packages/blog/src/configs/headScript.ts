@@ -40,3 +40,26 @@ export function createThemeHeadScript(options?: {
     `if(s)d.setAttribute(${JSON.stringify(STYLE_ATTRIBUTE)},s);}catch(e){}})()`
   )
 }
+
+/**
+ * Inline script that sets `dir` on `<html>` before the first paint, based on
+ * the current URL path and the locale-to-dir map.
+ *
+ * VitePress sets `<html lang>` per locale but does not set `dir`. Without this
+ * script the page would paint LTR and then snap to RTL on client-side mount.
+ * The composable `useLocaleDir` handles subsequent client-side navigations.
+ */
+export function createDirHeadScript(
+  localeDirs: Record<string, string>
+): string {
+  const map = JSON.stringify(localeDirs)
+
+  return (
+    `(function(){try{` +
+    `var m=${map};` +
+    `var p=location.pathname.replace(/^\\/+/,'').split('/')[0];` +
+    `var dir=m[p]||m['root']||'';` +
+    `if(dir)document.documentElement.setAttribute('dir',dir);` +
+    `}catch(e){}})()`
+  )
+}

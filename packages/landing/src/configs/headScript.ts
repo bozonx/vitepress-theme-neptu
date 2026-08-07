@@ -8,6 +8,7 @@ export {
   COLOR_ATTRIBUTE,
   STYLE_STORAGE_KEY,
   STYLE_ATTRIBUTE,
+  createDirHeadScript,
 } from 'vitepress-theme-neptu/src/configs/headScript.ts'
 
 /**

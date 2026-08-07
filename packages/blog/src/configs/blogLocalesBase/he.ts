@@ -2,6 +2,7 @@ import shared from '../sharedLocalesBase/he.ts'
 
 export default {
   label: 'עברית',
+  dir: 'rtl',
   themeConfig: {
     returnToTopLabel: 'חזרה למעלה',
     sidebarMenuLabel: 'תפריט',

@@ -317,12 +317,14 @@ export async function loadBlogLocale(
     title: rawTitle,
     titleTemplate,
     description,
+    dir: rawDir,
   } = templatedSite
   const title = rawTitle
   const resolvedRepo = mergedThemeConfig.repo as string | undefined
 
   return {
     lang: typeof lang === 'string' ? lang : undefined,
+    dir: typeof rawDir === 'string' ? (rawDir as 'ltr' | 'rtl' | 'auto') : baseLocale.dir,
     label: typeof label === 'string' ? label : baseLocale.label,
     title: typeof title === 'string' ? title : undefined,
     titleTemplate:

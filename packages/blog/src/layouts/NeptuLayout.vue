@@ -4,6 +4,7 @@ import { computed, provide, resolveDynamicComponent } from 'vue'
 
 import NotFound from '../components/layout-parts/NotFound.vue'
 import { useScrollY } from '../composables/useScrollY.ts'
+import { useLocaleDir } from '../composables/useLocaleDir.ts'
 import ImageLightbox from '../components/doc-components/ImageLightbox.vue'
 import BlogHome from './BlogHome.vue'
 import DefaultLayout from './DefaultLayout.vue'
@@ -14,6 +15,7 @@ import { resolveTranslationsByFilePath } from '../utils/shared/index.ts'
 const { page, frontmatter } = useData()
 const route = useRoute()
 const { scrollY } = useScrollY()
+useLocaleDir()
 
 const BUILTIN_LAYOUTS = [
   'home',

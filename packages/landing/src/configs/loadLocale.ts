@@ -147,6 +147,7 @@ export async function loadLocale(
     title: rawTitle,
     titleTemplate,
     description,
+    dir: rawDir,
   } = site
   const { repo: _localeYamlRepo, ...localeThemeConfig } = extractThemeConfig(site)
   const title = rawTitle as string | undefined
@@ -168,6 +169,7 @@ export async function loadLocale(
 
   return {
     lang: typeof lang === 'string' ? lang : undefined,
+    dir: typeof rawDir === 'string' ? (rawDir as 'ltr' | 'rtl' | 'auto') : baseLocale.dir,
     label: typeof label === 'string' ? label : baseLocale.label,
     title: typeof title === 'string' ? title : undefined,
     titleTemplate:

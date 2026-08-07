@@ -20,7 +20,7 @@ import {
   resolveExternalLinkIcon,
 } from '../utils/shared/configHelpers.ts'
 import blogBaseLocales from './blogLocalesBase/index.ts'
-import { createThemeHeadScript } from './headScript.ts'
+import { createThemeHeadScript, createDirHeadScript } from './headScript.ts'
 import { createConsentHeadScript } from './consentHeadScript.ts'
 import {
   DEFAULT_ADS_IN_CONTENT,
@@ -237,6 +237,15 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
     primaryLocale as (LocaleDefinition & { themeConfig?: Partial<ThemeConfig> }) | undefined
   )?.themeConfig
 
+  // Build a locale-index → dir map for the inline head script that sets
+  // <html dir> before the first paint (prevents LTR→RTL flash).
+  const mergedLocales = { ...(blogBaseConfig.locales || {}), ...(config.locales || {}) }
+  const localeDirs: Record<string, string> = {}
+  for (const [code, locale] of Object.entries(mergedLocales)) {
+    const dir = (locale as { dir?: string })?.dir
+    if (dir && dir !== 'auto') localeDirs[code] = dir
+  }
+
   return {
     ...blogBaseConfig,
     ...config,
@@ -271,6 +280,15 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
             config.themeConfig?.defaultStylePreset,
         }),
       ],
+      ...(Object.keys(localeDirs).length > 0
+        ? [
+            [
+              'script',
+              {},
+              createDirHeadScript(localeDirs),
+            ] as [string, Record<string, string>, string],
+          ]
+        : []),
       ...(config.head || []),
     ],
     // Keep the locale identity fields native. VitePress already uses `title`

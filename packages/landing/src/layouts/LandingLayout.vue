@@ -3,11 +3,13 @@ import DefaultTheme from 'vitepress/theme-without-fonts'
 import { useData } from 'vitepress'
 import { computed, useSlots } from 'vue'
 import { LocaleSelector, NeptuAd } from 'vitepress-theme-neptu/components'
+import { useLocaleDir } from 'vitepress-theme-neptu/composables'
 import type { LandingThemeConfig } from '../types.d.ts'
 
 const { Layout: DefaultLayout } = DefaultTheme
 const { frontmatter, theme } = useData<LandingThemeConfig>()
 const slots = useSlots()
+useLocaleDir()
 
 // The default theme's ad zone sits below the outline, so the column keeps the
 // table of contents at the top where readers look for it. A site passing its

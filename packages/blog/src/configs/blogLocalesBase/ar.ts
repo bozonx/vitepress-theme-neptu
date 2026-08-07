@@ -2,6 +2,7 @@ import shared from '../sharedLocalesBase/ar.ts'
 
 export default {
   label: 'العربية',
+  dir: 'rtl',
   themeConfig: {
     returnToTopLabel: 'العودة إلى الأعلى',
     sidebarMenuLabel: 'القائمة',

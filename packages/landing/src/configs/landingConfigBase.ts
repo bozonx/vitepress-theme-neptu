@@ -43,7 +43,7 @@ import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
 import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
 import landingBaseLocales from './landingLocalesBase/index.ts'
 import { autoLoadLocales } from './loadLocale.ts'
-import { createLandingHeadScript } from './headScript.ts'
+import { createLandingHeadScript, createDirHeadScript } from './headScript.ts'
 // Imported from the modules rather than the barrels: the `configs` barrel
 // pulls in the whole server-side config pipeline, and both of these are
 // dependency-free.
@@ -139,6 +139,18 @@ export function mergeLandingConfig(
       | undefined
   )?.themeConfig
 
+  // Build a locale-index → dir map for the inline head script that sets
+  // <html dir> before the first paint (prevents LTR→RTL flash).
+  const mergedLandingLocales = {
+    ...(landingBaseConfig.locales || {}),
+    ...(config.locales || {}),
+  }
+  const localeDirs: Record<string, string> = {}
+  for (const [code, locale] of Object.entries(mergedLandingLocales)) {
+    const dir = (locale as { dir?: string })?.dir
+    if (dir && dir !== 'auto') localeDirs[code] = dir
+  }
+
   return {
     ...landingBaseConfig,
     ...config,
@@ -171,6 +183,15 @@ export function mergeLandingConfig(
             config.themeConfig?.defaultStylePreset,
         }),
       ],
+      ...(Object.keys(localeDirs).length > 0
+        ? [
+            [
+              'script',
+              {},
+              createDirHeadScript(localeDirs),
+            ] as [string, Record<string, string>, string],
+          ]
+        : []),
       ...(config.head || []),
     ],
     locales: Object.fromEntries(
