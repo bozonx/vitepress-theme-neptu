@@ -25,12 +25,15 @@ export function resolveBaseLocaleKey(
 
 export function resolveTranslationsByFilePath(filePath?: string): { t: I18nTranslations; [key: string]: unknown } {
   const map = locales as unknown as LocalesMap
-  if (!filePath) return map[DEFAULT_LOCALE]
+  // `DEFAULT_LOCALE` is always present in the bundled map, so it is the one
+  // lookup that is safe to treat as total.
+  const fallback = map[DEFAULT_LOCALE]!
+  if (!filePath) return fallback
 
   const segments = filePath?.split('/').filter(Boolean) ?? []
   const localeIndex = segments[0] ?? ''
 
-  return map[resolveBaseLocaleKey(localeIndex, map)]
+  return map[resolveBaseLocaleKey(localeIndex, map)] ?? fallback
 }
 
 /**
@@ -41,18 +44,22 @@ export function pluralize(count: number, forms: string[]): string {
   const n = Math.abs(count)
   const len = forms.length
 
+  // A caller can hand over a short list; falling back to the first form beats
+  // rendering `undefined` next to a number.
+  const form = (index: number): string => forms[index] ?? forms[0] ?? ''
+
   if (len === 2) {
-    return n === 1 ? forms[0] : forms[1]
+    return n === 1 ? form(0) : form(1)
   }
 
   if (len >= 3) {
     const lastTwo = n % 100
-    if (lastTwo >= 11 && lastTwo <= 14) return forms[2]
+    if (lastTwo >= 11 && lastTwo <= 14) return form(2)
     const lastDigit = n % 10
-    if (lastDigit === 1) return forms[0]
-    if (lastDigit >= 2 && lastDigit <= 4) return forms[1]
-    return forms[2]
+    if (lastDigit === 1) return form(0)
+    if (lastDigit >= 2 && lastDigit <= 4) return form(1)
+    return form(2)
   }
 
-  return forms[0] ?? ''
+  return form(0)
 }

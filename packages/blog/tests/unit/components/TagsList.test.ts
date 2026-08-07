@@ -30,9 +30,9 @@ describe('TagsList', () => {
     })
     const items = wrapper.findAllComponents({ name: 'TagItem' })
     expect(items).toHaveLength(2)
-    expect(items[0].props('name')).toBe('Vue')
-    expect(items[0].props('count')).toBe(5)
-    expect(items[1].props('name')).toBe('TypeScript')
+    expect(items[0]!.props('name')).toBe('Vue')
+    expect(items[0]!.props('count')).toBe(5)
+    expect(items[1]!.props('name')).toBe('TypeScript')
   })
 
   it('applies xl size class', () => {

@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import {
   mergeWithAnalytics,
   loadGoogleAnalytics,
+  loadGoogleAnalyticsOrThrow,
   type AnalyticsDataSource,
 } from '../../../src/list-helpers/loadPostsStats.ts'
 import type { Post } from '../../../src/types.d.ts'
@@ -86,7 +87,7 @@ describe('loadPostsStats', () => {
 
       const result = await mergeWithAnalytics([dummyPost], dataSource)
 
-      expect(result[0].analyticsStats).toEqual({
+      expect(result[0]!.analyticsStats).toEqual({
         pageviews: 100,
         uniquePageviews: 50,
         avgTimeOnPage: 120.5,
@@ -132,5 +133,163 @@ describe('loadPostsStats', () => {
         expect.stringContaining('Critical error fetching Google Analytics data:')
       )
     })
+  })
+})
+
+describe('GA4 retry behaviour', () => {
+  const { privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+  })
+  const credentialsJson = JSON.stringify({
+    client_email: 'sa@project.iam.gserviceaccount.com',
+    private_key: privateKey,
+  })
+  const source = (over: Partial<AnalyticsDataSource> = {}): AnalyticsDataSource => ({
+    provider: 'ga4',
+    propertyId: '123',
+    credentialsJson,
+    retryDelayMs: 0,
+    ...over,
+  })
+
+  const tokenResponse = () =>
+    new Response(JSON.stringify({ access_token: 'tok' }), { status: 200 })
+  const reportResponse = (rows: unknown[]) =>
+    new Response(JSON.stringify({ rows }), { status: 200 })
+  const row = (path: string, views: string) => ({
+    dimensionValues: [{ value: path }],
+    metricValues: [{ value: views }, { value: '1' }, { value: '2' }],
+  })
+
+  beforeEach(() => {
+    delete (globalThis as any).loadingGaStatsPromise
+    delete (globalThis as any).warnedGaNoData
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+    vi.spyOn(console, 'info').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    delete (globalThis as any).loadingGaStatsPromise
+    delete (globalThis as any).warnedGaNoData
+    vi.restoreAllMocks()
+  })
+
+  it('retries a 5xx report response and succeeds', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(new Response('boom', { status: 503 }))
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(reportResponse([row('/posts/a', '10')]))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source())).resolves.toEqual({
+      '/posts/a': { pageviews: 10, uniquePageviews: 1, avgTimeOnPage: 2 },
+    })
+    expect(fetchMock).toHaveBeenCalledTimes(4)
+  })
+
+  it('retries a network-level failure', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValueOnce(new TypeError('fetch failed'))
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(reportResponse([row('/posts/a', '3')]))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source())).resolves.toHaveProperty('/posts/a')
+    expect(fetchMock).toHaveBeenCalledTimes(3)
+  })
+
+  it('retries a 429 on the token endpoint', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(new Response('slow down', { status: 429 }))
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(reportResponse([row('/posts/a', '1')]))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source())).resolves.toHaveProperty('/posts/a')
+    expect(fetchMock).toHaveBeenCalledTimes(3)
+  })
+
+  it('does not retry a 403 — bad credentials fail the same way every time', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(new Response('forbidden', { status: 403 }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source())).rejects.toThrow(/403/)
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  // A fresh Response per call: a body can only be read once.
+  const alwaysFailing = () =>
+    vi.fn().mockImplementation(async () => new Response('boom', { status: 500 }))
+
+  it('gives up after maxRetries and rejects', async () => {
+    const fetchMock = alwaysFailing()
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source({ maxRetries: 2 }))).rejects.toThrow(
+      /500/
+    )
+    // 3 attempts (1 + 2 retries); each dies on the token endpoint, one call each.
+    expect(fetchMock).toHaveBeenCalledTimes(3)
+  })
+
+  it('honours maxRetries: 0', async () => {
+    const fetchMock = alwaysFailing()
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source({ maxRetries: 0 }))).rejects.toThrow()
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('treats an empty report as a valid answer, not a failure', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(reportResponse([]))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await expect(loadGoogleAnalyticsOrThrow(source())).resolves.toEqual({})
+    expect(fetchMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('does not cache a failed fetch — a later locale retries from scratch', async () => {
+    const posts = [{ url: '/posts/a', title: 'A' } as any]
+    const failing = vi
+      .fn()
+      .mockImplementation(async () => new Response('boom', { status: 500 }))
+    vi.stubGlobal('fetch', failing)
+
+    await mergeWithAnalytics(posts, source({ maxRetries: 0 }))
+    expect((globalThis as any).loadingGaStatsPromise).toBeFalsy()
+
+    const succeeding = vi
+      .fn()
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(reportResponse([row('/posts/a', '7')]))
+    vi.stubGlobal('fetch', succeeding)
+
+    const merged = await mergeWithAnalytics(posts, source({ maxRetries: 0 }))
+    expect(merged[0]!.analyticsStats).toMatchObject({ pageviews: 7 })
+  })
+
+  it('shares one successful fetch across locales', async () => {
+    const posts = [{ url: '/posts/a', title: 'A' } as any]
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(tokenResponse())
+      .mockResolvedValueOnce(reportResponse([row('/posts/a', '5')]))
+    vi.stubGlobal('fetch', fetchMock)
+
+    await mergeWithAnalytics(posts, source())
+    await mergeWithAnalytics(posts, source())
+    expect(fetchMock).toHaveBeenCalledTimes(2)
   })
 })

@@ -43,7 +43,7 @@ export function resolveEditLinkPattern(
   } catch {
     // Fallback for plain strings like "github.com/owner/repo"
     const parts = normalizedUrl.split('/')
-    hostname = parts[0].toLowerCase()
+    hostname = (parts[0] ?? '').toLowerCase()
     normalizedUrl = `https://${normalizedUrl}`
   }
 

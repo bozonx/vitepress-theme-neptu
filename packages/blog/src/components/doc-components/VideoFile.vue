@@ -54,13 +54,18 @@ const handleError = (event: Event) => {
   errorMessage.value = getMediaErrorMessage(
     error,
     {
-      aborted: theme.value?.t?.videoFile?.videoPlaybackAborted,
-      network: theme.value?.t?.videoFile?.networkErrorLoadingVideo,
-      decode: theme.value?.t?.videoFile?.videoDecodingError,
-      notSupported: theme.value?.t?.videoFile?.videoFormatNotSupported,
-      unknown: theme.value?.t?.videoFile?.unknownVideoError,
+      aborted:
+        theme.value?.t?.videoFile?.videoPlaybackAborted || 'Video playback aborted',
+      network:
+        theme.value?.t?.videoFile?.networkErrorLoadingVideo ||
+        'Network error loading video',
+      decode: theme.value?.t?.videoFile?.videoDecodingError || 'Video decoding error',
+      notSupported:
+        theme.value?.t?.videoFile?.videoFormatNotSupported ||
+        'Video format not supported',
+      unknown: theme.value?.t?.videoFile?.unknownVideoError || 'Unknown video error',
     },
-    theme.value?.t?.videoFile?.errorLoadingVideoFile
+    theme.value?.t?.videoFile?.errorLoadingVideoFile || 'Error loading video file'
   )
 }
 

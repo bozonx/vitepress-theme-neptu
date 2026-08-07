@@ -12,8 +12,11 @@ const pageNotFoundText = computed(
 const toHomeText = computed(
   () => theme.value.notFound?.linkText || theme.value.t?.toHome || 'Home'
 )
-// The neutral selector and unmatched root routes use VitePress' `root` index.
-// Map that internal value to `/`; Neptu does not expose a `/root/` locale.
+// `root` here is VitePress' runtime sentinel, not a content locale: `useData()`
+// resolves `localeIndex` to `'root'` whenever the path matches no locale prefix
+// — which is exactly the 404 case and the neutral language selector. Neptu
+// rejects `root` as a *configured* locale (see `assertStrictLocaleStructure`),
+// so the sentinel always means "no locale" and maps to `/`.
 const homeLink = computed(() =>
   localeIndex.value === 'root' ? '/' : `/${localeIndex.value}/`
 )

@@ -123,7 +123,7 @@ describe('filterSitemap', () => {
       },
     ]
     const result = filterSitemap(items)
-    expect(result[0].links).toEqual([{ url: 'https://example.com/en/' }])
+    expect(result[0]!.links).toEqual([{ url: 'https://example.com/en/' }])
   })
 
   it('does not filter links for non-root pages', () => {
@@ -137,7 +137,7 @@ describe('filterSitemap', () => {
       },
     ]
     const result = filterSitemap(items)
-    expect(result[0].links).toHaveLength(2)
+    expect(result[0]!.links).toHaveLength(2)
   })
 
   it('preserves other item properties', () => {

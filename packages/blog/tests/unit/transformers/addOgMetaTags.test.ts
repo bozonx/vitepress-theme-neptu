@@ -290,7 +290,7 @@ describe('addOgMetaTags', () => {
     const ctx = createContext()
     ctx.pageData.frontmatter.title = ''
     ctx.pageData.frontmatter.description = ''
-    ctx.siteConfig.site.locales.en.title = ''
+    ctx.siteConfig.site.locales.en!.title = ''
     addOgMetaTags(ctx)
     const titleTag = ctx.head.find((h) => h[1]?.property === 'og:title')
     expect(titleTag).toBeUndefined()
@@ -431,7 +431,7 @@ describe('addOgMetaTags', () => {
 
   it('adds twitter:site when twitterSite is set in themeConfig', () => {
     const ctx = createContext()
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).twitterSite = 'myblog'
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).twitterSite = 'myblog'
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
       'meta',
@@ -441,7 +441,7 @@ describe('addOgMetaTags', () => {
 
   it('normalizes twitter:site handle with leading @', () => {
     const ctx = createContext()
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).twitterSite = '@myblog'
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).twitterSite = '@myblog'
     addOgMetaTags(ctx)
     expect(ctx.head).toContainEqual([
       'meta',
@@ -458,7 +458,7 @@ describe('addOgMetaTags', () => {
 
   it('adds twitter:creator when author has twitterHandle', () => {
     const ctx = createContext()
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).authors = [
       { id: 'alice', name: 'Alice Author', twitterHandle: 'alice_dev' },
     ]
     addOgMetaTags(ctx)
@@ -470,7 +470,7 @@ describe('addOgMetaTags', () => {
 
   it('normalizes twitter:creator handle with leading @', () => {
     const ctx = createContext()
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).authors = [
       { id: 'alice', name: 'Alice Author', twitterHandle: '@alice_dev' },
     ]
     addOgMetaTags(ctx)
@@ -490,7 +490,7 @@ describe('addOgMetaTags', () => {
   it('skips twitter:creator when post has no authorId', () => {
     const ctx = createContext()
     ctx.pageData.frontmatter.authorId = undefined
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).authors = [
       { id: 'alice', name: 'Alice Author', twitterHandle: 'alice_dev' },
     ]
     addOgMetaTags(ctx)

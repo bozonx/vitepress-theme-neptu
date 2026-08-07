@@ -112,7 +112,7 @@ describe('sortSimilarPosts', () => {
 
   it('sorts by tag intersection count first', () => {
     const result = sortSimilarPosts(posts, [{ slug: 'js' }, { slug: 'ts' }], 'current')
-    expect(result[0].url).toBe('a')
+    expect(result[0]!.url).toBe('a')
   })
 
   it('counts duplicate tag slugs only once', () => {

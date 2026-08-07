@@ -1,4 +1,4 @@
-import { useData } from 'vitepress'
+import { inBrowser, useData } from 'vitepress'
 import { watchEffect } from 'vue'
 
 interface LocaleWithDir {
@@ -16,6 +16,11 @@ export function useLocaleDir(): void {
   const { site, localeIndex } = useData()
 
   watchEffect(() => {
+    // `watchEffect` runs eagerly, and setup also runs on the server — where
+    // there is no `document`. The head script from `createDirHeadScript`
+    // already covers the initial render, so the server has nothing to do here.
+    if (!inBrowser) return
+
     const locale = site.value.locales[localeIndex.value] as LocaleWithDir | undefined
     const dir = locale?.dir
 

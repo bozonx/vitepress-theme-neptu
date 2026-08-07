@@ -17,15 +17,15 @@ export function makeAllPostsParams(
   perPage: number
 ): Array<{ params: { page: number } }> {
   const step = Math.max(1, perPage)
-  const dates = posts.map((item) => item.date)
   const res: Array<{ params: { page: number } }> = []
 
-  if (dates.length === 0) {
+  // An empty blog still needs its first list page to exist.
+  if (posts.length === 0) {
     res.push({ params: { page: 1 } })
     return res
   }
 
-  for (let i = 0; i < dates.length; i += step) {
+  for (let i = 0; i < posts.length; i += step) {
     const page = i / step + 1
 
     res.push({ params: { page } })
@@ -46,29 +46,23 @@ export function makeYearPostsParams(
   posts: PostWithDate[],
   perPage: number
 ): Array<{ params: { page: number; year: number } }> {
-  const dates = posts.map((item) => item.date)
+  const postCountByYear = new Map<number, number>()
 
-  const postsByYear: Record<number, Array<string | number | Date>> = {}
-
-  for (const date of dates) {
-    const year = safeGetYear(date)
+  for (const post of posts) {
+    const year = safeGetYear(post.date)
     if (year === undefined) continue
 
-    if (!postsByYear[year]) {
-      postsByYear[year] = []
-    }
-
-    postsByYear[year]!.push(date)
+    postCountByYear.set(year, (postCountByYear.get(year) ?? 0) + 1)
   }
 
   const res: Array<{ params: { page: number; year: number } }> = []
 
   const step = Math.max(1, perPage)
-  for (const [year, yearDates] of Object.entries(postsByYear)) {
-    for (let i = 0; i < yearDates.length; i += step) {
+  for (const [year, count] of postCountByYear) {
+    for (let i = 0; i < count; i += step) {
       const page = i / step + 1
 
-      res.push({ params: { page, year: Number(year) } })
+      res.push({ params: { page, year } })
     }
   }
 
@@ -78,29 +72,22 @@ export function makeYearPostsParams(
 export function makeYearMonthParams(
   posts: PostWithDate[]
 ): Array<{ params: { year: number; month: number } }> {
-  const monthCount: Record<string, number> = {}
-  const dates = posts.map((item) => item.date)
+  // Year and month are kept as a numeric pair rather than a `"${year}-${month}"`
+  // string, so nothing has to be parsed back out — a negative (BC) year would
+  // otherwise split on its own leading dash.
+  const seen = new Map<string, { year: number; month: number }>()
 
-  for (const date of dates) {
-    const year = safeGetYear(date)
-    const month = safeGetMonth(date)
+  for (const post of posts) {
+    const year = safeGetYear(post.date)
+    const month = safeGetMonth(post.date)
     if (year === undefined || month === undefined) continue
-    const yearMonth = `${year}-${month}`
 
-    if (typeof monthCount[yearMonth] === 'undefined') {
-      monthCount[yearMonth] = 1
-    } else {
-      monthCount[yearMonth]!++
-    }
+    seen.set(`${year}|${month}`, { year, month })
   }
 
-  return Object.keys(monthCount).map((item) => {
-    const parts = item.split('-')
-    const year = Number(parts[0])
-    const month = Number(parts[1])
-
-    return { params: { year, month } }
-  })
+  return [...seen.values()].map(({ year, month }) => ({
+    params: { year, month },
+  }))
 }
 
 export interface TaxonomyRouteParams {
@@ -155,20 +142,24 @@ export function makeTaxonomyParams(
   perPage: number,
   lang?: string
 ): Array<{ params: TaxonomyRouteParams }> {
-  const counts: Record<string, { name: string; id: string; count: number }> = {}
+  // Slugs come from author-written frontmatter, so a `Map` is required: with a
+  // plain object, a slug like `constructor` or `toString` would hit
+  // `Object.prototype` and the route would never be emitted.
+  const counts = new Map<string, { name: string; id: string; count: number }>()
 
   for (const post of posts) {
     for (const item of readTaxonomyEntries(post, kind, lang)) {
       if (!item.slug || !item.name) continue
 
-      if (typeof counts[item.slug] === 'undefined') {
-        counts[item.slug] = {
+      const existing = counts.get(item.slug)
+      if (existing) {
+        existing.count++
+      } else {
+        counts.set(item.slug, {
           name: item.name,
           id: (item.id as string) || item.slug,
           count: 1,
-        }
-      } else {
-        counts[item.slug]!.count++
+        })
       }
     }
   }
@@ -176,9 +167,7 @@ export function makeTaxonomyParams(
   const res: Array<{ params: TaxonomyRouteParams }> = []
 
   const step = Math.max(1, perPage)
-  for (const slug of Object.keys(counts)) {
-    const { name, id, count } = counts[slug]!
-
+  for (const [slug, { name, id, count }] of counts) {
     for (let i = 0; i < Math.ceil(count / step); i++) {
       res.push({ params: { slug, name, id, page: i + 1 } })
     }
@@ -210,20 +199,17 @@ export function makeAuthorsParams(
   const authorIds = posts
     .map((item) => item.authorId)
     .filter((item): item is string => Boolean(item))
-  const authorPostCount: Record<string, number> = {}
+  // Author ids are author-written — see the note in `makeTaxonomyParams`.
+  const authorPostCount = new Map<string, number>()
   const res: Array<{ params: { id: string; page: number } }> = []
 
   for (const id of authorIds) {
-    if (authorPostCount[id]) {
-      authorPostCount[id]!++
-    } else {
-      authorPostCount[id] = 1
-    }
+    authorPostCount.set(id, (authorPostCount.get(id) ?? 0) + 1)
   }
 
   const step = Math.max(1, perPage)
-  for (const id of Object.keys(authorPostCount)) {
-    for (let i = 0; i < authorPostCount[id]!; i += step) {
+  for (const [id, count] of authorPostCount) {
+    for (let i = 0; i < count; i += step) {
       const page = i / step + 1
 
       res.push({ params: { id, page } })

@@ -53,7 +53,7 @@ export function createPostGuid(siteUrl: string, url: string, date?: string | Dat
   if (date) {
     const parsed = new Date(date)
     if (!isNaN(parsed.getTime())) {
-      dateStr = parsed.toISOString().split('T')[0]
+      dateStr = parsed.toISOString().split('T')[0] ?? ''
     }
   }
   return `${siteUrl}${url}${dateStr ? `#${dateStr}` : ''}`

@@ -14,6 +14,8 @@ const themeAuthor = computed(() =>
     ? theme.value.authors?.find((item: Author) => item.id === frontmatter.value.authorId)
     : undefined
 )
+// `root` is VitePress' "no locale matched" sentinel rather than a configured
+// locale, so it must not become a `/root/authors/…` path.
 const authorUrl = computed(() =>
   localeIndex.value && localeIndex.value !== 'root'
     ? `/${localeIndex.value}/authors/${frontmatter.value.authorId}/1`

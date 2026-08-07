@@ -39,8 +39,8 @@ describe('NeptuFooter', () => {
     const wrapper = mount(NeptuFooter)
     const links = wrapper.findAll('li')
     expect(links.length).toBe(2)
-    expect(links[0].text()).toContain('Home')
-    expect(links[1].text()).toContain('About')
+    expect(links[0]!.text()).toContain('Home')
+    expect(links[1]!.text()).toContain('About')
   })
 
   it('uses up to two even navigation columns for many links', () => {

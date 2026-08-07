@@ -62,10 +62,10 @@ describe('mdImage', () => {
     mdImage(md, { srcDir: '/src' })
     md._rule(createMockState(tokens))
 
-    expect(tokens[0].type).toBe('figure_open')
-    expect(tokens[0].tag).toBe('figure')
-    expect(tokens[2].type).toBe('figure_close')
-    expect(tokens[2].tag).toBe('figure')
+    expect(tokens[0]!.type).toBe('figure_open')
+    expect(tokens[0]!.tag).toBe('figure')
+    expect(tokens[2]!.type).toBe('figure_close')
+    expect(tokens[2]!.tag).toBe('figure')
 
     expect(imageToken.attrPush).toHaveBeenCalledWith(['tabindex', '0'])
     expect(inlineToken.children.length).toBeGreaterThan(1)
@@ -141,7 +141,9 @@ describe('mdImage', () => {
     expect(imageToken.attrPush).toHaveBeenCalledWith(['height', '100'])
   })
 
-  it('adds lazy loading to non-standalone paragraphs but skips figure', () => {
+  // The first image is a likely LCP element, so it loads eagerly; only the
+  // images below it are deferred.
+  it('marks the first image high-priority and skips figure wrapping', () => {
     const imageToken = createMockToken('image', 'img', 0, [['src', 'img.png']])
     const inlineToken = createMockToken('inline', '', 0)
     inlineToken.children = [imageToken]
@@ -156,9 +158,35 @@ describe('mdImage', () => {
     mdImage(md, {})
     md._rule(createMockState(tokens))
 
-    expect(tokens[0].type).toBe('div_open')
-    expect(imageToken.attrPush).toHaveBeenCalledWith(['loading', 'lazy'])
+    expect(tokens[0]!.type).toBe('div_open')
+    expect(imageToken.attrPush).toHaveBeenCalledWith(['fetchpriority', 'high'])
+    expect(imageToken.attrPush).not.toHaveBeenCalledWith(['loading', 'lazy'])
     expect(imageToken.attrPush).toHaveBeenCalledWith(['decoding', 'async'])
+  })
+
+  it('lazy-loads every image after the first', () => {
+    const firstImage = createMockToken('image', 'img', 0, [['src', 'a.png']])
+    const firstInline = createMockToken('inline', '', 0)
+    firstInline.children = [firstImage]
+
+    const secondImage = createMockToken('image', 'img', 0, [['src', 'b.png']])
+    const secondInline = createMockToken('inline', '', 0)
+    secondInline.children = [secondImage]
+
+    const tokens = [
+      createMockToken('div_open', 'div', 1),
+      firstInline,
+      secondInline,
+      createMockToken('div_close', 'div', -1),
+    ]
+
+    const md = createMd()
+    mdImage(md, {})
+    md._rule(createMockState(tokens))
+
+    expect(firstImage.attrPush).toHaveBeenCalledWith(['fetchpriority', 'high'])
+    expect(secondImage.attrPush).toHaveBeenCalledWith(['loading', 'lazy'])
+    expect(secondImage.attrPush).not.toHaveBeenCalledWith(['fetchpriority', 'high'])
   })
 
   it('does nothing for non-image inline content', () => {
@@ -175,7 +203,7 @@ describe('mdImage', () => {
     mdImage(md, {})
     md._rule(createMockState(tokens))
 
-    expect(tokens[0].type).toBe('paragraph_open')
+    expect(tokens[0]!.type).toBe('paragraph_open')
   })
 
   it('does nothing without srcDir', () => {

@@ -18,6 +18,7 @@ const ICONIFY_ICON_MAP: Record<string, string> = {
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -29,12 +30,16 @@ const props = withDefaults(
     width: '1.6rem',
   }
 )
+
+// Resolved once so the template has a single narrowed value instead of two
+// separate lookups that TypeScript cannot tie together across attributes.
+const iconifyName = computed(() => ICONIFY_ICON_MAP[props.name])
 </script>
 
 <template>
   <Icon
-    v-if="ICONIFY_ICON_MAP[props.name]"
-    :icon="ICONIFY_ICON_MAP[props.name]"
+    v-if="iconifyName"
+    :icon="iconifyName"
     :width="props.width"
     :height="props.width"
     :alt="props.alt"

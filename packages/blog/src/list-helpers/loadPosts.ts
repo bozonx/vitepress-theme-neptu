@@ -52,6 +52,63 @@ function applyVisibility(posts: Post[], showDrafts: boolean): Post[] {
   return posts.filter((post) => shouldListPost(post.frontmatter))
 }
 
+/**
+ * Identity of the analytics enrichment, for the cache key.
+ *
+ * Posts loaded with analytics carry an extra `analyticsStats` field, so they
+ * are a different result and must not be served from an entry produced without
+ * it. Credentials are deliberately excluded — they do not change the shape of
+ * the result and have no business sitting in a cache key.
+ */
+function analyticsCacheIdentity(
+  popularPostsEnabled: boolean,
+  dataSource: AnalyticsDataSource | null | undefined
+): unknown {
+  if (!popularPostsEnabled || !dataSource) return null
+
+  return [
+    dataSource.provider,
+    dataSource.propertyId ?? null,
+    dataSource.dataPeriodDays ?? null,
+    dataSource.dataLimit ?? null,
+  ]
+}
+
+/**
+ * Builds the previews, applies analytics, and only then publishes the result to
+ * the cache — a half-built entry must never become visible to a concurrent
+ * caller.
+ */
+async function buildAndCache(
+  filePaths: string[],
+  cache: Record<string, Post[]>,
+  cacheKey: string,
+  options: LoadPostsOptions,
+  resolveSrcDir: (filePath: string) => string | undefined,
+  showDrafts: boolean
+): Promise<Post[]> {
+  const { popularPostsEnabled = false, dataSource = null } = options
+
+  let posts = applyVisibility(
+    filePaths.map((filePath) =>
+      makePreviewItem(filePath, {
+        maxPreviewLength: options.maxPreviewLength,
+        readingWpm: options.readingWpm,
+        srcDir: resolveSrcDir(filePath),
+      })
+    ) as Post[],
+    showDrafts
+  )
+
+  if (popularPostsEnabled && dataSource) {
+    posts = await mergeWithAnalytics(posts, dataSource)
+  }
+
+  cache[cacheKey] = posts
+
+  return posts
+}
+
 /** Loads all posts from the `<localeDir>/posts` directory. */
 export async function loadPostsData(
   localeDir: string,
@@ -79,6 +136,7 @@ export async function loadPostsData(
     options.readingWpm,
     srcDir,
     postsDirName,
+    analyticsCacheIdentity(popularPostsEnabled, dataSource),
   ])
   const cache = cacheOpt ?? getDefaultCache()
 
@@ -92,24 +150,15 @@ export async function loadPostsData(
     const files = await fs.readdir(postsDir, { recursive: true })
     const mdFiles = files.filter((file) => file.endsWith('.md')).sort()
     const fullPaths = mdFiles.map((file) => path.join(postsDir, file))
-    const posts = applyVisibility(
-      fullPaths.map((filePath) =>
-        makePreviewItem(filePath, {
-          maxPreviewLength: options.maxPreviewLength,
-          readingWpm: options.readingWpm,
-          srcDir,
-        })
-      ) as Post[],
+
+    return await buildAndCache(
+      fullPaths,
+      cache,
+      cacheKey,
+      options,
+      () => srcDir,
       showDrafts
     )
-
-    cache[cacheKey] = posts
-
-    if (popularPostsEnabled && dataSource) {
-      cache[cacheKey] = await mergeWithAnalytics(posts, dataSource)
-    }
-
-    return cache[cacheKey]!
   } catch (error) {
     throw new Error(
       `Error loading posts for locale ${localeIndex}: ${(error as Error).message}`,
@@ -159,6 +208,7 @@ export async function loadPostsDataFromFiles(
     options.readingWpm,
     srcDir,
     postsDirName,
+    analyticsCacheIdentity(popularPostsEnabled, dataSource),
   ])
   const cache = cacheOpt ?? getDefaultCache()
 
@@ -169,24 +219,14 @@ export async function loadPostsDataFromFiles(
   }
 
   try {
-    const posts = applyVisibility(
-      fullPaths.map((filePath) =>
-        makePreviewItem(filePath, {
-          maxPreviewLength: options.maxPreviewLength,
-          readingWpm: options.readingWpm,
-          srcDir: srcDir ?? inferSrcDir(filePath, postsDirName),
-        })
-      ) as Post[],
+    return await buildAndCache(
+      fullPaths,
+      cache,
+      cacheKey,
+      options,
+      (filePath) => srcDir ?? inferSrcDir(filePath, postsDirName),
       showDrafts
     )
-
-    cache[cacheKey] = posts
-
-    if (popularPostsEnabled && dataSource) {
-      cache[cacheKey] = await mergeWithAnalytics(posts, dataSource)
-    }
-
-    return cache[cacheKey]!
   } catch (error) {
     throw new Error(
       `Error loading posts from watched files: ${(error as Error).message}`,

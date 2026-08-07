@@ -539,6 +539,14 @@ export namespace NeptuBlogTheme {
     credentialsJson?: string | null
     dataPeriodDays?: number
     dataLimit?: number
+    /**
+     * Retries for a transient GA failure (network error, 429, 5xx). Defaults
+     * to 3; `0` disables retrying. Configuration errors such as bad
+     * credentials are never retried.
+     */
+    maxRetries?: number
+    /** Base delay for the exponential backoff, in ms. Defaults to 500. */
+    retryDelayMs?: number
   }
 
   export interface SeoConfig {

@@ -284,6 +284,9 @@ const handleModalKeydown = (event: KeyboardEvent) => {
 
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
+  // An empty modal has nothing to trap focus between.
+  if (!first || !last) return
+
   if (event.shiftKey && document.activeElement === first) {
     event.preventDefault()
     last.focus()

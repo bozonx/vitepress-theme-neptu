@@ -360,6 +360,16 @@
                 "dataLimit": {
                   "type": "integer",
                   "minimum": 1
+                },
+                "maxRetries": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Retries for a transient GA failure (network error, 429, 5xx). Defaults to 3; 0 disables retrying."
+                },
+                "retryDelayMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Base delay for the exponential backoff between retries, in milliseconds. Defaults to 500."
                 }
               },
               "additionalProperties": true

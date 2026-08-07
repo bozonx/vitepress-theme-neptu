@@ -249,3 +249,54 @@ describe('makeFeaturedPostsParams', () => {
     expect(makeFeaturedPostsParams(posts, 10)).toEqual([{ params: { page: 1 } }])
   })
 })
+
+// Route params are keyed by author-written slugs and ids; a name colliding with
+// `Object.prototype` used to swallow the route entirely, producing links that
+// 404 even though the tag rendered on the post itself.
+const PROTO_KEYS = ['constructor', 'toString', 'valueOf', 'hasOwnProperty', '__proto__']
+
+describe('Object.prototype key collisions', () => {
+  it.each(PROTO_KEYS)('makeTagsParams emits a route for slug "%s"', (slug) => {
+    const posts = [{ date: '2023-01-01', tags: [{ id: slug, name: slug, slug }] }]
+    expect(makeTagsParams(posts, 10)).toEqual([
+      { params: { slug, name: slug, id: slug, page: 1 } },
+    ])
+  })
+
+  it.each(PROTO_KEYS)('makeCategoriesParams emits a route for slug "%s"', (slug) => {
+    const posts = [{ date: '2023-01-01', categories: [{ id: slug, name: slug, slug }] }]
+    expect(makeCategoriesParams(posts, 10)).toHaveLength(1)
+  })
+
+  it.each(PROTO_KEYS)('makeAuthorsParams emits a route for author id "%s"', (id) => {
+    expect(makeAuthorsParams([{ date: '2023-01-01', authorId: id }], 10)).toEqual([
+      { params: { id, page: 1 } },
+    ])
+  })
+
+  it('paginates a prototype-named slug across pages', () => {
+    const posts = Array.from({ length: 5 }, (_, i) => ({
+      date: `2023-01-0${i + 1}`,
+      tags: [{ id: 'c', name: 'C', slug: 'constructor' }],
+    }))
+    expect(makeTagsParams(posts, 2).map((r) => r.params.page)).toEqual([1, 2, 3])
+  })
+})
+
+describe('makeYearMonthParams', () => {
+  it('deduplicates months and keeps year/month numeric', () => {
+    const posts = [
+      { date: '2023-03-01' },
+      { date: '2023-03-20' },
+      { date: '2023-04-02' },
+    ]
+    expect(makeYearMonthParams(posts)).toEqual([
+      { params: { year: 2023, month: 3 } },
+      { params: { year: 2023, month: 4 } },
+    ])
+  })
+
+  it('skips posts with unparsable dates', () => {
+    expect(makeYearMonthParams([{ date: 'not a date' }])).toEqual([])
+  })
+})

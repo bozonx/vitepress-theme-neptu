@@ -104,7 +104,8 @@ export function mdAdSlots(md: unknown, { ads }: MdAdSlotsOptions = {}): void {
     let seen = 0
 
     for (let i = 0; i < tokens.length; i++) {
-      if (!isAnchor(tokens[i])) continue
+      const token = tokens[i]
+      if (!token || !isAnchor(token)) continue
 
       seen++
 
@@ -117,11 +118,14 @@ export function mdAdSlots(md: unknown, { ads }: MdAdSlotsOptions = {}): void {
     }
 
     for (let n = positions.length - 1; n >= 0; n--) {
+      const position = positions[n]
+      if (position === undefined) continue
+
       const token = new state.Token('html_block', '', 0)
       token.block = true
       token.content = `<NeptuAd placement="in-content" :index="${n}" />\n`
 
-      tokens.splice(positions[n], 0, token)
+      tokens.splice(position, 0, token)
     }
   })
 }

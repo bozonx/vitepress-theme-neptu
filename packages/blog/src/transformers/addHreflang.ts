@@ -74,6 +74,9 @@ export function addHreflang({
     return [
       {
         code,
+        // `url` is kept alongside the tag so `x-default` does not have to reach
+        // back into the tuple to recover it.
+        url,
         tag: [
           'link',
           { rel: 'alternate', hreflang: lang, href: url },
@@ -90,13 +93,11 @@ export function addHreflang({
   const isLocaleHomePage = /^[^/]+\/index\.md$/.test(relativePath)
   const primaryLocaleCode =
     siteConfig.userConfig.primaryLocale || Object.keys(locales)[0]
+  // `alternates.length > 1` is guaranteed above, so `alternates[0]` exists.
   const primaryAlternate =
-    alternates.find(
-      (alternate) => alternate.code === primaryLocaleCode
-    ) || alternates[0]
-  const defaultHref = isLocaleHomePage
-    ? `${siteUrl}/`
-    : primaryAlternate.tag[1].href
+    alternates.find((alternate) => alternate.code === primaryLocaleCode) ||
+    alternates[0]!
+  const defaultHref = isLocaleHomePage ? `${siteUrl}/` : primaryAlternate.url
 
   head.push(...alternates.map((alternate) => alternate.tag), [
     'link',

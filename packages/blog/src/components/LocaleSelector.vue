@@ -27,6 +27,8 @@ const selectorConfig = computed(
 // `mergeBlogConfig`.
 const title = computed(() => props.title || selectorConfig.value.title || site.value.title)
 
+// `root` is never a Neptu content locale — it is VitePress' "no locale matched"
+// sentinel — so it must not become an entry in the language selector.
 const locales = computed(() =>
   Object.entries(site.value.locales || {})
     .filter(([code]) => code !== 'root')

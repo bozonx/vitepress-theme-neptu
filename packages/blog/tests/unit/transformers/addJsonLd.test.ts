@@ -408,7 +408,7 @@ describe('addJsonLd', () => {
 
     const ctx = createContext()
     ctx.siteConfig.userConfig.themeConfig.authors = [{ id: 'alice' } as any]
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).authors = [
       { id: 'alice' },
     ]
     addJsonLd(ctx)
@@ -423,7 +423,7 @@ describe('addJsonLd', () => {
 
     const ctx = createContext()
     ctx.siteConfig.userConfig.themeConfig.authors = [{ id: 'alice' } as any]
-    ;(ctx.siteConfig.site.locales.en.themeConfig as any).authors = [
+    ;(ctx.siteConfig.site.locales.en!.themeConfig as any).authors = [
       { id: 'alice' },
     ]
     addJsonLd(ctx)

@@ -9,7 +9,7 @@ interface AuthorLite {
   [key: string]: unknown
 }
 
-/** Safely extract the year from a date. Returns undefined only for truly missing dates. */
+/** Safely extract the year from a date. Returns undefined for missing or unparsable dates. */
 export function safeGetYear(date: string | number | Date | undefined): number | undefined {
   if (!date) return undefined
   const parsed = new Date(date)
@@ -47,7 +47,10 @@ export function makeTaxonomyList(
   allPosts: PostLite[] = [],
   kind: TaxonomyKind
 ): Array<TaxonomyEntry & { count: number }> {
-  const bySlug: Record<string, TaxonomyEntry & { count: number }> = {}
+  // A `Map` rather than an object literal: slugs come from author-written
+  // frontmatter, and `constructor` / `toString` / `__proto__` would collide
+  // with `Object.prototype` and silently drop the entry from the list.
+  const bySlug = new Map<string, TaxonomyEntry & { count: number }>()
 
   for (const post of allPosts) {
     for (const item of readTaxonomy(post, kind)) {
@@ -55,16 +58,17 @@ export function makeTaxonomyList(
       // rather than emit an empty pill.
       if (!item.name) continue
       const key = item.slug || item.name
+      const existing = bySlug.get(key)
 
-      if (typeof bySlug[key] === 'undefined') {
-        bySlug[key] = { ...item, count: 1 }
+      if (existing) {
+        existing.count++
       } else {
-        bySlug[key]!.count++
+        bySlug.set(key, { ...item, count: 1 })
       }
     }
   }
 
-  const res = Object.keys(bySlug).map((key) => bySlug[key]!)
+  const res = [...bySlug.values()]
 
   res.sort((a, b) => b.count - a.count)
 
@@ -113,23 +117,16 @@ export function makePostsOfCategoryList(
 export function makeYearsList(
   allPosts: PostLite[] = []
 ): Array<{ year: number; count: number }> {
-  const years: Record<number, number> = {}
+  const years = new Map<number, number>()
 
   for (const item of allPosts) {
     const postYear = safeGetYear(item.date)
     if (postYear === undefined) continue
 
-    if (typeof years[postYear] === 'undefined') {
-      years[postYear] = 1
-    } else {
-      years[postYear]!++
-    }
+    years.set(postYear, (years.get(postYear) ?? 0) + 1)
   }
 
-  const res = Object.keys(years).map((year) => ({
-    year: Number(year),
-    count: years[Number(year)]!,
-  }))
+  const res = [...years].map(([year, count]) => ({ year, count }))
   res.sort((a, b) => b.year - a.year)
 
   return res
@@ -140,7 +137,7 @@ export function makeMonthsList(
   year: number | string
 ): Array<{ month: number; count: number }> {
   const curYear = Number(year)
-  const months: Record<number, number> = {}
+  const months = new Map<number, number>()
 
   for (const item of allPosts) {
     const postYear = safeGetYear(item.date)
@@ -149,17 +146,10 @@ export function makeMonthsList(
     const postMonth = safeGetMonth(item.date)
     if (postMonth === undefined) continue
 
-    if (typeof months[postMonth] === 'undefined') {
-      months[postMonth] = 1
-    } else {
-      months[postMonth]!++
-    }
+    months.set(postMonth, (months.get(postMonth) ?? 0) + 1)
   }
 
-  const res = Object.keys(months).map((month) => ({
-    month: Number(month),
-    count: months[Number(month)]!,
-  }))
+  const res = [...months].map(([month, count]) => ({ month, count }))
 
   res.sort((a, b) => b.month - a.month)
 
@@ -192,21 +182,24 @@ export function makeAuthorsList(
   allPosts: PostLite[] = [],
   allAuthors: AuthorLite[] = []
 ): Array<AuthorLite & { count: number }> {
-  const authorPosts: Record<string, number> = {}
+  // Author ids are author-written, so `constructor` and friends must not be
+  // able to collide with `Object.prototype` — see {@link makeTaxonomyList}.
+  const authorPosts = new Map<string, number>()
 
   for (const item of allAuthors) {
-    authorPosts[item.id] = 0
+    authorPosts.set(item.id, 0)
   }
 
   for (const item of allPosts) {
-    if (item.authorId && typeof authorPosts[item.authorId] === 'number') {
-      authorPosts[item.authorId]!++
-    }
+    const { authorId } = item
+    if (!authorId) continue
+    const current = authorPosts.get(authorId)
+    if (current !== undefined) authorPosts.set(authorId, current + 1)
   }
 
-  const res = Object.keys(authorPosts).map((id) => {
+  const res = [...authorPosts].map(([id, count]) => {
     const author = allAuthors.find((item) => item.id === id)
-    return { ...(author as AuthorLite), count: authorPosts[id]! }
+    return { ...(author as AuthorLite), count }
   })
 
   res.sort((a, b) => (a.name || '').localeCompare(b.name || ''))

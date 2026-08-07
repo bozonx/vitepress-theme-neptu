@@ -19,7 +19,7 @@ interface Props {
 // Normalize path — removes the trailing numeric segment if path ends with /\d+
 function normalizePath(path = ''): string {
   const match = path.match(/^(.+\/)\d+$/)
-  return match ? match[1] : path
+  return match?.[1] ?? path
 }
 
 const { localeIndex } = useData()

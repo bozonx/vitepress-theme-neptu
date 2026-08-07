@@ -3,7 +3,7 @@
   "compilerOptions": {
     "types": ["node", "vitest/globals"],
     "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": false,
+    "noUncheckedIndexedAccess": true,
     "useDefineForClassFields": true,
     "verbatimModuleSyntax": false,
     "allowJs": true,

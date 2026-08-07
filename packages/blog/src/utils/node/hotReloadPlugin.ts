@@ -1,5 +1,7 @@
 import path from 'node:path'
 
+import { resetAnalyticsState } from '../../list-helpers/loadPostsStats.ts'
+
 // Inline interfaces so we do not need an explicit `vite` dependency.
 // VitePress bundles vite, so at runtime the types match.
 interface ViteDevServer {
@@ -80,6 +82,11 @@ export function createSiteYamlHotReloadPlugin(srcDir: string): Plugin {
             `\n[neptu-blog] Site config changed: ${path.relative(absSrcDir, changedPath)} — restarting dev server...`,
             { timestamp: true }
           )
+          // Analytics state lives on `globalThis` and therefore survives the
+          // restart. Clearing it lets a config change re-fetch GA stats — and
+          // gives a build that hit an analytics outage a way to recover
+          // without killing the dev server.
+          resetAnalyticsState()
           server.restart().catch((error: Error) => {
             server.config.logger.error(
               `[neptu-blog] Failed to restart dev server: ${error.message}`

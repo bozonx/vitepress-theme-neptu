@@ -229,7 +229,9 @@ export async function loadBlogLocale(
     LocaleDefinition
   >
   const baseLocaleKey = resolveBaseLocaleKey(localeIndex, localeMap)
-  const baseLocale = localeMap[baseLocaleKey]
+  // `resolveBaseLocaleKey` only ever returns a key it found in the map, or the
+  // built-in default — which the bundled map always carries.
+  const baseLocale = localeMap[baseLocaleKey] ?? localeMap['en']!
 
   // ------------------------------------------------------------------
   // Shared <srcDir>/site.yaml — admin-editable layer applied to every

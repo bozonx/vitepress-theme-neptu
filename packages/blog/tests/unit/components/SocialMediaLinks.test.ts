@@ -27,9 +27,9 @@ describe('SocialMediaLinks', () => {
     })
     const anchors = wrapper.findAll('.btn-stub')
     expect(anchors).toHaveLength(2)
-    expect(anchors[0].attributes('href')).toBe('https://example.com')
-    expect(anchors[0].attributes('title')).toBe('Site')
-    expect(anchors[1].attributes('href')).toBe('https://youtube.com/user')
+    expect(anchors[0]!.attributes('href')).toBe('https://example.com')
+    expect(anchors[0]!.attributes('title')).toBe('Site')
+    expect(anchors[1]!.attributes('href')).toBe('https://youtube.com/user')
   })
 
   it('maps known types to icon prop', () => {
@@ -44,9 +44,9 @@ describe('SocialMediaLinks', () => {
       global: { stubs: { NeptuBtn: { template: '<a :data-icon="$attrs.icon"><slot /></a>' } } },
     })
     const anchors = wrapper.findAll('a')
-    expect(anchors[0].attributes('data-icon')).toBe('mdi:twitter')
-    expect(anchors[1].attributes('data-icon')).toBe('mdi:facebook')
-    expect(anchors[2].attributes('data-icon')).toBe('mdi:instagram')
+    expect(anchors[0]!.attributes('data-icon')).toBe('mdi:twitter')
+    expect(anchors[1]!.attributes('data-icon')).toBe('mdi:facebook')
+    expect(anchors[2]!.attributes('data-icon')).toBe('mdi:instagram')
   })
 
   it('falls back to site icon for unknown type', () => {

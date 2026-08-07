@@ -46,8 +46,8 @@ describe('loadPostsData', () => {
     mockReaddir.mockResolvedValue(['post1.md', 'post2.md', 'readme.txt'])
     const posts = await loadPostsData('/content/en')
     expect(posts).toHaveLength(2)
-    expect(posts[0].url).toContain('post1')
-    expect(posts[1].url).toContain('post2')
+    expect(posts[0]!.url).toContain('post1')
+    expect(posts[1]!.url).toContain('post2')
   })
 
   it('reads posts from nested folders', async () => {
@@ -206,7 +206,7 @@ describe('draft filtering', () => {
     const posts = await loadPostsData('/content/en', { showDrafts: false })
 
     expect(posts).toHaveLength(1)
-    expect(posts[0].url).toContain('published')
+    expect(posts[0]!.url).toContain('published')
   })
 
   it('keeps drafts when they are included', async () => {
@@ -222,7 +222,7 @@ describe('draft filtering', () => {
     })
 
     expect(posts).toHaveLength(1)
-    expect(posts[0].url).toContain('published')
+    expect(posts[0]!.url).toContain('published')
   })
 
   it('passes the reading speed through to the preview builder', async () => {

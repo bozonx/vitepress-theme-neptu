@@ -3,6 +3,7 @@ import {
   makeTagsList,
   makeCategoriesList,
   makePostsOfCategoryList,
+  makePostsOfTagList,
   makeYearsList,
   makeMonthsList,
   makePostsOfMonthList,
@@ -45,7 +46,7 @@ describe('makeTagsList', () => {
     const posts: PostLite[] = [{ url: '/a', tags: [{ slug: 'foo' }, { name: 'bar' }] }]
     const result = makeTagsList(posts)
     expect(result).toHaveLength(1)
-    expect(result[0].name).toBe('bar')
+    expect(result[0]!.name).toBe('bar')
   })
 
   it('sorts by count descending', () => {
@@ -56,8 +57,8 @@ describe('makeTagsList', () => {
       { url: '/d', tags: [{ name: 'common' }] },
     ]
     const result = makeTagsList(posts)
-    expect(result[0].name).toBe('common')
-    expect(result[1].name).toBe('rare')
+    expect(result[0]!.name).toBe('common')
+    expect(result[1]!.name).toBe('rare')
   })
 
   it('preserves additional tag properties', () => {
@@ -95,7 +96,7 @@ describe('makeCategoriesList', () => {
     ]
     const result = makeCategoriesList(posts)
     expect(result).toHaveLength(1)
-    expect(result[0].count).toBe(2)
+    expect(result[0]!.count).toBe(2)
   })
 
   it('does not mix tags into the category list', () => {
@@ -301,14 +302,14 @@ describe('makeAuthorsList', () => {
     ]
     const result = makeAuthorsList(posts, authors)
     expect(result).toHaveLength(1)
-    expect(result[0].count).toBe(1)
+    expect(result[0]!.count).toBe(1)
   })
 
   it('ignores posts without authorId', () => {
     const authors = [{ id: 'alice' }]
     const posts: PostLite[] = [{ url: '/a' }, { url: '/b', authorId: 'alice' }]
     const result = makeAuthorsList(posts, authors)
-    expect(result[0].count).toBe(1)
+    expect(result[0]!.count).toBe(1)
   })
 
   it('sorts by name alphabetically', () => {
@@ -325,5 +326,47 @@ describe('makeAuthorsList', () => {
     const authors = [{ id: 'alice', name: 'Alice', image: 'a.jpg' }]
     const result = makeAuthorsList([], authors)
     expect(result[0]).toMatchObject({ id: 'alice', name: 'Alice', image: 'a.jpg' })
+  })
+})
+
+// Slugs and author ids come from author-written frontmatter, so names that
+// collide with `Object.prototype` must not disappear from the lists.
+const PROTO_KEYS = ['constructor', 'toString', 'valueOf', 'hasOwnProperty', '__proto__']
+
+describe('Object.prototype key collisions', () => {
+  it.each(PROTO_KEYS)('makeTagsList keeps a tag slugged "%s"', (slug) => {
+    const posts: PostLite[] = [
+      { url: '/a', tags: [{ id: slug, name: slug, slug }] },
+      { url: '/b', tags: [{ id: 'ok', name: 'Ok', slug: 'ok' }] },
+    ]
+    const result = makeTagsList(posts)
+    expect(result.map((item) => item.slug).sort()).toEqual([slug, 'ok'].sort())
+  })
+
+  it.each(PROTO_KEYS)('makeTagsList counts repeats of "%s"', (slug) => {
+    const posts: PostLite[] = [
+      { url: '/a', tags: [{ id: slug, name: slug, slug }] },
+      { url: '/b', tags: [{ id: slug, name: slug, slug }] },
+    ]
+    expect(makeTagsList(posts)[0]).toMatchObject({ slug, count: 2 })
+  })
+
+  it.each(PROTO_KEYS)('makeCategoriesList keeps a category slugged "%s"', (slug) => {
+    const posts: PostLite[] = [{ url: '/a', categories: [{ id: slug, name: slug, slug }] }]
+    expect(makeCategoriesList(posts)).toHaveLength(1)
+  })
+
+  it.each(PROTO_KEYS)('makeAuthorsList counts posts for author id "%s"', (id) => {
+    const result = makeAuthorsList([{ url: '/a', authorId: id }], [{ id, name: id }])
+    expect(result).toHaveLength(1)
+    expect(result[0]!.count).toBe(1)
+  })
+
+  it('makePostsOfTagList filters by a prototype-named slug', () => {
+    const posts: PostLite[] = [
+      { url: '/a', tags: [{ id: 'c', name: 'C', slug: 'constructor' }] },
+      { url: '/b', tags: [{ id: 'ok', name: 'Ok', slug: 'ok' }] },
+    ]
+    expect(makePostsOfTagList(posts, 'constructor').map((p) => p.url)).toEqual(['/a'])
   })
 })

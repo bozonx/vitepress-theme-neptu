@@ -32,6 +32,9 @@ jobs:
       - name: Build icon bundle
         run: npm run generate:icons
 
+      - name: Validate landing blocks
+        run: npm run validate:blocks
+
       - name: Type check
         run: npm run typecheck
 

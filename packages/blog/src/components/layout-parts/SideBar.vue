@@ -238,6 +238,10 @@ const handleKeydown = (event: KeyboardEvent) => {
 
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
+  // Nothing focusable inside the drawer — leave the event alone rather than
+  // calling `.focus()` on nothing.
+  if (!first || !last) return
+
   if (event.shiftKey && document.activeElement === first) {
     event.preventDefault()
     last.focus()

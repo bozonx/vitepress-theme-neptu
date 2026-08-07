@@ -70,8 +70,8 @@ describe('createConsentHeadScript', () => {
     for (const entry of dataLayer) calls.push(Array.from(entry as ArrayLike<unknown>))
 
     expect(calls).toHaveLength(1)
-    expect(calls[0][0]).toBe('consent')
-    expect(calls[0][1]).toBe('default')
+    expect(calls[0]![0]).toBe('consent')
+    expect(calls[0]![1]).toBe('default')
   })
 
   it('issues an update when a valid decision is stored', () => {

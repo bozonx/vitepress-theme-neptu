@@ -102,10 +102,13 @@ function generateModuleSource(srcDir: string): string {
     // Relative path from the project root — Vite resolves these at build time.
     // Using a relative path from srcDir keeps the module portable.
     const relPath = `./${locale}/${LOAD_POSTS_DATA_FILE}`
+    // Directory names are attacker-irrelevant but not syntax-safe: a folder
+    // named `it's` would otherwise close the string literal and emit a module
+    // that fails to parse. `JSON.stringify` quotes and escapes in one step.
     importLines.push(
-      `import { data as ${varName} } from '${relPath}'`
+      `import { data as ${varName} } from ${JSON.stringify(relPath)}`
     )
-    mapEntries.push(`  '${locale}': ${varName}.posts`)
+    mapEntries.push(`  ${JSON.stringify(locale)}: ${varName}.posts`)
   }
 
   return [

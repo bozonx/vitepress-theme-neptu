@@ -431,7 +431,7 @@ describe('defineBlogConfig', () => {
       siteUrl: 'https://example.com',
       srcDir: '/src',
     })
-    expect(result.locales.en.lang).toBe('en-US')
+    expect(result.locales.en!.lang).toBe('en-US')
   })
 
   it('preserves explicit locales', async () => {
@@ -443,6 +443,6 @@ describe('defineBlogConfig', () => {
     })
 
     expect(autoLoadLocales).not.toHaveBeenCalled()
-    expect(result.locales.ru.lang).toBe('ru-RU')
+    expect(result.locales.ru!.lang).toBe('ru-RU')
   })
 })

@@ -37,11 +37,11 @@ describe('NeptuPagination', () => {
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
     // 5 page numbers + to-end button
     expect(btns.length).toBe(6)
-    expect(btns[0].props('text')).toBe('1')
-    expect(btns[1].props('text')).toBe('2')
-    expect(btns[2].props('text')).toBe('3')
-    expect(btns[3].props('text')).toBe('4')
-    expect(btns[4].props('text')).toBe('5')
+    expect(btns[0]!.props('text')).toBe('1')
+    expect(btns[1]!.props('text')).toBe('2')
+    expect(btns[2]!.props('text')).toBe('3')
+    expect(btns[3]!.props('text')).toBe('4')
+    expect(btns[4]!.props('text')).toBe('5')
   })
 
   it('shows to-start button when first page is not visible', () => {
@@ -51,8 +51,8 @@ describe('NeptuPagination', () => {
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
     // to-start + 5 page numbers + to-end
     expect(btns.length).toBe(7)
-    expect(btns[0].props('icon')).toBe('mdi:page-first')
-    expect(btns[0].props('href')).toBe('/en/blog/1')
+    expect(btns[0]!.props('icon')).toBe('mdi:page-first')
+    expect(btns[0]!.props('href')).toBe('/en/blog/1')
   })
 
   it('shows to-end button when last page is not visible', () => {
@@ -63,8 +63,8 @@ describe('NeptuPagination', () => {
     // 4 page numbers + to-end
     expect(btns.length).toBe(5)
     const last = btns[btns.length - 1]
-    expect(last.props('icon')).toBe('mdi:page-last')
-    expect(last.props('href')).toBe('/en/blog/10')
+    expect(last!.props('icon')).toBe('mdi:page-last')
+    expect(last!.props('href')).toBe('/en/blog/10')
   })
 
   it('uses paginationBaseUrl prop when provided', () => {
@@ -72,7 +72,7 @@ describe('NeptuPagination', () => {
       props: { curPage: 1, totalPages: 3, paginationBaseUrl: '/custom' },
     })
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
-    expect(btns[0].props('href')).toBe('/custom/1')
+    expect(btns[0]!.props('href')).toBe('/custom/1')
   })
 
   it('derives baseUrl from route path when prop is absent', () => {
@@ -81,7 +81,7 @@ describe('NeptuPagination', () => {
       props: { curPage: 1, totalPages: 3 },
     })
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
-    expect(btns[0].props('href')).toBe('/en/tags/vue/1')
+    expect(btns[0]!.props('href')).toBe('/en/tags/vue/1')
   })
 
   it('strips VitePress base from route.path to avoid doubled base in URLs', () => {
@@ -91,7 +91,7 @@ describe('NeptuPagination', () => {
       props: { curPage: 1, totalPages: 3 },
     })
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
-    expect(btns[0].props('href')).toBe('/ru/recent/1')
+    expect(btns[0]!.props('href')).toBe('/ru/recent/1')
   })
 
   it('falls back to theme paginationMaxItems', () => {
@@ -111,8 +111,8 @@ describe('NeptuPagination', () => {
     const btns = wrapper.findAllComponents({ name: 'NeptuBtn' })
     // to-start + [3,4,5,6,7] + to-end
     expect(btns.length).toBe(7)
-    expect(btns[1].props('text')).toBe('3')
-    expect(btns[3].props('text')).toBe('5')
-    expect(btns[5].props('text')).toBe('7')
+    expect(btns[1]!.props('text')).toBe('3')
+    expect(btns[3]!.props('text')).toBe('5')
+    expect(btns[5]!.props('text')).toBe('7')
   })
 })

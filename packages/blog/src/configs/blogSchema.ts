@@ -12,6 +12,26 @@ import { z } from 'zod'
  * loaded payload.
  */
 
+/**
+ * An IETF language tag, as accepted by `Intl`. Caught here rather than at
+ * render time: `en_US` instead of `en-US` makes `toLocaleDateString` throw a
+ * `RangeError`, and a warning naming the file beats a stack trace mid-build.
+ */
+const LanguageTagSchema = z
+  .string()
+  .refine(
+    (value) => {
+      try {
+        Intl.DateTimeFormat.supportedLocalesOf(value)
+        return true
+      } catch {
+        return false
+      }
+    },
+    { message: 'must be an IETF language tag such as `en-US` (not `en_US`)' }
+  )
+  .optional()
+
 const AuthorLinkSchema = z.looseObject({
   type: z.string().optional(),
   url: z.string().optional(),
@@ -282,6 +302,8 @@ const ThemeConfigSchema = z
         credentialsJson: z.string().nullable().optional(),
         dataPeriodDays: z.number().int().min(1).optional(),
         dataLimit: z.number().int().min(1).optional(),
+        maxRetries: z.number().int().min(0).optional(),
+        retryDelayMs: z.number().int().min(0).optional(),
       }).optional(),
     }).optional(),
     feeds: z.looseObject({
@@ -375,7 +397,7 @@ export const SiteYamlSchema = z.looseObject({
   siteUrl: z.never().optional(),
   base: z.never().optional(),
   srcDir: z.never().optional(),
-  lang: z.string().optional(),
+  lang: LanguageTagSchema,
   title: z.string().optional(),
   titleTemplate: z.union([z.string(), z.boolean()]).optional(),
   description: z.string().optional(),

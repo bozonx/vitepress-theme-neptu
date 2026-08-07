@@ -27,8 +27,8 @@ describe('getLightboxElements', () => {
     `)
     const links = getLightboxElements(doc)
     expect(links).toHaveLength(2)
-    expect(links[0].getAttribute('href')).toBe('/a.jpg')
-    expect(links[1].getAttribute('href')).toBe('/b.jpg')
+    expect(links[0]!.getAttribute('href')).toBe('/a.jpg')
+    expect(links[1]!.getAttribute('href')).toBe('/b.jpg')
   })
 
   it('ignores links without lightbox class when not in doc content', () => {
@@ -38,7 +38,7 @@ describe('getLightboxElements', () => {
     `)
     const links = getLightboxElements(doc)
     expect(links).toHaveLength(1)
-    expect(links[0].getAttribute('href')).toBe('/b.jpg')
+    expect(links[0]!.getAttribute('href')).toBe('/b.jpg')
   })
 
   it('collects standalone images inside post body (.vp-doc)', () => {
@@ -50,7 +50,7 @@ describe('getLightboxElements', () => {
     `)
     const links = getLightboxElements(doc)
     expect(links).toHaveLength(1)
-    expect(links[0].getAttribute('src')).toBe('/resolved-body.jpg')
+    expect(links[0]!.getAttribute('src')).toBe('/resolved-body.jpg')
   })
 
   it('collects body images wrapped by mdImage where lightbox class was overwritten by externalLinks', () => {
@@ -63,8 +63,8 @@ describe('getLightboxElements', () => {
     `)
     const links = getLightboxElements(doc)
     expect(links).toHaveLength(1)
-    expect(links[0].tagName).toBe('IMG')
-    expect(links[0].getAttribute('src')).toBe('https://example.com/photo.jpg')
+    expect(links[0]!.tagName).toBe('IMG')
+    expect(links[0]!.getAttribute('src')).toBe('https://example.com/photo.jpg')
   })
 
   it('does not collect images inside regular content links (href differs from src)', () => {
@@ -132,7 +132,7 @@ describe('getClickedLightboxIndex', () => {
       <a class="lightbox" href="/b.jpg">img2</a>
     `)
     const links = getLightboxElements(doc)
-    const target = links[1]
+    const target = links[1]!
     expect(getClickedLightboxIndex(target, links)).toBe(1)
   })
 
@@ -142,7 +142,7 @@ describe('getClickedLightboxIndex', () => {
       <a class="lightbox" href="/b.jpg"><img src="/b.jpg" /></a>
     `)
     const links = getLightboxElements(doc)
-    const target = links[1].querySelector('img')!
+    const target = links[1]!.querySelector('img')!
     expect(getClickedLightboxIndex(target, links)).toBe(1)
   })
 

@@ -75,16 +75,16 @@ describe('mdAdSlots', () => {
     // second `heading_open`. With four headings and `every: 3` there is no
     // room for a second one.
     expect(slots).toHaveLength(1)
-    expect(tokens.indexOf(slots[0])).toBe(6)
-    expect(tokens[7].type).toBe('heading_open')
+    expect(tokens.indexOf(slots[0]!)).toBe(6)
+    expect(tokens[7]!.type).toBe('heading_open')
   })
 
   it('emits the placement and a stable index', () => {
     const slots = adSlots(run(createTokens(8)))
 
-    expect(slots[0].content).toContain('placement="in-content"')
-    expect(slots[0].content).toContain(':index="0"')
-    expect(slots[1].content).toContain(':index="1"')
+    expect(slots[0]!.content).toContain('placement="in-content"')
+    expect(slots[0]!.content).toContain(':index="0"')
+    expect(slots[1]!.content).toContain(':index="1"')
   })
 
   it('spaces slots by `every` headings', () => {
@@ -93,8 +93,8 @@ describe('mdAdSlots', () => {
 
     // Headings 2 and 5 — each `heading_open` sits 6 tokens apart, and the
     // first insertion shifts everything after it by one.
-    expect(tokens.indexOf(slots[0])).toBe(6)
-    expect(tokens.indexOf(slots[1])).toBe(25)
+    expect(tokens.indexOf(slots[0]!)).toBe(6)
+    expect(tokens.indexOf(slots[1]!)).toBe(25)
   })
 
   it('never exceeds `max`', () => {
@@ -113,7 +113,7 @@ describe('mdAdSlots', () => {
     const slots = adSlots(tokens)
 
     expect(slots).toHaveLength(2)
-    expect(tokens[tokens.indexOf(slots[0]) + 1].type).toBe('paragraph_open')
+    expect(tokens[tokens.indexOf(slots[0]!) + 1]!.type).toBe('paragraph_open')
   })
 
   it('ignores headings nested inside containers', () => {

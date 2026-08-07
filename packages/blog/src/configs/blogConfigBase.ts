@@ -201,6 +201,9 @@ const LOG_PREFIX = '[vitepress-theme-neptu]'
 function resolvePrimaryLocale(
   config: BlogUserConfig
 ): { title?: string; description?: string } | undefined {
+  // `defineBlogConfig` rejects a configured `root` locale up front, but
+  // `mergeBlogConfig` is exported as a lower-level entry point that skips that
+  // guard — so the filter stays as defence in depth.
   const locales = Object.entries(config.locales || {}).filter(
     ([code]) => code !== 'root'
   )

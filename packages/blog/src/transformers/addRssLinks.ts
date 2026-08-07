@@ -41,6 +41,7 @@ export function addRssLinks({
 
   for (const locale of supportedLocales) {
     const localeConfig = siteConfig.site.locales[locale]
+    if (!localeConfig) continue
 
     for (const format of rssFormats) {
       const feedUrl = getFeedUrl(siteUrl, locale, format)

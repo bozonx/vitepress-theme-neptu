@@ -27,6 +27,41 @@ export function isMonthNameToken(item: string): boolean {
   )
 }
 
+const warnedInvalidTags = new Set<string>()
+
+/**
+ * `lang` reaches this module straight from user config (`_site.yaml`), where a
+ * typo like `en_US` instead of `en-US` is easy to make. `toLocaleDateString`
+ * answers a structurally invalid tag with a `RangeError`, which would abort the
+ * whole SSR build over one character — so the tag is validated first and a bad
+ * one degrades to the runtime default instead of throwing.
+ *
+ * A well-formed but unknown tag (`xx-YY`) is left alone: `Intl` resolves it to
+ * its own fallback without complaining.
+ */
+function toValidLocaleTag(lang?: string): string | undefined {
+  if (!lang) return undefined
+
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(lang)
+    return lang
+  } catch {
+    if (!warnedInvalidTags.has(lang)) {
+      warnedInvalidTags.add(lang)
+      console.warn(
+        `[neptu-blog] Invalid language tag "${lang}" — dates fall back to the ` +
+          'default locale. Use an IETF tag such as `en-US`.'
+      )
+    }
+    return undefined
+  }
+}
+
+/** Resets the "invalid language tag" warning state. Used by tests. */
+export function resetLocaleTagWarnings(): void {
+  warnedInvalidTags.clear()
+}
+
 export function formatReadableDate(
   rawDate: string | number | Date | null | undefined,
   lang?: string,
@@ -45,5 +80,15 @@ export function formatReadableDate(
     timeZone: toTimeZone,
   }
 
-  return date.toLocaleDateString(lang, options)
+  try {
+    return date.toLocaleDateString(toValidLocaleTag(lang), options)
+  } catch {
+    // An unsupported `timeZone` is the only remaining RangeError source. A
+    // rendered post is worth more than a perfectly zoned date.
+    return date.toLocaleDateString(toValidLocaleTag(lang), {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
 }

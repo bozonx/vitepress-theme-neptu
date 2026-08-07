@@ -149,7 +149,9 @@ export function resolveI18nHref(
   const trimmed = rawHref.trim()
 
   if (!trimmed) return rawHref
-  // Main page
+  // Main page. `root` is VitePress' runtime "no locale matched" sentinel — it
+  // is never a configured locale, so it points at the site root like an empty
+  // `localeIndex` does.
   if (trimmed === '/') return !localeIndex || localeIndex === 'root' ? '/' : '/' + localeIndex
 
   const isExternal = isExternalUrl(trimmed)

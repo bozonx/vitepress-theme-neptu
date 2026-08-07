@@ -83,8 +83,11 @@ export function useActiveHeading(
       scrollY + window.innerHeight >= document.body.scrollHeight - 2
 
     if (atBottom) {
-      activeLink.value = items.value[items.value.length - 1].link
-      return
+      const lastItem = items.value[items.value.length - 1]
+      if (lastItem) {
+        activeLink.value = lastItem.link
+        return
+      }
     }
 
     let current = ''

@@ -176,6 +176,6 @@ describe('TopBar', () => {
     const wrapper = mount(TopBar, { global: globalStubs })
     const socialBtns = wrapper.findAllComponents({ name: 'NeptuBtn' }).filter((b) => b.props('icon') === 'x')
     expect(socialBtns.length).toBe(1)
-    expect(socialBtns[0].props('iconClass')).toBe('text-xl')
+    expect(socialBtns[0]!.props('iconClass')).toBe('text-xl')
   })
 })

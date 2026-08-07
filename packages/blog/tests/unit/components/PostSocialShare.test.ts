@@ -44,8 +44,8 @@ describe('PostSocialShare', () => {
     })
     const anchors = wrapper.findAll('a')
     expect(anchors).toHaveLength(2)
-    expect(anchors[0].attributes('title')).toBe('Telegram')
-    expect(anchors[1].attributes('title')).toBe('X')
+    expect(anchors[0]!.attributes('title')).toBe('Telegram')
+    expect(anchors[1]!.attributes('title')).toBe('X')
   })
 
   it('replaces {url} and {title} placeholders', () => {
@@ -92,6 +92,6 @@ describe('PostSocialShare', () => {
     })
     const anchors = wrapper.findAll('a')
     expect(anchors).toHaveLength(1)
-    expect(anchors[0].attributes('title')).toBe('Telegram')
+    expect(anchors[0]!.attributes('title')).toBe('Telegram')
   })
 })

@@ -1,5 +1,8 @@
-import { describe, it, expect } from 'vitest'
-import { formatReadableDate } from '../../../../src/utils/shared/date.ts'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import {
+  formatReadableDate,
+  resetLocaleTagWarnings,
+} from '../../../../src/utils/shared/date.ts'
 
 describe('formatReadableDate', () => {
   it('formats a valid date string', () => {
@@ -48,5 +51,48 @@ describe('formatReadableDate', () => {
     expect(utc).toBeDefined()
     expect(ny).toBeDefined()
     expect(utc).not.toBe(ny)
+  })
+})
+
+describe('formatReadableDate language tags', () => {
+  beforeEach(() => {
+    resetLocaleTagWarnings()
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  // `lang` comes from user-written `_site.yaml`, so a structurally invalid tag
+  // must degrade to the default locale rather than throw a RangeError and take
+  // the SSR build down with it.
+  it.each(['en_US', 'root', 'invalid locale', 'c'])(
+    'does not throw on the invalid tag "%s"',
+    (lang) => {
+      expect(() => formatReadableDate('2024-01-01', lang)).not.toThrow()
+      expect(formatReadableDate('2024-01-01', lang)).toBeTruthy()
+    }
+  )
+
+  it('warns once per invalid tag', () => {
+    formatReadableDate('2024-01-01', 'en_US')
+    formatReadableDate('2024-02-01', 'en_US')
+    expect(console.warn).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(console.warn).mock.calls[0]?.[0]).toContain('en_US')
+  })
+
+  it('does not warn for a valid tag', () => {
+    formatReadableDate('2024-01-01', 'en-US')
+    expect(console.warn).not.toHaveBeenCalled()
+  })
+
+  it('accepts a well-formed but unknown tag without warning', () => {
+    expect(formatReadableDate('2024-01-01', 'xx-YY')).toBeTruthy()
+    expect(console.warn).not.toHaveBeenCalled()
+  })
+
+  it('falls back to the default time zone when the given one is unsupported', () => {
+    expect(formatReadableDate('2024-01-01', 'en-US', 'Not/AZone')).toBeTruthy()
   })
 })
