@@ -50,14 +50,14 @@ const downloadFile = async () => {
     // Validate URL
     if (!isValidMediaUrl(props.url)) {
       hasError.value = true
-      errorMessage.value = theme.value.t.audioFile.invalidUrlProvided
+      errorMessage.value = theme.value?.t?.audioFile?.invalidUrlProvided
       return
     }
 
     downloadFileUtil(mediaUrl.value, downloadFilename.value)
   } catch {
     hasError.value = true
-    errorMessage.value = theme.value.t.audioFile.errorDownloadingFile
+    errorMessage.value = theme.value?.t?.audioFile?.errorDownloadingFile
     // On error, open the file in a new tab
     window.open(mediaUrl.value, '_blank')
   }
@@ -83,7 +83,7 @@ const togglePlayPause = async () => {
     // Validate URL before playback
     if (!isValidMediaUrl(props.url)) {
       hasError.value = true
-      errorMessage.value = theme.value.t.audioFile.invalidAudioUrlProvided
+      errorMessage.value = theme.value?.t?.audioFile?.invalidAudioUrlProvided
       console.error('Invalid audio URL provided')
       return
     }
@@ -109,7 +109,7 @@ const togglePlayPause = async () => {
     }
   } catch {
     hasError.value = true
-    errorMessage.value = theme.value.t.audioFile.errorPlayingAudioFile
+    errorMessage.value = theme.value?.t?.audioFile?.errorPlayingAudioFile
   }
 }
 
@@ -244,13 +244,13 @@ const handleError = (event: Event) => {
   errorMessage.value = getMediaErrorMessage(
     error,
     {
-      aborted: theme.value.t.audioFile.audioPlaybackAborted,
-      network: theme.value.t.audioFile.networkErrorLoadingAudio,
-      decode: theme.value.t.audioFile.audioDecodingError,
-      notSupported: theme.value.t.audioFile.audioFormatNotSupported,
-      unknown: theme.value.t.audioFile.unknownAudioError,
+      aborted: theme.value?.t?.audioFile?.audioPlaybackAborted,
+      network: theme.value?.t?.audioFile?.networkErrorLoadingAudio,
+      decode: theme.value?.t?.audioFile?.audioDecodingError,
+      notSupported: theme.value?.t?.audioFile?.audioFormatNotSupported,
+      unknown: theme.value?.t?.audioFile?.unknownAudioError,
     },
-    theme.value.t.audioFile.errorLoadingAudioFile
+    theme.value?.t?.audioFile?.errorLoadingAudioFile
   )
 }
 

@@ -51,7 +51,7 @@ export function makePreviewItem(
 ): PreviewItem {
   const { maxPreviewLength, srcDir, readingWpm } = options
   const baseDir = srcDir ?? path.resolve(filePath, '../../../')
-  const relativePath = path.relative(baseDir, filePath)
+  const relativePath = path.relative(baseDir, filePath).split(path.sep).join('/')
   const lang = relativePath.split('/')[0] || ''
 
   // `posts/my-article/index.md` is served as `/posts/my-article/`, not

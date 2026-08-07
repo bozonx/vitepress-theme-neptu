@@ -79,7 +79,23 @@ themeConfig:
       donate: 'Поддержать'
 ```
 
+### Стандартные строки Vitepress, лейблы доступности и страница 404
 
+`themeConfig` содержит на верхнем уровне отдельные поля для accessibility-лейблов
+UI-контролов и текстов системных страниц. Они не входят в объект переводов, так как большинство из них входят в стандарт Vitepress, но вы можете их переопределить в конфиге 3 уровня `_site.yaml`.
+
+| Поле | Назначение |
+| --- | --- |
+| `sidebarMenuLabel` | tooltip кнопки открытия сайдбара на мобильных |
+| `langMenuLabel` | aria-label и tooltip переключателя языка |
+| `colorThemeMenuLabel` | aria-label и tooltip переключателя цветовой темы |
+| `stylePresetMenuLabel` | aria-label и tooltip переключателя стилевого пресета |
+| `returnToTopLabel` | текст кнопки «Наверх» |
+| `darkModeSwitchLabel` | видимый текст кнопки переключателя темы (наследуется от VitePress) |
+| `lightModeSwitchTitle` | tooltip переключателя на светлую тему |
+| `darkModeSwitchTitle` | tooltip переключателя на тёмную тему |
+| `notFound.title` | заголовок страницы 404 |
+| `notFound.linkText` | текст ссылки «на главную» на странице 404 |
 
 ### Ключи `t`
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h, ref, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useBreakpoint } from '../../../src/composables/useBreakpoint.ts'
 
@@ -92,7 +92,7 @@ describe('useBreakpoint', () => {
     expect(removeSpy).toHaveBeenCalledWith('resize', expect.any(Function))
   })
 
-  it('supports custom window injection for isolated testing', () => {
+  it('supports custom window injection for isolated testing', async () => {
     const listeners: Record<string, EventListener> = {}
     const mockWinObj = {
       innerWidth: 600,
@@ -111,6 +111,7 @@ describe('useBreakpoint', () => {
     })
 
     const wrapper = mount(TestComp)
+    await nextTick()
     expect(wrapper.text()).toBe('600-true')
 
     mockWinObj.innerWidth = 900

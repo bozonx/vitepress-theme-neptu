@@ -72,7 +72,14 @@ export async function loadPostsData(
 
   const srcDir = srcDirOpt ?? path.dirname(localeDir)
   const postsDir = path.join(localeDir, postsDirName)
-  const cacheKey = path.resolve(postsDir)
+  const cacheKey = JSON.stringify([
+    path.resolve(postsDir),
+    showDrafts,
+    options.maxPreviewLength,
+    options.readingWpm,
+    srcDir,
+    postsDirName,
+  ])
   const cache = cacheOpt ?? getDefaultCache()
 
   if (cache[cacheKey] && !ignoreCache) {
@@ -145,9 +152,14 @@ export async function loadPostsDataFromFiles(
     .filter((file) => file.endsWith('.md'))
     .map((file) => path.resolve(file))
     .sort()
-  const cacheKey = fullPaths.length > 0
-    ? `${fullPaths.length}:${fullPaths[0]}${fullPaths.length > 1 ? `:${fullPaths[fullPaths.length - 1]}` : ''}`
-    : ''
+  const cacheKey = JSON.stringify([
+    fullPaths,
+    showDrafts,
+    options.maxPreviewLength,
+    options.readingWpm,
+    srcDir,
+    postsDirName,
+  ])
   const cache = cacheOpt ?? getDefaultCache()
 
   if (!fullPaths.length) return []

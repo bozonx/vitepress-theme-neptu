@@ -196,6 +196,14 @@ describe('isSafeExternalUrl', () => {
     expect(isSafeExternalUrl('data:text/html,<script>alert(1)</script>')).toBe(false)
   })
 
+  it('returns false for javascript scheme with embedded newline', () => {
+    expect(isSafeExternalUrl('java\nscript:alert(1)')).toBe(false)
+  })
+
+  it('returns false for javascript scheme with leading whitespace', () => {
+    expect(isSafeExternalUrl('  javascript:alert(1)')).toBe(false)
+  })
+
   it('returns false for non-external URLs', () => {
     expect(isSafeExternalUrl('/path')).toBe(false)
     expect(isSafeExternalUrl('#anchor')).toBe(false)
@@ -219,6 +227,22 @@ describe('sanitizeUrl', () => {
   it('strips dangerous schemes to undefined', () => {
     expect(sanitizeUrl('javascript:alert(1)')).toBeUndefined()
     expect(sanitizeUrl('data:text/html,<script>alert(1)</script>')).toBeUndefined()
+  })
+
+  it('strips javascript scheme with embedded newline', () => {
+    expect(sanitizeUrl('java\nscript:alert(1)')).toBeUndefined()
+  })
+
+  it('strips javascript scheme with leading whitespace', () => {
+    expect(sanitizeUrl('  javascript:alert(1)')).toBeUndefined()
+  })
+
+  it('strips javascript scheme with embedded tab', () => {
+    expect(sanitizeUrl('java\tscript:alert(1)')).toBeUndefined()
+  })
+
+  it('strips javascript scheme with embedded null byte', () => {
+    expect(sanitizeUrl('java\x00script:alert(1)')).toBeUndefined()
   })
 
   it('returns undefined for undefined input', () => {

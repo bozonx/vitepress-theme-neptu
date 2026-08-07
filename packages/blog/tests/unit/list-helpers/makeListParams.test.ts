@@ -10,8 +10,8 @@ import {
 } from '../../../src/list-helpers/makeListParams.ts'
 
 describe('makeAllPostsParams', () => {
-  it('returns empty array for empty posts', () => {
-    expect(makeAllPostsParams([], 10)).toEqual([])
+  it('returns page 1 for empty posts so links do not 404', () => {
+    expect(makeAllPostsParams([], 10)).toEqual([{ params: { page: 1 } }])
   })
 
   it('creates single page when posts fit within perPage', () => {
@@ -234,9 +234,9 @@ describe('makeAuthorsParams', () => {
 })
 
 describe('makeFeaturedPostsParams', () => {
-  it('returns empty array when no posts are featured', () => {
+  it('returns page 1 when no posts are featured so links do not 404', () => {
     const posts = [{ date: '2023-01-01' }, { date: '2023-01-02', featured: false }]
-    expect(makeFeaturedPostsParams(posts, 10)).toEqual([])
+    expect(makeFeaturedPostsParams(posts, 10)).toEqual([{ params: { page: 1 } }])
   })
 
   it('filters featured posts and generates page parameters', () => {

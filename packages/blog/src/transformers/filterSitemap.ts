@@ -1,4 +1,4 @@
-const EXCLUDED_ROUTES = ['tags', 'archive', 'authors', 'popular', 'recent', 'featured']
+const EXCLUDED_ROUTES = ['tags', 'categories', 'archive', 'authors', 'popular', 'recent', 'featured']
 
 const EXCLUDED_ROUTES_REGEXP = new RegExp(
   `^[^/]+/(${EXCLUDED_ROUTES.join('|')})(/|$)`

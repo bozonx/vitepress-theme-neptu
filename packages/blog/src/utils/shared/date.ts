@@ -34,6 +34,10 @@ export function formatReadableDate(
 ): string | undefined {
   if (!rawDate) return
 
+  const date = new Date(rawDate)
+  const time = date.getTime()
+  if (!Number.isFinite(time)) return
+
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
@@ -41,5 +45,5 @@ export function formatReadableDate(
     timeZone: toTimeZone,
   }
 
-  return new Date(rawDate).toLocaleDateString(lang, options)
+  return date.toLocaleDateString(lang, options)
 }

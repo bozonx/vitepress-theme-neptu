@@ -17,13 +17,24 @@ export const isAnchorUrl = (url?: string): boolean =>
  */
 const SAFE_SCHEMES = new Set(['http:', 'https:', 'mailto:', 'tel:'])
 
+/**
+ * Strips control characters and leading/trailing whitespace that browsers
+ * remove before parsing `href` — without this, `java\nscript:alert(1)` would
+ * bypass the scheme check because `isExternalUrl` sees `java\nscript:` as a
+ * non-matching scheme while the browser executes it as `javascript:`.
+ */
+function normalizeForUrlCheck(url: string): string {
+  return url.replace(/[\u0000-\u0020]/g, '').trim()
+}
+
 /** Returns `true` when the URL is external **and** uses a safe scheme. */
 export const isSafeExternalUrl = (url?: string): boolean => {
   if (!isExternalUrl(url)) return false
+  const normalized = normalizeForUrlCheck(url!)
   // Protocol-relative URLs (`//example.com`) are always safe.
-  if (/^\/\//.test(url!)) return true
+  if (/^\/\//.test(normalized)) return true
   try {
-    return SAFE_SCHEMES.has(new URL(url!).protocol.toLowerCase())
+    return SAFE_SCHEMES.has(new URL(normalized).protocol.toLowerCase())
   } catch {
     return false
   }
@@ -33,7 +44,10 @@ export const isSafeExternalUrl = (url?: string): boolean => {
 export const sanitizeUrl = (url?: string): string | undefined => {
   if (!url) return url
   if (isAnchorUrl(url)) return url
-  if (isExternalUrl(url)) return isSafeExternalUrl(url) ? url : undefined
+  // Normalize before checking so browser-stripped control characters cannot
+  // hide a dangerous scheme (e.g. `java\tscript:` → `javascript:`).
+  const normalized = normalizeForUrlCheck(url)
+  if (isExternalUrl(normalized)) return isSafeExternalUrl(normalized) ? normalized : undefined
   return url
 }
 

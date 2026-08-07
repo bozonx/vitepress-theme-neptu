@@ -22,10 +22,6 @@ export function useBreakpoint(
     isMobileOrTablet.value = windowWidth.value < breakpoint
   }
 
-  if (getWin()) {
-    onResize()
-  }
-
   onMounted(() => {
     const targetWin = getWin()
     if (!targetWin) return

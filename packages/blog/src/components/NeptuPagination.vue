@@ -23,7 +23,7 @@ interface PaginationItem {
 const items = computed(() => {
   const result: PaginationItem[] = []
   const curPage = props.curPage
-  const maxItems = props.paginationMaxItems || theme.value.paginationMaxItems || 7
+  const maxItems = props.paginationMaxItems ?? theme.value?.paginationMaxItems ?? 7
   const totalPages = props.totalPages
   // route.path includes the VitePress base, but BaseLink applies withBase()
   // again — strip it to avoid doubling the base in pagination URLs.
@@ -65,7 +65,7 @@ const items = computed(() => {
       result.push({
         icon: 'mdi:page-first',
         href: `${baseUrl}/1`,
-        title: theme.value.t.paginationToStart,
+        title: theme.value?.t?.paginationToStart,
       })
     }
 
@@ -79,7 +79,7 @@ const items = computed(() => {
       result.push({
         icon: 'mdi:page-last',
         href: `${baseUrl}/${totalPages}`,
-        title: theme.value.t.paginationToEnd,
+        title: theme.value?.t?.paginationToEnd,
       })
     }
   }

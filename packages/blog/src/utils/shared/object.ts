@@ -1,13 +1,10 @@
 export type DeepPathPart = string | number
 
-/** Sentinel marking a negative array index in a deep path. */
-export const NEGATIVE_INDEX: unique symbol = Symbol('NEGATIVE_INDEX')
-
 /** Split deep path to paths E.g "aa[0].bb[1].cc" => ['aa', 0, 'bb', 1, 'cc'] */
-export function splitDeepPath(pathTo: unknown): Array<DeepPathPart | typeof NEGATIVE_INDEX> {
+export function splitDeepPath(pathTo: unknown): Array<DeepPathPart> {
   if (!pathTo || typeof pathTo !== 'string') return []
 
-  const res: Array<DeepPathPart | typeof NEGATIVE_INDEX> = []
+  const res: Array<DeepPathPart> = []
   const DEEP_PATH_SEPARATOR = '.'
   const preparedPath = pathTo.replace(/\[/g, DEEP_PATH_SEPARATOR + '[')
   const segments = preparedPath.startsWith(DEEP_PATH_SEPARATOR)
@@ -18,12 +15,7 @@ export function splitDeepPath(pathTo: unknown): Array<DeepPathPart | typeof NEGA
     if (el.indexOf('[') === 0) {
       const match = el.match(/^\[(-?\d+)\]$/)
       if (match && match[1]) {
-        const index = Number(match[1])
-        if (index >= 0) {
-          res.push(index)
-        } else {
-          res.push(NEGATIVE_INDEX)
-        }
+        res.push(Number(match[1]))
       } else {
         return []
       }
@@ -74,7 +66,7 @@ export function deepGet(src: unknown, pathTo: unknown, defaultValue?: unknown): 
     if (current === null || current === undefined) return defaultValue
 
     if (Array.isArray(current)) {
-      if (typeof key !== 'number' || (key as unknown) === NEGATIVE_INDEX)
+      if (typeof key !== 'number' || key < 0 || key >= current.length)
         return defaultValue
       current = current[key]
     } else if (current && typeof current === 'object') {

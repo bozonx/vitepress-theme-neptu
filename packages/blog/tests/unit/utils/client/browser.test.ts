@@ -7,7 +7,7 @@ import {
 describe('stripRecentRedirectParam', () => {
   it('replaces state when ?recent=1', () => {
     const history = { replaceState: vi.fn() } as unknown as History
-    const location = { search: '?recent=1', pathname: '/en/post' } as unknown as Location
+    const location = { search: '?recent=1', pathname: '/en/post', hash: '' } as unknown as Location
     const win = { history, location } as unknown as Window
 
     stripRecentRedirectParam(win)
@@ -16,7 +16,7 @@ describe('stripRecentRedirectParam', () => {
 
   it('does nothing when no recent param', () => {
     const history = { replaceState: vi.fn() } as unknown as History
-    const location = { search: '?page=2', pathname: '/en/post' } as unknown as Location
+    const location = { search: '?page=2', pathname: '/en/post', hash: '' } as unknown as Location
     const win = { history, location } as unknown as Window
 
     stripRecentRedirectParam(win)
@@ -25,11 +25,19 @@ describe('stripRecentRedirectParam', () => {
 
   it('does nothing when recent param is not 1', () => {
     const history = { replaceState: vi.fn() } as unknown as History
-    const location = { search: '?recent=0', pathname: '/en/post' } as unknown as Location
+    const location = { search: '?recent=0', pathname: '/en/post', hash: '' } as unknown as Location
     const win = { history, location } as unknown as Window
 
     stripRecentRedirectParam(win)
     expect(history.replaceState).not.toHaveBeenCalled()
+  })
+  it('preserves other query params and hash', () => {
+    const history = { replaceState: vi.fn() } as unknown as History
+    const location = { search: '?recent=1&page=3', pathname: '/en/post', hash: '#section' } as unknown as Location
+    const win = { history, location } as unknown as Window
+
+    stripRecentRedirectParam(win)
+    expect(history.replaceState).toHaveBeenCalledWith({}, '', '/en/post?page=3#section')
   })
 })
 

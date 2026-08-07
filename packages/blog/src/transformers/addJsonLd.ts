@@ -218,14 +218,14 @@ function createPostJsonLd(
       )
     : undefined
 
-  const authorName = author?.name || author?.id
+  const authorName = normalizeText(author?.name || author?.id)
   const authorUrl = pageData.frontmatter.authorId
     ? makeAbsoluteUrl(
         siteUrl,
         `${localeIndex}/authors/${pageData.frontmatter.authorId}/1`
       )
     : undefined
-  const cover = pageData.frontmatter.cover
+  const cover = normalizeText(pageData.frontmatter.cover)
   const tags = pageData.frontmatter.tags
   const lang = langConfig.lang
   // `transformPageMeta` already folded `category` into this normalized list.

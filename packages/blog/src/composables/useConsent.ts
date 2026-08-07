@@ -31,6 +31,9 @@ function readStorage(storageKey: string): void {
   if (stored) {
     consentState.value = normalizeConsent(stored)
     decided.value = true
+  } else {
+    consentState.value = { ...CONSENT_DENIED }
+    decided.value = false
   }
 
   hydrated = true

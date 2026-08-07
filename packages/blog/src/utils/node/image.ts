@@ -29,7 +29,7 @@ export function getImageDimensions(
 ): ImageDimensions | null {
   if (!imagePath) return null
   // External URL
-  if (imagePath.startsWith('http') || imagePath.startsWith('//')) return null
+  if (/^https?:\/\//i.test(imagePath) || imagePath.startsWith('//')) return null
 
   try {
     const candidates: string[] = []

@@ -3,7 +3,10 @@ export function stripRecentRedirectParam(window: Window): void {
   const isRedirect = urlParams.get('recent')
 
   if (isRedirect === '1') {
-    const cleanUrl = window.location.pathname
+    urlParams.delete('recent')
+    const search = urlParams.toString()
+    const cleanUrl =
+      window.location.pathname + (search ? `?${search}` : '') + window.location.hash
     window.history.replaceState({}, '', cleanUrl)
   }
 }

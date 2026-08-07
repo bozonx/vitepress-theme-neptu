@@ -26,6 +26,23 @@ describe('isPlainObject', () => {
   it('returns false for functions', () => {
     expect(isPlainObject(() => {})).toBe(false)
   })
+
+  it('returns false for Date instances', () => {
+    expect(isPlainObject(new Date())).toBe(false)
+  })
+
+  it('returns false for RegExp instances', () => {
+    expect(isPlainObject(/foo/)).toBe(false)
+  })
+
+  it('returns false for class instances', () => {
+    class Foo {}
+    expect(isPlainObject(new Foo())).toBe(false)
+  })
+
+  it('returns true for Object.create(null)', () => {
+    expect(isPlainObject(Object.create(null))).toBe(true)
+  })
 })
 
 describe('deepMerge', () => {
@@ -88,5 +105,27 @@ describe('deepMerge', () => {
     const base = { a: 1 }
     const patch = { b: { x: 2 } }
     expect(deepMerge(base, patch)).toEqual({ a: 1, b: { x: 2 } })
+  })
+
+  it('preserves Date instances instead of merging them into empty objects', () => {
+    const date = new Date('2024-01-01')
+    const result = deepMerge({ d: date }, { d: new Date('2024-06-01') })
+    expect(result.d).toBeInstanceOf(Date)
+    expect((result.d as Date).toISOString()).toBe('2024-06-01T00:00:00.000Z')
+  })
+
+  it('skips __proto__ key to prevent prototype pollution', () => {
+    const base = { a: 1 }
+    const patch = JSON.parse('{"__proto__":{"polluted":true}}')
+    const result = deepMerge(base, patch)
+    expect(result).toEqual({ a: 1 })
+    expect((result as any).polluted).toBeUndefined()
+  })
+
+  it('skips constructor and prototype keys', () => {
+    const base = { a: 1 }
+    const patch = { constructor: { b: 2 }, prototype: { c: 3 } }
+    const result = deepMerge(base, patch)
+    expect(result).toEqual({ a: 1 })
   })
 })

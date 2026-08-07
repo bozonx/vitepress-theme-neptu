@@ -35,8 +35,8 @@ const breadcrumbs = computed<BreadcrumbItem[]>(() => {
   if (!category?.slug) return []
 
   const items: BreadcrumbItem[] = [
-    { text: theme.value.t.breadcrumbHome, href: '/' },
-    { text: theme.value.t.categories, href: 'categories' },
+    { text: theme.value?.t?.breadcrumbHome, href: '/' },
+    { text: theme.value?.t?.categories, href: 'categories' },
     { text: category.name || category.slug, href: `categories/${category.slug}/1` },
   ]
 

@@ -15,11 +15,17 @@ export function makeAllPostsParams(
   posts: PostWithDate[],
   perPage: number
 ): Array<{ params: { page: number } }> {
+  const step = Math.max(1, perPage)
   const dates = posts.map((item) => item.date)
   const res: Array<{ params: { page: number } }> = []
 
-  for (let i = 0; i < dates.length; i += perPage) {
-    const page = i / perPage + 1
+  if (dates.length === 0) {
+    res.push({ params: { page: 1 } })
+    return res
+  }
+
+  for (let i = 0; i < dates.length; i += step) {
+    const page = i / step + 1
 
     res.push({ params: { page } })
   }
@@ -56,9 +62,10 @@ export function makeYearPostsParams(
 
   const res: Array<{ params: { page: number; year: number } }> = []
 
+  const step = Math.max(1, perPage)
   for (const [year, yearDates] of Object.entries(postsByYear)) {
-    for (let i = 0; i < yearDates.length; i += perPage) {
-      const page = i / perPage + 1
+    for (let i = 0; i < yearDates.length; i += step) {
+      const page = i / step + 1
 
       res.push({ params: { page, year: Number(year) } })
     }
@@ -135,10 +142,11 @@ export function makeTaxonomyParams(
 
   const res: Array<{ params: { slug: string; name: string; page: number } }> = []
 
+  const step = Math.max(1, perPage)
   for (const slug of Object.keys(counts)) {
     const { name, count } = counts[slug]!
 
-    for (let i = 0; i < Math.ceil(count / perPage); i++) {
+    for (let i = 0; i < Math.ceil(count / step); i++) {
       res.push({ params: { slug, name, page: i + 1 } })
     }
   }
@@ -180,9 +188,10 @@ export function makeAuthorsParams(
     }
   }
 
+  const step = Math.max(1, perPage)
   for (const id of Object.keys(authorPostCount)) {
-    for (let i = 0; i < authorPostCount[id]!; i += perPage) {
-      const page = i / perPage + 1
+    for (let i = 0; i < authorPostCount[id]!; i += step) {
+      const page = i / step + 1
 
       res.push({ params: { id, page } })
     }

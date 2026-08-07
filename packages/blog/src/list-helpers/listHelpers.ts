@@ -175,7 +175,7 @@ export function makePostsOfMonthList(
   const curYear = Number(year)
   const curMonth = Number(month)
 
-  return allPosts
+  return [...allPosts]
     .sort((a, b) => safeGetTime(b.date) - safeGetTime(a.date))
     .filter((item) => {
       const postYear = safeGetYear(item.date)

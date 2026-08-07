@@ -85,11 +85,14 @@ export function interpolateDollarTemplate(
   let res = tmpl
   const templateRegex = /\$\{([^}]*)\}/g
   let match: RegExpExecArray | null
+  const replaced = new Set<string>()
 
   while ((match = templateRegex.exec(tmpl)) !== null) {
+    const fullMatch = match[0]
+    if (replaced.has(fullMatch)) continue
+    replaced.add(fullMatch)
+
     const key = (match[1] ?? '').trim()
-    const escapedKey = (match[1] ?? '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    const replaceRegex = new RegExp(`\\$\\{${escapedKey}\\}`, 'g')
 
     let stringValue: string
     if (options.eval) {
@@ -101,15 +104,16 @@ export function interpolateDollarTemplate(
       }
     } else {
       if (!isPathValid(key)) {
-        stringValue = match[0]
+        stringValue = fullMatch
       } else {
         const value = deepGet(data, key)
         // Config files are parsed before their locale inheritance is merged.
         // Keep unresolved placeholders for the later, merged-config pass.
-        stringValue = value === null || value === undefined ? match[0] : String(value)
+        stringValue = value === null || value === undefined ? fullMatch : String(value)
       }
     }
-    res = res.replace(replaceRegex, stringValue)
+    // Use split/join to avoid regex construction per placeholder
+    res = res.split(fullMatch).join(stringValue)
   }
   return res
 }
@@ -136,7 +140,7 @@ export function truncateText(
     appendEllipsis = true,
   } = options
 
-  if (typeof ellipsis !== 'string' || typeof text !== 'string' || length <= 4)
+  if (typeof ellipsis !== 'string' || typeof text !== 'string' || length < 1)
     return text
 
   let str = text
@@ -146,7 +150,7 @@ export function truncateText(
     str = str.replace(/[ \t]+/g, ' ').trim()
   }
 
-  if (str.length < 4 || length >= str.length) return str
+  if (length >= str.length) return str
   if (!appendEllipsis) return str.substring(0, length)
 
   if (respectWords) {

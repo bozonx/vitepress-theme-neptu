@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAttrs, computed } from 'vue'
-import { isExternalUrl } from '../utils/shared/index.ts'
+import { isExternalUrl, sanitizeUrl } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
 import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
@@ -16,7 +16,7 @@ const $attrs = useAttrs()
 
 const { theme } = useThemeConfig()
 const isExternal = computed(
-  () => !props.hideExternalIcon && isExternalUrl($attrs.href as string | undefined)
+  () => !props.hideExternalIcon && isExternalUrl(sanitizeUrl($attrs.href as string | undefined))
 )
 </script>
 

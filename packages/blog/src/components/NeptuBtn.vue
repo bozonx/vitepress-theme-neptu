@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSlots, computed } from 'vue'
 import { Icon } from '@iconify/vue'
-import { isExternalUrl } from '../utils/shared/index.ts'
+import { isExternalUrl, sanitizeUrl } from '../utils/shared/index.ts'
 import BaseLink from './BaseLink.vue'
 import { useThemeConfig } from '../composables/useThemeConfig.ts'
 
@@ -43,7 +43,7 @@ const {
   hideExternalIcon = false,
 } = defineProps<Props>()
 
-const isExternal = computed(() => !hideExternalIcon && isExternalUrl(href))
+const isExternal = computed(() => !hideExternalIcon && isExternalUrl(sanitizeUrl(href)))
 const hasText = computed(() => Boolean(text || slots.default))
 const btnProps = computed(() => {
   const common = { title, disabled }

@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 export interface ColorThemeOption {
   id: string
@@ -21,19 +21,24 @@ export const COLOR_STORAGE_KEY = 'neptu-color-theme'
 export const COLOR_ATTRIBUTE = 'data-theme'
 export const DEFAULT_COLOR_THEME = 'blue'
 
+const VALID_THEME_IDS = new Set(COLOR_THEME_PRESETS.map((p) => p.id))
+
+function isValidThemeId(id: string | null | undefined): id is string {
+  return typeof id === 'string' && VALID_THEME_IDS.has(id)
+}
+
 const activeThemeId = ref<string>(DEFAULT_COLOR_THEME)
 
 export function useColorTheme() {
   const setColorTheme = (themeId: string) => {
+    if (!isValidThemeId(themeId)) return
     activeThemeId.value = themeId
     if (typeof document !== 'undefined') {
-      if (themeId) {
-        document.documentElement.setAttribute('data-theme', themeId)
-        try {
-          localStorage.setItem(COLOR_STORAGE_KEY, themeId)
-        } catch {
-          // ignore
-        }
+      document.documentElement.setAttribute(COLOR_ATTRIBUTE, themeId)
+      try {
+        localStorage.setItem(COLOR_STORAGE_KEY, themeId)
+      } catch {
+        // ignore
       }
     }
   }
@@ -42,12 +47,12 @@ export function useColorTheme() {
     if (typeof document !== 'undefined') {
       try {
         const saved = localStorage.getItem(COLOR_STORAGE_KEY)
-        if (saved) {
+        if (isValidThemeId(saved)) {
           activeThemeId.value = saved
-          document.documentElement.setAttribute('data-theme', saved)
+          document.documentElement.setAttribute(COLOR_ATTRIBUTE, saved)
         } else {
-          const currentAttr = document.documentElement.getAttribute('data-theme')
-          if (currentAttr) {
+          const currentAttr = document.documentElement.getAttribute(COLOR_ATTRIBUTE)
+          if (isValidThemeId(currentAttr)) {
             activeThemeId.value = currentAttr
           }
         }
@@ -57,8 +62,29 @@ export function useColorTheme() {
     }
   }
 
+  const onStorageChange = (e: StorageEvent) => {
+    if (e.key === COLOR_STORAGE_KEY) {
+      if (isValidThemeId(e.newValue)) {
+        activeThemeId.value = e.newValue
+        if (typeof document !== 'undefined') {
+          document.documentElement.setAttribute(COLOR_ATTRIBUTE, e.newValue)
+        }
+      } else if (e.newValue === null) {
+        activeThemeId.value = DEFAULT_COLOR_THEME
+        if (typeof document !== 'undefined') {
+          document.documentElement.setAttribute(COLOR_ATTRIBUTE, DEFAULT_COLOR_THEME)
+        }
+      }
+    }
+  }
+
   onMounted(() => {
     initColorTheme()
+    window.addEventListener('storage', onStorageChange)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('storage', onStorageChange)
   })
 
   return {
