@@ -27,7 +27,7 @@ export default defineConfig(
     rules: { 'vue/no-v-html': 'off' },
   },
   {
-    files: ['**/.vitepress/theme/Layout.vue'],
+    files: ['**/.vitepress/theme/Layout.vue', 'src/components/doc-components/Badge.vue'],
     rules: { 'vue/multi-word-component-names': 'off' },
   },
   eslintConfigPrettier
