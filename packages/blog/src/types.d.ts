@@ -33,8 +33,14 @@ export namespace NeptuBlogTheme {
      * Absolute public base URL of the site, including the `http://` or
      * `https://` protocol and without a trailing slash.
      *
-     * If the VitePress `base` option is used, include that path here too,
-     * for example `https://example.com/blog`.
+     * The VitePress `base` option is automatically merged into the effective
+     * URL for all SEO features, so there is no need to duplicate the base path
+     * here. For example, with `base: '/blog/'` you can set
+     * `siteUrl: 'https://example.com'` and the theme will produce
+     * `https://example.com/blog/...` URLs.
+     *
+     * If the base path is already included in `siteUrl` (e.g.
+     * `https://example.com/blog`), it is detected and not added a second time.
      *
      * Used as the canonical site origin for generated sitemap URLs, RSS feeds,
      * canonical links, Open Graph metadata, JSON-LD, hreflang, and robots.txt.
@@ -833,14 +839,18 @@ export namespace NeptuBlogTheme {
      * Category `id` from `<locale>/_categories.yaml`. Sugar for a
      * single-entry `categories` list — folded into `categories` during
      * `transformPageData`, so components only ever read `categories`.
+     *
+     * An id with no matching registry entry is dropped with a build warning.
      */
     category?: string
     /**
-     * Additional category ids, for the rare post that belongs in more than
-     * one section. Inline `{ name, slug }` objects still work but are legacy —
-     * declare the category in `_categories.yaml` and reference it by id.
+     * Category ids, for the rare post that belongs in more than one section.
+     * The first one builds the breadcrumb trail.
+     *
+     * Authored as `string[]`. `transformPageData` replaces it in place with the
+     * resolved `TaxonomyEntry[]`, which is the shape every component reads.
      */
-    categories?: Array<string | TaxonomyEntry>
+    categories?: string[] | TaxonomyEntry[]
     /** Marks the post for explicit featured-post collections. Does not change chronological lists. */
     featured?: boolean
     /**

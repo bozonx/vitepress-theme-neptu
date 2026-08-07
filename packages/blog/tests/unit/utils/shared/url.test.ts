@@ -8,6 +8,7 @@ import {
   resolveI18nHref,
   generatePageUrlPath,
   normalizeSiteUrl,
+  resolveEffectiveSiteUrl,
   makeAbsoluteUrl,
   replaceRelativePathLocale,
 } from '../../../../src/utils/shared/url.ts'
@@ -127,6 +128,61 @@ describe('normalizeSiteUrl', () => {
 
   it('returns undefined for blank values', () => {
     expect(normalizeSiteUrl('   ')).toBeUndefined()
+  })
+})
+
+describe('resolveEffectiveSiteUrl', () => {
+  it('returns undefined when siteUrl is missing', () => {
+    expect(resolveEffectiveSiteUrl(undefined, '/blog/')).toBeUndefined()
+    expect(resolveEffectiveSiteUrl('', '/blog/')).toBeUndefined()
+  })
+
+  it('returns normalized siteUrl when base is empty or root', () => {
+    expect(resolveEffectiveSiteUrl('https://example.com', '/')).toBe(
+      'https://example.com'
+    )
+    expect(resolveEffectiveSiteUrl('https://example.com', '')).toBe(
+      'https://example.com'
+    )
+    expect(resolveEffectiveSiteUrl('https://example.com', undefined)).toBe(
+      'https://example.com'
+    )
+  })
+
+  it('merges base into siteUrl when siteUrl has no path', () => {
+    expect(resolveEffectiveSiteUrl('https://example.com', '/blog/')).toBe(
+      'https://example.com/blog'
+    )
+    expect(resolveEffectiveSiteUrl('https://example.com/', '/blog/')).toBe(
+      'https://example.com/blog'
+    )
+  })
+
+  it('does not double-add base when siteUrl already includes it', () => {
+    expect(resolveEffectiveSiteUrl('https://example.com/blog', '/blog/')).toBe(
+      'https://example.com/blog'
+    )
+    expect(
+      resolveEffectiveSiteUrl('https://example.com/blog', '/blog')
+    ).toBe('https://example.com/blog')
+  })
+
+  it('handles nested base paths', () => {
+    expect(
+      resolveEffectiveSiteUrl('https://example.com', '/path/to/site/')
+    ).toBe('https://example.com/path/to/site')
+  })
+
+  it('does not double-add nested base when already in siteUrl', () => {
+    expect(
+      resolveEffectiveSiteUrl('https://example.com/path/to/site', '/path/to/site/')
+    ).toBe('https://example.com/path/to/site')
+  })
+
+  it('strips trailing slashes from base', () => {
+    expect(resolveEffectiveSiteUrl('https://example.com', '/blog///')).toBe(
+      'https://example.com/blog'
+    )
   })
 })
 

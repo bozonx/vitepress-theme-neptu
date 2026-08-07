@@ -65,6 +65,39 @@ export function normalizeSiteUrl(siteUrl: string | null | undefined): string | u
   return trimmed.replace(/\/+$/, '')
 }
 
+/**
+ * Combines `siteUrl` with the VitePress `base` option into a single effective
+ * origin+path, so callers no longer need to manually duplicate the base path in
+ * `siteUrl`.
+ *
+ * If `siteUrl` already contains the base path (e.g. user included it manually),
+ * the path is not added a second time.
+ */
+export function resolveEffectiveSiteUrl(
+  siteUrl: string | null | undefined,
+  base: string | null | undefined
+): string | undefined {
+  const normalizedSiteUrl = normalizeSiteUrl(siteUrl)
+  if (!normalizedSiteUrl) return undefined
+
+  const basePath = (base || '').replace(/^\/+|\/+$/g, '')
+  if (!basePath) return normalizedSiteUrl
+
+  try {
+    const url = new URL(normalizedSiteUrl)
+    const siteUrlPath = url.pathname.replace(/^\/+|\/+$/g, '')
+
+    // siteUrl already includes the base path — don't double-add
+    if (siteUrlPath === basePath || siteUrlPath.endsWith('/' + basePath)) {
+      return normalizedSiteUrl
+    }
+
+    return `${normalizedSiteUrl}/${basePath}`
+  } catch {
+    return normalizedSiteUrl
+  }
+}
+
 export function makeAbsoluteUrl(
   siteUrl: string | null | undefined,
   rawUrl: string | null | undefined

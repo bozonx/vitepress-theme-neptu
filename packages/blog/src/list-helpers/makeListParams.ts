@@ -1,12 +1,13 @@
 import { safeGetYear, safeGetMonth } from './listHelpers.ts'
 import type { TaxonomyKind } from './listHelpers.ts'
 import { normalizeTag } from '../utils/shared/tags.ts'
+import type { Tag } from '../types.d.ts'
 
 interface PostWithDate {
   date: string | number | Date
   tags?: Array<{ name?: string; slug?: string } | string>
-  category?: { name?: string; slug?: string } | string
-  categories?: Array<{ name?: string; slug?: string } | string>
+  /** Already resolved against `_categories.yaml` by `makePreviewItem`. */
+  categories?: Array<Partial<Tag>>
   authorId?: string
   [key: string]: unknown
 }
@@ -115,13 +116,39 @@ export interface TaxonomyRouteParams {
 }
 
 /**
- * Builds `[slug]/[page]` route params for a taxonomy (tags or categories).
+ * Reads one taxonomy off a post as `{ id, name, slug }` entries.
  *
- * Posts arriving from `loadPostsData` already carry normalized entries, so the
- * category ids resolved against `_categories.yaml` reach the route params
- * untouched. Raw frontmatter still goes through the normalizer, which keeps a
- * hand-assembled post list from producing routes no link can reach.
+ * Tags are authored in the frontmatter, so a raw string still has to go through
+ * the normalizer here — that keeps a hand-assembled post list from producing
+ * routes no link can reach.
+ *
+ * Categories cannot be normalized at this point: their name and slug live in
+ * `_categories.yaml`, which this helper has no access to. Posts coming from
+ * `loadPostsData` are already resolved against the registry, so the entries are
+ * read as they are; anything not yet resolved is skipped rather than guessed at.
  */
+function readTaxonomyEntries(
+  post: PostWithDate,
+  kind: TaxonomyKind,
+  lang?: string
+): Tag[] {
+  if (kind === 'tags') {
+    return (post.tags || []).flatMap((value) => {
+      const item = normalizeTag(value, lang)
+      return item ? [item] : []
+    })
+  }
+
+  return (post.categories || []).flatMap((value) => {
+    if (!value || typeof value !== 'string') {
+      const item = value as Partial<Tag> | undefined
+      if (item?.id && item.name && item.slug) return [item as Tag]
+    }
+    return []
+  })
+}
+
+/** Builds `[slug]/[page]` route params for a taxonomy (tags or categories). */
 export function makeTaxonomyParams(
   posts: PostWithDate[],
   kind: TaxonomyKind,
@@ -131,19 +158,8 @@ export function makeTaxonomyParams(
   const counts: Record<string, { name: string; id: string; count: number }> = {}
 
   for (const post of posts) {
-    const raw =
-      kind === 'categories'
-        ? [
-            ...(post.category === undefined || post.category === null
-              ? []
-              : [post.category]),
-            ...(post.categories || []),
-          ]
-        : post.tags || []
-
-    for (const value of raw) {
-      const item = normalizeTag(value, lang)
-      if (!item?.slug || !item.name) continue
+    for (const item of readTaxonomyEntries(post, kind, lang)) {
+      if (!item.slug || !item.name) continue
 
       if (typeof counts[item.slug] === 'undefined') {
         counts[item.slug] = {

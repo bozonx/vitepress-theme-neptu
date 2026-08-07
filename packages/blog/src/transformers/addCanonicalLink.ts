@@ -2,7 +2,7 @@ import type { HeadConfig } from 'vitepress'
 import {
   generatePageUrlPath,
   makeAbsoluteUrl,
-  normalizeSiteUrl,
+  resolveEffectiveSiteUrl,
 } from '../utils/shared/index.ts'
 import { hasNoIndex } from '../utils/shared/head.ts'
 
@@ -25,7 +25,10 @@ function resolveCanonicalUrl(
   siteConfig: ExtendedSiteConfig
 ): string | null {
   if (canonicalValue === 'self') {
-    const siteUrl = normalizeSiteUrl(siteConfig.userConfig.siteUrl)
+    const siteUrl = resolveEffectiveSiteUrl(
+      siteConfig.userConfig.siteUrl,
+      siteConfig.site.base
+    )
     if (!siteUrl) {
       console.warn(
         'Canonical link not added: siteUrl not configured in siteConfig'

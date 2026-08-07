@@ -3,7 +3,7 @@ import {
   generatePageUrlPath,
   isPost,
   makeAbsoluteUrl,
-  normalizeSiteUrl,
+  resolveEffectiveSiteUrl,
 } from '../utils/shared/index.ts'
 import type {
   ExtendedPageData,
@@ -39,7 +39,10 @@ export function addOgMetaTags({
 }: AddOgMetaTagsContext): void {
   if (pageData.frontmatter?.seo?.og === false) return
 
-  const siteUrl = normalizeSiteUrl(siteConfig.userConfig.siteUrl)
+  const siteUrl = resolveEffectiveSiteUrl(
+    siteConfig.userConfig.siteUrl,
+    siteConfig.site.base
+  )
   if (!siteUrl) return
 
   const localeIndex = pageData.filePath.split('/')[0]!

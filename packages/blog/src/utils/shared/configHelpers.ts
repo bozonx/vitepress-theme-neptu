@@ -1,5 +1,6 @@
 import type { HeadConfig } from 'vitepress'
 import type { ExtendedPageData, ExtendedSiteConfig } from '../../types.d.ts'
+import { resolveEffectiveSiteUrl } from './url.ts'
 
 // ---------------------------------------------------------------------------
 // Type adapters — isolate all `as unknown as` casts in one place so the
@@ -95,21 +96,29 @@ export function normalizeSitemapUrl(relativePath: string): string {
  * Makes VitePress sitemap items safe for sites hosted below a domain root.
  * VitePress treats sitemap item URLs as root-relative when serializing them,
  * so a pathname in `siteUrl` alone is otherwise discarded.
+ *
+ * When `base` is provided (VitePress `base` option), it is merged into the
+ * effective URL so the user does not need to duplicate the base path in
+ * `siteUrl`.
  */
-export function resolveSitemapSiteUrl(siteUrl: string | undefined): {
+export function resolveSitemapSiteUrl(
+  siteUrl: string | undefined,
+  base?: string | undefined
+): {
   hostname: string | undefined
   basePath: string
 } {
-  if (!siteUrl) return { hostname: undefined, basePath: '' }
+  const effectiveUrl = resolveEffectiveSiteUrl(siteUrl, base)
+  if (!effectiveUrl) return { hostname: undefined, basePath: '' }
 
   try {
-    const url = new URL(siteUrl)
+    const url = new URL(effectiveUrl)
     return {
       hostname: url.origin,
       basePath: url.pathname.replace(/^\/+|\/+$/g, ''),
     }
   } catch {
-    return { hostname: siteUrl, basePath: '' }
+    return { hostname: effectiveUrl, basePath: '' }
   }
 }
 

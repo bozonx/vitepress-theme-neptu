@@ -69,12 +69,29 @@ vi.mock('vitepress-theme-neptu/utils', () => ({
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
   ],
   normalizeSitemapUrl: vi.fn((p: string) => p.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')),
-  resolveSitemapSiteUrl: vi.fn((siteUrl: string | undefined) => {
+  resolveSitemapSiteUrl: vi.fn((siteUrl: string | undefined, base?: string | undefined) => {
     if (!siteUrl) return { hostname: undefined, basePath: '' }
-    const url = new URL(siteUrl)
-    return {
-      hostname: url.origin,
-      basePath: url.pathname.replace(/^\/+|\/+$/g, ''),
+    const basePath = (base || '').replace(/^\/+|\/+$/g, '')
+    let effectiveUrl = siteUrl
+    if (basePath) {
+      try {
+        const url = new URL(siteUrl)
+        const siteUrlPath = url.pathname.replace(/^\/+|\/+$/g, '')
+        if (!(siteUrlPath === basePath || siteUrlPath.endsWith('/' + basePath))) {
+          effectiveUrl = `${siteUrl.replace(/\/+$/, '')}/${basePath}`
+        }
+      } catch {
+        // keep siteUrl as-is
+      }
+    }
+    try {
+      const url = new URL(effectiveUrl)
+      return {
+        hostname: url.origin,
+        basePath: url.pathname.replace(/^\/+|\/+$/g, ''),
+      }
+    } catch {
+      return { hostname: effectiveUrl, basePath: '' }
     }
   }),
   prefixSitemapItems: vi.fn((items: Array<{ url: string; links: Array<{ url?: string }> }>, basePath: string) =>

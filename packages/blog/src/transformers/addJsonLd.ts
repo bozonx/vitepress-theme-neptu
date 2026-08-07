@@ -8,7 +8,7 @@ import {
   isAuthorPath,
   isPage,
   makeAbsoluteUrl,
-  normalizeSiteUrl,
+  resolveEffectiveSiteUrl,
 } from '../utils/shared/index.ts'
 import { hasNoIndex } from '../utils/shared/head.ts'
 import type {
@@ -428,7 +428,10 @@ export function addJsonLd({
 
   if (!langConfig || !langConfig.themeConfig) return
 
-  const siteUrl = normalizeSiteUrl(siteConfig.userConfig.siteUrl)
+  const siteUrl = resolveEffectiveSiteUrl(
+    siteConfig.userConfig.siteUrl,
+    siteConfig.site.base
+  )
   if (!siteUrl) {
     console.warn(
       `[addJsonLd] siteUrl is not configured. JSON-LD requires absolute URLs.`

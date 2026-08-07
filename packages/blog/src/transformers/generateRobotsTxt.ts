@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { normalizeSiteUrl } from '../utils/shared/index.ts'
+import { resolveEffectiveSiteUrl } from '../utils/shared/index.ts'
 import type { ExtendedSiteConfig } from '../types.d.ts'
 
 /**
@@ -8,7 +8,7 @@ import type { ExtendedSiteConfig } from '../types.d.ts'
  * provided their own via public/robots.txt.
  */
 export function generateRobotsTxt(config: ExtendedSiteConfig): void {
-  const siteUrl = normalizeSiteUrl(config.userConfig?.siteUrl)
+  const siteUrl = resolveEffectiveSiteUrl(config.userConfig?.siteUrl, config.site?.base)
 
   if (!siteUrl) return
 

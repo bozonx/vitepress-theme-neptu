@@ -231,7 +231,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
   )
 
   const noIndexUrls = new Set<string>()
-  const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
+  const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl, config.base)
   const primaryLocale = resolvePrimaryLocale(config)
   const primaryThemeConfig = (
     primaryLocale as (LocaleDefinition & { themeConfig?: Partial<ThemeConfig> }) | undefined

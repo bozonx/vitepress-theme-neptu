@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import {
   normalizeTag,
   normalizeTags,
@@ -41,74 +41,84 @@ describe('normalizeTags', () => {
 })
 
 describe('normalizeCategories', () => {
+  const registry = [
+    { id: 'frontend', name: 'Frontend' },
+    { id: 'backend', name: 'Backend' },
+    { id: 'configuration', name: 'Настройка', slug: 'nastrojka' },
+  ]
+
   it('always returns an array', () => {
     expect(normalizeCategories(undefined, undefined)).toEqual([])
   })
 
   it('folds the `category` sugar into the list', () => {
-    expect(normalizeCategories('Frontend', undefined)).toEqual([
+    expect(normalizeCategories('frontend', undefined, 'en', registry)).toEqual([
       { id: 'frontend', name: 'Frontend', slug: 'frontend' },
     ])
   })
 
   it('puts the `category` sugar first, then the list', () => {
-    const result = normalizeCategories('Frontend', ['Backend'])
-    expect(result.map((item) => item.slug)).toEqual(['frontend', 'backend'])
+    const result = normalizeCategories('frontend', ['backend'], 'en', registry)
+    expect(result.map((item) => item.id)).toEqual(['frontend', 'backend'])
   })
 
-  // Declaring the same value both ways must not render a doubled chip.
+  // Declaring the same category both ways must not render a doubled chip.
   it('de-duplicates by id', () => {
-    const result = normalizeCategories('Frontend', [
-      { name: 'Frontend', slug: 'frontend' },
-    ])
+    const result = normalizeCategories('frontend', ['frontend'], 'en', registry)
     expect(result).toHaveLength(1)
   })
 
-  it('slugifies non-latin names', () => {
-    expect(normalizeCategories('Разработка', undefined, 'ru')).toEqual([
-      { id: 'razrabotka', name: 'Разработка', slug: 'razrabotka' },
-    ])
-  })
-})
-
-describe('normalizeCategories with a registry', () => {
-  const registry = [
-    { id: 'getting-started', name: 'Начало работы' },
-    { id: 'configuration', name: 'Настройка', slug: 'nastrojka' },
-  ]
-
-  it('resolves an id to the locale name, defaulting the slug to the id', () => {
-    expect(normalizeCategories('getting-started', undefined, 'ru', registry)).toEqual([
-      { id: 'getting-started', name: 'Начало работы', slug: 'getting-started' },
-    ])
+  // `name` and `slug` live in the registry, so the id alone is enough.
+  it('defaults name and slug to the id', () => {
+    const result = normalizeCategories('x', undefined, 'en', [{ id: 'x' }])
+    expect(result).toEqual([{ id: 'x', name: 'x', slug: 'x' }])
   })
 
   it('keeps an explicit per-locale slug', () => {
     expect(normalizeCategories('configuration', undefined, 'ru', registry)).toMatchObject([
-      { id: 'configuration', slug: 'nastrojka' },
+      { id: 'configuration', name: 'Настройка', slug: 'nastrojka' },
     ])
   })
 
-  // A blog written before the registry existed referenced categories by name.
-  it('still resolves a legacy name reference', () => {
-    expect(normalizeCategories('Настройка', undefined, 'ru', registry)).toMatchObject([
-      { id: 'configuration', name: 'Настройка' },
-    ])
+  // Re-running over already-resolved frontmatter must be a no-op, not a loss.
+  it('is idempotent over resolved entries', () => {
+    const once = normalizeCategories('frontend', undefined, 'en', registry)
+    expect(normalizeCategories(undefined, once, 'en', registry)).toEqual(once)
   })
+})
 
-  // An unknown id must not break the build — it degrades to the old behavior.
-  it('falls back to a slugified name for an unknown id', () => {
-    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
-    expect(normalizeCategories('Прочее', undefined, 'ru', registry)).toEqual([
-      { id: 'prochee', name: 'Прочее', slug: 'prochee' },
-    ])
-    expect(warn).toHaveBeenCalled()
+describe('normalizeCategories rejects anything but a registered id', () => {
+  const registry = [{ id: 'configuration', name: 'Настройка' }]
+  let warn: ReturnType<typeof vi.spyOn>
+
+  beforeEach(() => {
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+  })
+  afterEach(() => {
     warn.mockRestore()
   })
 
-  // Same category reached by id and by name is still one chip.
-  it('de-duplicates entries that resolve to the same id', () => {
-    const result = normalizeCategories('configuration', ['Настройка'], 'ru', registry)
-    expect(result).toHaveLength(1)
+  // A typo used to invent a one-post category. Now it is reported instead.
+  it('drops an unknown id and warns', () => {
+    expect(normalizeCategories('typo', undefined, 'ru', registry)).toEqual([])
+    expect(warn).toHaveBeenCalledOnce()
+  })
+
+  it('drops a display name — the registry is the only place names live', () => {
+    expect(normalizeCategories('Настройка', undefined, 'ru', registry)).toEqual([])
+    expect(warn).toHaveBeenCalledOnce()
+  })
+
+  it('drops the inline `{ name, slug }` form', () => {
+    expect(
+      normalizeCategories({ name: 'Настройка', slug: 'setup' }, undefined, 'ru', registry)
+    ).toEqual([])
+    expect(warn).toHaveBeenCalledOnce()
+  })
+
+  // Without a registry there is nothing any value could resolve against.
+  it('drops everything when there is no registry', () => {
+    expect(normalizeCategories('configuration', undefined, 'ru')).toEqual([])
+    expect(warn).toHaveBeenCalledOnce()
   })
 })

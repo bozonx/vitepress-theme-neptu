@@ -4,7 +4,7 @@ import {
   getFeedFormatInfo,
   resolveRssFormats,
 } from '../utils/node/index.ts'
-import { normalizeSiteUrl } from '../utils/shared/url.ts'
+import { resolveEffectiveSiteUrl } from '../utils/shared/url.ts'
 import { isHomePage } from '../utils/shared/index.ts'
 
 import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
@@ -34,7 +34,7 @@ export function addRssLinks({
     return
   }
 
-  const siteUrl = normalizeSiteUrl(rawSiteUrl)!
+  const siteUrl = resolveEffectiveSiteUrl(rawSiteUrl, siteConfig.site.base)!
   const supportedLocales = Object.keys(siteConfig.site.locales)
 
   const rssFormats = resolveRssFormats(siteConfig)

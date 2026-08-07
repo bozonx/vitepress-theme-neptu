@@ -122,7 +122,7 @@ export function mergeLandingConfig(
   )
 
   const noIndexUrls = new Set<string>()
-  const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl)
+  const sitemapSiteUrl = resolveSitemapSiteUrl(config.siteUrl, config.base)
 
   const primaryLocaleKey =
     config.primaryLocale || Object.keys(config.locales || {})[0]

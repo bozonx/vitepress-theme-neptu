@@ -16,7 +16,7 @@ import {
   validatePostForRss,
   validateRssConfig,
 } from '../utils/node/index.ts'
-import { makeAbsoluteUrl, normalizeSiteUrl } from '../utils/shared/url.ts'
+import { makeAbsoluteUrl, resolveEffectiveSiteUrl } from '../utils/shared/url.ts'
 import { resolveContentMediaPath, resolveSidebarLogo } from '../utils/shared/media.ts'
 import { shouldListPost, resolveShowDrafts } from '../utils/shared/publication.ts'
 import type { ExtendedSiteConfig, PostFrontmatter, Author } from '../types.d.ts'
@@ -44,7 +44,7 @@ export async function generateRssFeed(config: ExtendedSiteConfig): Promise<void>
     }
 
     const feeds: Record<string, Feed> = {}
-    const siteUrl = normalizeSiteUrl(config.userConfig!.siteUrl!)!
+    const siteUrl = resolveEffectiveSiteUrl(config.userConfig!.siteUrl, config.site!.base)!
     const rssFormats = resolveRssFormats(config)
     const generationErrors: Error[] = []
 

@@ -145,15 +145,20 @@ describe('makeTagsParams', () => {
 })
 
 describe('makeCategoriesParams', () => {
+  // Categories reach this helper already resolved against `_categories.yaml`
+  // by `makePreviewItem` — there is no registry here to resolve them with.
+  const frontend = { id: 'frontend', name: 'Frontend', slug: 'frontend' }
+  const backend = { id: 'backend', name: 'Backend', slug: 'backend' }
+
   it('returns empty array for empty posts', () => {
     expect(makeCategoriesParams([], 10)).toEqual([])
   })
 
   it('creates params per category with pagination', () => {
     const posts = [
-      { date: '2023-01-01', category: 'Frontend' },
-      { date: '2023-01-02', categories: [{ name: 'Frontend', slug: 'frontend' }] },
-      { date: '2023-01-03', category: 'Backend' },
+      { date: '2023-01-01', categories: [frontend] },
+      { date: '2023-01-02', categories: [frontend] },
+      { date: '2023-01-03', categories: [backend] },
     ]
     const result = makeCategoriesParams(posts, 10)
     expect(result).toHaveLength(2)
@@ -161,43 +166,39 @@ describe('makeCategoriesParams', () => {
     expect(result).toContainEqual({ params: { slug: 'backend', name: 'Backend', id: 'backend', page: 1 } })
   })
 
-  // The generated route must be reachable from the rendered chip, which links
-  // to the transliterated slug.
-  it('slugifies raw string categories the same way frontmatter does', () => {
+  // The route is keyed by the registry slug, which may differ from the id.
+  it('uses the resolved slug for the route', () => {
     const result = makeCategoriesParams(
-      [{ date: '2023-01-01', category: 'Web Development' }],
+      [{ date: '2023-01-01', categories: [{ id: 'writing', name: 'Контент', slug: 'kontent' }] }],
       10
     )
     expect(result).toEqual([
-      { params: { slug: 'web-development', name: 'Web Development', id: 'web-development', page: 1 } },
+      { params: { slug: 'kontent', name: 'Контент', id: 'writing', page: 1 } },
     ])
   })
 
-  it('merges the `category` sugar with the `categories` list', () => {
-    const posts = [
-      {
-        date: '2023-01-01',
-        category: 'Frontend',
-        categories: ['Frontend', 'Backend'],
-      },
-    ]
-    const result = makeCategoriesParams(posts, 10)
-    // Frontend is declared twice on one post but yields a single route.
-    expect(result).toHaveLength(2)
-    expect(result).toContainEqual({ params: { slug: 'frontend', name: 'Frontend', id: 'frontend', page: 1 } })
+  // A raw id has no name or slug until the registry resolves it, so inventing
+  // a route here would produce one no rendered chip links to.
+  it('ignores unresolved string categories', () => {
+    expect(
+      makeCategoriesParams(
+        [{ date: '2023-01-01', categories: ['frontend'] as unknown as [] }],
+        10
+      )
+    ).toEqual([])
   })
 
   it('paginates a category across several pages', () => {
     const posts = Array.from({ length: 5 }, (_, i) => ({
       date: `2023-01-0${i + 1}`,
-      category: 'Frontend',
+      categories: [frontend],
     }))
     const result = makeCategoriesParams(posts, 2)
     expect(result.map((item) => item.params.page)).toEqual([1, 2, 3])
   })
 
   it('skips posts without categories', () => {
-    const posts = [{ date: '2023-01-01', category: 'Frontend' }, { date: '2023-01-02' }]
+    const posts = [{ date: '2023-01-01', categories: [frontend] }, { date: '2023-01-02' }]
     expect(makeCategoriesParams(posts, 10)).toHaveLength(1)
   })
 })

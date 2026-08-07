@@ -5,7 +5,7 @@ import {
   generatePageUrlPath,
   getFrontmatterTranslations,
   makeAbsoluteUrl,
-  normalizeSiteUrl,
+  resolveEffectiveSiteUrl,
   pickExistingTranslationRelativePath,
   resolveTranslationRelativePathCandidates,
 } from '../utils/shared/index.ts'
@@ -35,7 +35,10 @@ export function addHreflang({
   // pipeline.
   if (hasNoIndex(pageData?.frontmatter?.head)) return
 
-  const siteUrl = normalizeSiteUrl(siteConfig.userConfig.siteUrl)
+  const siteUrl = resolveEffectiveSiteUrl(
+    siteConfig.userConfig.siteUrl,
+    siteConfig.site.base
+  )
   if (!siteUrl || !pageData) return
 
   const locales = siteConfig.site.locales

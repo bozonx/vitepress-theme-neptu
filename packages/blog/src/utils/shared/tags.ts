@@ -83,62 +83,60 @@ function categoryFromRegistry(entry: CategoryDefinition): Tag {
 }
 
 /**
- * Looks a frontmatter value up in the registry.
+ * Resolves one `category` / `categories` frontmatter value against the
+ * registry.
  *
- * `id` is the documented way to reference a category. `slug` and `name` are
- * accepted too so that a blog written before the registry existed
- * (`category: 'Настройка'`) keeps resolving to the same entry once that
- * category is declared.
- */
-function findInRegistry(
-  registry: CategoryRegistry,
-  value: string
-): CategoryDefinition | undefined {
-  return (
-    registry.find((entry) => entry?.id === value) ||
-    registry.find((entry) => entry?.slug === value) ||
-    registry.find((entry) => entry?.name === value)
-  )
-}
-
-/**
- * Resolves a single `category`/`categories` frontmatter value.
+ * The value is a category `id` and nothing else — there is no way to name a
+ * category from inside a post. An id with no matching entry is dropped with a
+ * warning rather than invented on the fly: a typo that silently created a
+ * one-post category is exactly what the registry exists to prevent, and
+ * failing the whole build over one post is worse than skipping its chip.
  *
- * A string is looked up in the registry. When it is not found — or when there
- * is no registry at all — it falls back to the pre-registry behavior of
- * treating the string as a display name and transliterating it into a slug,
- * so existing blogs keep building.
+ * Objects carrying an `id` are accepted so the function is idempotent — it may
+ * run over frontmatter that a previous pass already normalized.
  */
 export function normalizeCategory(
   value: unknown,
   lang?: string,
   registry?: CategoryRegistry
 ): Tag | undefined {
-  if (typeof value === 'string') {
-    const key = normalizeTagName(value)
-    if (!key) return
+  const raw =
+    typeof value === 'string'
+      ? value
+      : value && typeof value === 'object' && typeof (value as Tag).id === 'string'
+        ? (value as Tag).id
+        : undefined
 
-    const entry = registry?.length ? findInRegistry(registry, key) : undefined
-    if (entry) return categoryFromRegistry(entry)
+  const id = raw ? normalizeTagName(raw) : undefined
 
-    if (registry?.length) {
+  if (!id) {
+    if (value !== undefined && value !== null && value !== '') {
       console.warn(
-        `[vitepress-theme-neptu] Unknown category "${key}"${
+        `[vitepress-theme-neptu] Ignoring a category value that is not an id${
           lang ? ` in locale "${lang}"` : ''
-        } — no entry with this id in _categories.yaml. Falling back to a slug derived from the value.`
+        }: ${JSON.stringify(value)}. Declare the category in _categories.yaml and reference it by \`id\`.`
       )
     }
+    return
   }
 
-  // Inline `{ name, slug }` objects and unregistered strings share the tag
-  // data model, so they share its normalizer.
-  return normalizeTag(value, lang)
+  const entry = registry?.find((item) => item?.id === id)
+  if (!entry) {
+    console.warn(
+      `[vitepress-theme-neptu] Unknown category "${id}"${
+        lang ? ` in locale "${lang}"` : ''
+      } — no entry with this id in _categories.yaml. Skipping it.`
+    )
+    return
+  }
+
+  return categoryFromRegistry(entry)
 }
 
 /**
- * Categories share the tag data model (`{ id, name, slug }`). The difference
- * is where the name and slug come from: a category is declared once per locale
- * in `_categories.yaml` and posts reference it by `id`, while a tag carries its
+ * Categories share the tag data model (`{ id, name, slug }`), but not the way
+ * they are authored: a category is declared once per locale in
+ * `_categories.yaml` and posts reference it by `id`, while a tag carries its
  * own name in the frontmatter.
  *
  * A post may declare `category: 'getting-started'` as sugar for a single-entry
