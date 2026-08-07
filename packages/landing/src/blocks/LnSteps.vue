@@ -40,6 +40,7 @@ const sectionProps = useSectionProps(props)
           <LnIcon v-if="item.icon" :icon="item.icon" size="1.1rem" />
           <span v-else>{{ item.label ?? i + 1 }}</span>
         </div>
+        <span v-if="item.label" class="ln-step__sr">{{ item.label }}</span>
 
         <div class="ln-step__body">
           <p v-if="item.eyebrow" class="ln-step__eyebrow">{{ item.eyebrow }}</p>
@@ -167,5 +168,15 @@ const sectionProps = useSectionProps(props)
 
 .ln-step__media {
   margin-top: 0.5rem;
+}
+
+/* Visible to assistive tech only — exposes custom marker labels (e.g. "Day 1"). */
+.ln-step__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 </style>

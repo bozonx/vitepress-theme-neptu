@@ -10,9 +10,8 @@ tags: [guide, advanced]
 descriptionAsPreview: true
 ---
 
-Mermaid и KaTeX подключаются как опциональные Markdown-интеграции. Тема
-сохраняет пользовательский `markdown.config` VitePress, поэтому менять Neptu
-для этого не нужно.
+Mermaid и KaTeX подключаются как опциональные Markdown-интеграции через `markdown.
+config` который предоставляет VitePress.
 
 ## Mermaid
 

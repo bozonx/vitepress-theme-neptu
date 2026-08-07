@@ -84,6 +84,10 @@ export interface MediaSpec {
   autoplay?: boolean
   /** Show native controls for a video. Defaults to true when autoplay is off. */
   controls?: boolean
+  /** Mute the video. Defaults to true when autoplay is on. */
+  muted?: boolean
+  /** Loop the video. Defaults to true when autoplay is on. */
+  loop?: boolean
 }
 
 /** Either a plain image path or a full media spec. */

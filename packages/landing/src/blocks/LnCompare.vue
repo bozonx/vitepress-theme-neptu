@@ -8,7 +8,8 @@
  * row sticks while the body scrolls. On narrow screens the table scrolls
  * horizontally inside its own container instead of squashing the labels.
  */
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
@@ -38,6 +39,12 @@ const props = withDefaults(
 
 const columns = computed(() => props.columns ?? [])
 
+const { theme } = useData()
+const compareText = computed(() => {
+  const t = theme.value.t as { landing?: { compare?: Record<string, string> } } | undefined
+  return t?.landing?.compare ?? {}
+})
+
 /**
  * Rows carry their group header with them, so the flat `rows` array stays the
  * authoring format while the table still renders grouped sections.
@@ -53,7 +60,7 @@ const body = computed(() =>
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean'
 
 const plainAriaLabel = computed(() =>
-  (props.ariaLabel ?? props.title ?? 'Comparison')
+  (props.ariaLabel ?? props.title ?? compareText.value.region ?? 'Comparison')
     .replace(/<[^>]*>/g, '')
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
@@ -63,17 +70,25 @@ const plainAriaLabel = computed(() =>
 )
 const sectionProps = useSectionProps(props)
 
+/** Build-agnostic dev flag, same pattern as LnRenderer. */
+const isDev = (import.meta as { env?: { DEV?: boolean } }).env?.DEV === true
+
 /* Dev-mode validation: each row's values must match the column count. */
-if (import.meta.env.DEV) {
-  for (const [i, row] of (props.rows ?? []).entries()) {
-    if (row.values && columns.value.length && row.values.length !== columns.value.length) {
-      console.warn(
-        `[LnCompare] Row ${i} ("${row.label ?? ''}") has ${row.values.length} values, ` +
-        `but there are ${columns.value.length} columns.`
-      )
+watch(
+  () => [props.rows, columns.value] as const,
+  () => {
+    if (!isDev) return
+    for (const [i, row] of (props.rows ?? []).entries()) {
+      if (row.values && columns.value.length && row.values.length !== columns.value.length) {
+        console.warn(
+          `[LnCompare] Row ${i} ("${row.label ?? ''}") has ${row.values.length} values, ` +
+          `but there are ${columns.value.length} columns.`
+        )
+      }
     }
-  }
-}
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -142,7 +157,7 @@ if (import.meta.env.DEV) {
                     size="0.9rem"
                     :class="value ? 'ln-compare__yes' : 'ln-compare__no'"
                   />
-                  <span class="ln-compare__sr">{{ value ? '✓' : '—' }}</span>
+                  <span class="ln-compare__sr">{{ value ? (compareText.yes ?? 'Yes') : (compareText.no ?? 'No') }}</span>
                 </template>
                 <template v-else>{{ value ?? '—' }}</template>
               </td>

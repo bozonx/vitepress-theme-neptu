@@ -60,6 +60,10 @@ const open = (index: number): void => {
 
 const close = (): void => {
   dialog.value?.close?.()
+}
+
+/** Native `close` event covers Esc, backdrop click and programmatic close. */
+const onDialogClose = (): void => {
   emit('lightboxClose')
 }
 
@@ -128,6 +132,7 @@ const onKeydown = (event: KeyboardEvent): void => {
       class="ln-gallery__dialog"
       :aria-label="props.ariaLabel ?? props.title ?? label('region', 'Image viewer')"
       @click="close"
+      @close="onDialogClose"
       @keydown="onKeydown"
     >
       <div class="ln-gallery__viewer" @click.stop>

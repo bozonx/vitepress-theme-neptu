@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /** Lazy iframe for maps, calendars, demos and booking widgets. */
 import { computed } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
@@ -26,8 +27,13 @@ const props = withDefaults(
   >(),
   { mediaRatio: '16/9', loading: 'lazy', align: 'center', width: 'default' }
 )
+const { theme } = useData()
+const embedText = computed(() => {
+  const t = theme.value.t as { landing?: { embed?: Record<string, string> } } | undefined
+  return t?.landing?.embed ?? {}
+})
 const iframeTitle = computed(() =>
-  (props.embedTitle ?? props.title ?? 'Embedded content').replace(/<[^>]*>/g, '')
+  (props.embedTitle ?? props.title ?? embedText.value.title ?? 'Embedded content').replace(/<[^>]*>/g, '')
 )
 const sectionProps = useSectionProps(props)
 </script>

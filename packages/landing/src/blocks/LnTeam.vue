@@ -66,10 +66,10 @@ const sectionProps = useSectionProps(props)
           class="ln-member__avatar"
           :class="`ln-member__avatar--${props.avatarShape}`"
           :src="resolveUrl(member.avatar)"
-          :alt="member.name"
+          alt=""
           loading="lazy"
         />
-        <h3 class="ln-member__name">{{ member.name }}</h3>
+        <h4 class="ln-member__name">{{ member.name }}</h4>
         <p v-if="member.role" class="ln-member__role">{{ member.role }}</p>
         <p v-if="member.department" class="ln-member__department">{{ member.department }}</p>
         <p v-if="member.text" class="ln-member__text">{{ member.text }}</p>

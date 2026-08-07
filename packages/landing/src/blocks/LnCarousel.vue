@@ -71,7 +71,11 @@ const prefersReducedMotion = (): boolean =>
   typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const slides = (): HTMLElement[] =>
-  track.value ? (Array.from(track.value.children) as HTMLElement[]) : []
+  track.value
+    ? (Array.from(track.value.children) as HTMLElement[]).filter((child) =>
+        child.classList.contains('ln-carousel__slide')
+      )
+    : []
 
 /**
  * Slide position inside the scroll container.

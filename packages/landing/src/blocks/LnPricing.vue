@@ -121,7 +121,6 @@ const sectionProps = useSectionProps(props)
         <p
           v-if="priceOf(plan)"
           class="ln-plan__price"
-          :aria-live="hasToggle ? 'polite' : undefined"
         >
           <span v-if="currencyOf(plan)" class="ln-plan__currency">{{ currencyOf(plan) }}</span>
           <span

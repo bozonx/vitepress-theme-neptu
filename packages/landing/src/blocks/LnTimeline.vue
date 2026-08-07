@@ -1,5 +1,7 @@
 <script setup lang="ts">
 /** Roadmap or changelog. `state` drives how each marker is painted. */
+import { computed } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
@@ -17,6 +19,18 @@ const props = withDefaults(
   { variant: 'stacked', width: 'narrow', align: 'start' }
 )
 const sectionProps = useSectionProps(props)
+
+const { theme } = useData()
+const timelineText = computed(() => {
+  const t = theme.value.t as { landing?: { timeline?: Record<string, string> } } | undefined
+  return t?.landing?.timeline ?? {}
+})
+const stateLabel = (state?: string): string | undefined => {
+  if (!state || state === 'done') return timelineText.value.done ?? 'Completed'
+  if (state === 'active') return timelineText.value.active ?? 'In progress'
+  if (state === 'planned') return timelineText.value.planned ?? 'Planned'
+  return undefined
+}
 </script>
 
 <template>
@@ -42,6 +56,7 @@ const sectionProps = useSectionProps(props)
         <div class="ln-timeline__marker" aria-hidden="true">
           <LnIcon v-if="item.icon" :icon="item.icon" size="0.85rem" />
         </div>
+        <span class="ln-timeline__sr">{{ stateLabel(item.state) }}</span>
 
         <div class="ln-timeline__body">
           <p v-if="item.label" class="ln-timeline__label">{{ item.label }}</p>
@@ -176,5 +191,15 @@ const sectionProps = useSectionProps(props)
   color: var(--ln-c-text-2);
   font-size: 0.9375rem;
   line-height: var(--ln-body-lh);
+}
+
+/* Visible to assistive tech only — conveys the item state (done/active/planned). */
+.ln-timeline__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 </style>

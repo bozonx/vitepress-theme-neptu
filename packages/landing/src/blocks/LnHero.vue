@@ -8,6 +8,7 @@
  * - `plain` — copy only
  */
 import { computed, onMounted, ref } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnButtonGroup from '../primitives/LnButtonGroup.vue'
@@ -41,6 +42,12 @@ const props = withDefaults(
     glow: false,
   }
 )
+
+const { theme } = useData()
+const heroText = computed(() => {
+  const t = theme.value.t as { landing?: { hero?: Record<string, string> } } | undefined
+  return t?.landing?.hero ?? {}
+})
 
 const isCover = computed(() => props.variant === 'cover')
 const coverVideo = ref<HTMLVideoElement | null>(null)
@@ -120,7 +127,7 @@ const coverSpec = computed(() => {
         :aria-pressed="videoPaused"
         @click="toggleBackgroundVideo"
       >
-        {{ videoPaused ? 'Play background video' : 'Pause background video' }}
+        {{ videoPaused ? (heroText.playVideo ?? 'Play background video') : (heroText.pauseVideo ?? 'Pause background video') }}
       </button>
 
       <div class="ln-hero__grid">

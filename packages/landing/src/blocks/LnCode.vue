@@ -77,19 +77,9 @@ const onTabKeydown = (event: KeyboardEvent, index: number): void => {
 const copySample = async (): Promise<void> => {
   const source = current.value?.code
   if (!source) return
+  if (typeof navigator === 'undefined' || !navigator.clipboard) return
   try {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      await navigator.clipboard.writeText(source)
-    } else if (typeof document !== 'undefined') {
-      const textarea = document.createElement('textarea')
-      textarea.value = source
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-    }
+    await navigator.clipboard.writeText(source)
     copied.value = true
     if (resetTimer) clearTimeout(resetTimer)
     resetTimer = setTimeout(() => (copied.value = false), 2000)

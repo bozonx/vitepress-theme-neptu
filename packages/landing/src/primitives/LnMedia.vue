@@ -38,6 +38,8 @@ onMounted(() => {
 })
 const autoplay = computed(() => Boolean(spec.value.autoplay ?? props.autoplay) && !reducedMotion.value)
 const controls = computed(() => spec.value.controls ?? props.controls ?? !autoplay.value)
+const muted = computed(() => spec.value.muted ?? autoplay.value)
+const loop = computed(() => spec.value.loop ?? autoplay.value)
 </script>
 
 <template>
@@ -59,8 +61,8 @@ const controls = computed(() => spec.value.controls ?? props.controls ?? !autopl
         :style="{ objectFit: fit }"
         :autoplay="autoplay"
         :controls="controls"
-        muted
-        loop
+        :muted="muted"
+        :loop="loop"
         playsinline
       />
       <img

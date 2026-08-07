@@ -8,6 +8,7 @@
  * search engines and found by in-page search.
  */
 import { computed, ref, useId, watch } from 'vue'
+import { useData } from 'vitepress'
 import LnSection from '../primitives/LnSection.vue'
 import LnHeading from '../primitives/LnHeading.vue'
 import LnIcon from '../primitives/LnIcon.vue'
@@ -36,6 +37,14 @@ const generatedId = useId()
 const uid = computed(() => props.id ?? `ln-tabs-${generatedId}`)
 const labelOf = (tab: TabItem, index: number): string => tab.label ?? tab.title ?? `${index + 1}`
 
+const { theme } = useData()
+const tabsText = computed(() => {
+  const t = theme.value.t as { landing?: { tabs?: Record<string, string> } } | undefined
+  return t?.landing?.tabs ?? {}
+})
+const plainAriaLabel = computed(() =>
+  (props.title ?? tabsText.value.region ?? 'Tabs').replace(/<[^>]*>/g, '')
+)
 const onKeydown = (event: KeyboardEvent, index: number): void => {
   const total = tabs.value.length
   let next: number
@@ -73,7 +82,7 @@ const sectionProps = useSectionProps(props)
       <div
         class="ln-tabs__strip"
         role="tablist"
-        :aria-label="props.title ?? 'Tabs'"
+        :aria-label="plainAriaLabel"
         :aria-orientation="props.variant === 'side' ? 'vertical' : 'horizontal'"
       >
         <button

@@ -3,7 +3,7 @@
  * Outer wrapper of every block: paints the surface, owns the vertical rhythm
  * and constrains the content width. Blocks never set their own page padding.
  *
- * `align` is intentionally not applied here: a section does not know how its
+ * `align` is intentionally not accepted here: a section does not know how its
  * content should be aligned. Blocks forward `align` to `LnHeading` /
  * `LnButtonGroup` where it has meaning.
  */
@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<SectionProps & { tag?: string }>(), {
   bg: 'base',
   width: 'default',
   padding: 'md',
-  align: 'start',
   divider: false,
   reveal: true,
   tag: 'section',

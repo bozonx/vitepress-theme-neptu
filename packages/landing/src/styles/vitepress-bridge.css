@@ -42,7 +42,8 @@ body {
 }
 
 /**
-/* A landing page is edge-to-edge: blocks own the horizontal padding. */
+ * A landing page is edge-to-edge: blocks own the horizontal padding.
+ */
 .ln-page {
   width: 100%;
   min-width: 0;

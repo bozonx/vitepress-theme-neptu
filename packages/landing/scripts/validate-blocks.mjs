@@ -12,7 +12,8 @@ const schema = JSON.parse(
 )
 const validate = new Ajv2020({ allErrors: true, strict: true, allowUnionTypes: true }).compile(schema)
 const builtInTypes = new Set(
-  schema.definitions.block.allOf[1].oneOf
+  schema.definitions.block.allOf
+    .flatMap((branch) => branch.oneOf ?? [])
     .map((branch) => branch.properties?.type?.const)
     .filter(Boolean)
 )
@@ -24,18 +25,30 @@ Validate landing blocks in Markdown files. Paths default to the current director
 Pass files or directories; directories are searched recursively.`)
   process.exit(0)
 }
-const allowedCustomTypes = new Set(args.flatMap((arg) => arg.startsWith('--allow-type=') ? [arg.slice(13)] : []))
+const allowedCustomTypes = new Set(args.flatMap((arg) => arg.startsWith('--allow-type=') ? [arg.slice('--allow-type='.length)] : []))
 const inputPaths = args.filter((arg) => !arg.startsWith('--')).map((path) => resolve(path))
 const roots = inputPaths.length ? inputPaths : [process.cwd()]
 const ignored = new Set(['.git', 'node_modules', 'dist', '.vitepress', 'coverage', 'playwright-report'])
 const markdownFiles = []
 
-const walk = (path) => {
-  const entries = readdirSync(path, { withFileTypes: true })
+const displayRoot = roots.length === 1 && extname(roots[0]).toLowerCase() !== '.md'
+  ? roots[0]
+  : process.cwd()
+
+const walk = (path, seen = new Set()) => {
+  if (seen.has(path)) return
+  seen.add(path)
+  let entries
+  try {
+    entries = readdirSync(path, { withFileTypes: true })
+  } catch (error) {
+    console.error(`Warning: cannot read directory ${relative(displayRoot, path)}: ${error.message}`)
+    return
+  }
   for (const entry of entries) {
     if (ignored.has(entry.name)) continue
     const child = join(path, entry.name)
-    if (entry.isDirectory()) walk(child)
+    if (entry.isDirectory()) walk(child, seen)
     else if (entry.isFile() && extname(entry.name).toLowerCase() === '.md') markdownFiles.push(child)
   }
 }
@@ -43,10 +56,6 @@ for (const path of roots) {
   if (extname(path).toLowerCase() === '.md') markdownFiles.push(path)
   else walk(path)
 }
-
-const displayRoot = roots.length === 1 && extname(roots[0]).toLowerCase() !== '.md'
-  ? roots[0]
-  : process.cwd()
 
 let invalid = 0
 for (const file of markdownFiles) {
@@ -83,7 +92,7 @@ for (const file of markdownFiles) {
     }
   }
 
-const ids = new Map()
+  const ids = new Map()
   for (const [index, block] of blocks.entries()) {
     if (block?.id) {
       if (ids.has(block.id)) semanticErrors.push(`/blocks/${index}/id duplicate id "${block.id}" (first used at ${ids.get(block.id)})`)

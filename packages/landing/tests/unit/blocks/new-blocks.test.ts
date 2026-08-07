@@ -109,8 +109,8 @@ describe('LnCompare', () => {
     const wrapper = mount(LnCompare, { props })
     const cells = wrapper.findAll('.ln-compare__cell')
 
-    expect(cells[2].text()).toContain('—')
-    expect(cells[3].text()).toContain('✓')
+    expect(cells[2].text()).toContain('No')
+    expect(cells[3].text()).toContain('Yes')
   })
 })
 

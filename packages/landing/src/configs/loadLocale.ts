@@ -185,11 +185,13 @@ export async function loadLocale(
         ...((sharedThemeConfig.editLink || {}) as Record<string, unknown>),
         ...((localeThemeConfig.editLink || {}) as Record<string, unknown>),
       } as EditLinkConfig,
-      t: {
-        ...((baseLocale.t || {}) as Record<string, unknown>),
-        ...((sharedThemeConfig.t || {}) as Record<string, unknown>),
-        ...((localeThemeConfig.t || {}) as Record<string, unknown>),
-      } as unknown as I18nTranslations,
+      t: deepMerge(
+        deepMerge(
+          (baseLocale.t ?? {}) as Record<string, unknown>,
+          (sharedThemeConfig.t ?? {}) as Record<string, unknown>
+        ),
+        (localeThemeConfig.t ?? {}) as Record<string, unknown>
+      ) as unknown as I18nTranslations,
       sidebar,
     },
   }

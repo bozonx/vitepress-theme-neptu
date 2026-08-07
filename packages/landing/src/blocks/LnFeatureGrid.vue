@@ -84,7 +84,7 @@ const sectionProps = useSectionProps(props)
               <span v-for="tag in item.tags" :key="tag">{{ tag }}</span>
             </div>
             <LnButtonGroup v-if="item.actions?.length" :actions="item.actions" size="sm" />
-            <span v-if="item.linkText" class="ln-feature__link">{{ item.linkText }}</span>
+            <span v-else-if="item.linkText" class="ln-feature__link">{{ item.linkText }}</span>
           </div>
         </LnCard>
       <!-- Appended after the items, like in every other block. -->

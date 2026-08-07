@@ -81,7 +81,13 @@ const formId = computed(() => props.id ?? `ln-form-${generatedId}`)
 const resolvedAction = computed(() => resolveUrl(props.action))
 
 const onSubmit = async (event: Event): Promise<void> => {
-  if (!props.ajax || !props.action) return
+  if (!props.action) {
+    event.preventDefault()
+    state.value = 'error'
+    return
+  }
+  // Without ajax the native form submit navigates to the endpoint — let it.
+  if (!props.ajax) return
 
   event.preventDefault()
   const form = event.target as HTMLFormElement
