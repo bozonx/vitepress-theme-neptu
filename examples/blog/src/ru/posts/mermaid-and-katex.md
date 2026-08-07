@@ -47,13 +47,15 @@ flowchart LR
 `withMermaid` должен оставаться внешней обёрткой, чтобы добавить свои хуки
 VitePress. Параметры и совместимость версий приведены в [репозитории плагина](https://github.com/emersonbottero/vitepress-plugin-mermaid).
 
-Плагин принимает объект настроек Mermaid — тему, направление диаграммы и другие
-опции — первым аргументом:
+Настройки Mermaid — тему, направление диаграммы и другие опции — передаются
+свойством `mermaid` внутри конфига:
 
 ```ts
-return withMermaid(await defineBlogConfig(config), {
-  dark: 'dark',
-  // Mermaid launch configuration
+return withMermaid({
+  ...await defineBlogConfig(config),
+  mermaid: {
+    // MermaidConfig — см. https://mermaid.js.org/config/setup/modules/mermaidAPI.html
+  },
 })
 ```
 
@@ -63,10 +65,10 @@ Mermaid рендерится на клиенте: при SSR и в собран�
 
 ## KaTeX
 
-Установите Markdown-it plugin и KaTeX:
+Установите Markdown-it plugin (KaTeX устанавливается автоматически как зависимость):
 
 ```bash
-pnpm add -D @mdit/plugin-katex katex
+pnpm add -D @mdit/plugin-katex
 ```
 
 Зарегистрируйте его через существующий Markdown hook VitePress:
@@ -123,4 +125,4 @@ $$
 Рецепт KaTeX основан на
 [документации `@mdit/plugin-katex`](https://mdit-plugins.github.io/katex.html).
 Если KaTeX не обязателен, VitePress также документирует встроенное опциональное
-[подключение MathJax](https://vitepress.dev/ru/guide/markdown#math-equations).
+[подключение MathJax](https://vitepress.dev/guide/markdown#math-equations).

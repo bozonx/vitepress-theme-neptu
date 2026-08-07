@@ -50,13 +50,15 @@ flowchart LR
 See the [plugin repository](https://github.com/emersonbottero/vitepress-plugin-mermaid)
 for Mermaid configuration and version compatibility.
 
-The plugin accepts a Mermaid configuration object — theme, diagram direction,
-and other options — as its first argument:
+Mermaid configuration — theme, diagram direction, and other options — is
+passed as the `mermaid` property inside the config object:
 
 ```ts
-return withMermaid(await defineBlogConfig(config), {
-  dark: 'dark',
-  // Mermaid launch configuration
+return withMermaid({
+  ...await defineBlogConfig(config),
+  mermaid: {
+    // MermaidConfig — see https://mermaid.js.org/config/setup/modules/mermaidAPI.html
+  },
 })
 ```
 
@@ -66,10 +68,10 @@ configuration.
 
 ## KaTeX
 
-Install the Markdown-it plugin and KaTeX:
+Install the Markdown-it plugin (KaTeX is installed automatically as a dependency):
 
 ```bash
-pnpm add -D @mdit/plugin-katex katex
+pnpm add -D @mdit/plugin-katex
 ```
 
 Register it through the existing VitePress Markdown hook:
