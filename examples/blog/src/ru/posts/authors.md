@@ -6,7 +6,7 @@ description: >
   article:author, а также генерирует JSON-LD Person.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Контент', slug: 'writing' }
+category: writing
 tags: [frontmatter, config]
 descriptionAsPreview: true
 ---

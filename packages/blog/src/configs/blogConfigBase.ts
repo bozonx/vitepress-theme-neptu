@@ -434,7 +434,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       })
       transformTitle(extendedPageData, { siteConfig: extendedSiteConfig })
       transformDescription(extendedPageData, { siteConfig: extendedSiteConfig })
-      transformPageMeta(extendedPageData)
+      transformPageMeta(extendedPageData, { siteConfig: extendedSiteConfig })
       resolveDescription(extendedPageData, { siteConfig: extendedSiteConfig })
 
       if (hasNoIndex(extendedPageData.frontmatter.head)) {

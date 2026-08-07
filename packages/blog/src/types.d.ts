@@ -217,6 +217,12 @@ export namespace NeptuBlogTheme {
 
     twitterSite?: string
     authors?: Author[]
+    /**
+     * Per-locale category registry, loaded from
+     * `<srcDir>/<locale>/_categories.{yaml,ts}` and from
+     * `themeConfig.categories` in the `_site.yaml` chain. Merged by `id`.
+     */
+    categories?: CategoryDefinition[]
     nav?: NavConfig
     sidebar?: SidebarConfig
     donate?: DonateConfig
@@ -630,9 +636,40 @@ export namespace NeptuBlogTheme {
   }
 
   export interface TaxonomyEntry {
+    /**
+     * Language-independent key. For categories it is the `id` from
+     * `_categories.yaml` and is the same in every locale, which is what lets
+     * the language switcher map a category page across locales. For tags it
+     * falls back to the slug.
+     */
+    id?: string
     name?: string
     slug?: string
     count?: number
+    [key: string]: unknown
+  }
+
+  /**
+   * One entry of the per-locale category registry
+   * (`<srcDir>/<locale>/_categories.{yaml,ts}`).
+   *
+   * Only `id` is required; it is what posts reference in `category:` and what
+   * ties the same category together across locales. `name` and `slug` are
+   * per-locale and both default to `id`.
+   */
+  export interface CategoryDefinition {
+    /** Stable, language-independent key. Referenced from post frontmatter. */
+    id: string
+    /** Display name in this locale. Defaults to `id`. */
+    name?: string
+    /** URL segment in this locale. Defaults to `id`. */
+    slug?: string
+    /**
+     * Free-form note about the category. Not rendered by the built-in
+     * components — like any extra field it is carried through to
+     * `frontmatter.categories[]` for your own components to use.
+     */
+    description?: string
     [key: string]: unknown
   }
 
@@ -793,10 +830,16 @@ export namespace NeptuBlogTheme {
     coverAlt?: string
     tags?: Array<string | Tag>
     /**
-     * Sugar for a single-entry `categories` list. Folded into `categories`
-     * during `transformPageData`, so components only ever read `categories`.
+     * Category `id` from `<locale>/_categories.yaml`. Sugar for a
+     * single-entry `categories` list — folded into `categories` during
+     * `transformPageData`, so components only ever read `categories`.
      */
     category?: string
+    /**
+     * Additional category ids, for the rare post that belongs in more than
+     * one section. Inline `{ name, slug }` objects still work but are legacy —
+     * declare the category in `_categories.yaml` and reference it by id.
+     */
     categories?: Array<string | TaxonomyEntry>
     /** Marks the post for explicit featured-post collections. Does not change chronological lists. */
     featured?: boolean
@@ -946,6 +989,7 @@ export type NavConfig = NeptuBlogTheme.NavConfig
 export type SidebarConfig = NeptuBlogTheme.SidebarConfig
 export type SidebarItem = NeptuBlogTheme.SidebarItem
 export type TaxonomyEntry = NeptuBlogTheme.TaxonomyEntry
+export type CategoryDefinition = NeptuBlogTheme.CategoryDefinition
 export type BreadcrumbItem = NeptuBlogTheme.BreadcrumbItem
 export type AuthorItem = NeptuBlogTheme.AuthorItem
 export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem

@@ -228,6 +228,15 @@ export const AuthorSchema = z.looseObject({
 
 export const AuthorsListSchema = z.array(AuthorSchema)
 
+export const CategorySchema = z.looseObject({
+  id: z.string().min(1, 'category `id` must be a non-empty string'),
+  name: z.string().optional(),
+  slug: z.string().optional(),
+  description: z.string().optional(),
+})
+
+export const CategoriesListSchema = z.array(CategorySchema)
+
 const ThemeConfigSchema = z
   .looseObject({
     repo: z.never({
@@ -352,6 +361,7 @@ const ThemeConfigSchema = z
     })).optional(),
     t: TranslationSchema.optional(),
     authors: z.array(AuthorSchema).optional(),
+    categories: z.array(CategorySchema).optional(),
     returnToTopLabel: z.string().optional(),
     lightModeSwitchTitle: z.string().optional(),
     darkModeSwitchTitle: z.string().optional(),

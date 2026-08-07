@@ -1,13 +1,19 @@
 import { deepMerge } from '../shared/merge.ts'
-import { mergeAuthorsById, mergeSocialMediaSharesByName } from '../shared/mergeStrategy.ts'
+import {
+  mergeAuthorsById,
+  mergeCategoriesById,
+  mergeSocialMediaSharesByName,
+} from '../shared/mergeStrategy.ts'
 import { extractThemeConfig } from '../shared/configHelpers.ts'
 import { autoLoadLocalesFactory, type LocaleEntry } from './autoLoadLocales.ts'
 import {
   parseLocaleSite,
   parseSharedSite,
   parseLocaleAuthors,
+  parseLocaleCategories,
   resolveConfigTemplates,
 } from './i18n.ts'
+import { registerCategories } from './categoriesRegistry.ts'
 import { loadLocaleYamlChain } from './localeYamlChain.ts'
 import { mdToHtml } from './markdown.ts'
 import { getImageDimensions } from './image.ts'
@@ -18,6 +24,7 @@ import { resolveEditLinkPattern } from './editLink.ts'
 import type {
   LocaleDefinition,
   Author,
+  CategoryDefinition,
   SocialMediaShare,
   BlogUserConfig,
   ThemeConfig,
@@ -77,24 +84,27 @@ function resolveLocaleTemplates(
 }
 
 /**
- * Removes `authors` and `socialMediaShares` from a nested `themeConfig` so
- * that generic deep-merge does not touch them — they are merged separately
- * with by-id / by-name strategies.
+ * Removes `authors`, `categories` and `socialMediaShares` from a nested
+ * `themeConfig` so that generic deep-merge does not touch them — they are
+ * merged separately with by-id / by-name strategies.
  */
 function extractMergeableThemeArrays(
   site: Record<string, unknown>
 ): {
   site: Record<string, unknown>
   authors: Author[]
+  categories: CategoryDefinition[]
   socialMediaShares: SocialMediaShare[]
 } {
   const themeConfig = extractThemeConfig(site)
   const {
     authors: themeAuthors,
+    categories: themeCategories,
     socialMediaShares: themeSocialShares,
     ...themeConfigRest
   } = themeConfig as {
     authors?: Author[]
+    categories?: CategoryDefinition[]
     socialMediaShares?: SocialMediaShare[]
     [key: string]: unknown
   }
@@ -105,6 +115,9 @@ function extractMergeableThemeArrays(
         ? { ...siteRest, themeConfig: themeConfigRest }
         : siteRest,
     authors: Array.isArray(themeAuthors) ? (themeAuthors as Author[]) : [],
+    categories: Array.isArray(themeCategories)
+      ? (themeCategories as CategoryDefinition[])
+      : [],
     socialMediaShares: Array.isArray(themeSocialShares)
       ? (themeSocialShares as SocialMediaShare[])
       : [],
@@ -112,10 +125,12 @@ function extractMergeableThemeArrays(
 }
 
 interface LocaleYamlChain {
-  /** Merged `_site.yaml` payload with `authors`/`socialMediaShares` stripped and `extends` resolved. */
+  /** Merged `_site.yaml` payload with the by-key arrays stripped and `extends` resolved. */
   site: Record<string, unknown>
   /** Merged authors list from every step of the `extends` chain. */
   authors: Author[]
+  /** Merged category registry from every step of the `extends` chain. */
+  categories: CategoryDefinition[]
   /** Merged socialMediaShares list from every step of the `extends` chain. */
   socialMediaShares: SocialMediaShare[]
 }
@@ -126,6 +141,7 @@ interface LocaleYamlChain {
  * Authors from `_site.yaml themeConfig.authors` and `_authors.yaml` are
  * combined at each step (local `_authors.yaml` wins over local `_site.yaml
  * themeConfig.authors`), then merged across the chain with the by-id strategy.
+ * Categories work exactly the same way with `_categories.yaml`.
  */
 async function loadBlogLocaleYamlChain(
   localeIndex: string,
@@ -137,6 +153,7 @@ async function loadBlogLocaleYamlChain(
 
   const result = await loadLocaleYamlChain<{
     authors: Author[]
+    categories: CategoryDefinition[]
     socialMediaShares: SocialMediaShare[]
   }>(localeIndex, {
     srcDir,
@@ -148,31 +165,42 @@ async function loadBlogLocaleYamlChain(
     ) => Promise<Record<string, unknown>>,
     logPrefix: '[vitepress-theme-neptu]',
     prepareSite: async (rawSite) => {
-      const { site: siteWithoutArrays, authors: siteAuthors, socialMediaShares } =
-        extractMergeableThemeArrays(rawSite)
+      const {
+        site: siteWithoutArrays,
+        authors: siteAuthors,
+        categories: siteCategories,
+        socialMediaShares,
+      } = extractMergeableThemeArrays(rawSite)
       const localeParams = { ...templateParams, localeIndex }
       const authorsFile = (await parseLocaleAuthors(srcDir, localeParams)) as Author[]
+      const categoriesFile = (await parseLocaleCategories(
+        srcDir,
+        localeParams
+      )) as CategoryDefinition[]
       return {
         site: siteWithoutArrays,
         extra: {
           authors: mergeAuthorsById(siteAuthors, authorsFile),
+          categories: mergeCategoriesById(siteCategories, categoriesFile),
           socialMediaShares,
         },
       }
     },
     mergeExtra: (parent, current) => ({
       authors: mergeAuthorsById(parent.authors, current.authors),
+      categories: mergeCategoriesById(parent.categories, current.categories),
       socialMediaShares: mergeSocialMediaSharesByName(
         parent.socialMediaShares,
         current.socialMediaShares
       ),
     }),
-    defaultExtra: { authors: [], socialMediaShares: [] },
+    defaultExtra: { authors: [], categories: [], socialMediaShares: [] },
   })
 
   return {
     site: result.site,
     authors: result.extra.authors,
+    categories: result.extra.categories,
     socialMediaShares: result.extra.socialMediaShares,
   }
 }
@@ -223,9 +251,11 @@ export async function loadBlogLocale(
   }
   const {
     socialMediaShares: configSocialShares,
+    categories: configCategories,
     ...configThemeRest
   } = (config.themeConfig || {}) as {
     socialMediaShares?: SocialMediaShare[]
+    categories?: CategoryDefinition[]
     [key: string]: unknown
   }
 
@@ -246,8 +276,12 @@ export async function loadBlogLocale(
     theme: themeForTemplates,
     t: (themeForTemplates.t as Record<string, unknown> | undefined) ?? {},
   })) as Record<string, unknown>
-  const { site: sharedSiteSanitized, authors: sharedAuthors, socialMediaShares: sharedSocialShares } =
-    extractMergeableThemeArrays(sharedSite)
+  const {
+    site: sharedSiteSanitized,
+    authors: sharedAuthors,
+    categories: sharedCategories,
+    socialMediaShares: sharedSocialShares,
+  } = extractMergeableThemeArrays(sharedSite)
   const { repo: _sharedYamlRepo, ...sharedThemeConfig } = extractThemeConfig(sharedSiteSanitized)
 
   const resolvedTheme = deepMerge(themeForTemplates, sharedThemeConfig)
@@ -266,6 +300,13 @@ export async function loadBlogLocale(
   const site = chain.site
   const { repo: _localeYamlRepo, ...localeThemeConfig } = extractThemeConfig(site)
   const mergedAuthorsList = mergeAuthorsById(sharedAuthors, chain.authors)
+
+  // Category registry in priority order (low→high):
+  // config.ts → shared site.yaml → locale _site.yaml chain + _categories.yaml
+  const mergedCategories = mergeCategoriesById(
+    mergeCategoriesById(configCategories, sharedCategories),
+    chain.categories
+  )
 
   // Merge socialMediaShares in priority order (low→high):
   // built-in locale → config.ts → shared site.yaml → locale _site.yaml
@@ -311,6 +352,23 @@ export async function loadBlogLocale(
       })
     : undefined
 
+  // `name` and `slug` are materialized here rather than left to default at
+  // read time, so every consumer — components, the language switcher, route
+  // params — sees the same fully-resolved entry.
+  const categories = mergedCategories.map((item) => {
+    const templatedCategory = resolveConfigTemplates(item, templateContext)
+    return {
+      ...templatedCategory,
+      name: templatedCategory.name || templatedCategory.id,
+      slug: templatedCategory.slug || templatedCategory.id,
+    }
+  })
+
+  // Published before the return so the synchronous readers in
+  // `makePreviewItem` / `transformPageMeta` resolve post frontmatter against
+  // the same registry the components see.
+  registerCategories(config.srcDir || '', localeIndex, categories)
+
   const {
     lang,
     label,
@@ -350,6 +408,7 @@ export async function loadBlogLocale(
         ...((extractThemeConfig(templatedSite).t || {}) as Record<string, unknown>),
       } as unknown as I18nTranslations,
       authors,
+      ...(categories.length > 0 ? { categories } : {}),
       ...(mergedSocialShares.length > 0
         ? {
             socialMediaShares: resolveConfigTemplates(

@@ -12,7 +12,7 @@ coverAlt: Разноцветные флаги разных стран
 translations:
   en: "/en/posts/i18n-hreflang"
 date: 2026-07-13
-category: { name: 'Мультиязычность', slug: 'i18n' }
+category: i18n
 tags: [i18n, seo]
 descriptionAsPreview: true
 ---

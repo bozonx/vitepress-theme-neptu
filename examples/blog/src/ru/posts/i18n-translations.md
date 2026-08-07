@@ -5,7 +5,7 @@ description: >
   фолбэк, форматирование по языку, RTL и доступ к переводам из кода.
 authorId: ivan-k
 date: 2026-08-05
-category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
+category: neptu-deep
 tags: [i18n, config]
 descriptionAsPreview: true
 ---

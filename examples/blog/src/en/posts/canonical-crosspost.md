@@ -10,7 +10,7 @@ authorId: maria-editor
 # another site. Check <head> for <link rel="canonical" href="https://example.com/…">.
 canonical: "https://example.com/en/articles/original-post"
 
-category: SEO
+category: seo
 tags:
   - seo
   - canonical

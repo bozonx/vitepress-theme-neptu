@@ -23,7 +23,7 @@ layout: page
 
 - [Возможности Markdown и кастомные блоки](../posts/markdown-syntax) — Полный справочник синтаксиса Markdown, спецконтейнеры (`::: tip`, `::: warning`), блоки кода, бейджи и медиа-компоненты
 - [Все поля frontmatter](../posts/full-featured) — все поля в одном месте
-- [Категории и теги](../posts/categories-and-tags) — Две таксономии, хлебные крошки
+- [Категории и теги](../posts/categories-and-tags) — `_categories.yaml`, ссылка по `id`, хлебные крошки
 - [Черновики, время чтения, видео-кнопка и подкасты](../posts/drafts-video-podcasts) — `draft: true`, оценка времени, `videoLink`, `podcasts`
 - [Домашняя страница](../posts/home-page) — Hero, секции, фоновое изображение, свой контент
 - [Авторы](../posts/authors) — `authorId`, `_authors.yaml`, карточка автора, `twitter:creator`

@@ -3,7 +3,7 @@ title: Уровни конфигурации, конфиг первого уро
 description: 'Три уровня конфигурации и системные поля: srcDir, base, siteUrl, primaryLocale, repo, head, vite, markdown, sitemap, хуки, Pagefind, GA4 и perPage. А так же шаблоны строк'
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Настройка', slug: 'configuration' }
+category: configuration
 tags: [config]
 descriptionAsPreview: true
 ---
@@ -31,6 +31,7 @@ descriptionAsPreview: true
 | Оформление и поведение, одинаковые для языков: бренд, sidebar, nav, footer, ленты, SEO, иконки, publisher | `src/site.yaml` |
 | Язык, заголовок, описание, переводы, подписи и намеренные отличия одного языка | `src/<locale>/_site.yaml` |
 | Профили авторов одной локали | `src/<locale>/_authors.yaml` |
+| Рубрики одной локали | `src/<locale>/_categories.yaml` |
 
 ## Уровень 1 — `.vitepress/config.ts`
 

@@ -5,11 +5,13 @@ import { parseLocaleSite, parseSharedSite } from '../../../../src/utils/node/i18
 // for the `extends` and `autoLoadLocales` scenarios.
 const siteMocks: Record<string, Record<string, unknown>> = {}
 const authorsMocks: Record<string, unknown[]> = {}
+const categoriesMocks: Record<string, unknown[]> = {}
 
 vi.mock('../../../../src/utils/node/i18n.ts', () => ({
   LOCALE_SITE_FILE: '_site.yaml',
   SHARED_SITE_FILE: 'site.yaml',
   LOCALE_AUTHORS_FILE: '_authors.yaml',
+  LOCALE_CATEGORIES_FILE: '_categories.yaml',
   parseLocaleSite: vi.fn(async (_srcDir: string, props: any) => {
     const mock = siteMocks[props.localeIndex]
     if (mock) return mock
@@ -28,6 +30,9 @@ vi.mock('../../../../src/utils/node/i18n.ts', () => ({
   parseSharedSite: vi.fn(async () => ({})),
   parseLocaleAuthors: vi.fn(async (_srcDir: string, props: any) => {
     return authorsMocks[props.localeIndex] ?? []
+  }),
+  parseLocaleCategories: vi.fn(async (_srcDir: string, props: any) => {
+    return categoriesMocks[props.localeIndex] ?? []
   }),
   resolveConfigTemplates: vi.fn((value: unknown) => value),
   hasLocaleSite: vi.fn(
@@ -69,6 +74,7 @@ import { loadBlogLocale, autoLoadLocales } from '../../../../src/utils/node/conf
 beforeEach(() => {
   for (const k of Object.keys(siteMocks)) delete siteMocks[k]
   for (const k of Object.keys(authorsMocks)) delete authorsMocks[k]
+  for (const k of Object.keys(categoriesMocks)) delete categoriesMocks[k]
   fsExistsMock = () => false
   fsReaddirMock = () => []
   vi.mocked(parseSharedSite).mockResolvedValue({})

@@ -5,7 +5,7 @@ description: >
   список популярных постов на основе реальных просмотров из Google Analytics 4.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Интеграция', slug: 'integration' }
+category: integration
 tags: [advanced, config, analytics]
 descriptionAsPreview: true
 ---

@@ -9,7 +9,7 @@ cover: https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Colorful flags of many countries
-category: SEO
+category: seo
 tags:
   - seo
   - i18n

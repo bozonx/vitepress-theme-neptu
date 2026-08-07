@@ -5,7 +5,7 @@ description: >
   reading-time estimate — including the matching JSON-LD properties.
 date: 2025-05-20T10:00:00Z
 authorId: ivan-k
-category: Writing
+category: writing
 tags:
   - guide
   - frontmatter

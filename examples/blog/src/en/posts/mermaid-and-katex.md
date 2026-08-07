@@ -3,7 +3,7 @@ title: Mermaid Diagrams and KaTeX Formulas
 description: Opt-in recipes for adding Mermaid and KaTeX to a Neptu blog without increasing every site's bundle.
 date: 2026-07-31
 authorId: ivan-k
-category: Writing
+category: writing
 tags: [guide, advanced]
 translations:
   ru: /ru/posts/mermaid-and-katex

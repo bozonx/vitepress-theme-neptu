@@ -21,9 +21,9 @@ podcasts:
 translations:
   en: /en/posts/full-featured
 date: 2026-07-29
-category: { name: 'Контент', slug: 'writing' }
+category: writing
 categories:
-  - { name: 'Контент', slug: 'writing' }
+  - writing
 tags: [frontmatter]
 descriptionAsPreview: true
 previewText: 'Кастомный текст превью для карточки списка постов.'
@@ -103,15 +103,16 @@ translations:
 # article:published_time в OG и datePublished в JSON-LD.
 date: 2026-07-29
 # category — синтаксический сахар для одной категории.
-# На этапе сборки объединяется с categories и удаляется.
-# Дубликаты по slug отбрасываются, так что category + categories с одним slug
+# Значение — это `id` записи из src/<локаль>/_categories.yaml; название и адрес
+# берутся оттуда. На этапе сборки поле объединяется с categories и удаляется.
+# Дубликаты по id отбрасываются, так что category + categories с одним id
 # не дадут двойной чип.
-category: { name: 'Контент', slug: 'writing' }
-# Список категорий. Каждая — строка или { name, slug }.
-# Если slug не указан — генерируется из name транслитерацией с учётом локали.
+category: writing
+# Список категорий — те же id. Нужен, только если пост относится к нескольким
+# рубрикам сразу; первая из них строит хлебные крошки.
 categories:
-  - { name: 'Контент', slug: 'writing' }
-# Теги. Аналогично категориям: строка или { name, slug }.
+  - writing
+# Теги реестра не требуют: строка или { name, slug } прямо здесь.
 # slug генерируется транслитерацией, если не указан явно.
 tags: [frontmatter]
 # Использовать description как текст превью в карточках списков постов.

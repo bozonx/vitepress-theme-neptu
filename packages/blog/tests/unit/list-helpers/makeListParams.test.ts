@@ -121,8 +121,8 @@ describe('makeTagsParams', () => {
     ]
     const result = makeTagsParams(posts, 10)
     expect(result).toHaveLength(2)
-    expect(result).toContainEqual({ params: { slug: 'foo', name: 'foo', page: 1 } })
-    expect(result).toContainEqual({ params: { slug: 'bar', name: 'bar', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'foo', name: 'foo', id: 'foo', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'bar', name: 'bar', id: 'bar', page: 1 } })
   })
 
   it('handles string tags', () => {
@@ -131,8 +131,8 @@ describe('makeTagsParams', () => {
       { date: '2023-01-02', tags: ['foo'] },
     ]
     const result = makeTagsParams(posts, 10)
-    expect(result).toContainEqual({ params: { slug: 'foo', name: 'foo', page: 1 } })
-    expect(result).toContainEqual({ params: { slug: 'bar', name: 'bar', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'foo', name: 'foo', id: 'foo', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'bar', name: 'bar', id: 'bar', page: 1 } })
   })
 
   it('skips posts without tags', () => {
@@ -157,8 +157,8 @@ describe('makeCategoriesParams', () => {
     ]
     const result = makeCategoriesParams(posts, 10)
     expect(result).toHaveLength(2)
-    expect(result).toContainEqual({ params: { slug: 'frontend', name: 'Frontend', page: 1 } })
-    expect(result).toContainEqual({ params: { slug: 'backend', name: 'Backend', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'frontend', name: 'Frontend', id: 'frontend', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'backend', name: 'Backend', id: 'backend', page: 1 } })
   })
 
   // The generated route must be reachable from the rendered chip, which links
@@ -169,7 +169,7 @@ describe('makeCategoriesParams', () => {
       10
     )
     expect(result).toEqual([
-      { params: { slug: 'web-development', name: 'Web Development', page: 1 } },
+      { params: { slug: 'web-development', name: 'Web Development', id: 'web-development', page: 1 } },
     ])
   })
 
@@ -184,7 +184,7 @@ describe('makeCategoriesParams', () => {
     const result = makeCategoriesParams(posts, 10)
     // Frontend is declared twice on one post but yields a single route.
     expect(result).toHaveLength(2)
-    expect(result).toContainEqual({ params: { slug: 'frontend', name: 'Frontend', page: 1 } })
+    expect(result).toContainEqual({ params: { slug: 'frontend', name: 'Frontend', id: 'frontend', page: 1 } })
   })
 
   it('paginates a category across several pages', () => {

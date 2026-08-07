@@ -6,7 +6,7 @@ description: >
   функции.
 authorId: ivan-k
 date: 2026-07-08
-category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
+category: neptu-deep
 tags: [advanced, components]
 descriptionAsPreview: true
 ---

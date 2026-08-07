@@ -3,7 +3,7 @@ title: Локали и мультиязычность
 description: Модель локалей темы — маршрутизация, именование локалей, добавление языка и переключение языка.
 authorId: ivan-k
 date: 2026-07-14
-category: { name: 'Мультиязычность', slug: 'i18n' }
+category: i18n
 tags: [i18n, config]
 descriptionAsPreview: true
 ---

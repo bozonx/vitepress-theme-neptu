@@ -5,7 +5,7 @@ authorId: ivan-k
 translations:
   en: /en/posts/mermaid-and-katex
 date: 2026-07-25
-category: { name: 'Продвинутое', slug: 'advanced' }
+category: advanced
 tags: [guide, advanced]
 descriptionAsPreview: true
 ---

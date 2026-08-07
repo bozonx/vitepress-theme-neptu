@@ -6,7 +6,7 @@ description: >
   из индекса и кастомная настройка.
 authorId: ivan-k
 date: 2026-07-11
-category: { name: 'Углубляемся в тему Neptu', slug: 'neptu-deep' }
+category: neptu-deep
 tags: [search, config]
 descriptionAsPreview: true
 ---

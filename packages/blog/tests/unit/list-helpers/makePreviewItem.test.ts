@@ -91,8 +91,8 @@ Body content`)
     const item = makePreviewItem('/tmp/site/src/en/posts/hello.md')
 
     expect(item.tags).toEqual([
-      { name: 'Vue', slug: 'vue' },
-      { name: 'Web Dev', slug: 'web-dev-custom' },
+      { id: 'vue', name: 'Vue', slug: 'vue' },
+      { id: 'web-dev-custom', name: 'Web Dev', slug: 'web-dev-custom' },
     ])
   })
 

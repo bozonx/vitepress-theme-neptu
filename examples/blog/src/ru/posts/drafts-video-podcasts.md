@@ -5,7 +5,7 @@ description: >
   видео и выпадающий список подкастов к статье.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Контент', slug: 'writing' }
+category: writing
 tags: [frontmatter, config]
 descriptionAsPreview: true
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ

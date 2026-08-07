@@ -11,7 +11,7 @@ jsonLd: |
 translations:
   en: /en/posts/json-ld
 date: 2026-07-10
-category: { name: 'SEO', slug: 'seo' }
+category: seo
 tags: [seo]
 descriptionAsPreview: true
 ---

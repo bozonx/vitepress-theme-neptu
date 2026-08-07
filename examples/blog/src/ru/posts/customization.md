@@ -6,7 +6,7 @@ description: >
   статьи, трансформ-хуки сборки, слоты макета и собственные макеты.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Продвинутое', slug: 'advanced' }
+category: advanced
 tags: [theme, config, advanced]
 descriptionAsPreview: true
 ---

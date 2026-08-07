@@ -5,7 +5,7 @@ description: >
   frontmatter field lets you extend or override the generated schema.
 date: 2024-12-05T14:00:00Z
 authorId: maria-editor
-category: SEO
+category: seo
 tags:
   - seo
   - json-ld

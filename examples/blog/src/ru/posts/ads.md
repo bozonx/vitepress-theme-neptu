@@ -4,7 +4,7 @@ description: >
   Подключение компонента, три места размещения и вставка внутрь текста на этапе сборки.
 authorId: ivan-k
 date: 2026-07-05
-category: { name: 'Интеграция', slug: 'integration' }
+category: integration
 tags: [advanced, config]
 descriptionAsPreview: true
 ---

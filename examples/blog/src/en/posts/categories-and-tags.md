@@ -5,7 +5,7 @@ description: >
   labels. How to declare them, where they show up, and what you can configure.
 date: 2025-05-06T10:00:00Z
 authorId: ivan-k
-category: Configuration
+category: configuration
 tags:
   - guide
   - config

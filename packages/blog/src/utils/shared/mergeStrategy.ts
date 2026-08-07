@@ -1,4 +1,4 @@
-import type { Author, SocialMediaShare } from '../../types.d.ts'
+import type { Author, CategoryDefinition, SocialMediaShare } from '../../types.d.ts'
 
 /**
  * Merges two arrays of objects by a shared key field.
@@ -69,6 +69,20 @@ export function mergeAuthorsById(
   parent: readonly Author[] | undefined,
   child: readonly Author[] | undefined
 ): Author[] {
+  return mergeByKey(parent, child, 'id')
+}
+
+/**
+ * Merges two category registries by `id`.
+ *
+ * Lets a locale that `extends` another override just the `name` (the usual
+ * case — same sections, translated labels) while inheriting the rest of the
+ * entry, and append sections of its own.
+ */
+export function mergeCategoriesById(
+  parent: readonly CategoryDefinition[] | undefined,
+  child: readonly CategoryDefinition[] | undefined
+): CategoryDefinition[] {
   return mergeByKey(parent, child, 'id')
 }
 

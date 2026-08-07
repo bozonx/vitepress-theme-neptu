@@ -3,7 +3,7 @@ title: Featured Posts and Printing
 description: Curated featured collections and the blog theme's print-friendly output.
 date: 2026-08-01
 authorId: ivan-k
-category: Configuration
+category: configuration
 tags: [guide, frontmatter]
 featured: true
 ---

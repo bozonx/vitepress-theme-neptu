@@ -11,7 +11,7 @@ coverHeight: 800
 coverAlt: Горный пейзаж на закате
 coverDescription: "Закат над горными вершинами. Фото [Jeremy Bishop](https://unsplash.com/@jeremybishop) на Unsplash."
 date: 2026-08-04
-category: { name: 'Медиа', slug: 'media' }
+category: media
 tags: [media, frontmatter, components]
 descriptionAsPreview: true
 ---

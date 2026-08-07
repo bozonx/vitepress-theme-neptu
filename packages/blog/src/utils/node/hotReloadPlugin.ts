@@ -29,6 +29,7 @@ interface Plugin {
  *   - <srcDir>/site.{yaml,ts}
  *   - <srcDir>/<locale>/_site.{yaml,ts}
  *   - <srcDir>/<locale>/_authors.{yaml,ts}
+ *   - <srcDir>/<locale>/_categories.{yaml,ts}
  *
  * A restart is required (rather than HMR) because these files feed into
  * the VitePress config itself, which is resolved once at server startup.
@@ -42,6 +43,8 @@ export function createSiteYamlHotReloadPlugin(srcDir: string): Plugin {
     '_site.ts',
     '_authors.yaml',
     '_authors.ts',
+    '_categories.yaml',
+    '_categories.ts',
   ])
 
   function shouldHandle(changedPath: string): boolean {
@@ -61,6 +64,8 @@ export function createSiteYamlHotReloadPlugin(srcDir: string): Plugin {
         path.join(absSrcDir, '**/_site.ts'),
         path.join(absSrcDir, '**/_authors.yaml'),
         path.join(absSrcDir, '**/_authors.ts'),
+        path.join(absSrcDir, '**/_categories.yaml'),
+        path.join(absSrcDir, '**/_categories.ts'),
       ])
 
       let restartTimer: ReturnType<typeof setTimeout> | null = null

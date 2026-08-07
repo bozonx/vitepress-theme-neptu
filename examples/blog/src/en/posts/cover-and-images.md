@@ -10,7 +10,7 @@ coverWidth: 1200
 coverHeight: 800
 coverAlt: Mountain landscape at sunset
 coverDescription: "A sunset over mountain peaks. Photo by [Jeremy Bishop](https://unsplash.com/@jeremybishop) on Unsplash."
-category: Media
+category: media
 tags:
   - frontmatter
   - cover

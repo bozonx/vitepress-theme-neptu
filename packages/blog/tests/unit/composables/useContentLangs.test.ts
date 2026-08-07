@@ -310,3 +310,63 @@ describe('useContentLangs', () => {
     ])
   })
 })
+
+describe('useContentLangs on category pages', () => {
+  // A category page is a dynamic route, so there is no per-locale source file
+  // to match on — the mapping goes through the shared category id instead.
+  function mockCategoryPage(options: {
+    ruSlug?: string
+    ruCategories?: Array<Record<string, unknown>>
+    relativePath?: string
+  } = {}) {
+    const { ruSlug = 'nastrojka', relativePath = 'en/categories/configuration/1.md' } = options
+
+    mockedUseData.mockReturnValue({
+      site: ref({
+        locales: {
+          en: { label: 'English' },
+          ru: {
+            label: 'Русский',
+            themeConfig: {
+              categories: options.ruCategories ?? [
+                { id: 'configuration', name: 'Настройка', slug: ruSlug },
+              ],
+            },
+          },
+        },
+        cleanUrls: true,
+        pages: [],
+      }),
+      localeIndex: ref('en'),
+      page: ref({ relativePath }),
+      theme: ref({ i18nRouting: true }),
+      hash: ref(''),
+      params: ref({ id: 'configuration', slug: 'configuration', page: 1 }),
+    })
+  }
+
+  it('maps a category page to the target locale slug', () => {
+    mockCategoryPage()
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([{ link: '/ru/categories/nastrojka/1' }])
+  })
+
+  it('keeps the trailing route segments', () => {
+    mockCategoryPage({ relativePath: 'en/categories/configuration/popular/2.md' })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toMatchObject([
+      { link: '/ru/categories/nastrojka/popular/2' },
+    ])
+  })
+
+  // Without a shared id there is no way to know where the page lives in the
+  // other locale, and the file-path fallback cannot match a dynamic route.
+  it('drops the link when the target locale does not declare the category', () => {
+    mockCategoryPage({ ruCategories: [{ id: 'writing', name: 'Контент' }] })
+    const { localeLinks } = useContentLangs({ correspondingLink: true })
+
+    expect(localeLinks.value).toEqual([])
+  })
+})

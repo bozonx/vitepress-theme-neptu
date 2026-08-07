@@ -102,20 +102,33 @@ export function makeYearMonthParams(
   })
 }
 
+export interface TaxonomyRouteParams {
+  slug: string
+  name: string
+  /**
+   * Language-independent key of the entry. For categories it is the `id` from
+   * `_categories.yaml`; the language switcher reads it off `params` to find
+   * the matching slug in another locale.
+   */
+  id: string
+  page: number
+}
+
 /**
  * Builds `[slug]/[page]` route params for a taxonomy (tags or categories).
  *
- * Entries go through the same normalizer the frontmatter does, so a raw string
- * (`category: Frontend`) yields the same slug the rendered links point at
- * (`frontend`) instead of a route no link can reach.
+ * Posts arriving from `loadPostsData` already carry normalized entries, so the
+ * category ids resolved against `_categories.yaml` reach the route params
+ * untouched. Raw frontmatter still goes through the normalizer, which keeps a
+ * hand-assembled post list from producing routes no link can reach.
  */
 export function makeTaxonomyParams(
   posts: PostWithDate[],
   kind: TaxonomyKind,
   perPage: number,
   lang?: string
-): Array<{ params: { slug: string; name: string; page: number } }> {
-  const counts: Record<string, { name: string; count: number }> = {}
+): Array<{ params: TaxonomyRouteParams }> {
+  const counts: Record<string, { name: string; id: string; count: number }> = {}
 
   for (const post of posts) {
     const raw =
@@ -133,21 +146,25 @@ export function makeTaxonomyParams(
       if (!item?.slug || !item.name) continue
 
       if (typeof counts[item.slug] === 'undefined') {
-        counts[item.slug] = { name: item.name, count: 1 }
+        counts[item.slug] = {
+          name: item.name,
+          id: (item.id as string) || item.slug,
+          count: 1,
+        }
       } else {
         counts[item.slug]!.count++
       }
     }
   }
 
-  const res: Array<{ params: { slug: string; name: string; page: number } }> = []
+  const res: Array<{ params: TaxonomyRouteParams }> = []
 
   const step = Math.max(1, perPage)
   for (const slug of Object.keys(counts)) {
-    const { name, count } = counts[slug]!
+    const { name, id, count } = counts[slug]!
 
     for (let i = 0; i < Math.ceil(count / step); i++) {
-      res.push({ params: { slug, name, page: i + 1 } })
+      res.push({ params: { slug, name, id, page: i + 1 } })
     }
   }
 
@@ -158,7 +175,7 @@ export function makeCategoriesParams(
   posts: PostWithDate[],
   perPage: number,
   lang?: string
-): Array<{ params: { slug: string; name: string; page: number } }> {
+): Array<{ params: TaxonomyRouteParams }> {
   return makeTaxonomyParams(posts, 'categories', perPage, lang)
 }
 
@@ -166,7 +183,7 @@ export function makeTagsParams(
   posts: PostWithDate[],
   perPage: number,
   lang?: string
-): Array<{ params: { slug: string; name: string; page: number } }> {
+): Array<{ params: TaxonomyRouteParams }> {
   return makeTaxonomyParams(posts, 'tags', perPage, lang)
 }
 

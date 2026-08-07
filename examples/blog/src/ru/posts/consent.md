@@ -5,7 +5,7 @@ description: >
   CMP, как тема выставляет Google Consent Mode v2 и как использовать useConsent().
 authorId: ivan-k
 date: 2026-07-04
-category: { name: 'Интеграция', slug: 'integration' }
+category: integration
 tags: [advanced, config]
 descriptionAsPreview: true
 ---

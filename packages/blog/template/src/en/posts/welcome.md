@@ -8,7 +8,7 @@ authorId: ivan
 # Included in the "featured" list and home section
 featured: true
 # Shorthand for a single-entry `categories:` list
-category: Blogging
+category: blogging
 tags:
   - Welcome
   - Getting Started

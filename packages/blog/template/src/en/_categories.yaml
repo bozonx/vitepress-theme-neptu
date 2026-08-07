@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://unpkg.com/vitepress-theme-neptu/schema/categories.schema.json
+
+# The category registry for this locale.
+#
+# Posts reference a category by `id` (`category: blogging` in the frontmatter);
+# everything the reader sees is defined here, once. Add a locale by copying this
+# file into `src/<locale>/` and translating the `name` fields — keep the ids.
+#
+# `slug` defaults to `id`. Set it only when you want a different URL; because a
+# shared id is what links the same category across locales, the language
+# switcher keeps working either way.
+
+- id: 'blogging'
+  name: 'Blogging'
+
+- id: 'guides'
+  name: 'Guides'

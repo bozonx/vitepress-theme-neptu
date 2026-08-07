@@ -41,8 +41,8 @@ describe('transformPageMeta', () => {
     const pageData = createPageData()
     transformPageMeta(pageData)
     expect(pageData.frontmatter.tags).toEqual([
-      { name: 'Foo', slug: 'foo' },
-      { name: 'Bar Baz', slug: 'bar-baz' },
+      { id: 'foo', name: 'Foo', slug: 'foo' },
+      { id: 'bar-baz', name: 'Bar Baz', slug: 'bar-baz' },
     ])
   })
 
@@ -54,7 +54,9 @@ describe('transformPageMeta', () => {
       },
     })
     transformPageMeta(pageData)
-    expect(pageData.frontmatter.tags).toEqual([{ name: 'Foo', slug: 'custom-slug' }])
+    expect(pageData.frontmatter.tags).toEqual([
+      { id: 'custom-slug', name: 'Foo', slug: 'custom-slug' },
+    ])
   })
 
   it('normalizes object tags without slug', () => {
@@ -66,7 +68,9 @@ describe('transformPageMeta', () => {
       },
     })
     transformPageMeta(pageData)
-    expect(pageData.frontmatter.tags).toEqual([{ name: 'Foo Bar', slug: 'foo-bar' }])
+    expect(pageData.frontmatter.tags).toEqual([
+      { id: 'foo-bar', name: 'Foo Bar', slug: 'foo-bar' },
+    ])
   })
 
   it('transforms coverDescription markdown to HTML', () => {

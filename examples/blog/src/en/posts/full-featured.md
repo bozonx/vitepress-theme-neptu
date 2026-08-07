@@ -15,7 +15,7 @@ coverDescription: "coverDescription supports **markdown** and [links](https://un
 
 # --- Taxonomy ------------------------------------------------------------
 # One category files the post in the hierarchy and drives the breadcrumbs.
-category: Writing
+category: writing
 tags:
   - frontmatter
   - guide

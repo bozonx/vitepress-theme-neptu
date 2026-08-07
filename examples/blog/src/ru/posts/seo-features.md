@@ -6,7 +6,7 @@ description: >
   robots.txt и sitemap.xml, канонические ссылки и кросспостинг.
 authorId: ivan-k
 date: 2026-07-12
-category: { name: 'SEO', slug: 'seo' }
+category: seo
 tags: [seo, config]
 descriptionAsPreview: true
 ---

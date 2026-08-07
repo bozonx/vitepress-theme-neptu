@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unpkg.com/vitepress-theme-neptu/schema/categories.schema.json",
+  "title": "Neptu blog category registry (_categories.yaml)",
+  "description": "Array of category definitions for one locale. Posts reference a category by `id` in the `category` / `categories` frontmatter fields. Extra fields are preserved and reach components through `frontmatter.categories[]`.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": true,
+    "required": ["id"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Stable, language-independent key. Referenced from post frontmatter, used to merge entries across config layers, and used by the language switcher to map a category page from one locale to another — so keep it identical in every locale."
+      },
+      "name": {
+        "type": "string",
+        "description": "Display name in this locale. Defaults to `id`."
+      },
+      "slug": {
+        "type": "string",
+        "description": "URL segment in this locale (`/<locale>/categories/<slug>/1`). Defaults to `id`; set it only when you want a locale-specific URL."
+      },
+      "description": {
+        "type": "string",
+        "description": "Free-form note about the category. Not rendered by the built-in components; available to your own via `frontmatter.categories[]`."
+      }
+    }
+  }
+}

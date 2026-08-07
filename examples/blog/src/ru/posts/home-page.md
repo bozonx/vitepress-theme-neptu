@@ -6,7 +6,7 @@ description: >
   текст — в _site.yaml.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Контент', slug: 'writing' }
+category: writing
 tags: [config]
 descriptionAsPreview: true
 ---

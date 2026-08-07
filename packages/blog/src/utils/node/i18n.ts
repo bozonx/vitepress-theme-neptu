@@ -7,6 +7,7 @@ import { importConfigModule } from './tsLoader.ts'
 import {
   SiteYamlSchema,
   AuthorsListSchema,
+  CategoriesListSchema,
   validateAndWarn,
 } from '../../configs/blogSchema.ts'
 
@@ -14,6 +15,8 @@ import {
 export const LOCALE_SITE_FILE = '_site.yaml'
 // YAML file (inside the locale folder) holding per-locale authors.
 export const LOCALE_AUTHORS_FILE = '_authors.yaml'
+// YAML file (inside the locale folder) holding the per-locale category registry.
+export const LOCALE_CATEGORIES_FILE = '_categories.yaml'
 // YAML file (in srcDir root) holding the cross-locale shared site config.
 export const SHARED_SITE_FILE = 'site.yaml'
 
@@ -21,6 +24,7 @@ export const SHARED_SITE_FILE = 'site.yaml'
 // in the same folder, the TS variant wins (it is an explicit opt-in).
 export const LOCALE_SITE_TS_FILE = '_site.ts'
 export const LOCALE_AUTHORS_TS_FILE = '_authors.ts'
+export const LOCALE_CATEGORIES_TS_FILE = '_categories.ts'
 export const SHARED_SITE_TS_FILE = 'site.ts'
 
 export interface ParseLocaleSiteProps {
@@ -135,6 +139,32 @@ export async function parseLocaleAuthors(
   if (value && typeof value === 'object' && Object.keys(value).length > 0) {
     console.warn(
       `[vitepress-theme-neptu] ${fileLabel}: expected an array of authors; ignoring.`
+    )
+  }
+  return []
+}
+
+// Reads <srcDir>/<localeIndex>/_categories.{ts,yaml}. Must be an array of
+// CategoryDefinition objects (each with an `id` field). Returns [] if no file
+// exists — a blog without a registry falls back to slugs derived from the
+// frontmatter value, which is how the theme behaved before the registry.
+export async function parseLocaleCategories(
+  srcDir: string,
+  props: ParseLocaleSiteProps
+): Promise<unknown[]> {
+  const dir = path.join(srcDir, props.localeIndex)
+  const { value, fileLabel } = await loadSiteFile(
+    path.join(dir, LOCALE_CATEGORIES_TS_FILE),
+    path.join(dir, LOCALE_CATEGORIES_FILE),
+    props as Record<string, unknown>
+  )
+  if (Array.isArray(value)) {
+    validateAndWarn(CategoriesListSchema, value, fileLabel)
+    return value
+  }
+  if (value && typeof value === 'object' && Object.keys(value).length > 0) {
+    console.warn(
+      `[vitepress-theme-neptu] ${fileLabel}: expected an array of categories; ignoring.`
     )
   }
   return []

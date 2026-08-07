@@ -5,7 +5,7 @@ description: >
   базовая разметка, спецконтейнеры (::: tip, ::: warning), блоки кода, бейджи и медиакомпоненты.
 authorId: ivan-k
 date: 2026-08-07
-category: { name: 'Контент', slug: 'writing' }
+category: writing
 tags: [markdown, guide, syntax]
 descriptionAsPreview: true
 ---

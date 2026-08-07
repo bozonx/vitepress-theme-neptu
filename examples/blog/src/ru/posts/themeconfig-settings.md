@@ -6,7 +6,7 @@ description: >
   параметры вынесены в отдельные статьи.
 authorId: ivan-k
 date: 2026-08-04
-category: { name: 'Настройка', slug: 'configuration' }
+category: configuration
 tags: [config]
 descriptionAsPreview: true
 ---

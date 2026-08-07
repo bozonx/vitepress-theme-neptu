@@ -13,6 +13,7 @@ import {
   resolveContentMediaPath,
 } from '../utils/shared/index.ts'
 import { getImageDimensions } from '../utils/node/image.ts'
+import { getCategoriesRegistry } from '../utils/node/categoriesRegistry.ts'
 import { measureMarkdown } from '../utils/node/readingTime.ts'
 import { isDraft } from '../utils/shared/publication.ts'
 import type { PostFrontmatter, Tag, TaxonomyEntry } from '../types.d.ts'
@@ -23,7 +24,10 @@ export interface PreviewItem {
   authorId: string | undefined
   title: string | undefined
   tags: Tag[]
-  /** Normalized `{ name, slug }` list — `category` sugar is folded in here. */
+  /**
+   * Normalized `{ id, name, slug }` list resolved against the locale's
+   * `_categories.yaml` — `category` sugar is folded in here.
+   */
   categories: TaxonomyEntry[]
   preview: string | undefined
   draft: boolean
@@ -92,7 +96,12 @@ export function makePreviewItem(
     title: fm.title,
     featured: fm.featured === true,
     tags: normalizeTags(fm.tags, lang) || [],
-    categories: normalizeCategories(fm.category, fm.categories, lang),
+    categories: normalizeCategories(
+      fm.category,
+      fm.categories,
+      lang,
+      getCategoriesRegistry(baseDir, lang)
+    ),
     preview,
     draft: isDraft(fm),
     wordCount,
