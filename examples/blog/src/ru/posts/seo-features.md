@@ -45,8 +45,7 @@ themeConfig:
     og: true
     jsonLd: true
     hreflang: true
-    canonical: true
-    autoCanonical: true       # авто-canonical по умолчанию
+    canonical: true           # self-canonical на каждой странице
     rss: true
     maxDescriptionLength: 300
   twitterSite: '@your_handle' # twitter:site на каждой странице
@@ -117,11 +116,11 @@ sitemap по своему папочному адресу.
 
 ### Поведение по умолчанию
 
-При `autoCanonical: true` (по умолчанию) каждая страница автоматически получает
+При `seo.canonical: true` (по умолчанию) каждая страница автоматически получает
 каноническую ссылку на саму себя, так что в большинстве случаев вам ничего делать
 не нужно.
 
-Если вы отключили `autoCanonical` глобально, но хотите, чтобы *эта* страница
+Если вы отключили `seo.canonical` глобально, но хотите, чтобы *эта* страница
 ссылалась на саму себя, то укажите значение `self`:
 
 ```yaml
@@ -155,11 +154,24 @@ seo:
 # src/site.yaml
 themeConfig:
   seo:
-    # Выключить саму функциональность канонических ссылок в блоге
+    # Не добавлять self-canonical автоматически. Страницы с явным полем
+    # `canonical` во frontmatter всё равно получат свою ссылку.
     canonical: false
-    # Автоматически добавлять каноническую ссылку на саму себя, если не указано иное
-    autoCanonical: true
 ```
+
+То же самое можно указать для отдельной локали в `<locale>/_site.yaml` —
+настройки резолвятся по цепочке frontmatter → локаль → сайт.
+
+### Как складываются уровни
+
+| `themeConfig.seo.canonical` | `seo.canonical` в frontmatter | поле `canonical` | результат |
+| --- | --- | --- | --- |
+| `true` (по умолчанию) | — | — | self |
+| `true` | — | `<url>` | `<url>` |
+| `true` | `false` | любое | ничего |
+| `false` | — | — | ничего |
+| `false` | — | `<url>` / `self` | `<url>` / self |
+| `false` | `true` | — | self |
 
 ## Дальше
 

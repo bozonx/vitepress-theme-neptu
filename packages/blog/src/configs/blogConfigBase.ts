@@ -4,6 +4,7 @@ import { createColocatedMediaPlugin } from '../utils/node/colocatedMedia.ts'
 import { createPostsDataPlugin } from '../utils/node/postsDataPlugin.ts'
 import type { UserConfig, SiteConfig } from 'vitepress'
 import { omitUndefined, hasNoIndex } from '../utils/shared/index.ts'
+import { isSeoEnabled } from '../utils/shared/seo.ts'
 import { deepMerge } from '../utils/shared/merge.ts'
 import {
   castToExtendedPageData,
@@ -138,7 +139,6 @@ const defaultBlogThemeConfig = {
 
   seo: {
     maxDescriptionLength: 300,
-    autoCanonical: true,
   },
 
   toc: {
@@ -458,21 +458,19 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       const extendedCtx = castToTransformHeadContext(ctx)
       const typedCtx = castToTransformContext(ctx)
 
-      const pageSeo = extendedCtx.pageData.frontmatter?.seo
-      const globalSeo = extendedCtx.siteConfig.userConfig?.themeConfig?.seo
-      const isSeoEnabled = (key: keyof SeoConfig): boolean => {
-        if (pageSeo?.[key] !== undefined) return pageSeo[key] !== false
-        if (globalSeo?.[key] !== undefined) return globalSeo[key] !== false
-        return true
-      }
+      const { pageData, siteConfig: extendedSiteConfig } = extendedCtx
+      const enabled = (key: keyof SeoConfig): boolean =>
+        isSeoEnabled(key, pageData, extendedSiteConfig)
 
-      const isNoIndex = hasNoIndex(extendedCtx.pageData.frontmatter?.head)
+      const isNoIndex = hasNoIndex(pageData.frontmatter?.head)
 
-      if (isSeoEnabled('og')) addOgMetaTags(extendedCtx)
-      if (!isNoIndex && isSeoEnabled('jsonLd')) addJsonLd(extendedCtx)
-      if (!isNoIndex && isSeoEnabled('hreflang')) addHreflang(extendedCtx)
-      if (!isNoIndex && isSeoEnabled('canonical')) addCanonicalLink(extendedCtx)
-      if (isSeoEnabled('rss')) addRssLinks(extendedCtx)
+      if (enabled('og')) addOgMetaTags(extendedCtx)
+      if (!isNoIndex && enabled('jsonLd')) addJsonLd(extendedCtx)
+      if (!isNoIndex && enabled('hreflang')) addHreflang(extendedCtx)
+      // Not gated: an explicit `canonical` frontmatter value is honoured even
+      // when the automatic self-canonical is disabled.
+      if (!isNoIndex) addCanonicalLink(extendedCtx)
+      if (enabled('rss')) addRssLinks(extendedCtx)
 
       return config.transformHead ? await config.transformHead(typedCtx) : undefined
     },

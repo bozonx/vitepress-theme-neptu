@@ -35,7 +35,7 @@ describe('addCanonicalLink', () => {
         : ({
             userConfig: {
               siteUrl: 'https://example.com',
-              themeConfig: { seo: { autoCanonical: true } },
+              themeConfig: { seo: { canonical: true } },
             },
             site: { locales: {} },
             ...(overrides.siteConfig || {}),
@@ -61,7 +61,7 @@ describe('addCanonicalLink', () => {
     expect(ctx.head).toEqual([])
   })
 
-  it('adds self-canonical automatically when autoCanonical is enabled and no frontmatter canonical', () => {
+  it('adds self-canonical automatically when seo.canonical is enabled and no frontmatter canonical', () => {
     const ctx = createContext()
     addCanonicalLink(ctx)
     expect(ctx.head).toEqual([
@@ -69,12 +69,12 @@ describe('addCanonicalLink', () => {
     ])
   })
 
-  it('does nothing without canonical frontmatter when autoCanonical is disabled', () => {
+  it('does nothing without canonical frontmatter when seo.canonical is disabled', () => {
     const ctx = createContext({
       siteConfig: {
         userConfig: {
           siteUrl: 'https://example.com',
-          themeConfig: { seo: { autoCanonical: false } },
+          themeConfig: { seo: { canonical: false } },
         },
         site: { locales: {} },
       } as any,
@@ -182,9 +182,9 @@ describe('addCanonicalLink', () => {
       siteConfig: {
         userConfig: {
           siteUrl: 'https://example.com',
-          themeConfig: { seo: { autoCanonical: false } },
+          themeConfig: { seo: { canonical: false } },
         },
-        site: { locales: { en: { themeConfig: { seo: { autoCanonical: true } } } } },
+        site: { locales: { en: { themeConfig: { seo: { canonical: true } } } } },
       } as any,
     })
     addCanonicalLink(ctx)
@@ -193,10 +193,50 @@ describe('addCanonicalLink', () => {
     ])
   })
 
-  it('does nothing when frontmatter.seo.canonical is false', () => {
+  it('keeps an explicit canonical URL when seo.canonical is disabled site-wide', () => {
+    const ctx = createContext({
+      pageData: { frontmatter: { canonical: 'https://other.com/page' } } as any,
+      siteConfig: {
+        userConfig: {
+          siteUrl: 'https://example.com',
+          themeConfig: { seo: { canonical: false } },
+        },
+        site: { locales: {} },
+      } as any,
+    })
+    addCanonicalLink(ctx)
+    expect(ctx.head).toEqual([
+      ['link', { rel: 'canonical', href: 'https://other.com/page' }],
+    ])
+  })
+
+  it('auto-canonical respects frontmatter.seo.canonical over locale themeConfig', () => {
     const ctx = createContext({
       pageData: {
-        frontmatter: { canonical: 'self', seo: { canonical: false } },
+        filePath: 'en/posts/hello.md',
+        frontmatter: { seo: { canonical: true } },
+      } as any,
+      siteConfig: {
+        userConfig: {
+          siteUrl: 'https://example.com',
+          themeConfig: { seo: { canonical: false } },
+        },
+        site: { locales: { en: { themeConfig: { seo: { canonical: false } } } } },
+      } as any,
+    })
+    addCanonicalLink(ctx)
+    expect(ctx.head).toEqual([
+      ['link', { rel: 'canonical', href: 'https://example.com/en/posts/hello' }],
+    ])
+  })
+
+  it('does nothing when frontmatter.seo.canonical is false, even with an explicit URL', () => {
+    const ctx = createContext({
+      pageData: {
+        frontmatter: {
+          canonical: 'https://other.com/page',
+          seo: { canonical: false },
+        },
       } as any,
     })
     addCanonicalLink(ctx)

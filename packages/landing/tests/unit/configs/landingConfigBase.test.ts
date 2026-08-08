@@ -31,6 +31,7 @@ vi.mock('vitepress-theme-neptu/utils', () => ({
   omitUndefined: (obj: Record<string, unknown>) =>
     Object.fromEntries(Object.entries(obj).filter(([, v]) => v !== undefined)),
   hasNoIndex: vi.fn(() => false),
+  isSeoEnabled: vi.fn(() => true),
   deepMerge: vi.fn(
     (a: Record<string, unknown>, b: Record<string, unknown>) => ({ ...a, ...b })
   ),
@@ -218,10 +219,10 @@ describe('mergeLandingConfig', () => {
 
   it('deep merges themeConfig.seo', () => {
     const result = mergeLandingConfig({
-      themeConfig: { seo: { maxDescriptionLength: 200 } },
+      themeConfig: { seo: { canonical: false } },
     })
-    expect(result.themeConfig.seo.maxDescriptionLength).toBe(200)
-    expect(result.themeConfig.seo.autoCanonical).toBe(true)
+    expect(result.themeConfig.seo.canonical).toBe(false)
+    expect(result.themeConfig.seo.maxDescriptionLength).toBe(300)
   })
 
   it('provides default t from built-in EN locale when t is not specified', () => {

@@ -380,13 +380,6 @@ describe('addOgMetaTags', () => {
     ])
   })
 
-  it('does nothing when frontmatter.seo.og is false', () => {
-    const ctx = createContext()
-    ctx.pageData.frontmatter.seo = { og: false }
-    addOgMetaTags(ctx)
-    expect(ctx.head).toEqual([])
-  })
-
   it('surfaces description via og/twitter but not a bare meta description', () => {
     const ctx = createContext()
     addOgMetaTags(ctx)

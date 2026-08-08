@@ -37,8 +37,6 @@ export function addOgMetaTags({
   pageData,
   siteConfig,
 }: AddOgMetaTagsContext): void {
-  if (pageData.frontmatter?.seo?.og === false) return
-
   const siteUrl = resolveEffectiveSiteUrl(
     siteConfig.userConfig.siteUrl,
     siteConfig.site.base

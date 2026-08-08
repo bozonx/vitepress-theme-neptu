@@ -25,7 +25,6 @@ seo:
   jsonLd: true
   hreflang: true
   canonical: true
-  autoCanonical: true
   rss: true
   maxDescriptionLength: 160
 # draft: true
@@ -198,8 +197,9 @@ editLink: false
 # Если не указать — переключатель языка пытается найти перевод то томуже имени файла и полному пути.
 translations:
   en: /en/posts/frontmatter
-# Канонический URL. Принимает полный URL или 'self' для авто-каноникала.
-# Если не указан и seo.autoCanonical !== false — генерируется self-каноникал.
+# Канонический URL. Принимает полный URL (кросспостинг) или 'self', чтобы
+# принудительно поставить self-каноникал там, где seo.canonical выключен.
+# Если не указан и seo.canonical !== false — генерируется self-каноникал.
 canonical: https://example.com/canonical-url
 # Управление SEO. Каждый ключ отключает соответствующую фичу,
 # если установлен в false. По умолчанию всё включено.
@@ -208,8 +208,7 @@ seo:
   og: true                   # Open Graph + Twitter Card мета-теги.
   jsonLd: true               # JSON-LD структурированные данные.
   hreflang: true             # hreflang link-теги (только если >1 локали).
-  canonical: true            # canonical link-тег.
-  autoCanonical: true        # авто-каноникал, если поле canonical не задано.
+  canonical: true            # self-каноникал, если поле canonical не задано.
   rss: true                  # RSS/Atom/JSON feed link-теги на главной.
   maxDescriptionLength: 300  # лимит символов для авто-экстракта description. По умолчанию: 300
 # Кастомный JSON-LD.
@@ -302,11 +301,6 @@ layout: home
 Из общих полей frontmatter на главной имеют смысл только `title`,
 `description`, `translations`, `canonical`, `seo` и `draft`. Все остальные поля игнорируются
 
-## Дальше по темам
+---
 
-Каждое поле разбирается отдельно в тематических постах раздела «Контент»:
-[обложки и медиа](covers-images-media),
-[авторы](authors),
-[карточки постов](lists-and-pages#карточки-постов-в-списках) и [настройки themeConfig](themeconfig-settings).
-Поля `draft` и `readingTime` разбираются в
-[Черновиках, времени чтения, видео и подкастах](drafts-video-podcasts).
+Далее [Категории и теги](categories-and-tags)

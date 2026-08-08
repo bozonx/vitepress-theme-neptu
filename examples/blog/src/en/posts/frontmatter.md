@@ -39,7 +39,6 @@ seo:
   jsonLd: true
   hreflang: true
   canonical: true
-  autoCanonical: true
   rss: true
   maxDescriptionLength: 160
 # draft: true
@@ -195,8 +194,9 @@ editLink: false
 # If not specified — the switcher tries to find the same path in another locale.
 translations:
   en: /en/posts/frontmatter
-# Canonical URL. Accepts a full URL or 'self' for auto-canonical.
-# If not specified and seo.autoCanonical !== false — a self-canonical is generated.
+# Canonical URL. Accepts a full URL (cross-posting) or 'self' to force a
+# self-canonical where seo.canonical is disabled.
+# If not specified and seo.canonical !== false — a self-canonical is generated.
 canonical: https://example.com/canonical-url
 # Per-feature SEO control. Each key disables the corresponding feature
 # when set to false. Everything is enabled by default.
@@ -205,8 +205,7 @@ seo:
   og: true              # Open Graph + Twitter Card meta tags.
   jsonLd: true          # JSON-LD structured data.
   hreflang: true        # hreflang link tags (only if >1 locale).
-  canonical: true       # canonical link tag.
-  autoCanonical: true   # auto-canonical if the canonical field is not set.
+  canonical: true       # self-canonical link tag when the canonical field is not set.
   rss: true             # RSS/Atom/JSON feed link tags on the home page.
   maxDescriptionLength: 160  # character limit for auto-extracted description. Default: 300
 # Custom JSON-LD. A YAML object — deep-merged with the auto-generated schema

@@ -2,7 +2,7 @@ import type {
   UserConfig,
   SiteConfig,
 } from 'vitepress'
-import { omitUndefined, hasNoIndex } from 'vitepress-theme-neptu/utils'
+import { omitUndefined, hasNoIndex, isSeoEnabled } from 'vitepress-theme-neptu/utils'
 import { deepMerge } from 'vitepress-theme-neptu/utils'
 import { resolveBaseLocaleKey } from 'vitepress-theme-neptu/utils'
 import {
@@ -71,7 +71,6 @@ const defaultLandingThemeConfig = {
   stylePicker: false,
   seo: {
     maxDescriptionLength: 300,
-    autoCanonical: true,
   },
 
   // The right-hand column and its outline come from the VitePress default
@@ -320,21 +319,19 @@ export function mergeLandingConfig(
       const extendedCtx = castToTransformHeadContext(ctx)
       const typedCtx = castToTransformContext(ctx)
 
-      const pageSeo = extendedCtx.pageData.frontmatter?.seo
-      const globalSeo = extendedCtx.siteConfig.userConfig?.themeConfig?.seo
-      const isSeoEnabled = (key: keyof SeoConfig): boolean => {
-        if (pageSeo?.[key] !== undefined) return pageSeo[key] !== false
-        if (globalSeo?.[key] !== undefined) return globalSeo[key] !== false
-        return true
-      }
+      const { pageData, siteConfig: extendedSiteConfig } = extendedCtx
+      const enabled = (key: keyof SeoConfig): boolean =>
+        isSeoEnabled(key, pageData, extendedSiteConfig)
 
-      const isNoIndex = hasNoIndex(extendedCtx.pageData.frontmatter?.head)
+      const isNoIndex = hasNoIndex(pageData.frontmatter?.head)
 
       addDescriptionMetaTag(extendedCtx)
-      if (isSeoEnabled('og')) addOgMetaTags(extendedCtx)
-      if (!isNoIndex && isSeoEnabled('jsonLd')) addJsonLd(extendedCtx)
-      if (!isNoIndex && isSeoEnabled('hreflang')) addHreflang(extendedCtx)
-      if (!isNoIndex && isSeoEnabled('canonical')) addCanonicalLink(extendedCtx)
+      if (enabled('og')) addOgMetaTags(extendedCtx)
+      if (!isNoIndex && enabled('jsonLd')) addJsonLd(extendedCtx)
+      if (!isNoIndex && enabled('hreflang')) addHreflang(extendedCtx)
+      // Not gated: an explicit `canonical` frontmatter value is honoured even
+      // when the automatic self-canonical is disabled.
+      if (!isNoIndex) addCanonicalLink(extendedCtx)
 
       return config.transformHead
         ? await config.transformHead(typedCtx)

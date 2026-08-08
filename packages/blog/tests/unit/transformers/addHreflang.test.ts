@@ -233,17 +233,6 @@ describe('addHreflang', () => {
     ])
   })
 
-  it('does nothing when frontmatter.seo.hreflang is false', () => {
-    const ctx = createContext({
-      pageData: {
-        relativePath: 'en/posts/hello.md',
-        frontmatter: { seo: { hreflang: false } },
-      } as any,
-    })
-    addHreflang(ctx)
-    expect(ctx.head).toEqual([])
-  })
-
   it('uses primaryLocale for x-default when set', () => {
     const ctx = createContext({
       pageData: { relativePath: 'en/posts/hello.md' } as any,

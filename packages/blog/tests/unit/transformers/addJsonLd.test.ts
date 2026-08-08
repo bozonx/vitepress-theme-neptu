@@ -785,15 +785,4 @@ describe('addJsonLd', () => {
     expect(json['@type']).toBe('CustomType')
     expect(json.custom).toBe(true)
   })
-
-  it('does nothing when frontmatter.seo.jsonLd is false', () => {
-    vi.mocked(sharedUtils.isPost).mockReturnValue(true)
-    vi.mocked(sharedUtils.isAuthorPath).mockReturnValue(false)
-    vi.mocked(sharedUtils.isPage).mockReturnValue(false)
-
-    const ctx = createContext()
-    ctx.pageData.frontmatter.seo = { jsonLd: false }
-    addJsonLd(ctx)
-    expect(ctx.head).toEqual([])
-  })
 })

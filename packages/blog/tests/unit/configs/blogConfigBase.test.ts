@@ -5,6 +5,11 @@ import {
   defineBlogConfigSync,
 } from '../../../src/configs/blogConfigBase.ts'
 import { autoLoadLocales } from '../../../src/utils/node/config.ts'
+import { addOgMetaTags } from '../../../src/transformers/addOgMetaTags.ts'
+import { addJsonLd } from '../../../src/transformers/addJsonLd.ts'
+import { addHreflang } from '../../../src/transformers/addHreflang.ts'
+import { addCanonicalLink } from '../../../src/transformers/addCanonicalLink.ts'
+import { addRssLinks } from '../../../src/transformers/addRssLinks.ts'
 
 vi.mock('../../../src/utils/node/config.ts', () => ({
   autoLoadLocales: vi.fn(async () => ({ en: { lang: 'en-US' } })),
@@ -324,64 +329,75 @@ describe('mergeBlogConfig', () => {
     expect(customFn).toHaveBeenCalledWith(cfg)
   })
 
+  const createHeadCtx = (
+    frontmatter: Record<string, unknown> = {},
+    themeConfig: Record<string, unknown> = {},
+    locales: Record<string, unknown> = { en: {} }
+  ) => ({
+    head: [] as unknown[],
+    pageData: { frontmatter, filePath: 'en/index.md', relativePath: 'en/index.md' },
+    siteConfig: {
+      userConfig: { siteUrl: 'https://example.com', themeConfig },
+      site: { locales },
+    },
+    page: 'en/index.md',
+  })
+
   it('transformHead calls all SEO transformers by default', async () => {
-    const {
-      addOgMetaTags,
-      addJsonLd,
-      addHreflang,
-      addCanonicalLink,
-      addRssLinks,
-    } = await import('../../../src/transformers/addOgMetaTags.ts').then(() => ({
-      addOgMetaTags: vi.fn(),
-      addJsonLd: vi.fn(),
-      addHreflang: vi.fn(),
-      addCanonicalLink: vi.fn(),
-      addRssLinks: vi.fn(),
-    }))
+    vi.clearAllMocks()
     const result = mergeBlogConfig({})
-    const ctx = {
-      head: [],
-      pageData: { frontmatter: {} },
-      siteConfig: { userConfig: { themeConfig: {} }, site: { locales: {} } },
-      page: 'en/index.md',
-    }
-    await (result.transformHead as any)(ctx)
-    expect(addOgMetaTags).not.toHaveBeenCalled()
-    expect(addJsonLd).not.toHaveBeenCalled()
-    expect(addHreflang).not.toHaveBeenCalled()
-    expect(addCanonicalLink).not.toHaveBeenCalled()
-    expect(addRssLinks).not.toHaveBeenCalled()
+    await (result.transformHead as any)(createHeadCtx())
+    expect(addOgMetaTags).toHaveBeenCalled()
+    expect(addJsonLd).toHaveBeenCalled()
+    expect(addHreflang).toHaveBeenCalled()
+    expect(addCanonicalLink).toHaveBeenCalled()
+    expect(addRssLinks).toHaveBeenCalled()
   })
 
   it('transformHead respects frontmatter.seo to disable transformers', async () => {
+    vi.clearAllMocks()
     const result = mergeBlogConfig({})
-    const ctx = {
-      head: [],
-      pageData: { frontmatter: { seo: { og: false, jsonLd: false } } },
-      siteConfig: { userConfig: { themeConfig: {} }, site: { locales: {} } },
-      page: 'en/index.md',
-    }
-    await (result.transformHead as any)(ctx)
+    await (result.transformHead as any)(
+      createHeadCtx({ seo: { og: false, jsonLd: false } })
+    )
+    expect(addOgMetaTags).not.toHaveBeenCalled()
+    expect(addJsonLd).not.toHaveBeenCalled()
+    expect(addHreflang).toHaveBeenCalled()
   })
 
   it('transformHead respects global themeConfig.seo to disable transformers', async () => {
+    vi.clearAllMocks()
     const result = mergeBlogConfig({
-      themeConfig: { seo: { hreflang: false, canonical: false, rss: false } },
+      themeConfig: { seo: { hreflang: false, rss: false } },
     })
-    const ctx = {
-      head: [],
-      pageData: { frontmatter: {} },
-      siteConfig: {
-        userConfig: {
-          themeConfig: {
-            seo: { hreflang: false, canonical: false, rss: false },
-          },
-        },
-        site: { locales: {} },
-      },
-      page: 'en/index.md',
-    }
-    await (result.transformHead as any)(ctx)
+    await (result.transformHead as any)(
+      createHeadCtx({}, { seo: { hreflang: false, rss: false } })
+    )
+    expect(addHreflang).not.toHaveBeenCalled()
+    expect(addRssLinks).not.toHaveBeenCalled()
+    expect(addOgMetaTags).toHaveBeenCalled()
+  })
+
+  it('transformHead respects per-locale themeConfig.seo over the root one', async () => {
+    vi.clearAllMocks()
+    const result = mergeBlogConfig({})
+    await (result.transformHead as any)(
+      createHeadCtx({}, { seo: { hreflang: true } }, {
+        en: { themeConfig: { seo: { hreflang: false } } },
+      })
+    )
+    expect(addHreflang).not.toHaveBeenCalled()
+  })
+
+  it('transformHead always runs addCanonicalLink so explicit frontmatter canonical survives', async () => {
+    vi.clearAllMocks()
+    const result = mergeBlogConfig({})
+    await (result.transformHead as any)(
+      createHeadCtx({ canonical: 'https://other.com/original' }, {
+        seo: { canonical: false },
+      })
+    )
+    expect(addCanonicalLink).toHaveBeenCalled()
   })
 })
 

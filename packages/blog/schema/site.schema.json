@@ -412,12 +412,6 @@
             "canonical": {
               "type": "boolean"
             },
-            "autoCanonical": {
-              "type": "boolean"
-            },
-            "rssLinks": {
-              "type": "boolean"
-            },
             "rss": {
               "type": "boolean"
             },

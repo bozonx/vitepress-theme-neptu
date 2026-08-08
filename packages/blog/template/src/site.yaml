@@ -372,10 +372,9 @@ themeConfig:
   #   jsonLd: true
   #   # Generate hreflang alternate-language link tags.
   #   hreflang: true
-  #   # Generate canonical link tags.
+  #   # Add a self-referencing canonical link to every page. Turn it off to
+  #   # emit canonical links only on pages that set `canonical` in frontmatter.
   #   canonical: true
-  #   # Auto-generate canonical URLs from the page path.
-  #   autoCanonical: true
   #   # Add RSS/Atom feed <link> tags to <head>.
   #   rss: true
   #   # Maximum description length for meta tags (truncated if exceeded).

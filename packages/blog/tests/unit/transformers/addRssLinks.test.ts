@@ -148,16 +148,4 @@ describe('addRssLinks', () => {
       '[addRssLinks] siteUrl is not configured. RSS links were not added.'
     )
   })
-
-  it('does nothing when frontmatter.seo.rssLinks is false', () => {
-    const ctx = createContext({
-      pageData: {
-        filePath: 'en/index.md',
-        frontmatter: { layout: 'home', seo: { rssLinks: false } },
-        relativePath: 'en/index.md',
-      } as any,
-    })
-    addRssLinks(ctx)
-    expect(ctx.head).toEqual([])
-  })
 })

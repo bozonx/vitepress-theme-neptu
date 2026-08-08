@@ -22,8 +22,6 @@ export function addRssLinks({
   pageData,
   siteConfig,
 }: AddRssLinksContext): void {
-  if (pageData.frontmatter?.seo?.rssLinks === false) return
-
   if (!isHomePage(pageData.frontmatter)) return
 
   const rawSiteUrl = siteConfig.userConfig.siteUrl

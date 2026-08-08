@@ -562,14 +562,30 @@ export namespace NeptuBlogTheme {
     retryDelayMs?: number
   }
 
+  /**
+   * SEO switches. The same keys are accepted in `themeConfig.seo` (site-wide),
+   * in a locale's `themeConfig.seo` (`_site.yaml`) and in a page's
+   * `frontmatter.seo`, with the same meaning everywhere. The first layer that
+   * defines a key wins: page → locale → site. Every feature is enabled unless
+   * a layer sets it to `false`.
+   */
   export interface SeoConfig {
+    /** Open Graph and Twitter card meta tags. */
     og?: boolean
+    /** `BlogPosting` / `WebSite` JSON-LD. */
     jsonLd?: boolean
+    /** `<link rel="alternate" hreflang>` for translated pages. */
     hreflang?: boolean
+    /**
+     * Emit `<link rel="canonical">`. When enabled, a page without an explicit
+     * `canonical` frontmatter value gets a self-canonical automatically; a page
+     * with one gets that URL. When disabled, only pages with an explicit
+     * `canonical` frontmatter value get a canonical link.
+     */
     canonical?: boolean
-    autoCanonical?: boolean
-    rssLinks?: boolean
+    /** `<link rel="alternate" type="application/rss+xml">` feed links. */
     rss?: boolean
+    /** Max length of an auto-generated page description, in characters. */
     maxDescriptionLength?: number
   }
 
@@ -971,6 +987,13 @@ export namespace NeptuBlogTheme {
     videoLinkLang?: string
     /** URL of the discussion/comments thread rendered in the post footer. */
     commentLink?: string
+    /**
+     * Explicit canonical URL for this page: an absolute URL (cross-posting —
+     * point at the original publication) or `'self'` to force a self-canonical
+     * on a site where `seo.canonical` is disabled. Omit it to get the
+     * automatic self-canonical. To emit no canonical at all, set
+     * `seo.canonical: false`.
+     */
     canonical?: string
     seo?: SeoConfig
     translations?: Record<string, string>

@@ -413,8 +413,6 @@ export function addJsonLd({
     return
   }
 
-  if (pageData.frontmatter?.seo?.jsonLd === false) return
-
   // Skip noindex pages (e.g. drafts) so JSON-LD is never emitted for them,
   // even when this transformer is called outside the default transformHead
   // pipeline.

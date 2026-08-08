@@ -78,8 +78,6 @@ const SeoSchema = z.looseObject({
   jsonLd: z.boolean().optional(),
   hreflang: z.boolean().optional(),
   canonical: z.boolean().optional(),
-  autoCanonical: z.boolean().optional(),
-  rssLinks: z.boolean().optional(),
   rss: z.boolean().optional(),
   maxDescriptionLength: z.number().int().min(0).optional(),
 })

@@ -5,12 +5,9 @@ import {
   resolveEffectiveSiteUrl,
 } from '../utils/shared/index.ts'
 import { hasNoIndex } from '../utils/shared/head.ts'
+import { resolveSeoSetting } from '../utils/shared/seo.ts'
 
-import type {
-  ExtendedPageData,
-  ExtendedSiteConfig,
-  ThemeConfig,
-} from '../types.d.ts'
+import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
 
 export interface AddCanonicalLinkContext {
   page: string
@@ -52,42 +49,44 @@ function resolveCanonicalUrl(
   return null
 }
 
-/** Adds a canonical link to the page head. */
+/**
+ * Adds a canonical link to the page head.
+ *
+ * `seo.canonical: false` in the page's own frontmatter emits nothing at all.
+ * Otherwise an explicit `canonical` frontmatter value (an absolute URL or
+ * `'self'`) is always honoured, and a page without one gets a self-canonical
+ * unless `seo.canonical` is disabled for its locale or the site.
+ */
 export function addCanonicalLink({
   page,
   head,
   pageData,
   siteConfig,
 }: AddCanonicalLinkContext): void {
-  if (pageData?.frontmatter?.seo?.canonical === false) return
-
   if (!page || page.indexOf('/') < 0) {
     return
   }
 
   if (!pageData?.frontmatter) return
 
+  // A page opting out beats everything, including its own explicit URL.
+  if (pageData.frontmatter.seo?.canonical === false) return
+
   // Skip noindex pages (e.g. drafts) so canonical is never emitted for them,
   // even when this transformer is called outside the default transformHead
   // pipeline.
   if (hasNoIndex(pageData.frontmatter?.head)) return
 
-  const canonicalValue = pageData.frontmatter.canonical
-
   try {
-    const localeIndex = pageData.filePath.split('/')[0]!
-    const langConfig = siteConfig.site.locales[localeIndex]
-    const localeThemeConfig = langConfig?.themeConfig as ThemeConfig | undefined
-    const autoCanonical =
-      localeThemeConfig?.seo?.autoCanonical ??
-      siteConfig.userConfig.themeConfig?.seo?.autoCanonical ??
-      true
+    const canonicalValue = pageData.frontmatter.canonical
+    const autoEnabled =
+      resolveSeoSetting('canonical', pageData, siteConfig) !== false
 
     let canonicalUrl: string | null = null
 
     if (canonicalValue) {
       canonicalUrl = resolveCanonicalUrl(canonicalValue, page, siteConfig)
-    } else if (autoCanonical) {
+    } else if (autoEnabled) {
       canonicalUrl = resolveCanonicalUrl('self', page, siteConfig)
     }
 

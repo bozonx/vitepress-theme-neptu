@@ -60,7 +60,22 @@ Each post page includes `BlogPosting` structured data. See [JSON-LD microdata](s
 
 ### Canonical links
 
-Each page includes a `<link rel="canonical">` tag. By default, a self-canonical is generated. Override with the `canonical` frontmatter field.
+Each page includes a `<link rel="canonical">` tag. By default, a self-canonical is
+generated. Set the `canonical` frontmatter field to point at an original
+publication (cross-posting), or to `'self'` to force a self-canonical where
+`seo.canonical` is disabled.
+
+| `themeConfig.seo.canonical` | frontmatter `seo.canonical` | frontmatter `canonical` | result |
+| --- | --- | --- | --- |
+| `true` (default) | — | — | self |
+| `true` | — | `<url>` | `<url>` |
+| `true` | `false` | anything | nothing |
+| `false` | — | — | nothing |
+| `false` | — | `<url>` / `self` | `<url>` / self |
+| `false` | `true` | — | self |
+
+Every `seo.*` key resolves through the same layers: page frontmatter → locale
+`_site.yaml` → site `site.yaml`.
 
 ### hreflang
 
@@ -81,7 +96,6 @@ themeConfig:
     jsonLd: false
     hreflang: false
     canonical: false
-    autoCanonical: false
 ```
 
 ### Per page

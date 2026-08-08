@@ -28,8 +28,6 @@ export function addHreflang({
   pageData,
   siteConfig,
 }: AddHreflangContext): void {
-  if (pageData?.frontmatter?.seo?.hreflang === false) return
-
   // Skip noindex pages (e.g. drafts) so hreflang is never emitted for them,
   // even when this transformer is called outside the default transformHead
   // pipeline.

@@ -30,11 +30,10 @@ describe('addRssLinks integration', () => {
     },
   })
 
-  const createHomePageData = (rssEnabled = true): ExtendedPageData =>
+  const createHomePageData = (): ExtendedPageData =>
     ({
       frontmatter: {
         layout: 'home',
-        seo: { rssLinks: rssEnabled },
       },
       filePath: 'ru/index.md',
     }) as any
@@ -89,21 +88,6 @@ describe('addRssLinks integration', () => {
         hreflang: 'en-US',
       },
     ])
-  })
-
-  it('respects rssLinks=false in page frontmatter and skips adding links', () => {
-    const head: HeadConfig[] = []
-    const pageData = createHomePageData(false)
-    const siteConfig = createMockSiteConfig()
-
-    addRssLinks({
-      page: 'ru/index.html',
-      head,
-      pageData,
-      siteConfig,
-    })
-
-    expect(head).toHaveLength(0)
   })
 
   it('skips adding links for non-home pages', () => {

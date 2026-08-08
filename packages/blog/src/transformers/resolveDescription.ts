@@ -3,6 +3,7 @@ import path from 'node:path'
 
 import { DEFAULT_ENCODING } from '../constants.ts'
 import { isPost, isPage } from '../utils/shared/index.ts'
+import { resolveSeoSetting } from '../utils/shared/seo.ts'
 import { extractDescriptionFromMd } from '../utils/node/index.ts'
 import type { ExtendedPageData, ExtendedSiteConfig } from '../types.d.ts'
 
@@ -31,20 +32,13 @@ export function resolveDescription(
 
     const rawContent = readFile(path.join(siteConfig.srcDir, pageData.filePath))
 
-    const localeIndex = pageData.filePath.split('/')[0]
-    const localeTheme = localeIndex
-      ? siteConfig.site?.locales?.[localeIndex]?.themeConfig
-      : undefined
-    const configuredMaxLength = Number(localeTheme?.seo?.maxDescriptionLength)
-    const fallbackMaxLength = Number(
-      siteConfig.userConfig.themeConfig?.seo?.maxDescriptionLength
+    const configuredMaxLength = Number(
+      resolveSeoSetting('maxDescriptionLength', pageData, siteConfig)
     )
     const maxDescriptionLength =
       Number.isFinite(configuredMaxLength) && configuredMaxLength >= 0
         ? configuredMaxLength
-        : Number.isFinite(fallbackMaxLength) && fallbackMaxLength >= 0
-          ? fallbackMaxLength
-          : 300
+        : 300
 
     pageData.description = extractDescriptionFromMd(
       rawContent,
