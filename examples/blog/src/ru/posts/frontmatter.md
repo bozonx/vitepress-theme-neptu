@@ -197,7 +197,7 @@ editLink: false
 # Если не указать — переключатель языка пытается найти перевод то томуже имени файла и полному пути.
 translations:
   en: /en/posts/frontmatter
-# Канонический URL. Принимает полный URL (кросспостинг) или 'self', чтобы
+# Канонический URL. Принимает полный URL или 'self', чтобы
 # принудительно поставить self-каноникал там, где seo.canonical выключен.
 # Если не указан и seo.canonical !== false — генерируется self-каноникал.
 canonical: https://example.com/canonical-url
@@ -208,7 +208,7 @@ seo:
   og: true                   # Open Graph + Twitter Card мета-теги.
   jsonLd: true               # JSON-LD структурированные данные.
   hreflang: true             # hreflang link-теги (только если >1 локали).
-  canonical: true            # self-каноникал, если поле canonical не задано.
+  canonical: true            # генерирует self-каноникал, если поле canonical не задано.
   rss: true                  # RSS/Atom/JSON feed link-теги на главной.
   maxDescriptionLength: 300  # лимит символов для авто-экстракта description. По умолчанию: 300
 # Кастомный JSON-LD.
