@@ -126,12 +126,8 @@ videoLinkLang: RU
 # Язык подкаста — короткая подпись рядом с кнопкой.
 podcastLang: RU
 # Список платформ, на которых опубликован эпизод. Вверху поста будет выпадающее меню.
-# Это именно список, а не словарь: пункты меню идут в порядке записи.
 # Каждый пункт — `<id платформы>: <URL эпизода>`. Указывайте только те платформы,
 # где эпизод реально опубликован.
-# Встроенные id: site, rss, applepodcasts, spotify, youtube, youtubemusic,
-# amazonmusic, castbox, deezer, iheartradio, tunein, pocketcasts, overcast,
-# podcastaddict, podcastindex.
 # Любой другой id тоже работает: задайте его подпись и иконку один раз в
 # themeConfig.podcastPlatforms — либо опишите пункт прямо здесь (последний пример).
 # Незарегистрированный id не ломает ссылку: подпись будет построена из id,
@@ -152,6 +148,7 @@ podcasts:
   - podcastindex: https://podcastindex.org/
   - rss: https://example.com/rss
   - site: https://example.com/episode
+  # Пример кастомной платформы с кастомной иконкой
   - id: podimo
     url: https://podimo.com/
     label: Podimo
@@ -162,7 +159,6 @@ commentLink: https://github.com/.../discussions
 ### Элементы страницы ###
 
 # Включить/выключить бейдж времени чтения для этой страницы.
-# Перекрывает themeConfig.readingTime.layouts.
 # По умолчанию: следует themeConfig.readingTime.layouts.
 readingTime: true
 # Показать/скрыть правую боковую колонку для этой страницы.
@@ -170,18 +166,17 @@ readingTime: true
 aside: true
 # Показать/скрыть оглавление для этой страницы.
 # Порог по количеству заголовков (themeConfig.toc.minHeadings)
-# всё равно применяется.
+# даже если вы установите true.
 # По умолчанию: включено на постах, выключено на остальных layout'ах.
 toc: true
 # Включить/выключить рекламные слоты для этой страницы.
-# Перекрывает themeConfig.ads.layouts. Влияет и на in-content слоты,
-# которые вставляются markdown-плагином на этапе сборки.
+# Влияет на слоты в правой колонке и на in-content слоты.
 # По умолчанию: следует themeConfig.ads.layouts.
 ads: false
 
 ### Публикация и поиск ###
 
-# Черновик. Страница собирается (URL работает для превью),
+# Черновик. Страница попадает в сборку и доступна по URL,
 # но исключается из списков, RSS, sitemap, поиска и помечается noindex.
 # В vitepress dev черновики видны по умолчанию, в production — скрыты.
 # По умолчанию: false.
@@ -195,7 +190,7 @@ searchIncluded: true
 # themeConfig.editLink вообще настроен.
 # По умолчанию: ссылка показывается.
 editLink: false
-
+ 
 ### SEO ###
 
 # Карта переводов: код локали → относительный путь.
