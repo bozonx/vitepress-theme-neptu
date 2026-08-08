@@ -125,8 +125,7 @@ videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
 # Язык подкаста — короткая подпись рядом с кнопкой.
 podcastLang: RU
-# Платформа → URL эпизода. Ключи — произвольные имена платформ.
-# Рендерится как выпадающий список вверху поста.
+# Список подкаст-платформ на которых опубликован эпизод. Вверху поста будет выпадающий список с заданными ссылками.
 podcasts:
   spotify: https://open.spotify.com/
   applepodcasts: https://podcasts.apple.com/
