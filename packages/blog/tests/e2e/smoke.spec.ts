@@ -28,7 +28,7 @@ test('root renders locale selector without redirecting', async ({ page }) => {
 test('recent posts page loads', async ({ page }) => {
   await page.goto('en/recent/1', { waitUntil: 'domcontentloaded' })
   await expect(page).toHaveTitle(/Recent/)
-  await expect(page.getByText('Full-Featured Post')).toBeVisible()
+  await expect(page.getByText('All frontmatter fields')).toBeVisible()
 })
 
 // ---------------------------------------------------------------------------
@@ -37,7 +37,7 @@ test('recent posts page loads', async ({ page }) => {
 
 test('post page loads with content and JSON-LD', async ({ page }) => {
   await page.goto('en/posts/frontmatter', { waitUntil: 'domcontentloaded' })
-  await expect(page.locator('h1')).toContainText('Full-Featured Post')
+  await expect(page.locator('h1')).toContainText('All frontmatter fields')
 
   const jsonLd = await page.locator('script[type="application/ld+json"]').textContent()
   expect(jsonLd).toBeTruthy()
@@ -50,7 +50,7 @@ test('post page loads with content and JSON-LD', async ({ page }) => {
 
 test('about page loads', async ({ page }) => {
   await page.goto('en/pages/about', { waitUntil: 'domcontentloaded' })
-  await expect(page.locator('h1')).toContainText('About This Demo')
+  await expect(page.locator('h1')).toContainText('About this demo')
 })
 
 // ---------------------------------------------------------------------------
@@ -82,7 +82,7 @@ test('post category chip links to a real category page', async ({ page }) => {
   const crumb = page.locator('nav[aria-label="Breadcrumb"] a').last()
   await expect(crumb).toBeVisible()
   await crumb.click()
-  await expect(page.locator('h1')).toContainText('Configuration')
+  await expect(page.locator('h1')).toContainText('Writing')
 })
 
 test('authors page loads', async ({ page }) => {
@@ -94,7 +94,7 @@ test('authors page loads', async ({ page }) => {
 test('archive page loads', async ({ page }) => {
   await page.goto('en/archive/', { waitUntil: 'domcontentloaded' })
   await expect(page).toHaveTitle(/Date|Archive/)
-  await expect(page.getByText('2025')).toBeVisible()
+  await expect(page.locator('main').getByText('2026', { exact: true })).toBeVisible()
 })
 
 // ---------------------------------------------------------------------------
@@ -104,7 +104,7 @@ test('archive page loads', async ({ page }) => {
 test('canonical link present', async ({ page }) => {
   await page.goto('en/posts/frontmatter', { waitUntil: 'domcontentloaded' })
   const canonical = page.locator('link[rel="canonical"]')
-  await expect(canonical).toHaveAttribute('href', /posts\/frontmatter/)
+  await expect(canonical).toHaveAttribute('href', /canonical-url/)
 })
 
 test('alternate hreflang links present', async ({ page }) => {
