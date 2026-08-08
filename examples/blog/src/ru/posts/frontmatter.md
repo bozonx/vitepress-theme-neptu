@@ -195,31 +195,32 @@ editLink: false
 
 # Карта переводов: код локали → относительный путь.
 # Используется переключателем языков в шапке И hreflang-тегами для SEO.
-# Если не указать — переключатель пытается найти тот же путь в другой локали.
+# Если не указать — переключатель языка пытается найти перевод то томуже имени файла и полному пути.
 translations:
   en: /en/posts/frontmatter
 # Канонический URL. Принимает полный URL или 'self' для авто-каноникала.
 # Если не указан и seo.autoCanonical !== false — генерируется self-каноникал.
 canonical: https://example.com/canonical-url
-# Покомандное управление SEO. Каждый ключ отключает соответствующую фичу,
+# Управление SEO. Каждый ключ отключает соответствующую фичу,
 # если установлен в false. По умолчанию всё включено.
-# Перекрывает глобальные themeConfig.seo.
+# Перекрывает глобальное themeConfig.seo.
 seo:
-  og: true              # Open Graph + Twitter Card мета-теги.
-  jsonLd: true          # JSON-LD структурированные данные.
-  hreflang: true        # hreflang link-теги (только если >1 локали).
-  canonical: true       # canonical link-тег.
-  autoCanonical: true   # авто-каноникал, если поле canonical не задано.
-  rss: true             # RSS/Atom/JSON feed link-теги на главной.
-  maxDescriptionLength: 160  # лимит символов для авто-экстракта description. По умолчанию: 300
-# Кастомный JSON-LD. Объект YAML — deep-merge с авто-генерируемой схемой
-# (вложенные объекты мержатся рекурсивно). JSON-строка — полная замена.
+  og: true                   # Open Graph + Twitter Card мета-теги.
+  jsonLd: true               # JSON-LD структурированные данные.
+  hreflang: true             # hreflang link-теги (только если >1 локали).
+  canonical: true            # canonical link-тег.
+  autoCanonical: true        # авто-каноникал, если поле canonical не задано.
+  rss: true                  # RSS/Atom/JSON feed link-теги на главной.
+  maxDescriptionLength: 300  # лимит символов для авто-экстракта description. По умолчанию: 300
+# Кастомный JSON-LD.
+# Если указать объект YAML, он будет смержен с использованием deep-merge
+# с авто-генерируемой схемой. Вложенные объекты мержатся рекурсивно.
+# Если указать JSON-строку, она будет использована как есть (полная замена).
 jsonLd:
   "@type": TechArticle
   proficiencyLevel: Beginner
 # Стандартное поле VitePress для произвольных тегов в <head>.
-# Тема его тоже читает: если положить сюда noindex, она не станет
-# добавлять к странице JSON-LD и canonical.
+# Если положить сюда noindex, то JSON-LD и canonical добавлены не будут на страницу.
 head:
   - [meta, { name: robots, content: noindex }]
 
