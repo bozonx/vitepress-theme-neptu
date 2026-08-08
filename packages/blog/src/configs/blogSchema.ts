@@ -256,7 +256,6 @@ export const CategorySchema = z.looseObject({
   id: z.string().min(1, 'category `id` must be a non-empty string'),
   name: z.string().optional(),
   slug: z.string().optional(),
-  description: z.string().optional(),
 })
 
 export const CategoriesListSchema = z.array(CategorySchema)

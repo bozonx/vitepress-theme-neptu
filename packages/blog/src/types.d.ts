@@ -716,12 +716,6 @@ export namespace NeptuBlogTheme {
     name?: string
     /** URL segment in this locale. Defaults to `id`. */
     slug?: string
-    /**
-     * Free-form note about the category. Not rendered by the built-in
-     * components — like any extra field it is carried through to
-     * `frontmatter.categories[]` for your own components to use.
-     */
-    description?: string
     [key: string]: unknown
   }
 
