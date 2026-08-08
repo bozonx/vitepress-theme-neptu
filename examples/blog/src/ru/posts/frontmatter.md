@@ -5,19 +5,6 @@ description: >
   подкастов и ссылка на обсуждение — всё включено сразу.
 layout: post
 authorId: ivan-k
-cover: https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=1200&auto=format&fit=crop
-coverWidth: 1200
-coverHeight: 800
-coverAlt: Аккуратный стол с клавиатурой, блокнотом и растением
-coverDescription: "coverDescription поддерживает **markdown** и [ссылки](https://unsplash.com)."
-commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
-videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-videoLinkLang: RU
-podcastLang: RU
-podcasts:
-  spotify: https://open.spotify.com/
-  applepodcasts: https://podcasts.apple.com/
-  youtube: https://www.youtube.com/
 translations:
   en: /en/posts/frontmatter
 date: 2026-07-29
@@ -26,7 +13,6 @@ categories:
   - writing
 tags: [frontmatter]
 descriptionAsPreview: true
-previewText: 'Кастомный текст превью для карточки списка постов.'
 featured: true
 readingTime: true
 aside: true
