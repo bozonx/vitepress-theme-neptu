@@ -14,28 +14,20 @@ const props = withDefaults(
   }>(),
   { scrollY: 0 }
 )
-const { theme, frontmatter, isDark } = useData<ThemeConfig>()
+const { theme, isDark } = useData<ThemeConfig>()
 const { isMobileOrTablet } = useBreakpoint()
 const valueY = ref(0)
 const wrapperRef = ref<HTMLElement | null>(null)
 
+// The home page is configured entirely through `themeConfig.home`; its
+// frontmatter carries nothing but `layout: home`.
 const home = computed(() => theme.value.home || {})
-const appearance = computed(() =>
-  (frontmatter.value?.homeTheme as 'auto' | 'light' | 'dark' | undefined) ||
-  home.value.appearance || 'auto'
-)
-const homeMaxWidth = computed(() =>
-  (frontmatter.value?.homeMaxWidth as number) || home.value.maxWidth || 800
-)
-const homeBackground = computed(() =>
-  (frontmatter.value?.homeBackground as 'parallax' | 'none' | undefined) ||
-  home.value.background?.type || 'none'
-)
-const homeBackgroundImage = computed(() =>
-  (frontmatter.value?.homeBackgroundImage as string) || home.value.background?.image || ''
-)
+const appearance = computed(() => home.value.appearance || 'auto')
+const homeMaxWidth = computed(() => home.value.maxWidth || 800)
+const homeBackground = computed(() => home.value.background?.type || 'none')
+const homeBackgroundImage = computed(() => home.value.background?.image || '')
 const BG_HEIGHT_OFFSET = computed(
-  () => (frontmatter.value?.homeBackgroundParallaxOffset as number) ?? home.value.background?.parallaxOffset ?? 0
+  () => home.value.background?.parallaxOffset ?? 0
 )
 
 const hasBgImage = computed(() =>

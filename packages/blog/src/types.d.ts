@@ -914,13 +914,6 @@ export namespace NeptuBlogTheme {
     canonical?: string
     seo?: SeoConfig
     translations?: Record<string, string>
-
-    // Home page customization
-    homeTheme?: 'dark' | 'light'
-    homeMaxWidth?: number
-    homeBackground?: 'parallax' | 'none'
-    homeBackgroundImage?: string
-    homeBackgroundParallaxOffset?: number
   }
 
   export interface PostLite {

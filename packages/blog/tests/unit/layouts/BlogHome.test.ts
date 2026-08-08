@@ -26,8 +26,8 @@ describe('BlogHome', () => {
     expect(root.classes()).not.toContain('bg-no-repeat')
   })
 
-  it('applies light theme via frontmatter', () => {
-    mockFrontmatter.value = { homeTheme: 'light' }
+  it('applies light theme from home config', () => {
+    mockTheme.value = { home: { ...mockTheme.value.home, appearance: 'light' } }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
@@ -39,8 +39,10 @@ describe('BlogHome', () => {
     expect(mockIsDark.value).toBe(false)
   })
 
-  it('disables background when homeBackground is none', () => {
-    mockFrontmatter.value = { homeBackground: 'none' }
+  it('disables background when background type is none', () => {
+    mockTheme.value = {
+      home: { ...mockTheme.value.home, background: { type: 'none' } },
+    }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
@@ -53,8 +55,8 @@ describe('BlogHome', () => {
     expect(root.classes()).not.toContain('bg-fixed')
   })
 
-  it('applies custom max width from frontmatter', () => {
-    mockFrontmatter.value = { homeMaxWidth: 1200 }
+  it('applies custom max width from home config', () => {
+    mockTheme.value = { home: { ...mockTheme.value.home, maxWidth: 1200 } }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
@@ -65,8 +67,13 @@ describe('BlogHome', () => {
     expect(page.attributes('style')).toContain('max-width: 1200px')
   })
 
-  it('applies custom background image and home-has-bg class from frontmatter', () => {
-    mockFrontmatter.value = { homeBackgroundImage: '/img/custom-bg.webp', homeBackground: 'parallax' }
+  it('applies custom background image and home-has-bg class from home config', () => {
+    mockTheme.value = {
+      home: {
+        ...mockTheme.value.home,
+        background: { type: 'parallax', image: '/img/custom-bg.webp' },
+      },
+    }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
@@ -88,8 +95,13 @@ describe('BlogHome', () => {
     expect(root.classes()).not.toContain('home-has-bg')
   })
 
-  it('uses frontmatter homeBackgroundParallaxOffset over theme default', () => {
-    mockFrontmatter.value = { homeBackgroundParallaxOffset: 500, homeBackground: 'parallax' }
+  it('uses parallaxOffset from home config', () => {
+    mockTheme.value = {
+      home: {
+        ...mockTheme.value.home,
+        background: { type: 'parallax', parallaxOffset: 500 },
+      },
+    }
 
     const wrapper = mount(BlogHome, {
       props: { scrollY: 0 },
@@ -124,8 +136,6 @@ describe('BlogHome', () => {
   })
 
   it('uses default scrollY of 0 when not provided', () => {
-    mockFrontmatter.value = { homeBackground: 'none' }
-
     const wrapper = mount(BlogHome, {
       global: { stubs: { Content: ContentStub } },
     })

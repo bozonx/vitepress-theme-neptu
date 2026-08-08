@@ -207,14 +207,10 @@
  * The home layout (layout: home in frontmatter) uses the
  * `.home-layout` class. Set a background image and/or color.
  *
- * Frontmatter alternatives (no CSS needed):
- *   homeBackground: parallax | none
- *   homeBackgroundImage: https://…
- *   homeTheme: dark | light
- *   homeMaxWidth: 800
- *   homeBgParallaxOffset: 200
- *
- * Config (site.yaml) uses a nested object:
+ * Config alternative (no CSS needed) — site.yaml,
+ * under themeConfig.home:
+ *   appearance: auto | light | dark
+ *   maxWidth: 800
  *   background:
  *     type: parallax | none
  *     image: /img/home.webp

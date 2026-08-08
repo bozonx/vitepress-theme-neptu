@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `packages/blog` **breaking**: removed the home-page frontmatter overrides `homeTheme`, `homeMaxWidth`, `homeBackground`, `homeBackgroundImage` and `homeBackgroundParallaxOffset`. The home page is configured through `themeConfig.home` only (`appearance`, `maxWidth`, `background.type`, `background.image`, `background.parallaxOffset`); per-locale overrides go in that locale's `_site.yaml`, which deep-merges over `site.yaml`. The locale `index.md` should carry nothing but `layout: home`.
 - `packages/landing` **breaking**: removed deprecated block props — `noReveal` (use `reveal: false`), `noAlternate` (use `alternate: false`), `ratio` (use `mediaRatio`), `imageRatio` (use `mediaRatio`), `autoplay` (use `autoplayInterval`), `cardVariant` (use `variant`). Update your `blocks:` YAML and component props accordingly.
 - `packages/blog` **breaking**: removed backwards-compatibility `categoryName` and `tagName` props from `CategoryPostsList` and `TagPostsList`. Filtering is by slug only — remove `:categoryName` / `:tagName` from your category and tag page templates.
 - `packages/blog`: `getImageDimensions` no longer falls back to the `srcDir` root for image path resolution — use the public directory or co-located paths relative to the markdown file.
