@@ -12,12 +12,21 @@ videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: RU
 podcastLang: RU
 podcasts:
-  - applepodcasts: https://podcasts.apple.com/…
-  - spotify: https://open.spotify.com/…
+  - applepodcasts: https://podcasts.apple.com/
+  - spotify: https://open.spotify.com/
   - youtube: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-  - youtubemusic: https://music.youtube.com/…
-  - amazonmusic: https://music.amazon.com/…
-  - rss: https://example.com/podcast/rss
+  - youtubemusic: https://music.youtube.com/
+  - amazonmusic: https://music.amazon.com/
+  - castbox: https://castbox.fm/
+  - deezer: https://www.deezer.com/
+  - iheartradio: https://www.iheart.com/
+  - tunein: https://tunein.com/
+  - pocketcasts: https://pca.st/
+  - overcast: https://overcast.fm/
+  - podcastaddict: https://podcastaddict.com/
+  - podcastindex: https://podcastindex.org/
+  - rss: https://example.com/rss
+  - site: https://example.com/episode
 ---
 
 ## Черновики
@@ -134,33 +143,45 @@ videoLinkLang: RU     # язык метки, отображаемой на кн�
 
 `podcasts` отображает выпадающий список ссылок на подкаст платформы. Отлично подходит для создания страницы выпуска подкаста с размещением текста подкаста в посте.
 
-Это **список**, а не словарь: пункты меню идут ровно в том порядке, в котором вы их записали.
+Это **список**, а не словарь: пункты меню идут ровно в том порядке, в котором вы их записали. Указывайте только те платформы, где эпизод реально опубликован.
+
+# Список платформ, на которых опубликован эпизод. Вверху поста будет выпадающее меню.
+# Каждый пункт — `<id платформы>: <URL эпизода>`. Указывайте только те платформы,
+# где эпизод реально опубликован.
+# Любой другой id тоже работает: задайте его подпись и иконку один раз в
+# themeConfig.podcastPlatforms — либо опишите пункт прямо здесь (последний пример).
+# Незарегистрированный id не ломает ссылку: подпись будет построена из id,
+# иконка — общая mdi:podcast.
+
 
 ```yaml
 podcastLang: RU
 podcasts:
-  - applepodcasts: https://podcasts.apple.com/…
-  - spotify: https://open.spotify.com/…
-  - youtube: https://www.youtube.com/…
-  - youtubemusic: https://music.youtube.com/…
-  - amazonmusic: https://music.amazon.com/…
-  - castbox: https://castbox.fm/…
-  - deezer: https://www.deezer.com/…
-  - iheartradio: https://www.iheart.com/…
-  - tunein: https://tunein.com/…
-  - pocketcasts: https://pca.st/…
-  - overcast: https://overcast.fm/…
-  - podcastaddict: https://podcastaddict.com/…
-  - podcastindex: https://podcastindex.org/…
-  # RSS-лента подкаста
-  - rss: https://example.com/podcast/rss
-  # Страница выпуска на вашем сайте
-  - site: https://example.com/episode-1
+  - applepodcasts: https://podcasts.apple.com/
+  - spotify: https://open.spotify.com/
+  - youtube: https://www.youtube.com/
+  - youtubemusic: https://music.youtube.com/
+  - amazonmusic: https://music.amazon.com/
+  - castbox: https://castbox.fm/
+  - deezer: https://www.deezer.com/
+  - iheartradio: https://www.iheart.com/
+  - tunein: https://tunein.com/
+  - pocketcasts: https://pca.st/
+  - overcast: https://overcast.fm/
+  - podcastaddict: https://podcastaddict.com/
+  - podcastindex: https://podcastindex.org/
+  - rss: https://example.com/rss
+  - site: https://example.com/episode
+  # Пример кастомной платформы с кастомной иконкой
+  - id: podimo
+    url: https://podimo.com/
+    label: Podimo
+    iconUrl: /icons/podimo.svg
 ```
 
 ### Своя платформа
 
-Ключ каждого пункта — id платформы. Встроенных платформ 15 (список выше);
+Ключ каждого пункта — id платформы. Встроенных платформ 13 (список выше);
 всё остальное добавляется в реестр `themeConfig.podcastPlatforms`, откуда
 берутся подпись и иконка для всех постов сразу:
 
@@ -188,16 +209,7 @@ themeConfig:
 :::
 
 Для разовой платформы, ради которой не хочется трогать конфиг, пункт можно
-описать прямо в посте:
-
-```yaml
-podcasts:
-  - spotify: https://open.spotify.com/…
-  - id: podimo
-    url: https://podimo.com/…
-    label: Podimo
-    iconUrl: /icons/podimo.svg
-```
+описать прямо в посте — как в примере выше с `podimo`.
 
 Если платформа не найдена ни в реестре, ни среди встроенных, ссылка всё равно
 работает: подпись строится из id (`player-fm` → `Player Fm`), иконка — общая

@@ -125,33 +125,12 @@ videoLinkLang: RU
 # Язык подкаста — короткая подпись рядом с кнопкой.
 podcastLang: RU
 # Список платформ, на которых опубликован эпизод. Вверху поста будет выпадающее меню.
-# Каждый пункт — `<id платформы>: <URL эпизода>`. Указывайте только те платформы,
-# где эпизод реально опубликован.
-# Любой другой id тоже работает: задайте его подпись и иконку один раз в
-# themeConfig.podcastPlatforms — либо опишите пункт прямо здесь (последний пример).
-# Незарегистрированный id не ломает ссылку: подпись будет построена из id,
-# иконка — общая mdi:podcast.
+# Указывайте только те платформы, где эпизод реально опубликован.
 podcasts:
   - applepodcasts: https://podcasts.apple.com/
   - spotify: https://open.spotify.com/
-  - youtube: https://www.youtube.com/
   - youtubemusic: https://music.youtube.com/
-  - amazonmusic: https://music.amazon.com/
-  - castbox: https://castbox.fm/
-  - deezer: https://www.deezer.com/
-  - iheartradio: https://www.iheart.com/
-  - tunein: https://tunein.com/
-  - pocketcasts: https://pca.st/
-  - overcast: https://overcast.fm/
-  - podcastaddict: https://podcastaddict.com/
-  - podcastindex: https://podcastindex.org/
-  - rss: https://example.com/rss
-  - site: https://example.com/episode
-  # Пример кастомной платформы с кастомной иконкой
-  - id: podimo
-    url: https://podimo.com/
-    label: Podimo
-    iconUrl: /icons/podimo.svg
+  # ... и другие, подробней на странице "Черновики, время чтения, видео-кнопка и подкасты"
 # URL обсуждения (GitHub Discussions, Disqus, Telegram и т.п.) — кнопка в подвале поста.
 commentLink: https://github.com/.../discussions
 
