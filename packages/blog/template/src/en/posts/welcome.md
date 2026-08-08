@@ -27,8 +27,9 @@ coverAlt: Notebook on table
 #   ru: /ru/posts/welcome
 # commentLink: https://github.com/your-username/my-blog/discussions/1
 # videoLink: https://youtu.be/xxxx
-# podcasts:
-#   spotify: https://open.spotify.com/episode/xxxx
+# podcasts:               # ordered list of `<platform id>: <episode URL>`
+#   - applepodcasts: https://podcasts.apple.com/xxxx
+#   - spotify: https://open.spotify.com/episode/xxxx
 # aside: false           # force the aside column on/off for this page
 # toc: false             # force the table of contents on/off
 # ads: false             # force ad slots on/off

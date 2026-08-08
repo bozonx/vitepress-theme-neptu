@@ -659,6 +659,38 @@
             "additionalProperties": true
           }
         },
+        "podcastPlatforms": {
+          "type": "object",
+          "description": "Podcast platform registry keyed by platform id, merged over the theme's built-in one. Add services the theme does not know about, or override the label and icon of one it does. Posts reference a platform by its id in the `podcasts` frontmatter list.",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "description": "Menu label: a string, or an object keyed by locale when the wording differs per language.",
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              "icon": {
+                "type": "string",
+                "description": "Iconify name, e.g. `simple-icons:podbean`. Icons outside the theme's offline bundle are fetched from the Iconify API at runtime; prefer `iconUrl` when that is not acceptable."
+              },
+              "iconUrl": {
+                "type": "string",
+                "description": "URL of an icon file, e.g. `/icons/podbean.svg`. Takes precedence over `icon`."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
         "t": {
           "type": "object",
           "description": "Partial built-in translation overrides; nested objects are deep-merged.",
@@ -785,6 +817,7 @@
             },
             "podcasts": {
               "type": "object",
+              "description": "Per-locale podcast labels for ids whose wording is generic rather than a brand name (`site`, `rss`). Brand labels belong in `podcastPlatforms`.",
               "additionalProperties": {
                 "type": "string"
               }

@@ -67,6 +67,12 @@ const SocialLinkSchema = z.looseObject({
   mobileOnly: z.boolean().optional(),
 })
 
+const PodcastPlatformSchema = z.looseObject({
+  label: z.union([z.string(), z.record(z.string(), z.string())]).optional(),
+  icon: z.string().optional(),
+  iconUrl: z.string().optional(),
+})
+
 const SeoSchema = z.looseObject({
   og: z.boolean().optional(),
   jsonLd: z.boolean().optional(),
@@ -381,6 +387,7 @@ const ThemeConfigSchema = z
       urlTemplate: z.string().optional(), class: z.string().optional(),
       enabled: z.boolean().optional(),
     })).optional(),
+    podcastPlatforms: z.record(z.string(), PodcastPlatformSchema).optional(),
     t: TranslationSchema.optional(),
     authors: z.array(AuthorSchema).optional(),
     categories: z.array(CategorySchema).optional(),

@@ -255,6 +255,14 @@ export namespace NeptuBlogTheme {
     seo?: SeoConfig
     socialMediaShares?: SocialMediaShare[]
 
+    /**
+     * Podcast platform registry, merged over the theme's built-in one — add
+     * services the theme does not know about, or override the label and icon
+     * of one it does. Posts then reference a platform by its id in the
+     * `podcasts` frontmatter list.
+     */
+    podcastPlatforms?: Record<string, PodcastPlatform>
+
     t: I18nTranslations
 
     /**
@@ -344,6 +352,11 @@ export namespace NeptuBlogTheme {
 
     links: I18nLinks
     months: string[]
+    /**
+     * Per-locale podcast labels. Only holds ids whose wording is generic
+     * rather than a brand name (`site`, `rss`); brand labels live in the
+     * built-in registry and in `themeConfig.podcastPlatforms`.
+     */
     podcasts: Record<string, string>
     audioFile: Record<string, string>
     fileDownload: Record<string, string>
@@ -815,6 +828,48 @@ export namespace NeptuBlogTheme {
     enabled?: boolean
   }
 
+  /**
+   * A podcast platform as declared in the built-in registry or in
+   * `themeConfig.podcastPlatforms`.
+   */
+  export interface PodcastPlatform {
+    /**
+     * Menu label. A plain string for brand names; a `{ <locale>: <label> }`
+     * record when the wording differs per locale.
+     */
+    label?: string | Record<string, string>
+    /**
+     * Iconify name, e.g. `simple-icons:podbean`. Icons outside the theme's
+     * offline bundle are fetched from the Iconify API at runtime unless the
+     * site registers them itself via `addIcon()` in its own `enhanceApp`.
+     * Prefer `iconUrl` when neither applies.
+     */
+    icon?: string
+    /** URL of an icon file, e.g. `/icons/podbean.svg`. Wins over `icon`. */
+    iconUrl?: string
+  }
+
+  /** Extended frontmatter form: a link plus an inline platform definition. */
+  export interface PodcastEntryObject extends PodcastPlatform {
+    id: string
+    url: string
+  }
+
+  /**
+   * One item of the frontmatter `podcasts` list: either the extended object or
+   * the single-key shorthand `{ <platformId>: <url> }`.
+   */
+  export type PodcastEntry = PodcastEntryObject | Record<string, string>
+
+  /** A podcast link after registry lookup, ready to render. */
+  export interface ResolvedPodcast {
+    id: string
+    url: string
+    label: string
+    icon?: string | undefined
+    iconUrl?: string | undefined
+  }
+
   export interface Tag extends TaxonomyEntry {
     name: string
     slug: string
@@ -901,8 +956,13 @@ export namespace NeptuBlogTheme {
      * places in-content slots at build time.
      */
     ads?: boolean
-    /** Podcast platform → episode URL map, rendered as the podcast dropdown. */
-    podcasts?: Record<string, string>
+    /**
+     * Ordered list of podcast links rendered as the post's podcast dropdown.
+     * Each item is either the shorthand `{ <platformId>: <url> }` or the
+     * extended `{ id, url, label?, icon?, iconUrl? }` for a platform that is
+     * neither built in nor registered in `themeConfig.podcastPlatforms`.
+     */
+    podcasts?: PodcastEntry[]
     /** Optional language label shown next to the podcast button, e.g. `EN`. */
     podcastLang?: string
     /** External "watch the video" URL rendered as a button at the top of a post. */
@@ -1016,6 +1076,10 @@ export type SocialLinkItem = NeptuBlogTheme.SocialLinkItem
 export type LinkItem = NeptuBlogTheme.LinkItem
 export type SocialLink = NeptuBlogTheme.SocialLink
 export type SocialMediaShare = NeptuBlogTheme.SocialMediaShare
+export type PodcastPlatform = NeptuBlogTheme.PodcastPlatform
+export type PodcastEntry = NeptuBlogTheme.PodcastEntry
+export type PodcastEntryObject = NeptuBlogTheme.PodcastEntryObject
+export type ResolvedPodcast = NeptuBlogTheme.ResolvedPodcast
 export type TocConfig = NeptuBlogTheme.TocConfig
 export type AdsConfig = NeptuBlogTheme.AdsConfig
 export type ReadingTimeConfig = NeptuBlogTheme.ReadingTimeConfig

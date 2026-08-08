@@ -1,28 +1,16 @@
-<script lang="ts">
-const ICONIFY_ICON_MAP: Record<string, string> = {
-  site: 'mdi:globe',
-  rss: 'mdi:rss',
-  castbox: 'simple-icons:castbox',
-  spotify: 'mdi:spotify',
-  youtube: 'mdi:youtube',
-  amazonmusic: 'simple-icons:amazonmusic',
-  iheartradio: 'simple-icons:iheartradio',
-  tunein: 'simple-icons:tunein',
-  vk: 'ri:vk-fill',
-  deezer: 'cbi:deezer-logo',
-  pocketcasts: 'simple-icons:pocketcasts',
-  applepodcasts: 'simple-icons:applepodcasts',
-  overcast: 'simple-icons:overcast',
-}
-</script>
-
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
+import { BUILTIN_PODCAST_PLATFORMS, FALLBACK_PODCAST_ICON } from '../../configs/podcastPlatforms.ts'
 
 const props = withDefaults(
   defineProps<{
-    name: string
+    /** Platform id, looked up in the built-in registry. */
+    name?: string
+    /** Iconify name, overriding whatever `name` resolves to. */
+    icon?: string
+    /** Icon file URL, overriding both `icon` and `name`. */
+    iconUrl?: string
     alt?: string
     width?: string
   }>(),
@@ -31,125 +19,34 @@ const props = withDefaults(
   }
 )
 
-// Resolved once so the template has a single narrowed value instead of two
-// separate lookups that TypeScript cannot tie together across attributes.
-const iconifyName = computed(() => ICONIFY_ICON_MAP[props.name])
+const builtin = computed(() =>
+  props.name ? BUILTIN_PODCAST_PLATFORMS[props.name] : undefined
+)
+
+const resolvedIconUrl = computed(() => props.iconUrl ?? builtin.value?.iconUrl)
+
+const resolvedIcon = computed(
+  () => props.icon ?? builtin.value?.icon ?? FALLBACK_PODCAST_ICON
+)
 </script>
 
 <template>
+  <img
+    v-if="resolvedIconUrl"
+    :src="resolvedIconUrl"
+    :alt="props.alt || ''"
+    :width="props.width"
+    :height="props.width"
+    :style="{ width: props.width, height: props.width }"
+    loading="lazy"
+    decoding="async"
+  />
   <Icon
-    v-if="iconifyName"
-    :icon="iconifyName"
+    v-else
+    :icon="resolvedIcon"
     :width="props.width"
     :height="props.width"
     :alt="props.alt"
     aria-hidden="true"
   />
-  <template v-else-if="props.name === 'yandexmusic'">
-    <svg
-      :width="props.width"
-      :height="props.width"
-      :alt="props.alt"
-      aria-hidden="true"
-      viewBox="0 0 1500 1497"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M303.483 144.361C414.511 62.0905 545.733 12.3576 682.5 0V226.313C594.094 237.775 509.662 271.623 437.437 325.138C347.006 392.15 280.501 486.448 247.736 594.129C214.972 701.806 217.68 817.165 255.463 923.191C293.245 1029.21 364.101 1120.29 457.579 1182.98C551.062 1245.67 662.212 1276.66 774.642 1271.38C887.072 1266.09 994.828 1224.82 1082.02 1153.64C1169.2 1082.45 1231.21 985.137 1258.88 876.04C1278.19 799.938 1280.08 720.921 1264.95 644.74L1455 491.956L1454.87 490.723C1506.17 631.84 1514.01 785.365 1476.97 931.362C1437.44 1087.22 1348.87 1226.24 1224.31 1327.93C1099.76 1429.61 945.82 1488.58 785.203 1496.13C624.59 1503.68 465.801 1459.4 332.259 1369.84C198.718 1280.29 97.4948 1150.18 43.5192 998.721C-10.456 847.259 -14.326 682.46 32.4806 528.631C79.2872 374.802 174.292 240.089 303.483 144.361Z"
-        fill="#FCCA00"
-      />
-      <path
-        d="M1311.7 249.963L1312.5 251.958L1185.5 453.666C1139.32 385.223 1077.43 328.256 1005 287.939V746.958C1005 887.789 890.831 1001.96 750 1001.96C609.169 1001.96 495 887.789 495 746.958C495 606.126 609.169 491.958 750 491.958C802.781 491.958 851.817 507.994 892.5 535.458V10.478C1058.05 42.3216 1204.24 128.603 1311.7 249.963Z"
-        fill="#FC3F1D"
-      />
-    </svg>
-  </template>
-  <template v-else-if="props.name === 'soundstream'">
-    <svg
-      :width="props.width"
-      :height="props.width"
-      :alt="props.alt"
-      aria-hidden="true"
-      viewBox="0 0 1100 1564"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M200.015 21.5125C222.324 2.39028 241.446 -3.98379 266.942 2.39028C282.877 5.57731 327.496 59.7569 343.431 72.505C359.366 88.4402 359.366 110.749 343.431 126.685C126.713 324.281 126.713 671.668 340.244 872.451C359.366 891.573 359.366 913.882 337.057 933.004C317.935 948.94 302 964.875 286.064 983.997C266.942 1003.12 228.698 1009.49 206.389 990.371C-64.5093 722.66 -70.8834 298.784 200.015 21.5125Z"
-        fill="#EE4E5D"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M407.175 231.857C426.298 212.735 445.42 206.361 470.916 209.548C490.038 212.735 537.844 263.727 550.592 279.662C569.714 295.598 569.714 317.907 550.592 337.029C448.607 432.64 451.794 572.87 550.592 665.294C566.527 681.229 566.527 703.538 550.592 719.473L490.038 780.027C474.103 795.962 432.672 799.149 416.736 783.214C260.572 627.049 251.011 394.396 407.175 231.857V231.857ZM897.979 1541.73C878.856 1560.85 856.547 1567.22 831.051 1560.85C815.116 1557.66 767.31 1503.48 754.562 1490.74C738.627 1474.8 738.627 1449.3 754.562 1433.37C971.28 1235.77 971.28 888.386 757.749 687.603C738.627 668.481 738.627 642.984 760.936 627.049C780.058 611.114 795.994 595.179 811.929 576.057C831.051 556.934 869.295 550.56 888.418 569.683C1165.69 840.581 1172.06 1264.46 897.979 1541.73V1541.73Z"
-        fill="#EE4E5D"
-      />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M694.01 1331.37C674.888 1350.49 655.766 1356.86 630.269 1353.68C611.147 1350.49 563.342 1299.5 550.594 1283.56C531.471 1267.63 531.471 1245.32 550.594 1226.2C652.579 1130.58 649.392 993.542 550.594 897.931C534.658 881.996 534.658 859.687 550.594 843.752L611.147 783.198C627.082 767.263 668.514 764.076 684.449 783.198C840.614 936.176 850.175 1168.83 694.01 1331.37V1331.37Z"
-        fill="#EE4E5D"
-      />
-    </svg>
-  </template>
-  <template v-else-if="props.name === 'zvuk'">
-    <svg
-      :width="props.width"
-      :height="props.width"
-      :alt="props.alt"
-      aria-hidden="true"
-      viewBox="0 0 28 28"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clip-path="url(#clip0_807_20)">
-        <path
-          d="M-5.59434 28.0219C-5.59129 26.4982 -3.27064 25.002 -1.80802 24.2905C0.240871 23.292 2.71115 24.1409 3.70964 26.1898C4.70813 28.2387 3.85925 30.709 1.81036 31.7075C1.19356 32.0098 -0.168297 32.8465 -0.80953 32.8312H-5.73176L-5.59434 28.0219ZM-4.63556 18.4919C-9.88756 21.0538 -12.0677 27.3868 -9.50588 32.6389C-6.944 37.8909 -0.614108 40.0681 4.63789 37.5092C9.8899 34.9504 12.0702 28.6143 9.50821 23.3623C6.94633 18.1102 0.613394 15.93 -4.63556 18.4919ZM-7.46614 12.6932C-15.9212 16.8155 -19.4297 27.0112 -15.3075 35.4664C-11.1852 43.9217 -0.989685 47.4302 7.46544 43.3079C15.9206 39.1856 19.4291 28.9899 15.3069 20.5347C11.1846 12.0795 0.988979 8.56792 -7.46614 12.6932ZM-10.2936 6.89459C-21.9519 12.5772 -26.7916 26.6387 -21.106 38.294C-15.4204 49.9493 -1.36222 54.7922 10.2961 49.1065C21.9543 43.4209 26.791 29.3624 21.1054 17.7041C15.4198 6.04571 1.3615 1.20892 -10.2936 6.89459Z"
-          stroke="url(#paint0_linear_807_20)"
-          stroke-width="3.5"
-          stroke-miterlimit="10"
-        />
-      </g>
-      <defs>
-        <linearGradient
-          id="paint0_linear_807_20"
-          x1="17.5827"
-          y1="45.813"
-          x2="-17.5819"
-          y2="10.188"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stop-color="#F212FF" />
-          <stop offset="0.35" stop-color="#5AAFFF" />
-          <stop offset="0.4318" stop-color="#59B3FF" />
-          <stop offset="0.5087" stop-color="#55BEFF" />
-          <stop offset="0.5835" stop-color="#4FD1FF" />
-          <stop offset="0.6567" stop-color="#46ECFF" />
-          <stop offset="0.7" stop-color="#40FFFF" />
-        </linearGradient>
-        <clipPath id="clip0_807_20">
-          <rect width="28" height="28" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  </template>
-  <template v-else-if="props.name === 'podcastaddiction'">
-    <svg
-      :width="props.width"
-      :height="props.width"
-      :alt="props.alt"
-      aria-hidden="true"
-      viewBox="0 0 1500 1500"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M1499.49 732.949C1490.33 326.773 1158.47 0 749.746 0C335.426 0 0 335.935 0 749.746C0 1036.31 160.842 1285.71 397.523 1411.94V1184.42V754.835C397.523 751.781 397.523 749.236 397.523 746.183C397.523 572.616 522.226 428.062 686.631 396.505V521.208C589.413 549.712 518.663 639.803 518.663 746.183C518.663 746.692 518.663 747.71 518.663 748.219V749.236C520.19 877.503 625.042 980.828 753.308 980.828C859.688 980.828 949.27 910.078 978.283 813.37H1102.99C1071.43 977.774 926.875 1101.97 753.308 1101.97C663.217 1101.97 581.269 1068.37 518.663 1013.4V1463.35C591.449 1486.77 669.325 1500 750.255 1500C906.006 1500 1050.56 1452.66 1170.68 1371.23V1500H1500L1499.49 732.949ZM752.8 883.101C676.96 883.101 615.881 822.022 615.881 746.183C615.881 670.343 676.96 609.264 752.8 609.264C828.639 609.264 889.718 670.343 889.718 746.183C889.718 822.022 828.639 883.101 752.8 883.101ZM1109.09 747.201H987.954C987.954 746.692 987.954 746.692 987.954 746.183C987.954 616.39 883.101 511.537 753.308 511.537H752.8V390.397H753.308C949.779 390.397 1109.09 549.712 1109.09 746.183C1109.09 746.692 1109.09 746.692 1109.09 747.201ZM1317.78 747.201H1197.66C1197.66 746.692 1197.66 746.692 1197.66 746.183C1197.66 500.848 998.643 301.832 753.308 301.832H752.8V181.71H753.308C1065.32 181.71 1317.78 434.679 1317.78 746.183C1317.78 746.692 1317.78 746.692 1317.78 747.201Z"
-        fill="#F4842D"
-      />
-    </svg>
-  </template>
 </template>

@@ -73,22 +73,69 @@ The button appears in the post's top bar, next to the date and reading time.
 
 ## Podcasts
 
-A podcast dropdown can be added to the top of a post, listing episodes on multiple platforms:
+A podcast dropdown can be added to the top of a post, listing episodes on multiple platforms.
+`podcasts` is a **list**, not a map: menu items appear in exactly the order you write them.
 
 ```yaml
 ---
 podcastLang: EN
 podcasts:
-  spotify: https://open.spotify.com/episode/...
-  applepodcasts: https://podcasts.apple.com/episode/...
-  youtube: https://www.youtube.com/watch?v=...
+  - applepodcasts: https://podcasts.apple.com/episode/...
+  - spotify: https://open.spotify.com/episode/...
+  - youtube: https://www.youtube.com/watch?v=...
+  - youtubemusic: https://music.youtube.com/...
+  - rss: https://example.com/podcast/rss
+  - site: https://example.com/episode-1
 ---
 ```
 
 - `podcastLang` — short label next to the dropdown button
-- `podcasts` — a map of platform name → episode URL
+- `podcasts` — ordered list of `<platform id>: <episode URL>` pairs
 
-The keys are arbitrary platform names. The theme renders them as a dropdown list in the post's top bar.
+### Custom platforms
+
+The theme has 15 built-in platforms: `site`, `rss`, `applepodcasts`, `spotify`,
+`youtube`, `youtubemusic`, `amazonmusic`, `castbox`, `deezer`, `iheartradio`,
+`tunein`, `pocketcasts`, `overcast`, `podcastaddict`, `podcastindex`.
+
+Anything else goes into the `themeConfig.podcastPlatforms` registry, which
+supplies the label and icon for every post at once — and can override a
+built-in platform under the same id:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  podcastPlatforms:
+    podbean:
+      label: Podbean
+      icon: simple-icons:podbean       # any Iconify name
+    zvuk:
+      label: { ru: Звук, en: Zvuk }    # per-locale labels
+      iconUrl: /icons/zvuk.svg         # or your own file from public/
+```
+
+::: warning Iconify icons and offline builds
+The theme ships an offline icon bundle that only covers the built-in
+platforms. An `icon` name outside that bundle is fetched from
+`api.iconify.design` in the reader's browser — it is missing from the SSR
+output and never appears without network access. Use `iconUrl` with your own
+file, or register the icon yourself with `addIcon()` in your `enhanceApp`.
+:::
+
+For a one-off platform not worth a config entry, describe the item inline:
+
+```yaml
+podcasts:
+  - spotify: https://open.spotify.com/episode/...
+  - id: podimo
+    url: https://podimo.com/...
+    label: Podimo
+    iconUrl: /icons/podimo.svg
+```
+
+An id found in neither the registry nor the built-in list still renders a
+working link: the label is derived from the id (`player-fm` → `Player Fm`) and
+the icon falls back to a generic `mdi:podcast`.
 
 ## What's next
 

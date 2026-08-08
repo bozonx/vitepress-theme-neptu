@@ -22,7 +22,7 @@ descriptionAsPreview: true
 | `home` | [Домашняя страница](home-page) |
 | `i18nRouting` | [Локали и мультиязычность](locales) |
 | `authors` | [Авторы](authors) |
-| `readingTime`, `drafts` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
+| `readingTime`, `drafts`, `podcastPlatforms` | [Черновики, время чтения, видео и подкасты](drafts-video-podcasts) |
 | `search` | [Поиск Pagefind](search-pagefind) |
 | `popularPosts` | [Аналитика и популярные посты](analytics) |
 | `ads` | [Рекламные блоки](ads) |

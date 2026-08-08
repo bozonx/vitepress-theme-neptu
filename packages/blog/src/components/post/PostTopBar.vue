@@ -8,7 +8,7 @@ const { frontmatter } = useData()
 
 <template>
   <div
-    v-if="frontmatter.videoLink || frontmatter.podcasts"
+    v-if="frontmatter.videoLink || frontmatter.podcasts?.length"
     class="flex max-sm:flex-col sm:gap-x-3 max-sm:gap-y-7"
   >
     <PostVideoLink />

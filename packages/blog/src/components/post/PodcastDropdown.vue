@@ -6,17 +6,26 @@ import DropdownButton from '../DropdownButton.vue'
 import MenuItem from '../MenuItem.vue'
 import PodcastIcon from './PodcastIcon.vue'
 import { useThemeConfig } from '../../composables/useThemeConfig.ts'
+import { resolvePodcasts } from '../../utils/shared/podcasts.ts'
 
 import type { ThemeConfig, PostFrontmatter } from '../../types.d.ts'
 
-const { frontmatter } = useData<ThemeConfig>()
+const { frontmatter, localeIndex } = useData<ThemeConfig>()
 const { theme } = useThemeConfig()
 const fm = computed(() => frontmatter.value as PostFrontmatter)
 const btnText = computed(() => theme.value.t.listenPodcast)
+
+const podcasts = computed(() =>
+  resolvePodcasts(fm.value.podcasts, {
+    platforms: theme.value.podcastPlatforms,
+    translations: theme.value.t?.podcasts,
+    localeIndex: localeIndex.value,
+  })
+)
 </script>
 
 <template>
-  <DropdownButton v-if="frontmatter.podcasts" class="podcasts-btn w-fit [&>.btn-base]:bg-[var(--podcast-btn-bg)]! [&>.btn-base]:text-white [&>.btn-base]:py-3 [&>.btn-base]:hover:brightness-110">
+  <DropdownButton v-if="podcasts.length" class="podcasts-btn w-fit [&>.btn-base]:bg-[var(--podcast-btn-bg)]! [&>.btn-base]:text-white [&>.btn-base]:py-3 [&>.btn-base]:hover:brightness-110">
     <template #btn-text>
       <span class="mr-1" aria-hidden="true">
         <Icon
@@ -28,16 +37,23 @@ const btnText = computed(() => theme.value.t.listenPodcast)
       {{ btnText }}
     </template>
 
-    <template v-for="(link, name) in (fm.podcasts || {})" :key="String(name)">
-      <MenuItem v-if="link" :href="link" :hide-external-icon="true">
-        <span class="flex">
-          <span class="mr-2">
-            <PodcastIcon :name="String(name)" :alt="String(name) + ' podcast service icon'" />
-          </span>
-          {{ (theme.t.podcasts || {})[name] }}
+    <MenuItem
+      v-for="podcast in podcasts"
+      :key="podcast.id"
+      :href="podcast.url"
+      :hide-external-icon="true"
+    >
+      <span class="flex">
+        <span class="mr-2">
+          <PodcastIcon
+            :icon="podcast.icon"
+            :icon-url="podcast.iconUrl"
+            :alt="podcast.label + ' podcast service icon'"
+          />
         </span>
-      </MenuItem>
-    </template>
+        {{ podcast.label }}
+      </span>
+    </MenuItem>
   </DropdownButton>
 </template>
 
@@ -46,4 +62,3 @@ const btnText = computed(() => theme.value.t.listenPodcast)
   transform: none;
 }
 </style>
-

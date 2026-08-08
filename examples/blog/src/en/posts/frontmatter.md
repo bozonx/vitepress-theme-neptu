@@ -15,9 +15,9 @@ videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: EN
 podcastLang: EN
 podcasts:
-  spotify: https://open.spotify.com/
-  applepodcasts: https://podcasts.apple.com/
-  youtube: https://www.youtube.com/
+  - applepodcasts: https://podcasts.apple.com/
+  - spotify: https://open.spotify.com/
+  - youtube: https://www.youtube.com/
 translations:
   ru: /ru/posts/frontmatter
 date: 2026-07-29
@@ -129,12 +129,25 @@ videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: EN
 # Podcast language — short label next to the button.
 podcastLang: EN
-# Platform → episode URL. Keys are arbitrary platform names.
-# Rendered as a dropdown at the top of the post.
+# Ordered list of podcast links, rendered as a dropdown at the top of the post.
+# Each item is `<platform id>: <episode URL>`; menu order follows list order.
+# Built-in ids: site, rss, applepodcasts, spotify, youtube, youtubemusic,
+# amazonmusic, castbox, deezer, iheartradio, tunein, pocketcasts, overcast,
+# podcastaddict, podcastindex.
+# Any other id works too — register its label and icon once in
+# themeConfig.podcastPlatforms, or describe it inline (see the last item).
+# An unregistered id still links correctly, with a label derived from the id
+# and a generic podcast icon.
 podcasts:
-  spotify: https://open.spotify.com/
-  applepodcasts: https://podcasts.apple.com/
-  youtube: https://www.youtube.com/
+  - applepodcasts: https://podcasts.apple.com/
+  - spotify: https://open.spotify.com/
+  - youtube: https://www.youtube.com/
+  - rss: https://example.com/podcast/rss
+  - site: https://example.com/episode-1
+  - id: podimo
+    url: https://podimo.com/
+    label: Podimo
+    iconUrl: /icons/podimo.svg
 # Discussion URL (GitHub Discussions, Disqus, Telegram, etc.) — button in the post footer.
 commentLink: https://github.com/.../discussions
 
