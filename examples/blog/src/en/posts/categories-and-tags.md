@@ -1,138 +1,120 @@
 ---
-title: Categories and Tags
+title: Categories and tags
 description: >
-  A category is the post's one section and its breadcrumb trail; tags are free
-  labels. How to declare them, where they show up, and what you can configure.
-date: 2025-05-06T10:00:00Z
+  How categories and tags are implemented in the theme, their differences,
+  configuration in _categories.yaml, and usage in post frontmatter.
 authorId: ivan-k
-category: configuration
-tags:
-  - guide
-  - config
+date: 2026-07-10
+category: writing
+tags: [categories, tags, config]
 descriptionAsPreview: true
+translations:
+  ru: /ru/posts/categories-and-tags
 ---
 
-The theme has two taxonomies. They share the same internals but answer
-different questions:
+Categories and tags are two taxonomies for organizing posts. They look similar at first glance but serve different purposes and are configured differently.
+
+## What's the difference
 
 | | Categories | Tags |
 | --- | --- | --- |
-| Per post | usually one | as many as you like |
-| Meaning | a section of the blog | free-form labels |
-| Breadcrumbs | built from it | none |
-| Pages | [`categories/`](../categories/) | [`tags/`](../tags/) |
-| Post-footer block | `PostCategories` | `PostTags` |
-| Search filter | `category` | `tag` |
+| **Registry** | `_categories.yaml` — defined once per locale | No registry — created directly in posts |
+| **Linking** | By `id` from the registry | By slug (auto-generated from name) |
+| **URL** | `/categories/<slug>/1` | `/tags/<slug>/1` |
+| **Purpose** | Blog structure, breadcrumbs | Free-form labeling |
+| **Cross-locale** | Same `id` ties categories across locales | Same slug ties tags across locales |
 
-Neither needs a registry file — both are collected from post frontmatter at
-build time.
+## Categories
 
-## Declaring a category
+Categories are the structural backbone of the blog. They're defined in `_categories.yaml` and referenced by `id` in post frontmatter.
 
-The ordinary case is one category, written as a string:
+### Defining categories
 
 ```yaml
----
-title: Getting started in five minutes
-category: Getting Started
-tags:
-  - guide
----
+# src/en/_categories.yaml
+- id: 'getting-started'
+  name: 'Getting Started'
+
+- id: 'writing'
+  name: 'Writing'
+  # slug defaults to id; set it only when you want a different URL
+  slug: 'writing'
 ```
 
-The URL slug is transliterated from the name: `Getting Started` →
-`/en/categories/getting-started/1`. Set it yourself with the object form:
+The `id` is the same across all locales — it's what ties `/en/categories/writing/1` to `/ru/categories/kontent/1` so the language switcher can follow a category page. The `name` is localized. The `slug` defaults to `id` but can be overridden for localized URLs.
+
+### Using categories in posts
 
 ```yaml
-category: { name: 'Getting Started', slug: 'start' }
-```
+# Single category (syntactic sugar)
+category: writing
 
-If a post genuinely belongs in several sections, use `categories` — it accepts
-strings and objects alike:
-
-```yaml
+# Multiple categories
 categories:
-  - Getting Started
-  - { name: 'Configuration', slug: 'setup' }
+  - writing
+  - advanced
 ```
 
-`category` is sugar for a single-entry list. At build time the theme folds both
-fields into one normalized `categories` list, de-duplicated by slug, so
-components and structured data always read a single shape. Declaring both is
-fine — the `category` value comes first.
+The `category` field is merged with `categories` at build time. The first category in the list builds the breadcrumbs.
 
-**The first category wins.** It is the one that builds the breadcrumb trail and
-the `BreadcrumbList` markup. The rest appear as chips in the post footer.
+### Breadcrumbs
 
-## What you get for free
+Breadcrumbs are automatically generated from the post's first category. They appear at the top of the post page and show the path from the home page to the current post:
 
-These pages are generated at build time — you do not create them:
+Home → Category name → Post title
 
-| Page | URL |
-| --- | --- |
-| All categories | [`categories/`](../categories/) |
-| Posts in a category | `categories/<slug>/<page>` |
-| Popular in a category | `categories/<slug>/popular/<page>` |
+## Tags
 
-Plus, on post pages: the breadcrumb trail above the title, the category block in
-the footer, and the category cloud in the sidebar.
-
-::: tip Upgrading an existing blog
-Categories arrived after the first template releases. If your blog was scaffolded
-earlier, copy `src/<locale>/categories/` from the
-[template](https://github.com/bozonx/vitepress-theme-neptu/tree/main/packages/blog/template/src/en/categories)
-— without those files VitePress never builds the category routes.
-:::
-
-## Configuration
+Tags are free-form — no registry needed. You define them directly in post frontmatter:
 
 ```yaml
-# src/site.yaml
+# Simple strings
+tags: [markdown, guide, syntax]
+
+# With explicit slug
+tags:
+  - name: 'Markdown Guide'
+    slug: 'markdown-guide'
+  - name: 'Syntax Reference'
+```
+
+If no slug is provided, it's auto-generated by transliterating the tag name.
+
+### Tag pages
+
+The theme automatically generates a page for each tag at `/tags/<slug>/1`. These pages list all posts with that tag, sorted by date.
+
+### Tag cloud
+
+A tag cloud showing all tags with post counts is available on the `/tags/` page and can be displayed on the home page via `home.sections`.
+
+## URLs
+
+| Taxonomy | URL pattern |
+| --- | --- |
+| All categories | `/categories/` |
+| Single category | `/categories/<slug>/<page>` |
+| All tags | `/tags/` |
+| Single tag | `/tags/<slug>/<page>` |
+
+## Sidebar links
+
+Both categories and tags can be shown in the sidebar:
+
+```yaml
+# src/en/_site.yaml
 themeConfig:
   sidebar:
-    tags: true
-    categories: true # off unless set
-    # How many categories the sidebar shows before the "all categories" link.
-    categoriesCount: 10
-  # Icon for category links; falls back to tagsIcon.
-  categoriesIcon: 'fa6-solid:folder-open'
-  postFooter:
-    - categories
-    - tags
+    links:
+      - text: 'Categories'
+        href: 'categories/'
+        icon: 'fa6-solid:folder-open'
+      - text: 'Tags'
+        href: 'tags/'
+        icon: 'fa6-solid:tag'
 ```
 
-Drop `categories` from `postFooter` to hide the footer block — the order of the
-keys is the order of the blocks.
+## What's next
 
-## Breadcrumbs
-
-The trail is rendered only for posts that have a category:
-`Home / Categories / <Category> / <Title>`. Without one there is no hierarchy to
-express, and "Home / Post title" tells the reader nothing — so it is omitted.
-
-The matching `BreadcrumbList` JSON-LD is emitted alongside the visible trail —
-see [JSON-LD structured data](json-ld).
-
-`NeptuBreadcrumbs` is exported too, if you want a trail of your own:
-
-```vue
-<script setup>
-import { NeptuBreadcrumbs } from 'vitepress-theme-neptu/components'
-</script>
-
-<NeptuBreadcrumbs
-  :items="[
-    { text: 'Home', href: '/' },
-    { text: 'Docs', href: 'pages/docs' },
-    { text: 'Current page' },
-  ]"
-/>
-```
-
-Relative hrefs (`pages/docs`) get the active locale prefix automatically. The
-last item needs no `href` — the current page renders as plain text.
-
-## Search
-
-Categories are indexed as the `category` facet and tags as `tag`, so the search
-UI can filter by either — see [Preview and search](preview-and-search).
+- [All frontmatter fields](frontmatter) — complete frontmatter reference
+- [Lists and pages](lists-and-pages) — how post lists are generated

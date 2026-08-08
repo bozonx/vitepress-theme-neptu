@@ -1,155 +1,113 @@
 ---
-title: Where to Put Images & Media
+title: Where to store images and media
 description: >
-  Three supported approaches for placing media files — shared public directory,
-  co-located next to the markdown file, or folder-per-article with a media
-  subfolder — and which one to choose.
-date: 2025-07-30T19:00:00Z
+  Three methods for organizing media files: a global public folder, alongside
+  markdown files, or in a dedicated media subfolder per article.
 authorId: ivan-k
+date: 2026-07-15
 category: media
-tags:
-  - media
-  - guide
+tags: [media, images, structure]
 descriptionAsPreview: true
 translations:
   ru: /ru/posts/media-asset-placement
 ---
 
-The theme supports three ways to organize images and other media files. All
-three work for both cover images (frontmatter `cover`) and body images
-(markdown `![alt](src)`). Pick the one that fits your workflow.
+The theme supports three methods for placing media assets (images, videos, audio) in your blog. All three work with automatic `width`/`height` attributes and built-in media components.
 
-## 1. Shared public directory
+## Method 1: Global `public` folder
 
-The classic VitePress approach. All media lives under `src/public/` and is
-referenced with an absolute path starting from the public root.
+Place files in `src/public/` — they're copied to the site root as-is:
 
 ```text
 src/
 ├─ public/
-│  └─ img/
-│     ├─ cover.jpg
-│     └─ screenshot.png
-└─ en/
-   └─ posts/
-      └─ my-article.md
+│  ├─ img/
+│  │  ├─ logo.webp
+│  │  └─ hero-bg.jpg
+│  └─ media/
+│     └─ sample.mp3
 ```
 
-```yaml
-# frontmatter
-cover: /img/cover.jpg
-```
+Reference them with absolute paths starting from the site root:
 
 ```md
-<!-- body -->
-![Screenshot](/img/screenshot.png)
+![Logo](/img/logo.webp)
 ```
 
-**When to use**: small blogs with few images, shared assets across posts
-(logos, icons), or when you prefer a single media folder.
+**Use case:** shared assets used across multiple posts — logos, icons, background images, favicon.
 
-## 2. Co-located next to the markdown file
+## Method 2: Alongside markdown
 
-Images sit right next to the `.md` file and are referenced with a relative
-path. The theme reads dimensions automatically at build time.
+Place media files next to the `.md` file:
 
 ```text
-src/
-└─ en/
-   └─ posts/
-      ├─ my-article.md
-      ├─ cover.jpg
-      └─ screenshot.png
+src/en/posts/
+├─ my-article.md
+├─ cover.jpg
+└─ diagram.png
 ```
 
+Reference them with relative paths:
+
+```md
+![Diagram](./diagram.png)
+```
+
+Or in frontmatter:
+
 ```yaml
-# frontmatter — relative path
 cover: ./cover.jpg
 ```
 
-```md
-<!-- body — relative path -->
-![Screenshot](./screenshot.png)
-```
+The theme resolves relative paths to site-root paths at build time. `./cover.jpg` becomes `/en/posts/my-article/cover.jpg` in the built site.
 
-**When to use**: tutorials with screenshots, posts where you want everything
-in one place. Deleting the `.md` file also deletes its images.
+**Use case:** simple posts with a few images that don't need a separate folder.
 
-## 3. Folder-per-article with a media subfolder
+## Method 3: Per-article `media` subfolder
 
-Each article gets its own directory. The markdown file is `index.md` and
-media lives in a subfolder (commonly named `media`). With `cleanUrls: true`
-(enabled by default), the URL stays clean: `/en/posts/my-article/`.
+For posts organized as folders, use a `media/` subfolder:
 
 ```text
-src/
-└─ en/
-   └─ posts/
-      └─ my-article/
-         ├─ index.md
-         └─ media/
-            ├─ cover.jpg
-            ├─ diagram.svg
-            └─ photo.png
+src/en/posts/
+├─ my-article/
+│  ├─ index.md
+│  └─ media/
+│     ├─ cover.jpg
+│     ├─ photo1.jpg
+│     └─ video.mp4
+```
+
+Reference them the same way as method 2:
+
+```md
+![Photo](./media/photo1.jpg)
 ```
 
 ```yaml
-# frontmatter — relative to index.md
 cover: ./media/cover.jpg
 ```
 
-```md
-<!-- body — relative to index.md -->
-![Diagram](./media/diagram.svg)
-![Photo](./media/photo.png)
-```
+**Use case:** media-heavy articles with many images, videos or audio files. Keeps everything for one article in one place.
 
-**When to use**: image-heavy articles, long-form posts with many screenshots,
-when you want the whole article (text + media) portable as a single folder.
+## How paths are resolved
 
-## Comparison
+All three methods support automatic `width`/`height` attribute injection. The theme reads image dimensions at build time and adds them to `<img>` tags to prevent Cumulative Layout Shift (CLS).
 
-| Approach | Path style | Portable | Auto dimensions | Best for |
-|---|---|---|---|---|
-| Public directory | `/img/foo.png` | No | Yes | Small blogs, shared assets |
-| Co-located | `./foo.png` | Yes | Yes | Tutorials, single-file posts |
-| Folder-per-article | `./media/foo.png` | Yes | Yes | Image-heavy, long-form |
+| Method | Source path | Built path |
+| --- | --- | --- |
+| `public/` | `/img/logo.webp` | `/img/logo.webp` |
+| Alongside MD | `./cover.jpg` | `/en/posts/my-article/cover.jpg` |
+| `media/` subfolder | `./media/photo1.jpg` | `/en/posts/my-article/media/photo1.jpg` |
 
-All three approaches get automatic `width`/`height` injection for both cover
-images and standalone body images (those wrapped in `<figure>`).
+## Which method to choose
 
-## Mix and match
+- **`public/`** — for site-wide shared assets (logos, icons, favicons)
+- **Alongside MD** — for simple posts with 1-3 images
+- **`media/` subfolder** — for media-heavy articles with many files
 
-You are not locked into one approach. A common pattern:
+All three methods work seamlessly with the built-in media components (`YouTubeVideo`, `VideoFile`, `AudioFile`, `FileDownload`) and cover images.
 
-- **Shared assets** (logo, favicon, default OG image) in `src/public/`
-- **Article media** co-located or in a folder-per-article
+## What's next
 
-```md
-<!-- shared logo from public -->
-![Site logo](/img/logo.svg)
-
-<!-- local screenshot co-located with the article -->
-![Step 1](./screenshot-1.png)
-```
-
-## Media components
-
-The theme's built-in components (`YouTubeVideo`, `VideoFile`, `AudioFile`,
-`FileDownload`) also work with all three approaches. For local files, use
-absolute paths from the public directory:
-
-```md
-<VideoFile url="/media/demo.mp4" filename="Demo video" />
-```
-
-For co-located video/audio, reference the file with a relative path the same
-way as images — VitePress resolves it at build time.
-
-## Recommendation
-
-- **Starting out**: use `src/public/` — simplest, no surprises.
-- **Growing blog with many images**: switch to co-located or
-  folder-per-article for new posts. Existing posts in `public/` keep working.
-- **Team / CMS workflow**: folder-per-article makes reviews and imports
-  easier — each article is self-contained.
+- [Covers, images and media](covers-images-media) — cover configuration and media components
+- [Project structure](project-structure) — overall folder structure

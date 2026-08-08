@@ -1,102 +1,108 @@
 ---
-title: Localization & hreflang
+title: Linking translations and hreflang
 description: >
-  This blog ships English and Russian. Learn how locale folders, the language
-  switcher, the translations field, and automatic hreflang tags fit together.
-date: 2024-10-02T08:00:00Z
+  How to link translations of the same article with the translations field and
+  what the language switcher and hreflang tags get from it.
 authorId: maria-editor
 cover: https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
-coverAlt: Colorful flags of many countries
-category: seo
-tags:
-  - seo
-  - i18n
-descriptionAsPreview: true
-# Link this post to its Russian counterpart. The theme uses this for the
-# language switcher AND for the <link rel="alternate" hreflang="ru"> tag.
+coverAlt: Colorful flags of different countries
 translations:
   ru: "/ru/posts/i18n-hreflang"
+date: 2026-07-13
+category: i18n
+tags: [i18n, seo]
+descriptionAsPreview: true
 ---
 
-This very post exists in **Russian** too. Use the **language switcher** in the
-top bar to jump to it — and notice the switcher lands you on the *translated
-post*, not the Russian home page, because the two are linked.
+This article is also available in **Russian**. Click the language switcher in the top bar — it will take you to the translated article, not the home page, because the versions are linked. Here we explain how this linking works and what it gives search engines. The locale system itself is described in [Locales and multilingual support](locales).
 
-## How locales work
+## Two matching methods
 
-Each language is a folder under `src/` with its own `_site.yaml`. The theme
-auto-discovers them — no locale list to maintain in code:
+The theme looks for page translations in this order:
 
-```
-src/
-  en/   ← _site.yaml, posts, listing routes
-  ru/   ← _site.yaml, posts, listing routes
-```
+1. **`translations` field** in frontmatter — if present, it's the source of truth.
+2. **Same relative path** of the article in other locales — fallback.
 
-This is the required structure for single-language sites too. Keeping only
-`src/en/` is complete and does not require creating translations. Neptu does
-not treat root-level posts and pages as a second content mode: `src/index.md`
-is reserved for a neutral language selector.
-The config helper enforces this at build time: `locales.root` and root Markdown
-files other than `src/index.md` fail with a migration hint.
-
-Every locale gets its own home page, feeds, sitemap entries, and full set of
-listing layouts (recent / popular / archive / authors / tags).
-
-The root selector renders ordinary links to every locale, each written in its
-own language, with no prose beyond the site title. Browser-language detection
-highlights the matching link and scrolls it into view — no badge, no label to
-translate — but it never redirects. The page stays indexable because
-`hreflang="x-default"` points at it. For a
-single-language deployment that needs an immediate `/` → `/en/` transition,
-configure a permanent HTTP 301 or 308 redirect at the hosting layer instead of
-adding a JavaScript timer.
-
-## Linking translations
-
-Add a `translations` map to a post's frontmatter to connect it with the same
-article in other languages:
-
-### How it's done
+### Explicit matching
 
 ```yaml
-# in src/en/posts/i18n-hreflang.md
+# src/en/posts/i18n-hreflang.md
 translations:
   ru: "/ru/posts/i18n-hreflang"
 ```
 
 ```yaml
-# in src/ru/posts/i18n-hreflang.md
+# src/ru/posts/i18n-hreflang.md
 translations:
   en: "/en/posts/i18n-hreflang"
 ```
 
-From this the theme does two things automatically:
+The link is specified from both sides: each page declares where its translations live.
 
-1. **Language switcher** — sends readers to the matching translation.
-2. **hreflang tags** — emits `<link rel="alternate" hreflang="…">` for each
-   linked language plus `x-default`, so Google serves the right version per
-   user. Inspect `<head>` to see them.
-
-## Per-locale identity
-
-Each `_site.yaml` sets its own `lang`, labels, and can override any
-theme string via the `t` translation map:
+Explicit translations are only needed when article names or folders differ across locales, i.e., the slug paths are not identical.
 
 ```yaml
-# src/ru/_site.yaml
-lang: 'ru-RU'
+translations:
+  en: /en/posts/hello-world
+  'pt-BR': /pt-BR/artigos/ola-mundo
 ```
+
+### Path matching
+
+If you follow an approach where all article paths are the same across locales — including folders and subfolders, with only the content differing by language — then there's no need to specify the `translations` field in article frontmatter. Translations will be detected automatically:
+
+```text
+en/posts/article/hello-world.md  ←→  ru/posts/article/hello-world.md  ←→  de/posts/article/hello-world.md
+```
+
+### Generated lists
+
+Tag pages, category pages, author pages, archive pages, as well as `recent/`, `popular/` and `featured/` — these are not files but routes that the theme builds from your posts. Both methods above don't apply to them: `[slug]/[page].md` is physically the same file in all locales, so "path matching" always "works," even if such a page doesn't exist in the other locale.
+
+So a separate rule applies:
+
+- **matching by meaning, not by path.** Category — by `id` from `_categories.yaml`, tag — by slug, author — by `authorId`, archive — by year;
+- **always to the first page.** The reader is switching languages, not wanting the same page number in a different set of posts — and the third page in another locale might not exist;
+- **no link if the list in the target locale is empty** or that section doesn't exist there at all. The route for an empty list is not built, and a section can be disabled by removing its folder — see [Project structure](project-structure).
+
+## What the theme does with the link
+
+If an article has a translation, the **language switcher** in the top bar contains links to the current article's versions in other languages.
+
+The presence of a translation is checked at build time by scanning files in `srcDir`, and the result is written to the page. So the switcher offers exactly the languages in which the page actually exists, and matches the `hreflang` tags — they're now computed from the same source.
+
+Also, **hreflang tags** appear in the page's `<head>` — one `<link rel="alternate">` for each found version, including the current one, plus `x-default`. View the source of this page, they're there:
+
+```html
+<link rel="alternate" hreflang="ru-RU" href="https://…/ru/posts/i18n-hreflang" />
+<link rel="alternate" hreflang="en-US" href="https://…/en/posts/i18n-hreflang" />
+<link rel="alternate" hreflang="x-default" href="https://…/en/posts/i18n-hreflang" />
+```
+
+This tells search engines: these pages are not duplicates, but versions of the same content for different languages — and the reader should be shown the one matching their language.
+
+Implementation details:
+
+- **The `hreflang` attribute value is the full `lang` of the locale** (`ru-RU`, `pt-BR`), as set in its `_site.yaml`, not the folder name.
+- **`x-default` points to the primary locale.** The primary locale is determined by the `primaryLocale` field in `.vitepress/config.ts`. If not set, `en` is used (if it exists), otherwise the first locale alphabetically.
+  Exception — locale home pages: for them `x-default` points to the root language selection page.
+- **The version must exist on disk.** The theme checks the file before outputting the link, so there are no broken hreflang tags.
+- If you have only one language in the blog, hreflang doesn't appear in `head` because there's simply no need.
+- Drafts (`draft: true`) are excluded from hreflang automatically along with canonical and JSON-LD — see [Drafts, reading time, video and podcasts](drafts-video-podcasts).
+
+:::tip
+Absolute addresses are built from `siteUrl` — without it the tags won't appear, so set it before publishing (see [SEO overview](seo-features)).
+:::
 
 ## Primary locale
 
-The `primaryLocale` field sets which locale is the site's primary language. It
-controls:
+The `primaryLocale` field sets the locale that's considered the primary one for the site.
+It's used for:
 
-- the `x-default` target in hreflang tags;
-- the `title` and `description` of the root language selector page at `/`.
+- `x-default` in hreflang tags (see above);
+- `title` and `description` of the root language selection page at `/`.
 
 ```ts
 // .vitepress/config.ts
@@ -106,10 +112,25 @@ const config: BlogUserConfig = {
 }
 ```
 
-The value is the locale folder name (`en`, `ru`, `pt-BR`). When omitted, `en`
-is used if it exists, otherwise the first locale alphabetically.
+The value is the locale folder name (`ru`, `en`, `pt-BR`). If not set, the primary locale defaults to `en` (if it exists), otherwise the first locale alphabetically.
 
-## Toggles
+## How to disable
 
-hreflang is on by default; disable per page with `seo.hreflang: false`, or
-globally in `src/site.yaml` under `themeConfig.seo`.
+```yaml
+# Globally — src/site.yaml
+themeConfig:
+  seo:
+    hreflang: false
+```
+
+```yaml
+# For a single page — in frontmatter
+seo:
+  hreflang: false
+```
+
+## What's next
+
+- [Locales and multilingual support](locales) — routing, locale naming, adding a language
+- [Interface translations and language selection page](i18n-translations) — built-in translations, `t` key reference, `extends`
+- [SEO mechanisms](seo-features) — feeds, robots, sitemap, canonical and cross-posting

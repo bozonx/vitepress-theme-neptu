@@ -1,9 +1,36 @@
-:root,
+:root {
+  --pagefind-ui-primary: var(--vp-c-text-2);
+  --pagefind-ui-text: var(--vp-c-text-2);
+  --pagefind-ui-background: var(--vp-c-bg);
+  --pagefind-ui-border: var(--vp-c-divider);
+  --pagefind-ui-tag: var(--vp-c-bg-soft);
+}
+
+.dark,
 :root.dark,
 :root.dark :before {
   --pagefind-ui-primary: var(--vp-c-text-2);
   --pagefind-ui-text: var(--vp-c-text-2);
   --pagefind-ui-background: var(--vp-c-bg);
   --pagefind-ui-border: var(--vp-c-divider);
-  --pagefind-ui-tag: var(--vp-c-text-2);
+  --pagefind-ui-tag: var(--vp-c-bg-soft);
 }
+
+/* Hide empty Pagefind UI elements to prevent rendering blank boxes */
+.pagefind-ui__result-tags:empty,
+.pagefind-ui__result-tag:empty,
+.pagefind-ui__result-thumb:empty {
+  display: none !important;
+}
+
+/* Ensure result tags have proper contrast, readable text, and clean badge styling */
+.pagefind-ui__result-tag {
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: var(--neptu-radius-xs, 4px);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+

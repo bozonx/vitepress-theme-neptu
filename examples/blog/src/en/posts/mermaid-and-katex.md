@@ -1,131 +1,108 @@
 ---
-title: Mermaid Diagrams and KaTeX Formulas
-description: Opt-in recipes for adding Mermaid and KaTeX to a Neptu blog without increasing every site's bundle.
-date: 2026-07-31
+title: Mermaid diagrams and KaTeX formulas
+description: >
+  How to integrate Mermaid diagrams and KaTeX mathematical formulas as optional
+  Markdown extensions in the Neptu theme.
 authorId: ivan-k
-category: writing
-tags: [guide, advanced]
+date: 2026-07-26
+category: advanced
+tags: [mermaid, katex, markdown, plugins]
+descriptionAsPreview: true
 translations:
   ru: /ru/posts/mermaid-and-katex
 ---
 
-# Mermaid Diagrams and KaTeX Formulas
+Mermaid diagrams and KaTeX formulas are optional Markdown extensions. They're not included by default — install and configure them only if you need them.
 
-Mermaid and KaTeX are opt-in Markdown integrations. The theme preserves your
-VitePress `markdown.config`, so both can be added without changing Neptu.
+## Mermaid diagrams
 
-## Mermaid
-
-Install the renderer and Mermaid itself:
+### Installation
 
 ```bash
-pnpm add -D vitepress-plugin-mermaid mermaid
+npm install vitepress-plugin-mermaid
 ```
 
-In `.vitepress/config.ts`, wrap the already resolved Neptu config:
+### Configuration
 
 ```ts
+// .vitepress/config.ts
 import { withMermaid } from 'vitepress-plugin-mermaid'
-import { defineBlogConfig } from 'vitepress-theme-neptu/configs'
 
-export default async () => {
-  const config = {
-    // your existing Neptu config
-  }
-
-  return withMermaid(await defineBlogConfig(config))
-}
-```
-
-Then use a normal fenced block:
-
-````md
-```mermaid
-flowchart LR
-  Draft --> Review --> Publish
-```
-````
-
-`withMermaid` must remain the outer wrapper so it can add its VitePress hooks.
-See the [plugin repository](https://github.com/emersonbottero/vitepress-plugin-mermaid)
-for Mermaid configuration and version compatibility.
-
-Mermaid configuration — theme, diagram direction, and other options — is
-passed as the `mermaid` property inside the config object:
-
-```ts
-return withMermaid({
-  ...await defineBlogConfig(config),
+export default withMermaid({
+  // your VitePress / Neptu config
   mermaid: {
-    // MermaidConfig — see https://mermaid.js.org/config/setup/modules/mermaidAPI.html
+    // Mermaid.js options
+    theme: 'default',
   },
 })
 ```
 
-Mermaid renders on the client: during SSR and in the built HTML diagrams are
-empty, then drawn after hydration. This is expected and requires no extra
-configuration.
+### Usage
 
-## KaTeX
+````md
+```mermaid
+flowchart LR
+    A[Write article] --> B[Review] --> C[Publish]
+```
+````
 
-Install the Markdown-it plugin (KaTeX is installed automatically as a dependency):
+## KaTeX formulas
+
+### Installation
 
 ```bash
-pnpm add -D @mdit/plugin-katex
+npm install @mdit/plugin-katex
 ```
 
-Register it through the existing VitePress Markdown hook:
+### Configuration
 
 ```ts
-import { katex } from '@mdit/plugin-katex'
+// .vitepress/config.ts
+import { katex as katexPlugin } from '@mdit/plugin-katex'
 
-const config = {
+export default async () => defineBlogConfig({
   markdown: {
     config(md) {
-      md.use(katex)
+      md.use(katexPlugin)
     },
   },
-  // the rest of your Neptu config
-}
+})
 ```
 
-Import the required stylesheet once in `.vitepress/theme/index.ts`:
+### Import styles
 
-```ts
-import 'katex/dist/katex.min.css'
+```css
+/* .vitepress/theme/styles.css */
+@import 'katex/dist/katex.css'
 ```
 
-The plugin accepts options — for example, to avoid breaking rendering on error:
-
-```ts
-md.use(katex, { throwOnError: false })
-```
-
-Inline and display formulas then use dollar delimiters:
+### Usage
 
 ```md
-Euler's identity is $e^{i\pi}+1=0$.
+Euler's formula: $e^{i\pi} + 1 = 0$
 
 $$
 x = {-b \pm \sqrt{b^2-4ac} \over 2a}
 $$
 ```
 
-The full-content feed renderer intentionally handles safe standard Markdown,
-not arbitrary VitePress plugins or Vue components. Mermaid blocks and KaTeX
-formulas therefore remain source text in feeds unless you provide a custom feed
-transformer.
+Inline formulas use `$...$`, block formulas use `$$...$$`.
 
 ## Troubleshooting
 
-- **Formulas render as source text** — make sure KaTeX CSS is imported in
-  `theme/index.ts` and the plugin is registered in `markdown.config`.
-- **`$` conflicts with currency** — escape the dollar sign in non-formula text
-  with `\$`, or configure different delimiters via plugin options.
-- **Diagram does not appear** — Mermaid only renders in the browser. Open the
-  DevTools console: diagram syntax errors are logged there.
+### Mermaid not rendering
 
-The KaTeX setup follows the
-[`@mdit/plugin-katex` documentation](https://mdit-plugins.github.io/katex.html).
-If KaTeX is not a requirement, VitePress also documents a built-in opt-in
-[MathJax setup](https://vitepress.dev/guide/markdown#math-equations).
+- Ensure `withMermaid` wraps your config
+- Check that the mermaid code block uses `mermaid` as the language
+- Verify the diagram syntax at [mermaid.live](https://mermaid.live)
+
+### KaTeX not rendering
+
+- Ensure the CSS import is in your `styles.css`
+- Check for conflicting `$` signs in your markdown (escape with `\$`)
+- Verify formula syntax at [katex.org](https://katex.org)
+
+## What's next
+
+- [Markdown features](markdown-syntax) — full markdown reference
+- [Customization](customization) — custom styles and CSS variables

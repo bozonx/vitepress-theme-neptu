@@ -1,38 +1,18 @@
 ---
-title: Full-Featured Post — Every Frontmatter Field
+title: All frontmatter fields
 description: >
-  The kitchen-sink post: cover, author, tags, preview override, video button,
-  podcast dropdown, and comment link, all enabled so you can see them together.
-date: 2025-05-15T12:00:00Z
+  All frontmatter capabilities: cover, author, tags, preview, video button, podcast
+  dropdown and discussion link — all included out of the box.
+layout: post
 authorId: ivan-k
-
-# --- Cover ---------------------------------------------------------------
 cover: https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=1200&auto=format&fit=crop
 coverWidth: 1200
 coverHeight: 800
-coverAlt: A tidy desk with a keyboard, notebook and plant
+coverAlt: A tidy desk with a keyboard, notebook and a plant
 coverDescription: "coverDescription supports **markdown** and [links](https://unsplash.com)."
-
-# --- Taxonomy ------------------------------------------------------------
-# One category files the post in the hierarchy and drives the breadcrumbs.
-category: writing
-tags:
-  - frontmatter
-  - guide
-
-# --- List preview --------------------------------------------------------
-# Reuse `description` as the post-list preview (instead of an auto excerpt).
-descriptionAsPreview: true
-# previewText: "Or set explicit preview text — use one or the other, not both."
-
-# --- Footer links --------------------------------------------------------
 commentLink: https://github.com/bozonx/vitepress-theme-neptu/discussions
-
-# --- Video button (top of post) ------------------------------------------
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: EN
-
-# --- Podcast dropdown ----------------------------------------------------
 podcastLang: EN
 podcasts:
   spotify: https://open.spotify.com/
@@ -40,75 +20,281 @@ podcasts:
   youtube: https://www.youtube.com/
 translations:
   ru: /ru/posts/frontmatter
+date: 2026-07-29
+category: writing
+categories:
+  - writing
+tags: [frontmatter]
+descriptionAsPreview: true
+previewText: 'Custom preview text for the post list card.'
+featured: true
+readingTime: true
+aside: true
+toc: true
+ads: false
+searchIncluded: true
+canonical: https://example.com/canonical-url
+seo:
+  og: true
+  jsonLd: true
+  hreflang: true
+  canonical: true
+  autoCanonical: true
+  rss: true
+  maxDescriptionLength: 160
+# draft: true
+# contentLayout: MyCustomContent
+# jsonLd: '{"@context":"https://schema.org","@type":"BlogPosting"}'
 ---
 
-This is the **kitchen-sink** post. Every optional frontmatter field is turned on
-so you can see, in one place, how the theme renders each one. Look around: the
-cover and its caption are above, the author block, tags, comment link, video
-button and podcast dropdown are all wired from the frontmatter.
+Using the frontmatter section of a Markdown document, you can very flexibly configure each post. Frontmatter is a block at the beginning of a Markdown file delimited by two lines of three dashes `---`, containing post metadata in YAML format. The block itself is not rendered on the page, but its data affects the display, SEO and other aspects of the blog.
 
-## What's on this page
+The set of available fields depends on the `layout` value. Posts have the most fields — let's start with them, then cover regular pages (`layout: page`) and the home page (`layout: home`), where only a subset of fields work.
 
-| Feature | Field(s) | Where it shows |
-| --- | --- | --- |
-| Cover image + caption | `cover`, `coverWidth/Height`, `coverAlt`, `coverDescription` | top of post |
-| Author block | `authorId` | post footer |
-| Tags | `tags` | header + footer |
-| List preview | `descriptionAsPreview` | post-list cards |
-| Video button | `videoLink`, `videoLinkLang` | top of post |
-| Podcast dropdown | `podcasts`, `podcastLang` | top of post |
-| Comment link | `commentLink` | post footer |
-
-## How it's done
+## Full frontmatter example for a post
 
 ```yaml
 ---
-title: Full-Featured Post — Every Frontmatter Field
+### Core ###
+
+# Publication date. String or Date. Used for post sorting,
+# article:published_time in OG and datePublished in JSON-LD.
+# The only required field for posts
+date: 2026-07-29
+# Optional title override. By default it's taken from the first H1 heading
+title: All frontmatter fields
+# This goes into the meta description of the page
 description: >
-  The kitchen-sink post: cover, author, tags, preview override…
-date: 2025-05-15T12:00:00Z
+  All frontmatter capabilities: cover, author, tags, preview, video button, podcast
+  dropdown and discussion link — all included out of the box.
+# layout for posts can be omitted — the default is 'post' anyway.
+# Available options: post, home, page, util, tag, category, archive, author.
+# Also: false — bare content without sidebar, header and footer;
+# a globally registered component name — full layout replacement.
+layout: post
+# Author ID from themeConfig.authors. If the ID is not found — the author block is not rendered.
+# Make sure to specify the author ID correctly so post lists by author are built correctly.
 authorId: ivan-k
 
+### Categories and tags ###
+
+# category — syntactic sugar for a single category.
+# The value is an `id` from src/<locale>/_categories.yaml; the name and URL
+# are taken from there. At build time the field is merged with categories and removed.
+# Duplicate ids are dropped, so category + categories with the same id
+# won't produce a duplicate chip.
+category: writing
+# List of categories — same ids. Needed only if a post belongs to multiple
+# categories at once; the first one builds the breadcrumbs.
+categories:
+  - writing
+# Tags don't require a registry: a string or { name, slug } right here.
+# slug is generated by transliteration if not specified explicitly.
+tags: [frontmatter]
+
+### Cover ###
+
+# Cover URL. Supports URLs and co-located paths: ./media/cover.jpg —
+# automatically resolved to a site-root path (/en/posts/.../media/cover.jpg).
 cover: https://images.unsplash.com/photo-...
+# If not specified — automatically computed from the local file.
+# For external URLs (https://...) you need to specify them manually to avoid CLS (Cumulative Layout Shift - content jumping when images load).
 coverWidth: 1200
 coverHeight: 800
-coverAlt: A tidy desk with a keyboard, notebook and plant
-coverDescription: "coverDescription supports **markdown** and [links](...)."
+# alt text for <img> and og:image:alt. Plain text, no markdown.
+coverAlt: A tidy desk with a keyboard, notebook and a plant
+# Caption under the cover. Unlike coverAlt — supports markdown,
+# which is converted to HTML at build time.
+coverDescription: "coverDescription supports **markdown** and [links](https://unsplash.com)."
 
-tags: [frontmatter, guide]
-descriptionAsPreview: true
+### Preview in post lists ###
 
-commentLink: https://github.com/.../discussions
+# Use description as the preview text in post list cards.
+# Priority: previewText > descriptionAsPreview > auto-extract from content.
+# Default: false.
+descriptionAsPreview: false
+# Explicit preview text. Has the highest priority — overrides descriptionAsPreview.
+# An empty string ('') disables the preview, it's not ignored.
+previewText: 'Custom preview text for the post list card.'
+# Marks the post for featured collections visible on the home page and on a separate
+# featured posts page linked from the left sidebar.
+# Default: false.
+featured: false
+
+### Video, podcasts, discussion ###
+
+# "Watch video" button at the top of the post. External URL (YouTube, Vimeo, etc.).
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+# Video language — short label next to the button (e.g.: RU, EN).
 videoLinkLang: EN
-
+# Podcast language — short label next to the button.
 podcastLang: EN
+# Platform → episode URL. Keys are arbitrary platform names.
+# Rendered as a dropdown at the top of the post.
 podcasts:
   spotify: https://open.spotify.com/
   applepodcasts: https://podcasts.apple.com/
   youtube: https://www.youtube.com/
+# Discussion URL (GitHub Discussions, Disqus, Telegram, etc.) — button in the post footer.
+commentLink: https://github.com/.../discussions
+
+### Page elements ###
+
+# Enable/disable reading time badge for this page.
+# Overrides themeConfig.readingTime.layouts.
+# Default: follows themeConfig.readingTime.layouts.
+readingTime: true
+# Show/hide the right sidebar column for this page.
+# Default: follows themeConfig.asideLayouts.
+aside: true
+# Show/hide the table of contents for this page.
+# The minimum heading threshold (themeConfig.toc.minHeadings)
+# still applies.
+# Default: enabled on posts, disabled on other layouts.
+toc: true
+# Enable/disable ad slots for this page.
+# Overrides themeConfig.ads.layouts. Also affects in-content slots,
+# which are inserted by the markdown plugin at build time.
+# Default: follows themeConfig.ads.layouts.
+ads: false
+
+### Publishing and search ###
+
+# Draft. The page is built (URL works for preview),
+# but excluded from lists, RSS, sitemap, search and marked noindex.
+# In vitepress dev drafts are visible by default, in production — hidden.
+# Default: false.
+draft: false
+# Include the page in the search index (Pagefind).
+# Default: true for posts and pages, false for layout: util.
+# draft: true forcibly sets this to false.
+searchIncluded: true
+# Hide the "edit this page" link on this post.
+# Only works on layout: post and layout: page and only if
+# themeConfig.editLink is configured at all.
+# Default: the link is shown.
+editLink: false
+
+### SEO ###
+
+# Translation map: locale code → relative path.
+# Used by the language switcher in the header AND hreflang tags for SEO.
+# If not specified — the switcher tries to find the same path in another locale.
+translations:
+  en: /en/posts/frontmatter
+# Canonical URL. Accepts a full URL or 'self' for auto-canonical.
+# If not specified and seo.autoCanonical !== false — a self-canonical is generated.
+canonical: https://example.com/canonical-url
+# Per-feature SEO control. Each key disables the corresponding feature
+# when set to false. Everything is enabled by default.
+# Overrides global themeConfig.seo.
+seo:
+  og: true              # Open Graph + Twitter Card meta tags.
+  jsonLd: true          # JSON-LD structured data.
+  hreflang: true        # hreflang link tags (only if >1 locale).
+  canonical: true       # canonical link tag.
+  autoCanonical: true   # auto-canonical if the canonical field is not set.
+  rss: true             # RSS/Atom/JSON feed link tags on the home page.
+  maxDescriptionLength: 160  # character limit for auto-extracted description. Default: 300
+# Custom JSON-LD. A YAML object — deep-merged with the auto-generated schema
+# (nested objects are merged recursively). A JSON string — full replacement.
+jsonLd:
+  "@type": TechArticle
+  proficiencyLevel: Beginner
+# Standard VitePress field for arbitrary tags in <head>.
+# The theme also reads it: if you put noindex here, it won't
+# add JSON-LD and canonical to the page.
+head:
+  - [meta, { name: robots, content: noindex }]
+
+### Other ###
+
+# Component name for replacing the central content area.
+# Unlike layout — replaces only Content, not the entire layout.
+# If not specified — falls back to frontmatter.layout.
+# The component must be globally registered.
+contentLayout: MyCustomContent
 ---
 ```
 
-## Fields that aren't shown here
+## Regular pages (`layout: page`)
 
-A few options only make sense in isolation, so they have their own demos:
+`layout: page` is a simple page without the post "wrapper": the theme renders only your markdown content, the left sidebar and the footer. You write the first-level heading yourself in the page body — the `title` from frontmatter is not output to the page body, it only goes to the browser `<title>` and SEO tags.
 
-- `searchIncluded`, `previewText` → [Preview & Search](preview-and-search)
-- `canonical`, per-page `seo` toggles → [Canonical & cross-posting](canonical-crosspost)
-- `jsonLd` → [JSON-LD](json-ld)
-- `translations` → [i18n & hreflang](i18n-hreflang)
+A typical page looks like this:
 
-## Post body
-
-Everything from here down is ordinary markdown, just to give the post realistic
-length in the listings.
-
-```ts
-// Code blocks are styled by the theme.
-const greet = (name: string) => `Hello, ${name}!`
-console.log(greet('world'))
+```yaml
+---
+# Required field — without it the page renders as a post
+layout: page
+# Goes into <title> and SEO meta. Not shown in the page body —
+# write the heading in markdown yourself
+title: About
+# Goes into meta description
+description: Who I am, what this blog is about and how to contact me.
+# Translation map: locale code → relative path
+translations:
+  ru: /ru/pages/about
+---
 ```
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vehicula metus
-vitae mi feugiat, sed convallis diam feugiat. Suspendisse potenti.
+Besides these four, on `layout: page` these also work:
+
+- `aside` — right column. On pages it's **off by default**
+  (`page` is not in `themeConfig.asideLayouts`), enable it with `aside: true`.
+- `toc` — table of contents. Off by default; on pages the TOC lives
+  only in the right column, so `toc: true` alone is not enough — you also
+  need `aside: true`.
+- `ads` — ad slots, including in-content. Off by default.
+- `draft` — draft: URL works for preview, but the page is excluded from
+  sitemap, search and marked `noindex`.
+- `searchIncluded` — participation in the Pagefind index. Default: `true`.
+- `canonical`, `seo`, `head` — canonical URL, per-feature SEO disabling
+  and arbitrary tags in `<head>`.
+- `jsonLd` — custom JSON-LD, as an object (deep-merge) or string (full replacement).
+- `editLink` — `false` removes the "edit this page" link.
+- `contentLayout` — replace the central content area with your component.
+
+All other fields from the post example are **ignored** on `layout: page`: `date`,
+`authorId`, `cover` and other `cover*`, `category`, `categories`, `tags`,
+`featured`, `previewText`, `descriptionAsPreview`, `readingTime`, `videoLink`,
+`videoLinkLang`, `podcasts`, `podcastLang`, `commentLink`. Regular pages don't
+appear in feeds and post lists, so they don't need taxonomies, previews or covers.
+
+## Home page (`layout: home`)
+
+**The home page is not configured through frontmatter.** Its entire appearance — hero block, sections,
+width, theme and background — is described in the config, and `src/<locale>/index.md`
+contains only the layout:
+
+```yaml
+---
+layout: home
+---
+```
+
+The appearance is set in `site.yaml`, localizable texts — in the locale's `_site.yaml`
+(see [Home page](home-page) for details). Config layers are deep-merged, so even "one locale needs a different background" is solved by config, without
+frontmatter:
+
+```yaml
+# en/_site.yaml — overrides only image, the rest comes from site.yaml
+themeConfig:
+  home:
+    background:
+      image: /img/home-en.webp
+```
+
+Of the common frontmatter fields, only `title`,
+`description`, `translations`, `canonical`, `seo` and `draft` are meaningful on the home page. The fields `aside`,
+`toc`, `ads` and `readingTime` are always ignored, even if specified explicitly:
+the home page uses its own fullscreen layout without side columns.
+
+## Further reading
+
+Each field is covered separately in the thematic posts in the "Content" section:
+[covers and media](covers-images-media),
+[authors](authors),
+[post cards](lists-and-pages#post-cards-in-lists) and [themeConfig settings](themeconfig-settings).
+The `draft` and `readingTime` fields are covered in
+[Drafts, reading time, video and podcasts](drafts-video-podcasts).

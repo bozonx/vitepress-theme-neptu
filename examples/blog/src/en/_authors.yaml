@@ -2,11 +2,11 @@
 
 - id: 'ivan-k'
   name: 'Ivan K'
-  description: 'Maintainer of the theme. Writes most of the demo content you see here.'
-  image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ivan1'
-  imageWidth: 400 # real dimensions of the image — set both to avoid layout shift
-  imageHeight: 400
-  twitterHandle: 'neptu_blog' # used for the twitter:creator meta tag on this author's posts
+  description: 'Maintainer of the theme. Author of most of the demo content.'
+  image: 'https://api.dicebear.com/10.x/avataaars/svg?accessoriesVariant=&clothesVariant=hoodie&clothesGraphicVariant=&eyebrowsVariant=defaultNatural&eyesVariant=default,surprised&facialHairVariant=beardLight&facialHairProbability=100&mouthVariant=default&topVariant=dreads01&backgroundColor=3665b0&accessoriesColor=262e33,65c9ff,5199e4,25557c,3c4f5c,b1e2ff,a7ffc4,ffffb1&facialHairColor=a55728,2c1b18,724133,4a312c&clothesColor=262e33,65c9ff&seed=Ivan'
+  imageWidth: 800
+  imageHeight: 800
+  twitterHandle: 'neptu_blog'
   links:
     - type: 'github'
       url: 'https://github.com/bozonx/vitepress-theme-neptu'
@@ -17,10 +17,10 @@
 
 - id: 'maria-editor'
   name: 'Maria Fernandes'
-  description: 'Imaginary editor. Author of the SEO-focused posts in this demo.'
-  image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop'
-  imageWidth: 400
-  imageHeight: 400
+  description: 'Imaginary editor. Author of the SEO-focused posts.'
+  image: 'https://api.dicebear.com/10.x/toon-head/svg?seed=pk8g05f3'
+  imageWidth: 800
+  imageHeight: 800
   links:
     - type: 'website'
       url: 'https://example.com'

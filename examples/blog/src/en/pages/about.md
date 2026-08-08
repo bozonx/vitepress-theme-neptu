@@ -1,51 +1,37 @@
 ---
-title: About This Demo
-description: What this example blog is, and how to use it as a starting point for your own site.
+title: About this demo
+description: What this demo blog is and how to use it as a starting point for your own site.
 layout: page
 translations:
   ru: /ru/pages/about
 ---
 
-# About This Demo
+# About this demo
 
-This is the example site that ships with
-[vitepress-theme-neptu](https://github.com/bozonx/vitepress-theme-neptu).
-It plays three roles at once:
+This site is both a demo and a guide to the
+[vitepress-theme-neptu](https://github.com/bozonx/vitepress-theme-neptu) theme.
+Every post demonstrates a real feature of the theme, with the frontmatter or config
+that produces it shown alongside. It reads as a guide — from setup to advanced customization.
 
-1. **Visual documentation** — every post and page demonstrates a real feature,
-   with the frontmatter or config that produced it shown right below the result.
-2. **Scaffold** — copy the `example/blog` directory to bootstrap your own blog.
-3. **E2E fixture** — the content covers the full range of options, so it doubles
-   as a test fixture.
+## Guide sections
 
-## How the pages are organized
+The guide consists of seven sections and is meant to be read in order — from launching
+a blog to hooks and slots. The full table of contents with all thirty articles is on
+a separate page:
 
-| Area | Where to look |
-| --- | --- |
-| Post frontmatter | Posts tagged [`frontmatter`](../tags/frontmatter/1) |
-| Media embeds | [Media components](../posts/media-components) |
-| SEO (OG, JSON-LD, canonical, hreflang) | Posts tagged [`seo`](../tags/seo/1) |
-| Configuration | This `pages/*` section: [layers](config-layers), [themes & fonts](color-themes), [nav/sidebar/footer](nav-sidebar-footer), [feeds/search](seo-feeds-search), [advanced](advanced) |
-| Layout types | Sidebar: Recent · Popular · Archive · Authors · Tags |
+### → [Table of contents](contents)
 
-## Run it locally
-
-```bash
-git clone https://github.com/bozonx/vitepress-theme-neptu
-cd vitepress-theme-neptu
-npm install
-npm run blog:dev
-```
-
-Then open the printed URL. Edit any file under `example/blog/src` and the page
-hot-reloads.
+The same order is reflected in the [recent posts list](../recent/1), and the sections
+are available as [categories](../categories/).
 
 ## Start your own blog
 
-Copy `example/blog` somewhere new, then:
+The starting point is the template folder from the repository. Copy it and
+make it your own:
 
-- replace `siteUrl` in `.vitepress/config.ts`,
-- edit `src/site.yaml` and each `src/<locale>/_site.yaml`,
+- set `siteUrl` in `.vitepress/config.ts`,
+- edit `src/site.yaml` and `src/<locale>/_site.yaml`,
 - delete the demo posts in `src/<locale>/posts/` and write your own.
 
-See [Config layers](config-layers) for what to edit where.
+Step-by-step instructions are in the [Getting started](../posts/getting-started) section,
+and which file does what is explained in [Project structure](../posts/project-structure).
