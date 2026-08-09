@@ -15,7 +15,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "vitepress": "2.0.0-alpha.18",
+    "vitepress": "2.0.0-alpha.19",
     "vitepress-theme-neptu": "*",
     "vitepress-theme-neptu-landing": "*",
     "vue": "^3.5.40"
