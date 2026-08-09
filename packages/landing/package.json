@@ -78,7 +78,7 @@
     "ajv-formats": "^3.0.1",
     "eslint": "^10.7.0",
     "eslint-plugin-vue": "^10.10.0",
-    "globals": "^17.7.0",
+    "globals": "^17.9.0",
     "happy-dom": "^20.11.0",
     "typescript-eslint": "^8.65.0",
     "vitepress": "2.0.0-alpha.18",
