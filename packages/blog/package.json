@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/bozonx/vitepress-theme-neptu/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "src",
     "!src/.vitepress",

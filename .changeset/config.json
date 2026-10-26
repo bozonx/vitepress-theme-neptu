@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [
+    [
+      "vitepress-theme-neptu",
+      "vitepress-theme-neptu-landing",
+      "create-neptu-blog"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "vitepress-theme-neptu-docs",
+    "vitepress-theme-neptu-landing-example"
+  ]
+}

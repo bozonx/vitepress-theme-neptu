@@ -25,6 +25,9 @@
   "engines": {
     "node": ">=22.18.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "create-neptu-blog": "./index.mjs"
   },

@@ -14,6 +14,7 @@
     "examples/*"
   ],
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.1.1",
     "eslint": "^10.7.0",
@@ -47,7 +48,13 @@
     "landing:dev": "npm run dev -w vitepress-theme-neptu-landing-example",
     "landing:build": "npm run build -w vitepress-theme-neptu-landing-example",
     "landing:preview": "npm run preview -w vitepress-theme-neptu-landing-example",
+    "changeset": "changeset",
+    "version-packages": "changeset version && npm run generate:icons",
+    "release": "npm run generate:icons && npm run validate:blocks && changeset publish",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "xml-name-validator": "^5.0.0"
   }
 }
