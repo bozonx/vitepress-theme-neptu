@@ -164,7 +164,9 @@ Tables support text alignment in columns (left, center, right).
 | NeptuFooter | Page footer | Enabled |
 ```
 
-### Dividers and footnotes
+### Dividers
+
+Use three dashes `---` to create a horizontal separator between content sections.
 
 **Output:**
 
@@ -172,9 +174,7 @@ Text before a horizontal rule.
 
 ---
 
-Text with a footnote[^1].
-
-[^1]: This is footnote text that automatically appears at the bottom of the page.
+Text after a horizontal rule.
 
 **How to write:**
 
@@ -183,9 +183,7 @@ Text before a horizontal rule.
 
 ---
 
-Text with a footnote[^1].
-
-[^1]: This is footnote text that automatically appears at the bottom of the page.
+Text after a horizontal rule.
 ```
 
 ---
