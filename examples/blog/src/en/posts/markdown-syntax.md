@@ -220,20 +220,6 @@ The `::: info` block is intended for references, additional explanations and con
 :::
 ````
 
-### Note (`note`)
-
-::: note Note
-The `::: note` block highlights important details about how the system or plugins work.
-:::
-
-**How to write:**
-
-````md
-::: note Note
-The `::: note` block highlights important details about how the system or plugins work.
-:::
-````
-
 ### Warning (`warning`)
 
 ::: warning Warning
@@ -248,14 +234,10 @@ The `::: warning` block warns the user about potential problems or pitfalls.
 :::
 ````
 
-### Danger / Caution (`danger` and `caution`)
+### Danger (`danger`)
 
 ::: danger Error / Destructive action
 The `::: danger` block informs about critical errors or dangerous operations.
-:::
-
-::: caution Caution
-The `::: caution` block warns about operations that require special attention.
 :::
 
 **How to write:**
@@ -263,10 +245,6 @@ The `::: caution` block warns about operations that require special attention.
 ````md
 ::: danger Error / Destructive action
 The `::: danger` block informs about critical errors or dangerous operations.
-:::
-
-::: caution Caution
-The `::: caution` block warns about operations that require special attention.
 :::
 ````
 
