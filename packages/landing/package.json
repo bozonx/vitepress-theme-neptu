@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
+    "@mdit/plugin-tasklist": "^1.1.4",
     "ajv": "^8.20.0",
     "vitepress-theme-neptu": "^0.20.0",
     "yaml": "^2.9.0"

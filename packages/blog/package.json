@@ -126,6 +126,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
+    "@mdit/plugin-tasklist": "^1.1.4",
     "@tailwindcss/vite": "^4.3.3",
     "feed": "^6.0.0",
     "gray-matter": "^4.0.3",

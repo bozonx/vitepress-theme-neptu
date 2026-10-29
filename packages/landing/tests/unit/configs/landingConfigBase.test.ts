@@ -25,6 +25,7 @@ vi.mock('vitepress-theme-neptu/transformers', () => ({
   filterSitemap: vi.fn((items: unknown[]) => items),
   generateRobotsTxt: vi.fn(),
   mdImage: vi.fn(),
+  mdAdSlots: vi.fn(),
 }))
 
 vi.mock('vitepress-theme-neptu/utils', () => ({
@@ -233,6 +234,17 @@ describe('mergeLandingConfig', () => {
   it('markdown config includes lazyLoading image', () => {
     const result = mergeLandingConfig({})
     expect(result.markdown.image.lazyLoading).toBe(true)
+  })
+
+  it('registers tasklist plugin in markdown config', () => {
+    const result = mergeLandingConfig({})
+    const md = { use: vi.fn() }
+    result.markdown.config?.(
+      md as unknown as Parameters<
+        NonNullable<ReturnType<typeof mergeLandingConfig>['markdown']['config']>
+      >[0]
+    )
+    expect(md.use).toHaveBeenCalledWith(expect.any(Function), { disabled: false })
   })
 
   it('vite ssr config marks theme as noExternal', () => {

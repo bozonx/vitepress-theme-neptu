@@ -98,3 +98,30 @@ body {
   max-width: var(--ln-container-narrow);
   padding-inline: var(--ln-page-px);
 }
+
+/* Task lists */
+.vp-doc li.task-list-item,
+.ln-page li.task-list-item {
+  list-style-type: none;
+}
+
+.vp-doc li.task-list-item > input.task-list-item-checkbox,
+.ln-page li.task-list-item > input.task-list-item-checkbox {
+  margin: 0 0.35em 0.25em -1.25em;
+  vertical-align: middle;
+  cursor: pointer;
+  accent-color: var(--vp-c-brand-1);
+}
+
+.vp-doc li.task-list-item > label.task-list-item-label,
+.ln-page li.task-list-item > label.task-list-item-label {
+  cursor: pointer;
+}
+
+.vp-doc li.task-list-item > input.task-list-item-checkbox:disabled,
+.vp-doc li.task-list-item > input.task-list-item-checkbox:disabled + label.task-list-item-label,
+.ln-page li.task-list-item > input.task-list-item-checkbox:disabled,
+.ln-page li.task-list-item > input.task-list-item-checkbox:disabled + label.task-list-item-label {
+  opacity: 0.75;
+  cursor: default;
+}

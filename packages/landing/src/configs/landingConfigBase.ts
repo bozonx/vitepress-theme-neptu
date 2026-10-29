@@ -41,6 +41,7 @@ import {
 } from 'vitepress-theme-neptu/transformers'
 import type { SitemapItem } from 'vitepress-theme-neptu/transformers'
 import { resolveBlockMedia } from '../utils/resolveBlockMedia.ts'
+import { tasklist } from '@mdit/plugin-tasklist'
 import landingBaseLocales from './landingLocalesBase/index.ts'
 import { autoLoadLocales } from './loadLocale.ts'
 import { createLandingHeadScript, createDirHeadScript } from './headScript.ts'
@@ -245,6 +246,7 @@ export function mergeLandingConfig(
       }),
       config: (md) => {
         md.use(mdImage, { srcDir: config.srcDir })
+        md.use(tasklist, { disabled: false })
         // Places in-content ad slots while the page is compiled, so they are
         // part of the server-rendered HTML instead of appearing after load.
         md.use(mdAdSlots, {

@@ -53,6 +53,7 @@ import { addCanonicalLink } from '../transformers/addCanonicalLink.ts'
 import { collectImageDimensions } from '../transformers/collectImageDimensions.ts'
 import { resolveMediaPaths } from '../transformers/resolveMediaPaths.ts'
 import { mdImage } from '../transformers/mdImage.ts'
+import { tasklist } from '@mdit/plugin-tasklist'
 import { autoLoadLocales } from '../utils/node/config.ts'
 import { assertStrictLocaleStructure } from '../utils/node/localeStructure.ts'
 import type {
@@ -338,6 +339,7 @@ export function mergeBlogConfig(config: BlogUserConfig): ResolvedBlogConfig {
       }),
       config: (md) => {
         md.use(mdImage, { srcDir: config.srcDir })
+        md.use(tasklist, { disabled: false })
         // Places in-content ad slots while the page is compiled, so they are
         // part of the server-rendered HTML instead of appearing after load.
         md.use(mdAdSlots, {

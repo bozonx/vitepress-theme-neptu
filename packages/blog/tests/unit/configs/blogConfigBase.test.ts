@@ -246,6 +246,17 @@ describe('mergeBlogConfig', () => {
     expect(result.markdown.image.lazyLoading).toBe(true)
   })
 
+  it('registers tasklist plugin in markdown config', () => {
+    const result = mergeBlogConfig({})
+    const md = { use: vi.fn() }
+    result.markdown.config?.(
+      md as unknown as Parameters<
+        NonNullable<ReturnType<typeof mergeBlogConfig>['markdown']['config']>
+      >[0]
+    )
+    expect(md.use).toHaveBeenCalledWith(expect.any(Function), { disabled: false })
+  })
+
   it('vite ssr config marks theme as noExternal', () => {
     const result = mergeBlogConfig({})
     expect(result.vite.ssr.noExternal).toContain('vitepress-theme-neptu')
