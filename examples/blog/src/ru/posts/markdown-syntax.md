@@ -391,6 +391,7 @@ export interface SiteConfig {
 
 - Информационный: <Badge type="info" text="Инфо" />
 - Совет: <Badge type="tip" text="v2.0" />
+- Успех: <Badge type="success" text="Готово" />
 - Предупреждение: <Badge type="warning" text="Beta" />
 - Опасность: <Badge type="danger" text="Deprecated" />
 
@@ -399,6 +400,7 @@ export interface SiteConfig {
 ```md
 - Информационный: <Badge type="info" text="Инфо" />
 - Совет: <Badge type="tip" text="v2.0" />
+- Успех: <Badge type="success" text="Готово" />
 - Предупреждение: <Badge type="warning" text="Beta" />
 - Опасность: <Badge type="danger" text="Deprecated" />
 ```
@@ -444,28 +446,7 @@ export interface SiteConfig {
 
 ## Дополнительные интеграции
 
-### Диаграммы Mermaid
-
-Для создания схем и диаграмм подключите плагин `vitepress-plugin-mermaid` (см. [Диаграммы Mermaid и формулы KaTeX](./mermaid-and-katex)):
-
-````md
-```mermaid
-flowchart LR
-    A[Написание статьи] --> B[Проверка] --> C[Публикация]
-```
-````
-
-### Формулы KaTeX
-
-Для математических формул зарегистрируйте `@mdit/plugin-katex`:
-
-```md
-Формула Эйлера: $e^{i\pi} + 1 = 0$
-
-$$
-x = {-b \pm \sqrt{b^2-4ac} \over 2a}
-$$
-```
+Вы можете добавлять различные плагины Vitepress а так же Markdown плагины. Например [Диаграммы Mermaid и формулы KaTeX](./mermaid-and-katex).
 
 ---
 
