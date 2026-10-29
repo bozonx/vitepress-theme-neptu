@@ -108,7 +108,7 @@ jobs:
 
 В настройках репозитория включите **Settings → Pages → Source: GitHub Actions**.
 
-Если вы используете [аналитику и популярные посты](analytics), добавьте секреты `GA_PROPERTY_ID` и `GA_CREDENTIALS_JSON` в **Settings → Secrets and variables → Actions** и пробросьте их в шаг `npm run build` через `env:`.
+Если вы используете [аналитику и популярные посты](analytics), добавьте секреты `GA_PROPERTY_ID` и `GA_CREDENTIALS_JSON` в **Settings → Secrets and variables → Actions** и пробросьте их в шаг `npm run build` (раскоментируйте блок `env:`).
 
 ## Другие хостинги
 

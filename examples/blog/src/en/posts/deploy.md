@@ -92,6 +92,10 @@ jobs:
       - run: npm ci
       # npm run build will pick up --base from the script in package.json
       - run: npm run build
+        # If you use popular posts via GA4, uncomment the env block below:
+        # env:
+        #   GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
+        #   GA_CREDENTIALS_JSON: ${{ secrets.GA_CREDENTIALS_JSON }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: src/.vitepress/dist
@@ -111,7 +115,28 @@ jobs:
 
 In your repository settings, enable **Settings → Pages → Source: GitHub Actions**.
 
-If you use [analytics and popular posts](analytics), add the secrets `GA_PROPERTY_ID` and `GA_CREDENTIALS_JSON` in **Settings → Secrets and variables → Actions** and pass them to the `npm run build` step via `env:`.
+### Configuring popular posts (GA4) in GitHub Actions
+
+If you use [analytics and popular posts](analytics), Google Analytics data is fetched once during the build step. To provide the build process access to GA4:
+
+1. **Add secrets in your GitHub repository:**
+   - Go to **Settings → Secrets and variables → Actions** and click **New repository secret**.
+   - Add the first secret:
+     - **Name:** `GA_PROPERTY_ID`
+     - **Secret:** your numeric GA4 property ID (e.g., `123456789`).
+   - Add the second secret:
+     - **Name:** `GA_CREDENTIALS_JSON`
+     - **Secret:** the entire JSON key file content of your Google Cloud service account.
+
+2. **Uncomment environment variables in the workflow:**
+   - In your `.github/workflows/deploy.yml` file, uncomment the `env:` block in the `npm run build` step:
+     ```yaml
+           - run: npm run build
+             env:
+               GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
+               GA_CREDENTIALS_JSON: ${{ secrets.GA_CREDENTIALS_JSON }}
+     ```
+   This exposes the repository secrets as environment variables to the build process (`process.env.GA_PROPERTY_ID` and `process.env.GA_CREDENTIALS_JSON`). Without the `env:` block, GitHub repository secrets are not accessible to the build command.
 
 ## Other hosting providers
 
