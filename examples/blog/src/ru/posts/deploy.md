@@ -7,6 +7,8 @@ date: 2026-07-30
 category: getting-started
 tags: [start, deploy]
 descriptionAsPreview: true
+translations:
+  en: /en/posts/deploy
 ---
 
 Блог собирается в набор статических файлов — их можно выложить куда угодно: GitHub Pages, Netlify, Vercel, Cloudflare Pages или обычный веб-сервер. Разберём процесс на примере GitHub Pages: именно так опубликован [этот сайт](https://bozonx.github.io/vitepress-theme-neptu/blog).
@@ -31,29 +33,39 @@ npm run preview    # или: pnpm preview / yarn preview
 
 Их легко перепутать, но это разные вещи:
 
-- **`siteUrl`** — протокол и домен/IP сайта (`https://myblog.org` или￹`http://192.168.1.50:8080`) без пути (path) и без завершающего слэша. Поле `siteUrl` используется для canonical, sitemap, RSS, Open￹Graph. Задаётся в `.vitepress/config.ts`.
-- **`base`** — путь, по которому сайт лежит на домене. По умолчанию указан корень домена `/`, поэтому в конфиге можно вобще не указывать поле `base` если ваш сайт находится в корне. Можно размещать сайт по любому пути, даже вложеному `/path/to/site/`. Слэш на конце обязателен.
+- **`siteUrl`** — протокол и домен/IP сайта (`https://myblog.org` или `http://192.168.1.50:8080`) без пути (path) и без завершающего слэша. Поле `siteUrl` используется для canonical, sitemap, RSS, Open Graph. Задаётся в `.vitepress/config.ts`.
+- **`base`** — путь, по которому сайт лежит на домене. По умолчанию указан корень домена `/`, поэтому в конфиге можно вообще не указывать поле `base`, если ваш сайт находится в корне. Можно размещать сайт по любому пути, даже вложенному: `/path/to/site/`. Слэш на конце обязателен.
+
+Если сайт опубликован в корне (`myblog.org`), указывать `base` не нужно — он требуется только тогда, когда сайт лежит в подпапке.
+
+::: info
+Если сайт находится не в корне (например, с `base: /path-to-site/`), путь из `base` **автоматически добавляется** к `siteUrl` для всех SEO-ссылок (canonical, sitemap, RSS, Open Graph, JSON-LD). Вручную дублировать путь в `siteUrl` не нужно — достаточно указать сам домен: `https://myblog.org`.
+:::
 
 ## GitHub Pages (проектная страница)
 
-Если вы не используете свой домен то страница вашего проекта находится по адресу `https://<user>.github.io/<repo>/`. Поэтому указываем такие параметры:
+Если вы не используете свой домен, то страница вашего проекта находится по адресу `https://<user>.github.io/<repo>/`, то есть в подпапке. Поэтому вам нужен `base: '/<repo>/'`.
 
-```ts
-// .vitepress/config.ts
-siteUrl: 'https://<user>.github.io'
-base: '/<repo>/'
-```
-
-Если хотите сделать конфиг более универсальным то вместо того чтобы указывать base в файле конфигурации, можете передавать его при сборке:
+Если хотите сделать конфиг универсальным, вместо того чтобы жестко прописывать `base` в файле конфигурации, передавайте его при сборке и предпросмотре:
 
 ```json
 // package.json
 {
   "scripts": {
-    "build": "vitepress build src --base /my-blog/"
+    "build": "vitepress build src --base /<repo>/",
+    "preview": "vitepress preview src --base /<repo>/"
   }
 }
 ```
+
+А в файле конфигурации укажите абсолютный адрес без пути репозитория:
+
+```ts
+// .vitepress/config.ts
+siteUrl: 'https://<user>.github.io'
+```
+
+Путь `/<repo>/` добавится автоматически из `base`.
 
 ## Автоматический деплой через GitHub Actions
 
@@ -67,7 +79,7 @@ on:
     branches: [main]
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   build:
     permissions:
@@ -82,6 +94,10 @@ jobs:
       - run: npm ci
       # npm run build подхватит --base из скрипта в package.json
       - run: npm run build
+        # Если используются популярные посты через GA4, раскомментируйте env:
+        # env:
+        #   GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
+        #   GA_CREDENTIALS_JSON: ${{ secrets.GA_CREDENTIALS_JSON }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: src/.vitepress/dist
@@ -121,7 +137,7 @@ Actions** и пробросьте их в шаг `npm run build` через `env
 ## Деплой с помощью ИИ-агента
 
 Если вы не хотите настраивать деплой вручную, попросите ИИ-агента (например,
-Codex, Claude Code, Cascade и тд) сделать это за вас. Агент может
+Codex, Claude Code, Cascade и т. д.) сделать это за вас. Агент может
 создать конфигурацию, написать workflow и проверить сборку.
 
 Выполняйте запрос в корне вашего блога.
