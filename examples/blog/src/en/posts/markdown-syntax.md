@@ -272,11 +272,11 @@ Inside the collapsible accordion block you can place any Markdown syntax:
 
 ## Code blocks and their features
 
-### Syntax highlighting and file title
+### Syntax highlighting
 
-In square brackets after the language name, you can specify a filename `[filename.ts]`:
+Specify the programming language identifier immediately after the opening triple backticks (for example, `ts`, `js`, `bash`, `html`, `css`):
 
-```ts [src/siteConfig.ts]
+```ts
 export interface SiteConfig {
   title: string
   description: string
@@ -287,7 +287,7 @@ export interface SiteConfig {
 **How to write:**
 
 ````md
-```ts [src/siteConfig.ts]
+```ts
 export interface SiteConfig {
   title: string
   description: string
@@ -324,7 +324,7 @@ function calculateTotal(price: number, quantity: number): number {
 
 ### Code groups (tabs)
 
-The `::: code-group` syntax combines multiple code blocks into convenient switchable tabs.
+The `::: code-group` syntax combines multiple code blocks into convenient switchable tabs. Tab names are specified in square brackets right after the language:
 
 ::: code-group
 
@@ -357,6 +357,38 @@ npm install vitepress-theme-neptu
 
 ```bash [yarn]
 yarn add vitepress-theme-neptu
+```
+
+:::
+````
+
+#### Pro tip: specifying a filename on a code block
+
+In VitePress, square brackets `[filename]` are not supported on standalone code blocks. However, you can wrap even a **single** code block in `::: code-group` — this renders a neat header tab displaying the filename:
+
+::: code-group
+
+```ts [src/siteConfig.ts]
+export interface SiteConfig {
+  title: string
+  description: string
+  lang: string
+}
+```
+
+:::
+
+**How to write:**
+
+````md
+::: code-group
+
+```ts [src/siteConfig.ts]
+export interface SiteConfig {
+  title: string
+  description: string
+  lang: string
+}
 ```
 
 :::

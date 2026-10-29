@@ -259,11 +259,11 @@ descriptionAsPreview: true
 
 ## Блоки кода
 
-### Указание языка и файла из которого показан кусок кода
+### Подсветка синтаксиса
 
-В квадратных скобках после названия языка вы можете указать имя файла `[filename.ts]`:
+Укажите идентификатор языка программирования сразу после открывающих тройных кавычек (например, `ts`, `js`, `bash`, `html`, `css`):
 
-```ts [src/siteConfig.ts]
+```ts
 export interface SiteConfig {
   title: string
   description: string
@@ -274,7 +274,7 @@ export interface SiteConfig {
 **Как написать:**
 
 ````md
-```ts [src/siteConfig.ts]
+```ts
 export interface SiteConfig {
   title: string
   description: string
@@ -311,7 +311,7 @@ function calculateTotal(price: number, quantity: number): number {
 
 ### Группы кода (Code Groups / Вкладки)
 
-Синтаксис `::: code-group` объединяет несколько блоков кода в удобные переключаемые вкладки.
+Синтаксис `::: code-group` объединяет несколько блоков кода в удобные переключаемые вкладки. Название вкладки указывается в квадратных скобках после названия языка:
 
 ::: code-group
 
@@ -344,6 +344,38 @@ npm install vitepress-theme-neptu
 
 ```bash [yarn]
 yarn add vitepress-theme-neptu
+```
+
+:::
+````
+
+#### Лайфхак: как указать имя файла
+
+В VitePress квадратные скобки `[filename]` не поддерживаются для обычных одиночных блоков кода. Однако вы можете обернуть даже **один** блок кода в `::: code-group` — тогда над ним отобразится аккуратная вкладка с указанным именем файла:
+
+::: code-group
+
+```ts [src/siteConfig.ts]
+export interface SiteConfig {
+  title: string
+  description: string
+  lang: string
+}
+```
+
+:::
+
+**Как написать:**
+
+````md
+::: code-group
+
+```ts [src/siteConfig.ts]
+export interface SiteConfig {
+  title: string
+  description: string
+  lang: string
+}
 ```
 
 :::
