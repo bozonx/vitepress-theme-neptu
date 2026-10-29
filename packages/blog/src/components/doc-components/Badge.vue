@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
   text?: string
-  type?: 'info' | 'tip' | 'warning' | 'danger'
+  type?: 'info' | 'tip' | 'warning' | 'danger' | 'success'
 }
 
 withDefaults(defineProps<Props>(), {
@@ -50,5 +50,11 @@ withDefaults(defineProps<Props>(), {
   border-color: var(--vp-badge-danger-border);
   color: var(--vp-badge-danger-text);
   background-color: var(--vp-badge-danger-bg);
+}
+
+.VPBadge.success {
+  border-color: var(--vp-badge-success-border);
+  color: var(--vp-badge-success-text);
+  background-color: var(--vp-badge-success-bg);
 }
 </style>

@@ -14,11 +14,16 @@
   --vp-c-gray-soft: rgba(142, 150, 170, 0.14);
   --vp-c-red-soft: rgba(244, 63, 94, 0.14);
   --vp-c-yellow-soft: rgba(234, 179, 8, 0.14);
-  --vp-c-red-soft: rgba(244, 63, 94, 0.14);
+  --vp-c-green-1: #18794e;
+  --vp-c-green-2: #299764;
+  --vp-c-green-3: #30a46c;
+  --vp-c-green-soft: rgba(16, 185, 129, 0.14);
 
   --vp-c-brand-soft: var(--vp-c-indigo-soft);
   --vp-c-yellow-1: #915930;
   --vp-c-red-1: #b8272c;
+  --vp-c-success-1: var(--vp-c-green-1);
+  --vp-c-success-soft: var(--vp-c-green-soft);
 
   --vp-c-danger-soft: var(--vp-c-red-soft);
   --vp-c-warning-soft: var(--vp-c-yellow-soft);
@@ -51,10 +56,15 @@
   --vp-c-gray-soft: rgba(101, 117, 133, 0.16);
   --vp-c-red-soft: rgba(244, 63, 94, 0.16);
   --vp-c-yellow-soft: rgba(234, 179, 8, 0.16);
-  --vp-c-red-soft: rgba(244, 63, 94, 0.16);
+  --vp-c-green-1: #3dd68c;
+  --vp-c-green-2: #30a46c;
+  --vp-c-green-3: #298459;
+  --vp-c-green-soft: rgba(16, 185, 129, 0.16);
 
   --vp-c-yellow-1: #f9b44e;
   --vp-c-red-1: #f66f81;
+  --vp-c-success-1: var(--vp-c-green-1);
+  --vp-c-success-soft: var(--vp-c-green-soft);
 }
 
 /**
@@ -196,6 +206,10 @@
   --vp-badge-danger-border: var(--vp-c-danger-1);
   --vp-badge-danger-text: var(--vp-c-danger-1);
   --vp-badge-danger-bg: var(--vp-c-danger-soft);
+
+  --vp-badge-success-border: var(--vp-c-success-1);
+  --vp-badge-success-text: var(--vp-c-success-1);
+  --vp-badge-success-bg: var(--vp-c-success-soft);
 }
 
 /**

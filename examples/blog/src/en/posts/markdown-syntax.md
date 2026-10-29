@@ -403,7 +403,8 @@ The `<Badge>` component lets you add neat colored pills in text or headings.
 **Output:**
 
 - Info: <Badge type="info" text="Info" />
-- Tip / Success: <Badge type="tip" text="v2.0" />
+- Tip: <Badge type="tip" text="v2.0" />
+- Success: <Badge type="success" text="Released" />
 - Warning: <Badge type="warning" text="Beta" />
 - Danger: <Badge type="danger" text="Deprecated" />
 
@@ -411,7 +412,8 @@ The `<Badge>` component lets you add neat colored pills in text or headings.
 
 ```md
 - Info: <Badge type="info" text="Info" />
-- Tip / Success: <Badge type="tip" text="v2.0" />
+- Tip: <Badge type="tip" text="v2.0" />
+- Success: <Badge type="success" text="Released" />
 - Warning: <Badge type="warning" text="Beta" />
 - Danger: <Badge type="danger" text="Deprecated" />
 ```
