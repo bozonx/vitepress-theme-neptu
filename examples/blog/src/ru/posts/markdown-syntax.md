@@ -407,13 +407,13 @@ export interface SiteConfig {
 
 ## Встроенные медиа-компоненты Neptu
 
-Тема Neptu регистрирует готовые Vue-компоненты, доступные во всех статьях без ручного импорта.
+Тема Neptu регистрирует готовые Vue-компоненты, доступные во всех статьях.
 
 ### Видео с YouTube (`YouTubeVideo`)
 
 <YouTubeVideo id="dQw4w9WgXcQ" />
 
-**Как написать:**
+**Markdown:**
 
 ```html
 <YouTubeVideo id="dQw4w9WgXcQ" />
@@ -423,7 +423,7 @@ export interface SiteConfig {
 
 <AudioFile url="https://www.w3schools.com/html/horse.mp3" filename="Пример аудио (horse.mp3)" />
 
-**Как написать:**
+**Markdown:**
 
 ```html
 <AudioFile url="https://example.com/audio.mp3" filename="Пример аудио (MP3)" />
@@ -434,7 +434,7 @@ export interface SiteConfig {
 
 <FileDownload url="https://www.w3.org/WAI/WCAG21/wcag21.pdf" filename="Спецификация WCAG 2.1 (PDF)" />
 
-**Как написать:**
+**Markdown:**
 
 ```html
 <FileDownload url="https://example.com/archive.zip" filename="Архив исходных кодов" />
