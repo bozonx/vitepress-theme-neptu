@@ -287,7 +287,7 @@ To remove a custom element from the print version, add the `data-print-ignore` a
 
 ## Right column and table of contents
 
-The right column of the post layout is the third column to the right of the text. It contains the article table of contents, and below it — whatever you put there: ad blocks, newsletter forms, promos. Visibility and behavior settings are in [themeConfig settings](themeconfig-settings#table-of-contents-and-right-column). Here — CSS variables and slots for customization.
+The right column of the post layout is the third column to the right of the text. It contains the article table of contents, and below it — whatever you put there: ad blocks, newsletter forms, promos. Visibility and behavior settings are in [themeConfig settings](themeconfig-settings#right-column-aside). Here — CSS variables and slots for customization.
 
 ### CSS variables
 
@@ -336,7 +336,7 @@ The slot and TOC coexist: the TOC stays at the top, your block goes below. Colum
 
 ## Styling the language selection page
 
-The root page `/` (for multilingual sites) is built from the `LocaleSelector` component. Its behavior is described in [Interface translations](i18n-translations#behavior-on-first-visit). Here — CSS structure and variables for customization.
+The root page `/` (for multilingual sites) is built from the `LocaleSelector` component. Its behavior is described in [Interface translations](i18n-translations#root-site-page). Here — CSS structure and variables for customization.
 
 The component uses the following classes:
 
@@ -497,7 +497,7 @@ Besides post content, slots exist for the page wrapper — sidebar, header, righ
 | `nav-bar-content-before` | In the top bar, before its content |
 | `footer` | Replaces the site footer entirely |
 
-The right column is configured separately — which pages show it, how to connect ads and how to change dimensions is described in [themeConfig settings](themeconfig-settings#table-of-contents-and-right-column).
+The right column is configured separately — which pages show it, how to connect ads and how to change dimensions is described in [themeConfig settings](themeconfig-settings#right-column-aside).
 
 ## Customizing the site footer
 
@@ -609,3 +609,7 @@ Continuation.
 - [Components reference](components) — what you can import from the theme.
 - [External content](external-content) — content from CMS or API.
 - [Ad blocks](ads) — your component in theme slots.
+
+---
+
+Next: [Interface translations and language selection page](i18n-translations)

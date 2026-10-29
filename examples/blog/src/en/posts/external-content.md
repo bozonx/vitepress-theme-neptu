@@ -1,128 +1,151 @@
 ---
 title: External content — CMS, API and custom data loaders
 description: >
-  Methods for integrating external content from CMS or APIs: pre-build
-  synchronization, HTML to Markdown conversion, custom data loaders, and
-  embedding via iframes or Vue components.
+  How to pull articles from a CMS or API: syncing to local markdown before the build,
+  converting HTML, custom data loaders, and embedding external pages.
 authorId: ivan-k
-date: 2026-07-27
+date: 2026-07-06
 category: advanced
-tags: [cms, api, data-loaders, external]
+tags: [advanced]
 descriptionAsPreview: true
 translations:
   ru: /ru/posts/external-content
 ---
 
-The theme is designed for local Markdown files, but you can integrate external content from a CMS or API in several ways.
+Post utility functions in the theme read **local `.md` files**. If your content is stored in a CMS, an API, or on another website, synchronize it to local markdown *before* the VitePress build — once written, the generated files behave identically to manually written posts (previews, feeds, archive, similar posts).
 
-## Method 1: Pre-build synchronization
-
-Write a script that fetches content from your CMS/API and writes it as Markdown files before the build:
-
-```ts
-// scripts/sync-content.ts
-import { writeFileSync, mkdirSync } from 'fs'
-
-async function syncContent() {
-  const posts = await fetch('https://api.my-cms.com/posts').then(r => r.json())
-
-  for (const post of posts) {
-    const dir = `src/en/posts/${post.slug}`
-    mkdirSync(dir, { recursive: true })
-
-    const frontmatter = [
-      '---',
-      `title: ${JSON.stringify(post.title)}`,
-      `date: ${post.publishedAt}`,
-      `authorId: ${post.authorId}`,
-      '---',
-      '',
-    ].join('\n')
-
-    writeFileSync(`${dir}/index.md`, frontmatter + post.content)
-  }
-}
-
-syncContent()
-```
-
-Add it to your build script:
+## Sync before build
 
 ```json
+// package.json
 {
   "scripts": {
-    "build": "npm run sync && vitepress build src"
+    "prebuild": "node scripts/sync-remote-posts.mjs",
+    "build": "vitepress build src"
   }
 }
 ```
 
-## Method 2: HTML to Markdown conversion
+Your `sync-remote-posts.mjs` fetches external content and writes files like `src/en/posts/<slug>.md` with the frontmatter expected by the theme (`title`, `date`, `authorId`, `tags`, etc.). Because `prebuild` runs first, the newly written posts are indexed during every build.
 
-If your CMS returns HTML, convert it to Markdown:
+## Converting remote HTML
 
-```bash
-npm install @turndown/turndown
+If the data source returns HTML, convert it to Markdown in the same prebuild step:
+
+```js
+// scripts/sync-html-posts.mjs
+import fs from 'node:fs/promises'
+import TurndownService from 'turndown'
+
+const response = await fetch('https://example.com/article.html')
+if (!response.ok) {
+  throw new Error(`Failed to fetch remote HTML: ${response.status}`)
+}
+
+const html = await response.text()
+const markdown = new TurndownService().turndown(html)
+
+await fs.mkdir('src/en/posts', { recursive: true })
+await fs.writeFile(
+  'src/en/posts/imported-article.md',
+  `---
+title: Imported Article
+date: 2026-05-09
+tags: [imported]
+---
+
+${markdown}
+`
+)
 ```
 
-```ts
-import TurndownService from '@turndown/turndown'
+Install the converter into your site project, not into the theme package:
 
-const turndown = new TurndownService()
-const markdown = turndown.turndown(post.htmlContent)
+```sh
+npm install -D turndown
+# or: pnpm add -D turndown / yarn add -D turndown
 ```
 
-## Method 3: Custom data loaders
+## Custom data loaders
 
-VitePress supports custom data loaders that run at build time. Use them to load external data and pass it to pages:
-
-```ts
-// src/en/loadExternalPosts.data.ts
-import { createContentLoader } from 'vitepress'
-
-export default createContentLoader('posts/*.md', {
-  // ...options
-})
-```
-
-For more advanced cases, use the theme's `loadPostsDataFromFiles` helper:
+You can write a custom VitePress data loader. The starter template watches all posts in the locale, including subfolders, and passes the files to `loadPostsDataFromFiles`:
 
 ```ts
+// src/en/loadPosts.data.ts
+import { POSTS_DIR } from 'vitepress-theme-neptu/constants'
 import { loadPostsDataFromFiles } from 'vitepress-theme-neptu/list-helpers/node'
+
+export default {
+  // `**/*.md` is essential: with `*.md`, posts in subfolders will not appear in lists
+  watch: [`./${POSTS_DIR}/**/*.md`],
+  async load(watchedFiles: string[]) {
+    return {
+      posts: await loadPostsDataFromFiles(watchedFiles),
+    }
+  },
+}
 ```
 
-## Method 4: Embedding via iframes
+For most external content workflows, still generate local `.md` files. VitePress can only generate page routes for files known at build time. Returning extra items from a data loader populates post lists, but will not create the corresponding standalone markdown pages.
 
-For content that can't be converted to Markdown (interactive widgets, maps), embed it:
+## Embedding external content
+
+If you only need to display external content inside an existing post, use an iframe or a custom Vue component in markdown:
 
 ```md
-<iframe src="https://app.my-cms.com/post/123" width="100%" height="600" />
+<iframe
+  src="https://example.com/embed"
+  width="100%"
+  height="420"
+  loading="lazy"
+  sandbox="allow-scripts allow-same-origin"
+></iframe>
 ```
 
-## Method 5: Custom Vue components
-
-Create a Vue component that fetches and renders external content at runtime:
+Prefer a wrapper component if the embed is reused across articles:
 
 ```vue
-<!-- .vitepress/theme/ExternalPost.vue -->
-<script setup>
-import { ref, onMounted } from 'vue'
-
-const content = ref('')
-onMounted(async () => {
-  content.value = await fetch('/api/post/123').then(r => r.text())
-})
+<!-- .vitepress/theme/ExternalEmbed.vue -->
+<script setup lang="ts">
+defineProps<{ src: string; title?: string }>()
 </script>
 
 <template>
-  <div v-html="content" />
+  <iframe
+    :src="src"
+    :title="title"
+    width="100%"
+    height="420"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+  />
 </template>
 ```
 
-:::warning
-Only embed content from trusted sources. External scripts and iframes can introduce security risks. Ensure proper CSP headers and sanitize any user-generated content.
-:::
+Register it in your site's theme:
 
-## What's next
+```ts
+// .vitepress/theme/index.ts
+import Theme from 'vitepress-theme-neptu'
+import ExternalEmbed from './ExternalEmbed.vue'
 
-- [Components reference](components) — all exported components and utilities
-- [Project structure](project-structure) — where files live
+export default {
+  ...Theme,
+  enhanceApp(ctx) {
+    Theme.enhanceApp?.(ctx)
+    ctx.app.component('ExternalEmbed', ExternalEmbed)
+  },
+}
+```
+
+Then use it in markdown:
+
+```md
+<ExternalEmbed src="https://example.com/embed" title="External content" />
+```
+
+Embed only from trusted sources. Configure `sandbox`, allowed origins, and Content Security Policy according to the content provider's requirements.
+
+---
+
+Next: [Customization — color schemes, styles, fonts, hooks, slots and custom layouts](customization)

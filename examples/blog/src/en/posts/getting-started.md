@@ -82,7 +82,3 @@ To publish your blog on the internet, follow the deployment instructions on the
 ## What's next
 
 The blog is running — now you need to understand it. Let's start with the [project structure](project-structure).
-
----
-
-Next: [Project structure](project-structure)

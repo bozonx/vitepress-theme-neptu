@@ -111,5 +111,3 @@ And in the very root of `src/` there's `index.md` which renders the language sel
 ---
 
 Now that you understand the structure, it's time to [add your first post](first-post).
-
-Next: [Your first post](first-post)

@@ -1,139 +1,153 @@
 ---
 title: Ad blocks
 description: >
-  How to integrate custom ad components, configure their placement, and manage
-  their display based on consent.
+  Connecting a component, three placement options, and inserting in-content ads at build time.
 authorId: ivan-k
-date: 2026-07-24
+date: 2026-07-05
 category: integration
-tags: [ads, consent, config]
+tags: [advanced, config]
 descriptionAsPreview: true
 translations:
   ru: /ru/posts/ads
 ---
 
-The theme provides ad placement, height reservation, and an "Advertisement" label — but the ad component itself must be custom-made and globally registered.
+The theme does not include a proprietary ad component and is not tied to any specific ad network. It handles placement, height reservation, the "Advertisement" label, and consent coordination — while you write the ad unit code yourself and connect it via `ads.component`.
 
-## How it works
+In-content blocks are inserted **at build time** by a `markdown-it` plugin. VitePress markdown is compiled into a Vue template, so the theme injects `<NeptuAd />` directly into the article's HTML.
 
-1. You create a Vue component that renders your ad code
-2. Register it globally in `.vitepress/theme/index.ts`
-3. Configure where ads appear via `themeConfig.ads`
+The right-column placement location is detailed in [themeConfig settings](themeconfig-settings#right-column-aside).
 
-The theme handles:
-- **Placement** — aside, after content, in-content
-- **Height reservation** — reserves space to prevent layout shift
-- **Label** — "Advertisement" text above the block
-- **Consent** — hides ads until consent is given (if configured)
-
-## Creating an ad component
+## Connecting a component
 
 ```vue
-<!-- .vitepress/theme/MyAd.vue -->
-<script setup>
-// Your ad code here — Google AdSense, custom banner, etc.
+<!-- .vitepress/theme/AdUnit.vue -->
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+// `placement` and `index` come from the theme — use them to tailor formats.
+defineProps<{ placement?: string; index?: number }>()
+
+onMounted(() => {
+  try {
+    ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
+  } catch {
+    // Ad blocker — silently ignore
+  }
+})
 </script>
 
 <template>
-  <div class="my-ad">
-    <!-- ad content -->
-  </div>
+  <ins
+    class="adsbygoogle"
+    style="display: block"
+    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+    data-ad-slot="1234567890"
+  />
 </template>
 ```
 
-Register it globally:
-
 ```ts
 // .vitepress/theme/index.ts
-import MyAd from './MyAd.vue'
+import Theme from 'vitepress-theme-neptu'
+import AdUnit from './AdUnit.vue'
 
 export default {
-  enhanceApp({ app }) {
-    app.component('NeptuAd', MyAd)  // must be registered as 'NeptuAd'
+  ...Theme,
+  enhanceApp(ctx) {
+    Theme.enhanceApp?.(ctx)
+    ctx.app.component('AdUnit', AdUnit)
   },
 }
 ```
 
-The component must be registered with the name `NeptuAd` — the theme looks for this exact name.
-
-## Ad placement
-
-```yaml
-# src/site.yaml
-themeConfig:
-  ads:
-    enabled: true
-    layouts: [post]          # which layouts show ads
-    component: 'NeptuAd'     # must match the registered name
-    placements:
-      aside: true            # right column
-      afterContent: true     # below the article
-      inContent: true        # between paragraphs
-      inContentFrequency: 3  # every N paragraphs
+```ts
+// .vitepress/config.ts
+export default async () => defineBlogConfig({
+  themeConfig: {
+    ads: { component: 'AdUnit' },
+  },
+  head: [
+    [
+      'script',
+      {
+        async: '',
+        crossorigin: 'anonymous',
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX',
+      },
+    ],
+  ],
+})
 ```
 
-### Placement types
+The component is registered globally because in-content blocks are injected during build time — importing them inside individual markdown files is not feasible.
 
-| Placement | Where | Notes |
-| --- | --- | --- |
-| `aside` | Right column, below TOC | Only on layouts with aside |
-| `afterContent` | Below article, before footer | |
-| `inContent` | Between paragraphs | Frequency controlled by `inContentFrequency` |
+::: tip Page navigation
+VitePress is an SPA. The theme binds the block to the route via `:key`, so when navigating between posts, the component is remounted and `onMounted` fires again automatically. No manual intervention is needed.
+:::
 
-## Manual placement
+## Ad configuration
 
-You can also place ads manually in markdown:
-
-```md
-First part of the article.
-
-<NeptuAd />
-
-Continuation of the article.
+```ts
+themeConfig: {
+  ads: {
+    component: 'AdUnit',
+    layouts: ['post'],
+    aside: true,
+    afterContent: false,
+    inContent: {
+      enabled: true,
+      anchor: 'heading',
+      start: 2,
+      every: 3,
+      max: 2,
+      minBlocks: 6,
+    },
+  },
+}
 ```
 
-Manual placements work independently of automatic ones — both can appear on the same page.
+### `ads` parameters
 
-## Per-post control
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | `boolean` | `true` | Main toggle. Frontmatter `ads: true \| false` on a page overrides this. |
+| `component` | `string` | — | Name of globally registered component rendering the ad block. Receives `placement` and `index` props. Without it, `NeptuAd` renders only its default slot content. |
+| `layouts` | `string[]` | `['post']` | Layouts where ad slots are permitted: `'post'`, `'page'`, `'util'`, `'tag'`, `'category'`, `'archive'`, `'author'`. |
+| `defaultLayout` | `string` | `'post'` | Layout assumed if the page frontmatter does not declare `layout`. |
+| `aside` | `boolean` | `true` | Block in the right column. |
+| `afterContent` | `boolean` | `false` | Block below article body, before post footer. |
+| `requireConsent` | `boolean` | `false` | Do not render block until the visitor has granted consent. |
+| `label` | `string` | translation `adLabel` | Text above block. An empty string removes the label. |
+| `minHeight` | `Partial<Record<'aside' \| 'in-content' \| 'after-content', number>>` | — | Reserved height in pixels for each placement to prevent layout shifts. |
+
+### `ads.inContent` parameters
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | `boolean` | `true` | Enable automated blocks inside the text. |
+| `anchor` | `'heading' \| 'paragraph'` | `'heading'` | Anchor target: `'heading'` — before `##` heading, `'paragraph'` — before paragraph. |
+| `start` | `number` | `2` | Index of the first anchor (1-indexed) before which a block is placed. |
+| `every` | `number` | `3` | How many anchors to skip between blocks. |
+| `max` | `number` | `2` | Maximum number of blocks per page. |
+| `minBlocks` | `number` | `6` | Minimum number of top-level blocks in the article — short posts remain unaffected. |
+
+## Disabling on a page
 
 ```yaml
 ---
-ads: false  # disable all ads for this post
----
-```
-
-## Consent integration
-
-If you use consent management (see [Cookie consent](consent)), ads can be hidden until the user gives consent:
-
-```yaml
-# src/site.yaml
-themeConfig:
-  ads:
-    requireConsent: true
-```
-
-When `requireConsent` is `true`, ad components are not rendered until `useConsent()` returns `granted`.
-
-## Disabling ads
-
-### Globally
-
-```yaml
-themeConfig:
-  ads:
-    enabled: false
-```
-
-### Per page
-
-```yaml
----
+title: Page without ads
 ads: false
 ---
 ```
 
+This also works in reverse — `ads: true` where disabled by default. Frontmatter is respected by the build-time plugin, so in-content blocks will not appear either.
+
 ## What's next
 
-- [Cookie consent](consent) — consent management
-- [Customization](customization) — CSS variables for ad blocks
+- [Cookie consent](consent) — Consent Mode v2, CMP, and Google requirements.
+- [Analytics and popular posts](analytics) — setting up page view tracking.
+- [themeConfig settings](themeconfig-settings#right-column-aside) — column geometry and slots.
+
+---
+
+Next: [Cookie consent](consent)

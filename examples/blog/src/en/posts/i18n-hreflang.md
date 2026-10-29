@@ -8,6 +8,7 @@ cover: https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&
 coverWidth: 1200
 coverHeight: 800
 coverAlt: Colorful flags of different countries
+# Link this post with the Russian version — for language switcher and hreflang.
 translations:
   ru: "/ru/posts/i18n-hreflang"
 date: 2026-07-13

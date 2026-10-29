@@ -100,19 +100,29 @@ The article's reading time is displayed under the post title and in the post lis
 # src/site.yaml
 themeConfig:
   readingTime:
-    enabled: true           # default: true
-    wordsPerMinute: 200     # default: 200
-    layouts: [post]         # which layouts show the reading time
-  postList:
-    showReadingTime: true   # show reading time in post cards
+    enabled: true      # default: true
+    wpm: 200           # words per minute
+    layouts: ['post']  # where to show the badge
 ```
 
-To disable the badge for a specific post:
+An individual page can explicitly enable reading time:
 
 ```yaml
 ---
-readingTime: false
+title: Long reference page
+layout: page
+readingTime: true
 ---
+```
+
+### In post list
+
+By default, reading time is not displayed in post list cards, but it can be enabled:
+
+```yaml
+themeConfig:
+  postList:
+    showReadingTime: true
 ```
 
 ## "Watch video" button

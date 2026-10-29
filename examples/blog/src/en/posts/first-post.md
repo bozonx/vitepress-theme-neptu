@@ -1,8 +1,7 @@
 ---
 title: Your first post
 description: >
-  A minimal post is a Markdown file with a title, date and author. Let's go
-  through what's required and what you can add later.
+  A minimal post is a Markdown file with a title and date, as well as other frontmatter fields like author or cover
 authorId: maria-editor
 date: 2026-07-31
 category: getting-started

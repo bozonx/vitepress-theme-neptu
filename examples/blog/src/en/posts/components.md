@@ -225,3 +225,7 @@ import type {
 | `SeoConfig` | SEO configuration |
 | `Tag` | Tag description |
 | `ThemeConfig` | Full theme configuration |
+
+---
+
+This concludes the guide. You can return to the [table of contents](../pages/contents) or go to the [home page](../).

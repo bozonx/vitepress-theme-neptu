@@ -49,3 +49,7 @@ The post will still be displayed on the site and appear in lists; it simply won'
 The theme configures Pagefind with sensible defaults — for a typical blog, nothing needs to be configured. Modal translations (labels, keyboard hints) are localized through the standard `t.searchUI` key in `site.yaml` or `_site.yaml`. Full reference — in the [Pagefind UI docs](https://pagefind.app/docs/ui/).
 
 Need flags the theme doesn't provide? Set `search.enabled: false` and call the [Pagefind CLI](https://pagefind.app/docs/config-options/) yourself after the build.
+
+---
+
+Next: [Components, composables and utilities reference](components)
