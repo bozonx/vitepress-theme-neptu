@@ -390,15 +390,15 @@ export interface SiteConfig {
 **Отображение:**
 
 - Информационный: <Badge type="info" text="Инфо" />
-- Совет / Успех: <Badge type="tip" text="v2.0" />
+- Совет: <Badge type="tip" text="v2.0" />
 - Предупреждение: <Badge type="warning" text="Beta" />
 - Опасность: <Badge type="danger" text="Deprecated" />
 
-**Как написать:**
+**Markdown:**
 
 ```md
 - Информационный: <Badge type="info" text="Инфо" />
-- Совет / Успех: <Badge type="tip" text="v2.0" />
+- Совет: <Badge type="tip" text="v2.0" />
 - Предупреждение: <Badge type="warning" text="Beta" />
 - Опасность: <Badge type="danger" text="Deprecated" />
 ```
