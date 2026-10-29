@@ -446,7 +446,7 @@ export interface SiteConfig {
 
 ## Дополнительные интеграции
 
-Вы можете добавлять различные плагины Vitepress, а так же плагины Markdown. Смотрите подробней на страницах [Кастомизация](customization) и [Диаграммы Mermaid и формулы KaTeX](mermaid-and-katex).
+Вы можете добавлять различные плагины Vitepress, а так же плагины Markdown, например можно добавить [Диаграммы Mermaid и формулы KaTeX](mermaid-and-katex).
 
 ---
 
