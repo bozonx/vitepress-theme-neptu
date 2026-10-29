@@ -54,6 +54,7 @@ export const PER_PAGE = 15
 
 export default async () => {
   const base = process.env.VITEPRESS_BASE || '/'
+  const assetUrl = (path: string) => `${base}${path.replace(/^\//, '')}`
 
   const config: BlogUserConfig = {
     /////// Стандартные поля Vitepress

@@ -139,6 +139,7 @@ import { useThemeConfig, useBreakpoint } from 'vitepress-theme-neptu/composables
 | `useStylePreset()` | Чтение и смена стилевого пресета |
 | `useConsent()` | Согласие на куки — см. [Согласие на куки](consent) |
 | `useDownloadFile()` | Логика скачивания для своих кнопок |
+| `useLocaleDir()` | Реактивная установка атрибута `dir` (`ltr` / `rtl`) для `<html>` |
 
 ## Утилиты
 

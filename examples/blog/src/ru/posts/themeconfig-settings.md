@@ -130,7 +130,7 @@ themeConfig:
         mobileOnly: true    # скрывать на десктопе (показывать только в сайдбаре)
     socialLinks:
       - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
+        href: '${theme.repo}'
 ```
 
 Поля ссылок (`text`, `href`, `icon`, `desktopOnly` и др.) описаны в [Поля ссылок](#поля-ссылок).
@@ -176,7 +176,7 @@ themeConfig:
         icon: 'fa6-solid:share-nodes'
     socialLinks:
       - icon: 'fa6-brands:telegram'
-        link: 'https://t.me/yourchannel'
+        href: 'https://t.me/yourchannel'
         # desktopOnly: true  # скрывать на мобильных
         # mobileOnly: true   # скрывать на десктопе
 ```
@@ -211,7 +211,7 @@ themeConfig:
     atomFeed: true   # ссылка на Atom-ленту (по умолчанию true)
     socialLinks:     # социальные ссылки (тот же формат, что в sidebar.socialLinks)
       - icon: 'fa6-brands:github'
-        link: '${theme.repo}'
+        href: '${theme.repo}'
         title: 'GitHub'
     message: 'Копирование разрешено только со ссылкой на источник.'
     copyright: 'Copyright 2026 Your Name.'
@@ -315,8 +315,7 @@ markdown: {
 
 Прокрутите к нижней части этой страницы — весь набор блоков подвала работает
 там вживую: **карточка автора**, **ссылка на обсуждение**, **кнопки шеринга**,
-**ссылка на редактирование**, **категории и теги**, хронологическая
-**навигация** и список **похожих постов**.
+**ссылка на редактирование**, **категории и теги** и список **похожих постов**.
 
 ### Состав и порядок блоков
 

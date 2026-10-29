@@ -72,12 +72,7 @@ themeConfig:
         # Выделенная кнопка - primary
         - { text: 'Читать статьи', href: 'recent/1', primary: true }
         # Кнопка с иконкой
-        - { text: 'Читать статьи', href: 'recent/1', icon: 'fa6-solid:bookmark' }
-      sections:
-        # массив секций под hero-блоком (см подродности ниже)
-        - title: 'Последние статьи'
-          description: 'Свежие материалы о разработке и технологиях'
-          articles: 5
+        - { text: 'Содержание', href: 'pages/contents', icon: 'fa6-solid:list-ul' }
 ```
 
 > **Требования к картинке в Hero:**

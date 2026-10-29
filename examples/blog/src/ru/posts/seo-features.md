@@ -26,8 +26,8 @@ siteUrl: 'https://myblog.org'
 
 | Механизм | Что делает | Подробнее |
 | --- | --- | --- |
-| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [sitemap.xml](#sitemap-xml) |
-| **robots.txt** | со ссылкой на sitemap | [robots.txt](#robots-txt) |
+| **sitemap.xml** | карта сайта из `siteUrl`, без `noindex`-страниц | [sitemap.xml](#sitemapxml) |
+| **robots.txt** | со ссылкой на sitemap | [robots.txt](#robotstxt) |
 | **RSS / Atom / JSON** | ленты для каждой локали | [Ленты](#ленты-rss-atom-json) |
 | **Open Graph + Twitter card** | превью для соцсетей на каждой странице | см. ниже |
 | **JSON-LD** | микроразметка `BlogPosting` для постов | [Микроразметка JSON-LD](seo-json-ld) |
@@ -177,7 +177,7 @@ themeConfig:
 
 - [Микроразметка JSON-LD](seo-json-ld) — расширение схемы под свои нужды.
 - [Связывание переводов и hreflang](i18n-hreflang) — связь локалей между собой.
-- [Поиск Pagefind](search-pagefind) — индексация, фильтры, исключение из поиска.
+- [Поиск Pagefind](search-pagefind) — индексация, исключение из поиска.
 - [Публикация и деплой](deploy) — как выложить готовый сайт в интернет.
 
 ---
