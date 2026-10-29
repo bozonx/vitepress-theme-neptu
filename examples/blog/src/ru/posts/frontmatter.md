@@ -282,4 +282,4 @@ layout: home
 
 ---
 
-Далее [Категории и теги](categories-and-tags)
+Далее: [Категории и теги](categories-and-tags)

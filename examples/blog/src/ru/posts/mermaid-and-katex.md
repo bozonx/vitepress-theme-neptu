@@ -126,3 +126,7 @@ $$
 [документации `@mdit/plugin-katex`](https://mdit-plugins.github.io/katex.html).
 Если KaTeX не обязателен, VitePress также документирует встроенное опциональное
 [подключение MathJax](https://vitepress.dev/guide/markdown#math-equations).
+
+---
+
+Далее: [Внешний контент — CMS, API и свои data-лоадеры](external-content)

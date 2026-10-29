@@ -262,10 +262,14 @@ console.log(theme.value.featureEnabled) // true
 
 > Поля можно задавать на любом уровне: `config.ts`, `site.yaml` или `_site.yaml`. Значения сливаются по приоритету — от низкого к высокому.
 
-## Уровень 2 и уровнь 3
+## Уровень 2 и уровень 3
 
 Следующие уровни конфига находятся в файлах:
-- `src/site.yaml` - 2 уровень
-- `src/<locale>/_site.yaml` - 3 уровень
+- `src/site.yaml` — 2 уровень
+- `src/<locale>/_site.yaml` — 3 уровень
 
-Об их настройке смотрите в [Настройки themeConfig](themeconfig-settings.md)
+Об их настройке читайте в статье [Настройки themeConfig](themeconfig-settings).
+
+---
+
+Далее: [Настройки themeConfig — 2 и 3 уровень конфигурации](themeconfig-settings)

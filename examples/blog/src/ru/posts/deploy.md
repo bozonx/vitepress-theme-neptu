@@ -261,4 +261,4 @@ Codex, Claude Code, Cascade и тд) сделать это за вас. Аген
 
 ---
 
-Далее [Возможности Markdown](./markdown-syntax.md)
+Далее: [Возможности Markdown и кастомные блоки](markdown-syntax)

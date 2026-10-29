@@ -66,3 +66,7 @@ searchIncluded: false
 Нужны флаги, которых тема не предоставляет? Поставьте `search.enabled: false`
 и вызывайте [Pagefind CLI](https://pagefind.app/docs/config-options/) сами
 после сборки.
+
+---
+
+Далее: [Справочник компонентов, composables и утилит](components)

@@ -48,7 +48,7 @@ npm install      # или: pnpm install / yarn install
 npm run dev      # или: pnpm dev / yarn dev
 ```
 
-Откройте [http://localhost:5173](http://localhost:5173) — блог уже работает в dev режиме.
+Откройте `http://localhost:5173` — блог уже работает в dev режиме.
 
 ::: info
 Благодаря встроенной в Vitepress поддержки hot reload
@@ -62,7 +62,7 @@ npm run build      # или: pnpm build / yarn build
 npm run preview    # или: pnpm preview / yarn preview
 ```
 
-Скрипт `build` собирает статический сайт в `src/.vitepress/dist` и строит поисковый индекс [Pagefind](search-pagefind). А скрипт `preview` поднимает локальный сервер на [http://localhost:4173](http://localhost:4173), чтобы посмотреть итоговую сборку — именно её вы позже выложите в интернет.
+Скрипт `build` собирает статический сайт в `src/.vitepress/dist` и строит поисковый индекс [Pagefind](search-pagefind). А скрипт `preview` поднимает локальный сервер на `http://localhost:4173`, чтобы посмотреть итоговую сборку — именно её вы позже выложите в интернет.
 
 ## Шаг 5. Деплой
 
@@ -70,4 +70,8 @@ npm run preview    # или: pnpm preview / yarn preview
 
 ## Что дальше
 
-Блог запущен — дальше в нём нужно разобраться. Начем со [структуры проекта](project-structure).
+Блог запущен — дальше в нём нужно разобраться. Начнём со [структуры проекта](project-structure).
+
+---
+
+Далее: [Структура проекта](project-structure)

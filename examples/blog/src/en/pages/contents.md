@@ -4,6 +4,8 @@ description: >
   Full table of contents for the Neptu theme guide — nine sections from launching
   a blog in five minutes to hooks, slots and external content.
 layout: page
+translations:
+  ru: /ru/pages/contents
 ---
 
 # Table of contents

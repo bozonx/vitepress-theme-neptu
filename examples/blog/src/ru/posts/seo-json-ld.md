@@ -117,3 +117,7 @@ themeConfig:
 ```
 
 О других SEO-возможностях (OG, canonical, hreflang, RSS) и их переключателях см. в [обзоре SEO](seo-features).
+
+---
+
+Далее: [Аналитика и популярные посты](analytics)

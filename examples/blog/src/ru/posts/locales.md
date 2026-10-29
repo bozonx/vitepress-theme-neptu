@@ -140,3 +140,7 @@ node -e "console.log(new Intl.DisplayNames(['pt-BR'], { type: 'language' }).of('
 
 - [Переводы интерфейса и страница выбора языка](i18n-translations) — встроенные переводы, справочник ключей `t`, стилизация страницы выбора языка, наследование локалей.
 - [Связывание переводов и hreflang](i18n-hreflang) — `translations` и теги для поисковиков.
+
+---
+
+Далее: [Связывание переводов и hreflang](i18n-hreflang)
