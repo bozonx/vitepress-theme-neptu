@@ -165,4 +165,4 @@ DocSearch.
 [README лендинга](https://github.com/bozonx/vitepress-theme-neptu/blob/main/packages/landing/README.md#search),
 а рабочий пример интеграции Pagefind — компонент `PagefindSearch.vue` из темы
 блога. В отличие от лендинга, тема блога поставляется с уже встроенным
-Pagefind — см. [Поиск в теме блога](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/posts/seo-feeds-search).
+Pagefind — см. [Поиск в теме блога](https://bozonx.github.io/vitepress-theme-neptu/blog/ru/posts/search-pagefind).

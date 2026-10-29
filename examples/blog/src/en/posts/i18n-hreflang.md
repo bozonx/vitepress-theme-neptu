@@ -92,7 +92,7 @@ Implementation details:
 - If you have only one language in the blog, hreflang doesn't appear in `head` because there's simply no need.
 - Drafts (`draft: true`) are excluded from hreflang automatically along with canonical and JSON-LD — see [Drafts, reading time, video and podcasts](drafts-video-podcasts).
 
-:::tip
+::: tip
 Absolute addresses are built from `siteUrl` — without it the tags won't appear, so set it before publishing (see [SEO overview](seo-features)).
 :::
 
@@ -134,3 +134,7 @@ seo:
 - [Locales and multilingual support](locales) — routing, locale naming, adding a language
 - [Interface translations and language selection page](i18n-translations) — built-in translations, `t` key reference, `extends`
 - [SEO mechanisms](seo-features) — feeds, robots, sitemap, canonical and cross-posting
+
+---
+
+Next: [How SEO works — overview and mechanisms](seo-features)

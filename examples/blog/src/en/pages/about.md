@@ -15,8 +15,8 @@ that produces it shown alongside. It reads as a guide — from setup to advanced
 
 ## Guide sections
 
-The guide consists of seven sections and is meant to be read in order — from launching
-a blog to hooks and slots. The full table of contents with all thirty articles is on
+The guide consists of nine sections and is meant to be read in order — from launching
+a blog to hooks and slots. The full table of contents with all articles is on
 a separate page:
 
 ### → [Table of contents](contents)
@@ -26,7 +26,7 @@ are available as [categories](../categories/).
 
 ## Start your own blog
 
-The starting point is the template folder from the repository. Copy it and
+The starting point is the starter template from the repository's `packages/blog/template/` folder. Copy it and
 make it your own:
 
 - set `siteUrl` in `.vitepress/config.ts`,

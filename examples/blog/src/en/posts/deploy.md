@@ -39,7 +39,7 @@ These are easy to confuse, but they're different things:
 
 So if the site is published at the root (`myblog.org`), you don't need to set `base`. It's only needed when the site is not at the root.
 
-:::info
+::: info
 If the site is not at the root (using e.g. `base: /path-to-site/`), the `base` path is **automatically added** to `siteUrl` for all SEO links (canonical, sitemap, RSS, Open Graph, JSON-LD). You don't need to duplicate the path in `siteUrl` manually — just specify the domain: `https://myblog.org`.
 :::
 
@@ -245,4 +245,4 @@ But you'll need to do these yourself — the agent doesn't have access to your a
 
 ---
 
-Next: [Markdown features](./markdown-syntax)
+Next: [Markdown features and custom blocks](markdown-syntax)

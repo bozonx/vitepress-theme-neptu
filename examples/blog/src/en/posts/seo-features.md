@@ -1,115 +1,167 @@
 ---
 title: How SEO works — overview and mechanisms
 description: >
-  An overview of the theme's automatic SEO features: sitemap, robots.txt,
-  RSS/Atom/JSON feeds, Open Graph, JSON-LD, canonical links and hreflang.
+  A roadmap of the theme's SEO mechanisms: what is generated automatically at build time,
+  where it is configured, and how to disable any feature. RSS/Atom/JSON feeds,
+  automatic robots.txt and sitemap.xml, canonical links and cross-posting.
 authorId: ivan-k
-date: 2026-07-21
+date: 2026-07-12
 category: seo
-tags: [seo, sitemap, rss, og]
+tags: [seo, config]
 descriptionAsPreview: true
 translations:
   ru: /ru/posts/seo-features
 ---
 
-The theme generates all essential SEO features automatically. You don't need plugins or configuration — just set `siteUrl` and everything works.
+The Neptu theme handles all technical aspects of SEO for you: specify `siteUrl` — and the build generates a full suite of SEO mechanisms that completely cover your blog's SEO needs.
 
-## Prerequisite: `siteUrl`
+Set `siteUrl` in your level 1 configuration without a trailing slash:
 
 ```ts
 // .vitepress/config.ts
-export default async () => defineBlogConfig({
-  siteUrl: 'https://myblog.org',
-})
+siteUrl: 'https://myblog.org'
 ```
 
-Without `siteUrl`, most SEO features won't generate correct absolute URLs. Set it before publishing.
+## What is generated automatically
 
-## Generated features
+At build time, the following is created for the entire site:
 
-### sitemap.xml
-
-A `sitemap.xml` file is generated in the build output. It includes all public pages with their `lastmod` dates.
-
-### robots.txt
-
-A `robots.txt` file is generated referencing the sitemap. Drafts are excluded.
-
-### RSS / Atom / JSON feeds
-
-Three feed formats are generated:
-
-| Feed | Path | Content type |
+| Mechanism | What it does | Details |
 | --- | --- | --- |
-| RSS 2.0 | `/rss.xml` | All public posts |
-| Atom | `/atom.xml` | All public posts |
-| JSON Feed | `/feed.json` | All public posts |
+| **sitemap.xml** | site map derived from `siteUrl`, excluding `noindex` pages | [sitemap.xml](#sitemapxml) |
+| **robots.txt** | includes reference to sitemap | [robots.txt](#robotstxt) |
+| **RSS / Atom / JSON** | feeds for each locale | [Feeds](#feeds-rss-atom-json) |
+| **Open Graph + Twitter card** | social media previews on every page | see below |
+| **JSON-LD** | `BlogPosting` structured data for posts | [JSON-LD microdata](seo-json-ld) |
+| **canonical** | link to the original source of the page | [Canonical links](#canonical-links-canonical) |
+| **hreflang** | connects translated versions across languages | [Linking translations and hreflang](i18n-hreflang) |
 
-Feed links are added to `<head>` on the home page.
+## How to disable any feature
 
-### Open Graph and Twitter cards
+All SEO features are enabled by default. They can be disabled in two places:
 
-Each post page includes:
-- `og:title`, `og:description`, `og:image`, `og:url`, `og:type`
-- `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
-- `article:published_time`, `article:author`, `article:section`
+```yaml
+# Globally — src/site.yaml
+themeConfig:
+  seo:
+    og: true
+    jsonLd: true
+    hreflang: true
+    canonical: true           # self-canonical on every page
+    rss: true
+    maxDescriptionLength: 300
+  twitterSite: '@your_handle' # twitter:site on every page
+```
 
-### JSON-LD
+```yaml
+# For a single page — in post frontmatter (overrides global config)
+seo:
+  jsonLd: false
+  og: false
+```
 
-Each post page includes `BlogPosting` structured data. See [JSON-LD microdata](seo-json-ld) for details.
+## Feeds (RSS / Atom / JSON)
 
-### Canonical links
+Enabled by default. Links are rendered in the sidebar (RSS + Atom) and in the `<head>` of every page. Configured in `src/site.yaml`:
 
-Each page includes a `<link rel="canonical">` tag. By default, a self-canonical is
-generated. Set the `canonical` frontmatter field to point at an original
-publication (cross-posting), or to `'self'` to force a self-canonical where
-`seo.canonical` is disabled.
+```yaml
+themeConfig:
+  feeds:
+    maxPosts: 50
+    formats: ['rss', 'atom', 'json']
+    fullContent: false
+```
 
-| `themeConfig.seo.canonical` | frontmatter `seo.canonical` | frontmatter `canonical` | result |
-| --- | --- | --- | --- |
-| `true` (default) | — | — | self |
-| `true` | — | `<url>` | `<url>` |
-| `true` | `false` | anything | nothing |
-| `false` | — | — | nothing |
-| `false` | — | `<url>` / `self` | `<url>` / self |
-| `false` | `true` | — | self |
+File paths for each locale: `/en/feed.rss`, `/en/feed.atom`, `/en/feed.json`.
 
-Every `seo.*` key resolves through the same layers: page frontmatter → locale
-`_site.yaml` → site `site.yaml`.
+`fullContent: true` additionally includes sanitized HTML of the entire article. Relative links and images are converted to absolute URLs. The feed renderer does not execute custom Vue components or optional Markdown plugins; if the core content depends heavily on them, keeping the preview mode is recommended.
 
-### hreflang
+## robots.txt
 
-For multilingual sites, `<link rel="alternate">` tags with `hreflang` attributes are generated. See [Linking translations and hreflang](i18n-hreflang).
+Behavior depends on whether a custom `robots.txt` exists in `public/`:
 
-## Disabling features
+- **No file** — the theme generates `robots.txt` during the build:
 
-### Globally
+  ```text
+  User-agent: *
+  Allow: /
+
+  Sitemap: https://<siteUrl>/sitemap.xml
+  ```
+
+  The sitemap URL is derived from `siteUrl`.
+
+- **File exists** — the theme does not generate or modify it. VitePress copies `public/robots.txt` to the output directory as-is. If the file lacks a `Sitemap:` directive, the build logs a warning suggesting you add `Sitemap: https://<siteUrl>/sitemap.xml`.
+
+## sitemap.xml
+
+Built automatically using `siteUrl`. Pages with `robots: noindex` (configured via `head`) are excluded from the sitemap. Utility list pages (`recent/`, `popular/`, `archive/`, `tags/`, `authors/`) are omitted from the site map.
+
+Posts and pages without translations are included on equal footing — a translated counterpart is not required. Nested posts (`posts/my-article/index.md`) are added to the sitemap under their clean folder URL.
+
+## Canonical links (canonical)
+
+A canonical link instructs search engines which URL is the original, authoritative version of the page, preventing penalties for duplicate content.
+
+### Default behavior
+
+When `seo.canonical: true` (default), every page automatically receives a canonical link pointing to itself, so in most situations you don't need to do anything.
+
+If you disabled `seo.canonical` globally but want *this particular page* to link to itself, specify `self`:
+
+```yaml
+canonical: "self"
+```
+
+### Cross-posting: external canonical
+
+If you publish an article on your blog that originally appeared elsewhere, specify a canonical link to the original publication — search engines will attribute search rank to the primary source without penalizing your copy as duplicate content.
+
+```yaml
+# In post frontmatter
+canonical: "https://example.com/articles/original-post"
+```
+
+> Use this setting when syndicating your own content, migrating from an older domain, or re-publishing with permission.
+
+### Disabling for a single page
+
+```yaml
+seo:
+  canonical: false
+```
+
+### Disabling globally
 
 ```yaml
 # src/site.yaml
 themeConfig:
   seo:
-    sitemap: false
-    robots: false
-    rss: false
-    og: false
-    jsonLd: false
-    hreflang: false
+    # Do not add self-canonical automatically. Pages with an explicit
+    # `canonical` field in frontmatter will still receive their link.
     canonical: false
 ```
 
-### Per page
+The same can be defined for a specific locale in `<locale>/_site.yaml` — settings resolve along the chain: frontmatter → locale → site.
 
-```yaml
+### How configuration levels resolve
+
+| `themeConfig.seo.canonical` | frontmatter `seo.canonical` | frontmatter `canonical` | result |
+| --- | --- | --- | --- |
+| `true` (default) | — | — | self |
+| `true` | — | `<url>` | `<url>` |
+| `true` | `false` | any | nothing |
+| `false` | — | — | nothing |
+| `false` | — | `<url>` / `self` | `<url>` / self |
+| `false` | `true` | — | self |
+
+## Further reading
+
+- [JSON-LD microdata](seo-json-ld) — extending the schema for your needs.
+- [Linking translations and hreflang](i18n-hreflang) — connecting locales with one another.
+- [Pagefind search](search-pagefind) — indexing and excluding from search.
+- [Publishing and deployment](deploy) — publishing the finished site online.
+
 ---
-seo:
-  og: false
-  jsonLd: false
-  rss: false
----
-```
 
-## What's next
-
-- [JSON-LD microdata](seo-json-ld) — extending the schema
-- [Linking translations and hreflang](i18n-hreflang) — multilingual SEO
+Next: [JSON-LD microdata](seo-json-ld)

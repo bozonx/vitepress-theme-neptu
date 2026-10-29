@@ -480,4 +480,4 @@ Use the full arsenal of Markdown and custom containers to create meaningful and 
 
 ---
 
-Next: [Frontmatter fields](./frontmatter)
+Next: [All frontmatter fields](frontmatter)

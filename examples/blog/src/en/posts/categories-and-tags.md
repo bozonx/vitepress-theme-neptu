@@ -1,61 +1,91 @@
 ---
 title: Categories and tags
 description: >
-  How categories and tags are implemented in the theme, their differences,
-  configuration in _categories.yaml, and usage in post frontmatter.
+  Category — a post's primary section and breadcrumbs; tags — free-form labels.
+  Categories are defined in _categories.yaml, tags — directly in the post.
 authorId: ivan-k
-date: 2026-07-10
+date: 2026-07-27
 category: writing
-tags: [categories, tags, config]
+tags: [frontmatter, config]
 descriptionAsPreview: true
 translations:
   ru: /ru/posts/categories-and-tags
 ---
 
-Categories and tags are two taxonomies for organizing posts. They look similar at first glance but serve different purposes and are configured differently.
-
-## What's the difference
+The theme has two taxonomies. Under the hood they work similarly, but they solve different problems — and are therefore configured differently:
 
 | | Categories | Tags |
 | --- | --- | --- |
-| **Registry** | `_categories.yaml` — defined once per locale | No registry — created directly in posts |
-| **Linking** | By `id` from the registry | By slug (auto-generated from name) |
-| **URL** | `/categories/<slug>/1` | `/tags/<slug>/1` |
-| **Purpose** | Blog structure, breadcrumbs | Free-form labeling |
-| **Cross-locale** | Same `id` ties categories across locales | Same slug ties tags across locales |
+| Count per post | usually one | as many as you want |
+| Purpose | blog section | free-form labels |
+| Where defined | `_categories.yaml` | nowhere, directly in the post |
+| Breadcrumbs | built from it | no |
+| Pages | [`categories/`](../categories/) | [`tags/`](../tags/) |
 
-## Categories
+A blog typically has few categories, and they form its structure — which is why they are listed once in a registry, and posts reference them by ID. Tags can number in the hundreds, appearing as you go — they do not need separate registration.
 
-Categories are the structural backbone of the blog. They're defined in `_categories.yaml` and referenced by `id` in post frontmatter.
+## Category registry
 
-### Defining categories
+The file `src/<locale>/_categories.yaml` is the single place where categories are defined. It works just like [`_authors.yaml`](authors). If you need logic or computed values, you can use `_categories.ts` instead of YAML — a module exporting an array of records; `.ts` takes priority if both files exist.
 
 ```yaml
 # src/en/_categories.yaml
 - id: 'getting-started'
   name: 'Getting Started'
 
+- id: 'configuration'
+  name: 'Configuration'
+
 - id: 'writing'
   name: 'Writing'
-  # slug defaults to id; set it only when you want a different URL
-  slug: 'writing'
 ```
 
-The `id` is the same across all locales — it's what ties `/en/categories/writing/1` to `/ru/categories/kontent/1` so the language switcher can follow a category page. The `name` is localized. The `slug` defaults to `id` but can be overridden for localized URLs.
+A record has three fields, and distinguishing them is important:
 
-### Using categories in posts
+| Field | Description | Translated |
+| --- | --- | --- |
+| `id` | key referenced by posts | **no**, identical across all locales |
+| `name` | visible title | yes |
+| `slug` | URL path segment | yes, but defaults to `id` |
+
+Only `id` is required. `name` and `slug` default to `id` if omitted, so `- id: 'seo'` is already a working category with the URL `/en/categories/seo/1`.
+
+::: tip Custom fields
+You can add any custom fields to a record — for example, `description`. The theme doesn't render them, but they pass through the build and are accessible in `frontmatter.categories[]` for your custom components or CMS.
+:::
+
+::: tip Also supported in `_site.yaml`
+The same can be defined in `themeConfig.categories` inside `_site.yaml` — layers merge by `id`. However, a dedicated file is more convenient: it is easy to edit in headless CMSs like Sveltia, and it keeps the main site config lean.
+:::
+
+::: tip Editor autocompletion
+Add the schema line to the top of `_categories.yaml`:
+`# yaml-language-server: $schema=https://unpkg.com/vitepress-theme-neptu/schema/categories.schema.json`
+— then any editor with yaml-language-server (VS Code, Neovim, etc.) will provide autocompletion and value validation.
+:::
+
+## Setting a post category
+
+In the post, specify only the category `id`:
 
 ```yaml
-# Single category (syntactic sugar)
-category: writing
-
-# Multiple categories
-categories:
-  - writing
-  - advanced
+---
+title: Launch a blog in 5 minutes
+category: getting-started
+tags:
+  - guide
+---
 ```
 
-The `category` field is merged with `categories` at build time. The first category in the list builds the breadcrumbs.
+If a post genuinely belongs to multiple categories, use the `categories` field with a list of IDs:
+
+```yaml
+categories:
+  - getting-started
+  - configuration
+```
+
+`category` is simply syntactic sugar for a single-element list. During the build, the theme normalizes both fields into a single deduplicated `categories` list by `id`, so components and structured data always read one consistent shape. Specifying both fields at the same time is allowed — the value from `category` comes first.
 
 ### Breadcrumbs
 
@@ -63,58 +93,84 @@ Breadcrumbs are automatically generated from the post's first category. They app
 
 Home → Category name → Post title
 
+**The first category is primary.** It determines the breadcrumbs and `BreadcrumbList` in structured data. Additional categories are shown as chips in the post footer.
+
+## Different URLs in different languages
+
+A category has its own entry in each locale, and the `slug` can differ between entries:
+
+```yaml
+# src/ru/_categories.yaml
+- id: 'writing'
+  name: 'Контент'
+  slug: 'kontent'
+```
+
+```yaml
+# src/en/_categories.yaml
+- id: 'writing'
+  name: 'Writing'
+```
+
+This produces `/ru/categories/kontent/1` and `/en/categories/writing/1` — each URL is human-readable in its language, which is better for SEO. Meanwhile, the language switcher continues to work because the category resolves by the shared `id`.
+
 ## Tags
 
-Tags are free-form — no registry needed. You define them directly in post frontmatter:
+Unlike categories, tags are specified directly in the post's frontmatter, without a central registry.
 
 ```yaml
-# Simple strings
-tags: [markdown, guide, syntax]
-
-# With explicit slug
 tags:
-  - name: 'Markdown Guide'
-    slug: 'markdown-guide'
-  - name: 'Syntax Reference'
+  - frontmatter
+  - layout # → /en/tags/layout/1
 ```
 
-If no slug is provided, it's auto-generated by transliterating the tag name.
-
-### Tag pages
-
-The theme automatically generates a page for each tag at `/tags/<slug>/1`. These pages list all posts with that tag, sorted by date.
-
-### Tag cloud
-
-A tag cloud showing all tags with post counts is available on the `/tags/` page and can be displayed on the home page via `home.sections`.
-
-## URLs
-
-| Taxonomy | URL pattern |
-| --- | --- |
-| All categories | `/categories/` |
-| Single category | `/categories/<slug>/<page>` |
-| All tags | `/tags/` |
-| Single tag | `/tags/<slug>/<page>` |
-
-## Sidebar links
-
-Both categories and tags can be shown in the sidebar:
+A custom slug is specified using object syntax:
 
 ```yaml
-# src/en/_site.yaml
+tags:
+  - { name: 'Vue.js', slug: 'vue' }
+```
+
+A tag exists in the tag list as long as at least one post uses it.
+
+::: tip Tag registry for CMS
+If you need a tag list for autocomplete in a CMS like Sveltia, create `_tags.yaml` yourself: the CMS reads such a file directly, whereas the theme does not require or read it. Simply keep display names in it, and configure the CMS widget to save a string to the post — this way there is no second source of truth.
+:::
+
+## Configuration
+
+```yaml
+# src/site.yaml
 themeConfig:
   sidebar:
-    links:
-      - text: 'Categories'
-        href: 'categories/'
-        icon: 'fa6-solid:folder-open'
-      - text: 'Tags'
-        href: 'tags/'
-        icon: 'fa6-solid:tag'
+    tags: true
+    categories: true # disabled by default
+    # How many tags to show in the sidebar; followed by "All tags" link.
+    # tagsCount: 15 # default: 15
+
+    # How many categories to show in the sidebar; followed by "All categories" link.
+    # categoriesCount: 10 # default: 10
+
+  # Icon for category links (default: tagsIcon).
+  categoriesIcon: 'fa6-solid:folder-open'
+  postFooter:
+    - author
+    - donate
+    - comments
+    - social-share
+    - edit-link
+    - categories
+    - tags
+    - similar
 ```
 
-## What's next
+`postFooter` is an array of strings representing footer block names: `author`, `donate`, `comments`, `social-share`, `edit-link`, `categories`, `tags`, `similar`.
+The key order dictates the block order. The array **completely replaces** the default value, so you must list all blocks you want to display: omit `categories` or `tags` to hide that block.
 
-- [All frontmatter fields](frontmatter) — complete frontmatter reference
-- [Lists and pages](lists-and-pages) — how post lists are generated
+## Feeds and search
+
+Post tags are added to the RSS feed as `<category>` elements with links to the tag page. Categories are not emitted in the feed.
+
+---
+
+Next: [Drafts, reading time, video button and podcasts](drafts-video-podcasts)

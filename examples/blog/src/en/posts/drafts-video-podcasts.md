@@ -1,38 +1,98 @@
 ---
 title: Drafts, reading time, video button and podcasts
 description: >
-  How to use draft: true to hide posts, configure reading time, add video
-  links, and integrate podcast lists.
+  How to hide unfinished posts, display reading time estimates, add a video
+  button, and include a podcast dropdown in an article.
 authorId: ivan-k
-date: 2026-07-09
+date: 2026-08-04
 category: writing
-tags: [drafts, reading-time, video, podcasts]
+tags: [frontmatter, config]
 descriptionAsPreview: true
+videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+videoLinkLang: EN
+podcastLang: EN
+podcasts:
+  - applepodcasts: https://podcasts.apple.com/
+  - spotify: https://open.spotify.com/
+  - youtube: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+  - youtubemusic: https://music.youtube.com/
+  - amazonmusic: https://music.amazon.com/
+  - castbox: https://castbox.fm/
+  - deezer: https://www.deezer.com/
+  - iheartradio: https://www.iheart.com/
+  - tunein: https://tunein.com/
+  - pocketcasts: https://pca.st/
+  - overcast: https://overcast.fm/
+  - podcastaddict: https://podcastaddict.com/
+  - podcastindex: https://podcastindex.org/
+  - rss: https://example.com/rss
+  - site: https://example.com/episode
 translations:
   ru: /ru/posts/drafts-video-podcasts
 ---
 
 ## Drafts
 
-A post marked as `draft: true` is built — the URL works for preview — but excluded from lists, RSS, sitemap, search and marked `noindex`.
+Add `draft: true` to the post frontmatter — and it will disappear from all public surfaces of the blog, such as:
+
+- All post lists — recent, popular, archive, tags, authors, similar
+- RSS / Atom / JSON feeds
+- sitemap.xml
+- Search (Pagefind)
+- JSON-LD, hreflang, canonical, and other SEO components
+- The draft becomes unavailable to search bots, adding `<meta name="robots" content="noindex, nofollow">` to `<head>`
 
 ```yaml
 ---
+title: Post that is not ready yet
+date: 2026-08-01T10:00:00Z
+authorId: ivan-k
 draft: true
-date: 2026-07-24
 ---
 ```
 
-In `vitepress dev` drafts are visible by default. In production (`vitepress build`), drafts are hidden from all public lists and feeds but remain accessible via direct URL.
+> The draft page is still included in the production build and remains accessible via a direct link — this is the only way to open it, for instance to share a link with colleagues to discuss an article before publication.
 
-This is useful for:
-- Previewing a post before publication
-- Sharing a draft link with a reviewer
-- Keeping work-in-progress content in the same repository
+> If you need a file to be completely excluded from the build, exclude it using VitePress via `srcExclude`:
+>  ```ts
+>  // .vitepress/config.ts
+>  export default async () => defineBlogConfig({
+>    srcExclude: ['**/*.draft.md'],
+>  })
+>  ```
 
-## Reading time
+### Drafts are visible in the dev server
 
-Reading time is calculated automatically based on the post's word count. It appears as a badge next to the date in the post header.
+By default, drafts are **visible** in `vitepress dev` and **hidden** in `vitepress build`. This allows the author to see work-in-progress posts in general lists while writing, without accidentally publishing them.
+
+The mode is determined by `NODE_ENV`. You can override it explicitly:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  drafts:
+    showDrafts: false  # hide even in dev
+```
+
+`showDrafts: true` will return drafts to all lists and feeds — including the production build. Use this only for internal preview environments.
+
+## Post reading time and word count
+
+Both values are calculated during the build from the raw markdown source. Code blocks, inline code, and raw HTML are excluded from the count — long configuration listings are usually skimmed rather than read word for word.
+
+For CJK scripts where words are not space-delimited, characters are counted individually and converted to "words" using a factor of 2.
+
+The estimate is never zero: any non-empty text is at least "1 min".
+
+The article's reading time is displayed under the post title and in the post list on the right under the title in a `<time datetime="PT1M">` tag formatted according to ISO 8601. The word count is emitted in the post's JSON-LD, for example:
+
+```json
+{
+  "@type": "BlogPosting",
+  "wordCount": 218,
+  "timeRequired": "PT1M"
+}
+```
 
 ### Configuration
 
@@ -41,66 +101,66 @@ Reading time is calculated automatically based on the post's word count. It appe
 themeConfig:
   readingTime:
     enabled: true           # default: true
-    wordsPerMinute: 200      # default: 200
-    layouts: [post]          # which layouts show the badge
+    wordsPerMinute: 200     # default: 200
+    layouts: [post]         # which layouts show the reading time
+  postList:
+    showReadingTime: true   # show reading time in post cards
 ```
 
-### Per-post override
+To disable the badge for a specific post:
 
 ```yaml
 ---
-readingTime: false  # disable for this post
+readingTime: false
 ---
 ```
 
-Or override the global `readingTime.layouts` list — the per-post value takes precedence.
+## "Watch video" button
 
-## Video button
-
-A "Watch video" button can be added to the top of a post via frontmatter:
+The `videoLink` field in the post frontmatter adds a "Watch video" button to the article header. This is convenient for articles that accompany or summarize video content.
 
 ```yaml
----
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-videoLinkLang: EN
----
+videoLinkLang: EN     # label language displayed on the button
 ```
 
-- `videoLink` — external URL (YouTube, Vimeo, etc.)
-- `videoLinkLang` — short label next to the button (e.g.: EN, RU)
+## Podcast dropdown
 
-The button appears in the post's top bar, next to the date and reading time.
+`podcasts` displays a dropdown list of links to podcast platforms. It is ideal for podcast episode pages with the transcript or show notes in the post body.
 
-## Podcasts
+Menu items appear in the exact order you define them. Each item is `<platform id>: <episode URL>`. Specify only those platforms where the episode is actually published.
 
-A podcast dropdown can be added to the top of a post, listing episodes on multiple platforms.
-`podcasts` is a **list**, not a map: menu items appear in exactly the order you write them.
+You can also extend the list of podcast platforms if your service is not in the built-in list, by configuring custom platforms in the site config or directly in the post's `podcasts` list, as shown below.
 
 ```yaml
----
 podcastLang: EN
 podcasts:
-  - applepodcasts: https://podcasts.apple.com/episode/...
-  - spotify: https://open.spotify.com/episode/...
-  - youtube: https://www.youtube.com/watch?v=...
-  - youtubemusic: https://music.youtube.com/...
-  - rss: https://example.com/podcast/rss
-  - site: https://example.com/episode-1
----
+  - applepodcasts: https://podcasts.apple.com/
+  - spotify: https://open.spotify.com/
+  - youtube: https://www.youtube.com/
+  - youtubemusic: https://music.youtube.com/
+  - amazonmusic: https://music.amazon.com/
+  - castbox: https://castbox.fm/
+  - deezer: https://www.deezer.com/
+  - iheartradio: https://www.iheart.com/
+  - tunein: https://tunein.com/
+  - pocketcasts: https://pca.st/
+  - overcast: https://overcast.fm/
+  - podcastaddict: https://podcastaddict.com/
+  - podcastindex: https://podcastindex.org/
+  - rss: https://example.com/rss
+  # Any website on the internet
+  - site: https://example.com/episode
+  # Example of a custom platform with a custom icon
+  - id: podimo
+    url: https://podimo.com/
+    label: Podimo
+    iconUrl: /icons/podimo.svg
 ```
 
-- `podcastLang` — short label next to the dropdown button
-- `podcasts` — ordered list of `<platform id>: <episode URL>` pairs
+### Custom platform
 
-### Custom platforms
-
-The theme has 15 built-in platforms: `site`, `rss`, `applepodcasts`, `spotify`,
-`youtube`, `youtubemusic`, `amazonmusic`, `castbox`, `deezer`, `iheartradio`,
-`tunein`, `pocketcasts`, `overcast`, `podcastaddict`, `podcastindex`.
-
-Anything else goes into the `themeConfig.podcastPlatforms` registry, which
-supplies the label and icon for every post at once — and can override a
-built-in platform under the same id:
+The key for each item is the platform ID. There are 15 built-in platforms: 13 brand services (listed above) plus generic `site` and `rss`; anything else is added to the `themeConfig.podcastPlatforms` registry, which provides the label and icon across all posts:
 
 ```yaml
 # src/site.yaml
@@ -108,36 +168,32 @@ themeConfig:
   podcastPlatforms:
     podbean:
       label: Podbean
-      icon: simple-icons:podbean       # any Iconify name
+      icon: simple-icons:podbean       # any Iconify icon
     zvuk:
-      label: { ru: Звук, en: Zvuk }    # per-locale labels
-      iconUrl: /icons/zvuk.svg         # or your own file from public/
+      label: { ru: Звук, en: Zvuk }    # labels can be localized
+      iconUrl: /icons/zvuk.svg         # or a custom file from public/
 ```
+
+The same registry can override built-in platforms — just specify their ID.
 
 ::: warning Iconify icons and offline builds
-The theme ships an offline icon bundle that only covers the built-in
-platforms. An `icon` name outside that bundle is fetched from
-`api.iconify.design` in the reader's browser — it is missing from the SSR
-output and never appears without network access. Use `iconUrl` with your own
-file, or register the icon yourself with `addIcon()` in your `enhanceApp`.
+The theme includes an offline icon set that contains only the built-in platform icons. An `icon` name not in this bundle will be fetched from `api.iconify.design` in the reader's browser. If this is undesirable, use `iconUrl` with your own file or register the icon yourself using `addIcon()` in your `enhanceApp`.
 :::
 
-For a one-off platform not worth a config entry, describe the item inline:
+For a one-off platform where you don't want to edit global configuration, define the item directly in the post — as in the `podimo` example above.
+
+If a platform is found neither in the registry nor among built-in platforms, the link still works: the label is derived from the ID (`player-fm` → `Player Fm`), and the icon defaults to generic `mdi:podcast`.
+
+## Discussion link
+
+`commentLink` adds a "Discussion" button to the article footer linking to your discussion platform (GitHub Discussions, Telegram, a forum thread...).
 
 ```yaml
-podcasts:
-  - spotify: https://open.spotify.com/episode/...
-  - id: podimo
-    url: https://podimo.com/...
-    label: Podimo
-    iconUrl: /icons/podimo.svg
+commentLink: https://github.com/…/discussions
 ```
 
-An id found in neither the registry nor the built-in list still renders a
-working link: the label is derived from the id (`player-fm` → `Player Fm`) and
-the icon falls back to a generic `mdi:podcast`.
+> It is recommended to place a link here to the social media post announcing this article, steering users to your social channels where they can follow you.
 
-## What's next
+---
 
-- [All frontmatter fields](frontmatter) — complete frontmatter reference
-- [Covers, images and media](covers-images-media) — media components
+Next: [Home page](home-page)

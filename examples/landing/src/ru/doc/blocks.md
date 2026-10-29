@@ -384,7 +384,7 @@ description: 'Справочник по всем блокам лендинга: 
 
 Галерея с нативным лайтбоксом `<dialog>`. Элемент требует `src`; дополнительно
 поддерживаются `alt`, `caption`, `title`, `text`, `tags`, `actions`, `link` и
-`ratio`.
+`mediaRatio`.
 
 | Проп | Тип | По умолчанию |
 |------|-----|--------------|
@@ -392,8 +392,8 @@ description: 'Справочник по всем блокам лендинга: 
 | `cols` | `2 \| 3 \| 4` | `3` |
 | `variant` | `grid \| masonry` | `grid` |
 | `lightbox` | `boolean` | `true` |
-| `ratio` | CSS aspect-ratio | `4/3` |
-| `mediaRatio` | CSS aspect-ratio | `4/3` | Заменяет `ratio`. |
+| `mediaRatio` | CSS aspect-ratio | `4/3` |
+| `ariaLabel` | `string` | заголовок секции |
 
 ```yaml
 - type: gallery
@@ -454,6 +454,7 @@ Esc закрывает лайтбокс; управление фокусом о�
 | `rows` | `{ label, text?, group?, values }[]` | обязательно |
 | `rowsLabel`, `note` | `string` | — |
 | `stickyHead` | `boolean` | `true` |
+| `ariaLabel` | `string` | заголовок или «Comparison» |
 
 ```yaml
 - type: compare
@@ -507,7 +508,7 @@ Esc закрывает лайтбокс; управление фокусом о�
 | Проп | Тип | По умолчанию |
 |------|-----|--------------|
 | `youtube`, `vimeo`, `src` | id или URL / путь к файлу | хотя бы один обязателен |
-| `poster`, `caption`, `ratio` | `string` | `ratio: 16/9` |
+| `poster`, `caption`, `mediaRatio` | `string` | `mediaRatio: 16/9` |
 | `autoplay` | `boolean`, только `src` | `false` |
 | `actions` | `action[]` | — |
 
@@ -528,7 +529,7 @@ YouTube загружается только после нажатия и исп�
 | Проп | Тип | По умолчанию |
 |------|-----|--------------|
 | `src` | URL | обязательно |
-| `embedTitle`, `caption`, `ratio` | `string` | `ratio: 16/9` |
+| `embedTitle`, `caption`, `mediaRatio` | `string` | `mediaRatio: 16/9` |
 | `loading` | `lazy \| eager` | `lazy` |
 | `allow`, `sandbox` | строка атрибутов iframe | — |
 | `actions` | `action[]` | — |

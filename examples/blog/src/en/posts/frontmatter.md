@@ -128,25 +128,13 @@ videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 videoLinkLang: EN
 # Podcast language — short label next to the button.
 podcastLang: EN
-# Ordered list of podcast links, rendered as a dropdown at the top of the post.
-# Each item is `<platform id>: <episode URL>`; menu order follows list order.
-# Built-in ids: site, rss, applepodcasts, spotify, youtube, youtubemusic,
-# amazonmusic, castbox, deezer, iheartradio, tunein, pocketcasts, overcast,
-# podcastaddict, podcastindex.
-# Any other id works too — register its label and icon once in
-# themeConfig.podcastPlatforms, or describe it inline (see the last item).
-# An unregistered id still links correctly, with a label derived from the id
-# and a generic podcast icon.
+# List of platforms where the episode is published.
+# A dropdown menu listing the podcasts will appear at the top of the post.
 podcasts:
   - applepodcasts: https://podcasts.apple.com/
   - spotify: https://open.spotify.com/
-  - youtube: https://www.youtube.com/
-  - rss: https://example.com/podcast/rss
-  - site: https://example.com/episode-1
-  - id: podimo
-    url: https://podimo.com/
-    label: Podimo
-    iconUrl: /icons/podimo.svg
+  - youtubemusic: https://music.youtube.com/
+  # ... and others, see details on the "Drafts, reading time, video button and podcasts" page
 # Discussion URL (GitHub Discussions, Disqus, Telegram, etc.) — button in the post footer.
 commentLink: https://github.com/.../discussions
 
@@ -207,7 +195,7 @@ seo:
   hreflang: true        # hreflang link tags (only if >1 locale).
   canonical: true       # self-canonical link tag when the canonical field is not set.
   rss: true             # RSS/Atom/JSON feed link tags on the home page.
-  maxDescriptionLength: 160  # character limit for auto-extracted description. Default: 300
+  maxDescriptionLength: 300  # character limit for auto-extracted description. Default: 300
 # Custom JSON-LD. A YAML object — deep-merged with the auto-generated schema
 # (nested objects are merged recursively). A JSON string — full replacement.
 jsonLd:
@@ -297,16 +285,8 @@ themeConfig:
       image: /img/home-en.webp
 ```
 
-Of the common frontmatter fields, only `title`,
-`description`, `translations`, `canonical`, `seo` and `draft` are meaningful on the home page. The fields `aside`,
-`toc`, `ads` and `readingTime` are always ignored, even if specified explicitly:
-the home page uses its own fullscreen layout without side columns.
+Of the common frontmatter fields, only `title`, `description`, `translations`, `canonical`, `seo` and `draft` are meaningful on the home page. All other fields are ignored.
 
-## Further reading
+---
 
-Each field is covered separately in the thematic posts in the "Content" section:
-[covers and media](covers-images-media),
-[authors](authors),
-[post cards](lists-and-pages#post-cards-in-lists) and [themeConfig settings](themeconfig-settings).
-The `draft` and `readingTime` fields are covered in
-[Drafts, reading time, video and podcasts](drafts-video-podcasts).
+Next: [Categories and tags](categories-and-tags)

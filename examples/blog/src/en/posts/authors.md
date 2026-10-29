@@ -1,107 +1,123 @@
 ---
 title: Authors
 description: >
-  How authors are configured in _authors.yaml, linked to posts via authorId,
-  and how the theme generates author pages and cards automatically.
+  How authorId links a post to an entry in _authors.yaml, the theme builds an
+  author page, injects a card into the footer, emits twitter:creator and
+  article:author meta tags, and generates JSON-LD Person.
 authorId: ivan-k
-date: 2026-07-14
+date: 2026-08-04
 category: writing
-tags: [authors, config, seo]
+tags: [frontmatter, config]
 descriptionAsPreview: true
 translations:
   ru: /ru/posts/authors
 ---
 
-Authors are managed through a YAML registry and linked to posts via a simple `authorId` field. The theme automatically generates author pages, author cards in post footers, and relevant SEO metadata.
+An author appears in the following places:
 
-## Author registry
+- In the post footer, the author is rendered according to the `authorId` specified in the post frontmatter
+- On the author list page, author cards are displayed; the author's individual page displays their list of posts
+- **`twitter:creator`** — populated from the author's `twitterHandle`. Helps Twitter/X link the article to the author in preview cards.
+- **`article:author`** — Open Graph tag with the absolute URL of the author's page.
+- **JSON-LD `Person`** — structured data on the author page: name, description, portrait (`ImageObject`), links (`sameAs`), and URL.
+- **JSON-LD `article.author`** — `Person` object (name + URL) in the article's structured data.
 
-Authors are defined in `_authors.yaml` per locale:
+## How to add an author
+
+## Authors across all locales (`site.yaml`)
+
+You can define authors for all locales at once in `src/site.yaml`.
+
+```yaml
+# src/site.yaml
+themeConfig:
+  authors:
+    - id: 'jhon-doe'
+      name: 'John Doe'
+      description: 'Main correspondent'
+      image: 'https://…/avatar.jpg'
+      links:
+        - type: 'github'
+          url: 'https://github.com/…'
+          title: 'GitHub'
+```
+
+You can also add authors for a specific locale or override fields of global authors, such as name and description, in `src/en/_authors.yaml`.
+
+```yaml
+# in src/en/_authors.yaml
+- id: 'jhon-doe'
+  name: 'John Doe'
+  description: 'Chief correspondent'
+```
+
+And finally, reference the author's ID in the post frontmatter:
+
+```yaml
+# in post frontmatter
+authorId: ivan-k
+```
+
+## All author fields
+
+Only `id` is required; all other fields are optional.
+
+- **`id`** *(string, required)* — unique, stable identifier. Used in post frontmatter (`authorId`) and for merging entries across configuration layers.
+- **`name`** *(string)* — author's display name on the author page and in post metadata.
+- **`description`** *(string)* — short biography. Rendered as HTML — supports Markdown formatting.
+- **`image`** *(string)* — URL of author's avatar/portrait. Used on the author page and in the author card in the post footer.
+- **`imageWidth`** *(number)* — `image` width in pixels for the `width` attribute of `<img>`. Recommended to prevent Cumulative Layout Shift (CLS). Auto-detected for local files, but must be set manually for external URLs.
+- **`imageHeight`** *(number)* — `image` height in pixels for the `height` attribute of `<img>`. Similar to `imageWidth`.
+- **`twitterHandle`** *(string)* — Twitter/X username without the leading `@`. Used for the `twitter:creator` meta tag.
+- **`links`** *(array of objects)* — social and external links, displayed below the bio as icons. Each link:
+  - **`type`** *(string)* — link type determining the icon. Built-in: `site`, `youtube`, `x`, `facebook`, `instagram`, `tiktok`, `vk`, `mastodon`, `diaspora`. Any other type (e.g. `github`) falls back to a universal globe icon.
+  - **`url`** *(string)* — full URL of external resource.
+  - **`title`** *(string)* — accessible title / tooltip.
+
+### Template substitutions
+
+Author fields support template variables `${theme.*}`, `${config.*}`, and `${t.*}` — the same ones available in `_site.yaml`. Substitutions are evaluated after merging all configuration layers.
+
+For example, you set a custom field `organizationName` in `themeConfig`:
+
+```yaml
+# src/site.yaml
+themeConfig:
+  organizationName: 'Neptu Blog'
+```
+
+Now you can substitute it into the author bio using `${theme.organizationName}`:
 
 ```yaml
 # src/en/_authors.yaml
 - id: 'ivan-k'
-  name: 'Ivan K'
-  description: 'Maintainer of the theme.'
-  image: 'https://api.dicebear.com/10.x/avataaars/svg?seed=Ivan'
-  imageWidth: 800
-  imageHeight: 800
-  twitterHandle: 'neptu_blog'
-  links:
-    - type: 'github'
-      url: 'https://github.com/bozonx/vitepress-theme-neptu'
-      title: 'GitHub'
-    - type: 'website'
-      url: 'https://myblog.org'
-      title: 'Website'
+  name: 'Ivan K.'
+  description: 'Editor at ${theme.organizationName}'
 ```
 
-## Available fields
+After substitution, the bio becomes: "Editor at Neptu Blog".
 
-| Field | Required | Description |
-| --- | --- | --- |
-| `id` | Yes | Unique identifier, used in post frontmatter as `authorId` |
-| `name` | Yes | Display name |
-| `description` | No | Short bio, shown on author page and card |
-| `image` | No | Avatar URL |
-| `imageWidth` | No | Image width in pixels (avoids layout shift) |
-| `imageHeight` | No | Image height in pixels |
-| `twitterHandle` | No | Used for `twitter:creator` meta tag on this author's posts |
-| `links` | No | Array of social/profile links |
+## Adding an authors list and author pages
 
-### Link types
+The theme automatically creates several pages related to authors:
 
-Each link has a `type`, `url` and `title`:
+- **`authors/`** — list of all authors with their cards.
+- **`authors/<id>/`** — individual author page with their posts (chronological order).
+- **`authors/<id>/popular/`** — author's popular posts page (popularity order).
 
-| Type | Icon |
-| --- | --- |
-| `github` | GitHub icon |
-| `website` | Globe icon |
-| `twitter` | Twitter/X icon |
-| `linkedin` | LinkedIn icon |
-| `email` | Email icon |
-
-## Linking authors to posts
-
-In post frontmatter:
+To display the authors section in the sidebar, enable it in the locale configuration:
 
 ```yaml
----
-authorId: ivan-k
----
+# src/<locale>/_site.yaml
+themeConfig:
+  sidebar:
+    authors: true
+  # icon for the authors section in the sidebar (default: built-in)
+  authorsIcon: 'lucide:users'
 ```
 
-If the `authorId` is not found in `_authors.yaml`, the author block is not rendered. Make sure to specify the ID exactly.
+Also make sure the `src/<locale>/authors/` directory exists in your project and was not deleted. It is present by default in the blog template.
 
-## What the theme generates
+---
 
-### Author pages
-
-The theme automatically creates a page for each author at `/authors/<id>/1`, listing all their posts sorted by date.
-
-### Author cards
-
-An author card appears in the post footer, showing the avatar, name, description and social links.
-
-### SEO metadata
-
-- **Twitter:** `twitter:creator` meta tag from `twitterHandle`
-- **Open Graph:** `article:author` from the author's name
-- **JSON-LD:** `Person` schema embedded in the post's JSON-LD
-
-## Multiple authors
-
-The theme currently supports one author per post via the `authorId` field. If a post has multiple contributors, credit additional authors in the post body text.
-
-## Guest authors
-
-If an author is a one-time contributor not in `_authors.yaml`, simply omit the `authorId` field and credit them in the post body:
-
-```md
-Our freelance correspondent [John Doe](https://example.com).
-```
-
-## What's next
-
-- [All frontmatter fields](frontmatter) — complete frontmatter reference
-- [Lists and pages](lists-and-pages) — author list pages
+Next: [Where to store images and media](media-asset-placement)

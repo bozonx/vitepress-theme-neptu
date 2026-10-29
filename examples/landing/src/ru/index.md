@@ -106,7 +106,7 @@ blocks:
         text: Двадцать четыре готовые секции. Страница собирается из них, а не пишется руками.
       - icon: fa6-solid:palette
         title: Две оси темы
-        text: Цвет и стиль независимы — восемь палитр на пять стилевых пресетов.
+        text: Цвет и стиль независимы — восемь палитр на шесть стилевых пресетов.
       - icon: fa6-solid:file-code
         title: YAML или Vue
         text: Страницу можно собрать компонентами или описать данными во frontmatter.
@@ -198,7 +198,7 @@ blocks:
     cols: 4
     items:
       - { value: '24', label: Блока, text: и 11 примитивов }
-      - { value: '8 × 5', label: Комбинаций темы, text: цвет × стиль }
+      - { value: '8 × 6', label: Комбинаций темы, text: цвет × стиль }
       - { value: '0', label: Зависимостей, text: кроме Vue и VitePress }
       - { value: '100%', label: Типизации, text: 'пропсы, конфиг, блоки' }
 
@@ -309,7 +309,7 @@ blocks:
     rows:
       - { group: Основное, label: Блоки лендинга, values: ['24', '24', '24'] }
       - { group: Основное, label: Цветовые палитры, values: ['8', '8', 'Свои'] }
-      - { group: Основное, label: Стилевые пресеты, values: ['5', '5', 'Свои'] }
+      - { group: Основное, label: Стилевые пресеты, values: ['6', '6', 'Свои'] }
       - { group: Поддержка, label: Issues на GitHub, values: [true, true, true] }
       - { group: Поддержка, label: Приватный канал, values: [false, true, true] }
       - { group: Поддержка, label: Помощь с миграцией, values: [false, false, true] }
@@ -336,7 +336,7 @@ blocks:
       - { label: Готово, state: done, title: Библиотека блоков v1, text: 'Двадцать четыре блока, одиннадцать примитивов, две оси темы.' }
       - { label: Готово, state: done, title: Декларативный рендерер, text: Страницы из frontmatter с проверкой по схеме. }
       - { label: В работе, state: active, title: Интеграция с CMS, text: Маппинг типов блоков в админку Decap CMS. }
-      - { label: В планах, state: planned, title: Новые блоки, text: 'Таблица сравнения, табы, контактная форма, тизер блога.' }
+      - { label: В планах, state: planned, title: Новые блоки, text: 'Тизер блога, калькулятор тарифов, форма обратной связи.' }
 
   - type: team
     align: center
@@ -380,7 +380,7 @@ blocks:
     text: Раз в месяц — что появилось в теме и как это использовать.
     action: https://example.com/subscribe
     submitText: Подписаться
-    consent: 'Согласен с <a href="pages/links">условиями</a>'
+    consent: 'Согласен с <a href="/ru/pages/links">условиями</a>'
     note: Отписаться можно в один клик.
 
   - type: cta

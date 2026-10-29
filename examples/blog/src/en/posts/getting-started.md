@@ -24,9 +24,18 @@ Neptu blog is a theme for VitePress that lets you create static blogs which, whe
 
 Creating and launching your own blog is incredibly simple:
 
-## Step 1. Copy the template
+## Step 1. Create a project
 
-The theme repository includes a ready-made starter project — the `template/` folder. That's the installation: copy its contents into a new folder for your blog.
+The fastest way is to use the official scaffolder:
+
+```bash
+npm create neptu-blog@latest my-blog
+cd my-blog
+```
+
+The scaffolder will interactively ask for the blog title and content language (for example, `ru` or `en`), set up the package name and prepare the locale working folder.
+
+Or you can copy the starter template manually from the repository:
 
 ```bash
 git clone https://github.com/bozonx/vitepress-theme-neptu
@@ -73,3 +82,7 @@ To publish your blog on the internet, follow the deployment instructions on the
 ## What's next
 
 The blog is running — now you need to understand it. Let's start with the [project structure](project-structure).
+
+---
+
+Next: [Project structure](project-structure)

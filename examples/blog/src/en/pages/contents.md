@@ -68,5 +68,5 @@ Works out of the box — worth reading when you need fine-tuning.
 
 - [Interface translations and language selection page](../posts/i18n-translations) — Built-in translations, `t` key reference, styling, fallback, formatting
 - [Lists and pages](../posts/lists-and-pages) — Auto-lists, featured, post cards, standalone pages
-- [Pagefind search](../posts/search-pagefind) — Indexing, filters, excluding from search
+- [Pagefind search](../posts/search-pagefind) — Indexing, excluding from search
 - [Components, composables and utilities reference](../posts/components) — What you can import from the theme

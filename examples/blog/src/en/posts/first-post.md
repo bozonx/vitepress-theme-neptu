@@ -13,9 +13,9 @@ translations:
   ru: /ru/posts/first-post
 ---
 
-A post is just a Markdown file in the `src/<locale>/posts/` folder. The filename becomes the page URL: `posts/my-first-post.md` → `/ru/posts/my-first-post`.
+A post is just a Markdown file in the `src/<locale>/posts/` folder. The filename becomes the page URL: `posts/my-first-post.md` → `/en/posts/my-first-post`.
 
-A post can also be a folder: `posts/my-first-post/index.md` opens at `/ru/posts/my-first-post/`, with its images stored alongside. See [Project structure](project-structure) and [Where to store images and media](media-asset-placement) for details.
+A post can also be a folder: `posts/my-first-post/index.md` opens at `/en/posts/my-first-post/`, with its images stored alongside. See [Project structure](project-structure) and [Where to store images and media](media-asset-placement) for details.
 
 ## Minimal post
 
@@ -36,7 +36,7 @@ The only required field here is **`date`** — the publication date in ISO forma
 
 The second field, `authorId`, is optional — only include it if the post's author is a regular contributor listed in your config and/or in `_authors.yaml`.
 
-:::tip
+::: tip
 If the author is a one-time contributor, you can simply credit them in the post body, e.g.: Our freelance correspondent [John Doe](https://example.com).
 :::
 
