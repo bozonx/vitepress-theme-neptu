@@ -1,6 +1,6 @@
 {
   "name": "vitepress-theme-neptu-landing",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "VitePress theme for project sites: a block-based landing page, optional docs, switchable color and style themes",
   "types": "./src/types.d.ts",
   "type": "module",
@@ -69,7 +69,7 @@
     "@iconify/vue": "^5.0.1",
     "@mdit/plugin-tasklist": "^1.1.4",
     "ajv": "^8.20.0",
-    "vitepress-theme-neptu": "^0.20.0",
+    "vitepress-theme-neptu": "^0.20.1",
     "yaml": "^2.9.0"
   },
   "devDependencies": {

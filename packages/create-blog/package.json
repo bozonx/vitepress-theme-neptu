@@ -1,6 +1,6 @@
 {
   "name": "create-neptu-blog",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "Scaffold a new blog powered by vitepress-theme-neptu",
   "type": "module",
   "author": "Ivan Kozyrin <ipkozyrin@gmail.com>",
@@ -37,7 +37,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "vitepress-theme-neptu": "^0.20.0"
+    "vitepress-theme-neptu": "^0.20.1"
   },
   "scripts": {
     "lint": "eslint .",
