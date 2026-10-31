@@ -221,18 +221,19 @@ translations:
 # в production) canonical не выводится.
 canonical: https://example.com/canonical-url
 
-# Управление SEO. Каждый ключ отключает соответствующую фичу,
-# если установлен в false. По умолчанию всё включено.
-# Перекрывает глобальное themeConfig.seo.
+# Управление SEO. Используйте эти параметры чтобы отключить отдельные
+# SEO функции, для этого установите значение false. По умолчанию всё включено.
+# Эти параметры перекрывают глобальное themeConfig.seo.
 seo:
   og: true                   # Open Graph + Twitter Card мета-теги.
   jsonLd: true               # JSON-LD структурированные данные.
   hreflang: true             # hreflang link-теги (только если >1 локали).
-  canonical: true            # генерирует self-каноникал, если поле canonical не
-                             # задано.
+  canonical: true            # вкл/выкл авто генерации self-каноникал, если
+                             # поле canonical не задано.
   rss: true                  # RSS/Atom/JSON feed link-теги на главной.
   maxDescriptionLength: 300  # лимит символов для авто-экстракта description. По
                              # умолчанию: 300
+
 # Кастомный JSON-LD.
 # Если указать объект YAML, он будет смержен с использованием deep-merge
 # с авто-генерируемой схемой. Вложенные объекты мержатся рекурсивно.
