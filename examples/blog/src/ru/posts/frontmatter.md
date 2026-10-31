@@ -107,8 +107,8 @@ featured: false
 draft: false
 
 # Включить страницу в индекс поиска (Pagefind).
-# По умолчанию: true для постов и страниц, false для layout: util.
-# draft: true принудительно сбрасывает это в false.
+# По умолчанию: true для постов и страниц, но false для страниц с layout: util.
+# Если стоит draft: true, то это поле принудительно сбрасывается в false.
 searchIncluded: true
 
 ### Обложка ###
@@ -188,11 +188,11 @@ toc: true
 # По умолчанию: следует themeConfig.ads.layouts.
 ads: false
 
-# Скрыть ссылку «редактировать страницу» на этом посте.
-# Работает только на layout: post и layout: page и только если
-# themeConfig.editLink вообще настроен.
+# Чтобы скрыть ссылку «редактировать страницу» на этом посте установите параметрв в false.
+# Эта ссылка показывается если настроен параметр конфига themeConfig.editLink
+# и толmко у постов (с layout: post) и страниц (с layout: page)
 # По умолчанию: ссылка показывается.
-editLink: false
+editLink: true
  
 ### SEO ###
 
