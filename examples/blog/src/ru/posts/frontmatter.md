@@ -95,6 +95,16 @@ tags:
 # По умолчанию: false.
 featured: false
 
+# Если установлено true, то страница считается черновиком и не попадает в сборку и доступна по URL, но исключается из списков, RSS, sitemap, поиска и помечается noindex.
+# В vitepress dev черновики видны по умолчанию, в production — скрыты.
+# По умолчанию: false.
+draft: false
+
+# Включить страницу в индекс поиска (Pagefind).
+# По умолчанию: true для постов и страниц, false для layout: util.
+# draft: true принудительно сбрасывает это в false.
+searchIncluded: true
+
 ### Обложка ###
 
 # Файл обложки. Поддерживает URL и co-located пути к локальным файлам,
@@ -132,10 +142,10 @@ previewText: 'Кастомный текст превью для карточки
 
 # Кнопка «Смотреть видео» вверху поста. Внешний URL (YouTube, Vimeo и т.п.).
 videoLink: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
 # Язык видео — короткая подпись рядом с кнопкой (например: RU, EN).
 videoLinkLang: RU
-# Язык подкаста — короткая подпись рядом с кнопкой.
-podcastLang: RU
+
 # Список платформ, на которых опубликован эпизод.
 # Вверху поста будет выпадающее меню с перечисленными подкастами.
 podcasts:
@@ -144,6 +154,10 @@ podcasts:
   - youtubemusic: https://music.youtube.com/
   # ... и другие, подробней на странице "Черновики, время чтения, видео-кнопка и
   # подкасты"
+
+# Язык подкаста — короткая подпись рядом с кнопкой.
+podcastLang: RU
+
 # URL обсуждения (GitHub Discussions, Disqus, Telegram и т.п.) — кнопка в
 # подвале поста.
 commentLink: https://github.com/.../discussions
@@ -153,30 +167,21 @@ commentLink: https://github.com/.../discussions
 # Включить/выключить бейдж времени чтения для этой страницы.
 # По умолчанию: следует themeConfig.readingTime.layouts.
 readingTime: true
+
 # Показать/скрыть правую боковую колонку для этой страницы.
 # По умолчанию: следует themeConfig.asideLayouts.
 aside: true
+
 # Показать/скрыть оглавление для этой страницы.
-# Порог по количеству заголовков (themeConfig.toc.minHeadings)
-# даже если вы установите true.
+# Используется значение порога по количеству заголовков (themeConfig.toc.minHeadings).
 # По умолчанию: включено на постах, выключено на остальных layout'ах.
 toc: true
+
 # Включить/выключить рекламные слоты для этой страницы.
 # Влияет на слоты в правой колонке и на in-content слоты.
 # По умолчанию: следует themeConfig.ads.layouts.
 ads: false
 
-### Публикация и поиск ###
-
-# Черновик. Страница попадает в сборку и доступна по URL,
-# но исключается из списков, RSS, sitemap, поиска и помечается noindex.
-# В vitepress dev черновики видны по умолчанию, в production — скрыты.
-# По умолчанию: false.
-draft: false
-# Включить страницу в индекс поиска (Pagefind).
-# По умолчанию: true для постов и страниц, false для layout: util.
-# draft: true принудительно сбрасывает это в false.
-searchIncluded: true
 # Скрыть ссылку «редактировать страницу» на этом посте.
 # Работает только на layout: post и layout: page и только если
 # themeConfig.editLink вообще настроен.
