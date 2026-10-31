@@ -69,7 +69,8 @@ authorId: ivan-k
 
 ### Категории и теги ###
 
-# Категория к которой принадлежит пост. Значение — это `id` записи из src/<локаль>/_categories.yaml
+# Категория к которой принадлежит пост. Значение — это `id` записи из
+# src/<локаль>/_categories.yaml
 category: writing
 
 # Список id категорий к которым принадлежит пост.
@@ -95,8 +96,10 @@ tags:
 # URL обложки. Поддерживает URL и co-located пути, например ./media/cover.jpg —
 # автоматически разрешается в site-root путь (/ru/posts/.../media/cover.jpg).
 cover: https://images.unsplash.com/photo-...
-# Размеры обложки. Если не указать — автоматически вычисляются из локального файла.
-# Для внешних URL нужно указывать вручную чтобы избежать CLS (Cumulative Layout Shift - прыгание контента при загрузке картинок).
+# Размеры обложки. Если не указать — автоматически вычисляются из локального
+# файла.
+# Для внешних URL нужно указывать вручную чтобы избежать CLS (Cumulative Layout
+# Shift - прыгание контента при загрузке картинок).
 coverWidth: 1200
 coverHeight: 800
 # alt-текст для <img> и og:image:alt. Обычный текст, без markdown.
@@ -109,7 +112,8 @@ coverDescription: "coverDescription поддерживает **markdown** и [с
 
 # Использовать description как текст превью в карточках списков постов.
 # Приоритет: previewText > descriptionAsPreview > авто-экстракт из контента.
-# По умолчанию: false (если не задан previewText то берется начало поста для превью)
+# По умолчанию: false (если не задан previewText то берется начало поста для
+# превью)
 descriptionAsPreview: false
 # Явный текст превью. Имеет высший приоритет — перекрывает descriptionAsPreview.
 # Пустая строка ('') отключает превью, а не игнорируется.
@@ -133,8 +137,10 @@ podcasts:
   - applepodcasts: https://podcasts.apple.com/
   - spotify: https://open.spotify.com/
   - youtubemusic: https://music.youtube.com/
-  # ... и другие, подробней на странице "Черновики, время чтения, видео-кнопка и подкасты"
-# URL обсуждения (GitHub Discussions, Disqus, Telegram и т.п.) — кнопка в подвале поста.
+  # ... и другие, подробней на странице "Черновики, время чтения, видео-кнопка и
+  # подкасты"
+# URL обсуждения (GitHub Discussions, Disqus, Telegram и т.п.) — кнопка в
+# подвале поста.
 commentLink: https://github.com/.../discussions
 
 ### Элементы страницы ###
@@ -176,7 +182,8 @@ editLink: false
 
 # Карта переводов: код локали → относительный путь.
 # Используется переключателем языков в шапке И hreflang-тегами для SEO.
-# Если не указать — переключатель языка пытается найти перевод то томуже имени файла и полному пути.
+# Если не указать — переключатель языка пытается найти перевод то томуже имени
+# файла и полному пути.
 translations:
   en: /en/posts/frontmatter
 # Канонический URL. Принимает полный URL или 'self', чтобы
@@ -190,9 +197,11 @@ seo:
   og: true                   # Open Graph + Twitter Card мета-теги.
   jsonLd: true               # JSON-LD структурированные данные.
   hreflang: true             # hreflang link-теги (только если >1 локали).
-  canonical: true            # генерирует self-каноникал, если поле canonical не задано.
+  canonical: true            # генерирует self-каноникал, если поле canonical не
+                             # задано.
   rss: true                  # RSS/Atom/JSON feed link-теги на главной.
-  maxDescriptionLength: 300  # лимит символов для авто-экстракта description. По умолчанию: 300
+  maxDescriptionLength: 300  # лимит символов для авто-экстракта description. По
+                             # умолчанию: 300
 # Кастомный JSON-LD.
 # Если указать объект YAML, он будет смержен с использованием deep-merge
 # с авто-генерируемой схемой. Вложенные объекты мержатся рекурсивно.
@@ -201,7 +210,8 @@ jsonLd:
   "@type": TechArticle
   proficiencyLevel: Beginner
 # Стандартное поле VitePress для произвольных тегов в <head>.
-# Если положить сюда noindex, то JSON-LD и canonical добавлены не будут на страницу.
+# Если положить сюда noindex, то JSON-LD и canonical добавлены не будут на
+# страницу.
 head:
   - [meta, { name: robots, content: noindex }]
 
@@ -229,7 +239,8 @@ contentLayout: MyCustomContent
 # Обязательное поле — без него страница отрендерится как пост
 # Доступные варианты: post, home, page, util, tag, category, archive, author.
 # Кроме них: false — голый контент без сайдбара, шапки и подвала.
-# Если передать имя глобально зарегистрированного компонента, будет полная замена layout'а.
+# Если передать имя глобально зарегистрированного компонента, будет полная
+# замена layout'а.
 layout: page
 # Идёт в <title> и в SEO-мета. В теле страницы не выводится —
 # заголовок пишите в markdown сами
