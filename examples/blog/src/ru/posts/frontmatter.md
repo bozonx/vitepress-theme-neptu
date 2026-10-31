@@ -287,33 +287,29 @@ translations:
 ---
 ```
 
-Кроме этих четырёх на `layout: page` работают ещё:
+Кроме этих четырёх, на `layout: page` работают те же поля, что и у постов
+(подробное описание — в [полном примере поста](#полный-пример-frontmatter-поста)):
+`draft`, `searchIncluded`, `canonical`, `seo`, `head`, `jsonLd`,
+`editLink`,
+`contentLayout`, `aside`, `toc`, `ads`.
 
-- `aside` — правая колонка. На страницах по умолчанию **выключена**
-  (`page` нет в `themeConfig.asideLayouts`), включается через `aside: true`.
-- `toc` — оглавление. По умолчанию выключено; на страницах оглавление живёт
-  только в правой колонке, поэтому одного `toc: true` мало — нужен ещё
-  `aside: true`.
-- `ads` — рекламные слоты, включая in-content. По умолчанию выключены.
-- `draft` — черновик: URL работает, но страница исключается из
-  sitemap, поиска и помечается `noindex`.
-- `searchIncluded` — участие в индексе Pagefind. По умолчанию `true`.
-- `canonical`, `seo`, `head` — канонический URL, покомандное отключение
-  SEO-фич и произвольные теги в `<head>`.
-- `jsonLd` — свой JSON-LD, объектом (deep-merge) или строкой (полная замена).
-- `editLink` — `false` убирает ссылку «редактировать страницу».
-- `contentLayout` — подмена центральной области своим компонентом.
+Отличаются только значения по умолчанию у трёх полей. Все три
+**выключены**:
 
-Все остальные поля из примера поста на `layout: page` **игнорируются**: `date`,
-`authorId`, `cover` и прочие `cover*`, `category`, `categories`, `tags`,
-`featured`, `previewText`, `descriptionAsPreview`, `readingTime`, `videoLink`,
-`videoLinkLang`, `podcasts`, `podcastLang`, `commentLink`. Обычные страницы не
-попадают в ленты и списки постов, поэтому ни таксономии, ни превью, ни обложка
-им не нужны.
+- `aside` — правая колонка (включается через `aside: true`);
+- `toc` — оглавление; живёт только в правой колонке, поэтому нужен ещё
+  `aside: true`;
+- `ads` — рекламные слоты, включая in-content.
+
+::: tip Остальные поля поста игнорируются
+`date`, `authorId`, `cover*`, `category`, `categories`, `tags`, `featured`,
+`previewText`, `descriptionAsPreview`, `readingTime`, `videoLink*`,
+`podcasts`, `podcastLang`, `commentLink`.
+:::
 
 ## Главная страница (`layout: home`)
 
-**Главная не настраивается через frontmatter.** Весь её вид — hero-блок, секции,
+Главная **не** настраивается через frontmatter. Весь её вид — hero-блок, секции,
 ширина, тема оформления и фон — описывается в конфиге, а `src/<локаль>/index.md` содержит только layout:
 
 ```yaml
